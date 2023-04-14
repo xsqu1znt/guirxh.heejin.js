@@ -50,7 +50,7 @@ module.exports = {
                 await Promise.all(promiseArray);
 
                 // Log success
-                return logger.success("slash commands registered successfully");
+                return logger.success("slash commands pushed successfully");
             } else { //* Iterate through every guild the bot is currently in and push the slash commands
                 // Fetch each guild the bot's currently in
                 let guilds = await client.guilds.fetch();

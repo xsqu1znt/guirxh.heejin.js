@@ -9,7 +9,7 @@
 
 			"module.exports = {",
 			"    builder: new SlashCommandBuilder().setName(\"${1:cookie}\")",
-			"        .setDescription(\"${2:Get a cookie, or a glass of milk.}\"),\n",
+			"        .setDescription(\"${2:Get a cookie, or a glass of milk}\"),\n",
 
 			"    /**",
 			"     * @param {Client} client",
