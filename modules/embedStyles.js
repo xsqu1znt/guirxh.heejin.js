@@ -2,6 +2,7 @@ const { EmbedBuilder, quote, inlineCode, bold } = require('discord.js');
 
 const { botSettings } = require('../configs/heejinSettings.json');
 const { stringTools } = require('../modules/jsTools');
+const { cardnventoryParser } = require('../modules/userParser');
 const cardManager = require('../modules/cardManager');
 
 // Command -> /DROP
@@ -18,23 +19,29 @@ function generalDrop(user, card, dropTitle = "drop", isDuplicate = false) {
 }
 
 // Command -> User -> /PROFILE
-function userProfile(user) {
+function userProfile(user, userData) {
     let profile_info = "\`🥕 %BALANCE\` :: \`🃏 %CARD_TOTAL\` :: \`🎚️ LV. %LEVEL\`"
-        .replace("%BALANCE", "100")
-        .replace("%CARD_TOTAL", "1/100")
-        .replace("%LEVEL", "1");
+        .replace("%BALANCE", userData.balance)
+        .replace("%CARD_TOTAL", `${userData.card_inventory.length}/100`)
+        .replace("%LEVEL", userData.level);
 
     let embed = new EmbedBuilder()
         .setAuthor({ name: `${user.username} | profile`, iconURL: user.avatarURL({ dynamic: true }) })
         .setThumbnail(user.avatarURL({ dynamic: true }))
-        .addFields([
-            { name: "\`👤\` Biography", value: quote("N/A"), inline: false },
+        .setColor(botSettings.embedColor || null);
 
-            { name: "\`📄\` Information", value: quote(profile_info), inline: false },
+    if (userData.biography) embed.addFields({ name: "\`👤\` Biography", value: quote("N/A") });
 
-            { name: "\`📄\` Stage", value: quote("N/A"), inline: false },
-            { name: "\`🌟\` Favorite", value: quote("N/A"), inline: false }
-        ]).setColor(botSettings.embedColor || null);
+    embed.addFields([{ name: "\`📄\` Information", value: quote(profile_info) }]);
+
+    let card_selected = cardnventoryParser.fetch(userData.card_inventory, userData.card_selected_uid);
+    if (card_selected) embed.addFields({ name: "\`📄\` Stage", value: quote("Selected card") });
+
+    let card_favorite = cardnventoryParser.fetch(userData.card_inventory, userData.card_favorite_uid);
+    if (card_favorite) {
+        embed.addFields({ name: "\`🌟\` Favorite", value: quote("Favorited card") });
+        if (card_favorite.imageURL) embed.setImage(card_favorite.imageURL);
+    }
 
     return embed;
 }

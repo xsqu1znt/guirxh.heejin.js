@@ -1,5 +1,6 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
+const { userManager } = require('../modules/mongo');
 const { userProfile_ES } = require('../modules/embedStyles');
 
 module.exports = {
@@ -11,8 +12,9 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
-        let embed_profile = userProfile_ES(interaction.user);
+        let userData = await userManager.fetch(interaction.user.id, "full", true);
+        let embed_profile = userProfile_ES(interaction.user, userData);
 
-        return await interaction.reply({ embeds: [embed_profile] });
+        return await interaction.editReply({ embeds: [embed_profile] });
     }
 };

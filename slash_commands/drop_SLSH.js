@@ -84,6 +84,6 @@ module.exports = {
 
         let embed_drop = generalDrop_ES(interaction.user, card, dropEmbedTitle);
 
-        return await interaction.reply({ embeds: [embed_drop] });
+        return await interaction.editReply({ embeds: [embed_drop] });
     }
 };

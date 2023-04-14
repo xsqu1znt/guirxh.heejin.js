@@ -13,6 +13,6 @@ module.exports = {
     execute: async (client, interaction) => {
         let embed_cooldowns = userCooldowns_ES(interaction.user);
 
-        return await interaction.reply({ embeds: [embed_cooldowns] });
+        return await interaction.editReply({ embeds: [embed_cooldowns] });
     }
 };

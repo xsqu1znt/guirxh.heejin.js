@@ -18,8 +18,40 @@ async function user_exists(userID) {
     return exists ? true : false;
 }
 
-async function user_fetch(userID) {
-    let user = await models.user.findById(userID);
+/**
+ * @param {"full" | "essential" | "cards" | "!cards"} type 
+ */
+async function user_fetch(userID, type = "full", lean = false) {
+    let filter = {};
+    let user;
+
+    switch (type) {
+        case "full": filter = { __v: 0 }; break;
+        case "essential":
+            filter = {
+                daily_streak: 1,
+                level: 1,
+                xp: 1,
+                xp_for_next_level: 1,
+                biography: 1,
+                balance: 1,
+                cooldowns: 1,
+                xp_for_next_level: 1,
+                xp_for_next_level: 1,
+            };
+            break;
+        case "cards": filter = { _id: 0, card_inventory: 1 }; break;
+        case "!cards": filter = { card_inventory: 0, __v: 0 }; break;
+    }
+
+    if (userID) {
+        if (lean) user = await models.user.findById(userID, filter).lean();
+        else user = await models.user.findById(userID, filter);
+    } else {
+        if (lean) user = await models.user.find({}, filter).lean();
+        else user = await models.user.find({}, filter);
+    }
+
     return user || null;
 }
 
