@@ -35,7 +35,7 @@ importers_dir.forEach(fn => {
 // Connect the client to discord
 logger.log("connecting to Discord...");
 client.login(process.env.TOKEN).then(async () => {
-    // mongo.connect();
+    mongo.connect();
 
     // await slashCommandManager.push(client, "1052726201086656612");
     // await slashCommandManager.remove(client);

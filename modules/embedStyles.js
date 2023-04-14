@@ -1,23 +1,15 @@
 const { EmbedBuilder, quote, inlineCode, bold } = require('discord.js');
 
+const { botSettings } = require('../configs/heejinSettings.json');
 const { stringTools } = require('../modules/jsTools');
+const cardManager = require('../modules/cardManager');
 
 // Command -> /DROP
 function generalDrop(user, card, dropTitle = "drop", isDuplicate = false) {
     let embed = new EmbedBuilder()
         .setAuthor({ name: `${user.username} | ${dropTitle}`, iconURL: user.avatarURL({ dynamic: true }) })
-        .setDescription("%EMOJI %GROUP - %SINGLE : %NAME\n> %UID %GLOBAL_ID %CATEGORY %SET_ID\n> %ABILITY :: %REPUTATION"
-            .replace("%EMOJI", inlineCode(card.emoji))
-            .replace("%GROUP", bold(card.group))
-            .replace("%SINGLE", card.single)
-            .replace("%NAME", card.name)
-            .replace("%UID", inlineCode(card.uid))
-            .replace("%GLOBAL_ID", inlineCode(card.global_id))
-            .replace("%CATEGORY", inlineCode(card.category))
-            .replace("%SET_ID", inlineCode(`👥${card.set_id}`))
-            .replace("%ABILITY", inlineCode(`🎤 ABI. ${card.stats.ability}`))
-            .replace("%REPUTATION", inlineCode(`💖 REP. ${card.stats.reputation}`))
-        );
+        .setDescription(cardManager.format.drop(card))
+        .setColor(botSettings.embedColor || null);
 
     if (card.imageURL) embed.setImage(card.imageURL);
     if (isDuplicate) embed.setFooter({ text: "this is a duplicate" });
@@ -42,7 +34,7 @@ function userProfile(user) {
 
             { name: "\`📄\` Stage", value: quote("N/A"), inline: false },
             { name: "\`🌟\` Favorite", value: quote("N/A"), inline: false }
-        ]);
+        ]).setColor(botSettings.embedColor || null);
 
     return embed;
 }
@@ -70,7 +62,8 @@ function userCooldowns(user) {
 
     let embed = new EmbedBuilder()
         .setAuthor({ name: `${user.username} | cooldowns`, iconURL: user.avatarURL({ dynamic: true }) })
-        .setDescription(cooldowns_f.join("\n"));
+        .setDescription(cooldowns_f.join("\n"))
+        .setColor(botSettings.embedColor || null);
 
     return embed;
 }

@@ -1,0 +1,9 @@
+{
+    "botSettings": {
+        "currencyIcon": "🥕",
+        "embedColor": ""
+    },
+    "userSettings": {
+        "startingBalance": 250
+    }
+}
