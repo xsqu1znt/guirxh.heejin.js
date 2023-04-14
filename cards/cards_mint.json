@@ -1,0 +1,4142 @@
+[
+  {
+    "name": "Nayeon²",
+    "group": "Solo",
+    "single": "POP!",
+    "category": "mint",
+    "description": "Nayeon - POP!",
+    "emoji": "💥",
+    "global_id": "2502",
+    "set_id": "251",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1014200443313860668/Nayeon_POP.png"
+  },
+  {
+    "name": "Nayeon¹",
+    "group": "Solo",
+    "single": "POP!",
+    "category": "mint",
+    "description": "Nayeon - POP!",
+    "emoji": "💥",
+    "global_id": "2501",
+    "set_id": "251",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1014200443678769193/Nayeon_POP2.png"
+  },
+  {
+    "name": "Nayeon³",
+    "group": "Solo",
+    "single": "POP!",
+    "category": "mint",
+    "description": "Nayeon - POP!",
+    "emoji": "💥",
+    "global_id": "2503",
+    "set_id": "251",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1014200444052058112/Nayeon_POP3.png"
+  },
+  {
+    "name": "BX",
+    "group": "CIX",
+    "single": "458",
+    "category": "mint",
+    "description": "CIX - 458",
+    "emoji": "🏎️",
+    "global_id": "2504",
+    "set_id": "252",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094731644549730514/458_bx.png"
+  },
+  {
+    "name": "Yonghee",
+    "group": "CIX",
+    "single": "458",
+    "category": "mint",
+    "description": "CIX - 458",
+    "emoji": "🏎️",
+    "global_id": "2509",
+    "set_id": "252",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094731645833203732/458_yonghee.png"
+  },
+  {
+    "name": "Hyunsuk",
+    "group": "CIX",
+    "single": "458",
+    "category": "mint",
+    "description": "CIX - 458",
+    "emoji": "🏎️",
+    "global_id": "2506",
+    "set_id": "252",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094731644893675590/458_hyunsuk.png"
+  },
+  {
+    "name": "Seunghun",
+    "group": "CIX",
+    "single": "458",
+    "category": "mint",
+    "description": "CIX - 458",
+    "emoji": "🏎️",
+    "global_id": "2508",
+    "set_id": "252",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094731645493448864/458_seunghun.png"
+  },
+  {
+    "name": "Jinyoung",
+    "group": "CIX",
+    "single": "458",
+    "category": "mint",
+    "description": "CIX - 458",
+    "emoji": "🏎️",
+    "global_id": "2507",
+    "set_id": "252",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094731645204058224/458_jinyoung.png"
+  },
+  {
+    "name": "Lay",
+    "group": "EXO",
+    "single": "Don't Fight The Feeling",
+    "category": "mint",
+    "description": "EXO - Don't Fight The Feeling",
+    "emoji": "🚀",
+    "global_id": "2514",
+    "set_id": "253",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1014621113889853501/Lay.png"
+  },
+  {
+    "name": "Baekhyun",
+    "group": "EXO",
+    "single": "Don't Fight The Feeling",
+    "category": "mint",
+    "description": "EXO - Don't Fight The Feeling",
+    "emoji": "🚀",
+    "global_id": "2510",
+    "set_id": "253",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1014621739982000128/Baekhyun.png"
+  },
+  {
+    "name": "Chanyeol",
+    "group": "EXO",
+    "single": "Don't Fight The Feeling",
+    "category": "mint",
+    "description": "EXO - Don't Fight The Feeling",
+    "emoji": "🚀",
+    "global_id": "2511",
+    "set_id": "253",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1014621112673513533/Chanyeol.png"
+  },
+  {
+    "name": "D.O.",
+    "group": "EXO",
+    "single": "Don't Fight The Feeling",
+    "category": "mint",
+    "description": "EXO - Don't Fight The Feeling",
+    "emoji": "🚀",
+    "global_id": "2512",
+    "set_id": "253",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1014622891528159242/D.O.png"
+  },
+  {
+    "name": "Kai",
+    "group": "EXO",
+    "single": "Don't Fight The Feeling",
+    "category": "mint",
+    "description": "EXO - Don't Fight The Feeling",
+    "emoji": "🚀",
+    "global_id": "2513",
+    "set_id": "253",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1014621113529159751/Kai.png"
+  },
+  {
+    "name": "Xiumin",
+    "group": "EXO",
+    "single": "Don't Fight The Feeling",
+    "category": "mint",
+    "description": "EXO - Don't Fight The Feeling",
+    "emoji": "🚀",
+    "global_id": "2516",
+    "set_id": "253",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1014621115001348239/Xiumin.png"
+  },
+  {
+    "name": "Sehun",
+    "group": "EXO",
+    "single": "Don't Fight The Feeling",
+    "category": "mint",
+    "description": "EXO - Don't Fight The Feeling",
+    "emoji": "🚀",
+    "global_id": "2515",
+    "set_id": "253",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1014621114632257686/Sehun.png"
+  },
+  {
+    "name": "Junghwan",
+    "group": "TREASURE",
+    "single": "JIKJIN",
+    "category": "mint",
+    "description": "TREASURE - JIKJIN",
+    "emoji": "🎈",
+    "global_id": "2524",
+    "set_id": "254",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1018249109980839957/Junghwan.png"
+  },
+  {
+    "name": "Hyunsuk",
+    "group": "TREASURE",
+    "single": "JIKJIN",
+    "category": "mint",
+    "description": "TREASURE - JIKJIN",
+    "emoji": "🎈",
+    "global_id": "2520",
+    "set_id": "254",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1018249108831604868/Hyunsuk.png"
+  },
+  {
+    "name": "Jaehyuk",
+    "group": "TREASURE",
+    "single": "JIKJIN",
+    "category": "mint",
+    "description": "TREASURE - JIKJIN",
+    "emoji": "🎈",
+    "global_id": "2521",
+    "set_id": "254",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1018249109129404497/Jaehyuk.png"
+  },
+  {
+    "name": "Mashiho",
+    "group": "TREASURE",
+    "single": "JIKJIN",
+    "category": "mint",
+    "description": "TREASURE - JIKJIN",
+    "emoji": "🎈",
+    "global_id": "2526",
+    "set_id": "254",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1018249110781956156/trsr_mashiho.png"
+  },
+  {
+    "name": "Yoshi",
+    "group": "TREASURE",
+    "single": "JIKJIN",
+    "category": "mint",
+    "description": "TREASURE - JIKJIN",
+    "emoji": "🎈",
+    "global_id": "2528",
+    "set_id": "254",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1018249142167949392/Yoshi.png"
+  },
+  {
+    "name": "Doyoung",
+    "group": "TREASURE",
+    "single": "JIKJIN",
+    "category": "mint",
+    "description": "TREASURE - JIKJIN",
+    "emoji": "🎈",
+    "global_id": "2518",
+    "set_id": "254",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1018249108273758328/Doyoung.png"
+  },
+  {
+    "name": "Jihoon",
+    "group": "TREASURE",
+    "single": "JIKJIN",
+    "category": "mint",
+    "description": "TREASURE - JIKJIN",
+    "emoji": "🎈",
+    "global_id": "2523",
+    "set_id": "254",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1018249109674676265/Jihoon.png"
+  },
+  {
+    "name": "Asahi",
+    "group": "TREASURE",
+    "single": "JIKJIN",
+    "category": "mint",
+    "description": "TREASURE - JIKJIN",
+    "emoji": "🎈",
+    "global_id": "2517",
+    "set_id": "254",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1018249108001149009/Asahi.png"
+  },
+  {
+    "name": "Yedam",
+    "group": "TREASURE",
+    "single": "JIKJIN",
+    "category": "mint",
+    "description": "TREASURE - JIKJIN",
+    "emoji": "🎈",
+    "global_id": "2527",
+    "set_id": "254",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1018249141903691776/Yedam.png"
+  },
+  {
+    "name": "Haruto",
+    "group": "TREASURE",
+    "single": "JIKJIN",
+    "category": "mint",
+    "description": "TREASURE - JIKJIN",
+    "emoji": "🎈",
+    "global_id": "2519",
+    "set_id": "254",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1018249108550594570/Haruto.png"
+  },
+  {
+    "name": "Jeongwoo",
+    "group": "TREASURE",
+    "single": "JIKJIN",
+    "category": "mint",
+    "description": "TREASURE - JIKJIN",
+    "emoji": "🎈",
+    "global_id": "2522",
+    "set_id": "254",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1018249109414621265/Jeongwoo.png"
+  },
+  {
+    "name": "Junkyu",
+    "group": "TREASURE",
+    "single": "JIKJIN",
+    "category": "mint",
+    "description": "TREASURE - JIKJIN",
+    "emoji": "🎈",
+    "global_id": "2525",
+    "set_id": "254",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1018249110500950047/Junkyu.png"
+  },
+  {
+    "name": "Moon Sua",
+    "group": "billlie",
+    "single": "Ring Ma Bell",
+    "category": "mint",
+    "description": "billlie - Ring Ma Bell",
+    "emoji": "🔔",
+    "global_id": "2531",
+    "set_id": "255",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1020738200714620938/Moon_Sua.png"
+  },
+  {
+    "name": "Sheon",
+    "group": "billlie",
+    "single": "Ring Ma Bell",
+    "category": "mint",
+    "description": "billlie - Ring Ma Bell",
+    "emoji": "🔔",
+    "global_id": "2532",
+    "set_id": "255",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1020738201217929277/Sheon.png"
+  },
+  {
+    "name": "Siyoon",
+    "group": "billlie",
+    "single": "Ring Ma Bell",
+    "category": "mint",
+    "description": "billlie - Ring Ma Bell",
+    "emoji": "🔔",
+    "global_id": "2533",
+    "set_id": "255",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1020738201670922371/Siyoon.png"
+  },
+  {
+    "name": "Tsuki",
+    "group": "billlie",
+    "single": "Ring Ma Bell",
+    "category": "mint",
+    "description": "billlie - Ring Ma Bell",
+    "emoji": "🔔",
+    "global_id": "2535",
+    "set_id": "255",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1020738202660774018/Tsuki.png"
+  },
+  {
+    "name": "Haruna",
+    "group": "billlie",
+    "single": "Ring Ma Bell",
+    "category": "mint",
+    "description": "billlie - Ring Ma Bell",
+    "emoji": "🔔",
+    "global_id": "2530",
+    "set_id": "255",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1020738200332943370/Haruna.png"
+  },
+  {
+    "name": "Haram",
+    "group": "billlie",
+    "single": "Ring Ma Bell",
+    "category": "mint",
+    "description": "billlie - Ring Ma Bell",
+    "emoji": "🔔",
+    "global_id": "2529",
+    "set_id": "255",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1020738199951253515/Haram_1.png"
+  },
+  {
+    "name": "Suhyeon",
+    "group": "billlie",
+    "single": "Ring Ma Bell",
+    "category": "mint",
+    "description": "billlie - Ring Ma Bell",
+    "emoji": "🔔",
+    "global_id": "2534",
+    "set_id": "255",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1020738202191007754/SUHYEON_1.png"
+  },
+  {
+    "name": "Hwanwoong",
+    "group": "ONEUS",
+    "single": "Same Scent",
+    "category": "mint",
+    "description": "ONEUS - Same Scent",
+    "emoji": "👃",
+    "global_id": "2536",
+    "set_id": "256",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1023264938501865622/Hwanwoong.png"
+  },
+  {
+    "name": "Keonhee",
+    "group": "ONEUS",
+    "single": "Same Scent",
+    "category": "mint",
+    "description": "ONEUS - Same Scent",
+    "emoji": "👃",
+    "global_id": "2537",
+    "set_id": "256",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1023264938938089482/Keonhee.png"
+  },
+  {
+    "name": "Ravn",
+    "group": "ONEUS",
+    "single": "Same Scent",
+    "category": "mint",
+    "description": "ONEUS - Same Scent",
+    "emoji": "👃",
+    "global_id": "2539",
+    "set_id": "256",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1023264946332631070/Ravn.png"
+  },
+  {
+    "name": "Seoho",
+    "group": "ONEUS",
+    "single": "Same Scent",
+    "category": "mint",
+    "description": "ONEUS - Same Scent",
+    "emoji": "👃",
+    "global_id": "2540",
+    "set_id": "256",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1023264946974363648/Seoho.png"
+  },
+  {
+    "name": "Leedo",
+    "group": "ONEUS",
+    "single": "Same Scent",
+    "category": "mint",
+    "description": "ONEUS - Same Scent",
+    "emoji": "👃",
+    "global_id": "2538",
+    "set_id": "256",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1023264939353313351/Leedo.png"
+  },
+  {
+    "name": "Xion",
+    "group": "ONEUS",
+    "single": "Same Scent",
+    "category": "mint",
+    "description": "ONEUS - Same Scent",
+    "emoji": "👃",
+    "global_id": "2541",
+    "set_id": "256",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1023264948727599114/Xion.png"
+  },
+  {
+    "name": "Taeyeon³",
+    "group": "Solo",
+    "single": "INVU",
+    "category": "mint",
+    "description": "Taeyeon - INVU",
+    "emoji": "🏹",
+    "global_id": "2544",
+    "set_id": "257",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1025778775646027877/Taeyeon_INVU3.png"
+  },
+  {
+    "name": "Taeyeon²",
+    "group": "Solo",
+    "single": "INVU",
+    "category": "mint",
+    "description": "Taeyeon - INVU",
+    "emoji": "🏹",
+    "global_id": "2543",
+    "set_id": "257",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1025778775276912650/Taeyeon_INVU2.png"
+  },
+  {
+    "name": "Taeyeon¹",
+    "group": "Solo",
+    "single": "INVU",
+    "category": "mint",
+    "description": "Taeyeon - INVU",
+    "emoji": "🏹",
+    "global_id": "2542",
+    "set_id": "257",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1025778774681333780/Taeyeon_INVU.png"
+  },
+  {
+    "name": "Winter",
+    "group": "æspa",
+    "single": "Black Mamba",
+    "category": "mint",
+    "description": "æspa - Black Mamba",
+    "emoji": "🐍",
+    "global_id": "2548",
+    "set_id": "258",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1028283490304786442/winter.png"
+  },
+  {
+    "name": "Karina",
+    "group": "æspa",
+    "single": "Black Mamba",
+    "category": "mint",
+    "description": "æspa - Black Mamba",
+    "emoji": "🐍",
+    "global_id": "2546",
+    "set_id": "258",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1028283489604354178/karina.png"
+  },
+  {
+    "name": "Giselle",
+    "group": "æspa",
+    "single": "Black Mamba",
+    "category": "mint",
+    "description": "æspa - Black Mamba",
+    "emoji": "🐍",
+    "global_id": "2545",
+    "set_id": "258",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1028283489247821936/giselle.png"
+  },
+  {
+    "name": "Ningning",
+    "group": "æspa",
+    "single": "Black Mamba",
+    "category": "mint",
+    "description": "æspa - Black Mamba",
+    "emoji": "🐍",
+    "global_id": "2547",
+    "set_id": "258",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1028283489952469052/ningning.png"
+  },
+  {
+    "name": "Eunchae",
+    "group": "LE SSERAFIM",
+    "single": "ANTIFRAGILE",
+    "category": "mint",
+    "description": "LE SSERAFIM - ANTIFRAGILE",
+    "emoji": "🙅",
+    "global_id": "2550",
+    "set_id": "259",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1030863680918781952/eunchae.png"
+  },
+  {
+    "name": "Sakura",
+    "group": "LE SSERAFIM",
+    "single": "ANTIFRAGILE",
+    "category": "mint",
+    "description": "LE SSERAFIM - ANTIFRAGILE",
+    "emoji": "🙅",
+    "global_id": "2552",
+    "set_id": "259",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1030863681711509555/sakura.png"
+  },
+  {
+    "name": "Chaewon",
+    "group": "LE SSERAFIM",
+    "single": "ANTIFRAGILE",
+    "category": "mint",
+    "description": "LE SSERAFIM - ANTIFRAGILE",
+    "emoji": "🙅",
+    "global_id": "2549",
+    "set_id": "259",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1030863680486785054/chaewon.png"
+  },
+  {
+    "name": "Yunjin",
+    "group": "LE SSERAFIM",
+    "single": "ANTIFRAGILE",
+    "category": "mint",
+    "description": "LE SSERAFIM - ANTIFRAGILE",
+    "emoji": "🙅",
+    "global_id": "2553",
+    "set_id": "259",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1030863682042855494/yunjin.png"
+  },
+  {
+    "name": "Kazuha",
+    "group": "LE SSERAFIM",
+    "single": "ANTIFRAGILE",
+    "category": "mint",
+    "description": "LE SSERAFIM - ANTIFRAGILE",
+    "emoji": "🙅",
+    "global_id": "2551",
+    "set_id": "259",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1030863681313050734/kazuha.png"
+  },
+  {
+    "name": "Yuju",
+    "group": "GFRIEND",
+    "single": "Mago",
+    "category": "mint",
+    "description": "GFRIEND - Mago",
+    "emoji": "🕺🏻",
+    "global_id": "2559",
+    "set_id": "260",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1033362580342837318/Yuju_Mago.png"
+  },
+  {
+    "name": "Sowon",
+    "group": "GFRIEND",
+    "single": "Mago",
+    "category": "mint",
+    "description": "GFRIEND - Mago",
+    "emoji": "🕺🏻",
+    "global_id": "2556",
+    "set_id": "260",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1033362579260710983/Sowon_Mago.png"
+  },
+  {
+    "name": "Yerin",
+    "group": "GFRIEND",
+    "single": "Mago",
+    "category": "mint",
+    "description": "GFRIEND - Mago",
+    "emoji": "🕺🏻",
+    "global_id": "2558",
+    "set_id": "260",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1033362580019884143/Yerin_Mago.png"
+  },
+  {
+    "name": "Umji",
+    "group": "GFRIEND",
+    "single": "Mago",
+    "category": "mint",
+    "description": "GFRIEND - Mago",
+    "emoji": "🕺🏻",
+    "global_id": "2557",
+    "set_id": "260",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1033362579650789406/Umji_Mago.png"
+  },
+  {
+    "name": "Eunha",
+    "group": "GFRIEND",
+    "single": "Mago",
+    "category": "mint",
+    "description": "GFRIEND - Mago",
+    "emoji": "🕺🏻",
+    "global_id": "2554",
+    "set_id": "260",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1033362578463805470/Eunha_Mago.png"
+  },
+  {
+    "name": "SinB",
+    "group": "GFRIEND",
+    "single": "Mago",
+    "category": "mint",
+    "description": "GFRIEND - Mago",
+    "emoji": "🕺🏻",
+    "global_id": "2555",
+    "set_id": "260",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1033362578828701736/Sinb_Mago.png"
+  },
+  {
+    "name": "Nako",
+    "group": "IZ\\*ONE",
+    "single": "Fiesta",
+    "category": "mint",
+    "description": "IZONE - Fiesta",
+    "emoji": "🎉",
+    "global_id": "2566",
+    "set_id": "261",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035928880147607693/nako.png"
+  },
+  {
+    "name": "Yujin",
+    "group": "IZ\\*ONE",
+    "single": "Fiesta",
+    "category": "mint",
+    "description": "IZONE - Fiesta",
+    "emoji": "🎉",
+    "global_id": "2570",
+    "set_id": "261",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035929091133689866/yujin.png"
+  },
+  {
+    "name": "Chaewon",
+    "group": "IZ\\*ONE",
+    "single": "Fiesta",
+    "category": "mint",
+    "description": "IZONE - Fiesta",
+    "emoji": "🎉",
+    "global_id": "2560",
+    "set_id": "261",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035928876792168558/chaewon.png"
+  },
+  {
+    "name": "Sakura",
+    "group": "IZ\\*ONE",
+    "single": "Fiesta",
+    "category": "mint",
+    "description": "IZONE - Fiesta",
+    "emoji": "🎉",
+    "global_id": "2567",
+    "set_id": "261",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035928880541868152/sakura.png"
+  },
+  {
+    "name": "Hyewon",
+    "group": "IZ\\*ONE",
+    "single": "Fiesta",
+    "category": "mint",
+    "description": "IZONE - Fiesta",
+    "emoji": "🎉",
+    "global_id": "2564",
+    "set_id": "261",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035928878994169928/hyewon.png"
+  },
+  {
+    "name": "Minju",
+    "group": "IZ\\*ONE",
+    "single": "Fiesta",
+    "category": "mint",
+    "description": "IZONE - Fiesta",
+    "emoji": "🎉",
+    "global_id": "2565",
+    "set_id": "261",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035928879673655337/minju.png"
+  },
+  {
+    "name": "Hitomi",
+    "group": "IZ\\*ONE",
+    "single": "Fiesta",
+    "category": "mint",
+    "description": "IZONE - Fiesta",
+    "emoji": "🎉",
+    "global_id": "2563",
+    "set_id": "261",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035928878528606318/hitomi.png"
+  },
+  {
+    "name": "Eunbi",
+    "group": "IZ\\*ONE",
+    "single": "Fiesta",
+    "category": "mint",
+    "description": "IZONE - Fiesta",
+    "emoji": "🎉",
+    "global_id": "2562",
+    "set_id": "261",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035928878021099621/eunbi.png"
+  },
+  {
+    "name": "Wonyoung",
+    "group": "IZ\\*ONE",
+    "single": "Fiesta",
+    "category": "mint",
+    "description": "IZONE - Fiesta",
+    "emoji": "🎉",
+    "global_id": "2568",
+    "set_id": "261",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035928881057771551/wonyoung.png"
+  },
+  {
+    "name": "Yuri",
+    "group": "IZ\\*ONE",
+    "single": "Fiesta",
+    "category": "mint",
+    "description": "IZONE - Fiesta",
+    "emoji": "🎉",
+    "global_id": "2571",
+    "set_id": "261",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035929091674750976/yuri.png"
+  },
+  {
+    "name": "Chaeyeon",
+    "group": "IZ\\*ONE",
+    "single": "Fiesta",
+    "category": "mint",
+    "description": "IZONE - Fiesta",
+    "emoji": "🎉",
+    "global_id": "2561",
+    "set_id": "261",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035928877442277396/chaeyeon.png"
+  },
+  {
+    "name": "Yena",
+    "group": "IZ\\*ONE",
+    "single": "Fiesta",
+    "category": "mint",
+    "description": "IZONE - Fiesta",
+    "emoji": "🎉",
+    "global_id": "2569",
+    "set_id": "261",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035928881728856115/yena.png"
+  },
+  {
+    "name": "Junseo",
+    "group": "WEi",
+    "single": "Spray",
+    "category": "mint",
+    "description": "WEi - Spray",
+    "emoji": "✌🏼",
+    "global_id": "2574",
+    "set_id": "262",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038467710494974012/spray_junseo.png"
+  },
+  {
+    "name": "Daehyeon",
+    "group": "WEi",
+    "single": "Spray",
+    "category": "mint",
+    "description": "WEi - Spray",
+    "emoji": "✌🏼",
+    "global_id": "2572",
+    "set_id": "262",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038467708439765152/spray_daehyeon.png"
+  },
+  {
+    "name": "Yohan",
+    "group": "WEi",
+    "single": "Spray",
+    "category": "mint",
+    "description": "WEi - Spray",
+    "emoji": "✌🏼",
+    "global_id": "2576",
+    "set_id": "262",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038467711610650624/spray_yohan.png"
+  },
+  {
+    "name": "Seokhwa",
+    "group": "WEi",
+    "single": "Spray",
+    "category": "mint",
+    "description": "WEi - Spray",
+    "emoji": "✌🏼",
+    "global_id": "2575",
+    "set_id": "262",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038467711073792050/spray_seokhwa.png"
+  },
+  {
+    "name": "Yongha",
+    "group": "WEi",
+    "single": "Spray",
+    "category": "mint",
+    "description": "WEi - Spray",
+    "emoji": "✌🏼",
+    "global_id": "2577",
+    "set_id": "262",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038467712021704777/spray_yongha.png"
+  },
+  {
+    "name": "Donghan",
+    "group": "WEi",
+    "single": "Spray",
+    "category": "mint",
+    "description": "WEi - Spray",
+    "emoji": "✌🏼",
+    "global_id": "2573",
+    "set_id": "262",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038467709006000200/spray_donghan.png"
+  },
+  {
+    "name": "Bom",
+    "group": "2NE1",
+    "single": "I AM THE BEST",
+    "category": "mint",
+    "description": "2NE1 - I AM THE BEST",
+    "emoji": "💎",
+    "global_id": "2578",
+    "set_id": "263",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038467705721860126/Bom_IATB.png"
+  },
+  {
+    "name": "CL",
+    "group": "2NE1",
+    "single": "I AM THE BEST",
+    "category": "mint",
+    "description": "2NE1 - I AM THE BEST",
+    "emoji": "💎",
+    "global_id": "2579",
+    "set_id": "263",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038467706246144120/CL_IATB.png"
+  },
+  {
+    "name": "Minzy",
+    "group": "2NE1",
+    "single": "I AM THE BEST",
+    "category": "mint",
+    "description": "2NE1 - I AM THE BEST",
+    "emoji": "💎",
+    "global_id": "2581",
+    "set_id": "263",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038467707978383410/Minzy_IATB.png"
+  },
+  {
+    "name": "Dara",
+    "group": "2NE1",
+    "single": "I AM THE BEST",
+    "category": "mint",
+    "description": "2NE1 - I AM THE BEST",
+    "emoji": "💎",
+    "global_id": "2580",
+    "set_id": "263",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038467707345051788/Dara_IATB.png"
+  },
+  {
+    "name": "Jake",
+    "group": "ENHYPEN",
+    "single": "Drunk-Dazed",
+    "category": "mint",
+    "description": "ENHYPEN - Drunk-Dazed",
+    "emoji": "🥴",
+    "global_id": "2583",
+    "set_id": "264",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038468560772673546/heejin-enhypen-jake.png"
+  },
+  {
+    "name": "Sunoo",
+    "group": "ENHYPEN",
+    "single": "Drunk-Dazed",
+    "category": "mint",
+    "description": "ENHYPEN - Drunk-Dazed",
+    "emoji": "🥴",
+    "global_id": "2588",
+    "set_id": "264",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038468562383294535/heejin-enhypen-sunoo.png"
+  },
+  {
+    "name": "Heeseung",
+    "group": "ENHYPEN",
+    "single": "Drunk-Dazed",
+    "category": "mint",
+    "description": "ENHYPEN - Drunk-Dazed",
+    "emoji": "🥴",
+    "global_id": "2582",
+    "set_id": "264",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038468560424554547/heejin-enhypen-heeseung.png"
+  },
+  {
+    "name": "Sunghoon",
+    "group": "ENHYPEN",
+    "single": "Drunk-Dazed",
+    "category": "mint",
+    "description": "ENHYPEN - Drunk-Dazed",
+    "emoji": "🥴",
+    "global_id": "2587",
+    "set_id": "264",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038468562064523436/heejin-enhypen-sunghoon.png"
+  },
+  {
+    "name": "Ni-Ki",
+    "group": "ENHYPEN",
+    "single": "Drunk-Dazed",
+    "category": "mint",
+    "description": "ENHYPEN - Drunk-Dazed",
+    "emoji": "🥴",
+    "global_id": "2586",
+    "set_id": "264",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038468561766715452/heejin-enhypen-niki.png"
+  },
+  {
+    "name": "Jay",
+    "group": "ENHYPEN",
+    "single": "Drunk-Dazed",
+    "category": "mint",
+    "description": "ENHYPEN - Drunk-Dazed",
+    "emoji": "🥴",
+    "global_id": "2584",
+    "set_id": "264",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038468561112416386/heejin-enhypen-jay.png"
+  },
+  {
+    "name": "Jungwon",
+    "group": "ENHYPEN",
+    "single": "Drunk-Dazed",
+    "category": "mint",
+    "description": "ENHYPEN - Drunk-Dazed",
+    "emoji": "🥴",
+    "global_id": "2585",
+    "set_id": "264",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038468561426993363/heejin-enhypen-jungwon.png"
+  },
+  {
+    "name": "YooA²",
+    "group": "Solo",
+    "single": "Selfish",
+    "category": "mint",
+    "description": "YooA - Selfish",
+    "emoji": "💁‍",
+    "global_id": "2590",
+    "set_id": "265",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1041006373510594641/Yooa_Selfish3.png"
+  },
+  {
+    "name": "YooA¹",
+    "group": "Solo",
+    "single": "Selfish",
+    "category": "mint",
+    "description": "YooA - Selfish",
+    "emoji": "💁‍",
+    "global_id": "2589",
+    "set_id": "265",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1041006372784963584/Yooa_Selfish.png"
+  },
+  {
+    "name": "YooA³",
+    "group": "Solo",
+    "single": "Selfish",
+    "category": "mint",
+    "description": "YooA - Selfish",
+    "emoji": "💁‍",
+    "global_id": "2591",
+    "set_id": "265",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1041006373145686137/Yooa_Selfish2.png"
+  },
+  {
+    "name": "Eunsang",
+    "group": "X1",
+    "single": "Flash",
+    "category": "mint",
+    "description": "X1 - Flash",
+    "emoji": "📸",
+    "global_id": "2594",
+    "set_id": "266",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1041006374756298792/flash_eunsang.png"
+  },
+  {
+    "name": "Hangyul",
+    "group": "X1",
+    "single": "Flash",
+    "category": "mint",
+    "description": "X1 - Flash",
+    "emoji": "📸",
+    "global_id": "2595",
+    "set_id": "266",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1041006375624523846/flash_hangyul.png"
+  },
+  {
+    "name": "Seungwoo",
+    "group": "X1",
+    "single": "Flash",
+    "category": "mint",
+    "description": "X1 - Flash",
+    "emoji": "📸",
+    "global_id": "2599",
+    "set_id": "266",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1041006501336186940/flash_seungwoo.png"
+  },
+  {
+    "name": "Yohan",
+    "group": "X1",
+    "single": "Flash",
+    "category": "mint",
+    "description": "X1 - Flash",
+    "emoji": "📸",
+    "global_id": "2602",
+    "set_id": "266",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1041006502485426347/flash_yohan.png"
+  },
+  {
+    "name": "Dongpyo",
+    "group": "X1",
+    "single": "Flash",
+    "category": "mint",
+    "description": "X1 - Flash",
+    "emoji": "📸",
+    "global_id": "2593",
+    "set_id": "266",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1041006374366216292/flash_dongpyo.png"
+  },
+  {
+    "name": "Seungyoun",
+    "group": "X1",
+    "single": "Flash",
+    "category": "mint",
+    "description": "X1 - Flash",
+    "emoji": "📸",
+    "global_id": "2600",
+    "set_id": "266",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1041006501751431278/flash_seungyoun.png"
+  },
+  {
+    "name": "Wooseok",
+    "group": "X1",
+    "single": "Flash",
+    "category": "mint",
+    "description": "X1 - Flash",
+    "emoji": "📸",
+    "global_id": "2601",
+    "set_id": "266",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1041006502120525885/flash_wooseok.png"
+  },
+  {
+    "name": "Dohyon",
+    "group": "X1",
+    "single": "Flash",
+    "category": "mint",
+    "description": "X1 - Flash",
+    "emoji": "📸",
+    "global_id": "2592",
+    "set_id": "266",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1041006373925826560/flash_dohyon.png"
+  },
+  {
+    "name": "Minhee",
+    "group": "X1",
+    "single": "Flash",
+    "category": "mint",
+    "description": "X1 - Flash",
+    "emoji": "📸",
+    "global_id": "2598",
+    "set_id": "266",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1041006377004433459/flash_minhee.png"
+  },
+  {
+    "name": "Junho",
+    "group": "X1",
+    "single": "Flash",
+    "category": "mint",
+    "description": "X1 - Flash",
+    "emoji": "📸",
+    "global_id": "2597",
+    "set_id": "266",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1041006376488542268/flash_junho.png"
+  },
+  {
+    "name": "Hyeongjun",
+    "group": "X1",
+    "single": "Flash",
+    "category": "mint",
+    "description": "X1 - Flash",
+    "emoji": "📸",
+    "global_id": "2596",
+    "set_id": "266",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1041006376090087506/flash_hyeongjun.png"
+  },
+  {
+    "name": "Chungha³",
+    "group": "Solo",
+    "single": "Gotta Go",
+    "category": "mint",
+    "description": "Chungha - Gotta Go",
+    "emoji": "🕛‍",
+    "global_id": "2605",
+    "set_id": "267",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043885739919810631/gottago_chungha2.png"
+  },
+  {
+    "name": "Chungha²",
+    "group": "Solo",
+    "single": "Gotta Go",
+    "category": "mint",
+    "description": "Chungha - Gotta Go",
+    "emoji": "🕛‍",
+    "global_id": "2604",
+    "set_id": "267",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043885739504578681/gottago_chungha3.png"
+  },
+  {
+    "name": "Chungha¹",
+    "group": "Solo",
+    "single": "Gotta Go",
+    "category": "mint",
+    "description": "Chungha - Gotta Go",
+    "emoji": "🕛‍",
+    "global_id": "2603",
+    "set_id": "267",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043885739089346661/gottago_chungha1.png"
+  },
+  {
+    "name": "Jin",
+    "group": "BTS",
+    "single": "Dynamite",
+    "category": "mint",
+    "description": "BTS - Dynamite",
+    "emoji": "🧨",
+    "global_id": "2608",
+    "set_id": "268",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043885740553154640/Jin_1.png"
+  },
+  {
+    "name": "Jungkook",
+    "group": "BTS",
+    "single": "Dynamite",
+    "category": "mint",
+    "description": "BTS - Dynamite",
+    "emoji": "🧨",
+    "global_id": "2609",
+    "set_id": "268",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043885740876111893/Jungkook_1.png"
+  },
+  {
+    "name": "RM",
+    "group": "BTS",
+    "single": "Dynamite",
+    "category": "mint",
+    "description": "BTS - Dynamite",
+    "emoji": "🧨",
+    "global_id": "2610",
+    "set_id": "268",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043885741194887198/RM.png"
+  },
+  {
+    "name": "J-Hope",
+    "group": "BTS",
+    "single": "Dynamite",
+    "category": "mint",
+    "description": "BTS - Dynamite",
+    "emoji": "🧨",
+    "global_id": "2606",
+    "set_id": "268",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043885742130217020/J-Hope.png"
+  },
+  {
+    "name": "Suga",
+    "group": "BTS",
+    "single": "Dynamite",
+    "category": "mint",
+    "description": "BTS - Dynamite",
+    "emoji": "🧨",
+    "global_id": "2611",
+    "set_id": "268",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043885741505261658/Suga.png"
+  },
+  {
+    "name": "V",
+    "group": "BTS",
+    "single": "Dynamite",
+    "category": "mint",
+    "description": "BTS - Dynamite",
+    "emoji": "🧨",
+    "global_id": "2612",
+    "set_id": "268",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043885741824024666/V.png"
+  },
+  {
+    "name": "Jimin",
+    "group": "BTS",
+    "single": "Dynamite",
+    "category": "mint",
+    "description": "BTS - Dynamite",
+    "emoji": "🧨",
+    "global_id": "2607",
+    "set_id": "268",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043885740226003004/Jimin_1.png"
+  },
+  {
+    "name": "Seungyeon",
+    "group": "KARA",
+    "single": "When I Move",
+    "category": "mint",
+    "description": "KARA - When I Move",
+    "emoji": "👯‍",
+    "global_id": "2616",
+    "set_id": "269",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1048958718886297710/whenimove_seungyeon.png"
+  },
+  {
+    "name": "Jiyoung",
+    "group": "KARA",
+    "single": "When I Move",
+    "category": "mint",
+    "description": "KARA - When I Move",
+    "emoji": "👯‍",
+    "global_id": "2614",
+    "set_id": "269",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1048958718064201849/whenimove_jiyoung.png"
+  },
+  {
+    "name": "Gyuri",
+    "group": "KARA",
+    "single": "When I Move",
+    "category": "mint",
+    "description": "KARA - When I Move",
+    "emoji": "👯‍",
+    "global_id": "2613",
+    "set_id": "269",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1048958717720281148/whenimove_gyuri.png"
+  },
+  {
+    "name": "Nicole",
+    "group": "KARA",
+    "single": "When I Move",
+    "category": "mint",
+    "description": "KARA - When I Move",
+    "emoji": "👯‍",
+    "global_id": "2615",
+    "set_id": "269",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1048958718496219136/whenimove_nicole.png"
+  },
+  {
+    "name": "Youngji",
+    "group": "KARA",
+    "single": "When I Move",
+    "category": "mint",
+    "description": "KARA - When I Move",
+    "emoji": "👯‍",
+    "global_id": "2617",
+    "set_id": "269",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1048958719234412594/whenimove_youngji.png"
+  },
+  {
+    "name": "Choerry",
+    "group": "LOOΠΔ",
+    "single": "Butterfly",
+    "category": "mint",
+    "description": "LOOΠΔ - Butterfly",
+    "emoji": "🦋",
+    "global_id": "2618",
+    "set_id": "270",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1048958772304941166/butterfly_choerry.png"
+  },
+  {
+    "name": "Chuu",
+    "group": "LOOΠΔ",
+    "single": "Butterfly",
+    "category": "mint",
+    "description": "LOOΠΔ - Butterfly",
+    "emoji": "🦋",
+    "global_id": "2619",
+    "set_id": "270",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1048958772585971753/butterfly_chuu.png"
+  },
+  {
+    "name": "Go Won",
+    "group": "LOOΠΔ",
+    "single": "Butterfly",
+    "category": "mint",
+    "description": "LOOΠΔ - Butterfly",
+    "emoji": "🦋",
+    "global_id": "2620",
+    "set_id": "270",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1048958772875382844/butterfly_gowon.png"
+  },
+  {
+    "name": "Haseul",
+    "group": "LOOΠΔ",
+    "single": "Butterfly",
+    "category": "mint",
+    "description": "LOOΠΔ - Butterfly",
+    "emoji": "🦋",
+    "global_id": "2621",
+    "set_id": "270",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1048958773177356299/butterfly_haseul.png"
+  },
+  {
+    "name": "Kim Lip",
+    "group": "LOOΠΔ",
+    "single": "Butterfly",
+    "category": "mint",
+    "description": "LOOΠΔ - Butterfly",
+    "emoji": "🦋",
+    "global_id": "2625",
+    "set_id": "270",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1048958774393716787/butterfly_kimlip.png"
+  },
+  {
+    "name": "Olivia Hye",
+    "group": "LOOΠΔ",
+    "single": "Butterfly",
+    "category": "mint",
+    "description": "LOOΠΔ - Butterfly",
+    "emoji": "🦋",
+    "global_id": "2626",
+    "set_id": "270",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1048958774678933504/butterfly_oliviahye.png"
+  },
+  {
+    "name": "Vivi",
+    "group": "LOOΠΔ",
+    "single": "Butterfly",
+    "category": "mint",
+    "description": "LOOΠΔ - Butterfly",
+    "emoji": "🦋",
+    "global_id": "2627",
+    "set_id": "270",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1048958876260765736/butterfly_vivi.png"
+  },
+  {
+    "name": "Yves",
+    "group": "LOOΠΔ",
+    "single": "Butterfly",
+    "category": "mint",
+    "description": "LOOΠΔ - Butterfly",
+    "emoji": "🦋",
+    "global_id": "2629",
+    "set_id": "270",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1048958876944445520/butterfly_yves.png"
+  },
+  {
+    "name": "Hyunjin",
+    "group": "LOOΠΔ",
+    "single": "Butterfly",
+    "category": "mint",
+    "description": "LOOΠΔ - Butterfly",
+    "emoji": "🦋",
+    "global_id": "2623",
+    "set_id": "270",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1048958773785546852/butterfly_hyunjin.png"
+  },
+  {
+    "name": "Heejin",
+    "group": "LOOΠΔ",
+    "single": "Butterfly",
+    "category": "mint",
+    "description": "LOOΠΔ - Butterfly",
+    "emoji": "🦋",
+    "global_id": "2622",
+    "set_id": "270",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1048958773487747144/butterfly_heejin.png"
+  },
+  {
+    "name": "Jinsoul",
+    "group": "LOOΠΔ",
+    "single": "Butterfly",
+    "category": "mint",
+    "description": "LOOΠΔ - Butterfly",
+    "emoji": "🦋",
+    "global_id": "2624",
+    "set_id": "270",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1048958774083325983/butterfly_jinsoul.png"
+  },
+  {
+    "name": "Yeojin",
+    "group": "LOOΠΔ",
+    "single": "Butterfly",
+    "category": "mint",
+    "description": "LOOΠΔ - Butterfly",
+    "emoji": "🦋",
+    "global_id": "2628",
+    "set_id": "270",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1048958876554383380/butterfly_yeojin.png"
+  },
+  {
+    "name": "Minho³",
+    "group": "Solo",
+    "single": "Chase",
+    "category": "mint",
+    "description": "Minho - Chase",
+    "emoji": "🏃‍",
+    "global_id": "2632",
+    "set_id": "271",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054053626101911553/chase_minho3.png"
+  },
+  {
+    "name": "Minho¹",
+    "group": "Solo",
+    "single": "Chase",
+    "category": "mint",
+    "description": "Minho - Chase",
+    "emoji": "🏃‍",
+    "global_id": "2630",
+    "set_id": "271",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054053625472745522/chase_minho1.png"
+  },
+  {
+    "name": "Minho²",
+    "group": "Solo",
+    "single": "Chase",
+    "category": "mint",
+    "description": "Minho - Chase",
+    "emoji": "🏃‍",
+    "global_id": "2631",
+    "set_id": "271",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054053625787330620/chase_minho2.png"
+  },
+  {
+    "name": "RM²",
+    "group": "Solo",
+    "single": "Wild Flower",
+    "category": "mint",
+    "description": "RM - Wild Flower",
+    "emoji": "🌺",
+    "global_id": "2634",
+    "set_id": "272",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054053626651357244/wildflower_rm2.png"
+  },
+  {
+    "name": "RM¹",
+    "group": "Solo",
+    "single": "Wild Flower",
+    "category": "mint",
+    "description": "RM - Wild Flower",
+    "emoji": "🌺",
+    "global_id": "2633",
+    "set_id": "272",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054053626387103874/wildflower_rm1.png"
+  },
+  {
+    "name": "RM³",
+    "group": "Solo",
+    "single": "Wild Flower",
+    "category": "mint",
+    "description": "RM - Wild Flower",
+    "emoji": "🌺",
+    "global_id": "2635",
+    "set_id": "272",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054053627028852778/wildflower_rm3.png"
+  },
+  {
+    "name": "Baekhyun²",
+    "group": "Solo",
+    "single": "Candy",
+    "category": "mint",
+    "description": "Baekhyun - Candy",
+    "emoji": "🍬",
+    "global_id": "2637",
+    "set_id": "273",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1056562040325550200/candy_baekhyun2.png"
+  },
+  {
+    "name": "Baekhyun³",
+    "group": "Solo",
+    "single": "Candy",
+    "category": "mint",
+    "description": "Baekhyun - Candy",
+    "emoji": "🍬",
+    "global_id": "2638",
+    "set_id": "273",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1056562040677879808/candy_baekhyun3.png"
+  },
+  {
+    "name": "Baekhyun¹",
+    "group": "Solo",
+    "single": "Candy",
+    "category": "mint",
+    "description": "Baekhyun - Candy",
+    "emoji": "🍬",
+    "global_id": "2636",
+    "set_id": "273",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1056562039964848248/candy_baekhyun1.png"
+  },
+  {
+    "name": "Sohyun",
+    "group": "4minute",
+    "single": "Crazy",
+    "category": "mint",
+    "description": "4minute - Crazy",
+    "emoji": "🤪",
+    "global_id": "2643",
+    "set_id": "274",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1056562042749857872/crazy_sohyun.png"
+  },
+  {
+    "name": "Jihyun",
+    "group": "4minute",
+    "single": "Crazy",
+    "category": "mint",
+    "description": "4minute - Crazy",
+    "emoji": "🤪",
+    "global_id": "2641",
+    "set_id": "274",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1056562041931976735/crazy_jihyun.png"
+  },
+  {
+    "name": "Jiyoon",
+    "group": "4minute",
+    "single": "Crazy",
+    "category": "mint",
+    "description": "4minute - Crazy",
+    "emoji": "🤪",
+    "global_id": "2642",
+    "set_id": "274",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1056562042259128440/crazy_jiyoon.png"
+  },
+  {
+    "name": "Gayoon",
+    "group": "4minute",
+    "single": "Crazy",
+    "category": "mint",
+    "description": "4minute - Crazy",
+    "emoji": "🤪",
+    "global_id": "2639",
+    "set_id": "274",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1056562041114083438/crazy_gayoon.png"
+  },
+  {
+    "name": "Hyuna",
+    "group": "4minute",
+    "single": "Crazy",
+    "category": "mint",
+    "description": "4minute - Crazy",
+    "emoji": "🤪",
+    "global_id": "2640",
+    "set_id": "274",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1056562041558675466/crazy_hyuna.png"
+  },
+  {
+    "name": "Sulli",
+    "group": "f(x)",
+    "single": "Electric Shock",
+    "category": "mint",
+    "description": "f(x) - Electric Shock",
+    "emoji": "⚡",
+    "global_id": "2647",
+    "set_id": "275",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059117129737183232/es_sulli.png"
+  },
+  {
+    "name": "Amber",
+    "group": "f(x)",
+    "single": "Electric Shock",
+    "category": "mint",
+    "description": "f(x) - Electric Shock",
+    "emoji": "⚡",
+    "global_id": "2644",
+    "set_id": "275",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059117065627238470/es_amber.png"
+  },
+  {
+    "name": "Krystal",
+    "group": "f(x)",
+    "single": "Electric Shock",
+    "category": "mint",
+    "description": "f(x) - Electric Shock",
+    "emoji": "⚡",
+    "global_id": "2645",
+    "set_id": "275",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059117128936071178/es_krystal.png"
+  },
+  {
+    "name": "Luna",
+    "group": "f(x)",
+    "single": "Electric Shock",
+    "category": "mint",
+    "description": "f(x) - Electric Shock",
+    "emoji": "⚡",
+    "global_id": "2646",
+    "set_id": "275",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059117129259036722/es_luna.png"
+  },
+  {
+    "name": "Victoria",
+    "group": "f(x)",
+    "single": "Electric Shock",
+    "category": "mint",
+    "description": "f(x) - Electric Shock",
+    "emoji": "⚡",
+    "global_id": "2648",
+    "set_id": "275",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059117130206937158/es_victoria.png"
+  },
+  {
+    "name": "Xiaojun",
+    "group": "WAYV",
+    "single": "Phantom",
+    "category": "mint",
+    "description": "WAYV - Phantom",
+    "emoji": "🕯️",
+    "global_id": "2653",
+    "set_id": "276",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059117132442501140/phantom_xiaojun.png"
+  },
+  {
+    "name": "Hendery",
+    "group": "WAYV",
+    "single": "Phantom",
+    "category": "mint",
+    "description": "WAYV - Phantom",
+    "emoji": "🕯️",
+    "global_id": "2649",
+    "set_id": "276",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059117130609598535/phantom_hendery.png"
+  },
+  {
+    "name": "Winwin",
+    "group": "WAYV",
+    "single": "Phantom",
+    "category": "mint",
+    "description": "WAYV - Phantom",
+    "emoji": "🕯️",
+    "global_id": "2652",
+    "set_id": "276",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059117132035666060/phantom_winwin.png"
+  },
+  {
+    "name": "Kun",
+    "group": "WAYV",
+    "single": "Phantom",
+    "category": "mint",
+    "description": "WAYV - Phantom",
+    "emoji": "🕯️",
+    "global_id": "2650",
+    "set_id": "276",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059117130940952676/phantom_kun.png"
+  },
+  {
+    "name": "Yangyang",
+    "group": "WAYV",
+    "single": "Phantom",
+    "category": "mint",
+    "description": "WAYV - Phantom",
+    "emoji": "🕯️",
+    "global_id": "2654",
+    "set_id": "276",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059117132832583781/phantom_yangyang.png"
+  },
+  {
+    "name": "Ten",
+    "group": "WAYV",
+    "single": "Phantom",
+    "category": "mint",
+    "description": "WAYV - Phantom",
+    "emoji": "🕯️",
+    "global_id": "2651",
+    "set_id": "276",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059117131607842827/phantom_ten.png"
+  },
+  {
+    "name": "Hyojung",
+    "group": "OH MY GIRL",
+    "single": "Nonstop",
+    "category": "mint",
+    "description": "OH MY GIRL - Nonstop",
+    "emoji": "🤠",
+    "global_id": "2656",
+    "set_id": "277",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1061645948616441958/Hyojung_Nonstop.png"
+  },
+  {
+    "name": "Seunghee",
+    "group": "OH MY GIRL",
+    "single": "Nonstop",
+    "category": "mint",
+    "description": "OH MY GIRL - Nonstop",
+    "emoji": "🤠",
+    "global_id": "2659",
+    "set_id": "277",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1061645950596169728/Seunghee_Nonstop.png"
+  },
+  {
+    "name": "YooA",
+    "group": "OH MY GIRL",
+    "single": "Nonstop",
+    "category": "mint",
+    "description": "OH MY GIRL - Nonstop",
+    "emoji": "🤠",
+    "global_id": "2660",
+    "set_id": "277",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1061645951116259519/Yooa_Nonstop.png"
+  },
+  {
+    "name": "Mimi",
+    "group": "OH MY GIRL",
+    "single": "Nonstop",
+    "category": "mint",
+    "description": "OH MY GIRL - Nonstop",
+    "emoji": "🤠",
+    "global_id": "2658",
+    "set_id": "277",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1061645950017339512/Mimi_Nonstop.png"
+  },
+  {
+    "name": "Arin",
+    "group": "OH MY GIRL",
+    "single": "Nonstop",
+    "category": "mint",
+    "description": "OH MY GIRL - Nonstop",
+    "emoji": "🤠",
+    "global_id": "2655",
+    "set_id": "277",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1061645948004089926/Arin_Nonstop.png"
+  },
+  {
+    "name": "Jiho",
+    "group": "OH MY GIRL",
+    "single": "Nonstop",
+    "category": "mint",
+    "description": "OH MY GIRL - Nonstop",
+    "emoji": "🤠",
+    "global_id": "2657",
+    "set_id": "277",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1061645949291737188/Jiho_Nonstop.png"
+  },
+  {
+    "name": "Yubin",
+    "group": "OH MY GIRL",
+    "single": "Nonstop",
+    "category": "mint",
+    "description": "OH MY GIRL - Nonstop",
+    "emoji": "🤠",
+    "global_id": "2661",
+    "set_id": "277",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1061645951757975612/Yubin_Nonstop.png"
+  },
+  {
+    "name": "BamBam",
+    "group": "GOT7",
+    "single": "Just Right",
+    "category": "mint",
+    "description": "GOT7 - Just Right",
+    "emoji": "👌",
+    "global_id": "2662",
+    "set_id": "278",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1064166395170017311/BamBam_Just_Right.png"
+  },
+  {
+    "name": "Jackson",
+    "group": "GOT7",
+    "single": "Just Right",
+    "category": "mint",
+    "description": "GOT7 - Just Right",
+    "emoji": "👌",
+    "global_id": "2663",
+    "set_id": "278",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1064166395451031552/Jackson_Just_Right.png"
+  },
+  {
+    "name": "Jay B",
+    "group": "GOT7",
+    "single": "Just Right",
+    "category": "mint",
+    "description": "GOT7 - Just Right",
+    "emoji": "👌",
+    "global_id": "2664",
+    "set_id": "278",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1064166395744624650/JayB_Just_Right.png"
+  },
+  {
+    "name": "Yugyeom",
+    "group": "GOT7",
+    "single": "Just Right",
+    "category": "mint",
+    "description": "GOT7 - Just Right",
+    "emoji": "👌",
+    "global_id": "2668",
+    "set_id": "278",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1064166397011312671/Yugyeom_Just_Right.png"
+  },
+  {
+    "name": "Jinyoung",
+    "group": "GOT7",
+    "single": "Just Right",
+    "category": "mint",
+    "description": "GOT7 - Just Right",
+    "emoji": "👌",
+    "global_id": "2665",
+    "set_id": "278",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1064166396050821130/Jinyoung_Just_Right.png"
+  },
+  {
+    "name": "Mark",
+    "group": "GOT7",
+    "single": "Just Right",
+    "category": "mint",
+    "description": "GOT7 - Just Right",
+    "emoji": "👌",
+    "global_id": "2666",
+    "set_id": "278",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1064166396331835442/Mark_Just_Right.png"
+  },
+  {
+    "name": "Youngjae",
+    "group": "GOT7",
+    "single": "Just Right",
+    "category": "mint",
+    "description": "GOT7 - Just Right",
+    "emoji": "👌",
+    "global_id": "2667",
+    "set_id": "278",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1064166396705120368/Youngjae_Just_Right.png"
+  },
+  {
+    "name": "Taehyun",
+    "group": "TXT",
+    "single": "Sugar Rush Ride",
+    "category": "mint",
+    "description": "TXT - Sugar Rush Ride",
+    "emoji": "🍨",
+    "global_id": "2672",
+    "set_id": "279",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066691055514304552/Taehyun.png"
+  },
+  {
+    "name": "Beomgyu",
+    "group": "TXT",
+    "single": "Sugar Rush Ride",
+    "category": "mint",
+    "description": "TXT - Sugar Rush Ride",
+    "emoji": "🍨",
+    "global_id": "2669",
+    "set_id": "279",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066691054771904584/Beomgyu.png"
+  },
+  {
+    "name": "Huening Kai",
+    "group": "TXT",
+    "single": "Sugar Rush Ride",
+    "category": "mint",
+    "description": "TXT - Sugar Rush Ride",
+    "emoji": "🍨",
+    "global_id": "2670",
+    "set_id": "279",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066691055036153857/Huening_Kai.png"
+  },
+  {
+    "name": "Soobin",
+    "group": "TXT",
+    "single": "Sugar Rush Ride",
+    "category": "mint",
+    "description": "TXT - Sugar Rush Ride",
+    "emoji": "🍨",
+    "global_id": "2671",
+    "set_id": "279",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066691055292002304/Soobin.png"
+  },
+  {
+    "name": "Yeonjun",
+    "group": "TXT",
+    "single": "Sugar Rush Ride",
+    "category": "mint",
+    "description": "TXT - Sugar Rush Ride",
+    "emoji": "🍨",
+    "global_id": "2673",
+    "set_id": "279",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066691055757570098/Yeonjun.png"
+  },
+  {
+    "name": "Belle",
+    "group": "cignature",
+    "single": "AURORA",
+    "category": "mint",
+    "description": "cignature - AURORA",
+    "emoji": "💫",
+    "global_id": "2676",
+    "set_id": "280",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1069248379177156669/BELLE.png"
+  },
+  {
+    "name": "Chaesol",
+    "group": "cignature",
+    "single": "AURORA",
+    "category": "mint",
+    "description": "cignature - AURORA",
+    "emoji": "💫",
+    "global_id": "2677",
+    "set_id": "280",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1069248379479130193/CHAESOL.png"
+  },
+  {
+    "name": "Jeewon",
+    "group": "cignature",
+    "single": "AURORA",
+    "category": "mint",
+    "description": "cignature - AURORA",
+    "emoji": "💫",
+    "global_id": "2675",
+    "set_id": "280",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1069248378862587934/JEEWON.png"
+  },
+  {
+    "name": "Semi",
+    "group": "cignature",
+    "single": "AURORA",
+    "category": "mint",
+    "description": "cignature - AURORA",
+    "emoji": "💫",
+    "global_id": "2680",
+    "set_id": "280",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1069248380305408010/SEMI.png"
+  },
+  {
+    "name": "Dohee",
+    "group": "cignature",
+    "single": "AURORA",
+    "category": "mint",
+    "description": "cignature - AURORA",
+    "emoji": "💫",
+    "global_id": "2674",
+    "set_id": "280",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1069248378485096458/DOHEE.png"
+  },
+  {
+    "name": "Seline",
+    "group": "cignature",
+    "single": "AURORA",
+    "category": "mint",
+    "description": "cignature - AURORA",
+    "emoji": "💫",
+    "global_id": "2679",
+    "set_id": "280",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1069248380045377627/SELINE.png"
+  },
+  {
+    "name": "Chloe",
+    "group": "cignature",
+    "single": "AURORA",
+    "category": "mint",
+    "description": "cignature - AURORA",
+    "emoji": "💫",
+    "global_id": "2678",
+    "set_id": "280",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1069248379743391754/CHLOE.png"
+  },
+  {
+    "name": "JEON SOYEON²",
+    "group": "Solo",
+    "single": "BEAM BEAM",
+    "category": "mint",
+    "description": "JEON SOYEON - BEAM BEAM",
+    "emoji": "🍔",
+    "global_id": "2682",
+    "set_id": "281",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1074372557546999948/Beam_Beam_Soyeon2.png"
+  },
+  {
+    "name": "JEON SOYEON¹",
+    "group": "Solo",
+    "single": "BEAM BEAM",
+    "category": "mint",
+    "description": "JEON SOYEON - BEAM BEAM",
+    "emoji": "🍔",
+    "global_id": "2681",
+    "set_id": "281",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1074372557232406528/Beam_Beam_Soyeon.png"
+  },
+  {
+    "name": "JEON SOYEON³",
+    "group": "Solo",
+    "single": "BEAM BEAM",
+    "category": "mint",
+    "description": "JEON SOYEON - BEAM BEAM",
+    "emoji": "🍔",
+    "global_id": "2683",
+    "set_id": "281",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1074372557840593059/Beam_Beam_Soyeon3.png"
+  },
+  {
+    "name": "Na Goeun",
+    "group": "PURPLE KISS",
+    "single": "Sweet Juice",
+    "category": "mint",
+    "description": "PURPLE KISS - Sweet Juice",
+    "emoji": "🥤",
+    "global_id": "2687",
+    "set_id": "282",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1076884722531192953/Sweet_Juice_NaGoeun.png"
+  },
+  {
+    "name": "Chaein",
+    "group": "PURPLE KISS",
+    "single": "Sweet Juice",
+    "category": "mint",
+    "description": "PURPLE KISS - Sweet Juice",
+    "emoji": "🥤",
+    "global_id": "2684",
+    "set_id": "282",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1076884721319026870/Sweet_Juice_Chaein.png"
+  },
+  {
+    "name": "Ireh",
+    "group": "PURPLE KISS",
+    "single": "Sweet Juice",
+    "category": "mint",
+    "description": "PURPLE KISS - Sweet Juice",
+    "emoji": "🥤",
+    "global_id": "2686",
+    "set_id": "282",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1076884722036252762/Sweet_Juice_Ireh.png"
+  },
+  {
+    "name": "Yuki",
+    "group": "PURPLE KISS",
+    "single": "Sweet Juice",
+    "category": "mint",
+    "description": "PURPLE KISS - Sweet Juice",
+    "emoji": "🥤",
+    "global_id": "2689",
+    "set_id": "282",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1076884723437150278/Sweet_Juice_Yuki.png"
+  },
+  {
+    "name": "Dosie",
+    "group": "PURPLE KISS",
+    "single": "Sweet Juice",
+    "category": "mint",
+    "description": "PURPLE KISS - Sweet Juice",
+    "emoji": "🥤",
+    "global_id": "2685",
+    "set_id": "282",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1076884721675534336/Sweet_Juice_Doise.png"
+  },
+  {
+    "name": "Swan",
+    "group": "PURPLE KISS",
+    "single": "Sweet Juice",
+    "category": "mint",
+    "description": "PURPLE KISS - Sweet Juice",
+    "emoji": "🥤",
+    "global_id": "2688",
+    "set_id": "282",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1076884722996740226/Sweet_Juice_Swan.png"
+  },
+  {
+    "name": "Soobin",
+    "group": "WJSN CHOCOME",
+    "single": "Super Yuppers!",
+    "category": "mint",
+    "description": "WJSN CHOCOME - Super Yuppers!",
+    "emoji": "🎀",
+    "global_id": "2692",
+    "set_id": "283",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079399872538619954/Super_Yuppers_Soobin.png"
+  },
+  {
+    "name": "Dayoung",
+    "group": "WJSN CHOCOME",
+    "single": "Super Yuppers!",
+    "category": "mint",
+    "description": "WJSN CHOCOME - Super Yuppers!",
+    "emoji": "🎀",
+    "global_id": "2690",
+    "set_id": "283",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079399871964004472/Super_Yuppers_Dayoung.png"
+  },
+  {
+    "name": "Luda",
+    "group": "WJSN CHOCOME",
+    "single": "Super Yuppers!",
+    "category": "mint",
+    "description": "WJSN CHOCOME - Super Yuppers!",
+    "emoji": "🎀",
+    "global_id": "2691",
+    "set_id": "283",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079399872286953592/Super_Yuppers_Luda.png"
+  },
+  {
+    "name": "Yeoreum",
+    "group": "WJSN CHOCOME",
+    "single": "Super Yuppers!",
+    "category": "mint",
+    "description": "WJSN CHOCOME - Super Yuppers!",
+    "emoji": "🎀",
+    "global_id": "2693",
+    "set_id": "283",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079399872899334164/Super_Yuppers_Yeoreum.png"
+  },
+  {
+    "name": "Mina",
+    "group": "TWICE",
+    "single": "Set Me Free",
+    "category": "mint",
+    "description": "TWICE - Set Me Free",
+    "emoji": "📞",
+    "global_id": "2698",
+    "set_id": "284",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1081698288178307133/setmefree_mina.png"
+  },
+  {
+    "name": "Nayeon",
+    "group": "TWICE",
+    "single": "Set Me Free",
+    "category": "mint",
+    "description": "TWICE - Set Me Free",
+    "emoji": "📞",
+    "global_id": "2700",
+    "set_id": "284",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1081698288681635912/setmefree_nayeon.png"
+  },
+  {
+    "name": "Sana",
+    "group": "TWICE",
+    "single": "Set Me Free",
+    "category": "mint",
+    "description": "TWICE - Set Me Free",
+    "emoji": "📞",
+    "global_id": "2701",
+    "set_id": "284",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1081698288979419156/setmefree_sana.png"
+  },
+  {
+    "name": "Tzuyu",
+    "group": "TWICE",
+    "single": "Set Me Free",
+    "category": "mint",
+    "description": "TWICE - Set Me Free",
+    "emoji": "📞",
+    "global_id": "2702",
+    "set_id": "284",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1081698289302376468/setmefree_tzuyu.png"
+  },
+  {
+    "name": "Jihyo",
+    "group": "TWICE",
+    "single": "Set Me Free",
+    "category": "mint",
+    "description": "TWICE - Set Me Free",
+    "emoji": "📞",
+    "global_id": "2697",
+    "set_id": "284",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1081698287930855524/setmefree_jihyo.png"
+  },
+  {
+    "name": "Dahyun",
+    "group": "TWICE",
+    "single": "Set Me Free",
+    "category": "mint",
+    "description": "TWICE - Set Me Free",
+    "emoji": "📞",
+    "global_id": "2695",
+    "set_id": "284",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1081698287112954026/setmefree_dahyun.png"
+  },
+  {
+    "name": "Jeongyeon",
+    "group": "TWICE",
+    "single": "Set Me Free",
+    "category": "mint",
+    "description": "TWICE - Set Me Free",
+    "emoji": "📞",
+    "global_id": "2696",
+    "set_id": "284",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1081698287570129026/setmefree_jeongyeon.png"
+  },
+  {
+    "name": "Momo",
+    "group": "TWICE",
+    "single": "Set Me Free",
+    "category": "mint",
+    "description": "TWICE - Set Me Free",
+    "emoji": "📞",
+    "global_id": "2699",
+    "set_id": "284",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1081698288434155720/setmefree_momo.png"
+  },
+  {
+    "name": "Chaeyoung",
+    "group": "TWICE",
+    "single": "Set Me Free",
+    "category": "mint",
+    "description": "TWICE - Set Me Free",
+    "emoji": "📞",
+    "global_id": "2694",
+    "set_id": "284",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1081698286840336414/setmefree_chaeyoung.png"
+  },
+  {
+    "name": "Key",
+    "group": "SHINee",
+    "single": "Lucifer",
+    "category": "mint",
+    "description": "SHINee - Lucifer",
+    "emoji": "😈",
+    "global_id": "2704",
+    "set_id": "286",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494276748116008/lucifer_key.png"
+  },
+  {
+    "name": "Minho",
+    "group": "SHINee",
+    "single": "Lucifer",
+    "category": "mint",
+    "description": "SHINee - Lucifer",
+    "emoji": "😈",
+    "global_id": "2705",
+    "set_id": "286",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494277012361266/lucifer_minho.png"
+  },
+  {
+    "name": "Taemin",
+    "group": "SHINee",
+    "single": "Lucifer",
+    "category": "mint",
+    "description": "SHINee - Lucifer",
+    "emoji": "😈",
+    "global_id": "2707",
+    "set_id": "286",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494277616341113/lucifer_taemin.png"
+  },
+  {
+    "name": "Onew",
+    "group": "SHINee",
+    "single": "Lucifer",
+    "category": "mint",
+    "description": "SHINee - Lucifer",
+    "emoji": "😈",
+    "global_id": "2706",
+    "set_id": "286",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494277259833385/lucifer_onew.png"
+  },
+  {
+    "name": "Jonghyun",
+    "group": "SHINee",
+    "single": "Lucifer",
+    "category": "mint",
+    "description": "SHINee - Lucifer",
+    "emoji": "😈",
+    "global_id": "2703",
+    "set_id": "286",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494276509052948/lucifer_jonghyun.png"
+  },
+  {
+    "name": "BamBam²",
+    "group": "Solo",
+    "single": "Sour & Sweet",
+    "category": "mint",
+    "description": "BamBam - Sour & Sweet",
+    "emoji": "🪶",
+    "global_id": "2709",
+    "set_id": "287",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1087003948885475379/BamBam_2.png"
+  },
+  {
+    "name": "BamBam¹",
+    "group": "Solo",
+    "single": "Sour & Sweet",
+    "category": "mint",
+    "description": "BamBam - Sour & Sweet",
+    "emoji": "🪶",
+    "global_id": "2708",
+    "set_id": "287",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1087003948591886397/BamBam_1.png"
+  },
+  {
+    "name": "BamBam³",
+    "group": "Solo",
+    "single": "Sour & Sweet",
+    "category": "mint",
+    "description": "BamBam - Sour & Sweet",
+    "emoji": "🪶",
+    "global_id": "2710",
+    "set_id": "287",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1087003949187473439/BamBam_3.png"
+  },
+  {
+    "name": "Woobin",
+    "group": "CRAVITY",
+    "single": "Groovy",
+    "category": "mint",
+    "description": "CRAVITY - Groovy",
+    "emoji": "✌️",
+    "global_id": "2719",
+    "set_id": "288",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086989007361151066/cravity-groovy_woobin.png"
+  },
+  {
+    "name": "Hyeongjun",
+    "group": "CRAVITY",
+    "single": "Groovy",
+    "category": "mint",
+    "description": "CRAVITY - Groovy",
+    "emoji": "✌️",
+    "global_id": "2712",
+    "set_id": "288",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086989008141307935/cravity-groovy_hyeongjun.png"
+  },
+  {
+    "name": "Allen",
+    "group": "CRAVITY",
+    "single": "Groovy",
+    "category": "mint",
+    "description": "CRAVITY - Groovy",
+    "emoji": "✌️",
+    "global_id": "2711",
+    "set_id": "288",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086989007784779826/cravity-groovy_allen.png"
+  },
+  {
+    "name": "Minhee",
+    "group": "CRAVITY",
+    "single": "Groovy",
+    "category": "mint",
+    "description": "CRAVITY - Groovy",
+    "emoji": "✌️",
+    "global_id": "2714",
+    "set_id": "288",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086989008904659004/cravity-groovy_minhee.png"
+  },
+  {
+    "name": "Seongmin",
+    "group": "CRAVITY",
+    "single": "Groovy",
+    "category": "mint",
+    "description": "CRAVITY - Groovy",
+    "emoji": "✌️",
+    "global_id": "2715",
+    "set_id": "288",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086989009319907399/cravity-groovy_seongmin.png"
+  },
+  {
+    "name": "Serim",
+    "group": "CRAVITY",
+    "single": "Groovy",
+    "category": "mint",
+    "description": "CRAVITY - Groovy",
+    "emoji": "✌️",
+    "global_id": "2716",
+    "set_id": "288",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086989009672212580/cravity-groovy_serim.png"
+  },
+  {
+    "name": "Wonjin",
+    "group": "CRAVITY",
+    "single": "Groovy",
+    "category": "mint",
+    "description": "CRAVITY - Groovy",
+    "emoji": "✌️",
+    "global_id": "2718",
+    "set_id": "288",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086989010406232114/cravity-groovy_wonjin.png"
+  },
+  {
+    "name": "Jungmo",
+    "group": "CRAVITY",
+    "single": "Groovy",
+    "category": "mint",
+    "description": "CRAVITY - Groovy",
+    "emoji": "✌️",
+    "global_id": "2713",
+    "set_id": "288",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086989008552333462/cravity-groovy_jungmo.png"
+  },
+  {
+    "name": "Taeyoung",
+    "group": "CRAVITY",
+    "single": "Groovy",
+    "category": "mint",
+    "description": "CRAVITY - Groovy",
+    "emoji": "✌️",
+    "global_id": "2717",
+    "set_id": "288",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086989010058092654/cravity-groovy_taeyoung.png"
+  },
+  {
+    "name": "Onew¹",
+    "group": "Solo",
+    "single": "DICE",
+    "category": "mint",
+    "description": "ONEW - DICE",
+    "emoji": "🎲",
+    "global_id": "2720",
+    "set_id": "289",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092060855459389470/Onew_1.png"
+  },
+  {
+    "name": "Onew²",
+    "group": "Solo",
+    "single": "DICE",
+    "category": "mint",
+    "description": "ONEW - DICE",
+    "emoji": "🎲",
+    "global_id": "2721",
+    "set_id": "289",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092060855824302152/Onew_2.png"
+  },
+  {
+    "name": "Onew³",
+    "group": "Solo",
+    "single": "DICE",
+    "category": "mint",
+    "description": "ONEW - DICE",
+    "emoji": "🎲",
+    "global_id": "2722",
+    "set_id": "289",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092060856130478150/Onew_3.png"
+  },
+  {
+    "name": "JISOO¹",
+    "group": "Solo",
+    "single": "FLOWER",
+    "category": "mint",
+    "description": "JISOO - FLOWER",
+    "emoji": "🌷",
+    "global_id": "2723",
+    "set_id": "290",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092060856428281876/flower_jisoo1.png"
+  },
+  {
+    "name": "JISOO²",
+    "group": "Solo",
+    "single": "FLOWER",
+    "category": "mint",
+    "description": "JISOO - FLOWER",
+    "emoji": "🌷",
+    "global_id": "2724",
+    "set_id": "290",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092060856742846585/flower_jisoo2.png"
+  },
+  {
+    "name": "JISOO³",
+    "group": "Solo",
+    "single": "FLOWER",
+    "category": "mint",
+    "description": "JISOO - FLOWER",
+    "emoji": "🌷",
+    "global_id": "2725",
+    "set_id": "290",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092060857086783548/flower_jisoo3.png"
+  },
+  {
+    "name": "Junho",
+    "group": "2PM",
+    "single": "My House",
+    "category": "mint",
+    "description": "2PM - My House",
+    "emoji": "🏠",
+    "global_id": "2727",
+    "set_id": "291",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094605973844406322/myhouse_junho.png"
+  },
+  {
+    "name": "Nichkhun",
+    "group": "2PM",
+    "single": "My House",
+    "category": "mint",
+    "description": "2PM - My House",
+    "emoji": "🏠",
+    "global_id": "2729",
+    "set_id": "291",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094605974435790978/myhouse_nichkhun.png"
+  },
+  {
+    "name": "Taecyeon",
+    "group": "2PM",
+    "single": "My House",
+    "category": "mint",
+    "description": "2PM - My House",
+    "emoji": "🏠",
+    "global_id": "2730",
+    "set_id": "291",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094605974821679165/myhouse_taecyeon.png"
+  },
+  {
+    "name": "Jun. K",
+    "group": "2PM",
+    "single": "My House",
+    "category": "mint",
+    "description": "2PM - My House",
+    "emoji": "🏠",
+    "global_id": "2728",
+    "set_id": "291",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094605974154788864/myhouse_junk.png"
+  },
+  {
+    "name": "Chansung",
+    "group": "2PM",
+    "single": "My House",
+    "category": "mint",
+    "description": "2PM - My House",
+    "emoji": "🏠",
+    "global_id": "2726",
+    "set_id": "291",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094605973554987088/myhouse_chansung.png"
+  },
+  {
+    "name": "Wooyoung",
+    "group": "2PM",
+    "single": "My House",
+    "category": "mint",
+    "description": "2PM - My House",
+    "emoji": "🏠",
+    "global_id": "2731",
+    "set_id": "291",
+    "rarity": "mint",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094605975308222544/myhouse_wooyoung.png"
+  }
+]

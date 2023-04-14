@@ -1,2 +1,7 @@
 node_modules
 .env
+
+cards_formated.json
+cards.json
+format_card_json.js
+format_cards.js
