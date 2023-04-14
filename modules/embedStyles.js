@@ -3,9 +3,24 @@ const { EmbedBuilder, quote, inlineCode, bold } = require('discord.js');
 const { stringTools } = require('../modules/jsTools');
 
 // Command -> /DROP
-function generalDrop(user, card, dropTitle = "drop") {
+function generalDrop(user, card, dropTitle = "drop", isDuplicate = false) {
     let embed = new EmbedBuilder()
-        .setAuthor({ name: `${user.username} | ${dropTitle}`, iconURL: user.avatarURL({ dynamic: true }) });
+        .setAuthor({ name: `${user.username} | ${dropTitle}`, iconURL: user.avatarURL({ dynamic: true }) })
+        .setDescription("%EMOJI %GROUP - %SINGLE : %NAME\n> %UID %GLOBAL_ID %CATEGORY %SET_ID\n> %ABILITY :: %REPUTATION"
+            .replace("%EMOJI", inlineCode(card.emoji))
+            .replace("%GROUP", bold(card.group))
+            .replace("%SINGLE", card.single)
+            .replace("%NAME", card.name)
+            .replace("%UID", inlineCode(card.uid))
+            .replace("%GLOBAL_ID", inlineCode(card.global_id))
+            .replace("%CATEGORY", inlineCode(card.category))
+            .replace("%SET_ID", inlineCode(`👥${card.set_id}`))
+            .replace("%ABILITY", inlineCode(`🎤 ABI. ${card.stats.ability}`))
+            .replace("%REPUTATION", inlineCode(`💖 REP. ${card.stats.reputation}`))
+        );
+
+    if (card.imageURL) embed.setImage(card.imageURL);
+    if (isDuplicate) embed.setFooter({ text: "this is a duplicate" });
 
     return embed;
 }
@@ -47,10 +62,10 @@ function userCooldowns(user) {
         { name: "random", timestamp: Date.now() }
     ];
 
-    let cooldowns_f = cooldowns.map(cooldown => "\`$VISUAL $NAME:\` $AVAILABILITY"
-        .replace("$VISUAL", "✔️")
-        .replace("$NAME", stringTools.toTitleCase(cooldown.name.replace(/_/g, " ")))
-        .replace("$AVAILABILITY", bold("Available"))
+    let cooldowns_f = cooldowns.map(cooldown => "\`%VISUAL %NAME:\` %AVAILABILITY"
+        .replace("%VISUAL", "✔️")
+        .replace("%NAME", stringTools.toTitleCase(cooldown.name.replace(/_/g, " ")))
+        .replace("%AVAILABILITY", bold("Available"))
     );
 
     let embed = new EmbedBuilder()
