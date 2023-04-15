@@ -1,7 +1,7 @@
 const { EmbedBuilder, quote, inlineCode, bold } = require('discord.js');
 
 const { botSettings } = require('../configs/heejinSettings.json');
-const { stringTools } = require('../modules/jsTools');
+const { stringTools, dateTools } = require('../modules/jsTools');
 const { cardnventoryParser } = require('../modules/userParser');
 const cardManager = require('../modules/cardManager');
 
@@ -47,25 +47,36 @@ function userProfile(user, userData) {
 }
 
 // Command -> User -> /COOLDOWNS
-function userCooldowns(user) {
+function userCooldowns(user, userData) {
     let cooldowns = [
-        { name: "drop_1", timestamp: Date.now() },
-        { name: "drop_2", timestamp: Date.now() },
-        { name: "drop_3", timestamp: Date.now() },
-        { name: "drop_4", timestamp: Date.now() },
-        { name: "drop_event", timestamp: Date.now() },
-        { name: "drop_seasonal", timestamp: Date.now() },
-        { name: "drop_weekly", timestamp: Date.now() },
-        { name: "daily", timestamp: Date.now() },
-        { name: "stage", timestamp: Date.now() },
-        { name: "random", timestamp: Date.now() }
+        { name: "drop_1", timestamp: 0 },
+        { name: "drop_2", timestamp: 0 },
+        { name: "drop_3", timestamp: 0 },
+        { name: "drop_4", timestamp: 0 },
+        { name: "drop_event", timestamp: 0 },
+        { name: "drop_seasonal", timestamp: 0 },
+        { name: "drop_weekly", timestamp: 0 },
+        { name: "daily", timestamp: 0 },
+        { name: "stage", timestamp: 0 },
+        { name: "random", timestamp: 0 }
     ];
 
-    let cooldowns_f = cooldowns.map(cooldown => "\`%VISUAL %NAME:\` %AVAILABILITY"
-        .replace("%VISUAL", "✔️")
-        .replace("%NAME", stringTools.toTitleCase(cooldown.name.replace(/_/g, " ")))
-        .replace("%AVAILABILITY", bold("Available"))
-    );
+    let cooldowns_user = [];
+    userData.cooldowns.forEach((value, key) => cooldowns_user.push({ name: key, timestamp: value }));
+
+    cooldowns_user.forEach(cooldown => {
+        let spliceIndex = cooldowns.findIndex(c => c.name === cooldown.name);
+        if (spliceIndex >= 0) cooldowns.splice(spliceIndex, 1, cooldown);
+    });
+
+    let cooldowns_f = cooldowns.map(cooldown => {
+        let cooldownETA = dateTools.eta(cooldown.timestamp, true);
+
+        return "\`%VISUAL %NAME:\` %AVAILABILITY"
+            .replace("%VISUAL", cooldownETA ? "❌" : "✔️")
+            .replace("%NAME", stringTools.toTitleCase(cooldown.name.replace(/_/g, " ")))
+            .replace("%AVAILABILITY", bold(cooldownETA ? cooldownETA : "Available"));
+    });
 
     let embed = new EmbedBuilder()
         .setAuthor({ name: `${user.username} | cooldowns`, iconURL: user.avatarURL({ dynamic: true }) })

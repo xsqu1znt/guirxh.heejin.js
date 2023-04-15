@@ -19,7 +19,7 @@ module.exports = {
         // Check if the user has an active cooldown
         let cooldownETA_random = dateTools.eta(userData.cooldowns.get("random"), true);
         if (cooldownETA_random) return await interaction.editReply({
-            content: `You can drop again **${cooldownETA_random}**.`
+            content: `You can use random again **${cooldownETA_random}**.`
         });
 
         let xpGained = randomTools.number(xpRange.min, xpRange.max);
@@ -30,16 +30,16 @@ module.exports = {
             // Update the user
             userData.xp += xpGained;
             userData.balance += currencyGained;
-
-            // Set the user's cooldown
-            userData.cooldowns.set("random", dateTools.fromNow(userSettings.cooldowns.random));
-
-            // Send the update to the database
-            await userManager.update(interaction.user.id, {
-                xp: userData.xp, balance: userData.balance,
-                cooldowns: userData.cooldowns
-            });
         }
+
+        // Set the user's cooldown
+        userData.cooldowns.set("random", dateTools.fromNow(userSettings.cooldowns.random));
+
+        // Send the update to the database
+        await userManager.update(interaction.user.id, {
+            xp: userData.xp, balance: userData.balance,
+            cooldowns: userData.cooldowns
+        });
 
         // Create the embed
         let embed_random = new EmbedBuilder()
