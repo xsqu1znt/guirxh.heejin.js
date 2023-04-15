@@ -16,7 +16,7 @@ module.exports = {
 
         let embed_start = new EmbedBuilder()
             .setAuthor({ name: `Welcome, ${interaction.user.username}!`, iconURL: interaction.user.avatarURL({ dynamic: true }) })
-            .setDescription(`You got \`${botSettings.currencyIcon} ${userSettings.startingBalance}\``)
+            .setDescription(`You got \`${botSettings.currencyIcon} ${userSettings.currency.startingBalance}\``)
             .setColor(botSettings.embedColor || null);
 
         return await interaction.editReply({ embeds: [embed_start] });

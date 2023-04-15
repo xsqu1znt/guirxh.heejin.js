@@ -7,7 +7,7 @@ const schema_user = Schema({
 
     level: { type: Number, default: 1 },
     xp: { type: Number, default: 0 },
-    xp_for_next_level: { type: Number, default: 1000 },
+    xp_for_next_level: { type: Number, default: 50 },
 
     biography: { type: String, default: new String() },
     balance: { type: Number, default: 0 },

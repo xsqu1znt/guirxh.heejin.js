@@ -4,6 +4,26 @@
         "embedColor": ""
     },
     "userSettings": {
-        "startingBalance": 250
+        "xp": {
+            "maxLevel": 50,
+            "xpMultiplier": 50,
+            "xpRange": {
+                "min": 10,
+                "max": 250
+            }
+        },
+        "currency": {
+            "startingBalance": 250,
+            "currencyRange": {
+                "min": 10,
+                "max": 250
+            }
+        },
+        "chances": {
+            "winRandom": 40
+        },
+        "cooldowns": {
+            "random": "10s"
+        }
     }
 }

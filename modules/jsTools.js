@@ -117,10 +117,10 @@ function number_clamp(num, min, max) {
  * @param {number} unixInSeconds The UNIX date in seconds.
  * @param {boolean} ignorePast If true, returns null if the given date is before the current time.
  */
-function date_eta(unixInSeconds, ignorePast = false) {
-    if (!unixInSeconds) return null;
+function date_eta(unixInMilliseconds, ignorePast = false) {
+    if (!unixInMilliseconds) return null;
 
-    let duration = unixInSeconds - number_milliToSeconds(Date.now());
+    let duration = number_milliToSeconds(unixInMilliseconds - Date.now());
     if (ignorePast && duration < 0) return null;
 
     let formatter = new Intl.RelativeTimeFormat(undefined, { numeric: "auto" });
@@ -143,6 +143,33 @@ function date_eta(unixInSeconds, ignorePast = false) {
     });
 
     return formatter.format(duration.toFixed(), div.name);
+}
+
+/** Return a unix time from now + a given time string.
+ * @param {string} str The time to add.
+ * @param {"s" | "ms"} type The return type. (seconds | milliseconds)
+ * @example timeFromNow("1h"): 1681534527237
+ */
+function date_fromNow(str, type = "ms") {
+    let timeToAdd = str.match(/[a-zA-Z]+|[0-9]+/g);
+    let unix = Date.now();
+
+    switch (timeToAdd[1]) {
+        case "y": unix += (+timeToAdd[0] * 12 * 4 * 7 * 24 * 60 * 60 * 1000); break;
+        case "m": unix += (+timeToAdd[0] * 4 * 7 * 24 * 60 * 60 * 1000); break;
+        case "w": unix += (+timeToAdd[0] * 7 * 24 * 60 * 60 * 1000); break;
+        case "d": unix += (+timeToAdd[0] * 24 * 60 * 60 * 1000); break;
+        case "h": unix += (+timeToAdd[0] * 60 * 60 * 1000); break;
+        case "m": unix += (+timeToAdd[0] * 60 * 1000); break;
+        case "s": unix += (+timeToAdd[0] * 1000); break;
+        case "ms": unix += (+timeToAdd[0]); break;
+    }
+
+    switch (type) {
+        case "s": return number_milliToSeconds(unix);
+        case "ms": return unix;
+        default: return unix;
+    }
 }
 
 // ! Random
@@ -307,7 +334,8 @@ module.exports = {
 
     /** Functions useful for dealing with dates. */
     dateTools: {
-        eta: date_eta
+        eta: date_eta,
+        fromNow: date_fromNow
     },
 
     /** Functions useful for dealing with random. */
