@@ -78,12 +78,32 @@ function parse_toCardLike(card) {
 }
 
 function parse_fromCardLike(cardLike) {
-    let card = fetch_byGlobalID(cardLike.globalID);
-    return { ...card, ...cardLike };
+    return { ...fetch_byGlobalID(cardLike.globalID), ...cardLike };
 }
 
-//! Format
-function format_drop(card) {
+//! To String
+function toString_inventory(card, duplicateCount = 0, isFavorite = false) {
+    return "%EMOJI %GROUP - %SINGLE : %NAME :: LV. $LEVEL$DUPES\n%UID %GLOBAL_ID %CATEGORY %SET_ID%LOCKED%FAVORITED\n> %ABILITY :: %REPUTATION"
+        .replace("%EMOJI", inlineCode(card.emoji))
+        .replace("%GROUP", bold(card.group))
+        .replace("%SINGLE", card.single)
+        .replace("%NAME", card.name)
+        .replace("%LEVEL", card.stats.level)
+        .replace("%DUPES", duplicateCount > 0 ? inlineCode(`${duplicateCount} ${duplicateCount > 1 ? "Dupes" : "Dupe"}`) : "")
+
+        .replace("%UID", inlineCode(card.uid))
+        .replace("%GLOBAL_ID", inlineCode(card.global_id))
+        .replace("%CATEGORY", inlineCode(card.category))
+        .replace("%SET_ID", inlineCode(`👥${card.set_id}`))
+
+        .replace("%LOCKED", card?.locked ? inlineCode(" 🔒") : "")
+        .replace("%FAVORITED", isFavorite ? inlineCode(" 🌟") : "")
+
+        .replace("%ABILITY", inlineCode(`🎤 ABI. ${card.stats.ability}`))
+        .replace("%REPUTATION", inlineCode(`💖 REP. ${card.stats.reputation}`));
+}
+
+function toString_drop(card) {
     return "%EMOJI %GROUP - %SINGLE : %NAME\n> %UID %GLOBAL_ID %CATEGORY %SET_ID\n> %ABILITY :: %REPUTATION"
         .replace("%EMOJI", inlineCode(card.emoji))
         .replace("%GROUP", bold(card.group))
@@ -109,7 +129,8 @@ module.exports = {
         fromCardLike: parse_fromCardLike
     },
 
-    format: {
-        drop: format_drop
+    toString: {
+        drop: toString_drop,
+        inventory: toString_inventory
     }
 };

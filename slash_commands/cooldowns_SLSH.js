@@ -4,8 +4,7 @@ const { userCooldowns_ES } = require('../modules/embedStyles');
 const { userManager } = require('../modules/mongo');
 
 module.exports = {
-    builder: new SlashCommandBuilder().setName("cooldowns")
-        .setDescription("Check your cooldowns"),
+    builder: new SlashCommandBuilder().setName("cooldowns").setDescription("Check your cooldowns"),
 
     /**
      * @param {Client} client

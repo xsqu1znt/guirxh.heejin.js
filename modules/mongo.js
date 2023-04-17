@@ -129,29 +129,42 @@ async function user_tryLevelUp(userID, userData = null) {
 }
 
 //! User -> Card Inventory
-async function userInventory_addCards(userID, cards, resetUID = false) {
+async function cardInventory_addCards(userID, cards, resetUID = false) {
     // Convert a single card into an array
     if (!Array.isArray(cards)) cards = [cards];
 
-    // Get the user's current card for unique ID creation
-    let userCards; if (resetUID) userCards = { cards } = await user_fetch(userID, "cards", true);
+    // Get the user's current cards for unique ID creation
+    let userCards; if (resetUID) userCards = (await user_fetch(userID, "cards", true)).card_inventory;
 
+    let promiseArray = [];
     for (let card of cards) {
         // Reset the unique ID
-        if (resetUID) cardManager.resetUID(card, userCards)
+        if (resetUID) card = cardManager.resetUID(card, userCards);
 
-        let { CardsV2: cards } = await models.userInventory.findOne({ UserID: userID }, { CardsV2: 1, _id: 0 });
+        // Convert the card object to a slimmer "CardLike" object
+        card = cardManager.parse.toCardLike(card);
 
-        // Add the card to the user's inventory
-        cards.set(String(card.CardID), card);
-
-        // Push the update to the database
-        await models.userInventory.updateOne({ UserID: userID }, { CardsV2: cards });
+        // Push the CardLike to the user's card_inventory in Mongo
+        promiseArray.push(user_update(userID, { $push: { card_inventory: card } }));
     }
+
+    // Wait for Mongo to finish
+    await Promise.all(promiseArray); return;
+}
+
+async function cardInventory_removeCards(userID, cardUIDS) {
+    // Convert a single card UID into an array
+    if (!Array.isArray(cardUIDS)) cardUIDS = [cardUIDS];
+
+    // Parse into an array of filters for Mongo
+    cardUIDS = cardUIDS.map(uid => ({ uid }));
+
+    // Send the pull request to Mongo
+    await user_update(userID, { $pullAll: { card_inventory: cardUIDS } }); return;
 }
 
 module.exports = {
-    /** Connect to MongoDB */
+    /** Connect to MongoDB. */
     connect: () => {
         mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
             .then(() => logger.success("successfully connected to MongoDB"))
@@ -163,6 +176,12 @@ module.exports = {
         fetch: user_fetch,
         update: user_update,
         new: user_new,
-        tryLevelUp: user_tryLevelUp
+
+        tryLevelUp: user_tryLevelUp,
+
+        cards: {
+            add: cardInventory_addCards,
+            remove: cardInventory_removeCards
+        }
     }
 };

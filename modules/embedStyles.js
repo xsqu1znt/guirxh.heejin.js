@@ -2,14 +2,14 @@ const { EmbedBuilder, quote, inlineCode, bold } = require('discord.js');
 
 const { botSettings } = require('../configs/heejinSettings.json');
 const { stringTools, dateTools } = require('../modules/jsTools');
-const { cardnventoryParser } = require('../modules/userParser');
+const { cardnventoryParser, cardInventoryParser } = require('../modules/userParser');
 const cardManager = require('../modules/cardManager');
 
 // Command -> /DROP
 function generalDrop(user, card, dropTitle = "drop", isDuplicate = false) {
     let embed = new EmbedBuilder()
         .setAuthor({ name: `${user.username} | ${dropTitle}`, iconURL: user.avatarURL({ dynamic: true }) })
-        .setDescription(cardManager.format.drop(card))
+        .setDescription(cardManager.toString.drop(card))
         .setColor(botSettings.embedColor || null);
 
     if (card.imageURL) embed.setImage(card.imageURL);
@@ -86,11 +86,72 @@ function userCooldowns(user, userData) {
     return embed;
 }
 
+// Command -> User -> /INVENTORY
+/**
+ * @param {"global" | "set"} sorting
+ * @param {"ascending" | "descending"} order
+ */
+function userInventory(userData, sorting = "global", order = "ascending") {
+    let userCards = userData.card_inventory;
+    
+    // Sort the cards
+    switch (sorting) {
+        case "global": userCards = userCards.sort((a, b) => a.globalID - b.globalID); break;
+        case "set": userCards = userCards.sort((a, b) => a.setID - b.setID); break;
+    }
+
+    if (order === "decending") userCards.reverse();
+
+    // Parse every card in the (cards) array into a readable [String] entry
+    // then split the array into groups of 10 cards each
+    // so we can easily create embed inventory pages of only 10 entries per
+    let userCards_f = [];
+
+    for (let card of userCards) {
+        // We subtract 1 from the total so it doesn't count the primary (main) card
+        let { card_duplicates } = cardInventoryParser.duplicates(userCards, { globalID: card.globalID });
+
+        // Whether or not this is the user's favorited card
+        let isFavorite = (userData.card_favorite_uid === card.uid);
+
+        // Parse the CardLike object into a fully detailed card
+        card = cardManager.parse.fromCardLike(card);
+
+        userCards_f.push(cardManager.toString.inventory(card, card_duplicates.length, isFavorite));
+    }
+
+    // Max of 10 entires per page
+    userCards_f = arrayTools.chunk(userCards_f, 10);
+
+    // Create an array to store the inventory pages for easy pagination
+    let embeds = [];
+
+    // Keep track of the page index
+    let pageIndex = 1;
+
+    // Go through each group in (cards_f) and create an embed for it
+    for (let group of userCards_f) {
+        // Create a new embed for this inventory page
+        let embed_page = new EmbedBuilder()
+            .setAuthor({ name: `${member.displayName} | inventory`, iconURL: member.user.avatarURL({ dynamic: true }) })
+            .setDescription(group[0] ? group.join("\n") : "try doing \`/drop\` to start filling up your inventory!")
+            .setFooter({ text: `page ${pageIndex++} of ${userCards_f.length || 1} • total ${userCards.length}` })
+            .setColor(SystemConfig.EmbedColor);
+
+        // Push the newly created embed to our collection
+        embeds.push(embed_page);
+    };
+
+    // Return the embed array
+    return embeds;
+}
+
 module.exports = {
     // General Commands
     generalDrop_ES: generalDrop,
 
     // User Commands
     userProfile_ES: userProfile,
-    userCooldowns_ES: userCooldowns
+    userCooldowns_ES: userCooldowns,
+    userInventory_ES: userInventory
 };

@@ -4,8 +4,7 @@ const { userManager } = require('../modules/mongo');
 const { userProfile_ES } = require('../modules/embedStyles');
 
 module.exports = {
-    builder: new SlashCommandBuilder().setName("profile")
-        .setDescription("View your profile"),
+    builder: new SlashCommandBuilder().setName("profile").setDescription("View your profile"),
 
     /**
      * @param {Client} client

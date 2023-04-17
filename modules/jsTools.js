@@ -172,6 +172,33 @@ function date_fromNow(str, type = "ms") {
     }
 }
 
+/** Parse a given time string into milliseconds/seconds.
+ * @param {string} str The time string to parse.
+ * @param {"s" | "ms"} type The return type. (seconds | milliseconds)
+ * @example parseStr("1m"): 60000
+ */
+function date_parseStr(str, type = "ms") {
+    let time = str.match(/[a-zA-Z]+|[0-9]+/g);
+    let parsed = 0;
+
+    switch (time[1]) {
+        case "y": parsed = (+time[0] * 12 * 4 * 7 * 24 * 60 * 60 * 1000); break;
+        case "m": parsed = (+time[0] * 4 * 7 * 24 * 60 * 60 * 1000); break;
+        case "w": parsed = (+time[0] * 7 * 24 * 60 * 60 * 1000); break;
+        case "d": parsed = (+time[0] * 24 * 60 * 60 * 1000); break;
+        case "h": parsed = (+time[0] * 60 * 60 * 1000); break;
+        case "m": parsed = (+time[0] * 60 * 1000); break;
+        case "s": parsed = (+time[0] * 1000); break;
+        case "ms": parsed = (+time[0]); break;
+    }
+
+    switch (type) {
+        case "s": return number_milliToSeconds(parsed);
+        case "ms": return parsed;
+        default: return parsed;
+    }
+}
+
 // ! Random
 /** Has a 50% chance to return true/false. */
 function random_chance50() {
@@ -335,7 +362,8 @@ module.exports = {
     /** Functions useful for dealing with dates. */
     dateTools: {
         eta: date_eta,
-        fromNow: date_fromNow
+        fromNow: date_fromNow,
+        parseStr: date_parseStr
     },
 
     /** Functions useful for dealing with random. */

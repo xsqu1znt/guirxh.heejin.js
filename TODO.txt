@@ -1,0 +1,5 @@
+/event start
+/event addCards
+/event retireCards
+/event restoreRetiredCards
+/event end

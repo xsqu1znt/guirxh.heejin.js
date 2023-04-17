@@ -1,7 +1,11 @@
 {
     "botSettings": {
+        "currentEvent": "none",
         "currencyIcon": "🥕",
-        "embedColor": ""
+        "embedColor": "",
+        "timeout": {
+            "pagination": "60s"
+        }
     },
     "userSettings": {
         "xp": {
