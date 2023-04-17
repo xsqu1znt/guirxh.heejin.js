@@ -83,7 +83,7 @@ function parse_fromCardLike(cardLike) {
 
 //! To String
 function toString_inventory(card, duplicateCount = 0, isFavorite = false) {
-    return "%EMOJI %GROUP - %SINGLE : %NAME :: LV. $LEVEL$DUPES\n%UID %GLOBAL_ID %CATEGORY %SET_ID%LOCKED%FAVORITED\n> %ABILITY :: %REPUTATION"
+    return "%EMOJI %GROUP - %SINGLE : %NAME :: LV. %LEVEL %DUPES\n> %UID %GLOBAL_ID %CATEGORY %SET_ID%LOCKED%FAVORITED\n> %ABILITY :: %REPUTATION"
         .replace("%EMOJI", inlineCode(card.emoji))
         .replace("%GROUP", bold(card.group))
         .replace("%SINGLE", card.single)
@@ -92,9 +92,9 @@ function toString_inventory(card, duplicateCount = 0, isFavorite = false) {
         .replace("%DUPES", duplicateCount > 0 ? inlineCode(`${duplicateCount} ${duplicateCount > 1 ? "Dupes" : "Dupe"}`) : "")
 
         .replace("%UID", inlineCode(card.uid))
-        .replace("%GLOBAL_ID", inlineCode(card.global_id))
+        .replace("%GLOBAL_ID", inlineCode(card.globalID))
         .replace("%CATEGORY", inlineCode(card.category))
-        .replace("%SET_ID", inlineCode(`👥${card.set_id}`))
+        .replace("%SET_ID", inlineCode(`👥${card.setID}`))
 
         .replace("%LOCKED", card?.locked ? inlineCode(" 🔒") : "")
         .replace("%FAVORITED", isFavorite ? inlineCode(" 🌟") : "")
@@ -110,9 +110,9 @@ function toString_drop(card) {
         .replace("%SINGLE", card.single)
         .replace("%NAME", card.name)
         .replace("%UID", inlineCode(card.uid))
-        .replace("%GLOBAL_ID", inlineCode(card.global_id))
+        .replace("%GLOBAL_ID", inlineCode(card.globalID))
         .replace("%CATEGORY", inlineCode(card.category))
-        .replace("%SET_ID", inlineCode(`👥${card.set_id}`))
+        .replace("%SET_ID", inlineCode(`👥${card.setID}`))
         .replace("%ABILITY", inlineCode(`🎤 ABI. ${card.stats.ability}`))
         .replace("%REPUTATION", inlineCode(`💖 REP. ${card.stats.reputation}`));
 }

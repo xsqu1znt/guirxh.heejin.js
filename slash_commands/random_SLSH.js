@@ -5,7 +5,8 @@ const { randomTools, dateTools } = require('../modules/jsTools');
 const { userManager } = require('../modules/mongo');
 
 module.exports = {
-    builder: new SlashCommandBuilder().setName("random").setDescription("Get a random amount of carrots"),
+    builder: new SlashCommandBuilder().setName("random")
+        .setDescription("Get a random amount of carrots"),
 
     /**
      * @param {Client} client

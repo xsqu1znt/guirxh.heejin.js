@@ -12,8 +12,7 @@ async function message_destroyMessageAfter(message, time) {
  * @param {{ ephemeral: false, followUp: false, timeout: 10000 }} options 
  */
 async function message_paginationify(interaction, embeds, options) {
-    let options_default = { ephemeral: false, followUp: false, timeout: 10000 };
-    options = { ...options_default, ...options };
+    options = { ephemeral: false, followUp: false, timeout: 10000, ...options };
 
     // Fail-safe if the the (embeds) parameter isn't an array
     if (!Array.isArray(embeds)) return;
@@ -67,8 +66,8 @@ async function message_paginationify(interaction, embeds, options) {
     let filter = i => i.user.id === interaction.user.id;
     let collector = fetchedReply.createMessageComponentCollector({ filter, componentType: ComponentType.Button, time: options.timeout });
     collector.on("collect", async i => {
-        // Defer the interaction and reswt the collector's timer
-        // await i.deferUpdate();
+        // Defer the interaction and reset the collector's timer
+        await i.deferUpdate();
         collector.resetTimer();
 
         // Execute action for whichever button was pressed

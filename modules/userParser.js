@@ -13,12 +13,22 @@ function cardInventory_get(cardArray, uid) {
     }
 } */
 
+/** Filter out duplicate cards from the user's card_inventory. */
+function cardInventory_primary(cardArray) {
+    cardArray = cardArray.reduce((accumulator, current) => {
+        if (!accumulator.find(c => c.globalID === current.globalID)) accumulator.push(current);
+
+        return accumulator;
+    }, []);
+
+    return cardArray;
+}
+
 /** Return all duplicates of the given card found using the filter.
  * @param {{uid: string, globalID: string}} filter 
  */
 function cardInventory_duplicates(cardArray, filter = { uid: "", globalID: "" }) {
-    let filter_default = { uid: "", globalID: "" };
-    let filter = { ...filter_default, ...filter };
+    filter = { uid: "", globalID: "", ...filter };
 
     // Find the card in the user's card_inventory using the provided filter
     let card_primary;
@@ -40,6 +50,7 @@ function cardInventory_duplicates(cardArray, filter = { uid: "", globalID: "" })
 module.exports = {
     cardInventoryParser: {
         get: cardInventory_get,
+        primary: cardInventory_primary,
         duplicates: cardInventory_duplicates
     }
 };

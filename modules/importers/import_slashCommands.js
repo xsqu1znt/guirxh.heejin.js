@@ -13,7 +13,7 @@ function importSlashCommands(dir) {
         try {
             slash_commands.push(require(`${dir}/${entry}`));
         } catch (err) {
-            logger.error("Failed to import slash command", `at: \'${join(dir, entry)}\'`, err);
+            logger.error("Failed to import slash command", `at: \'${`${dir}/${entry}`}\'`, err);
         }
     } else { // In the case of a folder within the root slash command directory
         let _nested = readdirSync(`.${dir}/${entry}`).filter(file_name => file_name.endsWith('.js'));

@@ -4,7 +4,8 @@ const { userSettings, botSettings } = require('../configs/heejinSettings.json');
 const { userManager } = require('../modules/mongo');
 
 module.exports = {
-    builder: new SlashCommandBuilder().setName("start").setDescription("Start your journey"),
+    builder: new SlashCommandBuilder().setName("start")
+        .setDescription("Start your journey"),
 
     /**
      * @param {Client} client
