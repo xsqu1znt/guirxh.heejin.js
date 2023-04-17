@@ -1,6 +1,7 @@
 // Connects us to our Mongo database so we can save and retrieve data.
 
 const { userSettings } = require('../configs/heejinSettings.json');
+const cardManager = require('./cardManager');
 const logger = require('./logger');
 
 // Models
@@ -11,8 +12,7 @@ const models = {
 const mongoose = require('mongoose');
 const MONGO_URI = process.env.MONGO_URI;
 
-//! Database Functions
-// Users
+//! User
 async function user_exists(userID) {
     let exists = await models.user.exists({ _id: userID });
     return exists ? true : false;
@@ -126,6 +126,28 @@ async function user_tryLevelUp(userID, userData = null) {
 
     // Return the answer
     return res;
+}
+
+//! User -> Card Inventory
+async function userInventory_addCards(userID, cards, resetUID = false) {
+    // Convert a single card into an array
+    if (!Array.isArray(cards)) cards = [cards];
+
+    // Get the user's current card for unique ID creation
+    let userCards; if (resetUID) userCards = { cards } = await user_fetch(userID, "cards", true);
+
+    for (let card of cards) {
+        // Reset the unique ID
+        if (resetUID) cardManager.resetUID(card, userCards)
+
+        let { CardsV2: cards } = await models.userInventory.findOne({ UserID: userID }, { CardsV2: 1, _id: 0 });
+
+        // Add the card to the user's inventory
+        cards.set(String(card.CardID), card);
+
+        // Push the update to the database
+        await models.userInventory.updateOne({ UserID: userID }, { CardsV2: cards });
+    }
 }
 
 module.exports = {

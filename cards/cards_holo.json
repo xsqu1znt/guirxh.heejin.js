@@ -1,0 +1,362 @@
+[
+  {
+    "name": "Lisa",
+    "group": "HOLO",
+    "single": "BLɅϽKPIИK",
+    "category": "holo",
+    "description": "Special - Holo",
+    "emoji": "✨",
+    "globalID": "1020",
+    "setID": "101",
+    "rarity": "holo",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1025778857317511248/hololisa.gif"
+  },
+  {
+    "name": "Taeyeon",
+    "group": "HOLO",
+    "single": "Girls' Generation",
+    "category": "holo",
+    "description": "Special - Holo",
+    "emoji": "✨",
+    "globalID": "1003",
+    "setID": "101",
+    "rarity": "holo",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1018221315603316757/holotaeyeon.gif"
+  },
+  {
+    "name": "San",
+    "group": "HOLO",
+    "single": "ATEEZ",
+    "category": "holo",
+    "description": "Special - Holo",
+    "emoji": "✨",
+    "globalID": "1007",
+    "setID": "101",
+    "rarity": "holo",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1020736055957274846/holosan.gif"
+  },
+  {
+    "name": "Seulgi",
+    "group": "HOLO",
+    "single": "Red Velvet",
+    "category": "holo",
+    "description": "Special - Holo",
+    "emoji": "✨",
+    "globalID": "1008",
+    "setID": "101",
+    "rarity": "holo",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1020736056317972541/holoseulgi.gif"
+  },
+  {
+    "name": "Baekhyun",
+    "group": "HOLO",
+    "single": "EXO",
+    "category": "holo",
+    "description": "Special - Holo",
+    "emoji": "✨",
+    "globalID": "1013",
+    "setID": "101",
+    "rarity": "holo",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1023232509758144559/holobaekhyun.gif"
+  },
+  {
+    "name": "Sullyoon",
+    "group": "HOLO",
+    "single": "NMIXX",
+    "category": "holo",
+    "description": "Special - Holo",
+    "emoji": "✨",
+    "globalID": "1015",
+    "setID": "101",
+    "rarity": "holo",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1023232510915780699/holosullyoon.gif"
+  },
+  {
+    "name": "Jisung",
+    "group": "HOLO",
+    "single": "NCT",
+    "category": "holo",
+    "description": "Special - Holo",
+    "emoji": "✨",
+    "globalID": "1018",
+    "setID": "101",
+    "rarity": "holo",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1025778856457678940/holojisung.gif"
+  },
+  {
+    "name": "Juyeon",
+    "group": "HOLO",
+    "single": "THE BOYZ",
+    "category": "holo",
+    "description": "Special - Holo",
+    "emoji": "✨",
+    "globalID": "1001",
+    "setID": "101",
+    "rarity": "holo",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1018221315032879104/holojuyeon.gif"
+  },
+  {
+    "name": "Nayeon",
+    "group": "HOLO",
+    "single": "TWICE",
+    "category": "holo",
+    "description": "Special - Holo",
+    "emoji": "✨",
+    "globalID": "1002",
+    "setID": "101",
+    "rarity": "holo",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1018221315297116281/holonayeon.gif"
+  },
+  {
+    "name": "Bang Chan",
+    "group": "HOLO",
+    "single": "Stray Kids",
+    "category": "holo",
+    "description": "Special - Holo",
+    "emoji": "✨",
+    "globalID": "1006",
+    "setID": "101",
+    "rarity": "holo",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1020736055579783270/holobangchan.gif"
+  },
+  {
+    "name": "Taemin",
+    "group": "HOLO",
+    "single": "SHINee",
+    "category": "holo",
+    "description": "Special - Holo",
+    "emoji": "✨",
+    "globalID": "1009",
+    "setID": "101",
+    "rarity": "holo",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1020736057765019770/holotaemin.gif"
+  },
+  {
+    "name": "Karina",
+    "group": "HOLO",
+    "single": "æspa",
+    "category": "holo",
+    "description": "Special - Holo",
+    "emoji": "✨",
+    "globalID": "1019",
+    "setID": "101",
+    "rarity": "holo",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1025778856935821362/holokarina.gif"
+  },
+  {
+    "name": "Wonyoung",
+    "group": "HOLO",
+    "single": "IVE",
+    "category": "holo",
+    "description": "Special - Holo",
+    "emoji": "✨",
+    "globalID": "1010",
+    "setID": "101",
+    "rarity": "holo",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1020736058264137738/holowonyoung.gif"
+  },
+  {
+    "name": "Chaewon",
+    "group": "HOLO",
+    "single": "LE SSERAFIM",
+    "category": "holo",
+    "description": "Special - Holo",
+    "emoji": "✨",
+    "globalID": "1016",
+    "setID": "101",
+    "rarity": "holo",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1025778855346188399/holochaewon.gif"
+  },
+  {
+    "name": "Eunwoo",
+    "group": "HOLO",
+    "single": "ASTRO",
+    "category": "holo",
+    "description": "Special - Holo",
+    "emoji": "✨",
+    "globalID": "1017",
+    "setID": "101",
+    "rarity": "holo",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1025778855815958538/holoeunwoo.gif"
+  },
+  {
+    "name": "Taeyong",
+    "group": "HOLO",
+    "single": "NCT",
+    "category": "holo",
+    "description": "Special - Holo",
+    "emoji": "✨",
+    "globalID": "1004",
+    "setID": "101",
+    "rarity": "holo",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1018221315951435916/holotaeyong.gif"
+  },
+  {
+    "name": "V",
+    "group": "HOLO",
+    "single": "BTS",
+    "category": "holo",
+    "description": "Special - Holo",
+    "emoji": "✨",
+    "globalID": "1005",
+    "setID": "101",
+    "rarity": "holo",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1018221316282798190/holov.gif"
+  },
+  {
+    "name": "Jinyoung",
+    "group": "HOLO",
+    "single": "CIX",
+    "category": "holo",
+    "description": "Special - Holo",
+    "emoji": "✨",
+    "globalID": "1011",
+    "setID": "101",
+    "rarity": "holo",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1023232510508945439/holojinyoung.gif"
+  },
+  {
+    "name": "Yeonjun",
+    "group": "HOLO",
+    "single": "TXT",
+    "category": "holo",
+    "description": "Special - Holo",
+    "emoji": "✨",
+    "globalID": "1012",
+    "setID": "101",
+    "rarity": "holo",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1023232509280014376/hoiloyeonjun.gif"
+  },
+  {
+    "name": "Chuu",
+    "group": "HOLO",
+    "single": "LOOΠΔ",
+    "category": "holo",
+    "description": "Special - Holo",
+    "emoji": "✨",
+    "globalID": "1014",
+    "setID": "101",
+    "rarity": "holo",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1023232510156607578/holochuu.gif"
+  }
+]

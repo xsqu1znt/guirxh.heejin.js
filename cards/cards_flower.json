@@ -1,0 +1,542 @@
+[
+  {
+    "name": "Joy",
+    "group": "FLOWER",
+    "single": "Red Velvet",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "🍀",
+    "globalID": "1027",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1036046814358544435/flower_joy.png"
+  },
+  {
+    "name": "V",
+    "group": "FLOWER",
+    "single": "BTS",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "🍀",
+    "globalID": "1029",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1036046815759454218/flower_v.png"
+  },
+  {
+    "name": "BamBam",
+    "group": "FLOWER",
+    "single": "GOT7",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "⚛️",
+    "globalID": "1031",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037106658779869234/flower_bambam.png"
+  },
+  {
+    "name": "Sungchan",
+    "group": "FLOWER",
+    "single": "NCT",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "⚛️",
+    "globalID": "1034",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037106660465975406/flower_sungchan.png"
+  },
+  {
+    "name": "Onda",
+    "group": "FLOWER",
+    "single": "EVERGLOW",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "⚛️",
+    "globalID": "1033",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037106659966857387/flower_onda.png"
+  },
+  {
+    "name": "Yeowool",
+    "group": "FLOWER",
+    "single": "PURPLEBECK",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "🌼",
+    "globalID": "1025",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037103911758221484/flower_Yeowool.png"
+  },
+  {
+    "name": "Go Won",
+    "group": "FLOWER",
+    "single": "LOOΠΔ",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "🍀",
+    "globalID": "1026",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1036046813410631760/flower_gowon.png"
+  },
+  {
+    "name": "Yerim",
+    "group": "FLOWER",
+    "single": "PURPLEBECK",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "🍀",
+    "globalID": "1030",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1036046816115953674/flower_yerim.png"
+  },
+  {
+    "name": "Jaehyun",
+    "group": "FLOWER",
+    "single": "NCT",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "⚛️",
+    "globalID": "1032",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037106659400634409/flower_jaehyun.png"
+  },
+  {
+    "name": "Soobin",
+    "group": "FLOWER",
+    "single": "TXT",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "*️⃣",
+    "globalID": "1038",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037106662349222049/flower_soobin.png"
+  },
+  {
+    "name": "Jungwoo",
+    "group": "FLOWER",
+    "single": "NCT",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "*️⃣",
+    "globalID": "1036",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037106661241925824/flower_jungwoo.png"
+  },
+  {
+    "name": "Yoohyeon",
+    "group": "FLOWER",
+    "single": "Dreamcatcher",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "⚛️",
+    "globalID": "1035",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037106660898000907/flower_yoohyeon.png"
+  },
+  {
+    "name": "Ni-Ki",
+    "group": "FLOWER",
+    "single": "ENHYPEN",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "🍀",
+    "globalID": "1028",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1036046814685712474/flower_niki.png"
+  },
+  {
+    "name": "Sullyoon",
+    "group": "FLOWER",
+    "single": "NMIXX",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "*️⃣",
+    "globalID": "1039",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037106662743482478/flower_sullyoon.png"
+  },
+  {
+    "name": "Eunwoo",
+    "group": "FLOWER",
+    "single": "ASTRO",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "🌼",
+    "globalID": "1021",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1036046813091860520/flower_eunwoo.png"
+  },
+  {
+    "name": "Jisung",
+    "group": "FLOWER",
+    "single": "NCT",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "🌼",
+    "globalID": "1023",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1036046814064939018/flower_jisung.png"
+  },
+  {
+    "name": "Seunghun",
+    "group": "FLOWER",
+    "single": "CIX",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "🌼",
+    "globalID": "1024",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1036046815063183390/flower_seunghun.png"
+  },
+  {
+    "name": "Minho",
+    "group": "FLOWER",
+    "single": "SHINee",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "*️⃣",
+    "globalID": "1037",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037106661875261550/flower_minho.png"
+  },
+  {
+    "name": "IU",
+    "group": "FLOWER",
+    "single": "Solo",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "🌼",
+    "globalID": "1022",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1036046813746188298/flower_iu.png"
+  },
+  {
+    "name": "Tzuyu",
+    "group": "FLOWER",
+    "single": "TWICE",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "*️⃣",
+    "globalID": "1040",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037106663146139688/flower_tzuyu.png"
+  },
+  {
+    "name": "Minseo",
+    "group": "FLOWER",
+    "single": "DRIPPIN",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "🌸",
+    "globalID": "1044",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043597867580936354/flower_minseo.png"
+  },
+  {
+    "name": "Youngbin",
+    "group": "FLOWER",
+    "single": "SF9",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "🌸",
+    "globalID": "1042",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043597866926608514/flower_youngbin.png"
+  },
+  {
+    "name": "Yuna",
+    "group": "FLOWER",
+    "single": "ITZY",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "🏵️",
+    "globalID": "1047",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043597868583374929/flower_yuna.png"
+  },
+  {
+    "name": "Jungkook",
+    "group": "FLOWER",
+    "single": "BTS",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "🏵️",
+    "globalID": "1048",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043597868948263013/flower_jungkook.png"
+  },
+  {
+    "name": "Gaeul",
+    "group": "FLOWER",
+    "single": "IVE",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "🌸",
+    "globalID": "1043",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043597867262148668/flower_gaeul.png"
+  },
+  {
+    "name": "D.O.",
+    "group": "FLOWER",
+    "single": "EXO",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "🏵️",
+    "globalID": "1046",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043597868231032872/flower_do.png"
+  },
+  {
+    "name": "Seonghwa",
+    "group": "FLOWER",
+    "single": "ATEEZ",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "🌸",
+    "globalID": "1041",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043597866473619588/flower_seonghwa.png"
+  },
+  {
+    "name": "Solar",
+    "group": "FLOWER",
+    "single": "MAMAMOO",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "🌸",
+    "globalID": "1045",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043597867903881226/flower_solar.png"
+  },
+  {
+    "name": "AleXa",
+    "group": "FLOWER",
+    "single": "Solo",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "🏵️",
+    "globalID": "1049",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043597869254443028/flower_alexa.png"
+  },
+  {
+    "name": "Intak",
+    "group": "FLOWER",
+    "single": "P1Harmony",
+    "category": "flwr",
+    "description": "Special - Flower",
+    "emoji": "🏵️",
+    "globalID": "1050",
+    "setID": "102",
+    "rarity": "flower",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043597869548064848/flower_intak.png"
+  }
+]

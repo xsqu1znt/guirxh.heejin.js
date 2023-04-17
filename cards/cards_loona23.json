@@ -1,0 +1,218 @@
+[
+  {
+    "name": "Olivia Hye",
+    "group": "LOOΠΔ",
+    "single": "Egoist",
+    "category": "mint",
+    "description": "LOOΠΔ - Solo",
+    "emoji": "🐺",
+    "globalID": "1212",
+    "setID": "120",
+    "rarity": "loona23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715778311368746/egoist_oliviahye.png"
+  },
+  {
+    "name": "Yves",
+    "group": "LOOΠΔ",
+    "single": "new",
+    "category": "mint",
+    "description": "LOOΠΔ - Solo",
+    "emoji": "🦢",
+    "globalID": "1209",
+    "setID": "120",
+    "rarity": "loona23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715808933982239/new_yves.png"
+  },
+  {
+    "name": "HeeJin",
+    "group": "LOOΠΔ",
+    "single": "ViViD",
+    "category": "mint",
+    "description": "LOOΠΔ - Solo",
+    "emoji": "🐰",
+    "globalID": "1201",
+    "setID": "120",
+    "rarity": "loona23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715810200670319/vivid_heejin.png"
+  },
+  {
+    "name": "HyunJin",
+    "group": "LOOΠΔ",
+    "single": "Around You",
+    "category": "mint",
+    "description": "LOOΠΔ - Solo",
+    "emoji": "🐱",
+    "globalID": "1202",
+    "setID": "120",
+    "rarity": "loona23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715777556385812/aroundyou_hyunjin.png"
+  },
+  {
+    "name": "ViVi",
+    "group": "LOOΠΔ",
+    "single": "Everyday I Love You",
+    "category": "mint",
+    "description": "LOOΠΔ - Solo",
+    "emoji": "🦌",
+    "globalID": "1205",
+    "setID": "120",
+    "rarity": "loona23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715778726596688/everydayily_vivi.png"
+  },
+  {
+    "name": "Kim Lip",
+    "group": "LOOΠΔ",
+    "single": "Eclipse",
+    "category": "mint",
+    "description": "LOOΠΔ - Solo",
+    "emoji": "🦉",
+    "globalID": "1206",
+    "setID": "120",
+    "rarity": "loona23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715777938063402/eclipse_kimlip.png"
+  },
+  {
+    "name": "JinSoul",
+    "group": "LOOΠΔ",
+    "single": "Singing In The Rain",
+    "category": "mint",
+    "description": "LOOΠΔ - Solo",
+    "emoji": "🐟",
+    "globalID": "1207",
+    "setID": "120",
+    "rarity": "loona23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715809802203176/sitr_jinsoul.png"
+  },
+  {
+    "name": "Go Won",
+    "group": "LOOΠΔ",
+    "single": "One & Only",
+    "category": "mint",
+    "description": "LOOΠΔ - Solo",
+    "emoji": "🦋",
+    "globalID": "1211",
+    "setID": "120",
+    "rarity": "loona23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715809357615144/oneonly_gowon.png"
+  },
+  {
+    "name": "YeoJin",
+    "group": "LOOΠΔ",
+    "single": "Kiss Later",
+    "category": "mint",
+    "description": "LOOΠΔ - Solo",
+    "emoji": "🐸",
+    "globalID": "1204",
+    "setID": "120",
+    "rarity": "loona23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715807746990120/kisslater_yeojin.png"
+  },
+  {
+    "name": "Chuu",
+    "group": "LOOΠΔ",
+    "single": "Heart Attack",
+    "category": "mint",
+    "description": "LOOΠΔ - Solo",
+    "emoji": "🐧",
+    "globalID": "1210",
+    "setID": "120",
+    "rarity": "loona23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715807344349294/heartattack_chuu.png"
+  },
+  {
+    "name": "Choerry",
+    "group": "LOOΠΔ",
+    "single": "Love Cherry Motion",
+    "category": "mint",
+    "description": "LOOΠΔ - Solo",
+    "emoji": "🦇",
+    "globalID": "1208",
+    "setID": "120",
+    "rarity": "loona23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715808170618890/lcm_choerry.png"
+  },
+  {
+    "name": "HaSeul",
+    "group": "LOOΠΔ",
+    "single": "Let Me In",
+    "category": "mint",
+    "description": "LOOΠΔ - Solo",
+    "emoji": "🐦",
+    "globalID": "1203",
+    "setID": "120",
+    "rarity": "loona23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715808556490752/letmein_haseul.png"
+  }
+]

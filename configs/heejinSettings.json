@@ -23,10 +23,10 @@
             "winRandom": 40
         },
         "cooldowns": {
-            "drop1": "5s",
-            "drop2": "5s",
-            "drop3": "5s",
-            "drop4": "5s",
+            "drop_1": "5s",
+            "drop_2": "5s",
+            "drop_3": "5s",
+            "drop_4": "5s",
             "drop_weekly": "5s",
             "drop_seasonal": "5s",
             "drop_event": "5s",

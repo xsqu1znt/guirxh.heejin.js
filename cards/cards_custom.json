@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Custom",
+    "group": "Custom",
+    "single": "CUST01",
+    "category": "cust",
+    "description": "Custom - CUST01",
+    "emoji": "📝",
+    "globalID": "101",
+    "setID": "100",
+    "rarity": "custom",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1088081215271223377/custom_cust01.png"
+  },
+  {
+    "name": "Custom",
+    "group": "Custom",
+    "single": "CUST03",
+    "category": "cust",
+    "description": "Custom - CUST03",
+    "emoji": "📝",
+    "globalID": "103",
+    "setID": "100",
+    "rarity": "custom",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1088081215854223451/custom_cust03.png"
+  },
+  {
+    "name": "Custom",
+    "group": "Custom",
+    "single": "CUST02",
+    "category": "cust",
+    "description": "Custom - CUST02",
+    "emoji": "📝",
+    "globalID": "102",
+    "setID": "100",
+    "rarity": "custom",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1088081215606755398/custom_cust02.png"
+  }
+]

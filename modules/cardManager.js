@@ -13,10 +13,36 @@ const cards = {
     event: [],
 };
 
+let cards_all = []; Object.keys(cards).forEach(key => cards_all = [...cards_all, ...cards[key]]);
+
+//! General
+function resetUID(card, userCards = null) {
+    let newUID = () => randomTools.numberString(6);
+
+    if (userCards) {
+        let uid = newUID();
+
+        // Loop this function until we have a unique UID
+        if (userCards.find(card => card.uid === uid))
+            return this.resetUID(card, userCards);
+
+        card.uid = uid;
+    } else card.uid = newUID();
+
+    // Return the card
+    return card;
+}
+
+//! Fetch
+function fetch_byGlobalID(globalID) {
+    let card = cards_all.find(card => card.globalID === globalID);
+    return card || null;
+}
+
 /**
  * @param {"drop" | "drop_3_4" | "weekly" | "seasonal" | "event"} dropCategory 
  */
-function randomDrop(dropCategory) {
+function fetch_randomDrop(dropCategory) {
     let cardChoices = [];
 
     switch (dropCategory) {
@@ -41,21 +67,49 @@ function randomDrop(dropCategory) {
     return randomTools.choice(cardChoices) || null;
 }
 
-module.exports = {
-    randomDrop,
+//! Parse
+function parse_toCardLike(card) {
+    return {
+        uid: card.uid,
+        globalID: card.globalID,
+        setID: card.setID,
+        stats: card.stats
+    };
+}
 
-    // Formatting
+function parse_fromCardLike(cardLike) {
+    let card = fetch_byGlobalID(cardLike.globalID);
+    return { ...card, ...cardLike };
+}
+
+//! Format
+function format_drop(card) {
+    return "%EMOJI %GROUP - %SINGLE : %NAME\n> %UID %GLOBAL_ID %CATEGORY %SET_ID\n> %ABILITY :: %REPUTATION"
+        .replace("%EMOJI", inlineCode(card.emoji))
+        .replace("%GROUP", bold(card.group))
+        .replace("%SINGLE", card.single)
+        .replace("%NAME", card.name)
+        .replace("%UID", inlineCode(card.uid))
+        .replace("%GLOBAL_ID", inlineCode(card.global_id))
+        .replace("%CATEGORY", inlineCode(card.category))
+        .replace("%SET_ID", inlineCode(`👥${card.set_id}`))
+        .replace("%ABILITY", inlineCode(`🎤 ABI. ${card.stats.ability}`))
+        .replace("%REPUTATION", inlineCode(`💖 REP. ${card.stats.reputation}`));
+}
+
+module.exports = {
+    resetUID,
+
+    fetch: {
+        drop: fetch_randomDrop
+    },
+
+    parse: {
+        toCardLike: parse_toCardLike,
+        fromCardLike: parse_fromCardLike
+    },
+
     format: {
-        drop: (card) => "%EMOJI %GROUP - %SINGLE : %NAME\n> %UID %GLOBAL_ID %CATEGORY %SET_ID\n> %ABILITY :: %REPUTATION"
-            .replace("%EMOJI", inlineCode(card.emoji))
-            .replace("%GROUP", bold(card.group))
-            .replace("%SINGLE", card.single)
-            .replace("%NAME", card.name)
-            .replace("%UID", inlineCode(card.uid))
-            .replace("%GLOBAL_ID", inlineCode(card.global_id))
-            .replace("%CATEGORY", inlineCode(card.category))
-            .replace("%SET_ID", inlineCode(`👥${card.set_id}`))
-            .replace("%ABILITY", inlineCode(`🎤 ABI. ${card.stats.ability}`))
-            .replace("%REPUTATION", inlineCode(`💖 REP. ${card.stats.reputation}`))
+        drop: format_drop
     }
 };

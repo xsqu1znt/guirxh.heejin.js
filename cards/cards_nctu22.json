@@ -1,0 +1,416 @@
+[
+  {
+    "name": "Lucas",
+    "group": "NCT U",
+    "single": "Make a Wish",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🧞",
+    "globalID": "2049",
+    "setID": "245",
+    "rarity": "nctu22",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345992328552531/maw_lucas.png"
+  },
+  {
+    "name": "Shotaro",
+    "group": "NCT U",
+    "single": "Make a Wish",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🧞",
+    "globalID": "2050",
+    "setID": "245",
+    "rarity": "nctu22",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345992672489492/maw_shotaro.png"
+  },
+  {
+    "name": "Doyoung",
+    "group": "NCT U",
+    "single": "Make a Wish",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🧞",
+    "globalID": "2046",
+    "setID": "245",
+    "rarity": "nctu22",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345991217061899/maw_doyoung.png"
+  },
+  {
+    "name": "Xiaojun",
+    "group": "NCT U",
+    "single": "Make a Wish",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🧞",
+    "globalID": "2052",
+    "setID": "245",
+    "rarity": "nctu22",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345993255493652/maw_xiaojun.png"
+  },
+  {
+    "name": "Jaehyun",
+    "group": "NCT U",
+    "single": "Make a Wish",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🧞",
+    "globalID": "2047",
+    "setID": "245",
+    "rarity": "nctu22",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345991598747668/maw_jaehyun.png"
+  },
+  {
+    "name": "Jaemin",
+    "group": "NCT U",
+    "single": "Make a Wish",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🧞",
+    "globalID": "2048",
+    "setID": "245",
+    "rarity": "nctu22",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345991930097775/maw_jaemin.png"
+  },
+  {
+    "name": "Taeyong",
+    "group": "NCT U",
+    "single": "Make a Wish",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🧞",
+    "globalID": "2051",
+    "setID": "245",
+    "rarity": "nctu22",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345992966078504/maw_taeyong.png"
+  },
+  {
+    "name": "Mark",
+    "group": "NCT U",
+    "single": "90's Love",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🏒",
+    "globalID": "2041",
+    "setID": "246",
+    "rarity": "nctu22",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345941552320562/90slove_mark.png"
+  },
+  {
+    "name": "Haechan",
+    "group": "NCT U",
+    "single": "90's Love",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🏒",
+    "globalID": "2053",
+    "setID": "246",
+    "rarity": "nctu22",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031532687686635560/90slove_haechan.png"
+  },
+  {
+    "name": "Jeno",
+    "group": "NCT U",
+    "single": "90's Love",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🏒",
+    "globalID": "2040",
+    "setID": "246",
+    "rarity": "nctu22",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345940990279810/90slove_jeno.png"
+  },
+  {
+    "name": "Winwin",
+    "group": "NCT U",
+    "single": "90's Love",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🏒",
+    "globalID": "2044",
+    "setID": "246",
+    "rarity": "nctu22",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345942684782643/90slove_winwin.png"
+  },
+  {
+    "name": "Ten",
+    "group": "NCT U",
+    "single": "90's Love",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🏒",
+    "globalID": "2043",
+    "setID": "246",
+    "rarity": "nctu22",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345942345039932/90slove_ten.png"
+  },
+  {
+    "name": "Sungchan",
+    "group": "NCT U",
+    "single": "90's Love",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🏒",
+    "globalID": "2042",
+    "setID": "246",
+    "rarity": "nctu22",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345941946585119/90slove_sungchan.png"
+  },
+  {
+    "name": "Yangyang",
+    "group": "NCT U",
+    "single": "90's Love",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🏒",
+    "globalID": "2045",
+    "setID": "246",
+    "rarity": "nctu22",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345943108407397/90slove_yangyang.png"
+  },
+  {
+    "name": "Chenle",
+    "group": "NCT U",
+    "single": "From Home",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🌿",
+    "globalID": "2033",
+    "setID": "247",
+    "rarity": "nctu22",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345870127509624/fromhome_chenle.png"
+  },
+  {
+    "name": "Yuta",
+    "group": "NCT U",
+    "single": "From Home",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🌿",
+    "globalID": "2039",
+    "setID": "247",
+    "rarity": "nctu22",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345872400822322/fromhome_yuta.png"
+  },
+  {
+    "name": "Haechan",
+    "group": "NCT U",
+    "single": "From Home",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🌿",
+    "globalID": "2035",
+    "setID": "247",
+    "rarity": "nctu22",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345870848925797/fromhome_haechan.png"
+  },
+  {
+    "name": "Taeil",
+    "group": "NCT U",
+    "single": "From Home",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🌿",
+    "globalID": "2038",
+    "setID": "247",
+    "rarity": "nctu22",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345871998165072/fromhome_taeil.png"
+  },
+  {
+    "name": "Renjun",
+    "group": "NCT U",
+    "single": "From Home",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🌿",
+    "globalID": "2037",
+    "setID": "247",
+    "rarity": "nctu22",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345871662620704/fromhome_renjun.png"
+  },
+  {
+    "name": "Kun",
+    "group": "NCT U",
+    "single": "From Home",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🌿",
+    "globalID": "2036",
+    "setID": "247",
+    "rarity": "nctu22",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345871226417193/fromhome_kun.png"
+  },
+  {
+    "name": "Doyoung",
+    "group": "NCT U",
+    "single": "From Home",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🌿",
+    "globalID": "2034",
+    "setID": "247",
+    "rarity": "nctu22",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345870509187072/fromhome_doyoung.png"
+  },
+  {
+    "name": "Ten",
+    "group": "NCT U",
+    "single": "Baby Don't Stop",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🚫",
+    "globalID": "2032",
+    "setID": "248",
+    "rarity": "nctu22",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031347286380392478/bds_ten.png"
+  },
+  {
+    "name": "Taeyong",
+    "group": "NCT U",
+    "single": "Baby Don't Stop",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🚫",
+    "globalID": "2031",
+    "setID": "248",
+    "rarity": "nctu22",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031347286015488010/bds_taeyong.png"
+  }
+]

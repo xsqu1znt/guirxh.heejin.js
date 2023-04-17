@@ -1,0 +1,362 @@
+[
+  {
+    "name": "I.N",
+    "group": "EASTER23",
+    "single": "Stray Kids",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2217",
+    "setID": "229",
+    "rarity": "easter23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092082676493725756/easter23_in.png"
+  },
+  {
+    "name": "Hyunsuk",
+    "group": "EASTER23",
+    "single": "CIX",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2227",
+    "setID": "229",
+    "rarity": "easter23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094312550516138045/easter23_hyunsuk.png"
+  },
+  {
+    "name": "Yujin",
+    "group": "EASTER23",
+    "single": "CLC",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2225",
+    "setID": "229",
+    "rarity": "easter23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092082679010312292/easter23_yujin.png"
+  },
+  {
+    "name": "Q",
+    "group": "EASTER23",
+    "single": "THE BOYZ",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2231",
+    "setID": "229",
+    "rarity": "easter23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094312552219029636/easter23_q.png"
+  },
+  {
+    "name": "Suzy",
+    "group": "EASTER23",
+    "single": "Solo",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2222",
+    "setID": "229",
+    "rarity": "easter23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092082677936566352/easter23_suzy.png"
+  },
+  {
+    "name": "Wonwoo",
+    "group": "EASTER23",
+    "single": "SEVENTEEN",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2232",
+    "setID": "229",
+    "rarity": "easter23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094312552516829284/easter23_wonwoo.png"
+  },
+  {
+    "name": "Xion",
+    "group": "EASTER23",
+    "single": "ONEUS",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2233",
+    "setID": "229",
+    "rarity": "easter23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094312552919474217/easter23_xion.png"
+  },
+  {
+    "name": "Wonho",
+    "group": "EASTER23",
+    "single": "Solo",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2223",
+    "setID": "229",
+    "rarity": "easter23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092082678267904071/easter23_wonho.png"
+  },
+  {
+    "name": "Intak",
+    "group": "EASTER23",
+    "single": "P1Harmony",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2228",
+    "setID": "229",
+    "rarity": "easter23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094312550960738304/easter23_intak.png"
+  },
+  {
+    "name": "Heejin",
+    "group": "EASTER23",
+    "single": "LOOΠΔ",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2216",
+    "setID": "229",
+    "rarity": "easter23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092082676200112148/easter23_heejin.png"
+  },
+  {
+    "name": "Nayeon",
+    "group": "EASTER23",
+    "single": "TWICE",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2220",
+    "setID": "229",
+    "rarity": "easter23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092082677311615126/easter23_nayeon.png"
+  },
+  {
+    "name": "Luda",
+    "group": "EASTER23",
+    "single": "WJSN",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2230",
+    "setID": "229",
+    "rarity": "easter23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094312551627636746/easter23_luda.png"
+  },
+  {
+    "name": "Yuna",
+    "group": "EASTER23",
+    "single": "ITZY",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2235",
+    "setID": "229",
+    "rarity": "easter23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094312553758343359/easter23_yuna.png"
+  },
+  {
+    "name": "Soobin",
+    "group": "EASTER23",
+    "single": "TXT",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2221",
+    "setID": "229",
+    "rarity": "easter23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092082677655552040/easter23_soobin.png"
+  },
+  {
+    "name": "Wonyoung",
+    "group": "EASTER23",
+    "single": "IVE",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2224",
+    "setID": "229",
+    "rarity": "easter23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092082678649598035/easter23_wonyoung.png"
+  },
+  {
+    "name": "Arin",
+    "group": "EASTER23",
+    "single": "OH MY GIRL",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2226",
+    "setID": "229",
+    "rarity": "easter23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094312550239318046/easter23_arin.png"
+  },
+  {
+    "name": "Jisoo",
+    "group": "EASTER23",
+    "single": "BLɅϽKPIИK",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2229",
+    "setID": "229",
+    "rarity": "easter23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094312551254335498/easter23_jisoo.png"
+  },
+  {
+    "name": "Jongho",
+    "group": "EASTER23",
+    "single": "ATEEZ",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2218",
+    "setID": "229",
+    "rarity": "easter23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092082676749582366/easter23_jongho.png"
+  },
+  {
+    "name": "Jungkook",
+    "group": "EASTER23",
+    "single": "BTS",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2219",
+    "setID": "229",
+    "rarity": "easter23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092082677005418507/easter23_jungkook.png"
+  },
+  {
+    "name": "Yeri",
+    "group": "EASTER23",
+    "single": "Red Velvet",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2234",
+    "setID": "229",
+    "rarity": "easter23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094312553255022692/easter23_yeri.png"
+  }
+]

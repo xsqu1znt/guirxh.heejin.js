@@ -1,0 +1,380 @@
+[
+  {
+    "name": "Dayeon",
+    "group": "Kep1er",
+    "single": "WA DA DA",
+    "category": "mint",
+    "description": "Kep1er - WA DA DA",
+    "emoji": "🔭",
+    "globalID": "2130",
+    "setID": "239",
+    "rarity": "kep1er23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078268341616670/Dayeon_Wadada.png"
+  },
+  {
+    "name": "Yujin",
+    "group": "Kep1er",
+    "single": "WA DA DA",
+    "category": "mint",
+    "description": "Kep1er - WA DA DA",
+    "emoji": "🔭",
+    "globalID": "2136",
+    "setID": "239",
+    "rarity": "kep1er23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078267481796679/Yujin_Wadada.png"
+  },
+  {
+    "name": "Hikaru",
+    "group": "Kep1er",
+    "single": "WA DA DA",
+    "category": "mint",
+    "description": "Kep1er - WA DA DA",
+    "emoji": "🔭",
+    "globalID": "2131",
+    "setID": "239",
+    "rarity": "kep1er23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078268677173359/Hikaru_Wadada.png"
+  },
+  {
+    "name": "Chaehyun",
+    "group": "Kep1er",
+    "single": "WA DA DA",
+    "category": "mint",
+    "description": "Kep1er - WA DA DA",
+    "emoji": "🔭",
+    "globalID": "2129",
+    "setID": "239",
+    "rarity": "kep1er23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078267783782420/Chaehyun_Wadada.png"
+  },
+  {
+    "name": "Huening Bahiyyih",
+    "group": "Kep1er",
+    "single": "WA DA DA",
+    "category": "mint",
+    "description": "Kep1er - WA DA DA",
+    "emoji": "🔭",
+    "globalID": "2132",
+    "setID": "239",
+    "rarity": "kep1er23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078266290602055/Huening_Bahiyyih_Wadada.png"
+  },
+  {
+    "name": "Youngeun",
+    "group": "Kep1er",
+    "single": "WA DA DA",
+    "category": "mint",
+    "description": "Kep1er - WA DA DA",
+    "emoji": "🔭",
+    "globalID": "2135",
+    "setID": "239",
+    "rarity": "kep1er23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078267192377494/Youngeun_Wadada.png"
+  },
+  {
+    "name": "Mashiro",
+    "group": "Kep1er",
+    "single": "WA DA DA",
+    "category": "mint",
+    "description": "Kep1er - WA DA DA",
+    "emoji": "🔭",
+    "globalID": "2133",
+    "setID": "239",
+    "rarity": "kep1er23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078266022178876/Mashiro_Wadada.png"
+  },
+  {
+    "name": "Xiaoting",
+    "group": "Kep1er",
+    "single": "WA DA DA",
+    "category": "mint",
+    "description": "Kep1er - WA DA DA",
+    "emoji": "🔭",
+    "globalID": "2134",
+    "setID": "239",
+    "rarity": "kep1er23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078266554855494/Xiaoting_Wadada.png"
+  },
+  {
+    "name": "Yeseo",
+    "group": "Kep1er",
+    "single": "WA DA DA",
+    "category": "mint",
+    "description": "Kep1er - WA DA DA",
+    "emoji": "🔭",
+    "globalID": "2137",
+    "setID": "239",
+    "rarity": "kep1er23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078266819092480/Yeseo_Wadada.png"
+  },
+  {
+    "name": "Yuri",
+    "group": "IZ\\*ONE",
+    "single": "La Vie en Rose",
+    "category": "mint",
+    "description": "I\\*ZONE - La Vie en Rose",
+    "emoji": "🌹",
+    "globalID": "2128",
+    "setID": "240",
+    "rarity": "kep1er23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078378140127352/lavienrose_Yuri.png"
+  },
+  {
+    "name": "Chaewon",
+    "group": "IZ\\*ONE",
+    "single": "La Vie en Rose",
+    "category": "mint",
+    "description": "I\\*ZONE - La Vie en Rose",
+    "emoji": "🌹",
+    "globalID": "2117",
+    "setID": "240",
+    "rarity": "kep1er23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078268953993397/lavienrose_Chaewon.png"
+  },
+  {
+    "name": "Eunbi",
+    "group": "IZ\\*ONE",
+    "single": "La Vie en Rose",
+    "category": "mint",
+    "description": "I\\*ZONE - La Vie en Rose",
+    "emoji": "🌹",
+    "globalID": "2119",
+    "setID": "240",
+    "rarity": "kep1er23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078364160499722/lavienrose_Eunbi.png"
+  },
+  {
+    "name": "Hitomi",
+    "group": "IZ\\*ONE",
+    "single": "La Vie en Rose",
+    "category": "mint",
+    "description": "I\\*ZONE - La Vie en Rose",
+    "emoji": "🌹",
+    "globalID": "2120",
+    "setID": "240",
+    "rarity": "kep1er23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078364437336135/lavienrose_Hitomi.png"
+  },
+  {
+    "name": "Sakura",
+    "group": "IZ\\*ONE",
+    "single": "La Vie en Rose",
+    "category": "mint",
+    "description": "I\\*ZONE - La Vie en Rose",
+    "emoji": "🌹",
+    "globalID": "2124",
+    "setID": "240",
+    "rarity": "kep1er23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078365657866312/lavienrose_Sakura.png"
+  },
+  {
+    "name": "Yujin",
+    "group": "IZ\\*ONE",
+    "single": "La Vie en Rose",
+    "category": "mint",
+    "description": "I\\*ZONE - La Vie en Rose",
+    "emoji": "🌹",
+    "globalID": "2127",
+    "setID": "240",
+    "rarity": "kep1er23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078366534475947/lavienrose_Yujin.png"
+  },
+  {
+    "name": "Hyewon",
+    "group": "IZ\\*ONE",
+    "single": "La Vie en Rose",
+    "category": "mint",
+    "description": "I\\*ZONE - La Vie en Rose",
+    "emoji": "🌹",
+    "globalID": "2121",
+    "setID": "240",
+    "rarity": "kep1er23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078364760285214/lavienrose_Hyewon.png"
+  },
+  {
+    "name": "Nako",
+    "group": "IZ\\*ONE",
+    "single": "La Vie en Rose",
+    "category": "mint",
+    "description": "I\\*ZONE - La Vie en Rose",
+    "emoji": "🌹",
+    "globalID": "2123",
+    "setID": "240",
+    "rarity": "kep1er23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078365334908928/lavienrose_Nako.png"
+  },
+  {
+    "name": "Minju",
+    "group": "IZ\\*ONE",
+    "single": "La Vie en Rose",
+    "category": "mint",
+    "description": "I\\*ZONE - La Vie en Rose",
+    "emoji": "🌹",
+    "globalID": "2122",
+    "setID": "240",
+    "rarity": "kep1er23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078365066481754/lavienrose_Minju.png"
+  },
+  {
+    "name": "Yena",
+    "group": "IZ\\*ONE",
+    "single": "La Vie en Rose",
+    "category": "mint",
+    "description": "I\\*ZONE - La Vie en Rose",
+    "emoji": "🌹",
+    "globalID": "2126",
+    "setID": "240",
+    "rarity": "kep1er23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078366278627418/lavienrose_Yena.png"
+  },
+  {
+    "name": "Chaeyeon",
+    "group": "IZ\\*ONE",
+    "single": "La Vie en Rose",
+    "category": "mint",
+    "description": "I\\*ZONE - La Vie en Rose",
+    "emoji": "🌹",
+    "globalID": "2118",
+    "setID": "240",
+    "rarity": "kep1er23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078363866902620/lavienrose_Chaeyeon.png"
+  },
+  {
+    "name": "Wonyoung",
+    "group": "IZ\\*ONE",
+    "single": "La Vie en Rose",
+    "category": "mint",
+    "description": "I\\*ZONE - La Vie en Rose",
+    "emoji": "🌹",
+    "globalID": "2125",
+    "setID": "240",
+    "rarity": "kep1er23",
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078365909536818/lavienrose_Wonyoung.png"
+  }
+]
