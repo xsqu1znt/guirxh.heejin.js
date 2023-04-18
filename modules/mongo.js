@@ -59,6 +59,10 @@ async function user_update(userID, update) {
     return await models.user.findByIdAndUpdate(userID, update);
 }
 
+async function user_updatedNested(userID, query, update) {
+    return await models.user.updateOne({ _id: userID, ...query }, update);
+}
+
 async function user_new(userID) {
     let user = await models.user.findById(userID);
     user ||= await new models.user({
@@ -177,6 +181,7 @@ module.exports = {
         exists: user_exists,
         fetch: user_fetch,
         update: user_update,
+        updateNested: user_updatedNested,
         new: user_new,
 
         tryLevelUp: user_tryLevelUp,

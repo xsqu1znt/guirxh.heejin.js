@@ -31,16 +31,27 @@ function userProfile(user, userData) {
         .setThumbnail(user.avatarURL({ dynamic: true }))
         .setColor(botSettings.embedColor || null);
 
-    if (userData.biography) embed.addFields({ name: "\`👤\` Biography", value: quote("N/A") });
+    if (userData.biography) embed.addFields({ name: "\`👤\` Biography", value: userData.biography });
 
     embed.addFields([{ name: "\`📄\` Information", value: quote(profile_info) }]);
 
     let card_selected = cardInventoryParser.get(userData.card_inventory, userData.card_selected_uid);
-    if (card_selected) embed.addFields({ name: "\`📄\` Stage", value: quote("Selected card") });
+    if (card_selected) {
+        card_selected = cardManager.parse.fromCardLike(card_selected);
+
+        let card_selected_isFavorited = (userData.card_favorite_uid === card_selected.uid)
+        let card_selected_f = cardManager.toString.inventory(card_selected, 0, card_selected_isFavorited);
+
+        embed.addFields({ name: "\`📄\` Stage", value: quote(card_selected_f) });
+    }
 
     let card_favorite = cardInventoryParser.get(userData.card_inventory, userData.card_favorite_uid);
     if (card_favorite) {
-        embed.addFields({ name: "\`🌟\` Favorite", value: quote("Favorited card") });
+        card_favorite = cardManager.parse.fromCardLike(card_favorite);
+
+        let card_favorite_f = cardManager.toString.inventory(card_favorite, 0, true);
+        embed.addFields({ name: "\`🌟\` Favorite", value: quote(card_favorite_f) });
+
         if (card_favorite.imageURL) embed.setImage(card_favorite.imageURL);
     }
 

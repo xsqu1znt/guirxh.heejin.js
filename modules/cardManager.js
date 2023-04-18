@@ -102,8 +102,8 @@ function toString_inventory(card, duplicateCount = 0, isFavorite = false) {
         .replace("%CATEGORY", inlineCode(card.category))
         .replace("%SET_ID", inlineCode(`👥${card.setID}`))
 
-        .replace("%LOCKED", card?.locked ? inlineCode(" 🔒") : "")
-        .replace("%FAVORITED", isFavorite ? inlineCode(" 🌟") : "")
+        .replace("%LOCKED", card?.locked ? " " + inlineCode("🔒") : "")
+        .replace("%FAVORITED", isFavorite ? " " + inlineCode("🌟") : "")
 
         .replace("%ABILITY", inlineCode(`🎤 ABI. ${card.stats.ability}`))
         .replace("%REPUTATION", inlineCode(`💖 REP. ${card.stats.reputation}`));

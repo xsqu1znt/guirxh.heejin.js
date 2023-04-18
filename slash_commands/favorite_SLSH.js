@@ -2,11 +2,11 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js'
 
 const { userManager } = require('../modules/mongo');
 const { cardInventoryParser } = require('../modules/userParser');
-const { userView_ES } = require('../modules/embedStyles');
+const cardManager = require('../modules/cardManager');
 
 module.exports = {
-    builder: new SlashCommandBuilder().setName("view")
-        .setDescription("View a card in your inventory")
+    builder: new SlashCommandBuilder().setName("favorite")
+        .setDescription("Set a card as your favorite")
 
         .addStringOption(option => option.setName("uid")
             .setDescription("The unique ID of the card")
@@ -27,10 +27,16 @@ module.exports = {
         let card = cardInventoryParser.get(userData.card_inventory, uid);
         if (!card) return await interaction.editReply({ content: `\`${uid}\` is not a valid card ID.` });
 
-        // Create the embed
-        let embed_view = userView_ES(interaction.user, userData, card);
+        // Check if the card is already favorited
+        if (card.uid === userData.card_favorite_uid) return await interaction.editReply({
+            content: `\`${uid}\` is already favorited.`
+        });
 
-        // Send the embed
-        return await interaction.editReply({ embeds: [embed_view] });
+        // Update the user's card_favorite_uid in Mongo
+        await userManager.update(interaction.user.id, { card_favorite_uid: card.uid });
+
+        // Let the user know the result
+        let card_f = cardManager.toString.basic(cardManager.parse.fromCardLike(card));
+        return await interaction.editReply({ content: `${card_f} set as favorite.` });
     }
 };
