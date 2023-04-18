@@ -4,6 +4,7 @@ const { botSettings } = require('../configs/heejinSettings.json');
 const { stringTools, arrayTools, dateTools } = require('../modules/jsTools');
 const { cardInventoryParser } = require('../modules/userParser');
 const cardManager = require('../modules/cardManager');
+const userParser = require('../modules/userParser');
 
 // Command -> /DROP
 function generalDrop(user, card, dropTitle = "drop", isDuplicate = false) {
@@ -34,10 +35,10 @@ function userProfile(user, userData) {
 
     embed.addFields([{ name: "\`📄\` Information", value: quote(profile_info) }]);
 
-    let card_selected = cardnventoryParser.fetch(userData.card_inventory, userData.card_selected_uid);
+    let card_selected = cardInventoryParser.get(userData.card_inventory, userData.card_selected_uid);
     if (card_selected) embed.addFields({ name: "\`📄\` Stage", value: quote("Selected card") });
 
-    let card_favorite = cardnventoryParser.fetch(userData.card_inventory, userData.card_favorite_uid);
+    let card_favorite = cardInventoryParser.get(userData.card_inventory, userData.card_favorite_uid);
     if (card_favorite) {
         embed.addFields({ name: "\`🌟\` Favorite", value: quote("Favorited card") });
         if (card_favorite.imageURL) embed.setImage(card_favorite.imageURL);
@@ -117,7 +118,7 @@ function userInventory(user, userData, sorting = "global", order = "descending",
     let userCards_f = [];
 
     for (let card of cardInventoryParser.primary(userCards)) {
-        // We subtract 1 from the total so it doesn't count the primary (main) card
+        // Get the duplicate cards under the primary card
         let { card_duplicates } = cardInventoryParser.duplicates(userCards, { globalID: card.globalID });
 
         // Whether or not this is the user's favorited card
@@ -151,6 +152,29 @@ function userInventory(user, userData, sorting = "global", order = "descending",
     return embeds;
 }
 
+// Command -> User -> /VIEW
+function userView(user, userData, card) {
+    // Parse the CardLike into a fully detailed card
+    card = cardManager.parse.fromCardLike(card);
+
+    // Get the duplicate cards under the primary card
+    let { card_duplicates } = userParser.cardInventoryParser.duplicates(userData.card_inventory, { globalID: card.globalID });
+
+    // Whether or not this is the user's favorited card
+    let isFavorite = (userData.card_favorite_uid === card.uid);
+
+    let embed = new EmbedBuilder()
+        .setAuthor({ name: `${user.username} | inventory`, iconURL: user.avatarURL({ dynamic: true }) })
+        .setDescription(cardManager.toString.inventory(card, card_duplicates.length, isFavorite))
+        .setColor(botSettings.embedColor || null);
+
+    // Add the card image to the embed if available
+    if (card.imageURL) embed.setImage(card.imageURL);
+
+    // Return the embed
+    return embed;
+}
+
 module.exports = {
     // General Commands
     generalDrop_ES: generalDrop,
@@ -158,5 +182,6 @@ module.exports = {
     // User Commands
     userProfile_ES: userProfile,
     userCooldowns_ES: userCooldowns,
-    userInventory_ES: userInventory
+    userInventory_ES: userInventory,
+    userView_ES: userView
 };

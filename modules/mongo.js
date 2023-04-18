@@ -152,15 +152,17 @@ async function cardInventory_addCards(userID, cards, resetUID = false) {
     await Promise.all(promiseArray); return;
 }
 
-async function cardInventory_removeCards(userID, cardUIDS) {
+async function cardInventory_removeCards(userID, uids) {
     // Convert a single card UID into an array
-    if (!Array.isArray(cardUIDS)) cardUIDS = [cardUIDS];
+    if (!Array.isArray(uids)) uids = [uids];
 
-    // Parse into an array of filters for Mongo
-    cardUIDS = cardUIDS.map(uid => ({ uid }));
+    let promiseArray = [];
+    for (let uid of uids) {
+        // Send the pull request to Mongo
+        promiseArray.push(user_update(userID, { $pull: { card_inventory: { uid } } }));
+    }
 
-    // Send the pull request to Mongo
-    await user_update(userID, { $pullAll: { card_inventory: cardUIDS } }); return;
+    await Promise.all(promiseArray); return;
 }
 
 module.exports = {

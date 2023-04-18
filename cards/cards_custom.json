@@ -9,6 +9,7 @@
     "globalID": "101",
     "setID": "100",
     "rarity": "custom",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -27,6 +28,7 @@
     "globalID": "103",
     "setID": "100",
     "rarity": "custom",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -45,6 +47,7 @@
     "globalID": "102",
     "setID": "100",
     "rarity": "custom",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,

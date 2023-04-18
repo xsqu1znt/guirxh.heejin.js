@@ -82,6 +82,12 @@ function parse_fromCardLike(cardLike) {
 }
 
 //! To String
+function toString_basic(card) {
+    return "%SINGLE : %NAME"
+        .replace("%SINGLE", bold(card.single))
+        .replace("%NAME", card.name);
+}
+
 function toString_inventory(card, duplicateCount = 0, isFavorite = false) {
     return "%EMOJI %GROUP - %SINGLE : %NAME :: LV. %LEVEL %DUPES\n> %UID %GLOBAL_ID %CATEGORY %SET_ID%LOCKED%FAVORITED\n> %ABILITY :: %REPUTATION"
         .replace("%EMOJI", inlineCode(card.emoji))
@@ -130,6 +136,7 @@ module.exports = {
     },
 
     toString: {
+        basic: toString_basic,
         drop: toString_drop,
         inventory: toString_inventory
     }

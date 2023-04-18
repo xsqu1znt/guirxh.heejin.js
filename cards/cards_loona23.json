@@ -9,6 +9,7 @@
     "globalID": "1212",
     "setID": "120",
     "rarity": "loona23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -27,6 +28,7 @@
     "globalID": "1209",
     "setID": "120",
     "rarity": "loona23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -45,6 +47,7 @@
     "globalID": "1201",
     "setID": "120",
     "rarity": "loona23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -63,6 +66,7 @@
     "globalID": "1202",
     "setID": "120",
     "rarity": "loona23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -81,6 +85,7 @@
     "globalID": "1205",
     "setID": "120",
     "rarity": "loona23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -99,6 +104,7 @@
     "globalID": "1206",
     "setID": "120",
     "rarity": "loona23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -117,6 +123,7 @@
     "globalID": "1207",
     "setID": "120",
     "rarity": "loona23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -135,6 +142,7 @@
     "globalID": "1211",
     "setID": "120",
     "rarity": "loona23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -153,6 +161,7 @@
     "globalID": "1204",
     "setID": "120",
     "rarity": "loona23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -171,6 +180,7 @@
     "globalID": "1210",
     "setID": "120",
     "rarity": "loona23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -189,6 +199,7 @@
     "globalID": "1208",
     "setID": "120",
     "rarity": "loona23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -207,6 +218,7 @@
     "globalID": "1203",
     "setID": "120",
     "rarity": "loona23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,

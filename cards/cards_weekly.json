@@ -9,6 +9,7 @@
     "globalID": "1060",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -27,6 +28,7 @@
     "globalID": "1057",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -45,6 +47,7 @@
     "globalID": "1054",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -63,6 +66,7 @@
     "globalID": "1055",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -81,6 +85,7 @@
     "globalID": "1052",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -99,6 +104,7 @@
     "globalID": "1051",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -117,6 +123,7 @@
     "globalID": "1058",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -135,6 +142,7 @@
     "globalID": "1053",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -153,6 +161,7 @@
     "globalID": "1056",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -171,6 +180,7 @@
     "globalID": "1059",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -189,6 +199,7 @@
     "globalID": "1072",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -207,6 +218,7 @@
     "globalID": "1068",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -225,6 +237,7 @@
     "globalID": "1071",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -243,6 +256,7 @@
     "globalID": "1076",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -261,6 +275,7 @@
     "globalID": "1078",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -279,6 +294,7 @@
     "globalID": "1067",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -297,6 +313,7 @@
     "globalID": "1061",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -315,6 +332,7 @@
     "globalID": "1077",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -333,6 +351,7 @@
     "globalID": "1063",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -351,6 +370,7 @@
     "globalID": "1070",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -369,6 +389,7 @@
     "globalID": "1062",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -387,6 +408,7 @@
     "globalID": "1066",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -405,6 +427,7 @@
     "globalID": "1064",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -423,6 +446,7 @@
     "globalID": "1073",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -441,6 +465,7 @@
     "globalID": "1079",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -459,6 +484,7 @@
     "globalID": "1080",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -477,6 +503,7 @@
     "globalID": "1065",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -495,6 +522,7 @@
     "globalID": "1069",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -513,6 +541,7 @@
     "globalID": "1074",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -531,6 +560,7 @@
     "globalID": "1075",
     "setID": "103",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -549,6 +579,7 @@
     "globalID": "1086",
     "setID": "104",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -567,6 +598,7 @@
     "globalID": "1082",
     "setID": "104",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -585,6 +617,7 @@
     "globalID": "1090",
     "setID": "104",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -603,6 +636,7 @@
     "globalID": "1088",
     "setID": "104",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -621,6 +655,7 @@
     "globalID": "1084",
     "setID": "104",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -639,6 +674,7 @@
     "globalID": "1087",
     "setID": "104",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -657,6 +693,7 @@
     "globalID": "1081",
     "setID": "104",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -675,6 +712,7 @@
     "globalID": "1083",
     "setID": "104",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -693,6 +731,7 @@
     "globalID": "1085",
     "setID": "104",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -711,6 +750,7 @@
     "globalID": "1089",
     "setID": "104",
     "rarity": "weekly",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,

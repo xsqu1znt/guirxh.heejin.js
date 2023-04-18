@@ -9,6 +9,7 @@
     "globalID": "2151",
     "setID": "237",
     "rarity": "boss23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -27,6 +28,7 @@
     "globalID": "2148",
     "setID": "237",
     "rarity": "boss23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -45,6 +47,7 @@
     "globalID": "2150",
     "setID": "237",
     "rarity": "boss23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -63,6 +66,7 @@
     "globalID": "2147",
     "setID": "237",
     "rarity": "boss23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -81,6 +85,7 @@
     "globalID": "2149",
     "setID": "237",
     "rarity": "boss23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -99,6 +104,7 @@
     "globalID": "2145",
     "setID": "237",
     "rarity": "boss23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -117,6 +123,7 @@
     "globalID": "2146",
     "setID": "237",
     "rarity": "boss23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -135,6 +142,7 @@
     "globalID": "2142",
     "setID": "238",
     "rarity": "boss23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -153,6 +161,7 @@
     "globalID": "2139",
     "setID": "238",
     "rarity": "boss23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -171,6 +180,7 @@
     "globalID": "2140",
     "setID": "238",
     "rarity": "boss23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -189,6 +199,7 @@
     "globalID": "2144",
     "setID": "238",
     "rarity": "boss23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -207,6 +218,7 @@
     "globalID": "2141",
     "setID": "238",
     "rarity": "boss23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -225,6 +237,7 @@
     "globalID": "2143",
     "setID": "238",
     "rarity": "boss23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -243,6 +256,7 @@
     "globalID": "2138",
     "setID": "238",
     "rarity": "boss23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,

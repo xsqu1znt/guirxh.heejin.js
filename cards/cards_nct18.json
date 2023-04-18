@@ -9,6 +9,7 @@
     "globalID": "2057",
     "setID": "244",
     "rarity": "nct18",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -27,6 +28,7 @@
     "globalID": "2058",
     "setID": "244",
     "rarity": "nct18",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -45,6 +47,7 @@
     "globalID": "2060",
     "setID": "244",
     "rarity": "nct18",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -63,6 +66,7 @@
     "globalID": "2061",
     "setID": "244",
     "rarity": "nct18",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -81,6 +85,7 @@
     "globalID": "2071",
     "setID": "244",
     "rarity": "nct18",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -99,6 +104,7 @@
     "globalID": "2055",
     "setID": "244",
     "rarity": "nct18",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -117,6 +123,7 @@
     "globalID": "2063",
     "setID": "244",
     "rarity": "nct18",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -135,6 +142,7 @@
     "globalID": "2065",
     "setID": "244",
     "rarity": "nct18",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -153,6 +161,7 @@
     "globalID": "2056",
     "setID": "244",
     "rarity": "nct18",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -171,6 +180,7 @@
     "globalID": "2067",
     "setID": "244",
     "rarity": "nct18",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -189,6 +199,7 @@
     "globalID": "2062",
     "setID": "244",
     "rarity": "nct18",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -207,6 +218,7 @@
     "globalID": "2066",
     "setID": "244",
     "rarity": "nct18",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -225,6 +237,7 @@
     "globalID": "2054",
     "setID": "244",
     "rarity": "nct18",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -243,6 +256,7 @@
     "globalID": "2059",
     "setID": "244",
     "rarity": "nct18",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -261,6 +275,7 @@
     "globalID": "2064",
     "setID": "244",
     "rarity": "nct18",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -279,6 +294,7 @@
     "globalID": "2068",
     "setID": "244",
     "rarity": "nct18",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -297,6 +313,7 @@
     "globalID": "2069",
     "setID": "244",
     "rarity": "nct18",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -315,6 +332,7 @@
     "globalID": "2070",
     "setID": "244",
     "rarity": "nct18",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,

@@ -9,6 +9,7 @@
     "globalID": "2194",
     "setID": "232",
     "rarity": "event23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -27,6 +28,7 @@
     "globalID": "2195",
     "setID": "232",
     "rarity": "event23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -45,6 +47,7 @@
     "globalID": "2192",
     "setID": "233",
     "rarity": "event23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -63,6 +66,7 @@
     "globalID": "2193",
     "setID": "233",
     "rarity": "event23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -81,6 +85,7 @@
     "globalID": "2190",
     "setID": "234",
     "rarity": "event23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -99,6 +104,7 @@
     "globalID": "2189",
     "setID": "234",
     "rarity": "event23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -117,6 +123,7 @@
     "globalID": "2191",
     "setID": "234",
     "rarity": "event23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -135,6 +142,7 @@
     "globalID": "2186",
     "setID": "235",
     "rarity": "event23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -153,6 +161,7 @@
     "globalID": "2187",
     "setID": "235",
     "rarity": "event23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -171,6 +180,7 @@
     "globalID": "2188",
     "setID": "235",
     "rarity": "event23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -189,6 +199,7 @@
     "globalID": "2183",
     "setID": "236",
     "rarity": "event23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -207,6 +218,7 @@
     "globalID": "2184",
     "setID": "236",
     "rarity": "event23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -225,6 +237,7 @@
     "globalID": "2185",
     "setID": "236",
     "rarity": "event23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,

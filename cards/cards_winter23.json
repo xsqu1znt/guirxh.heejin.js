@@ -9,6 +9,7 @@
     "globalID": "2160",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -27,6 +28,7 @@
     "globalID": "2167",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -45,6 +47,7 @@
     "globalID": "2168",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -63,6 +66,7 @@
     "globalID": "2174",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -81,6 +85,7 @@
     "globalID": "2182",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -99,6 +104,7 @@
     "globalID": "2163",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -117,6 +123,7 @@
     "globalID": "2175",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -135,6 +142,7 @@
     "globalID": "2178",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -153,6 +161,7 @@
     "globalID": "2157",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -171,6 +180,7 @@
     "globalID": "2159",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -189,6 +199,7 @@
     "globalID": "2161",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -207,6 +218,7 @@
     "globalID": "2181",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -225,6 +237,7 @@
     "globalID": "2156",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -243,6 +256,7 @@
     "globalID": "2152",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -261,6 +275,7 @@
     "globalID": "2155",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -279,6 +294,7 @@
     "globalID": "2169",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -297,6 +313,7 @@
     "globalID": "2154",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -315,6 +332,7 @@
     "globalID": "2162",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -333,6 +351,7 @@
     "globalID": "2176",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -351,6 +370,7 @@
     "globalID": "2177",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -369,6 +389,7 @@
     "globalID": "2153",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -387,6 +408,7 @@
     "globalID": "2158",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -405,6 +427,7 @@
     "globalID": "2165",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -423,6 +446,7 @@
     "globalID": "2172",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -441,6 +465,7 @@
     "globalID": "2173",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -459,6 +484,7 @@
     "globalID": "2180",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -477,6 +503,7 @@
     "globalID": "2164",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -495,6 +522,7 @@
     "globalID": "2170",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -513,6 +541,7 @@
     "globalID": "2171",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,
@@ -531,6 +560,7 @@
     "globalID": "2179",
     "setID": "161",
     "rarity": "winter23",
+    "sellPrice": 10,
     "stats": {
       "level": 1,
       "xp": 0,

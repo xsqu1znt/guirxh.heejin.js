@@ -3,6 +3,11 @@ function cardInventory_get(cardArray, uid) {
     return cardArray.find(card => card.uid === uid) || null;
 }
 
+/** Get multiple cards from the user's card_inventory */
+function cardInventory_getMultiple(cardArray, uids) {
+    return uids.map(uid => cardArray.find(card => card.uid === uid));
+}
+
 /* function cards_fetch(cardArray, filter = { uid: "" }) {
     let filter_default = { uid: null };
     filter = { ...filter_default, ...filter };
@@ -50,6 +55,7 @@ function cardInventory_duplicates(cardArray, filter = { uid: "", globalID: "" })
 module.exports = {
     cardInventoryParser: {
         get: cardInventory_get,
+        getMultiple: cardInventory_getMultiple,
         primary: cardInventory_primary,
         duplicates: cardInventory_duplicates
     }
