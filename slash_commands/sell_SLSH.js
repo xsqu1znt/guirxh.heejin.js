@@ -8,6 +8,7 @@ const cardManager = require('../modules/cardManager');
 module.exports = {
     builder: new SlashCommandBuilder().setName("sell")
         .setDescription("Sell a card in your inventory")
+
         .addStringOption(option => option.setName("uid")
             .setDescription("The unique ID of the card (separate multiple by comma)")
             .setRequired(true)),
