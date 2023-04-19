@@ -174,6 +174,7 @@ function userView(user, userData, card) {
     // Whether or not this is the user's favorited card
     let isFavorite = (userData.card_favorite_uid === card.uid);
 
+    // Create the embed
     let embed = new EmbedBuilder()
         .setAuthor({ name: `${user.username} | inventory`, iconURL: user.avatarURL({ dynamic: true }) })
         .setDescription(cardManager.toString.inventory(card, card_duplicates.length, isFavorite))
@@ -181,6 +182,35 @@ function userView(user, userData, card) {
 
     // Add the card image to the embed if available
     if (card.imageURL) embed.setImage(card.imageURL);
+
+    // Return the embed
+    return embed;
+}
+
+// Command -> User -> /GIFT
+function userGift(user, recipient, cards) {
+    // Parse the CardLikes into fully detailed cards
+    cards = cards.map(card => cardManager.parse.fromCardLike(card));
+
+    // Create the embed
+    let embed = new EmbedBuilder()
+        .setAuthor({ name: `${user.username} | gift`, iconURL: user.avatarURL({ dynamic: true }) })
+        .addFields({ name: `from:`, value: `${user}`, inline: true }, { name: `to:`, value: `${recipient}`, inline: true })
+        .setColor(botSettings.embedColor || null);
+
+    if (cards.length === 1) {
+        embed.setDescription(cardManager.toString.inventory(cards[0]));
+
+        // Add the card image to the embed if available
+        if (cards[0].imageURL) embed.setImage(cards[0].imageURL);
+
+    } else {
+        embed.setDescription(cards.map(card => cardManager.toString.inventory(card)).join("\n\n"));
+
+        // Add the last card's image to the embed if available
+        let card_last = cards.slice(-1)[0];
+        if (card_last.imageURL) embed.setImage(card_last.imageURL);
+    }
 
     // Return the embed
     return embed;
@@ -194,5 +224,6 @@ module.exports = {
     userProfile_ES: userProfile,
     userCooldowns_ES: userCooldowns,
     userInventory_ES: userInventory,
-    userView_ES: userView
+    userView_ES: userView,
+    userGift_ES: userGift
 };

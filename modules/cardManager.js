@@ -20,7 +20,7 @@ function resetUID(card, userCards = null) {
     let newUID = () => randomTools.numberString(6);
 
     if (userCards) {
-        let uid = newUID();
+        let uid = card?.uid || newUID();
 
         // Loop this function until we have a unique UID
         if (userCards.find(card => card.uid === uid))
