@@ -20,7 +20,7 @@ function generalDrop(user, card, dropTitle = "drop", isDuplicate = false) {
 }
 
 // Command -> User -> /PROFILE
-function userProfile(user, userData) {
+function userProfile(user, userData, compactMode = false) {
     let profile_info = "\`🥕 %BALANCE\` :: \`🃏 %CARD_TOTAL\` :: \`🎚️ LV. %LEVEL\`"
         .replace("%BALANCE", userData.balance)
         .replace("%CARD_TOTAL", `${userData.card_inventory.length}/100`)
@@ -35,24 +35,26 @@ function userProfile(user, userData) {
 
     embed.addFields([{ name: "\`📄\` Information", value: quote(profile_info) }]);
 
-    let card_selected = cardInventoryParser.get(userData.card_inventory, userData.card_selected_uid);
-    if (card_selected) {
-        card_selected = cardManager.parse.fromCardLike(card_selected);
+    if (!compactMode) {
+        let card_selected = cardInventoryParser.get(userData.card_inventory, userData.card_selected_uid);
+        if (card_selected) {
+            card_selected = cardManager.parse.fromCardLike(card_selected);
 
-        let card_selected_isFavorited = (userData.card_favorite_uid === card_selected.uid)
-        let card_selected_f = cardManager.toString.inventory(card_selected, 0, card_selected_isFavorited);
+            let card_selected_isFavorited = (userData.card_favorite_uid === card_selected.uid)
+            let card_selected_f = cardManager.toString.inventory(card_selected, 0, card_selected_isFavorited);
 
-        embed.addFields({ name: "\`📄\` Stage", value: quote(card_selected_f) });
-    }
+            embed.addFields({ name: "\`📄\` Stage", value: quote(card_selected_f) });
+        }
 
-    let card_favorite = cardInventoryParser.get(userData.card_inventory, userData.card_favorite_uid);
-    if (card_favorite) {
-        card_favorite = cardManager.parse.fromCardLike(card_favorite);
+        let card_favorite = cardInventoryParser.get(userData.card_inventory, userData.card_favorite_uid);
+        if (card_favorite) {
+            card_favorite = cardManager.parse.fromCardLike(card_favorite);
 
-        let card_favorite_f = cardManager.toString.inventory(card_favorite, 0, true);
-        embed.addFields({ name: "\`🌟\` Favorite", value: quote(card_favorite_f) });
+            let card_favorite_f = cardManager.toString.inventory(card_favorite, 0, true);
+            embed.addFields({ name: "\`🌟\` Favorite", value: quote(card_favorite_f) });
 
-        if (card_favorite.imageURL) embed.setImage(card_favorite.imageURL);
+            if (card_favorite.imageURL) embed.setImage(card_favorite.imageURL);
+        }
     }
 
     return embed;

@@ -24,6 +24,9 @@ module.exports = {
     execute: async (client, interaction) => {
         // Get interaction options
         let recipient = interaction.options.getUser("player");
+        if (recipient.id === interaction.user.id) return await interaction.editReply({
+            content: "You can't gift to yourself!"
+        });
 
         let uids = interaction.options.getString("uid").replace(/ /g, "").split(",");
         if (!Array.isArray(uids)) uids = [uids];
@@ -36,7 +39,7 @@ module.exports = {
         // Fetch the user from Mongo
         let userData = await userManager.fetch(interaction.user.id, "full", true);
 
-        // Check if recipient user exists in Mongo
+        // Check if the recipient user exists in Mongo
         let recipientExists = await userManager.exists(recipient.id);
         if (!recipientExists) return await interaction.editReply({
             content: "That user hasn't started yet."
