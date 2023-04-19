@@ -165,20 +165,21 @@ function userInventory(user, userData, sorting = "global", order = "descending",
     return embeds;
 }
 
-// Command -> User -> /VIEW
-function userView(user, userData, card) {
+// Command -> User -> /VIEW | /IDOL
+function userView(user, userData, card, isIdol = false) {
     // Parse the CardLike into a fully detailed card
     card = cardManager.parse.fromCardLike(card);
 
     // Get the duplicate cards under the primary card
-    let { card_duplicates } = userParser.cardInventoryParser.duplicates(userData.card_inventory, { globalID: card.globalID });
+    let card_duplicates = []; if (!isIdol)
+        card_duplicates = userParser.cardInventoryParser.duplicates(userData.card_inventory, { globalID: card.globalID });
 
     // Whether or not this is the user's favorited card
     let isFavorite = (userData.card_favorite_uid === card.uid);
 
     // Create the embed
     let embed = new EmbedBuilder()
-        .setAuthor({ name: `${user.username} | inventory`, iconURL: user.avatarURL({ dynamic: true }) })
+        .setAuthor({ name: `${user.username} | ${isIdol ? "idol" : "view"}`, iconURL: user.avatarURL({ dynamic: true }) })
         .setDescription(cardManager.toString.inventory(card, card_duplicates.length, isFavorite))
         .setColor(botSettings.embedColor || null);
 

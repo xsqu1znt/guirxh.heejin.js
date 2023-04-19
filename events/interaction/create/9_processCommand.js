@@ -1,6 +1,7 @@
 // Executes commands requested by a command interaction.
 
 const { Client, BaseInteraction } = require('discord.js');
+
 // const { botSettings } = require('../../../configs/heejinSettings.json');
 const { userManager } = require('../../../modules/mongo');
 const { stringTools } = require('../../../modules/jsTools');
@@ -28,7 +29,7 @@ module.exports = {
 
             // Check if the user's in the database
             if (!await userManager.exists(args.interaction.user.id) && args.interaction.commandName !== "start") {
-                // Get the start command ID
+                // Get the /start command ID
                 let guildCommands = await args.interaction.guild.commands.fetch();
                 let startCommandID = guildCommands.find(slash_commands => slash_commands.name === "start").id;
 
