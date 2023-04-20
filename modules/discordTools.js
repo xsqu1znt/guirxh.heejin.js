@@ -1,11 +1,32 @@
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require('discord.js');
+
+const { botSettings } = require('../configs/heejinSettings.json');
 
 // Message Tools
-async function message_destroyMessageAfter(message, time) {
+async function message_deleteAfter(message, time) {
     let m;
 
     setTimeout(async () => m = await message.delete(), time);
     return m;
+}
+
+/** Create a simple embed with a description. */
+function message_embedify(description, options = { title: "", author: null }) {
+    options = { title: "", author: null, ...options };
+
+    // Format dynamic parameters in the title
+    let title = title
+        .replace("%USER", options.author.username);
+
+    // Create the embed
+    let embed = new EmbedBuilder()
+        .setDescription(description)
+        .setColor(botSettings.embedColor || null);
+
+    if (options.title) embed.setAuthor({ name: title });
+    if (options.author) embed.setAuthor({ iconURL: options.author.avatarURL({ dynamic: true }) });
+
+    return embed;
 }
 
 /**
@@ -101,7 +122,7 @@ async function message_paginationify(interaction, embeds, options) {
                     // Check if the collected page number is actually a number, and that embed page is available
                     if (isNaN(pageNum) || pageNum > embeds.length || pageNum < 0)
                         // Send a self destructing message to the user stating that the given page number is invalid
-                        return await message_destroyMessageAfter(await interaction.followUp({
+                        return await message_deleteAfter(await interaction.followUp({
                             content: `<@${interaction.member.id}> that is an invalid page number.`
                         }), 5000);
 
@@ -133,6 +154,9 @@ async function message_paginationify(interaction, embeds, options) {
 
 module.exports = {
     messageTools: {
+        deleteAfter: message_deleteAfter,
+
+        embedify: message_embedify,
         paginationify: message_paginationify
     }
 };

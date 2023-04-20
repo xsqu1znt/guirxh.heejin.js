@@ -81,14 +81,20 @@ module.exports = {
                     await userManager.update(interaction.user.id, { $push: { card_team_uids: card.uid } });
 
                 // Let the user know the result
-                return await interaction.editReply({ content: `Added ${card_f} to your team.` });
+                let embed_add = messageTools.embedify(`Added ${card_f} to your team.`, {
+                    title: "%USER | team add",
+                    author: interaction.user
+                }); return await interaction.editReply({ embeds: [embed_add] });
 
             case "remove":
                 // Remove the card's uid from the user's card_team_uids
                 await userManager.update(interaction.user.id, { $pull: { card_team_uids: card.uid } });
 
                 // Let the user know the result
-                return await interaction.editReply({ content: `Removed ${card_f} from your team.` });
+                let embed_remove = messageTools.embedify(`Removed ${card_f} from your team.`, {
+                    title: "%USER | team remove",
+                    author: interaction.user
+                }); return await interaction.editReply({ embeds: [embed_remove] });
         }
     }
 };
