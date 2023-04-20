@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 const { userManager } = require('../modules/mongo');
-const { cardInventoryParser } = require('../modules/userParser');
+const userParser = require('../modules/userParser');
 const { userView_ES } = require('../modules/embedStyles');
 
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
         let userData = await userManager.fetch(interaction.user.id, "full", true);
 
         // Get the card from the user's card_inventory
-        let card = cardInventoryParser.get(userData.card_inventory, userData.card_selected_uid);
+        let card = userParser.cards.get(userData.card_inventory, userData.card_selected_uid);
 
         // Check if the user has a valid card selected
         if (!userData.card_selected_uid || !card) {

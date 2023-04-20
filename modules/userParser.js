@@ -1,11 +1,17 @@
+const cardManager = require('./cardManager');
+
 /** Get a card from the user's card_inventory. */
-function cardInventory_get(cardArray, uid) {
-    return cardArray.find(card => card.uid === uid) || null;
+function cards_get(cardArray, uid) {
+    let card = cardArray.find(card => card.uid === uid);
+    return card ? cardManager.parse.fromCardLike(card) : null;
 }
 
-/** Get multiple cards from the user's card_inventory */
-function cardInventory_getMultiple(cardArray, uids) {
-    return uids.map(uid => cardArray.find(card => card.uid === uid));
+/** Get multiple cards from the user's card_inventory. */
+function cards_getMultiple(cardArray, uids, filterInvalid = true) {
+    let cards = uids.map(uid => cardArray.find(card => card.uid === uid));
+    if (filterInvalid) cards = cards.filter(card => card);
+
+    return cards.map(card => cardManager.parse.fromCardLike(card));
 }
 
 /* function cards_fetch(cardArray, filter = { uid: "" }) {
@@ -19,7 +25,7 @@ function cardInventory_getMultiple(cardArray, uids) {
 } */
 
 /** Filter out duplicate cards from the user's card_inventory. */
-function cardInventory_primary(cardArray) {
+function cards_primary(cardArray) {
     cardArray = cardArray.reduce((accumulator, current) => {
         if (!accumulator.find(c => c.globalID === current.globalID)) accumulator.push(current);
 
@@ -32,7 +38,7 @@ function cardInventory_primary(cardArray) {
 /** Return all duplicates of the given card found using the filter.
  * @param {{uid: string, globalID: string}} filter 
  */
-function cardInventory_duplicates(cardArray, filter = { uid: "", globalID: "" }) {
+function cards_duplicates(cardArray, filter = { uid: "", globalID: "" }) {
     filter = { uid: "", globalID: "", ...filter };
 
     // Find the card in the user's card_inventory using the provided filter
@@ -53,10 +59,10 @@ function cardInventory_duplicates(cardArray, filter = { uid: "", globalID: "" })
 }
 
 module.exports = {
-    cardInventoryParser: {
-        get: cardInventory_get,
-        getMultiple: cardInventory_getMultiple,
-        primary: cardInventory_primary,
-        duplicates: cardInventory_duplicates
+    cards: {
+        get: cards_get,
+        getMultiple: cards_getMultiple,
+        primary: cards_primary,
+        duplicates: cards_duplicates
     }
 };

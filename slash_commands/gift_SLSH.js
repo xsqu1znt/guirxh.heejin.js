@@ -1,6 +1,6 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
-const { cardInventoryParser } = require('../modules/userParser');
+const userParser = require('../modules/userParser');
 const { userGift_ES } = require('../modules/embedStyles');
 const { userManager } = require('../modules/mongo');
 const cardManager = require('../modules/cardManager');
@@ -46,7 +46,7 @@ module.exports = {
         });
 
         // Get the cards from the user's card_inventory
-        let cardsToGift = cardInventoryParser.getMultiple(userData.card_inventory, uids);
+        let cardsToGift = userParser.cards.getMultiple(userData.card_inventory, uids);
 
         // Filter out invalid cards
         cardsToGift = cardsToGift.filter(card => card);

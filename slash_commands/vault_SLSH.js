@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 const { userManager } = require('../modules/mongo');
-const { cardInventoryParser } = require('../modules/userParser');
+const userParser = require('../modules/userParser');
 const cardManager = require('../modules/cardManager');
 
 module.exports = {
@@ -32,7 +32,7 @@ module.exports = {
         let userData = await userManager.fetch(interaction.user.id, "full", true);
 
         // Get the card from the user's card_inventory
-        let card = cardInventoryParser.get(userData.card_inventory, uid);
+        let card = userParser.cards.get(userData.card_inventory, uid);
         if (!card) return await interaction.editReply({ content: `\`${uid}\` is not a valid card ID.` });
 
         // Determine the operation type
@@ -40,12 +40,12 @@ module.exports = {
         switch (interaction.options.getSubcommand()) {
             case "add":
                 card.locked = true;
-                result = `${cardManager.toString.basic(cardManager.parse.fromCardLike(card))} has been locked.`;
+                result = `${cardManager.toString.basic(card)} has been locked.`;
                 break;
 
             case "remove":
                 card.locked = false;
-                result = `${cardManager.toString.basic(cardManager.parse.fromCardLike(card))} has been unlocked.`;
+                result = `${cardManager.toString.basic(card)} has been unlocked.`;
                 break;
         }
 

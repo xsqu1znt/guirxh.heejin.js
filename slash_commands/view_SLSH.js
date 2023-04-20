@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 const { userManager } = require('../modules/mongo');
-const { cardInventoryParser } = require('../modules/userParser');
+const userParser = require('../modules/userParser');
 const { userView_ES } = require('../modules/embedStyles');
 
 module.exports = {
@@ -24,7 +24,7 @@ module.exports = {
         let userData = await userManager.fetch(interaction.user.id, "full", true);
 
         // Get the card from the user's card_inventory
-        let card = cardInventoryParser.get(userData.card_inventory, uid);
+        let card = userParser.cards.get(userData.card_inventory, uid);
         if (!card) return await interaction.editReply({ content: `\`${uid}\` is not a valid card ID.` });
 
         // Create the embed

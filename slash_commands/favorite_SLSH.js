@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 const { userManager } = require('../modules/mongo');
-const { cardInventoryParser } = require('../modules/userParser');
+const userParser = require('../modules/userParser');
 const cardManager = require('../modules/cardManager');
 
 module.exports = {
@@ -24,7 +24,7 @@ module.exports = {
         let userData = await userManager.fetch(interaction.user.id, "full", true);
 
         // Get the card from the user's card_inventory
-        let card = cardInventoryParser.get(userData.card_inventory, uid);
+        let card = userParser.cards.get(userData.card_inventory, uid);
         if (!card) return await interaction.editReply({ content: `\`${uid}\` is not a valid card ID.` });
 
         // Check if the card is already favorited
@@ -36,7 +36,7 @@ module.exports = {
         await userManager.update(interaction.user.id, { card_favorite_uid: card.uid });
 
         // Let the user know the result
-        let card_f = cardManager.toString.basic(cardManager.parse.fromCardLike(card));
+        let card_f = cardManager.toString.basic(card);
         return await interaction.editReply({ content: `${card_f} set as favorite.` });
     }
 };

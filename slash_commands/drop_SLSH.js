@@ -5,7 +5,7 @@ const { randomTools, dateTools } = require('../modules/jsTools');
 const { generalDrop_ES } = require('../modules/embedStyles');
 const { userManager } = require('../modules/mongo');
 const cardManager = require('../modules/cardManager');
-const { cardInventoryParser } = require('../modules/userParser');
+const userParser = require('../modules/userParser');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("drop")
@@ -101,7 +101,7 @@ module.exports = {
         // Refresh userData for the purpose of checking if it's a duplicate card
         userData = await userManager.fetch(interaction.user.id, "cards");
 
-        let { card_duplicates } = cardInventoryParser.duplicates(userData.card_inventory, { globalID: card.globalID });
+        let { card_duplicates } = userParser.cards.duplicates(userData.card_inventory, { globalID: card.globalID });
 
         let embed_drop = generalDrop_ES(interaction.user, card, dropEmbedTitle, card_duplicates.length > 0);
 

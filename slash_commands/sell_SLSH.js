@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 const { botSettings } = require('../configs/heejinSettings.json');
-const { cardInventoryParser } = require('../modules/userParser');
+const userParser = require('../modules/userParser');
 const { userManager } = require('../modules/mongo');
 const cardManager = require('../modules/cardManager');
 
@@ -26,19 +26,13 @@ module.exports = {
         let userData = await userManager.fetch(interaction.user.id, "full", true);
 
         // Get the cards from the user's card_inventory
-        let cardsToRemove = cardInventoryParser.getMultiple(userData.card_inventory, uids);
-
-        // Filter out invalid cards
-        cardsToRemove = cardsToRemove.filter(card => card);
+        let cardsToRemove = userParser.cards.getMultiple(userData.card_inventory, uids);
         if (cardsToRemove.length === 0) return await interaction.editReply({
             content: `No cards were found with ${uids.length === 1 ? "that ID" : "those IDs"}.`
         });
 
         // Remove the cards from the user's card_inventory
         await userManager.cards.remove(interaction.user.id, cardsToRemove.map(card => card.uid));
-
-        // Parse the CardLike objects into fully detailed cards
-        cardsToRemove = cardsToRemove.map(card => cardManager.parse.fromCardLike(card));
 
         // Update the user's balance with the total sell amount
         let currencyGained = 0; cardsToRemove.forEach(card => currencyGained += card.sellPrice);

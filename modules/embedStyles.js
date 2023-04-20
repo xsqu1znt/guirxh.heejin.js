@@ -2,7 +2,6 @@ const { EmbedBuilder, quote, inlineCode, bold } = require('discord.js');
 
 const { botSettings } = require('../configs/heejinSettings.json');
 const { stringTools, arrayTools, dateTools } = require('../modules/jsTools');
-const { cardInventoryParser } = require('../modules/userParser');
 const cardManager = require('../modules/cardManager');
 const userParser = require('../modules/userParser');
 
@@ -36,20 +35,16 @@ function userProfile(user, userData, compactMode = false) {
     embed.addFields([{ name: "\`📄\` Information", value: quote(profile_info) }]);
 
     if (!compactMode) {
-        let card_selected = cardInventoryParser.get(userData.card_inventory, userData.card_selected_uid);
+        let card_selected = userParser.cards.get(userData.card_inventory, userData.card_selected_uid);
         if (card_selected) {
-            card_selected = cardManager.parse.fromCardLike(card_selected);
-
-            let card_selected_isFavorited = (userData.card_favorite_uid === card_selected.uid)
+            let card_selected_isFavorited = (card_selected.uid === userData.card_favorite_uid)
             let card_selected_f = cardManager.toString.inventory(card_selected, 0, card_selected_isFavorited);
 
             embed.addFields({ name: "\`📄\` Stage", value: quote(card_selected_f) });
         }
 
-        let card_favorite = cardInventoryParser.get(userData.card_inventory, userData.card_favorite_uid);
+        let card_favorite = userParser.cards.get(userData.card_inventory, userData.card_favorite_uid);
         if (card_favorite) {
-            card_favorite = cardManager.parse.fromCardLike(card_favorite);
-
             let card_favorite_f = cardManager.toString.inventory(card_favorite, 0, true);
             embed.addFields({ name: "\`🌟\` Favorite", value: quote(card_favorite_f) });
 
@@ -130,12 +125,12 @@ function userInventory(user, userData, sorting = "global", order = "descending",
     // so we can easily create embed inventory pages of only 10 entries per
     let userCards_f = [];
 
-    for (let card of cardInventoryParser.primary(userCards)) {
+    for (let card of userParser.cards.primary(userCards)) {
         // Get the duplicate cards under the primary card
-        let { card_duplicates } = cardInventoryParser.duplicates(userCards, { globalID: card.globalID });
+        let { card_duplicates } = userParser.cards.duplicates(userCards, { globalID: card.globalID });
 
         // Whether or not this is the user's favorited card
-        let isFavorite = (userData.card_favorite_uid === card.uid);
+        let isFavorite = (card.uid === userData.card_favorite_uid);
 
         userCards_f.push(cardManager.toString.inventory(card, card_duplicates.length, isFavorite));
     }
@@ -154,7 +149,7 @@ function userInventory(user, userData, sorting = "global", order = "descending",
         let embed_page = new EmbedBuilder()
             .setAuthor({ name: `${user.username} | inventory`, iconURL: user.avatarURL({ dynamic: true }) })
             .setDescription(group[0] ? group.join("\n") : "try doing \`/drop\` to start filling up your inventory!")
-            .setFooter({ text: `page ${pageIndex++} of ${userCards_f.length || 1} • total ${userCards.length}` })
+            .setFooter({ text: `page ${pageIndex++} of ${userCards_f.length || 1} | total ${userCards.length}` })
             .setColor(botSettings.embedColor || null);
 
         // Push the newly created embed to our collection
@@ -167,15 +162,12 @@ function userInventory(user, userData, sorting = "global", order = "descending",
 
 // Command -> User -> /VIEW | /IDOL
 function userView(user, userData, card, isIdol = false) {
-    // Parse the CardLike into a fully detailed card
-    card = cardManager.parse.fromCardLike(card);
-
     // Get the duplicate cards under the primary card
     let card_duplicates = []; if (!isIdol)
-        card_duplicates = userParser.cardInventoryParser.duplicates(userData.card_inventory, { globalID: card.globalID });
+        card_duplicates = userParser.cards.duplicates(userData.card_inventory, { globalID: card.globalID });
 
     // Whether or not this is the user's favorited card
-    let isFavorite = (userData.card_favorite_uid === card.uid);
+    let isFavorite = (card.uid === userData.card_favorite_uid);
 
     // Create the embed
     let embed = new EmbedBuilder()
@@ -190,11 +182,54 @@ function userView(user, userData, card, isIdol = false) {
     return embed;
 }
 
+// Command -> User -> /TEAM VIEW
+function userTeamView(user, userData) {
+    // Convert the user's card_inventory into an array
+    let cards_team = userParser.cards.getMultiple(userData.card_inventory, userData.card_team_uids);
+
+    // Parse every card in the (cards) array into a readable [String] entry
+    // then split the array into groups of 10 cards each
+    // so we can easily create embed inventory pages of only 10 entries per
+    let cards_team_f = arrayTools.chunk(cards_team.map(card => {
+        // Whether or not this is the user's favorited card
+        let isFavorite = (card.uid === userData.card_favorite_uid);
+
+        return cardManager.toString.inventory(card, 0, isFavorite);
+    }), 1);
+
+    // Get the total team's ability
+    let totalAbility = 0; cards_team.map(card => totalAbility += card.stats.ability);
+
+    // Create an array to store the inventory pages for easy pagination
+    let embeds = [];
+
+    // Keep track of the page index
+    let pageIndex = 1;
+
+    // Go through each group in (cards_f) and create an embed for it
+    for (let group of cards_team_f) {
+        let card_image = cards_team[pageIndex - 1]?.imageURL;
+
+        // Create a new embed for this team page
+        let embed_page = new EmbedBuilder()
+            .setAuthor({ name: `${user.username} | team`, iconURL: user.avatarURL({ dynamic: true }) })
+            .setDescription(group[0] ? group.join("\n") : "You don't have a team set yet.")
+            .setFooter({ text: `${pageIndex++} of ${cards_team_f.length || 1} | team ability: ${totalAbility}` })
+            .setColor(botSettings.embedColor || null);
+
+        // Add the card image to the embed if available
+        if (card_image) embed_page.setImage(card_image);
+
+        // Push the newly created embed to our collection
+        embeds.push(embed_page);
+    }
+
+    // Return the array of embeds
+    return embeds;
+}
+
 // Command -> User -> /GIFT
 function userGift(user, recipient, cards) {
-    // Parse the CardLikes into fully detailed cards
-    cards = cards.map(card => cardManager.parse.fromCardLike(card));
-
     // Create the embed
     let embed = new EmbedBuilder()
         .setAuthor({ name: `${user.username} | gift`, iconURL: user.avatarURL({ dynamic: true }) })
@@ -228,5 +263,6 @@ module.exports = {
     userCooldowns_ES: userCooldowns,
     userInventory_ES: userInventory,
     userView_ES: userView,
+    userTeamView_ES: userTeamView,
     userGift_ES: userGift
 };
