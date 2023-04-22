@@ -48,7 +48,7 @@ module.exports = {
         // Build the user's inventory pages
         let embed_inventory = userInventory_ES(interaction.user, userData, sorting, order, { setID, groupName });
 
-        // Paginatation-ify-inator 9000!!!!!!
+        // Paginatation-ify-inator 9000!!!!11
         return await messageTools.paginationify(interaction, embed_inventory, {
             timeout: dateTools.parseStr(botSettings.timeout.pagination)
         });

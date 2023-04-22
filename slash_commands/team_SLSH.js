@@ -32,6 +32,9 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
+        // Reusable function to embedify common messages
+        const embedinator = new messageTools.Embedinator(interaction, { title: "%USER | team", author: interaction.user });
+
         // Get interation options
         let uid = interaction.options.getString("uid");
 
@@ -51,7 +54,7 @@ module.exports = {
 
         // Get the card from the user's card_inventory
         let card = userParser.cards.get(userData.card_inventory, uid);
-        if (!card) return await interaction.editReply({ content: `\`${uid}\` is not a valid card ID.` });
+        if (!card) return await embedinator.send(`\`${uid}\` is not a valid card ID.`);
 
         // Parse the card into a human readable format
         let card_f = cardManager.toString.basic(card);
@@ -60,15 +63,15 @@ module.exports = {
         switch (interaction.options.getSubcommand()) {
             case "add":
                 // Don't allow duplicate card entries
-                if (userData.card_team_uids.find(uid => uid === card.uid)) return await interaction.editReply({
-                    content: `\`${card.uid}\` is already on your team.`
-                });
+                if (userData.card_team_uids.find(uid => uid === card.uid)) return await embedinator.send(
+                    `\`${card.uid}\` is already on your team.`
+                );
 
                 // Check if the user's team is full
                 let cards_team = userParser.cards.getMultiple(userData.card_inventory, userData.card_team_uids, false);
-                if (cards_team.filter(card => card).length >= 4) return await interaction.editReply({
-                    content: "Your team can only have a max of \`4\` cards."
-                });
+                if (cards_team.filter(card => card).length >= 4) return await embedinator.send(
+                    "Your team can only have a max of \`4\` cards."
+                );
 
                 // Add the card's uid to the user's card_team_uids
                 // also check and remove invalid uids if they exist in the user's card_team_uids
@@ -81,20 +84,14 @@ module.exports = {
                     await userManager.update(interaction.user.id, { $push: { card_team_uids: card.uid } });
 
                 // Let the user know the result
-                let embed_add = messageTools.embedify(`Added ${card_f} to your team.`, {
-                    title: "%USER | team add",
-                    author: interaction.user
-                }); return await interaction.editReply({ embeds: [embed_add] });
+                return await embedinator.send(`Added ${card_f} to your team.`);
 
             case "remove":
                 // Remove the card's uid from the user's card_team_uids
                 await userManager.update(interaction.user.id, { $pull: { card_team_uids: card.uid } });
 
                 // Let the user know the result
-                let embed_remove = messageTools.embedify(`Removed ${card_f} from your team.`, {
-                    title: "%USER | team remove",
-                    author: interaction.user
-                }); return await interaction.editReply({ embeds: [embed_remove] });
+                return await embedinator.send(`Removed ${card_f} from your team.`);
         }
     }
 };

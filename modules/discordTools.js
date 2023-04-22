@@ -11,22 +11,52 @@ async function message_deleteAfter(message, time) {
 }
 
 /** Create a simple embed with a description. */
-function message_embedify(description, options = { title: "", author: null }) {
-    options = { title: "", author: null, ...options };
+class message_Embedinator {
+    constructor(interaction, options = { title: "", author: null }) {
+        options = { title: "", author: null, ...options };
 
-    // Format dynamic parameters in the title
-    let title = title
-        .replace("%USER", options.author.username);
+        this.interaction = interaction;
+        this.title = options.title
+            .replace("%USER", options.author.username || interaction.user.username);
+        this.author = options.author;
+    }
 
-    // Create the embed
-    let embed = new EmbedBuilder()
-        .setDescription(description)
-        .setColor(botSettings.embedColor || null);
+    /** Change the title.
+     * @param {string} title The title.
+     */
+    setTitle(title) { this.title = title; }
+    /** Change the embed's author.
+     * @param {string} author The author.
+     */
+    setAuthor(author) { this.author = author; }
 
-    if (options.title) embed.setAuthor({ name: title });
-    if (options.author) embed.setAuthor({ iconURL: options.author.avatarURL({ dynamic: true }) });
+    /** Send the embed.
+     * @param {string} description The description of the embed.
+     * @param {{followUp: boolean, ephemeral: boolean}} options Optional options.
+     */
+    async send(description, options = { followUp: false, ephemeral: false }) {
+        options = { followUp: false, ephemeral: false, ...options };
 
-    return embed;
+        // Create the embed
+        let embed = new EmbedBuilder()
+            .setDescription(description)
+            .setColor(botSettings.embedColor || null);
+
+        if (this.title) embed.setAuthor({ name: this.title });
+        if (this.author) embed.setAuthor({ name: embed.data.author.name, iconURL: this.author.avatarURL({ dynamic: true }) });
+
+        // Send the embed
+        if (options.followUp)
+            return await this.interaction.followUp({ embeds: [embed], ephemeral: options.ephemeral });
+        else
+            try {
+                return await this.interaction.reply({ embeds: [embed], ephemeral: options.ephemeral });
+            } catch {
+                // If you edit a reply you can't change the message to ephemeral unfortunately
+                // unless you do a follow up message and then delete the original reply but that's pretty scuffed
+                return await this.interaction.editReply({ embeds: [embed] });
+            }
+    }
 }
 
 /**
@@ -75,7 +105,7 @@ async function message_paginationify(interaction, embeds, options) {
             await interaction.reply({ embeds: [embeds[0]], components: [actionRow_pagination], ephemeral: options.ephemeral });
             fetchedReply = await interaction.fetchReply();
         } catch {
-            // If you edit a reply you can't change the message's ephemeral unfortunately
+            // If you edit a reply you can't change the message to ephemeral unfortunately
             // unless you do a follow up message and then delete the original reply but that's pretty scuffed
             fetchedReply = await interaction.editReply({ embeds: [embeds[0]], components: [actionRow_pagination] });
         }
@@ -156,7 +186,7 @@ module.exports = {
     messageTools: {
         deleteAfter: message_deleteAfter,
 
-        embedify: message_embedify,
+        Embedinator: message_Embedinator,
         paginationify: message_paginationify
     }
 };
