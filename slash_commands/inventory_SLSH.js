@@ -1,9 +1,9 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
-const { userManager } = require('../modules/mongo');
-const { messageTools } = require('../modules/discordTools');
-const { userInventory_ES } = require('../modules/embedStyles');
 const { botSettings } = require('../configs/heejinSettings.json');
+const { userInventory_ES } = require('../modules/embedStyles');
+const { messageTools } = require('../modules/discordTools');
+const { userManager } = require('../modules/mongo');
 const { dateTools } = require('../modules/jsTools');
 
 module.exports = {

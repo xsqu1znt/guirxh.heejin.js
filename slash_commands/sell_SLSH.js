@@ -1,8 +1,9 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 const { botSettings } = require('../configs/heejinSettings.json');
-const userParser = require('../modules/userParser');
+const { messageTools } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
+const userParser = require('../modules/userParser');
 const cardManager = require('../modules/cardManager');
 
 module.exports = {
@@ -18,6 +19,11 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
+        // Reusable embedinator to send success/error messages
+        const embedinator = new messageTools.Embedinator(interaction, {
+            title: "%USER | sell", author: interaction.user
+        });
+
         // Get interaction options
         let uids = interaction.options.getString("uid").replace(/ /g, "").split(",");
         if (!Array.isArray(uids)) uids = [uids];
@@ -27,9 +33,9 @@ module.exports = {
 
         // Get the cards from the user's card_inventory
         let cardsToRemove = userParser.cards.getMultiple(userData.card_inventory, uids);
-        if (cardsToRemove.length === 0) return await interaction.editReply({
-            content: `No cards were found with ${uids.length === 1 ? "that ID" : "those IDs"}.`
-        });
+        if (cardsToRemove.length === 0) return await embedinator.send(
+            `No cards were found with ${uids.length === 1 ? "that ID" : "those IDs"}.`
+        );
 
         // Remove the cards from the user's card_inventory
         await userManager.cards.remove(interaction.user.id, cardsToRemove.map(card => card.uid));
@@ -48,6 +54,6 @@ module.exports = {
             result = `You sold ${card_f} and received \`${botSettings.currencyIcon} ${currencyGained}\`.`;
         }
 
-        return await interaction.editReply({ content: result });
+        return await embedinator.send(result);
     }
 };

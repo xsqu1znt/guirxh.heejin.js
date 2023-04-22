@@ -1,8 +1,9 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 const { botSettings, userSettings } = require('../configs/heejinSettings.json');
-const { randomTools, dateTools } = require('../modules/jsTools');
+const { dateTools } = require('../modules/jsTools');
 const { generalDrop_ES } = require('../modules/embedStyles');
+const { messageTools } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 const cardManager = require('../modules/cardManager');
 const userParser = require('../modules/userParser');
@@ -42,6 +43,11 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
+        // Reusable embedinator to send success/error messages
+        const embedinator = new messageTools.Embedinator(interaction, {
+            title: "%USER | drop", author: interaction.user
+        });
+
         let userData = await userManager.fetch(interaction.user.id, "essential");
         let [dropEmbedTitle, dropCooldownType] = "";
         let card;
@@ -79,7 +85,7 @@ module.exports = {
 
             case "event": // TODO: use bot config for dynamic event name
                 if (botSettings.currentEvent === "none" || botSettings.currentEvent === "")
-                    return await interaction.editReply({ content: "There isn't an event right now." });
+                    return await embedinator.send("There isn't an event right now.");
 
                 dropEmbedTitle = botSettings.currentEvent; dropCooldownType = "drop_event";
                 card = cardManager.fetch.drop("event");
@@ -88,9 +94,9 @@ module.exports = {
 
         // Check if the user has an active cooldown
         let cooldownETA_drop = dateTools.eta(userData.cooldowns.get(dropCooldownType), true);
-        if (cooldownETA_drop) return await interaction.editReply({
-            content: `You can drop again **${cooldownETA_drop}**.`
-        });
+        if (cooldownETA_drop) return await embedinator.send(
+            `You can drop again **${cooldownETA_drop}**.`
+        );
 
         // Set the user's cooldown
         userData.cooldowns.set(dropCooldownType, dateTools.fromNow(userSettings.cooldowns[dropCooldownType]));

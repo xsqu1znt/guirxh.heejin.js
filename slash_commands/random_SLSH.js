@@ -2,6 +2,7 @@ const { Client, CommandInteraction, SlashCommandBuilder, EmbedBuilder } = requir
 
 const { botSettings, userSettings } = require('../configs/heejinSettings.json');
 const { randomTools, dateTools } = require('../modules/jsTools');
+const { messageTools } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 
 module.exports = {
@@ -13,14 +14,19 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
+        // Reusable embedinator to send success/error messages
+        const embedinator = new messageTools.Embedinator(interaction, {
+            title: "%USER | random", author: interaction.user
+        });
+
         let { xp: { xpRange }, currency: { currencyRange } } = userSettings;
         let userData = await userManager.fetch(interaction.user.id, "essential");
 
         // Check if the user has an active cooldown
         let cooldownETA_random = dateTools.eta(userData.cooldowns.get("random"), true);
-        if (cooldownETA_random) return await interaction.editReply({
-            content: `You can use random again **${cooldownETA_random}**.`
-        });
+        if (cooldownETA_random) return await embedinator.send(
+            `You can use random again **${cooldownETA_random}**.`
+        );
 
         let xpGained = randomTools.number(xpRange.min, xpRange.max);
         let currencyGained = randomTools.number(currencyRange.min, currencyRange.max);

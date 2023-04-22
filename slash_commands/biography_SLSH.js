@@ -1,6 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 const { userManager } = require('../modules/mongo');
+const { messageTools } = require('../modules/discordTools');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("biography")
@@ -15,8 +16,13 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
+        // Reusable embedinator to send success/error messages
+        const embedinator = new messageTools.Embedinator(interaction, {
+            title: "%USER | biography", author: interaction.user
+        });
+
         // Get interaction options
-        let biography = interaction.options.getString("text");
+        let biography = interaction.options.getString("text").trim();
 
         // Update the user's biography in Mongo
         await userManager.update(interaction.user.id, {
@@ -24,6 +30,6 @@ module.exports = {
         });
 
         // Let the user know the result
-        return await interaction.editReply({ content: "Your biography has been updated." });
+        return await embedinator.send(`Your biography has been changed to: \"${biography}\"`);
     }
 };

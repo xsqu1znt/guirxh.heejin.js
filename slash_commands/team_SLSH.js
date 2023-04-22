@@ -32,8 +32,10 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
-        // Reusable function to embedify common messages
-        const embedinator = new messageTools.Embedinator(interaction, { title: "%USER | team", author: interaction.user });
+        // Reusable embedinator to send success/error messages
+        const embedinator = new messageTools.Embedinator(interaction, {
+            title: "%USER | team", author: interaction.user
+        });
 
         // Get interation options
         let uid = interaction.options.getString("uid");

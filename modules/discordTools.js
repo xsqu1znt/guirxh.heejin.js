@@ -3,13 +3,6 @@ const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentTyp
 const { botSettings } = require('../configs/heejinSettings.json');
 
 // Message Tools
-async function message_deleteAfter(message, time) {
-    let m;
-
-    setTimeout(async () => m = await message.delete(), time);
-    return m;
-}
-
 /** Create a simple embed with a description. */
 class message_Embedinator {
     constructor(interaction, options = { title: "", author: null }) {
@@ -24,7 +17,10 @@ class message_Embedinator {
     /** Change the title.
      * @param {string} title The title.
      */
-    setTitle(title) { this.title = title; }
+    setTitle(title) {
+        this.title = title
+            .replace("%USER", this.author.username || this.interaction.user.username);;
+    }
     /** Change the embed's author.
      * @param {string} author The author.
      */
@@ -57,6 +53,13 @@ class message_Embedinator {
                 return await this.interaction.editReply({ embeds: [embed] });
             }
     }
+}
+
+async function message_deleteAfter(message, time) {
+    let m;
+
+    setTimeout(async () => m = await message.delete(), time);
+    return m;
 }
 
 /**
@@ -184,9 +187,9 @@ async function message_paginationify(interaction, embeds, options) {
 
 module.exports = {
     messageTools: {
-        deleteAfter: message_deleteAfter,
-
         Embedinator: message_Embedinator,
+
+        deleteAfter: message_deleteAfter,
         paginationify: message_paginationify
     }
 };

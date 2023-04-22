@@ -1,8 +1,9 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 const { userManager } = require('../modules/mongo');
-const userParser = require('../modules/userParser');
+const { messageTools } = require('../modules/discordTools');
 const { userView_ES } = require('../modules/embedStyles');
+const userParser = require('../modules/userParser');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("idol")
@@ -13,6 +14,11 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
+        // Reusable embedinator to send success/error messages
+        const embedinator = new messageTools.Embedinator(interaction, {
+            title: "%USER | idol", author: interaction.user
+        });
+
         // Fetch the user from Mongo
         let userData = await userManager.fetch(interaction.user.id, "full", true);
 
@@ -25,9 +31,9 @@ module.exports = {
             let guildCommands = await interaction.guild.commands.fetch();
             let setCommandID = guildCommands.find(slash_commands => slash_commands.name === "set").id;
 
-            return await interaction.editReply({
-                content: `You don't have a card selected. Use </set:${setCommandID}> first.`
-            });
+            return await embedinator.send(
+                `You don't have a card selected. Use </set:${setCommandID}> first.`
+            );
         }
 
         // Create the embed

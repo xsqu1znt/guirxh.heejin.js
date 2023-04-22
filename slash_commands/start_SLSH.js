@@ -1,6 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 const { userSettings, botSettings } = require('../configs/heejinSettings.json');
+const { messageTools } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 
 module.exports = {
@@ -12,13 +13,21 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
+        // Reusable embedinator to send success/error messages
+        const embedinator = new messageTools.Embedinator(interaction, {
+            title: "Welcome, %USER!", author: interaction.user
+        });
+
+        // Check if the user already started the bot
+        if (await userManager.exists(interaction.user.id)) {
+            embedinator.setTitle("%USER | start");
+            return await embedinator.send("You already started the bot.");
+        }
+
+        // Add the user to the Mongo database
         await userManager.new(interaction.user.id);
 
-        let embed_start = new EmbedBuilder()
-            .setAuthor({ name: `Welcome, ${interaction.user.username}!`, iconURL: interaction.user.avatarURL({ dynamic: true }) })
-            .setDescription(`You got \`${botSettings.currencyIcon} ${userSettings.currency.startingBalance}\``)
-            .setColor(botSettings.embedColor || null);
-
-        return await interaction.editReply({ embeds: [embed_start] });
+        // Let the user know the result
+        return await embedinator.send(`You got \`${botSettings.currencyIcon} ${userSettings.currency.startingBalance}\``);
     }
 };

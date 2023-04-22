@@ -2,6 +2,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js'
 
 const { userManager } = require('../modules/mongo');
 const { userProfile_ES } = require('../modules/embedStyles');
+const { messageTools } = require('../modules/discordTools');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("profile")
@@ -18,15 +19,20 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
+        // Reusable embedinator to send success/error messages
+        const embedinator = new messageTools.Embedinator(interaction, {
+            title: "%USER | profile", author: interaction.user
+        });
+
         // Get interaction options
         let user = interaction.options.getUser("player") || interaction.user;
         let compact = interaction.options.getBoolean("compact") || false;
 
         // Check if the given user exists in Mongo
         let userExists = await userManager.exists(user.id);
-        if (!userExists) return await interaction.editReply({
-            content: "That user hasn't started yet."
-        });
+        if (!userExists) return await embedinator.send(
+            "That user hasn't started yet."
+        );
 
         let userData = await userManager.fetch(user.id, "full", true);
         let embed_profile = userProfile_ES(user, userData, compact);

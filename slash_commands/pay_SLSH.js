@@ -1,6 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 const { botSettings } = require('../configs/heejinSettings.json');
+const { messageTools } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 
 module.exports = {
@@ -20,16 +21,21 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
-        // Get interaction options
-        let amount = interaction.options.getNumber("amount");
-        if (amount < 1) return interaction.editReply({
-            content: "You can't give less than \`1\`!"
+        // Reusable embedinator to send success/error messages
+        const embedinator = new messageTools.Embedinator(interaction, {
+            title: "%USER | pay", author: interaction.user
         });
 
+        // Get interaction options
+        let amount = interaction.options.getNumber("amount");
+        if (amount < 1) return embedinator.send(
+            "You can't give less than \`1\`!"
+        );
+
         let recipient = interaction.options.getUser("player");
-        if (recipient.id === interaction.user.id) return await interaction.editReply({
-            content: "You can't gift to yourself!"
-        });
+        if (recipient.id === interaction.user.id) return await embedinator.send(
+            "You can't gift to yourself!"
+        );
 
         // Fetch the users from Mongo
         let userData = await userManager.fetch(interaction.user.id, "essential", true);
@@ -37,14 +43,14 @@ module.exports = {
 
         // Check if the recipient user exists in Mongo
         let recipientExists = await userManager.exists(recipient.id);
-        if (!recipientExists) return await interaction.editReply({
-            content: "That user hasn't started yet."
-        });
+        if (!recipientExists) return await embedinator.send(
+            "That user hasn't started yet."
+        );
 
         // Check if the user has enough
-        if (userData.balance < amount) return await interaction.editReply({
-            content: `You don't have enough! You're \`${botSettings.currencyIcon} ${amount - userData.balance}\` short.`
-        });
+        if (userData.balance < amount) return await embedinator.send(
+            `You don't have enough! You're \`${botSettings.currencyIcon} ${amount - userData.balance}\` short.`
+        );
 
         // Update the users' balance in mongo
         await Promise.all([
@@ -57,8 +63,8 @@ module.exports = {
         // Let the user know the result
         let amount_f = `\`${botSettings.currencyIcon} ${amount}\``;
         let balance_f = `\`${botSettings.currencyIcon} ${userData.balance - amount}\``;
-        return await interaction.editReply({
-            content: `You gave \`${amount_f}\` to **${recipient.username}**.\nBalance remaining: \`${balance_f}\``
-        });
+        return await embedinator.send(
+            `You gave \`${amount_f}\` to **${recipient.username}**.\nBalance remaining: \`${balance_f}\``
+        );
     }
 };

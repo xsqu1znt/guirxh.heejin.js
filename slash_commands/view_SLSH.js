@@ -1,8 +1,9 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 const { userManager } = require('../modules/mongo');
-const userParser = require('../modules/userParser');
+const { messageTools } = require('../modules/discordTools');
 const { userView_ES } = require('../modules/embedStyles');
+const userParser = require('../modules/userParser');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("view")
@@ -17,6 +18,11 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
+        // Reusable embedinator to send success/error messages
+        const embedinator = new messageTools.Embedinator(interaction, {
+            title: "%USER | view", author: interaction.user
+        });
+
         // Get interation options
         let uid = interaction.options.getString("uid");
 
@@ -25,7 +31,7 @@ module.exports = {
 
         // Get the card from the user's card_inventory
         let card = userParser.cards.get(userData.card_inventory, uid);
-        if (!card) return await interaction.editReply({ content: `\`${uid}\` is not a valid card ID.` });
+        if (!card) return await embedinator.send(`\`${uid}\` is not a valid card ID.`);
 
         // Create the embed
         let embed_view = userView_ES(interaction.user, userData, card);
