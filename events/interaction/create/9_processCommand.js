@@ -5,6 +5,7 @@ const { Client, BaseInteraction } = require('discord.js');
 // const { botSettings } = require('../../../configs/heejinSettings.json');
 const { userManager } = require('../../../modules/mongo');
 const { stringTools } = require('../../../modules/jsTools');
+const { messageTools } = require('../modules/discordTools');
 const logger = require('../../../modules/logger');
 
 module.exports = {
@@ -16,6 +17,9 @@ module.exports = {
      * @param {{ interaction: BaseInteraction }} args
      */
     execute: async (client, args) => {
+        // Reusable embedinator to send success/error messages
+        const embedinator = new messageTools.Embedinator(args.interaction);
+
         // Filter out non-guild and non-command interactions
         if (!args.interaction.guild || !args.interaction.isCommand()) return;
 
@@ -34,9 +38,9 @@ module.exports = {
                 let startCommandID = guildCommands.find(slash_commands => slash_commands.name === "start").id;
 
                 // Send the mebed
-                return await args.interaction.editReply({
-                    content: `**You haven't started yet!** Use </start:${startCommandID}> first!`
-                });
+                return await embedinator.send(
+                    `**You haven't started yet!** Use </start:${startCommandID}> first!`
+                );
             }
 
             // Execute the command function
