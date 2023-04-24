@@ -1,0 +1,1522 @@
+[
+  {
+    "name": "Heejin",
+    "group": "EASTER23",
+    "single": "LOOΠΔ",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2216",
+    "setID": "229",
+    "rarity": 19,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092082676200112148/easter23_heejin.png"
+  },
+  {
+    "name": "I.N",
+    "group": "EASTER23",
+    "single": "Stray Kids",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2217",
+    "setID": "229",
+    "rarity": 19,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092082676493725756/easter23_in.png"
+  },
+  {
+    "name": "Jongho",
+    "group": "EASTER23",
+    "single": "ATEEZ",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2218",
+    "setID": "229",
+    "rarity": 19,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092082676749582366/easter23_jongho.png"
+  },
+  {
+    "name": "Jungkook",
+    "group": "EASTER23",
+    "single": "BTS",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2219",
+    "setID": "229",
+    "rarity": 19,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092082677005418507/easter23_jungkook.png"
+  },
+  {
+    "name": "Nayeon",
+    "group": "EASTER23",
+    "single": "TWICE",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2220",
+    "setID": "229",
+    "rarity": 19,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092082677311615126/easter23_nayeon.png"
+  },
+  {
+    "name": "Soobin",
+    "group": "EASTER23",
+    "single": "TXT",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2221",
+    "setID": "229",
+    "rarity": 19,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092082677655552040/easter23_soobin.png"
+  },
+  {
+    "name": "Suzy",
+    "group": "EASTER23",
+    "single": "Solo",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2222",
+    "setID": "229",
+    "rarity": 19,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092082677936566352/easter23_suzy.png"
+  },
+  {
+    "name": "Wonho",
+    "group": "EASTER23",
+    "single": "Solo",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2223",
+    "setID": "229",
+    "rarity": 19,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092082678267904071/easter23_wonho.png"
+  },
+  {
+    "name": "Wonyoung",
+    "group": "EASTER23",
+    "single": "IVE",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2224",
+    "setID": "229",
+    "rarity": 19,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092082678649598035/easter23_wonyoung.png"
+  },
+  {
+    "name": "Yujin",
+    "group": "EASTER23",
+    "single": "CLC",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2225",
+    "setID": "229",
+    "rarity": 19,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092082679010312292/easter23_yujin.png"
+  },
+  {
+    "name": "Arin",
+    "group": "EASTER23",
+    "single": "OH MY GIRL",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2226",
+    "setID": "229",
+    "rarity": 19,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094312550239318046/easter23_arin.png"
+  },
+  {
+    "name": "Hyunsuk",
+    "group": "EASTER23",
+    "single": "CIX",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2227",
+    "setID": "229",
+    "rarity": 19,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094312550516138045/easter23_hyunsuk.png"
+  },
+  {
+    "name": "Intak",
+    "group": "EASTER23",
+    "single": "P1Harmony",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2228",
+    "setID": "229",
+    "rarity": 19,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094312550960738304/easter23_intak.png"
+  },
+  {
+    "name": "Jisoo",
+    "group": "EASTER23",
+    "single": "BLɅϽKPIИK",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2229",
+    "setID": "229",
+    "rarity": 19,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094312551254335498/easter23_jisoo.png"
+  },
+  {
+    "name": "Luda",
+    "group": "EASTER23",
+    "single": "WJSN",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2230",
+    "setID": "229",
+    "rarity": 19,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094312551627636746/easter23_luda.png"
+  },
+  {
+    "name": "Q",
+    "group": "EASTER23",
+    "single": "THE BOYZ",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2231",
+    "setID": "229",
+    "rarity": 19,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094312552219029636/easter23_q.png"
+  },
+  {
+    "name": "Wonwoo",
+    "group": "EASTER23",
+    "single": "SEVENTEEN",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2232",
+    "setID": "229",
+    "rarity": 19,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094312552516829284/easter23_wonwoo.png"
+  },
+  {
+    "name": "Xion",
+    "group": "EASTER23",
+    "single": "ONEUS",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2233",
+    "setID": "229",
+    "rarity": 19,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094312552919474217/easter23_xion.png"
+  },
+  {
+    "name": "Yeri",
+    "group": "EASTER23",
+    "single": "Red Velvet",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2234",
+    "setID": "229",
+    "rarity": 19,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094312553255022692/easter23_yeri.png"
+  },
+  {
+    "name": "Yuna",
+    "group": "EASTER23",
+    "single": "ITZY",
+    "category": "east",
+    "description": "Event - EASTER23",
+    "emoji": "🐰",
+    "globalID": "2235",
+    "setID": "229",
+    "rarity": 19,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094312553758343359/easter23_yuna.png"
+  },
+  {
+    "name": "Beomgyu",
+    "group": "XMAS22",
+    "single": "TXT",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2086",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089302600073287/xmas22_beomgyu.png"
+  },
+  {
+    "name": "Chaeryeong",
+    "group": "XMAS22",
+    "single": "ITZY",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2087",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089302923018330/xmas22_chaeryeong.png"
+  },
+  {
+    "name": "Changmin",
+    "group": "XMAS22",
+    "single": "TVXQ",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2088",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089303245991986/xmas22_changmin.png"
+  },
+  {
+    "name": "Chanyeol",
+    "group": "XMAS22",
+    "single": "EXO",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2089",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089303623483402/xmas22_chanyeol.png"
+  },
+  {
+    "name": "Dohyon",
+    "group": "XMAS22",
+    "single": "BAE173",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2090",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089303967399996/xmas22_dohyon.png"
+  },
+  {
+    "name": "Haseul",
+    "group": "XMAS22",
+    "single": "LOOΠΔ",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2091",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089304265207818/xmas22_haseul.png"
+  },
+  {
+    "name": "Jisoo",
+    "group": "XMAS22",
+    "single": "BLΛƆKPIИK",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2092",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089304596561991/xmas22_jisoo.png"
+  },
+  {
+    "name": "JiU",
+    "group": "XMAS22",
+    "single": "Dreamcatcher",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2093",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089304919507046/xmas22_jiu.png"
+  },
+  {
+    "name": "Johnny",
+    "group": "XMAS22",
+    "single": "NCT",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2095",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089305250869369/xmas22_johnny.png"
+  },
+  {
+    "name": "JooE",
+    "group": "XMAS22",
+    "single": "MOMOLAND",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2096",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089305548668938/xmas22_jooe.png"
+  },
+  {
+    "name": "Joy",
+    "group": "XMAS22",
+    "single": "Red Velvet",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2097",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089360120762418/xmas22_joy.png"
+  },
+  {
+    "name": "Jun",
+    "group": "XMAS22",
+    "single": "SEVENTEEN",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2098",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089360422739968/xmas22_jun.png"
+  },
+  {
+    "name": "Jungsu",
+    "group": "XMAS22",
+    "single": "Xdinary Heroes",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2099",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089360728928356/xmas22_jungsu.png"
+  },
+  {
+    "name": "Jungwon",
+    "group": "XMAS22",
+    "single": "ENHYPEN",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2100",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089361056092170/xmas22_jungwon.png"
+  },
+  {
+    "name": "Keeho",
+    "group": "XMAS22",
+    "single": "P1Harmony",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2101",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089361412595852/xmas22_keeho.png"
+  },
+  {
+    "name": "Lee Know",
+    "group": "XMAS22",
+    "single": "Stray Kids",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2102",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089361697812570/xmas22_leeknow.png"
+  },
+  {
+    "name": "Liz",
+    "group": "XMAS22",
+    "single": "IVE",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2103",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089362029170688/xmas22_liz.png"
+  },
+  {
+    "name": "Mark",
+    "group": "XMAS22",
+    "single": "NCT",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2104",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089362415034378/xmas22_mark.png"
+  },
+  {
+    "name": "Momo",
+    "group": "XMAS22",
+    "single": "TWICE",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2105",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089362805116958/xmas22_momo.png"
+  },
+  {
+    "name": "Nagyung",
+    "group": "XMAS22",
+    "single": "fromis_9",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2106",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089363266482246/xmas22_nagyung.png"
+  },
+  {
+    "name": "Ningning",
+    "group": "XMAS22",
+    "single": "æspa",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2107",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089388457480192/xmas22_ningning.png"
+  },
+  {
+    "name": "Sangyeon",
+    "group": "XMAS22",
+    "single": "THE BOYZ",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2108",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089388813991996/xmas22_sangyeon.png"
+  },
+  {
+    "name": "Soyeon",
+    "group": "XMAS22",
+    "single": "(G)I-dle",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2109",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089389157920800/xmas22_soyeon.png"
+  },
+  {
+    "name": "Sunny",
+    "group": "XMAS22",
+    "single": "Girls' Generation",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2110",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054096998455853196/xmas22_sunny.png"
+  },
+  {
+    "name": "Wonpil",
+    "group": "XMAS22",
+    "single": "DAY6",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2111",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089389468307546/xmas22_wonpil.png"
+  },
+  {
+    "name": "Yangyang",
+    "group": "XMAS22",
+    "single": "NCT",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2112",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089389875146834/xmas22_yangyang.png"
+  },
+  {
+    "name": "Yedam",
+    "group": "XMAS22",
+    "single": "TREASURE",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2113",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089390219087892/xmas22_yedam.png"
+  },
+  {
+    "name": "Yeosang",
+    "group": "XMAS22",
+    "single": "ATEEZ",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2114",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089390554628186/xmas22_yeosang.png"
+  },
+  {
+    "name": "Yerin",
+    "group": "XMAS22",
+    "single": "GFriend",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2115",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089390927917196/xmas22_yerin.png"
+  },
+  {
+    "name": "Yves",
+    "group": "XMAS22",
+    "single": "LOOΠΔ",
+    "category": "xmas",
+    "description": "Event - XMAS22",
+    "emoji": "🎄",
+    "globalID": "2116",
+    "setID": "241",
+    "rarity": 25,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054089391238303875/xmas22_yves.png"
+  },
+  {
+    "name": "Dahyun",
+    "group": "HL22",
+    "single": "TWICE",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2001",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1029567474036899850/hl22_dahyun.png"
+  },
+  {
+    "name": "Jisoo",
+    "group": "HL22",
+    "single": "BLɅϽKPIИK",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2002",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1029567474414387262/hl22_jisoo.png"
+  },
+  {
+    "name": "Luna",
+    "group": "HL22",
+    "single": "f(x)",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2003",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1029567474779304048/hl22_luna.png"
+  },
+  {
+    "name": "New",
+    "group": "HL22",
+    "single": "THE BOYZ",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2004",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1029567475228094534/hl22_new.png"
+  },
+  {
+    "name": "Sooyoung",
+    "group": "HL22",
+    "single": "Girls' Generation",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2005",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1029567475685261402/hl22_sooyoung.png"
+  },
+  {
+    "name": "Xiaojun",
+    "group": "HL22",
+    "single": "NCT",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2006",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1029567476419276940/hl22_xiaojun.png"
+  },
+  {
+    "name": "Yohan",
+    "group": "HL22",
+    "single": "WEi",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2007",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1029567476884836352/hl22_yohan.png"
+  },
+  {
+    "name": "Yoohyeon",
+    "group": "HL22",
+    "single": "Dreamcatcher",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2008",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1029592674501660672/psd_copy.png"
+  },
+  {
+    "name": "Lee Know",
+    "group": "HL22",
+    "single": "Stray Kids",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2009",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1029568868949164082/psd_copy.png"
+  },
+  {
+    "name": "Wonho",
+    "group": "HL22",
+    "single": "Solo",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2010",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1029568868462624849/hl22_wonho.png"
+  },
+  {
+    "name": "AleXa",
+    "group": "HL22",
+    "single": "Solo",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2011",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1030873819268796587/hl22_alexa.png"
+  },
+  {
+    "name": "Baekhyun",
+    "group": "HL22",
+    "single": "EXO",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2012",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1030873819730170027/hl22_baekhyun.png"
+  },
+  {
+    "name": "Chanyeol",
+    "group": "HL22",
+    "single": "EXO",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2013",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1030873820141195305/hl22_chanyeol.png"
+  },
+  {
+    "name": "Choyeon",
+    "group": "HL22",
+    "single": "bugAboo",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2014",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1030873820535455784/hl22_choyeon.png"
+  },
+  {
+    "name": "Irene",
+    "group": "HL22",
+    "single": "Red Velvet",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2015",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1030873820900380682/hl22_irene.png"
+  },
+  {
+    "name": "Johnny",
+    "group": "HL22",
+    "single": "NCT",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2016",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1030873821294628885/hl22_johnny.png"
+  },
+  {
+    "name": "Jungwoo",
+    "group": "HL22",
+    "single": "NCT",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2017",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1030873821680500846/hl22_jungwoo.png"
+  },
+  {
+    "name": "Karina",
+    "group": "HL22",
+    "single": "æspa",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2018",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1030873822066380903/hl22_karina.png"
+  },
+  {
+    "name": "Siwon",
+    "group": "HL22",
+    "single": "Super Junior",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2019",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1030873822460645429/hl22_siwon.png"
+  },
+  {
+    "name": "Taeyeon",
+    "group": "HL22",
+    "single": "Girls' Generation",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2020",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1030873822829760602/hl22_taeyeon.png"
+  },
+  {
+    "name": "Chaeyoung",
+    "group": "HL22",
+    "single": "TWICE",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2021",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1032435339610042428/hl22_chaeyoung.png"
+  },
+  {
+    "name": "Felix",
+    "group": "HL22",
+    "single": "Stray Kids",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2022",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1032435339991715940/hl22_felix.png"
+  },
+  {
+    "name": "Heejin",
+    "group": "HL22",
+    "single": "LOOΠΔ",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2023",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1032435340335652986/hl22_heejin.png"
+  },
+  {
+    "name": "Jin",
+    "group": "HL22",
+    "single": "BTS",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2024",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1032435340671201360/hl22_jin.png"
+  },
+  {
+    "name": "Jonghyun",
+    "group": "HL22",
+    "single": "SHINee",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2025",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1032435341019336704/hl22_jonghyun.png"
+  },
+  {
+    "name": "Juyeon",
+    "group": "HL22",
+    "single": "THE BOYZ",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2026",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1032435341380042752/hl22_juyeon.png"
+  },
+  {
+    "name": "Keonhee",
+    "group": "HL22",
+    "single": "ONEUS",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2027",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1032435341765914675/hl22_keonhee.png"
+  },
+  {
+    "name": "Kim Lip",
+    "group": "HL22",
+    "single": "LOOΠΔ",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2028",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1032435342130810910/hl22_kimlip.png"
+  },
+  {
+    "name": "Soyeon",
+    "group": "HL22",
+    "single": "(G)I-dle",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2029",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1032435342483136542/hl22_soyeon.png"
+  },
+  {
+    "name": "Wooyoung",
+    "group": "HL22",
+    "single": "ATEEZ",
+    "category": "hlwn",
+    "description": "Special - HL22",
+    "emoji": "🎃",
+    "globalID": "2030",
+    "setID": "249",
+    "rarity": 29,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1032435342848045066/hl22_wooyoung.png"
+  }
+]

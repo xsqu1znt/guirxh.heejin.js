@@ -10,7 +10,7 @@ class message_Embedinator {
 
         this.interaction = interaction;
         this.title = options.title
-            .replace("%USER", options.author.username || interaction.user.username);
+            .replace("%USER", options.author?.username || interaction.user.username);
         this.author = options.author;
     }
 

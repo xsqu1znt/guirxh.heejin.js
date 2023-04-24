@@ -5,7 +5,7 @@ const { Client, BaseInteraction } = require('discord.js');
 // const { botSettings } = require('../../../configs/heejinSettings.json');
 const { userManager } = require('../../../modules/mongo');
 const { stringTools } = require('../../../modules/jsTools');
-const { messageTools } = require('../modules/discordTools');
+const { messageTools } = require('../../../modules/discordTools');
 const logger = require('../../../modules/logger');
 
 module.exports = {
@@ -51,7 +51,8 @@ module.exports = {
                 // Send a level up message if the user leveled up successfully
                 if (leveled.leveled) {
                     // Gotta have a level up message to actually send
-                    let lvlMsg = `Congratulations, ${args.interaction.user}! You gained %LVLS_GAINED %DYNLVLSTR! You are now level %CURRLVL.`
+                    let lvlMsg = `Congratulations, %USER! You gained %LVLS_GAINED %DYNLVLSTR! You are now level %CURRLVL.`
+                        .replace("%USER", args.interaction.user)
                         .replace("%LVLS_GAINED", stringTools.formatNumber(leveled.levels_gained))
                         .replace("%DYNLVLSTR", leveled.levels_gained > 1 ? "levels" : "level")
                         .replace("%CURRLVL", stringTools.formatNumber(leveled.level_current));

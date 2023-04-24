@@ -7,6 +7,7 @@
             "pagination": "60s"
         }
     },
+
     "userSettings": {
         "xp": {
             "maxLevel": 50,
@@ -27,22 +28,21 @@
             "winRandom": 40
         },
         "cooldowns": {
-            "drop_1": "5s",
-            "drop_2": "5s",
-            "drop_3": "5s",
-            "drop_4": "5s",
+            "drop_5": "5s",
             "drop_weekly": "5s",
             "drop_seasonal": "5s",
             "drop_event": "5s",
             "random": "5s"
         }
     },
-    "shopSettings": {
-        "stock": [
-            1234,
-            4321,
-            5678,
-            8765
-        ]
+
+    "dropSettings": {
+        "chances": {
+            "common": { "chance": 100, "cardRarityFilter": 70 },
+            "uncommon": { "chance": 25, "cardRarityFilter": 60 },
+            "rare": { "chance": 15, "cardRarityFilter": 50 },
+            "epic": { "chance": 10, "cardRarityFilter": 40 },
+            "mint": { "chance": 5, "cardRarityFilter": 30 }
+        }
     }
 }

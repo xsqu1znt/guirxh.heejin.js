@@ -6,14 +6,18 @@ const cardManager = require('../modules/cardManager');
 const userParser = require('../modules/userParser');
 
 // Command -> /DROP
-function generalDrop(user, card, dropTitle = "drop", isDuplicate = false) {
+function generalDrop(user, cards, cards_isDuplicate, dropTitle = "drop") {
+    if (!Array.isArray(cards)) cards = [cards];
+    if (!Array.isArray(cards_isDuplicate)) cards_isDuplicate = [cards_isDuplicate];
+
+    // Create the embed
     let embed = new EmbedBuilder()
         .setAuthor({ name: `${user.username} | ${dropTitle}`, iconURL: user.avatarURL({ dynamic: true }) })
-        .setDescription(cardManager.toString.drop(card))
+        .setDescription(cards.map((card, idx) => cardManager.toString.drop(card, cards_isDuplicate[idx] || false)).join("\n"))
         .setColor(botSettings.embedColor || null);
 
-    if (card.imageURL) embed.setImage(card.imageURL);
-    if (isDuplicate) embed.setFooter({ text: "this is a duplicate" });
+    let card_last = cards.slice(-1)[0];
+    if (card_last.imageURL) embed.setImage(card_last.imageURL);
 
     return embed;
 }
@@ -58,10 +62,7 @@ function userProfile(user, userData, compactMode = false) {
 // Command -> User -> /COOLDOWNS
 function userCooldowns(user, userData) {
     let cooldowns = [
-        { name: "drop_1", timestamp: 0 },
-        { name: "drop_2", timestamp: 0 },
-        { name: "drop_3", timestamp: 0 },
-        { name: "drop_4", timestamp: 0 },
+        { name: "drop_5", timestamp: 0 },
         { name: "drop_event", timestamp: 0 },
         { name: "drop_seasonal", timestamp: 0 },
         { name: "drop_weekly", timestamp: 0 },
@@ -230,20 +231,21 @@ function userTeamView(user, userData) {
 
 // Command -> User -> /GIFT
 function userGift(user, recipient, cards) {
+    let fromTo = `from: ${user} to: ${recipient}`;
+
     // Create the embed
     let embed = new EmbedBuilder()
         .setAuthor({ name: `${user.username} | gift`, iconURL: user.avatarURL({ dynamic: true }) })
-        .addFields({ name: `from:`, value: `${user}`, inline: true }, { name: `to:`, value: `${recipient}`, inline: true })
         .setColor(botSettings.embedColor || null);
 
     if (cards.length === 1) {
-        embed.setDescription(cardManager.toString.inventory(cards[0]));
+        embed.setDescription(cardManager.toString.inventory(cards[0]) + "\n\n" + fromTo);
 
         // Add the card image to the embed if available
         if (cards[0].imageURL) embed.setImage(cards[0].imageURL);
 
     } else {
-        embed.setDescription(cards.map(card => cardManager.toString.inventory(card)).join("\n\n"));
+        embed.setDescription(cards.map(card => cardManager.toString.inventory(card)).join("\n") + "\n\n" + fromTo);
 
         // Add the last card's image to the embed if available
         let card_last = cards.slice(-1)[0];

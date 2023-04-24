@@ -1,5 +1,24 @@
 [
   {
+    "name": "Seonghwa",
+    "group": "Ritsuka",
+    "single": "BDAY23",
+    "category": "bday",
+    "description": "Maira - BDAY23",
+    "emoji": "🐈",
+    "globalID": "2206",
+    "setID": "230",
+    "rarity": 20,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1087028721740959814/bday_seonghwa.png"
+  },
+  {
     "name": "Hongjoong",
     "group": "Ritsuka",
     "single": "BDAY23",
@@ -8,7 +27,7 @@
     "emoji": "🐈",
     "globalID": "2207",
     "setID": "230",
-    "rarity": "bday23",
+    "rarity": 20,
     "sellPrice": 10,
     "stats": {
       "level": 1,
@@ -27,7 +46,7 @@
     "emoji": "🐈",
     "globalID": "2208",
     "setID": "230",
-    "rarity": "bday23",
+    "rarity": 20,
     "sellPrice": 10,
     "stats": {
       "level": 1,
@@ -46,7 +65,7 @@
     "emoji": "🐈",
     "globalID": "2209",
     "setID": "230",
-    "rarity": "bday23",
+    "rarity": 20,
     "sellPrice": 10,
     "stats": {
       "level": 1,
@@ -57,15 +76,15 @@
     "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1087028722810499152/bday_wonhyuk.png"
   },
   {
-    "name": "Jinyoung",
+    "name": "Theo",
     "group": "Ritsuka",
     "single": "BDAY23",
     "category": "bday",
     "description": "Ritsuka - BDAY23",
     "emoji": "🐈",
-    "globalID": "2214",
+    "globalID": "2210",
     "setID": "230",
-    "rarity": "bday23",
+    "rarity": 20,
     "sellPrice": 10,
     "stats": {
       "level": 1,
@@ -73,7 +92,7 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1087028724953788496/bday_jinyoung.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1087028723330584707/bday_theo.png"
   },
   {
     "name": "Hyunsuk",
@@ -84,7 +103,7 @@
     "emoji": "🐈",
     "globalID": "2211",
     "setID": "230",
-    "rarity": "bday23",
+    "rarity": 20,
     "sellPrice": 10,
     "stats": {
       "level": 1,
@@ -103,7 +122,7 @@
     "emoji": "🐈",
     "globalID": "2212",
     "setID": "230",
-    "rarity": "bday23",
+    "rarity": 20,
     "sellPrice": 10,
     "stats": {
       "level": 1,
@@ -114,63 +133,6 @@
     "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1087028724093956277/bday_ravn.png"
   },
   {
-    "name": "Seokhwa",
-    "group": "Ritsuka",
-    "single": "BDAY23",
-    "category": "bday",
-    "description": "Ritsuka - BDAY23",
-    "emoji": "🐈",
-    "globalID": "2215",
-    "setID": "230",
-    "rarity": "bday23",
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1087028725348044991/bday_seokhwa.png"
-  },
-  {
-    "name": "Seonghwa",
-    "group": "Ritsuka",
-    "single": "BDAY23",
-    "category": "bday",
-    "description": "Maira - BDAY23",
-    "emoji": "🐈",
-    "globalID": "2206",
-    "setID": "230",
-    "rarity": "bday23",
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1087028721740959814/bday_seonghwa.png"
-  },
-  {
-    "name": "Theo",
-    "group": "Ritsuka",
-    "single": "BDAY23",
-    "category": "bday",
-    "description": "Ritsuka - BDAY23",
-    "emoji": "🐈",
-    "globalID": "2210",
-    "setID": "230",
-    "rarity": "bday23",
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1087028723330584707/bday_theo.png"
-  },
-  {
     "name": "Sunoo",
     "group": "Ritsuka",
     "single": "BDAY23",
@@ -179,7 +141,7 @@
     "emoji": "🐈",
     "globalID": "2213",
     "setID": "230",
-    "rarity": "bday23",
+    "rarity": 20,
     "sellPrice": 10,
     "stats": {
       "level": 1,
@@ -190,6 +152,101 @@
     "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1087028724609847387/bday_sunoo.png"
   },
   {
+    "name": "Jinyoung",
+    "group": "Ritsuka",
+    "single": "BDAY23",
+    "category": "bday",
+    "description": "Ritsuka - BDAY23",
+    "emoji": "🐈",
+    "globalID": "2214",
+    "setID": "230",
+    "rarity": 20,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1087028724953788496/bday_jinyoung.png"
+  },
+  {
+    "name": "Seokhwa",
+    "group": "Ritsuka",
+    "single": "BDAY23",
+    "category": "bday",
+    "description": "Ritsuka - BDAY23",
+    "emoji": "🐈",
+    "globalID": "2215",
+    "setID": "230",
+    "rarity": 20,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1087028725348044991/bday_seokhwa.png"
+  },
+  {
+    "name": "Doyoung",
+    "group": "Maira",
+    "single": "BDAY23",
+    "category": "bday",
+    "description": "Maira - BDAY23",
+    "emoji": "🦉",
+    "globalID": "2196",
+    "setID": "231",
+    "rarity": 20,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1087026598798168124/bday_Doyoung.png"
+  },
+  {
+    "name": "Haechan",
+    "group": "Maira",
+    "single": "BDAY23",
+    "category": "bday",
+    "description": "Maira - BDAY23",
+    "emoji": "🦉",
+    "globalID": "2197",
+    "setID": "231",
+    "rarity": 20,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1087026599024664676/bday_Haechan.png"
+  },
+  {
+    "name": "Haerin",
+    "group": "Maira",
+    "single": "BDAY23",
+    "category": "bday",
+    "description": "Maira - BDAY23",
+    "emoji": "🦉",
+    "globalID": "2198",
+    "setID": "231",
+    "rarity": 20,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1087026599272140820/bday_Haerin.png"
+  },
+  {
     "name": "Hoshi",
     "group": "Maira",
     "single": "BDAY23",
@@ -198,7 +255,7 @@
     "emoji": "🦉",
     "globalID": "2199",
     "setID": "231",
-    "rarity": "bday23",
+    "rarity": 20,
     "sellPrice": 10,
     "stats": {
       "level": 1,
@@ -209,6 +266,25 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1087026599561531392/bday_Hoshi.png"
   },
   {
+    "name": "Intak",
+    "group": "Maira",
+    "single": "BDAY23",
+    "category": "bday",
+    "description": "Maira - BDAY23",
+    "emoji": "🦉",
+    "globalID": "2200",
+    "setID": "231",
+    "rarity": 20,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1087026599829983384/bday_Intak.png"
+  },
+  {
     "name": "Jungwon",
     "group": "Maira",
     "single": "BDAY23",
@@ -217,7 +293,7 @@
     "emoji": "🦉",
     "globalID": "2201",
     "setID": "231",
-    "rarity": "bday23",
+    "rarity": 20,
     "sellPrice": 10,
     "stats": {
       "level": 1,
@@ -236,7 +312,7 @@
     "emoji": "🦉",
     "globalID": "2202",
     "setID": "231",
-    "rarity": "bday23",
+    "rarity": 20,
     "sellPrice": 10,
     "stats": {
       "level": 1,
@@ -247,6 +323,25 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1087026600425562122/bday_Minseo.png"
   },
   {
+    "name": "Taehyun",
+    "group": "Maira",
+    "single": "BDAY23",
+    "category": "bday",
+    "description": "Maira - BDAY23",
+    "emoji": "🦉",
+    "globalID": "2203",
+    "setID": "231",
+    "rarity": 20,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1087026600731758613/bday_Taehyun.png"
+  },
+  {
     "name": "Yeji",
     "group": "Maira",
     "single": "BDAY23",
@@ -255,7 +350,7 @@
     "emoji": "🦉",
     "globalID": "2204",
     "setID": "231",
-    "rarity": "bday23",
+    "rarity": 20,
     "sellPrice": 10,
     "stats": {
       "level": 1,
@@ -266,25 +361,6 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1087026601075675166/bday_Yeji.png"
   },
   {
-    "name": "Haechan",
-    "group": "Maira",
-    "single": "BDAY23",
-    "category": "bday",
-    "description": "Maira - BDAY23",
-    "emoji": "🦉",
-    "globalID": "2197",
-    "setID": "231",
-    "rarity": "bday23",
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1087026599024664676/bday_Haechan.png"
-  },
-  {
     "name": "Yunjin",
     "group": "Maira",
     "single": "BDAY23",
@@ -293,7 +369,7 @@
     "emoji": "🦉",
     "globalID": "2205",
     "setID": "231",
-    "rarity": "bday23",
+    "rarity": 20,
     "sellPrice": 10,
     "stats": {
       "level": 1,
@@ -302,81 +378,5 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1087026601348309032/bday_Yunjin.png"
-  },
-  {
-    "name": "Intak",
-    "group": "Maira",
-    "single": "BDAY23",
-    "category": "bday",
-    "description": "Maira - BDAY23",
-    "emoji": "🦉",
-    "globalID": "2200",
-    "setID": "231",
-    "rarity": "bday23",
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1087026599829983384/bday_Intak.png"
-  },
-  {
-    "name": "Haerin",
-    "group": "Maira",
-    "single": "BDAY23",
-    "category": "bday",
-    "description": "Maira - BDAY23",
-    "emoji": "🦉",
-    "globalID": "2198",
-    "setID": "231",
-    "rarity": "bday23",
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1087026599272140820/bday_Haerin.png"
-  },
-  {
-    "name": "Doyoung",
-    "group": "Maira",
-    "single": "BDAY23",
-    "category": "bday",
-    "description": "Maira - BDAY23",
-    "emoji": "🦉",
-    "globalID": "2196",
-    "setID": "231",
-    "rarity": "bday23",
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1087026598798168124/bday_Doyoung.png"
-  },
-  {
-    "name": "Taehyun",
-    "group": "Maira",
-    "single": "BDAY23",
-    "category": "bday",
-    "description": "Maira - BDAY23",
-    "emoji": "🦉",
-    "globalID": "2203",
-    "setID": "231",
-    "rarity": "bday23",
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1087026600731758613/bday_Taehyun.png"
   }
 ]
