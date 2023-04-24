@@ -105,6 +105,7 @@ function userCooldowns(user, userData) {
  */
 function userInventory(user, userData, sorting = "set", order = "descending", filter = { setID: "", groupName: "" }) {
     filter = { setID: "", group: "", ...filter };
+    sorting ||= "set"; order ||= "descending";
 
     let userCards = userData.card_inventory;
 

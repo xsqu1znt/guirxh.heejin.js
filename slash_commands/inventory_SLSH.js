@@ -22,7 +22,7 @@ module.exports = {
         )
 
         .addStringOption(option => option.setName("order")
-            .setDescription("Default: Ascending")
+            .setDescription("Default: Descending")
             .addChoices(
                 { name: "Ascending", value: "ascending" },
                 { name: "Descending", value: "descending" }
