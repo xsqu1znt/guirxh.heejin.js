@@ -57,7 +57,7 @@ module.exports = {
                 if (eventSettings.season.name === "none" || eventSettings.season.name === "")
                     return await embedinator.send("There isn't a season event right now.");
 
-                dropEmbedTitle = "seasonal"; dropCooldownType = "drop_seasonal";
+                dropEmbedTitle = eventSettings.season.name; dropCooldownType = "drop_seasonal";
                 cards = [cardManager.fetch.drop("seasonal")];
                 break;
 
