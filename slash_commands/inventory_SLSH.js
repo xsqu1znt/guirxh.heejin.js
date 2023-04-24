@@ -14,7 +14,7 @@ module.exports = {
         .addStringOption(option => option.setName("group_name").setDescription("Filter by group"))
 
         .addStringOption(option => option.setName("sorting")
-            .setDescription("Default - sorting: Set ID | order: Ascending")
+            .setDescription("Default: Set ID")
             .addChoices(
                 { name: "Global ID", value: "global" },
                 { name: "Set ID", value: "set" }
@@ -22,7 +22,7 @@ module.exports = {
         )
 
         .addStringOption(option => option.setName("order")
-            .setDescription("The order you want it to be sorted")
+            .setDescription("Default: Ascending")
             .addChoices(
                 { name: "Ascending", value: "ascending" },
                 { name: "Descending", value: "descending" }
