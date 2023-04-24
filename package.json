@@ -4,10 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "pm2 start index.js -i max",
-    "stop": "pm2 stop index.js",
-    "delete": "pm2 delete index.js all",
-    "list": "pm2 list",
+    "start": "node index.js",
     "dev": "nodemon index.js"
   },
   "author": "",
@@ -17,8 +14,7 @@
     "discord.js": "^14.9.0",
     "dotenv": "^16.0.3",
     "mongoose": "^7.0.3",
-    "node-fetch": "^3.3.1",
-    "pm2": "^5.3.0"
+    "node-fetch": "^3.3.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
