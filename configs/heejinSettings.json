@@ -36,5 +36,13 @@
             "drop_event": "5s",
             "random": "5s"
         }
+    },
+    "shopSettings": {
+        "stock": [
+            1234,
+            4321,
+            5678,
+            8765
+        ]
     }
 }
