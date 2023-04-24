@@ -1,6 +1,6 @@
 const { inlineCode, bold, italic } = require('discord.js');
 
-const { dropSettings } = require('../configs/heejinSettings.json');
+const { dropSettings, eventSettings, shopSettings } = require('../configs/heejinSettings.json');
 const { randomTools } = require('./jsTools');
 
 const cards = {
@@ -10,12 +10,22 @@ const cards = {
     epic: require('../cards/cards_epic.json'),
     mint: require('../cards/cards_mint.json'),
 
-    weekly: [],
-    seasonal: [],
-    event: [],
+    seasonal: require('../cards/cards_seasonal.json'),
+    holiday: require('../cards/cards_holiday.json'),
+    bday: require('../cards/cards_bday.json'),
+
+    event: [
+        ...require('../cards/cards_event1.json'),
+        ...require('../cards/cards_event2.json'),
+        ...require('../cards/cards_event3.json'),
+    ],
+
+    custom: require('../cards/cards_custom.json'),
+    shop: require('../cards/cards_shop.json')
 };
 
-let cards_all = []; Object.keys(cards).forEach(key => cards_all = [...cards_all, ...cards[key]]);
+let cards_all = []; Object.entries(cards).forEach(entry => cards_all = [...cards_all, ...entry[1]]);
+const cards_drop = [...cards.common, ...cards.uncommon, ...cards.rare, ...cards.epic, ...cards.mint];
 
 //! General
 function resetUID(card, userCards = null) {
@@ -45,7 +55,6 @@ function fetch_byGlobalID(globalID) {
  * @param {"drop_5" | "weekly" | "seasonal" | "event"} dropCategory 
  */
 function fetch_randomDrop(dropCategory) {
-    let cards_drop = [...cards.common, ...cards.uncommon, ...cards.rare, ...cards.epic, ...cards.mint];
     let card_choices = [];
 
     switch (dropCategory) {
@@ -56,13 +65,13 @@ function fetch_randomDrop(dropCategory) {
             card_choices = cards_drop.filter(card => card.rarity === category_picked.cardRarityFilter);
             break;
         case 'weekly':
-            card_choices = cards.weekly;
+            card_choices = cards.shop.filter(card => shopSettings.stockSetIDs.filter(id => id !== "100").includes(card.setID));
             break;
         case 'seasonal':
-            card_choices = cards.seasonal;
+            card_choices = cards.seasonal.filter(card => eventSettings.season.cardRarityFilter.includes(card.rarity));
             break;
         case 'event':
-            card_choices = cards.event;
+            card_choices = cards.event.filter(card => eventSettings.cardRarityFilter.includes(card.rarity));
             break;
     }
 

@@ -1,7 +1,7 @@
-const { EmbedBuilder, quote, inlineCode, bold } = require('discord.js');
+const { EmbedBuilder, quote, bold, TimestampStyles } = require('discord.js');
 
 const { botSettings } = require('../configs/heejinSettings.json');
-const { stringTools, arrayTools, dateTools } = require('../modules/jsTools');
+const { arrayTools, stringTools, numberTools, dateTools } = require('../modules/jsTools');
 const cardManager = require('../modules/cardManager');
 const userParser = require('../modules/userParser');
 
@@ -85,7 +85,9 @@ function userCooldowns(user, userData) {
         return "\`%VISUAL %NAME:\` %AVAILABILITY"
             .replace("%VISUAL", cooldownETA ? "❌" : "✔️")
             .replace("%NAME", stringTools.toTitleCase(cooldown.name.replace(/_/g, " ")))
-            .replace("%AVAILABILITY", bold(cooldownETA ? cooldownETA : "Available"));
+            .replace("%AVAILABILITY", bold(cooldownETA
+                ? `<t:${numberTools.milliToSeconds(cooldown.timestamp)}:${TimestampStyles.RelativeTime}>`
+                : "Available"));
     });
 
     let embed = new EmbedBuilder()
@@ -101,7 +103,7 @@ function userCooldowns(user, userData) {
  * @param {"global" | "set"} sorting
  * @param {"ascending" | "descending"} order
  */
-function userInventory(user, userData, sorting = "global", order = "descending", filter = { setID: "", groupName: "" }) {
+function userInventory(user, userData, sorting = "set", order = "descending", filter = { setID: "", groupName: "" }) {
     filter = { setID: "", group: "", ...filter };
 
     let userCards = userData.card_inventory;

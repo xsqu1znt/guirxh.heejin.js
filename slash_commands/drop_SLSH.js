@@ -1,6 +1,6 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
-const { botSettings, userSettings } = require('../configs/heejinSettings.json');
+const { userSettings, eventSettings } = require('../configs/heejinSettings.json');
 const { dateTools } = require('../modules/jsTools');
 const { generalDrop_ES } = require('../modules/embedStyles');
 const { messageTools } = require('../modules/discordTools');
@@ -50,20 +50,23 @@ module.exports = {
 
             case "weekly":
                 dropEmbedTitle = "weekly"; dropCooldownType = "drop_weekly";
-                cards = cardManager.fetch.drop("weekly");
+                cards = [cardManager.fetch.drop("weekly")];
                 break;
 
             case "seasonal":
+                if (eventSettings.season.name === "none" || eventSettings.season.name === "")
+                    return await embedinator.send("There isn't a season event right now.");
+
                 dropEmbedTitle = "seasonal"; dropCooldownType = "drop_seasonal";
-                cards = cardManager.fetch.drop("seasonal");
+                cards = [cardManager.fetch.drop("seasonal")];
                 break;
 
-            case "event": // TODO: use bot config for dynamic event name
-                if (botSettings.currentEvent === "none" || botSettings.currentEvent === "")
+            case "event":
+                if (eventSettings.name === "none" || eventSettings.name === "")
                     return await embedinator.send("There isn't an event right now.");
 
-                dropEmbedTitle = botSettings.currentEvent; dropCooldownType = "drop_event";
-                cards = cardManager.fetch.drop("event");
+                dropEmbedTitle = eventSettings.name; dropCooldownType = "drop_event";
+                cards = [cardManager.fetch.drop("event")];
                 break;
         }
 
@@ -75,7 +78,7 @@ module.exports = {
 
         // Set the user's cooldown
         userData.cooldowns.set(dropCooldownType, dateTools.fromNow(userSettings.cooldowns[dropCooldownType]));
-        // await userManager.update(interaction.user.id, { cooldowns: userData.cooldowns });
+        await userManager.update(interaction.user.id, { cooldowns: userData.cooldowns });
 
         // Add the card to the user's inventory
         await userManager.cards.add(interaction.user.id, cards, true);

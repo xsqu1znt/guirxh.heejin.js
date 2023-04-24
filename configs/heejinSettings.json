@@ -1,11 +1,24 @@
 {
     "botSettings": {
-        "currentEvent": "none",
         "currencyIcon": "🥕",
         "embedColor": "",
         "timeout": {
             "pagination": "60s"
         }
+    },
+
+    "eventSettings": {
+        "name": "Iconic Subunits Part 2",
+        "cardRarityFilter": [17],
+        
+        "season": {
+            "name": "none",
+            "cardRarityFilter": [18]
+        }
+    },
+
+    "shopSettings": {
+        "stockSetIDs": ["100", "104"]
     },
 
     "userSettings": {
