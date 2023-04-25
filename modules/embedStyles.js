@@ -5,8 +5,8 @@ const { arrayTools, stringTools, numberTools, dateTools } = require('../modules/
 const cardManager = require('../modules/cardManager');
 const userParser = require('../modules/userParser');
 
-// Command -> /DROP
-function generalDrop(user, cards, cards_isDuplicate, dropTitle = "drop") {
+// Command -> User -> /DROP
+function userDrop(user, cards, cards_isDuplicate, dropTitle = "drop") {
     if (!Array.isArray(cards)) cards = [cards];
     if (!Array.isArray(cards_isDuplicate)) cards_isDuplicate = [cards_isDuplicate];
 
@@ -261,7 +261,7 @@ function userGift(user, recipient, cards) {
 
 module.exports = {
     // General Commands
-    generalDrop_ES: generalDrop,
+    userDrop_ES: userDrop,
 
     // User Commands
     userProfile_ES: userProfile,

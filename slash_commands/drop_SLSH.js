@@ -2,7 +2,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js'
 
 const { userSettings, eventSettings } = require('../configs/heejinSettings.json');
 const { dateTools } = require('../modules/jsTools');
-const { generalDrop_ES } = require('../modules/embedStyles');
+const { userDrop_ES } = require('../modules/embedStyles');
 const { messageTools } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 const cardManager = require('../modules/cardManager');
@@ -57,7 +57,7 @@ module.exports = {
                 if (eventSettings.season.name === "none" || eventSettings.season.name === "")
                     return await embedinator.send("There isn't a season event right now.");
 
-                dropEmbedTitle = eventSettings.season.name; dropCooldownType = "drop_seasonal";
+                dropEmbedTitle = "seasonal"; dropCooldownType = "drop_seasonal";
                 cards = [cardManager.fetch.drop("seasonal")];
                 break;
 
@@ -65,7 +65,7 @@ module.exports = {
                 if (eventSettings.name === "none" || eventSettings.name === "")
                     return await embedinator.send("There isn't an event right now.");
 
-                dropEmbedTitle = eventSettings.name; dropCooldownType = "drop_event";
+                dropEmbedTitle = "event"; dropCooldownType = "drop_event";
                 cards = [cardManager.fetch.drop("event")];
                 break;
         }
@@ -91,8 +91,10 @@ module.exports = {
             userParser.cards.duplicates(userData.card_inventory, { globalID: card.globalID }).length > 1
         );
 
-        let embed_drop = generalDrop_ES(interaction.user, cards, cards_isDuplicate, dropEmbedTitle);
+        // Create the embed
+        let embed_drop = userDrop_ES(interaction.user, cards, cards_isDuplicate, dropEmbedTitle);
 
+        // Let the user know the result
         return await interaction.editReply({ embeds: [embed_drop] });
     }
 };
