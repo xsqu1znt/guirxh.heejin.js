@@ -77,7 +77,7 @@ module.exports = {
         );
 
         // Set the user's cooldown and XP
-        let { xp: { xpRange: xp_drop } } = userSettings;
+        let { xp: { commands: { drop: xp_drop } } } = userSettings;
         userData.cooldowns.set(dropCooldownType, dateTools.fromNow(userSettings.cooldowns[dropCooldownType]));
 
         // Update the user in Mongo
@@ -94,7 +94,7 @@ module.exports = {
 
         // Used to tell the user if a card they got is a duplicate
         let cards_isDuplicate = cards.map(card =>
-            userParser.cards.duplicates(userData.card_inventory, { globalID: card.globalID }).length > 1
+            userParser.cards.duplicates(userData.card_inventory, { globalID: card.globalID }).card_duplicates.length > 1
         );
 
         // Create the embed

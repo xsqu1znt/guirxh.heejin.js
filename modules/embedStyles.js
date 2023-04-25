@@ -26,7 +26,7 @@ function userDrop(user, cards, cards_isDuplicate, dropTitle = "drop") {
 function userProfile(user, userData, compactMode = false) {
     let profile_info = "\`🥕 %BALANCE\` :: \`🃏 %CARD_TOTAL\` :: \`🎚️ LV. %LEVEL\`"
         .replace("%BALANCE", userData.balance)
-        .replace("%CARD_TOTAL", `${userData.card_inventory.length}/100`)
+        .replace("%CARD_TOTAL", `${userData.card_inventory.length}/${cardManager.cardTotal}`)
         .replace("%LEVEL", userData.level);
 
     let embed = new EmbedBuilder()
@@ -203,6 +203,7 @@ function userTeamView(user, userData) {
 
     // Get the total team's ability
     let totalAbility = 0; cards_team.map(card => totalAbility += card.stats.ability);
+    totalAbility = stringTools.formatNumber(Math.floor(totalAbility / 1000), { round: true });
 
     // Create an array to store the inventory pages for easy pagination
     let embeds = [];

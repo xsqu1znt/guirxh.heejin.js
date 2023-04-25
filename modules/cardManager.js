@@ -139,6 +139,8 @@ function toString_drop(card, isDuplicate = false) {
 }
 
 module.exports = {
+    cardTotal: cards_all.length,
+
     resetUID,
 
     get: {

@@ -5,3 +5,5 @@
 /event end
 
 /applycard to update global/set ids
+/unfavorite card
+/idol set
