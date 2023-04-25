@@ -46,7 +46,7 @@ function resetUID(card, userCards = null) {
 }
 
 //! Fetch
-function fetch_byGlobalID(globalID) {
+function get_byGlobalID(globalID) {
     let card = cards_all.find(card => card.globalID === globalID);
     return card || null;
 }
@@ -54,7 +54,7 @@ function fetch_byGlobalID(globalID) {
 /**
  * @param {"drop_5" | "weekly" | "seasonal" | "event"} dropCategory 
  */
-function fetch_randomDrop(dropCategory) {
+function get_randomDrop(dropCategory) {
     let card_choices = [];
 
     switch (dropCategory) {
@@ -90,7 +90,7 @@ function parse_toCardLike(card) {
 }
 
 function parse_fromCardLike(cardLike) {
-    return { ...fetch_byGlobalID(cardLike.globalID), ...cardLike };
+    return { ...get_byGlobalID(cardLike.globalID), ...cardLike };
 }
 
 //! To String
@@ -141,8 +141,9 @@ function toString_drop(card, isDuplicate = false) {
 module.exports = {
     resetUID,
 
-    fetch: {
-        drop: fetch_randomDrop
+    get: {
+        byGlobalID: get_byGlobalID,
+        drop: get_randomDrop
     },
 
     parse: {

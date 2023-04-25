@@ -19,7 +19,6 @@ module.exports = {
             title: "%USER | random", author: interaction.user
         });
 
-        let { xp: { xpRange }, currency: { currencyRange } } = userSettings;
         let userData = await userManager.fetch(interaction.user.id, "essential");
 
         // Check if the user has an active cooldown
@@ -28,10 +27,12 @@ module.exports = {
             `You can use random again **${cooldownETA_random}**.`
         );
 
-        let xpGained = randomTools.number(xpRange.min, xpRange.max);
-        let currencyGained = randomTools.number(currencyRange.min, currencyRange.max);
-
+        
         // Use rng to determine if the user gets anything
+        let { xp: { commands: { random: xp_random } }, currency: { currencyRange } } = userSettings;
+        let currencyGained = randomTools.number(currencyRange.min, currencyRange.max);
+        let xpGained = randomTools.number(xp_random.min, xp_random.max);
+        
         let won = randomTools.chance(userSettings.chances.winRandom); if (won) {
             // Update the user
             userData.xp += xpGained;
@@ -43,7 +44,8 @@ module.exports = {
 
         // Send the update to the database
         await userManager.update(interaction.user.id, {
-            xp: userData.xp, balance: userData.balance,
+            xp: userData.xp,
+            balance: userData.balance,
             cooldowns: userData.cooldowns
         });
 

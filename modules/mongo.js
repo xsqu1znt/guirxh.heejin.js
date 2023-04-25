@@ -111,7 +111,7 @@ async function user_tryLevelUp(userID, userData = null) {
             userData.xp = (userData.xp - userData.xp_for_next_level) || 0;
 
             // Multiply the user's (xp_for_next_level) by its multipler
-            userData.xp_for_next_level = Math.round(userData.level * userSettings.xp.xpMultiplier);
+            userData.xp_for_next_level = Math.round(userData.level * userSettings.xp.nextLevelXPMultiplier);
 
             // Recursively level up the user if they still have enough (xp)
             if (userData.xp >= userData.xp_for_next_level)

@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 const { userSettings, eventSettings } = require('../configs/heejinSettings.json');
-const { dateTools } = require('../modules/jsTools');
+const { dateTools, randomTools } = require('../modules/jsTools');
 const { userDrop_ES } = require('../modules/embedStyles');
 const { messageTools } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
@@ -45,12 +45,12 @@ module.exports = {
         switch (interaction.options.getSubcommand()) {
             case "5":
                 dropEmbedTitle = "drop 5"; dropCooldownType = "drop_5";
-                cards = [...Array(5)].map(() => cardManager.fetch.drop("drop_5"));
+                cards = [...Array(5)].map(() => cardManager.get.drop("drop_5"));
                 break;
 
             case "weekly":
                 dropEmbedTitle = "weekly"; dropCooldownType = "drop_weekly";
-                cards = [cardManager.fetch.drop("weekly")];
+                cards = [cardManager.get.drop("weekly")];
                 break;
 
             case "seasonal":
@@ -58,7 +58,7 @@ module.exports = {
                     return await embedinator.send("There isn't a season event right now.");
 
                 dropEmbedTitle = "seasonal"; dropCooldownType = "drop_seasonal";
-                cards = [cardManager.fetch.drop("seasonal")];
+                cards = [cardManager.get.drop("seasonal")];
                 break;
 
             case "event":
@@ -66,7 +66,7 @@ module.exports = {
                     return await embedinator.send("There isn't an event right now.");
 
                 dropEmbedTitle = "event"; dropCooldownType = "drop_event";
-                cards = [cardManager.fetch.drop("event")];
+                cards = [cardManager.get.drop("event")];
                 break;
         }
 
@@ -76,9 +76,15 @@ module.exports = {
             `You can drop again **${cooldownETA_drop}**.`
         );
 
-        // Set the user's cooldown
+        // Set the user's cooldown and XP
+        let { xp: { xpRange: xp_drop } } = userSettings;
         userData.cooldowns.set(dropCooldownType, dateTools.fromNow(userSettings.cooldowns[dropCooldownType]));
-        await userManager.update(interaction.user.id, { cooldowns: userData.cooldowns });
+
+        // Update the user in Mongo
+        await userManager.update(interaction.user.id, {
+            xp: userData.xp += randomTools.number(xp_drop.min, xp_drop.max),
+            cooldowns: userData.cooldowns
+        });
 
         // Add the card to the user's inventory
         await userManager.cards.add(interaction.user.id, cards, true);

@@ -4,7 +4,6 @@
 /event restoreRetiredCards
 /event end
 
-/inventory sorting shows default order in description
 drop command gives XP
 add new drop format to rewrite
 remove spacing in multiple gift

@@ -164,14 +164,14 @@ function userInventory(user, userData, sorting = "set", order = "descending", fi
     return embeds;
 }
 
-// Command -> User -> /VIEW | /IDOL
-function userView(user, userData, card, isIdol = false) {
+// Command -> User -> /VIEW | /VIEW (GLOBAL) | /IDOL
+function userView(user, userData, card, isIdol = false, isGlobal = false) {
     // Get the duplicate cards under the primary card
-    let card_duplicates = []; if (!isIdol)
+    let card_duplicates = []; if (!isIdol && !isGlobal)
         card_duplicates = userParser.cards.duplicates(userData.card_inventory, { globalID: card.globalID });
 
     // Whether or not this is the user's favorited card
-    let isFavorite = (card.uid === userData.card_favorite_uid);
+    let isFavorite = isGlobal ? false : (card.uid === userData.card_favorite_uid);
 
     // Create the embed
     let embed = new EmbedBuilder()
