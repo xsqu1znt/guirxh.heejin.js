@@ -4,8 +4,4 @@
 /event restoreRetiredCards
 /event end
 
-drop command gives XP
-add new drop format to rewrite
-remove spacing in multiple gift
-
 /applycard to update global/set ids
