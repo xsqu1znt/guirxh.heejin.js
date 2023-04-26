@@ -95,9 +95,10 @@ function parse_fromCardLike(cardLike) {
 
 //! To String
 function toString_basic(card) {
-    return "%EMOJI %UID :: %SINGLE - %NAME"
-        .replace("%EMOJI", inlineCode(card.emoji))
+    return "%UID %EMOJI %GROUP - %SINGLE - %NAME"
         .replace("%UID", inlineCode(card.uid))
+        .replace("%EMOJI", inlineCode(card.emoji))
+        .replace("%GROUP", bold(card.group))
         .replace("%SINGLE", bold(card.single))
         .replace("%NAME", card.name);
 }

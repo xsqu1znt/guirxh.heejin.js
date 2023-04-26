@@ -32,7 +32,7 @@ module.exports = {
         // Let the user know the result
         let result = biography.toLowerCase() === "reset"
             ? "Biography reset."
-            : `Your biography has been changed to: \"${biography}\".`;
+            : `Your biography has been changed to:\n> ${biography}`;
         return await embedinator.send(result);
     }
 };
