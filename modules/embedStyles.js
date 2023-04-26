@@ -42,14 +42,14 @@ function userProfile(user, userData, compactMode = false) {
         let card_selected = userParser.cards.get(userData.card_inventory, userData.card_selected_uid);
         if (card_selected) {
             let card_selected_isFavorited = (card_selected.uid === userData.card_favorite_uid)
-            let card_selected_f = cardManager.toString.inventory(card_selected, 0, card_selected_isFavorited);
+            let card_selected_f = cardManager.toString.inventory(card_selected, { favorited: card_selected_isFavorited });
 
             embed.addFields({ name: "\`📄\` Stage", value: quote(card_selected_f) });
         }
 
         let card_favorite = userParser.cards.get(userData.card_inventory, userData.card_favorite_uid);
         if (card_favorite) {
-            let card_favorite_f = cardManager.toString.inventory(card_favorite, 0, true);
+            let card_favorite_f = cardManager.toString.inventory(card_favorite, { favorited: true });
             embed.addFields({ name: "\`🌟\` Favorite", value: quote(card_favorite_f) });
 
             if (card_favorite.imageURL) embed.setImage(card_favorite.imageURL);
@@ -136,7 +136,10 @@ function userInventory(user, userData, sorting = "set", order = "descending", fi
         // Whether or not this is the user's favorited card
         let isFavorite = (card.uid === userData.card_favorite_uid);
 
-        userCards_f.push(cardManager.toString.inventory(card, card_duplicates.length, isFavorite));
+        userCards_f.push(cardManager.toString.inventory(card, {
+            duplicate_count: card_duplicates.length,
+            favorited: isFavorite
+        }));
     }
 
     // Max of 10 entires per page
@@ -164,20 +167,39 @@ function userInventory(user, userData, sorting = "set", order = "descending", fi
     return embeds;
 }
 
-// Command -> User -> /VIEW | /VIEW (GLOBAL) | /IDOL
-function userView(user, userData, card, isIdol = false, isGlobal = false) {
-    // Get the duplicate cards under the primary card
-    let card_duplicates = []; if (!isIdol && !isGlobal)
-        card_duplicates = userParser.cards.duplicates(userData.card_inventory, { globalID: card.globalID });
-
-    // Whether or not this is the user's favorited card
-    let isFavorite = isGlobal ? false : (card.uid === userData.card_favorite_uid);
+// Command -> User -> /VIEW UID | /VIEW GID | /VIEW FAVORITE
+/** @param {"uid" | "global" | "favorite"} viewStyle */
+function userView(user, userData, card, viewStyle = "uid", showDuplicates = true) {
 
     // Create the embed
-    let embed = new EmbedBuilder()
-        .setAuthor({ name: `${user.username} | ${isIdol ? "idol" : "view"}`, iconURL: user.avatarURL({ dynamic: true }) })
-        .setDescription(cardManager.toString.inventory(card, card_duplicates.length, isFavorite))
-        .setColor(botSettings.embedColor || null);
+    let embed = new EmbedBuilder().setColor(botSettings.embedColor || null);
+    let embed_title = "%USER | view";
+
+    switch (viewStyle) {
+        case "uid":
+            let duplicate_count = 0; if (showDuplicates) {
+                let { card_duplicates } = userParser.cards.duplicates(userData.card_inventory, { globalID: card.globalID });
+                duplicate_count = card_duplicates.length;
+            }
+
+            // Whether or not this is the user's favorite card
+            let isFavorite = (card.uid === userData.card_favorite_uid);
+
+            embed.setDescription(cardManager.toString.inventory(card, { duplicate_count, favorited: isFavorite }));
+            break;
+
+        case "global":
+            embed.setDescription(cardManager.toString.inventory(card));
+            break;
+
+        case "favorite":
+            embed_title = "%USER | favorite"
+            embed.setDescription(cardManager.toString.inventory(card, { favorited: true }));
+            break;
+    }
+
+    // Set the title and author icon for the embed
+    embed.setAuthor({ name: embed_title.replace("%USER", user.username), iconURL: user.avatarURL({ dynamic: true }) })
 
     // Add the card image to the embed if available
     if (card.imageURL) embed.setImage(card.imageURL);
@@ -198,7 +220,7 @@ function userTeamView(user, userData) {
         // Whether or not this is the user's favorited card
         let isFavorite = (card.uid === userData.card_favorite_uid);
 
-        return cardManager.toString.inventory(card, 0, isFavorite);
+        return cardManager.toString.inventory(card, { favorited: isFavorite });
     }), 1);
 
     // Get the total team's ability

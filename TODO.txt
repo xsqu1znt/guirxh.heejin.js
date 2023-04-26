@@ -7,3 +7,5 @@
 /applycard to update global/set ids
 /unfavorite card
 /idol set
+
+change /cooldowns to have default values in heejinSettings.json

@@ -10,7 +10,7 @@ module.exports = {
         .setDescription("Set a card as your favorite")
 
         .addStringOption(option => option.setName("uid")
-            .setDescription("The unique ID of the card")
+            .setDescription("The unique ID of the card | use \"reset\" to unfavorite")
             .setRequired(true)),
 
     /**
@@ -25,6 +25,13 @@ module.exports = {
 
         // Get interation options
         let uid = interaction.options.getString("uid");
+
+        // Unfavorite the card if the user requested
+        if (uid.toLowerCase() === "reset") {
+            await userManager.update(interaction.user.id, { card_favorite_uid: "" });
+            
+            return await embedinator.send("Favorite card reset.");
+        }
 
         // Fetch the user from Mongo
         let userData = await userManager.fetch(interaction.user.id, "full", true);

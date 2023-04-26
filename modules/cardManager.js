@@ -102,22 +102,26 @@ function toString_basic(card) {
         .replace("%NAME", card.name);
 }
 
-function toString_inventory(card, duplicateCount = 0, isFavorite = false) {
-    return "%EMOJI %GROUP - %SINGLE : %NAME :: LV. %LEVEL %DUPES\n> %UID %GLOBAL_ID %CATEGORY %SET_ID%LOCKED%FAVORITED\n> %ABILITY :: %REPUTATION"
+/** @param {{duplicate_count: number, favorited: boolean}} options */
+function toString_inventory(card, options = { duplicate_count: 0, favorited: false }) {
+    options = { duplicate_count: 0, favorited: false, ...options };
+
+    let { duplicateCount: duplicate_count } = options;
+    return "%EMOJI %GROUP - %SINGLE : %NAME :: LV. %LEVEL %DUPES\n> %UID%GLOBAL_ID %CATEGORY %SET_ID%LOCKED%FAVORITED\n> %ABILITY :: %REPUTATION"
         .replace("%EMOJI", inlineCode(card.emoji))
         .replace("%GROUP", bold(card.group))
         .replace("%SINGLE", card.single)
         .replace("%NAME", card.name)
         .replace("%LEVEL", card.stats.level)
-        .replace("%DUPES", duplicateCount > 0 ? inlineCode(`${duplicateCount} ${duplicateCount > 1 ? "Dupes" : "Dupe"}`) : "")
+        .replace("%DUPES", duplicate_count > 0 ? inlineCode(`${duplicate_count} ${duplicate_count > 1 ? "Dupes" : "Dupe"}`) : "")
 
-        .replace("%UID", inlineCode(card.uid))
+        .replace("%UID", card.uid ? (inlineCode(card.uid) + " ") : "")
         .replace("%GLOBAL_ID", inlineCode(card.globalID))
         .replace("%CATEGORY", inlineCode(card.category))
         .replace("%SET_ID", inlineCode(`👥${card.setID}`))
 
-        .replace("%LOCKED", card?.locked ? " " + inlineCode("🔒") : "")
-        .replace("%FAVORITED", isFavorite ? " " + inlineCode("🌟") : "")
+        .replace("%LOCKED", card?.locked ? (" " + inlineCode("🔒")) : "")
+        .replace("%FAVORITED", options.favorited ? (" " + inlineCode("🌟")) : "")
 
         .replace("%ABILITY", inlineCode(`🎤 ABI. ${card.stats.ability}`))
         .replace("%REPUTATION", inlineCode(`💖 REP. ${card.stats.reputation}`));
