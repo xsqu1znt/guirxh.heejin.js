@@ -5,8 +5,54 @@ const { arrayTools, stringTools, numberTools, dateTools } = require('../modules/
 const cardManager = require('../modules/cardManager');
 const userParser = require('../modules/userParser');
 
+// Command -> General -> /COLLECTIONS
+/** @param {"ascending" | "decending"} order */
+function globalCollections_ES(user, options = { order: "decending", filter: { group: "", category: "" } }) {
+    let { cards_all } = cardManager;
+
+    // Sort by set ID (decending order)
+    cards_all = cards_all.sort((a, b) => a.setID - b.setID);
+    if (options.order === "ascending") cards_all = cards_all.reverse();
+
+    // Apply command filters
+    if (options.filter.group) cards_all = cards_all.filter(c => c.Group.toLowerCase() === group);
+    if (options.filter.category) cards_all = cards_all.filter(c => c.Category.toLowerCase() === category);
+
+    // Create an array the only contains unique cards
+    let cards_unique = arrayTools.unique(cards_all, (card, card_compare) => card.setID === card_compare.setID);
+
+    // Get the number of cards in a set by using each unique card's set ID
+    let card_totals = cards_unique.map(card => cards_all.filter(c => c.setID === card.setID).length);
+
+    // Parse the card into a human readable format
+    let collections_f = cards_unique.map((card, idx) => cardManager.toString.setEntry(card, card_totals[idx]));
+    collections_f = arrayTools.chunk(collections_f, 10);
+
+    // Create an array to store the inventory pages for easy pagination
+    let embeds = [];
+
+    // Keep track of the page index
+    let pageIndex = 1;
+
+    // Go through each group in (cards_f) and create an embed for it
+    for (let group of collections_f) {
+        // Create a new embed for this inventory page
+        let embed_page = new EmbedBuilder()
+            .setAuthor({ name: `${user.username} | collections`, iconURL: user.avatarURL({ dynamic: true }) })
+            .setDescription(group[0] ? group.join("\n") : "no collections were found.")
+            .setFooter({ text: `page ${pageIndex++} of ${collections_f.length || 1} • total sets: ${cards_unique.length}` })
+            .setColor(botSettings.embedColor || null);
+
+        // Push the newly created embed to our collection
+        embeds.push(embed_page);
+    };
+
+    // Return the array of embeds
+    return embeds;
+}
+
 // Command -> User -> /DROP
-function userDrop(user, cards, cards_isDuplicate, dropTitle = "drop") {
+function userDrop_ES(user, cards, cards_isDuplicate, dropTitle = "drop") {
     if (!Array.isArray(cards)) cards = [cards];
     if (!Array.isArray(cards_isDuplicate)) cards_isDuplicate = [cards_isDuplicate];
 
@@ -23,7 +69,7 @@ function userDrop(user, cards, cards_isDuplicate, dropTitle = "drop") {
 }
 
 // Command -> User -> /COOLDOWNS
-function userCooldowns(user, userData) {
+function userCooldowns_ES(user, userData) {
     let cooldowns = Object.keys(userSettings.cooldowns).map(name => ({ name, timestamp: 0 }));
 
     let cooldowns_user = [];
@@ -54,7 +100,7 @@ function userCooldowns(user, userData) {
 }
 
 // Command -> User -> /PROFILE
-function userProfile(user, userData, compactMode = false) {
+function userProfile_ES(user, userData, compactMode = false) {
     let profile_info = "\`🥕 %BALANCE\` :: \`🃏 %CARD_TOTAL\` :: \`🎚️ LV. %LEVEL\`"
         .replace("%BALANCE", userData.balance)
         .replace("%CARD_TOTAL", `${userData.card_inventory.length}/${cardManager.cardTotal}`)
@@ -95,7 +141,7 @@ function userProfile(user, userData, compactMode = false) {
  * @param {"global" | "set"} sorting
  * @param {"ascending" | "descending"} order
  */
-function userInventory(user, userData, sorting = "set", order = "descending", filter = { setID: "", groupName: "" }) {
+function userInventory_ES(user, userData, sorting = "set", order = "descending", filter = { setID: "", groupName: "" }) {
     filter = { setID: "", group: "", ...filter };
     sorting ||= "set"; order ||= "descending";
 
@@ -161,7 +207,7 @@ function userInventory(user, userData, sorting = "set", order = "descending", fi
 
 // Command -> User -> /VIEW UID | /VIEW GID | /VIEW FAVORITE
 /** @param {"uid" | "global" | "favorite" | "idol"} viewStyle */
-function userView(user, userData, card, viewStyle = "uid", showDuplicates = true) {
+function userView_ES(user, userData, card, viewStyle = "uid", showDuplicates = true) {
 
     // Create the embed
     let embed = new EmbedBuilder().setColor(botSettings.embedColor || null);
@@ -206,7 +252,7 @@ function userView(user, userData, card, viewStyle = "uid", showDuplicates = true
 }
 
 // Command -> User -> /TEAM VIEW
-function userTeamView(user, userData) {
+function userTeamView_ES(user, userData) {
     // Convert the user's card_inventory into an array
     let cards_team = userParser.cards.getMultiple(userData.card_inventory, userData.card_team_uids);
 
@@ -253,7 +299,7 @@ function userTeamView(user, userData) {
 }
 
 // Command -> User -> /GIFT
-function userGift(user, recipient, cards) {
+function userGift_ES(user, recipient, cards) {
     let fromTo = `from: ${user} to: ${recipient}`;
 
     // Create the embed
@@ -281,13 +327,14 @@ function userGift(user, recipient, cards) {
 
 module.exports = {
     // General Commands
-    userDrop_ES: userDrop,
-    userCooldowns_ES: userCooldowns,
+    globalCollections_ES,
 
     // User Commands
-    userProfile_ES: userProfile,
-    userInventory_ES: userInventory,
-    userView_ES: userView,
-    userTeamView_ES: userTeamView,
-    userGift_ES: userGift
+    userDrop_ES,
+    userCooldowns_ES,
+    userProfile_ES,
+    userInventory_ES,
+    userView_ES,
+    userTeamView_ES,
+    userGift_ES
 };

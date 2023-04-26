@@ -15,6 +15,22 @@ function array_chunk(arr, size) {
     return arr_new;
 }
 
+/** Return an array with only unique items based on the given filter.
+ * @param {Array} arr The array to filter.
+ * @param {(itemCurrent, itemToCompare) => void} filter The method to filter.
+ */
+function array_unique(arr, filter) {
+    let arr_new = [];
+
+    arr.forEach(itemCurrent => {
+        // let existsInArray = arr_new.findIndex(e => filter(e, )) >= 0;
+        let existsInArray = arr_new.findIndex(itemToCompare => filter(itemCurrent, itemToCompare)) >= 0;
+        if (!existsInArray) arr_new.push(itemCurrent);
+    });
+
+    return arr_new;
+}
+
 // ! String
 /** Capitalize the first letter of each word in a string.
  * @param {string} str The string you wish to convert. 
@@ -341,7 +357,8 @@ async function async_wait(ms) {
 module.exports = {
     /** Functions useful for dealing with arrays. */
     arrayTools: {
-        chunk: array_chunk
+        chunk: array_chunk,
+        unique: array_unique
     },
 
     /** Functions useful for dealing with strings. */

@@ -11,7 +11,7 @@ module.exports = {
         .setDescription("View your card inventory")
 
         .addStringOption(option => option.setName("set_id").setDescription("Filter by set ID"))
-        .addStringOption(option => option.setName("group_name").setDescription("Filter by group"))
+        .addStringOption(option => option.setName("group").setDescription("Filter by group"))
 
         .addStringOption(option => option.setName("sorting")
             .setDescription("Default: Set ID")
