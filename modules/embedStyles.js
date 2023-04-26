@@ -60,7 +60,8 @@ function userDrop_ES(user, cards, cards_isDuplicate, dropTitle = "drop") {
     let embed = new EmbedBuilder()
         .setAuthor({ name: `${user.username} | ${dropTitle}`, iconURL: user.avatarURL({ dynamic: true }) })
         .setDescription(cards.map((card, idx) => cardManager.toString.inventory(card, {
-            isDuplicate: cards_isDuplicate[idx] || false
+            isDuplicate: cards_isDuplicate[idx] || false,
+            simplify: true
         })).join("\n"))
         .setColor(botSettings.embedColor || null);
 

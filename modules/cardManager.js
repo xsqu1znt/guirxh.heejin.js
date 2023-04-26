@@ -1,5 +1,4 @@
 const { dropSettings, eventSettings, shopSettings } = require('../configs/heejinSettings.json');
-const { userInventory_ES } = require('./embedStyles');
 const { randomTools } = require('./jsTools');
 
 const cards = {
@@ -138,8 +137,8 @@ function toString_setEntry(card, count = 1) {
         .replace("%CARD_COUNT", inline(["📁", count || 1]));
 }
 
-function toString_inventory(card, options = { duplicate_count: 0, favorited: false, selected: false, isDuplicate: false }) {
-    options = { duplicate_count: 0, favorited: false, selected: false, isDuplicate: false ...options };
+function toString_inventory(card, options = { duplicate_count: 0, favorited: false, selected: false, isDuplicate: false, simplify: false, }) {
+    options = { duplicate_count: 0, favorited: false, selected: false, isDuplicate: false, simplify: false, ...options };
 
     // Special charactors
     let superscript = {
@@ -148,7 +147,7 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
     };
 
     let { duplicate_count } = options;
-    let formated = "%UID%EMOJI %GROUP : %SINGLE - %NAME %LEVEL %DUPE\n> %GLOBAL_ID %SET_ID %RARITY :: %ABILITY : %REPUTATION %LOCKED%FAVORITED%SELECTED"
+    let formated = "%UID%EMOJI %GROUP : %SINGLE - %NAME%LEVEL %DUPE\n> %GLOBAL_ID %SET_ID %CATEGORY %RARITY%STATS%LOCKED%FAVORITED%SELECTED"
         .replace("%UID", card.uid ? `${inline(card.uid)} ` : "")
         .replace("%EMOJI", inline(card.emoji, { spacing: false }))
 
@@ -156,30 +155,31 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
         .replace("%SINGLE", card.single)
         .replace("%NAME", card.name)
 
-        .replace("%LEVEL", inline(["LV.", card.stats.level]))
+        .replace("%LEVEL", options.simplify ? "" : inline(["LV.", card.stats.level]))
 
-        .replace("%GLOBAL_ID", inline(card.globalID))
+        .replace("%GLOBAL_ID", ` ${inline(card.globalID)}`)
         .replace("%SET_ID", inline(["🗣️", card.setID], { separator: "" }))
+        .replace("%CATEGORY", inline(card.category))
         .replace("%RARITY", inline(["R", card.setID], { separator: "" }))
 
-        .replace("%ABILITY", inlineCode(["🎤", card.stats.ability]))
-        .replace("%REPUTATION", inlineCode(["💖", card.stats.reputation]))
+        .replace("%STATS", options.simplify ? ""
+            : ` :: ${inline(["🎤", card.stats.ability])} : ${inline(["💖", card.stats.reputation])}`)
 
-        .replace("%LOCKED", card.locked ? `${inline("🔒", { spacing: false })} ` : "")
+        .replace("%LOCKED", card.locked ? ` ${inline("🔒", { spacing: false })} ` : "")
         .replace("%FAVORITED", options.favorited ? `${inline("🌟", { spacing: false })} ` : "")
         .replace("%SELECTED", options.selected ? `${inline("🌟", { spacing: false })} ` : "");
 
     // For special cases with dupeified things
     if (options.isDuplicate)
-        formated.replace("%DUPE", bold(italic(superscript.dupe)));
+        formated = formated.replace("%DUPE", bold(italic(superscript.dupe)));
     else if (options.duplicate_count > 0) {
         // Special charactor formatting
         let duplicate_count_f = String(duplicate_count).split("").map(num => superscript.number[+num]).join("");
 
-        formated.replace("%DUPE", superscript.dupe + bold(duplicate_count_f));
+        formated = formated.replace("%DUPE", superscript.dupe + bold(duplicate_count_f));
     }
     else
-        formated.replace("%DUPE", "");
+        formated = formated.replace("%DUPE", "");
 
     // Return the formated card
     return formated;
@@ -204,7 +204,6 @@ module.exports = {
     toString: {
         basic: toString_basic,
         setEntry: toString_setEntry,
-        drop: toString_drop,
         inventory: toString_inventory
     }
 };
