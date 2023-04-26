@@ -59,7 +59,9 @@ function userDrop_ES(user, cards, cards_isDuplicate, dropTitle = "drop") {
     // Create the embed
     let embed = new EmbedBuilder()
         .setAuthor({ name: `${user.username} | ${dropTitle}`, iconURL: user.avatarURL({ dynamic: true }) })
-        .setDescription(cards.map((card, idx) => cardManager.toString.drop(card, cards_isDuplicate[idx] || false)).join("\n"))
+        .setDescription(cards.map((card, idx) => cardManager.toString.inventory(card, {
+            isDuplicate: cards_isDuplicate[idx] || false
+        })).join("\n"))
         .setColor(botSettings.embedColor || null);
 
     let card_last = cards.slice(-1)[0];
@@ -174,9 +176,13 @@ function userInventory_ES(user, userData, sorting = "set", order = "descending",
         // Whether or not this is the user's favorited card
         let isFavorite = (card.uid === userData.card_favorite_uid);
 
+        // Whether or not this is the user's selected card
+        let isSelected = (card.uid === userData.card_selected_uid);
+
         userCards_f.push(cardManager.toString.inventory(card, {
             duplicate_count: card_duplicates.length,
-            favorited: isFavorite
+            favorited: isFavorite,
+            selected: isSelected
         }));
     }
 
