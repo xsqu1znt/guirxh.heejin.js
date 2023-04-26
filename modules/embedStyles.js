@@ -122,16 +122,22 @@ function userProfile_ES(user, userData, compactMode = false) {
         let card_selected = userParser.cards.get(userData.card_inventory, userData.card_selected_uid);
         if (card_selected) {
             let card_selected_isFavorited = (card_selected.uid === userData.card_favorite_uid)
-            let card_selected_f = cardManager.toString.inventory(card_selected, { favorited: card_selected_isFavorited });
+            let card_selected_f = cardManager.toString.inventory(card_selected, {
+                favorited: card_selected_isFavorited, selected: true
+            });
 
             embed.addFields({ name: "\`📄\` Stage", value: quote(card_selected_f) });
         }
 
         let card_favorite = userParser.cards.get(userData.card_inventory, userData.card_favorite_uid);
         if (card_favorite) {
-            let card_favorite_f = cardManager.toString.inventory(card_favorite, { favorited: true });
+            let card_favorite_f = cardManager.toString.inventory(card_favorite, {
+                favorited: true, selected: card_selected
+            });
+
             embed.addFields({ name: "\`🌟\` Favorite", value: quote(card_favorite_f) });
 
+            // Add the card's image to the user's profile
             if (card_favorite.imageURL) embed.setImage(card_favorite.imageURL);
         }
     }
@@ -201,6 +207,7 @@ function userInventory_ES(user, userData, sorting = "set", order = "descending",
         let embed_page = new EmbedBuilder()
             .setAuthor({ name: `${user.username} | inventory`, iconURL: user.avatarURL({ dynamic: true }) })
             .setDescription(group[0] ? group.join("\n") : "try doing \`/drop\` to start filling up your inventory!")
+            // .addFields({ name: "\u200b", value: group[0] ? group.join("\n") : "try doing \`/drop\` to start filling up your inventory!" })
             .setFooter({ text: `page ${pageIndex++} of ${userCards_f.length || 1} | total ${userCards.length}` })
             .setColor(botSettings.embedColor || null);
 
@@ -234,7 +241,7 @@ function userView_ES(user, userData, card, viewStyle = "uid", showDuplicates = t
             break;
 
         case "global":
-            embed.setDescription(cardManager.toString.inventory(card));
+            embed.setDescription(cardManager.toString.inventory(card, { simplify: true }));
             break;
 
         case "favorite":
@@ -244,7 +251,7 @@ function userView_ES(user, userData, card, viewStyle = "uid", showDuplicates = t
 
         case "idol":
             embed_title = "%USER | idol"
-            embed.setDescription(cardManager.toString.inventory(card));
+            embed.setDescription(cardManager.toString.inventory(card, { selected: true }));
             break;
     }
 

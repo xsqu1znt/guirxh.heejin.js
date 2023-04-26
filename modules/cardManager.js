@@ -147,7 +147,7 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
     };
 
     let { duplicate_count } = options;
-    let formated = "%UID%EMOJI %GROUP : %SINGLE - %NAME%LEVEL %DUPE\n> %GLOBAL_ID %SET_ID %CATEGORY %RARITY%STATS%LOCKED%FAVORITED%SELECTED"
+    let formated = "%UID%EMOJI %GROUP : %SINGLE - %NAME %DUPE\n> %GLOBAL_ID %SET_ID %CATEGORY %RARITY\n> %LOCKED %FAVORITED%SELECTED%LEVEL%STATS"
         .replace("%UID", card.uid ? `${inline(card.uid)} ` : "")
         .replace("%EMOJI", inline(card.emoji, { spacing: false }))
 
@@ -155,7 +155,7 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
         .replace("%SINGLE", card.single)
         .replace("%NAME", card.name)
 
-        .replace("%LEVEL", options.simplify ? "" : inline(["LV.", card.stats.level]))
+        .replace("%LEVEL", options.simplify ? "" : ` ${inline(["LV.", card.stats.level])}`)
 
         .replace("%GLOBAL_ID", ` ${inline(card.globalID)}`)
         .replace("%SET_ID", inline(["🗣️", card.setID], { separator: "" }))
@@ -163,11 +163,12 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
         .replace("%RARITY", inline(["R", card.setID], { separator: "" }))
 
         .replace("%STATS", options.simplify ? ""
-            : ` :: ${inline(["🎤", card.stats.ability])} : ${inline(["💖", card.stats.reputation])}`)
+            : ` ${inline(["🎤", card.stats.ability])} : ${inline(["💖", card.stats.reputation])}`)
 
-        .replace("%LOCKED", card.locked ? ` ${inline("🔒", { spacing: false })} ` : "")
-        .replace("%FAVORITED", options.favorited ? `${inline("🌟", { spacing: false })} ` : "")
-        .replace("%SELECTED", options.selected ? `${inline("🌟", { spacing: false })} ` : "");
+        // .replace("%LOCKED", card.locked ? ` ${inline("🔒", { spacing: false })} ` : "")
+        .replace("%LOCKED", inline(card.locked ? "🔒" : "🔓"))
+        .replace("%FAVORITED", options.favorited ? ` ${inline("🌟", { spacing: false })} ` : "")
+        .replace("%SELECTED", options.selected ? ` ${inline("🏃", { spacing: false })} ` : "");
 
     // For special cases with dupeified things
     if (options.isDuplicate)
@@ -176,7 +177,8 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
         // Special charactor formatting
         let duplicate_count_f = String(duplicate_count).split("").map(num => superscript.number[+num]).join("");
 
-        formated = formated.replace("%DUPE", superscript.dupe + bold(duplicate_count_f));
+        // formated = formated.replace("%DUPE", `${superscript.dupe} ${bold(duplicate_count_f)}`);
+        formated = formated.replace("%DUPE", bold(duplicate_count_f));
     }
     else
         formated = formated.replace("%DUPE", "");
