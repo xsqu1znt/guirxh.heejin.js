@@ -92,9 +92,9 @@ function parse_fromCardLike(cardLike) {
 }
 
 //! To String
-function inline(str, options = { spacing: true, separator: " " }) {
+function inline(str, options = { spacing: false, separator: " " }) {
     if (!Array.isArray(str)) str = [str]
-    options = { spacing: true, separator: " ", ...options };
+    options = { spacing: false, separator: " ", ...options };
 
     if (options.spacing)
         return `\` ${str.join(options.separator)} \``;
@@ -147,7 +147,7 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
     };
 
     let { duplicate_count } = options;
-    let formated = "%UID%EMOJI %GROUP : %SINGLE - %NAME %DUPE\n> %GLOBAL_ID %SET_ID %CATEGORY %RARITY\n> %LOCKED %FAVORITED%SELECTED%LEVEL%STATS"
+    let formated = "%UID%EMOJI %GROUP : %SINGLE - %NAME %DUPE\n> %SET_ID %GLOBAL_ID %RARITY %CATEGORY %LOCKED\n> %LEVEL%STATS%FAVORITED%SELECTED"
         .replace("%UID", card.uid ? `${inline(card.uid)} ` : "")
         .replace("%EMOJI", inline(card.emoji, { spacing: false }))
 
@@ -155,18 +155,18 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
         .replace("%SINGLE", card.single)
         .replace("%NAME", card.name)
 
-        .replace("%LEVEL", options.simplify ? "" : ` ${inline(["LV.", card.stats.level])}`)
-
         .replace("%GLOBAL_ID", ` ${inline(card.globalID)}`)
         .replace("%SET_ID", inline(["🗣️", card.setID], { separator: "" }))
-        .replace("%CATEGORY", inline(card.category))
         .replace("%RARITY", inline(["R", card.setID], { separator: "" }))
+        .replace("%CATEGORY", inline(card.category))
 
+        .replace("%LOCKED", card.locked ? ` ${inline("🔒", { spacing: false })} ` : "")
+        // .replace("%LOCKED", inline(card.locked ? "🔒" : "🔓"))
+
+        .replace("%LEVEL", options.simplify ? "" : ` ${inline(["LV.", card.stats.level])}`)
         .replace("%STATS", options.simplify ? ""
             : ` ${inline(["🎤", card.stats.ability])} : ${inline(["💖", card.stats.reputation])}`)
 
-        // .replace("%LOCKED", card.locked ? ` ${inline("🔒", { spacing: false })} ` : "")
-        .replace("%LOCKED", inline(card.locked ? "🔒" : "🔓"))
         .replace("%FAVORITED", options.favorited ? ` ${inline("🌟", { spacing: false })} ` : "")
         .replace("%SELECTED", options.selected ? ` ${inline("🏃", { spacing: false })} ` : "");
 
@@ -178,7 +178,7 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
         let duplicate_count_f = String(duplicate_count).split("").map(num => superscript.number[+num]).join("");
 
         // formated = formated.replace("%DUPE", `${superscript.dupe} ${bold(duplicate_count_f)}`);
-        formated = formated.replace("%DUPE", bold(duplicate_count_f));
+        formated = formated.replace("%DUPE", bold(["--", duplicate_count_f]));
     }
     else
         formated = formated.replace("%DUPE", "");

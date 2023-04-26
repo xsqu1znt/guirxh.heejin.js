@@ -15,8 +15,8 @@ function globalCollections_ES(user, options = { order: "decending", filter: { gr
     if (options.order === "ascending") cards_all = cards_all.reverse();
 
     // Apply command filters
-    if (options.filter.group) cards_all = cards_all.filter(c => c.Group.toLowerCase() === group);
-    if (options.filter.category) cards_all = cards_all.filter(c => c.Category.toLowerCase() === category);
+    if (options.filter.group) cards_all = cards_all.filter(card => card.group.toLowerCase() === options.filter.group);
+    if (options.filter.category) cards_all = cards_all.filter(card => card.category.toLowerCase() === options.filter.category);
 
     // Create an array the only contains unique cards
     let cards_unique = arrayTools.unique(cards_all, (card, card_compare) => card.setID === card_compare.setID);
@@ -154,31 +154,30 @@ function userInventory_ES(user, userData, sorting = "set", order = "descending",
     filter = { setID: "", group: "", ...filter };
     sorting ||= "set"; order ||= "descending";
 
-    let userCards = userData.card_inventory;
-
     // Parse the CardLike objects into fully detailed cards
-    userCards = userCards.map(card => cardManager.parse.fromCardLike(card));
+    let cards_user = userData.card_inventory.map(card => cardManager.parse.fromCardLike(card));
 
     // Filter the cards
-    if (filter.setID) userCards = userCards.filter(card => card.setID === filter.setID);
-    if (filter.groupName) userCards = userCards.filter(card => card.group.toLowerCase() === filter.groupName);
+    if (filter.setID) cards_user = cards_user.filter(card => card.setID === filter.setID);
+    if (filter.groupName) cards_user = cards_user.filter(card => card.group.toLowerCase() === filter.groupName);
 
     // Sort the cards
     switch (sorting) {
-        case "global": userCards = userCards.sort((a, b) => a.globalID - b.globalID); break;
-        case "set": userCards = userCards.sort((a, b) => a.setID - b.setID); break;
+        case "global": cards_user = cards_user.sort((a, b) => a.globalID - b.globalID); break;
+        case "set": cards_user = cards_user.sort((a, b) => a.setID - b.setID); break;
     }
 
-    if (order === "ascending") userCards = userCards.reverse();
+    if (order === "ascending") cards_user = cards_user.reverse();
 
     // Parse every card in the (cards) array into a readable [String] entry
     // then split the array into groups of 10 cards each
     // so we can easily create embed inventory pages of only 10 entries per
-    let userCards_f = [];
+    let cards_user_f = [];
 
-    for (let card of userParser.cards.primary(userCards)) {
+    let cards_user_primary = userParser.cards.primary(cards_user);
+    for (let card of cards_user_primary) {
         // Get the duplicate cards under the primary card
-        let { card_duplicates } = userParser.cards.duplicates(userCards, { globalID: card.globalID });
+        let { card_duplicates } = userParser.cards.duplicates(cards_user, { globalID: card.globalID });
 
         // Whether or not this is the user's favorited card
         let isFavorite = (card.uid === userData.card_favorite_uid);
@@ -186,7 +185,7 @@ function userInventory_ES(user, userData, sorting = "set", order = "descending",
         // Whether or not this is the user's selected card
         let isSelected = (card.uid === userData.card_selected_uid);
 
-        userCards_f.push(cardManager.toString.inventory(card, {
+        cards_user_f.push(cardManager.toString.inventory(card, {
             duplicate_count: card_duplicates.length,
             favorited: isFavorite,
             selected: isSelected
@@ -194,7 +193,7 @@ function userInventory_ES(user, userData, sorting = "set", order = "descending",
     }
 
     // Max of 10 entires per page
-    userCards_f = arrayTools.chunk(userCards_f, 10);
+    cards_user_f = arrayTools.chunk(cards_user_f, 10);
     // Create an array to store the inventory pages for easy pagination
     let embeds = [];
 
@@ -202,13 +201,12 @@ function userInventory_ES(user, userData, sorting = "set", order = "descending",
     let pageIndex = 1;
 
     // Go through each group in (cards_f) and create an embed for it
-    for (let group of userCards_f) {
+    for (let group of cards_user_f) {
         // Create a new embed for this inventory page
         let embed_page = new EmbedBuilder()
             .setAuthor({ name: `${user.username} | inventory`, iconURL: user.avatarURL({ dynamic: true }) })
             .setDescription(group[0] ? group.join("\n") : "try doing \`/drop\` to start filling up your inventory!")
-            // .addFields({ name: "\u200b", value: group[0] ? group.join("\n") : "try doing \`/drop\` to start filling up your inventory!" })
-            .setFooter({ text: `page ${pageIndex++} of ${userCards_f.length || 1} | total ${userCards.length}` })
+            .setFooter({ text: `page ${pageIndex++} of ${cards_user_f.length || 1} | total cards: ${cards_user_primary.length}` })
             .setColor(botSettings.embedColor || null);
 
         // Push the newly created embed to our collection

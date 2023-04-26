@@ -46,12 +46,12 @@ module.exports = {
         switch (interaction.options.getSubcommand()) {
             case "add":
                 card.locked = true;
-                result = `${cardManager.toString.basic(card)} has been locked.`;
+                result = `You locked a card:\n> ${cardManager.toString.basic(card)}`;
                 break;
 
             case "remove":
                 card.locked = false;
-                result = `${cardManager.toString.basic(card)} has been unlocked.`;
+                result = `You unlocked a card:\n> ${cardManager.toString.basic(card)}`;
                 break;
         }
 

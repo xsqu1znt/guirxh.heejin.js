@@ -1,7 +1,7 @@
 {
     "botSettings": {
         "currencyIcon": "🥕",
-        "embedColor": "Random",
+        "embedColor": "#36393F",
         "timeout": {
             "pagination": "60s"
         }
