@@ -8,7 +8,7 @@ module.exports = {
         .setDescription("Change your profile biography")
 
         .addStringOption(option => option.setName("text")
-            .setDescription("Set it to \"none\" to reset")
+            .setDescription("Use \"reset\" to remove")
             .setRequired(true)),
 
     /**
@@ -26,10 +26,13 @@ module.exports = {
 
         // Update the user's biography in Mongo
         await userManager.update(interaction.user.id, {
-            biography: biography.toLowerCase() === "none" ? "" : biography
+            biography: biography.toLowerCase() === "reset" ? "" : biography
         });
 
         // Let the user know the result
-        return await embedinator.send(`Your biography has been changed to: \"${biography}\"`);
+        let result = biography.toLowerCase() === "reset"
+            ? "Biography reset."
+            : `Your biography has been changed to: \"${biography}\".`;
+        return await embedinator.send(result);
     }
 };

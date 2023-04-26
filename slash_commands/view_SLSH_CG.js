@@ -77,7 +77,7 @@ module.exports = {
 
                 // Get the card from the user's card_inventory
                 card = userParser.cards.get(userData.card_inventory, userData.card_favorite_uid);
-                if (!card) return await embedinator.send("You don't have a favorite card.");
+                if (!card) return await embedinator.send("You don't have a favorite card. Use **/favorite** first");
 
                 // Create the embed
                 embed_view = userView_ES(interaction.user, userData, card, "favorite");

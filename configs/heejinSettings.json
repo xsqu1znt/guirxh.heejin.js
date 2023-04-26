@@ -45,6 +45,8 @@
             "drop_weekly": "5s",
             "drop_seasonal": "5s",
             "drop_event": "5s",
+            "daily": "5s",
+            "stage": "5s",
             "random": "5s"
         }
     },

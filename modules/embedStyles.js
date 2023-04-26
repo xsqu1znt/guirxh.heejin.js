@@ -1,6 +1,6 @@
 const { EmbedBuilder, quote, bold, TimestampStyles } = require('discord.js');
 
-const { botSettings } = require('../configs/heejinSettings.json');
+const { botSettings, userSettings } = require('../configs/heejinSettings.json');
 const { arrayTools, stringTools, numberTools, dateTools } = require('../modules/jsTools');
 const cardManager = require('../modules/cardManager');
 const userParser = require('../modules/userParser');
@@ -18,6 +18,37 @@ function userDrop(user, cards, cards_isDuplicate, dropTitle = "drop") {
 
     let card_last = cards.slice(-1)[0];
     if (card_last.imageURL) embed.setImage(card_last.imageURL);
+
+    return embed;
+}
+
+// Command -> User -> /COOLDOWNS
+function userCooldowns(user, userData) {
+    let cooldowns = Object.keys(userSettings.cooldowns).map(name => ({ name, timestamp: 0 }));
+
+    let cooldowns_user = [];
+    userData.cooldowns.forEach((value, key) => cooldowns_user.push({ name: key, timestamp: value }));
+
+    cooldowns_user.forEach(cooldown => {
+        let spliceIndex = cooldowns.findIndex(c => c.name === cooldown.name);
+        if (spliceIndex >= 0) cooldowns.splice(spliceIndex, 1, cooldown);
+    });
+
+    let cooldowns_f = cooldowns.map(cooldown => {
+        let cooldownETA = dateTools.eta(cooldown.timestamp, true);
+
+        return "\`%VISUAL %NAME:\` %AVAILABILITY"
+            .replace("%VISUAL", cooldownETA ? "❌" : "✔️")
+            .replace("%NAME", stringTools.toTitleCase(cooldown.name.replace(/_/g, " ")))
+            .replace("%AVAILABILITY", bold(cooldownETA
+                ? `<t:${numberTools.milliToSeconds(cooldown.timestamp)}:${TimestampStyles.RelativeTime}>`
+                : "Available"));
+    });
+
+    let embed = new EmbedBuilder()
+        .setAuthor({ name: `${user.username} | cooldowns`, iconURL: user.avatarURL({ dynamic: true }) })
+        .setDescription(cooldowns_f.join("\n"))
+        .setColor(botSettings.embedColor || null);
 
     return embed;
 }
@@ -55,45 +86,6 @@ function userProfile(user, userData, compactMode = false) {
             if (card_favorite.imageURL) embed.setImage(card_favorite.imageURL);
         }
     }
-
-    return embed;
-}
-
-// Command -> User -> /COOLDOWNS
-function userCooldowns(user, userData) {
-    let cooldowns = [
-        { name: "drop_5", timestamp: 0 },
-        { name: "drop_event", timestamp: 0 },
-        { name: "drop_seasonal", timestamp: 0 },
-        { name: "drop_weekly", timestamp: 0 },
-        { name: "daily", timestamp: 0 },
-        { name: "stage", timestamp: 0 },
-        { name: "random", timestamp: 0 }
-    ];
-
-    let cooldowns_user = [];
-    userData.cooldowns.forEach((value, key) => cooldowns_user.push({ name: key, timestamp: value }));
-
-    cooldowns_user.forEach(cooldown => {
-        let spliceIndex = cooldowns.findIndex(c => c.name === cooldown.name);
-        if (spliceIndex >= 0) cooldowns.splice(spliceIndex, 1, cooldown);
-    });
-
-    let cooldowns_f = cooldowns.map(cooldown => {
-        let cooldownETA = dateTools.eta(cooldown.timestamp, true);
-
-        return "\`%VISUAL %NAME:\` %AVAILABILITY"
-            .replace("%VISUAL", cooldownETA ? "❌" : "✔️")
-            .replace("%NAME", stringTools.toTitleCase(cooldown.name.replace(/_/g, " ")))
-            .replace("%AVAILABILITY", bold(cooldownETA
-                ? `<t:${numberTools.milliToSeconds(cooldown.timestamp)}:${TimestampStyles.RelativeTime}>`
-                : "Available"));
-    });
-
-    let embed = new EmbedBuilder()
-        .setAuthor({ name: `${user.username} | cooldowns`, iconURL: user.avatarURL({ dynamic: true }) })
-        .setDescription(cooldowns_f.join("\n"))
-        .setColor(botSettings.embedColor || null);
 
     return embed;
 }
@@ -168,7 +160,7 @@ function userInventory(user, userData, sorting = "set", order = "descending", fi
 }
 
 // Command -> User -> /VIEW UID | /VIEW GID | /VIEW FAVORITE
-/** @param {"uid" | "global" | "favorite"} viewStyle */
+/** @param {"uid" | "global" | "favorite" | "idol"} viewStyle */
 function userView(user, userData, card, viewStyle = "uid", showDuplicates = true) {
 
     // Create the embed
@@ -195,6 +187,11 @@ function userView(user, userData, card, viewStyle = "uid", showDuplicates = true
         case "favorite":
             embed_title = "%USER | favorite"
             embed.setDescription(cardManager.toString.inventory(card, { favorited: true }));
+            break;
+
+        case "idol":
+            embed_title = "%USER | idol"
+            embed.setDescription(cardManager.toString.inventory(card));
             break;
     }
 
@@ -285,10 +282,10 @@ function userGift(user, recipient, cards) {
 module.exports = {
     // General Commands
     userDrop_ES: userDrop,
+    userCooldowns_ES: userCooldowns,
 
     // User Commands
     userProfile_ES: userProfile,
-    userCooldowns_ES: userCooldowns,
     userInventory_ES: userInventory,
     userView_ES: userView,
     userTeamView_ES: userTeamView,

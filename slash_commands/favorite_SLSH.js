@@ -52,6 +52,6 @@ module.exports = {
 
         // Let the user know the result
         let card_f = cardManager.toString.basic(card);
-        return await embedinator.send(`${card_f} set as favorite.`);
+        return await embedinator.send(`Your favorite card has been changed to:\n> ${card_f}`);
     }
 };
