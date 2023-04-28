@@ -62,6 +62,9 @@ function recalculateStats(card) {
         card.stats.reputation += nextLevelStatReward.reputation;
     }
 
+    // Reset how much XP the card needs to level up
+    card.stats.xp_for_next_level = card.stats.level * userSettings.xp.card.nextLevelXPMultiplier;
+
     return card;
 }
 

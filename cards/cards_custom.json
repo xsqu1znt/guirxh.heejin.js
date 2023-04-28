@@ -13,6 +13,7 @@
     "stats": {
       "level": 1,
       "xp": 0,
+      "xp_for_next_level": 100,
       "ability": 100,
       "reputation": 100
     },
@@ -32,6 +33,7 @@
     "stats": {
       "level": 1,
       "xp": 0,
+      "xp_for_next_level": 100,
       "ability": 100,
       "reputation": 100
     },
@@ -51,6 +53,7 @@
     "stats": {
       "level": 1,
       "xp": 0,
+      "xp_for_next_level": 100,
       "ability": 100,
       "reputation": 100
     },
