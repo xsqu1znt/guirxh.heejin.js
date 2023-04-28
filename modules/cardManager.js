@@ -207,7 +207,7 @@ function toString_shopEntry(card) {
         .replace("%SINGLE", card.single)
         .replace("%NAME", card.name)
         .replace("%SET_ID", inline(["🗣️", card.setID], { separator: "" }))
-        .replace("%PRICE", inline([botSettings.currencyIcon, card.sellPrice], { separator: "" }));
+        .replace("%PRICE", inline([botSettings.currencyIcon, card.price], { separator: "" }));
 }
 
 function toString_inventory(card, options = { duplicate_count: 0, favorited: false, selected: false, isDuplicate: false, simplify: false, }) {
