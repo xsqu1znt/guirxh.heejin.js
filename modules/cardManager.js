@@ -119,7 +119,7 @@ function italic(str, options = { separator: " " }) {
 function toString_basic(card) {
     return "%UID %EMOJI %GROUP :: %SINGLE - %NAME"
         .replace("%UID", inline(card.uid))
-        .replace("%EMOJI", inline(card.emoji, { spacing: false }))
+        .replace("%EMOJI", inline(card.emoji))
         .replace("%GROUP", bold(card.group))
         .replace("%SINGLE", card.single)
         .replace("%NAME", card.name);
@@ -129,7 +129,7 @@ function toString_setEntry(card, count = 1) {
     return "%SET_ID %CATEGORY %EMOJI %GROUP :: %SINGLE %RARITY %CARD_COUNT"
         .replace("%SET_ID", inline(card.setID))
         .replace("%CATEGORY", inline(card.category))
-        .replace("%EMOJI", inline(card.emoji), { spacing: false })
+        .replace("%EMOJI", inline(card.emoji))
         .replace("%GROUP", bold(card.group))
         .replace("%SINGLE", card.single)
         .replace("%RARITY", inline(["R", card.rarity], { separator: "" }))
@@ -149,7 +149,7 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
     let { duplicate_count } = options;
     let formated = "%UID%EMOJI %GROUP : %SINGLE - %NAME %DUPE\n> %SET_ID %GLOBAL_ID %RARITY %CATEGORY %LOCKED\n> %LEVEL%STATS%FAVORITED%SELECTED"
         .replace("%UID", card.uid ? `${inline(card.uid)} ` : "")
-        .replace("%EMOJI", inline(card.emoji, { spacing: false }))
+        .replace("%EMOJI", inline(card.emoji))
 
         .replace("%GROUP", bold(card.group))
         .replace("%SINGLE", card.single)
@@ -160,15 +160,15 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
         .replace("%RARITY", inline(["R", card.setID], { separator: "" }))
         .replace("%CATEGORY", inline(card.category))
 
-        .replace("%LOCKED", card.locked ? ` ${inline("🔒", { spacing: false })} ` : "")
+        .replace("%LOCKED", card.locked ? ` ${inline("🔒")} ` : "")
         // .replace("%LOCKED", inline(card.locked ? "🔒" : "🔓"))
 
         .replace("%LEVEL", options.simplify ? "" : ` ${inline(["LV.", card.stats.level])}`)
         .replace("%STATS", options.simplify ? ""
             : ` ${inline(["🎤", card.stats.ability])} : ${inline(["💖", card.stats.reputation])}`)
 
-        .replace("%FAVORITED", options.favorited ? ` ${inline("🌟", { spacing: false })} ` : "")
-        .replace("%SELECTED", options.selected ? ` ${inline("🏃", { spacing: false })} ` : "");
+        .replace("%FAVORITED", options.favorited ? ` ${inline("🌟")} ` : "")
+        .replace("%SELECTED", options.selected ? ` ${inline("🏃")} ` : "");
 
     // For special cases with dupeified things
     if (options.isDuplicate)
