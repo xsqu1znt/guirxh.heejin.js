@@ -93,10 +93,13 @@ class Stage {
         // Apply a random amount of xp to the winning card
         let { xp: { card: { stage: xp_stage } } } = userSettings;
         let xp = randomTools.number(xp_stage.min, xp_stage.max);
-        winner_data.card.stats.xp = xp;
 
-        // Try leveling the card up
-        winner_data.card = cardManager.tryLevelUp;
+        winner_data.card.stats.xp = xp; winner_data.cardXPGained = xp;
+
+        // Try leveling up the card
+        let levelUpSession = cardManager.tryLevelUp(winner_data.card);
+
+        winner_data.card = levelUpSession.card; winner_data.cardLevelsGained = levelUpSession.levelsGained;
 
         return this.resolve(winner_data);
     }
