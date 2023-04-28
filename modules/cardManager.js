@@ -56,7 +56,7 @@ function recalculateStats(card) {
     card.stats.reputation = card_base.stats.reputation;
 
     // Iterate through each level and increase the stats
-    for (let i = 0; i < card.stats.level; i++) {
+    for (let i = 0; i < (card.stats.level - 1); i++) {
         let { xp: { card: { nextLevelStatReward } } } = userSettings;
         card.stats.ability += nextLevelStatReward.ability;
         card.stats.reputation += nextLevelStatReward.reputation;
@@ -209,7 +209,7 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
     };
 
     let { duplicate_count } = options;
-    let formated = "%UID%EMOJI %GROUP : %SINGLE - %NAME %DUPE\n> %SET_ID %GLOBAL_ID %RARITY %CATEGORY %LOCKED\n> %LEVEL%STATS%FAVORITED%SELECTED"
+    let formated = "%UID%EMOJI %GROUP : %SINGLE - %NAME %DUPE\n> %SET_ID %GLOBAL_ID %RARITY %CATEGORY %LOCKED\n %LEVEL%STATS%FAVORITED%SELECTED"
         .replace("%UID", card.uid ? `${inline(card.uid)} ` : "")
         .replace("%EMOJI", inline(card.emoji))
 
@@ -219,13 +219,13 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
 
         .replace("%GLOBAL_ID", ` ${inline(card.globalID)}`)
         .replace("%SET_ID", inline(["🗣️", card.setID], { separator: "" }))
-        .replace("%RARITY", inline(["R", card.setID], { separator: "" }))
+        .replace("%RARITY", inline(["R", card.rarity], { separator: "" }))
         .replace("%CATEGORY", inline(card.category))
 
         .replace("%LOCKED", card.locked ? ` ${inline("🔒")} ` : "")
         // .replace("%LOCKED", inline(card.locked ? "🔒" : "🔓"))
 
-        .replace("%LEVEL", options.simplify ? "" : ` ${inline(["LV.", card.stats.level])}`)
+        .replace("%LEVEL", options.simplify ? "" : `> ${inline(["LV.", card.stats.level])}`)
         .replace("%STATS", options.simplify ? ""
             : ` ${inline(["🎤", card.stats.ability])} : ${inline(["💖", card.stats.reputation])}`)
 

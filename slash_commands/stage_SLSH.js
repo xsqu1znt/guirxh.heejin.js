@@ -23,8 +23,8 @@ module.exports = {
         });
 
         // Get interaction options
-        let user_rival = interaction.options.getUser("player");
-        if (user_rival.id === interaction.user.id) return await embedinator.send(
+        let user_rival = interaction.options.getUser("player") || null;
+        if (user_rival?.id === interaction.user.id) return await embedinator.send(
             "You can't duel yourself!"
         );
 
@@ -55,7 +55,7 @@ module.exports = {
             );
         }
 
-        // ! Create the stage battle
+        //! Create the stage battle
         let stage = new Stage(interaction, user_rival, {
             card_player: card_idol,
             card_rival: user_rival ? user_rival : null,
@@ -63,6 +63,26 @@ module.exports = {
         });
 
         // Send the embed
-        return await interaction.editReply({ embeds: [stage.embed] });
+        await interaction.editReply({ embeds: [stage.embed] });
+
+        //! Handle the resulting winner
+        let winner = await stage.start();
+
+        if (winner.user) {
+            // Update the winning user's card_inventory with the added XP/levels in Mongo
+            await userManager.cards.update(winner.user.id, winner.card);
+
+            // Edit the embed's footer with information regarding the winning card
+            stage.embed.data.footer.text = "%USERNAME's idol gained %XPxp %LEVELS"
+                .replace("%USERNAME", winner.user.username)
+                .replace("%XP", winner.cardXPGained)
+                .replace("%LEVELS", winner.cardLevelsGained > 0 ? "and leveled up" : "");
+
+            return await stage.update_embed();
+        }
+        
+        // Fallback for if the winner isn't a player
+        stage.embed.data.footer.text = "you lost";
+        return await stage.update_embed();
     }
 };

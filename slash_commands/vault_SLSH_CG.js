@@ -56,10 +56,7 @@ module.exports = {
         }
 
         // Update the user's card_inventory in Mongo
-        await userManager.updateNested(interaction.user.id,
-            { "card_inventory.uid": card.uid },
-            { $set: { "card_inventory.$": card } }
-        );
+        await userManager.cards.update(interaction.user.id, card);
 
         // Let the user know the result
         return await embedinator.send(result);

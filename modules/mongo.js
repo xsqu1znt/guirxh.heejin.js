@@ -58,10 +58,6 @@ async function user_update(userID, update) {
     return await models.user.findByIdAndUpdate(userID, update);
 }
 
-async function user_updatedNested(userID, query, update) {
-    return await models.user.updateOne({ _id: userID, ...query }, update);
-}
-
 async function user_new(userID) {
     let user = await models.user.findById(userID);
     user ||= await new models.user({
@@ -168,6 +164,14 @@ async function cardInventory_removeCards(userID, uids) {
     await Promise.all(promiseArray); return;
 }
 
+async function cardInventory_updateCard(userID, card) {
+    await models.user.updateOne(
+        { _id: userID, "card_inventory.uid": card.uid },
+        { $set: { "card_inventory.$": card } }
+    );
+    return;
+}
+
 module.exports = {
     /** Connect to MongoDB. */
     connect: () => {
@@ -180,14 +184,14 @@ module.exports = {
         exists: user_exists,
         fetch: user_fetch,
         update: user_update,
-        updateNested: user_updatedNested,
         new: user_new,
 
         tryLevelUp: user_tryLevelUp,
 
         cards: {
             add: cardInventory_addCards,
-            remove: cardInventory_removeCards
+            remove: cardInventory_removeCards,
+            update: cardInventory_updateCard
         }
     }
 };

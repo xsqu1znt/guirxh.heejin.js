@@ -11,8 +11,8 @@ class Stage {
      * @param {User} rival
      * @param {Card} card
      */
-    constructor(interaction, rival, options = { card_player: null, card_rival: null, startDelay: 3000, turnDelay: 1000 }) {
-        options = { card_player: null, card_rival: null, startDelay: 3000, turnDelay: 1000, ...options };
+    constructor(interaction, rival, options = { card_player: null, card_rival: null, startDelay: 3, turnDelay: 1000 }) {
+        options = { card_player: null, card_rival: null, startDelay: 3, turnDelay: 1000, ...options };
 
         this.interaction = interaction;
         this.rival = rival;
@@ -41,7 +41,8 @@ class Stage {
             else
                 this.card_away.stats.level = rivalLevel;
 
-            this.card_away = cardManager.recalculateStats(this.card_away);
+            this.card_away = cardManager.recalculateStats(this.card_away);  
+            this.card_away = cardManager.resetUID(this.card_away);
         }
         this.card_away_startingHP = this.card_away.stats.reputation;
 
@@ -58,13 +59,13 @@ class Stage {
 
             .addFields(
                 // The player's team
-                { name: interaction.user.username, value: cardManager.toString.inventory(this.card_home) },
+                { name: interaction.user.username, value: cardManager.toString.inventory(this.card_home), inline: true },
 
                 // The rival's team
-                { name: "Rival", value: cardManager.toString.inventory(this.card_away) }
+                { name: "Rival", value: cardManager.toString.inventory(this.card_away), inline: true }
             )
 
-            .setFooter({ text: `battle starting in ${this.startDelay} ${this.startDelay === 1 ? "second" : "seconds"}...` })
+            .setFooter({ text: `battle starting in ${this.delay.start} ${this.delay.start === 1 ? "second" : "seconds"}...` })
             .setColor(botSettings.embedColor || null);
     }
 
@@ -85,7 +86,7 @@ class Stage {
      */
     async end(winner) {
         let winner_data = {
-            id: "",
+            user: null,
             card: null,
             cardXPGained: 0,
             cardLevelsGained: 0
@@ -93,7 +94,12 @@ class Stage {
 
         switch (winner) {
             case "home":
-                winner_data.id = this.interaction.user.id;
+                // Update embed fields to show who won
+                this.embed.data.fields[0].name += " ***WON!***";
+                this.embed.data.fields[1].name += " ***LOST!***";
+                await this.update_embed();
+                
+                winner_data.user = this.interaction.user;
 
                 // Reset the card's HP (reputation)
                 this.card_home.stats.reputation = this.card_home_startingHP;
@@ -102,6 +108,13 @@ class Stage {
                 break;
 
             case "away":
+                // Update embed fields to show who won
+                this.embed.data.fields[0].name += " ***LOST!***";
+                this.embed.data.fields[1].name += " ***WON!***";
+                await this.update_embed();
+
+                winner_data.user = this.rival;
+                
                 // Reset the card's HP (reputation)
                 this.card_away.stats.reputation = this.card_away_startingHP;
 
@@ -149,7 +162,7 @@ class Stage {
     async attack_home() {
         this.turn++;
 
-        this.card_home = this.applyDamage(this.card_away, this.card_home);
+        this.card_home = this.applyDamage(this.card_away, this.card_home).receiver;
 
         // Update the embed with the rival's new stats
         this.embed.data.fields[0].value = cardManager.toString.inventory(this.card_home);
@@ -174,7 +187,7 @@ class Stage {
     async attack_away() {
         this.turn++;
 
-        this.card_away = this.applyDamage(this.card_home, this.card_away);
+        this.card_away = this.applyDamage(this.card_home, this.card_away).receiver;
 
         // Update the embed with the rival's new stats
         this.embed.data.fields[1].value = cardManager.toString.inventory(this.card_away);
@@ -196,7 +209,7 @@ class Stage {
     }
 
     /** Apply a random amount of damage to the receiving card based on the attacking card's ability. */
-    async applyDamage(card_attacker, card_receiver) {
+    applyDamage(card_attacker, card_receiver) {
         // Destructure the needed card stats for cleaner code
         let { stats: { ability: ability_attacker } } = card_attacker;
         let { stats: { reputation: reputation_receiver } } = card_receiver;
@@ -213,7 +226,7 @@ class Stage {
         card_receiver.stats.reputation = reputation_receiver;
 
         // Return the updated cards
-        return { attacker: card_attacker, receiver: reputation_receiver };
+        return { attacker: card_attacker, receiver: card_receiver };
     }
 }
 
