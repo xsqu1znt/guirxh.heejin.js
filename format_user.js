@@ -1,4 +1,4 @@
-const user = require('./user_guirxh.json');
+const user = require('./user_gui.json');
 
 const fs = require('fs');
 const { userSettings } = require('./configs/heejinSettings.json');

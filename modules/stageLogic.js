@@ -41,7 +41,7 @@ class Stage {
             else
                 this.card_away.stats.level = rivalLevel;
 
-            this.card_away = cardManager.recalculateStats(this.card_away);  
+            this.card_away = cardManager.recalculateStats(this.card_away);
             this.card_away = cardManager.resetUID(this.card_away);
         }
         this.card_away_startingHP = this.card_away.stats.reputation;
@@ -77,7 +77,8 @@ class Stage {
         // this.embed.data.footer.text = ""; await this.update_embed();
 
         return new Promise((resolve, reject) => {
-            this.resolve = resolve; this.attack_away();
+            this.resolve = resolve;
+            randomTools.chance50() ? this.attack_away() : this.attack_home();
         });
     }
 
@@ -98,7 +99,7 @@ class Stage {
                 this.embed.data.fields[0].name += " ***WON!***";
                 this.embed.data.fields[1].name += " ***LOST!***";
                 await this.update_embed();
-                
+
                 winner_data.user = this.interaction.user;
 
                 // Reset the card's HP (reputation)
@@ -114,7 +115,7 @@ class Stage {
                 await this.update_embed();
 
                 winner_data.user = this.rival;
-                
+
                 // Reset the card's HP (reputation)
                 this.card_away.stats.reputation = this.card_away_startingHP;
 

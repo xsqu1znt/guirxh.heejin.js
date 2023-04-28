@@ -1,9 +1,11 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
+const { botSettings } = require('../configs/heejinSettings.json');
 const { messageTools } = require('../modules/discordTools');
+const { userManager } = require('../modules/mongo');
+const { dateTools } = require('../modules/jsTools');
 const Stage = require('../modules/stageLogic');
 const userParser = require('../modules/userParser');
-const { userManager } = require('../modules/mongo');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("stage")
@@ -59,7 +61,8 @@ module.exports = {
         let stage = new Stage(interaction, user_rival, {
             card_player: card_idol,
             card_rival: user_rival ? user_rival : null,
-            startDelay: 3, turnDelay: 1
+            startDelay: dateTools.parseStr(botSettings.timeout.stage_start, "s"),
+            turnDelay: dateTools.parseStr(botSettings.timeout.stage_turn)
         });
 
         // Send the embed
@@ -80,7 +83,7 @@ module.exports = {
 
             return await stage.update_embed();
         }
-        
+
         // Fallback for if the winner isn't a player
         stage.embed.data.footer.text = "you lost";
         return await stage.update_embed();

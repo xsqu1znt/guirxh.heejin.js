@@ -3,6 +3,8 @@
         "currencyIcon": "🥕",
         "embedColor": "#36393F",
         "timeout": {
+            "stage_start": "3s",
+            "stage_turn": "500ms",
             "pagination": "60s"
         }
     },
@@ -23,7 +25,7 @@
 
     "userSettings": {
         "xp": {
-            "maxLevel": 50,
+            "maxLevel": 100,
             "nextLevelXPMultiplier": 50,
             "commands": {
                 "drop": { "min": 10, "max": 30 },
@@ -42,7 +44,7 @@
             "startingBalance": 250,
             "currencyRange": {
                 "min": 10,
-                "max": 250
+                "max": 500
             }
         },
         "chances": {
