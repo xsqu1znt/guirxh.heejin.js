@@ -100,6 +100,10 @@ function tryLevelUp(card, session = null) {
 }
 
 //! Fetch
+function get_random(basicOnly = false) {
+    return randomTools.choice(basicOnly ? cards_basic : cards_all);
+}
+
 function get_byGlobalID(globalID) {
     let card = cards_all.find(card => card.globalID === globalID);
     return card || null;
@@ -251,6 +255,7 @@ module.exports = {
     tryLevelUp,
 
     get: {
+        random: get_random,
         byGlobalID: get_byGlobalID,
         drop: get_randomDrop
     },

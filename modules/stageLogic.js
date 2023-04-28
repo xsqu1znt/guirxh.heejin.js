@@ -6,7 +6,7 @@ const cardManager = require('./cardManager');
 const logger = require('./logger');
 
 class Stage {
-    /** Create a new Stage battle instance
+    /** Create a new Stage battle.
      * @param {CommandInteraction} interaction
      * @param {User} rival
      * @param {Card} card
@@ -24,7 +24,25 @@ class Stage {
         this.card_home = options.card_player;
         this.card_home_startingHP = this.card_home.stats.reputation;
 
-        this.card_away = options.card_rival; // TODO: random card/other player's card
+        this.card_away = options.card_rival;
+
+        // Pick a random card if the player isn't battling another player
+        if (!this.card_away) {
+            this.card_away = cardManager.get.random(true);
+
+            // Get the player's card level
+            let rivalLevel = this.card_home.stats.level;
+
+            // Determine a random amount to subtract from the level if possible
+            let rnd = randomTools.number(0, 5);
+
+            if (rivalLevel - rnd > 1)
+                this.card_away.stats.level = rivalLevel - rnd;
+            else
+                this.card_away.stats.level = rivalLevel;
+
+            this.card_away = cardManager.recalculateStats(this.card_away);
+        }
         this.card_away_startingHP = this.card_away.stats.reputation;
 
         this.turn = 0;
@@ -50,6 +68,7 @@ class Stage {
             .setColor(botSettings.embedColor || null);
     }
 
+    /** Start the stage battle. */
     async start() {
         await this.start_countdown();
 
@@ -104,6 +123,7 @@ class Stage {
         return this.resolve(winner_data);
     }
 
+    /** Update the embed footer to show the countdown. */
     async start_countdown() {
         for (let i = this.delay.start; i > 0; i--) {
             await asyncTools.wait(1000); this.delay.start--;
@@ -196,3 +216,5 @@ class Stage {
         return { attacker: card_attacker, receiver: reputation_receiver };
     }
 }
+
+module.exports = Stage;
