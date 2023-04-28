@@ -41,7 +41,7 @@ module.exports = {
                 // Get the card from the user's card_inventory
                 let card_view = userParser.cards.get(userData.card_inventory, userData.card_selected_uid);
                 if (!card_view) return await embedinator.send(
-                    `You don't have a card selected. Use **/idol set** first.`
+                    "You don't have a card selected. Use **/idol set** first."
                 );
 
                 // Create the embed
