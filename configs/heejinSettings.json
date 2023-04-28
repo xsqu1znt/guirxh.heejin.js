@@ -27,7 +27,15 @@
             "nextLevelXPMultiplier": 50,
             "commands": {
                 "drop": { "min": 10, "max": 30 },
-                "random": { "min": 10, "max": 250 }
+                "random": { "min": 10, "max": 250 },
+                "stage": { "min": 10, "max": 250 }
+            },
+            
+            "card": {
+                "maxLevel": 100,
+                "nextLevelXPMultiplier": 50,
+                "nextLevelStatReward": { "ability": 9, "reputation": 9 },
+                "stage": { "min": 50, "max": 200 }
             }
         },
         "currency": {

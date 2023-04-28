@@ -1,5 +1,6 @@
-const { dropSettings, eventSettings, shopSettings } = require('../configs/heejinSettings.json');
+const { userSettings, dropSettings, eventSettings, shopSettings } = require('../configs/heejinSettings.json');
 const { randomTools } = require('./jsTools');
+const logger = require('./logger');
 
 const cards = {
     common: require('../cards/cards_common.json'),
@@ -43,6 +44,61 @@ function resetUID(card, userCards = null) {
     return card;
 }
 
+function recalculateStats(card) {
+    let card_base = get_byGlobalID(card.globalID);
+    if (!card_base) {
+        logger.error("CardManager -> recalculateStats", "base card could not be found");
+        return null;
+    }
+
+    // Reset it's stats back to its original base stats
+    card.stats.ability = card_base.stats.ability;
+    card.stats.reputation = card_base.stats.reputation;
+
+    // Iterate through each level and increase the stats
+    for (let i = 0; i < card.stats.level; i++) {
+        let { xp: { card: { nextLevelStatReward } } } = userSettings;
+        card.stats.ability += nextLevelStatReward.ability;
+        card.stats.reputation += nextLevelStatReward.reputation;
+    }
+
+    return card;
+}
+
+function tryLevelUp(card, session = null) {
+    session = { leveled: false, levelsGained: 0, ...session };
+
+    // Don't level the card past the max card level
+    if (card.stats.level === userSettings.xp.card.maxLevel) return session;
+
+    // Increase the card's level by 1 if they meet or surpass the required XP
+    if (card.stats.xp >= card.stats.xp_for_next_level) {
+        card.stats.level++;
+        session.leveled = true; session.levelsGained++;
+
+        // If the card's at its max level set its XP to its required xp_for_next_level
+        if (card.stats.level === userSettings.xp.card.maxLevel)
+            card.stats.xp = card.stats.xp_for_next_level;
+        else {
+            // Reset XP, keeping any overshoot
+            // defaults to 0 if there wasn't a positive overshoot value
+            card.stats.xp = (card.stats.xp - card.stats.xp_for_next_level) || 0;
+
+            // Multiply the card's xp_for_next_level by its multipler
+            card.stats.xp_for_next_level = Math.round(card.stats.level * userSettings.xp.card.nextLevelXPMultiplier);
+
+            card = recalculateStats(card);
+
+            // Recursively level up the card if there's still enough XP
+            if (card.stats.xp >= card.stats.xp_for_next_level)
+                return tryLevelUp(card, session);
+        }
+    }
+
+    // Return whether the card was leveled up or not
+    session.card = card; return session;
+}
+
 //! Fetch
 function get_byGlobalID(globalID) {
     let card = cards_all.find(card => card.globalID === globalID);
@@ -82,7 +138,6 @@ function parse_toCardLike(card) {
     return {
         uid: card.uid,
         globalID: card.globalID,
-        setID: card.setID,
         stats: card.stats
     };
 }
@@ -192,6 +247,8 @@ module.exports = {
     cardTotal: cards_all.length,
 
     resetUID,
+    recalculateStats,
+    tryLevelUp,
 
     get: {
         byGlobalID: get_byGlobalID,

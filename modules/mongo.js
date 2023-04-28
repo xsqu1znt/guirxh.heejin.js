@@ -30,14 +30,13 @@ async function user_fetch(userID, type = "full", lean = false) {
         case "essential":
             filter = {
                 daily_streak: 1,
+                daily_streak_expires: 1,
                 level: 1,
                 xp: 1,
                 xp_for_next_level: 1,
                 biography: 1,
                 balance: 1,
                 cooldowns: 1,
-                xp_for_next_level: 1,
-                xp_for_next_level: 1,
             };
             break;
         case "cards": filter = { _id: 0, card_inventory: 1 }; break;
@@ -79,7 +78,7 @@ async function user_tryLevelUp(userID, userData = null) {
         leveled: userData?.session_res?.leveled || false,
         levels_gained: userData?.session_res?.levels_gained || 0,
         level_current: userData?.session_res?.level_current || null
-    }
+    };
 
     // Fetch the user from the database
     userData ||= await user_fetch(userID, "essential", true);

@@ -1,4 +1,4 @@
-const { CommandInteraction, EmbedBuilder } = require('discord.js');
+const { CommandInteraction, User, EmbedBuilder } = require('discord.js');
 
 const { botSettings, userSettings } = require('../configs/heejinSettings.json');
 const { randomTools, asyncTools } = require('./jsTools');
@@ -8,30 +8,35 @@ const logger = require('./logger');
 class Stage {
     /** Create a new Stage battle instance
      * @param {CommandInteraction} interaction
-     * @param {number} startDelay
+     * @param {User} rival
      * @param {Card} card
      */
-    constructor(interaction, card, options = { startDelay: 3000, turnDelay: 1000 }) {
-        options = { startDelay: 3000, turnDelay: 1000, ...options };
+    constructor(interaction, rival, options = { card_player: null, card_rival: null, startDelay: 3000, turnDelay: 1000 }) {
+        options = { card_player: null, card_rival: null, startDelay: 3000, turnDelay: 1000, ...options };
 
         this.interaction = interaction;
+        this.rival = rival;
         this.delay = {
             start: options.startDelay,
             turn: options.turnDelay
         };
 
-        this.card_home = card;
+        this.card_home = options.card_player;
         this.card_home_startingHP = this.card_home.stats.reputation;
 
-        this.card_away = card; // TODO: random card/other player's card
+        this.card_away = options.card_rival; // TODO: random card/other player's card
         this.card_away_startingHP = this.card_away.stats.reputation;
 
         this.turn = 0;
 
         this.resolve = null;
 
+        // Create the starting embed
         this.embed = new EmbedBuilder()
-            .setAuthor({ name: `${interaction.user.username} | collections`, iconURL: user.avatarURL({ dynamic: true }) })
+            .setAuthor({
+                name: `${interaction.user.username} | stage`,
+                iconURL: interaction.user.avatarURL({ dynamic: true })
+            })
 
             .addFields(
                 // The player's team
@@ -60,7 +65,40 @@ class Stage {
      * @param {"home" | "away"} winner
      */
     async end(winner) {
-        
+        let winner_data = {
+            id: "",
+            card: null,
+            cardXPGained: 0,
+            cardLevelsGained: 0
+        };
+
+        switch (winner) {
+            case "home":
+                winner_data.id = this.interaction.user.id;
+
+                // Reset the card's HP (reputation)
+                this.card_home.stats.reputation = this.card_home_startingHP;
+
+                winner_data.card = this.card_home;
+                break;
+
+            case "away":
+                // Reset the card's HP (reputation)
+                this.card_away.stats.reputation = this.card_away_startingHP;
+
+                winner_data.card = this.card_away;
+                break;
+        }
+
+        // Apply a random amount of xp to the winning card
+        let { xp: { card: { stage: xp_stage } } } = userSettings;
+        let xp = randomTools.number(xp_stage.min, xp_stage.max);
+        winner_data.card.stats.xp = xp;
+
+        // Try leveling the card up
+        winner_data.card = cardManager.tryLevelUp;
+
+        return this.resolve(winner_data);
     }
 
     async start_countdown() {
