@@ -20,7 +20,7 @@
     },
 
     "shopSettings": {
-        "stockSetIDs": ["100", "104"]
+        "stockSetIDs": ["104"]
     },
 
     "userSettings": {

@@ -1,4 +1,4 @@
-const { userSettings, dropSettings, eventSettings, shopSettings } = require('../configs/heejinSettings.json');
+const { botSettings, userSettings, dropSettings, eventSettings, shopSettings } = require('../configs/heejinSettings.json');
 const { randomTools } = require('./jsTools');
 const logger = require('./logger');
 
@@ -199,6 +199,17 @@ function toString_setEntry(card, count = 1) {
         .replace("%CARD_COUNT", inline(["📁", count || 1]));
 }
 
+function toString_shopEntry(card) {
+    return "%GLOBAL_ID %GROUP %EMOJI :: %SINGLE : %NAME %SET_ID %PRICE"
+        .replace("%GLOBAL_ID", inline(card.globalID))
+        .replace("%GROUP", bold(card.group))
+        .replace("%EMOJI", inline(card.emoji))
+        .replace("%SINGLE", card.single)
+        .replace("%NAME", card.name)
+        .replace("%SET_ID", inline(["🗣️", card.setID], { separator: "" }))
+        .replace("%PRICE", inline([botSettings.currencyIcon, card.sellPrice], { separator: "" }));
+}
+
 function toString_inventory(card, options = { duplicate_count: 0, favorited: false, selected: false, isDuplicate: false, simplify: false, }) {
     options = { duplicate_count: 0, favorited: false, selected: false, isDuplicate: false, simplify: false, ...options };
 
@@ -271,6 +282,7 @@ module.exports = {
     toString: {
         basic: toString_basic,
         setEntry: toString_setEntry,
+        shopEntry: toString_shopEntry,
         inventory: toString_inventory
     }
 };

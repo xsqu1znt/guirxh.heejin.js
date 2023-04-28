@@ -1,6 +1,6 @@
 const { EmbedBuilder, quote, bold, TimestampStyles } = require('discord.js');
 
-const { botSettings, userSettings } = require('../configs/heejinSettings.json');
+const { botSettings, userSettings, shopSettings } = require('../configs/heejinSettings.json');
 const { arrayTools, stringTools, numberTools, dateTools } = require('../modules/jsTools');
 const cardManager = require('../modules/cardManager');
 const userParser = require('../modules/userParser');
@@ -41,6 +41,43 @@ function globalCollections_ES(user, options = { order: "decending", filter: { gr
             .setAuthor({ name: `${user.username} | collections`, iconURL: user.avatarURL({ dynamic: true }) })
             .setDescription(group[0] ? group.join("\n") : "no collections were found.")
             .setFooter({ text: `page ${pageIndex++} of ${collections_f.length || 1} • total sets: ${cards_unique.length}` })
+            .setColor(botSettings.embedColor || null);
+
+        // Push the newly created embed to our collection
+        embeds.push(embed_page);
+    };
+
+    // Return the array of embeds
+    return embeds;
+}
+
+// Command -> General -> /SHOP
+function globalShop_ES(user) {
+    let { cards_all } = cardManager;
+
+    // Filter out cards that aren't currently in the shop
+    let cards_shop = cards_all.filter(card => shopSettings.stockSetIDs.includes(card.setID));
+
+    // Sort by global ID (decending order)
+    cards_shop = cards_shop.sort((a, b) => a.globalID - b.globalID);
+
+    // Parse the card into a human readable format
+    let cards_shop_f = cards_shop.map(card => cardManager.toString.shopEntry(card));
+    cards_shop_f = arrayTools.chunk(cards_shop_f, 10);
+
+    // Create an array to store the inventory pages for easy pagination
+    let embeds = [];
+
+    // Keep track of the page index
+    let pageIndex = 1;
+
+    // Go through each group in (cards_f) and create an embed for it
+    for (let group of cards_shop_f) {
+        // Create a new embed for this inventory page
+        let embed_page = new EmbedBuilder()
+            .setAuthor({ name: `${user.username} | shop`, iconURL: user.avatarURL({ dynamic: true }) })
+            .setDescription(group[0] ? group.join("\n") : "the shop is empty!")
+            .setFooter({ text: `page ${pageIndex++} of ${cards_shop_f.length || 1} • /shop buy <gid> • /view gid <gid>` })
             .setColor(botSettings.embedColor || null);
 
         // Push the newly created embed to our collection
@@ -340,6 +377,7 @@ function userGift_ES(user, recipient, cards) {
 module.exports = {
     // General Commands
     globalCollections_ES,
+    globalShop_ES,
 
     // User Commands
     userDrop_ES,

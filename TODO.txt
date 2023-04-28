@@ -7,3 +7,5 @@
 /applycard to update global/set ids
 /unfavorite card
 /idol set
+
+change all global_id references to gid
