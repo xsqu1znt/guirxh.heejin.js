@@ -12,6 +12,7 @@ const {
 
 const { botSettings } = require('../configs/heejinSettings.json');
 const { randomTools, arrayTools } = require('./jsTools');
+const logger = require('./logger');
 
 // Message Tools
 /** Create a simple embed with a description. */
@@ -257,31 +258,36 @@ class message_Navigationify {
 
                 case "btn_skipFirst": this.nestedPageIndex = 0; break;
                 case "btn_back": this.nestedPageIndex--; break;
+
                 case "btn_jump":
                     // Let the user know what action they should take
-                    let _msg = await interaction.followUp({
+                    let _msg = await this.interaction.followUp({
                         content: `${this.interaction.user} say the page number you want to jump to`
                     });
 
                     // Create a new message collector and await the user's next message
-                    let filter_temp = m => m.author.id === interaction.user.id;
-                    return interaction.channel.awaitMessages({ filter: filter_temp, time: 10000, max: 1 }).then(async collected => {
-                        // Delete the user's number message along with our previous message telling the user what to do
-                        collected.first().delete(); _msg.delete();
+                    let filter_temp = m => m.author.id === this.interaction.user.id;
+                    await this.interaction.channel.awaitMessages({ filter: filter_temp, time: 10000, max: 1 })
+                        .then(async collected => {
+                            // Delete the user's number message along with our previous message telling the user what to do
+                            collected.first().delete(); _msg.delete();
 
-                        // Convert the collected message to a number
-                        let pageNum = Number(collected.first().content);
+                            // Convert the collected message to a number
+                            let pageNum = Number(collected.first().content);
 
-                        // Check if the collected page number is actually a number, and that embed page is available
-                        if (isNaN(pageNum) || pageNum > this.views[this.viewIndex]?.length || pageNum < 0)
-                            // Send a self destructing message to the user stating that the given page number is invalid
-                            return await message_deleteAfter(await this.interaction.followUp({
-                                content: `${this.interaction.user} that's an invalid page number`
-                            }), 5000);
+                            // Check if the collected page number is actually a number, and that embed page is available
+                            if (isNaN(pageNum) || pageNum > this.views[this.viewIndex]?.length || pageNum < 0)
+                                // Send a self destructing message to the user stating that the given page number is invalid
+                                return await message_deleteAfter(await this.interaction.followUp({
+                                    content: `${this.interaction.user} that's an invalid page number`
+                                }), 5000);
 
-                        // Update the current page index
-                        this.nestedPageIndex = pageNum - 1;
-                    });
+                            // Update the current page index
+                            this.nestedPageIndex = pageNum - 1;
+                        });
+
+                    break;
+
                 case "btn_next": this.nestedPageIndex++; break;
                 case "btn_skipLast": this.nestedPageIndex = (this.views[this.viewIndex].length - 1); break;
 
@@ -293,7 +299,8 @@ class message_Navigationify {
         });
 
         // When the collector times out remove the message's components
-        collector.on("end", () => fetchedReply.edit({ components: [] }));
+        try { collector.on("end", () => this.fetchedReply.edit({ components: [] })); }
+        catch (err) { logger.error("Failed to remove message components", "navigationify", err) };
     }
 }
 
