@@ -234,7 +234,7 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
     };
 
     let { duplicate_count } = options;
-    let formated = "%UID%EMOJI %GROUP : %SINGLE - %NAME %DUPE\n> %SET_ID %GLOBAL_ID %RARITY %CATEGORY %LOCKED\n %LEVEL%STATS%FAVORITED%SELECTED"
+    let formated = "%UID%EMOJI %GROUP : %SINGLE - %NAME %DUPE\n> %SET_ID %GLOBAL_ID %RARITY %CATEGORY%SELL_PRICE%LOCKED\n %LEVEL%STATS%FAVORITED%SELECTED"
         .replace("%UID", card.uid ? space("right", inline(true, card.uid)) : "")
         .replace("%EMOJI", inline(true, card.emoji))
 
@@ -246,12 +246,13 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
         .replace("%SET_ID", inline(true, "🗣️", card.setID))
         .replace("%RARITY", inline(false, "R", card.rarity))
         .replace("%CATEGORY", inline(true, card.category))
-
+        
+        .replace("%SELL_PRICE", options.simplify ? "" : space("left", inline(true, "💰", card.sellPrice)))
         .replace("%LOCKED", card.locked ? space("both", inline(true, "🔒")) : "")
 
         .replace("%LEVEL", options.simplify ? "" : quote(true, inline(false, "LV.", card.stats.level)))
         .replace("%STATS", options.simplify ? ""
-            : space("left", inline(false, "🎤", card.stats.ability), ":", inline(false, "💖", card.stats.reputation)))
+            : space("left", inline(true, "🎤", card.stats.ability), ":", inline(true, "💖", card.stats.reputation)))
 
         .replace("%FAVORITED", options.favorited ? space("left", inline(true, "🌟")) : "")
         .replace("%SELECTED", options.selected ? space("left", inline(true, "🏃")) : "");
