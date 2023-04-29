@@ -27,7 +27,7 @@ function cards_getMultiple(cardArray, uids, filterInvalid = true) {
 
 /** Filter out duplicate cards from the user's card_inventory. */
 function cards_primary(cardArray) {
-    return arrayTools.unique(cardArray, (card, card_compare) => card.globalID === card_compare.globalID);
+    return arrayTools.unique(cardArray, (card, compareCard) => card.globalID === compareCard.globalID);
 }
 
 /** Return all duplicates of the given card found using the filter.

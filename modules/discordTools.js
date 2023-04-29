@@ -114,8 +114,8 @@ class message_Navigationify {
     addSelectMenuOption(options = { emoji: "", label: "", description: "", isDefault: false }) {
         options = {
             emoji: "",
-            label: "Option",
-            description: "This is a description.",
+            label: `option ${this.selectMenu_values.length + 1}`,
+            description: "",
             value: `view_${this.selectMenu_values.length + 1}`,
             isDefault: false,
             ...options
@@ -124,9 +124,11 @@ class message_Navigationify {
         // Create a new select menu option
         let newOption = new StringSelectMenuOptionBuilder()
             .setLabel(options.label)
-            .setDescription(options.description)
             .setValue(options.value)
             .setDefault(options.isDefault);
+        
+        // Add a description if provided
+        if (options.description) newOption.setDescription(options.description);
 
         // Add an emoji if provided
         if (options.emoji) newOption.setEmoji(options.emoji);

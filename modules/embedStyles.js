@@ -1,6 +1,6 @@
 const { EmbedBuilder, quote, bold, TimestampStyles } = require('discord.js');
 
-const { botSettings, userSettings, shopSettings } = require('../configs/heejinSettings.json');
+const { botSettings, userSettings } = require('../configs/heejinSettings.json');
 const { arrayTools, stringTools, numberTools, dateTools } = require('../modules/jsTools');
 const cardManager = require('../modules/cardManager');
 const userParser = require('../modules/userParser');
@@ -53,10 +53,7 @@ function globalCollections_ES(user, options = { order: "decending", filter: { gr
 
 // Command -> General -> /SHOP
 function globalShop_ES(user) {
-    let { cards_all } = cardManager;
-
-    // Filter out cards that aren't currently in the shop
-    let cards_shop = cards_all.filter(card => shopSettings.stockSetIDs.includes(card.setID));
+    let { cards_shop } = cardManager;
 
     // Sort by global ID (decending order)
     cards_shop = cards_shop.sort((a, b) => a.globalID - b.globalID);

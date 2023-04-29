@@ -3,7 +3,8 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js'
 const { botSettings } = require('../configs/heejinSettings.json');
 const { globalShop_ES } = require('../modules/embedStyles');
 const { messageTools } = require('../modules/discordTools');
-const { dateTools } = require('../modules/jsTools');
+const { arrayTools, dateTools } = require('../modules/jsTools');
+const cardManager = require('../modules/cardManager');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("shop")
@@ -22,9 +23,16 @@ module.exports = {
             timeout: dateTools.parseStr(botSettings.timeout.pagination)
         });
 
-        navigationify.addSelectMenuOption({ label: "Option 1", isDefault: true });
-        navigationify.addSelectMenuOption({ label: "Option 2" });
-        navigationify.addSelectMenuOption({ label: "Option 3" });
+        // Get an array of unique cards based on the set ID
+        let shopCards_unique = arrayTools.unique(cardManager.cards_shop,
+            (card, compareCard) => card.setID === compareCard.setID
+        );
+
+        // Add a select menu option for each card group
+        shopCards_unique.forEach((card, idx) => navigationify.addSelectMenuOption({
+            label: card.group,
+            isDefault: (idx === 0)
+        }));
 
         navigationify.toggleSelectMenu();
         navigationify.togglePagination();
