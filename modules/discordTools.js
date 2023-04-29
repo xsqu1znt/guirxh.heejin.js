@@ -11,7 +11,7 @@ const {
 } = require('discord.js');
 
 const { botSettings } = require('../configs/heejinSettings.json');
-const { randomTools } = require('./jsTools');
+const { randomTools, arrayTools } = require('./jsTools');
 
 // Message Tools
 /** Create a simple embed with a description. */
@@ -73,8 +73,8 @@ class message_SelectMenuinator {
      * @param {CommandInteraction} interaction
      * @param {Array<Embed | Array<Embed>} embedViews
      */
-    constructor(interaction, embedViews, options = { ephemeral: false, followUp: false, timeout: 10000 }) {
-        options = { ephemeral: false, followUp: false, timeout: 10000, ...options };
+    constructor(interaction, embedViews, options = { pagination: false, ephemeral: false, followUp: false, timeout: 10000 }) {
+        options = { pagination: false, ephemeral: false, followUp: false, timeout: 10000, ...options };
 
         this.interaction = interaction;
         this.fetchedReply = null;
@@ -82,8 +82,9 @@ class message_SelectMenuinator {
         this.views = embedViews;
         this.options = options;
 
-        this.selectMenuEnabled = true;
-        this.paginationEnabled = false;
+        this.selectMenu_enabled = true;
+        this.selectMenu_values = [];
+        this.pagination_enabled = options.pagination;
 
         this.viewIndex = 0; this.nestedPageIndex = 0;
 
@@ -110,15 +111,15 @@ class message_SelectMenuinator {
         this.messageComponents = [this.actionRow.selectMenu];
     }
 
-    addMenuOption(options = { emoji: "", label: "", description: "", value: "", isDefault: false }) {
+    addMenuOption(options = { emoji: "", label: "", description: "", isDefault: false }) {
         options = {
             emoji: "",
             label: "Option",
             description: "This is a description.",
-            value: randomTools.letterString(4),
+            value: `view_${this.selectMenu_values + 1}`,
             isDefault: false,
             ...options
-        };
+        }; this.selectMenu_values.push(options.value);
 
         // Create a new select menu option
         let newOption = new StringSelectMenuOptionBuilder()
@@ -137,24 +138,38 @@ class message_SelectMenuinator {
         this.actionRowComponents.selectMenu.spliceOptions(index);
     }
 
-    setMenuDisabled(disabled = true) {
+    async setMenuDisabled(disabled = true) {
         this.actionRowComponents.selectMenu.setDisabled(disabled);
+        await this.updateMessageComponents();
+    }
+
+    async setPaginationDisabled(disabled = true) {
+        this.actionRow.pagination.components.forEach(btn => btn.setDisabled(disabled));
+        await this.updateMessageComponents();
     }
 
     async toggleMenu() {
-        if (this.selectMenuEnabled) {
+        if (this.selectMenu_enabled) {
             delete this.messageComponents[0];
-            this.selectMenuEnabled = false;
+            this.selectMenu_enabled = false;
         } else {
             this.messageComponents = [this.actionRow.selectMenu, ...this.messageComponents];
-            this.selectMenuEnabled = true;
+            this.selectMenu_enabled = true;
         }
 
         await this.updateComponents();
     }
 
-    async updateMessageComponents() {
-        await this.interaction.editReply({ components: this.messageComponents });
+    async togglePagination() {
+        if (this.pagination_enabled) {
+            delete this.messageComponents[1];
+            this.pagination_enabled = false;
+        } else {
+            this.messageComponents = [...this.messageComponents, this.actionRow.pagination];
+            this.pagination_enabled = true;
+        }
+
+        await this.updateComponents();
     }
 
     async send() {
@@ -176,7 +191,76 @@ class message_SelectMenuinator {
             }
 
         // Collect message component interactions
-        await this.collectInteractions(); return this.fetchedReply;
+        this.collectInteractions(); return this.fetchedReply;
+    }
+
+    async update(resetNestedIndex = false) {
+        if (resetNestedIndex) this.nestedPageIndex = 0;
+
+        let view = this.views[this.viewIndex];
+        let nestedPageCount = view?.length;
+        if (this.pagination_enabled && nestedPageCount > 1) {
+            this.actionRow.pagination.setComponents(nestedPageCount > 2
+                // Add extra pagination buttons if there are more than 2 pages
+                ? [
+                    this.actionRowComponents.pagination.skipFirst,
+                    this.actionRowComponents.pagination.pageBack,
+                    this.actionRowComponents.pagination.jump,
+                    this.actionRowComponents.pagination.pageNext,
+                    this.actionRowComponents.pagination.skipLast
+                ]
+                : [
+                    this.actionRowComponents.pagination.pageBack,
+                    this.actionRowComponents.pagination.pageNext
+                ]
+            );
+
+            view = view[this.nestedPageIndex];
+        }
+
+        await this.fetchedReply.edit({ embeds: [this.views[this.viewIndex]], components: this.messageComponents });
+    }
+
+    async collectInteractions() {
+        // Keeps track of the current view the user's on
+        let curViewIdx = 0;
+
+        // Collect button interactions
+        let filter = i => i.user.id === this.interaction.user.id;
+        let collector = this.fetchedReply.createMessageComponentCollector({ filter, time: this.options.timeout });
+
+        collector.on("collect", async i => {
+            // Defer the interaction and reset the collector's timer
+            await i.deferUpdate(); collector.resetTimer();
+
+            // Ignore interactions that aren't dealing with the select menu or pagination buttons
+            if (i.componentType !== ComponentType.StringSelect || i.componentType !== ComponentType.Button) return;
+
+            // Execute an action for whichever interaction was used
+            let changeView = this.selectMenu_values.findIndex(v => v === i.customID);
+            if (changeView >= 0) {
+                this.viewIndex = changeView; return await this.update(true);
+            }
+
+            // An else case if the user didn't use the select menu
+            if (this.pagination_enabled) {
+                switch (i.customID) {
+                    case "btn_skipFirst": this.nestedPageIndex = 0; break;
+                    case "btn_back": this.nestedPageIndex--; break;
+                    case "btn_jump": break;
+                    case "btn_next": this.nestedPageIndex++; break;
+                    case "btn_skipLast": this.nestedPageIndex = (this.views[this.viewIndex].length - 1); break;
+
+                    default: return;
+                }
+
+                // Update the message
+                return await this.update();
+            }
+        });
+
+        // When the collector times out remove the message's components
+        collector.on("end", () => fetchedReply.edit({ components: [] }));
     }
 }
 
