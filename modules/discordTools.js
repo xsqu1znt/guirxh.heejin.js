@@ -140,7 +140,7 @@ async function message_paginationify(interaction, embeds, options) {
             case "btn_jump":
                 // Let the user know what action they should take
                 let _msg = await interaction.followUp({
-                    content: `<@${interaction.member.id}> say the page number you wish to jump to.`
+                    content: `<@${interaction.member.id}> say the page number you want to jump to`
                 });
 
                 // Create a new message collector and await the user's next message
@@ -156,7 +156,7 @@ async function message_paginationify(interaction, embeds, options) {
                     if (isNaN(pageNum) || pageNum > embeds.length || pageNum < 0)
                         // Send a self destructing message to the user stating that the given page number is invalid
                         return await message_deleteAfter(await interaction.followUp({
-                            content: `<@${interaction.member.id}> that is an invalid page number.`
+                            content: `<@${interaction.member.id}> that's an invalid page number`
                         }), 5000);
 
                     // Update the current page index

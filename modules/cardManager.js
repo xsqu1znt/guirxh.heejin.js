@@ -200,10 +200,10 @@ function toString_setEntry(card, count = 1) {
 }
 
 function toString_shopEntry(card) {
-    return "%GLOBAL_ID %GROUP %EMOJI :: %SINGLE : %NAME %SET_ID %PRICE"
+    return "%GLOBAL_ID %EMOJI %GROUP :: %SINGLE : %NAME %SET_ID %PRICE"
         .replace("%GLOBAL_ID", inline(card.globalID))
-        .replace("%GROUP", bold(card.group))
         .replace("%EMOJI", inline(card.emoji))
+        .replace("%GROUP", bold(card.group))
         .replace("%SINGLE", card.single)
         .replace("%NAME", card.name)
         .replace("%SET_ID", inline(["🗣️", card.setID], { separator: "" }))
