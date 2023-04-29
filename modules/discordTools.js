@@ -96,7 +96,7 @@ class message_Navigationify {
         this.components = {
             stringSelectMenu: new StringSelectMenuBuilder()
                 .setCustomId("menu_view")
-                .setPlaceholder("Make a selection..."),
+                .setPlaceholder("make a selection..."),
 
             pagination: {
                 skipFirst: new ButtonBuilder({ label: "◀◀", style: ButtonStyle.Primary, custom_id: "btn_skipFirst" }),
