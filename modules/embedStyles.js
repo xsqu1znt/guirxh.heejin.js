@@ -77,28 +77,67 @@ function globalShop_ES(user) {
 
         // Return the embed
         return embed;
-    }
+    };
 
     let embed_all = () => {
-        let cards_f = card_sets.map(set => set.map(card => cardManager.toString.shopEntry(card)));
+        let cardSets_f = card_sets.map(set => set.map(card => cardManager.toString.shopEntry(card)));
+
+        // Break up sets into multiple pages to retain there being a max of 10 cards per page
+        cardSets_f = (() => {
+            let newArr = [];
+
+            for (let set of cardSets_f) {
+                if (set.length > 10) newArr = [...newArr, ...arrayTools.chunk(set, 10)];
+                else newArr = [...newArr, set];
+            };
+
+            return newArr;
+        })();
+
         let embeds = [];
 
-        for (let i = 0; i < cards_f.length; i++) {
+        for (let i = 0; i < cardSets_f.length; i++) {
             // Create the embed page
             let embed = embed_template()
-                .setDescription(cards_f[i].join("\n"))
-                .setFooter({ text: `page ${i + 1} of ${cards_f.length || 1}` });
-            
+                .setDescription(cardSets_f[i].join("\n"))
+                .setFooter({ text: `page ${i + 1} of ${cardSets_f.length || 1}` });
+
             embeds.push(embed);
         }
 
         return embeds;
-    }
+    };
+
+    let embed_cardSets = () => {
+        let embeds = [];
+
+        for (let card of cards_shop_unique) {
+            let cardSet = cards_shop.filter(c => c.setID === card.setID);
+            let cardSet_f = cardSet.map(c => cardManager.toString.shopEntry(c));
+
+            cardSet_f = arrayTools.chunk(cardSet_f, 10);
+
+            let _embeds = [];
+            for (let i = 0; i < cardSet_f.length; i++) {
+                let embed = embed_template()
+                    .setDescription(cardSet_f[i].join("\n"))
+                    .setFooter({ text: `page ${i + 1} of ${cardSet_f.length || 1}` });
+
+                _embeds.push(embed);
+            }
+
+
+            embeds.push(_embeds);
+        }
+
+        return embeds;
+    };
 
     // Return the different embed views
     return [
         embed_list(),
-        embed_all()
+        embed_all(),
+        ...embed_cardSets()
     ];
 
     /* // Parse the card into a human readable format
