@@ -1,10 +1,22 @@
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require('discord.js');
+const {
+    CommandInteraction,
+    Embed,
+    EmbedBuilder,
+    StringSelectMenuBuilder,
+    StringSelectMenuOptionBuilder,
+    ActionRowBuilder,
+    ButtonBuilder,
+    ButtonStyle,
+    ComponentType
+} = require('discord.js');
 
 const { botSettings } = require('../configs/heejinSettings.json');
+const { randomTools } = require('./jsTools');
 
 // Message Tools
 /** Create a simple embed with a description. */
 class message_Embedinator {
+    /** @param {CommandInteraction} interaction */
     constructor(interaction, options = { title: "", author: null }) {
         options = { title: "", author: null, ...options };
 
@@ -55,11 +67,93 @@ class message_Embedinator {
     }
 }
 
-async function message_deleteAfter(message, time) {
-    let m;
+/** Send a message with a customizable select menu to switch to different views. */
+class message_SelectMenuinator {
+    /**
+     * @param {CommandInteraction} interaction
+     * @param {Array<Embed | Array<Embed>} embedViews
+     */
+    constructor(interaction, embedViews, options = { ephemeral: false, followUp: false, timeout: 10000 }) {
+        options = { ephemeral: false, followUp: false, timeout: 10000, ...options };
 
-    setTimeout(async () => m = await message.delete(), time);
-    return m;
+        this.interaction = interaction;
+        this.selectMenuEnabled = true;
+        this.paginationEnabled = false;
+        this.viewIndex = 0; this.nestedPageIndex = 0;
+
+        this.actionRow = {
+            selectMenu: new ActionRowBuilder(),
+            pagination: new ActionRowBuilder()
+        };
+
+        this.actionRowComponents = {
+            selectMenu: new StringSelectMenuBuilder(),
+
+            pagination: {
+                skipFirst: new ButtonBuilder({ label: "◀◀", style: ButtonStyle.Primary, custom_id: "btn_skipFirst" }),
+                pageBack: new ButtonBuilder({ label: "◀", style: ButtonStyle.Primary, custom_id: "btn_back" }),
+                jump: new ButtonBuilder({ label: "📄", style: ButtonStyle.Primary, custom_id: "btn_jump" }),
+                pageNext: new ButtonBuilder({ label: "▶", style: ButtonStyle.Primary, custom_id: "btn_next" }),
+                skipLast: new ButtonBuilder({ label: "▶▶", style: ButtonStyle.Primary, custom_id: "btn_skipLast" })
+            }
+        };
+
+        // Add the select menu component to the selectMenu action row
+        this.actionRow.selectMenu.addComponents(this.actionRowComponents.selectMenu);
+
+        this.messageComponents = [this.actionRow.selectMenu];
+    }
+
+    addMenuOption(options = { emoji: "", label: "", description: "", value: "", isDefault: false }) {
+        options = {
+            emoji: "",
+            label: "Option",
+            description: "This is a description.",
+            value: randomTools.letterString(4),
+            isDefault: false,
+            ...options
+        };
+
+        // Create a new select menu option
+        let newOption = new StringSelectMenuOptionBuilder()
+            .setLabel(options.label)
+            .setDescription(options.description)
+            .setValue(options.value);
+
+        // Add an emoji if provided
+        if (options.emoji) newOption.setEmoji(emoji);
+
+        // Add the new option to the select menu
+        this.actionRowComponents.selectMenu.addOptions(newOption);
+    }
+
+    removeMenuOption(index) {
+        this.actionRowComponents.selectMenu.spliceOptions(index);
+    }
+
+    setMenuDisabled(disabled = true) {
+        this.actionRowComponents.selectMenu.setDisabled(disabled);
+    }
+
+    async toggleMenu() {
+        if (this.selectMenuEnabled) {
+            delete this.messageComponents[0];
+            this.selectMenuEnabled = false;
+        } else {
+            this.messageComponents = [this.actionRow.selectMenu, ...this.messageComponents];
+            this.selectMenuEnabled = true;
+        }
+
+        await this.updateComponents();
+    }
+
+    async updateMessageComponents() {
+        await this.interaction.editReply({ components: this.messageComponents });
+    }
+
+    async send() {
+
+    }
 }
 
 /**
@@ -183,6 +277,13 @@ async function message_paginationify(interaction, embeds, options) {
 
     // Return (fetchedReply) because honestly, why not
     return fetchedReply;
+}
+
+async function message_deleteAfter(message, time) {
+    let m;
+
+    setTimeout(async () => m = await message.delete(), time);
+    return m;
 }
 
 module.exports = {
