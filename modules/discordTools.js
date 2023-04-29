@@ -67,14 +67,14 @@ class message_Embedinator {
     }
 }
 
-/** Send a message with a customizable select menu to switch to different views. */
-class message_SelectMenuinator {
+/** Send a message with a select menu/pagination to switch to different views. */
+class message_Navigationify {
     /**
      * @param {CommandInteraction} interaction
      * @param {Array<Embed | Array<Embed>} embedViews
      */
-    constructor(interaction, embedViews, options = { pagination: false, ephemeral: false, followUp: false, timeout: 10000 }) {
-        options = { pagination: false, ephemeral: false, followUp: false, timeout: 10000, ...options };
+    constructor(interaction, embedViews, options = { ephemeral: false, followUp: false, timeout: 10000 }) {
+        options = { ephemeral: false, followUp: false, timeout: 10000, ...options };
 
         this.interaction = interaction;
         this.fetchedReply = null;
@@ -82,9 +82,9 @@ class message_SelectMenuinator {
         this.views = embedViews;
         this.options = options;
 
-        this.selectMenu_enabled = true;
+        this.selectMenu_enabled = false;
         this.selectMenu_values = [];
-        this.pagination_enabled = options.pagination;
+        this.pagination_enabled = false;
 
         this.viewIndex = 0; this.nestedPageIndex = 0;
 
@@ -93,8 +93,10 @@ class message_SelectMenuinator {
             pagination: new ActionRowBuilder()
         };
 
-        this.actionRowComponents = {
-            selectMenu: new StringSelectMenuBuilder(),
+        this.components = {
+            stringSelectMenu: new StringSelectMenuBuilder()
+                .setCustomId("menu_view")
+                .setPlaceholder("Make a selection..."),
 
             pagination: {
                 skipFirst: new ButtonBuilder({ label: "◀◀", style: ButtonStyle.Primary, custom_id: "btn_skipFirst" }),
@@ -106,17 +108,15 @@ class message_SelectMenuinator {
         };
 
         // Add the select menu component to the selectMenu action row
-        this.actionRow.selectMenu.addComponents(this.actionRowComponents.selectMenu);
-
-        this.messageComponents = [this.actionRow.selectMenu];
+        this.actionRow.selectMenu.addComponents(this.components.stringSelectMenu);
     }
 
-    addMenuOption(options = { emoji: "", label: "", description: "", isDefault: false }) {
+    addSelectMenuOption(options = { emoji: "", label: "", description: "", isDefault: false }) {
         options = {
             emoji: "",
             label: "Option",
             description: "This is a description.",
-            value: `view_${this.selectMenu_values + 1}`,
+            value: `view_${this.selectMenu_values.length + 1}`,
             isDefault: false,
             ...options
         }; this.selectMenu_values.push(options.value);
@@ -125,21 +125,39 @@ class message_SelectMenuinator {
         let newOption = new StringSelectMenuOptionBuilder()
             .setLabel(options.label)
             .setDescription(options.description)
-            .setValue(options.value);
+            .setValue(options.value)
+            .setDefault(options.isDefault);
 
         // Add an emoji if provided
-        if (options.emoji) newOption.setEmoji(emoji);
+        if (options.emoji) newOption.setEmoji(options.emoji);
 
         // Add the new option to the select menu
-        this.actionRowComponents.selectMenu.addOptions(newOption);
+        this.components.stringSelectMenu.addOptions(newOption);
     }
 
-    removeMenuOption(index) {
-        this.actionRowComponents.selectMenu.spliceOptions(index);
+    removeSelectMenuOption(index) {
+        this.components.stringSelectMenu.spliceOptions(index);
     }
 
-    async setMenuDisabled(disabled = true) {
-        this.actionRowComponents.selectMenu.setDisabled(disabled);
+    determinePageinationStyle() {
+        let nestedPageCount = this.views[this.viewIndex]?.length || 0;
+
+        if (nestedPageCount > 1) this.actionRow.pagination.setComponents(
+            this.components.pagination.pageBack,
+            this.components.pagination.pageNext
+        );
+
+        if (nestedPageCount > 3) this.actionRow.pagination.setComponents(
+            this.components.pagination.skipFirst,
+            this.components.pagination.pageBack,
+            this.components.pagination.jump,
+            this.components.pagination.pageNext,
+            this.components.pagination.skipLast
+        );
+    }
+
+    async setSelectMenuDisabled(disabled = true) {
+        this.components.stringSelectMenu.setDisabled(disabled);
         await this.updateMessageComponents();
     }
 
@@ -148,37 +166,34 @@ class message_SelectMenuinator {
         await this.updateMessageComponents();
     }
 
-    async toggleMenu() {
-        if (this.selectMenu_enabled) {
-            delete this.messageComponents[0];
-            this.selectMenu_enabled = false;
-        } else {
-            this.messageComponents = [this.actionRow.selectMenu, ...this.messageComponents];
-            this.selectMenu_enabled = true;
-        }
-
-        await this.updateComponents();
+    async toggleSelectMenu() {
+        this.selectMenu_enabled = !this.selectMenu_enabled;
     }
 
     async togglePagination() {
-        if (this.pagination_enabled) {
-            delete this.messageComponents[1];
-            this.pagination_enabled = false;
-        } else {
-            this.messageComponents = [...this.messageComponents, this.actionRow.pagination];
-            this.pagination_enabled = true;
-        }
-
-        await this.updateComponents();
+        this.pagination_enabled = !this.pagination_enabled;
     }
 
     async send() {
+        let view = this.views[this.viewIndex];
+        if (Array.isArray(view)) view = view[this.nestedPageIndex];
+
         let replyOptions = {
-            embeds: [this.views[0]],
-            components: this.messageComponents,
+            embeds: [view],
+            components: [],
             ephemeral: this.options.ephemeral
         };
 
+        // If enabled, add in the select menu action row
+        if (this.selectMenu_enabled) replyOptions.components.push(this.actionRow.selectMenu);
+
+        // If enabled, add in the pagination action row
+        if (this.views[this.viewIndex]?.length > 1 && this.pagination_enabled) {
+            this.determinePageinationStyle();
+            replyOptions.components.push(this.actionRow.pagination);
+        }
+
+        // Send the embed and neccesary components
         if (this.options.followUp)
             this.fetchedReply = await this.interaction.followUp(replyOptions);
         else
@@ -198,33 +213,27 @@ class message_SelectMenuinator {
         if (resetNestedIndex) this.nestedPageIndex = 0;
 
         let view = this.views[this.viewIndex];
-        let nestedPageCount = view?.length;
-        if (this.pagination_enabled && nestedPageCount > 1) {
-            this.actionRow.pagination.setComponents(nestedPageCount > 2
-                // Add extra pagination buttons if there are more than 2 pages
-                ? [
-                    this.actionRowComponents.pagination.skipFirst,
-                    this.actionRowComponents.pagination.pageBack,
-                    this.actionRowComponents.pagination.jump,
-                    this.actionRowComponents.pagination.pageNext,
-                    this.actionRowComponents.pagination.skipLast
-                ]
-                : [
-                    this.actionRowComponents.pagination.pageBack,
-                    this.actionRowComponents.pagination.pageNext
-                ]
-            );
+        if (Array.isArray(view)) view = view[this.nestedPageIndex];
 
-            view = view[this.nestedPageIndex];
+        let replyOptions = {
+            embeds: [view],
+            components: [],
+            ephemeral: this.options.ephemeral
+        };
+
+        // If enabled, add in the select menu action row
+        if (this.selectMenu_enabled) replyOptions.components.push(this.actionRow.selectMenu);
+
+        // If enabled, add in the pagination action row
+        if (this.views[this.viewIndex]?.length > 1 && this.pagination_enabled) {
+            this.determinePageinationStyle();
+            replyOptions.components.push(this.actionRow.pagination);
         }
 
-        await this.fetchedReply.edit({ embeds: [this.views[this.viewIndex]], components: this.messageComponents });
+        await this.fetchedReply.edit(replyOptions);
     }
 
     async collectInteractions() {
-        // Keeps track of the current view the user's on
-        let curViewIdx = 0;
-
         // Collect button interactions
         let filter = i => i.user.id === this.interaction.user.id;
         let collector = this.fetchedReply.createMessageComponentCollector({ filter, time: this.options.timeout });
@@ -234,29 +243,27 @@ class message_SelectMenuinator {
             await i.deferUpdate(); collector.resetTimer();
 
             // Ignore interactions that aren't dealing with the select menu or pagination buttons
-            if (i.componentType !== ComponentType.StringSelect || i.componentType !== ComponentType.Button) return;
+            if (![ComponentType.Button, ComponentType.StringSelect].includes(i.componentType)) return;
 
-            // Execute an action for whichever interaction was used
-            let changeView = this.selectMenu_values.findIndex(v => v === i.customID);
-            if (changeView >= 0) {
-                this.viewIndex = changeView; return await this.update(true);
+            switch (i.customId) {
+                case "menu_view":
+                    let changeView = this.selectMenu_values.findIndex(v => v === i.values[0]);
+                    if (changeView >= 0) {
+                        this.viewIndex = changeView;
+                        return await this.update(true);
+                    }
+
+                case "btn_skipFirst": this.nestedPageIndex = 0; break;
+                case "btn_back": this.nestedPageIndex--; break;
+                case "btn_jump": break;
+                case "btn_next": this.nestedPageIndex++; break;
+                case "btn_skipLast": this.nestedPageIndex = (this.views[this.viewIndex].length - 1); break;
+
+                default: return;
             }
 
-            // An else case if the user didn't use the select menu
-            if (this.pagination_enabled) {
-                switch (i.customID) {
-                    case "btn_skipFirst": this.nestedPageIndex = 0; break;
-                    case "btn_back": this.nestedPageIndex--; break;
-                    case "btn_jump": break;
-                    case "btn_next": this.nestedPageIndex++; break;
-                    case "btn_skipLast": this.nestedPageIndex = (this.views[this.viewIndex].length - 1); break;
-
-                    default: return;
-                }
-
-                // Update the message
-                return await this.update();
-            }
+            // Update the message
+            return await this.update();
         });
 
         // When the collector times out remove the message's components
@@ -397,6 +404,7 @@ async function message_deleteAfter(message, time) {
 module.exports = {
     messageTools: {
         Embedinator: message_Embedinator,
+        Navigationify: message_Navigationify,
 
         deleteAfter: message_deleteAfter,
         paginationify: message_paginationify
