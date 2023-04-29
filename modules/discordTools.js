@@ -77,8 +77,14 @@ class message_SelectMenuinator {
         options = { ephemeral: false, followUp: false, timeout: 10000, ...options };
 
         this.interaction = interaction;
+        this.fetchedReply = null;
+
+        this.views = embedViews;
+        this.options = options;
+
         this.selectMenuEnabled = true;
         this.paginationEnabled = false;
+
         this.viewIndex = 0; this.nestedPageIndex = 0;
 
         this.actionRow = {
@@ -152,7 +158,25 @@ class message_SelectMenuinator {
     }
 
     async send() {
+        let replyOptions = {
+            embeds: [this.views[0]],
+            components: this.messageComponents,
+            ephemeral: this.options.ephemeral
+        };
 
+        if (this.options.followUp)
+            this.fetchedReply = await this.interaction.followUp(replyOptions);
+        else
+            try {
+                this.fetchedReply = await this.interaction.reply(replyOptions);
+            } catch {
+                // If you edit a reply you can't change the message to ephemeral
+                // unless you do a follow up message and then delete the original reply but that's pretty scuffed
+                this.fetchedReply = await this.interaction.editReply(replyOptions);
+            }
+
+        // Collect message component interactions
+        await this.collectInteractions(); return this.fetchedReply;
     }
 }
 
