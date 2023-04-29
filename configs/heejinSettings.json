@@ -1,7 +1,7 @@
 {
     "botSettings": {
         "currencyIcon": "🥕",
-        "embedColor": "#36393F",
+        "embedColor": "#2B2D31",
         "timeout": {
             "stage_start": "3s",
             "stage_turn": "500ms",

@@ -40,9 +40,11 @@ module.exports = {
         // Build the set collection pages
         let embed_collections = globalCollections_ES(interaction.user, { order, filter: { group, category } });
 
-        // Paginatation-ify-inator 9000!!!!11
-        return await messageTools.paginationify(interaction, embed_collections, {
+        // Navigateinator-ify-er 9000!!!!11
+        let navigationify = new messageTools.Navigationify(interaction, [embed_collections], {
             timeout: dateTools.parseStr(botSettings.timeout.pagination)
-        });
+        }); navigationify.togglePagination();
+
+        return await navigationify.send();
     }
 };

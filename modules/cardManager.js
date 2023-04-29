@@ -154,60 +154,74 @@ function parse_fromCardLike(cardLike) {
 }
 
 //! To String
-function inline(str, options = { spacing: false, separator: " " }) {
-    if (!Array.isArray(str)) str = [str]
-    options = { spacing: false, separator: " ", ...options };
+function inline(space = true, ...str) {
+    if (!Array.isArray(str)) str = [str];
 
-    if (options.spacing)
-        return `\` ${str.join(options.separator)} \``;
-    else
-        return `\`${str.join(options.separator)}\``;
+    return space ? (`\`${str.join(" ")}\``) : (`\`${str.join("")}\``);
 }
 
-function bold(str, options = { separator: " " }) {
-    if (!Array.isArray(str)) str = [str]
-    options = { separator: " ", ...options };
+function bold(space = true, ...str) {
+    if (!Array.isArray(str)) str = [str];
 
-    return `**${str.join(options.separator)}**`;
+    return space ? (`**${str.join(" ")}**`) : (`**${str.join("")}**`);
 }
 
-function italic(str, options = { separator: " " }) {
-    if (!Array.isArray(str)) str = [str]
-    options = { separator: " ", ...options };
+function italic(space = true, ...str) {
+    if (!Array.isArray(str)) str = [str];
 
-    return `*${str.join(options.separator)}*`;
+    return space ? (`*${str.join(" ")}*`) : (`*${str.join("")}*`);
+}
+
+function quote(space = true, ...str) {
+    if (!Array.isArray(str)) str = [str];
+
+    return space ? (`> ${str.join(" ")}`) : (`> ${str.join("")}`);
+}
+
+/** @param {"left" | "right" | "both"} side */
+function space(side = "both", ...str) {
+    if (!Array.isArray(str)) str = [str];
+
+    switch (side) {
+        case "left": return space ? (" " + str.join(" ")) : (" " + str.join(""));
+        case "right": return space ? (str.join(" ") + " ") : (str.join("") + " ");
+        case "both": return space ? (" " + str.join(" ") + " ") : (" " + str.join("") + " ");
+    }
 }
 
 function toString_basic(card) {
     return "%UID %EMOJI %GROUP :: %SINGLE - %NAME"
-        .replace("%UID", inline(card.uid))
-        .replace("%EMOJI", inline(card.emoji))
-        .replace("%GROUP", bold(card.group))
+        .replace("%UID", inline(true, card.uid))
+        .replace("%EMOJI", inline(true, card.emoji))
+        .replace("%GROUP", bold(true, card.group))
         .replace("%SINGLE", card.single)
         .replace("%NAME", card.name);
 }
 
-function toString_setEntry(card, count = 1) {
-    return "%SET_ID %CATEGORY %EMOJI %GROUP :: %SINGLE %RARITY %CARD_COUNT"
-        .replace("%SET_ID", inline(card.setID))
-        .replace("%CATEGORY", inline(card.category))
-        .replace("%EMOJI", inline(card.emoji))
-        .replace("%GROUP", bold(card.group))
-        .replace("%SINGLE", card.single)
-        .replace("%RARITY", inline(["R", card.rarity], { separator: "" }))
+function toString_setEntry(card, count = 1, simplify = false) {
+    if (count < 10) count = `0${count}`;
 
-        .replace("%CARD_COUNT", inline(["📁", count || 1]));
+    return "%SET_ID %CARD_COUNT %CATEGORY %EMOJI %GROUP%SINGLE"
+        .replace("%SET_ID", inline(true, "🗣️", card.setID))
+
+        .replace("%CARD_COUNT", inline(true, "📁", count || 1))
+
+        .replace("%CATEGORY", inline(true, card.category))
+        .replace("%EMOJI", inline(true, card.emoji))
+        .replace("%GROUP", bold(true, card.group))
+        .replace("%SINGLE", simplify ? "" : space("left", `:: ${card.single}`))
+        .replace("%RARITY", inline(false, "R", card.rarity));
 }
 
 function toString_shopEntry(card) {
     return "%GLOBAL_ID %EMOJI %GROUP :: %SINGLE : %NAME %SET_ID %PRICE"
-        .replace("%GLOBAL_ID", inline(card.globalID))
-        .replace("%EMOJI", inline(card.emoji))
-        .replace("%GROUP", bold(card.group))
+        .replace("%GLOBAL_ID", inline(true, card.globalID))
+        .replace("%EMOJI", inline(true, card.emoji))
+        .replace("%GROUP", bold(true, card.group))
         .replace("%SINGLE", card.single)
         .replace("%NAME", card.name)
-        .replace("%SET_ID", inline(["🗣️", card.setID], { separator: "" }))
-        .replace("%PRICE", inline([botSettings.currencyIcon, card.price], { separator: "" }));
+        .replace("%SET_ID", inline(true, "🗣️", card.setID))
+        .replace("%PRICE", inline(true, botSettings.currencyIcon, card.price));
 }
 
 function toString_inventory(card, options = { duplicate_count: 0, favorited: false, selected: false, isDuplicate: false, simplify: false, }) {
@@ -221,37 +235,35 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
 
     let { duplicate_count } = options;
     let formated = "%UID%EMOJI %GROUP : %SINGLE - %NAME %DUPE\n> %SET_ID %GLOBAL_ID %RARITY %CATEGORY %LOCKED\n %LEVEL%STATS%FAVORITED%SELECTED"
-        .replace("%UID", card.uid ? `${inline(card.uid)} ` : "")
-        .replace("%EMOJI", inline(card.emoji))
+        .replace("%UID", card.uid ? space("right", inline(true, card.uid)) : "")
+        .replace("%EMOJI", inline(true, card.emoji))
 
-        .replace("%GROUP", bold(card.group))
+        .replace("%GROUP", bold(true, card.group))
         .replace("%SINGLE", card.single)
         .replace("%NAME", card.name)
 
-        .replace("%GLOBAL_ID", ` ${inline(card.globalID)}`)
-        .replace("%SET_ID", inline(["🗣️", card.setID], { separator: "" }))
-        .replace("%RARITY", inline(["R", card.rarity], { separator: "" }))
-        .replace("%CATEGORY", inline(card.category))
+        .replace("%GLOBAL_ID", space("left", inline(true, card.globalID)))
+        .replace("%SET_ID", inline(true, "🗣️", card.setID))
+        .replace("%RARITY", inline(false, "R", card.rarity))
+        .replace("%CATEGORY", inline(true, card.category))
 
-        .replace("%LOCKED", card.locked ? ` ${inline("🔒")} ` : "")
-        // .replace("%LOCKED", inline(card.locked ? "🔒" : "🔓"))
+        .replace("%LOCKED", card.locked ? space("both", inline(true, "🔒")) : "")
 
-        .replace("%LEVEL", options.simplify ? "" : `> ${inline(["LV.", card.stats.level])}`)
+        .replace("%LEVEL", options.simplify ? "" : quote(true, inline(false, "LV.", card.stats.level)))
         .replace("%STATS", options.simplify ? ""
-            : ` ${inline(["🎤", card.stats.ability])} : ${inline(["💖", card.stats.reputation])}`)
+            : space("left", inline(false, "🎤", card.stats.ability), ":", inline(false, "💖", card.stats.reputation)))
 
-        .replace("%FAVORITED", options.favorited ? ` ${inline("🌟")} ` : "")
-        .replace("%SELECTED", options.selected ? ` ${inline("🏃")} ` : "");
+        .replace("%FAVORITED", options.favorited ? space("left", inline(true, "🌟")) : "")
+        .replace("%SELECTED", options.selected ? space("left", inline(true, "🏃")) : "");
 
     // For special cases with dupeified things
     if (options.isDuplicate)
-        formated = formated.replace("%DUPE", bold(italic(superscript.dupe)));
+        formated = formated.replace("%DUPE", bold(true, italic(true, superscript.dupe)));
     else if (options.duplicate_count > 0) {
         // Special charactor formatting
         let duplicate_count_f = String(duplicate_count).split("").map(num => superscript.number[+num]).join("");
 
-        // formated = formated.replace("%DUPE", `${superscript.dupe} ${bold(duplicate_count_f)}`);
-        formated = formated.replace("%DUPE", bold(["--", duplicate_count_f]));
+        formated = formated.replace("%DUPE", bold(true, "--", duplicate_count_f));
     }
     else
         formated = formated.replace("%DUPE", "");

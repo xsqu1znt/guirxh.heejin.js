@@ -19,7 +19,7 @@ module.exports = {
         let embed_shop = globalShop_ES(interaction.user);
 
         // Navigateinator-ify-er 9000!!!!11
-        let navigationify = new messageTools.Navigationify(interaction, [embed_shop], {
+        let navigationify = new messageTools.Navigationify(interaction, embed_shop, {
             timeout: dateTools.parseStr(botSettings.timeout.pagination)
         });
 
@@ -28,23 +28,25 @@ module.exports = {
             (card, compareCard) => card.setID === compareCard.setID
         );
 
-        // Add a select menu option for each card group
-        shopCards_unique.forEach((card, idx) => navigationify.addSelectMenuOption({
-            label: card.group,
-            isDefault: (idx === 0)
-        }));
+        // ! Select menu options
+        navigationify.addSelectMenuOption({
+            emoji: "🛍️",
+            label: "List",
+            description: "View a list of each available set.",
+            isDefault: true
+        });
 
-        // Add the an option to view the badge shop
-        navigationify.addSelectMenuOption({ label: "Badges" });
+        navigationify.addSelectMenuOption({ emoji: "📁", label: "All Cards", description: "View all the available shop cards." });
+
+        // Add a select menu option for each card group
+        shopCards_unique.forEach(card => navigationify.addSelectMenuOption({ emoji: card.emoji, label: card.group }));
+
+        // navigationify.addSelectMenuOption({ label: "Card Packs", description: "Buy a pack of random cards." });
+        navigationify.addSelectMenuOption({ emoji: "📛", label: "Badges", description: "Buy a badge for your profile." });
 
         navigationify.toggleSelectMenu();
         navigationify.togglePagination();
 
         return await navigationify.send();
-
-        /* // Paginatation-ify-inator 9000!!!!11
-        return await messageTools.paginationify(interaction, embed_shop, {
-            timeout: dateTools.parseStr(botSettings.timeout.pagination)
-        }); */
     }
 };

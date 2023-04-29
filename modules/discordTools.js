@@ -169,11 +169,11 @@ class message_Navigationify {
         await this.updateMessageComponents();
     }
 
-    async toggleSelectMenu() {
+    toggleSelectMenu() {
         this.selectMenu_enabled = !this.selectMenu_enabled;
     }
 
-    async togglePagination() {
+    togglePagination() {
         this.pagination_enabled = !this.pagination_enabled;
     }
 
@@ -233,6 +233,12 @@ class message_Navigationify {
             replyOptions.components.push(this.actionRow.pagination);
         }
 
+        // Set the option the user picked as default so the select menu shows the relevant option selected
+        if (this.selectMenu_enabled) {
+            this.components.stringSelectMenu.options.forEach(option => option.setDefault(false));
+            this.components.stringSelectMenu.options[this.viewIndex].setDefault(true);
+        }
+
         await this.fetchedReply.edit(replyOptions);
     }
 
@@ -257,7 +263,12 @@ class message_Navigationify {
                     }
 
                 case "btn_skipFirst": this.nestedPageIndex = 0; break;
-                case "btn_back": this.nestedPageIndex--; break;
+
+                case "btn_back":
+                    this.nestedPageIndex--;
+                    if (this.nestedPageIndex < 0) this.nestedPageIndex = this.views[this.viewIndex].length - 1;
+
+                    break;
 
                 case "btn_jump":
                     // Let the user know what action they should take
@@ -288,7 +299,12 @@ class message_Navigationify {
 
                     break;
 
-                case "btn_next": this.nestedPageIndex++; break;
+                case "btn_next":
+                    this.nestedPageIndex++;
+                    if (this.nestedPageIndex > this.views[this.viewIndex].length - 1) this.nestedPageIndex = 0;
+
+                    break;
+
                 case "btn_skipLast": this.nestedPageIndex = (this.views[this.viewIndex].length - 1); break;
 
                 default: return;

@@ -58,7 +58,50 @@ function globalShop_ES(user) {
     // Sort by global ID (decending order)
     cards_shop = cards_shop.sort((a, b) => a.globalID - b.globalID);
 
-    // Parse the card into a human readable format
+    // Create an array of only unique shop cards for sorting purposes
+    let cards_shop_unique = arrayTools.unique(cards_shop, (card, cardCompare) => card.setID === cardCompare.setID);
+    // The amount of cards in each set
+    let card_sets = cards_shop_unique.map(card => cards_shop.filter(c => c.setID === card.setID));
+
+    // Embed creation
+    let embed_template = () => new EmbedBuilder()
+        .setAuthor({ name: `${user.username} | shop`, iconURL: user.avatarURL({ dynamic: true }) })
+        .setColor(botSettings.embedColor || null);
+
+    let embed_list = () => {
+        let cards_f = cards_shop_unique.map((card, idx) => cardManager.toString.setEntry(card, card_sets[idx].length, true));
+
+        // Create the embed
+        let embed = embed_template()
+            .setDescription(cards_f ? cards_f.join("\n") : "the shop is empty!");
+
+        // Return the embed
+        return embed;
+    }
+
+    let embed_all = () => {
+        let cards_f = card_sets.map(set => set.map(card => cardManager.toString.shopEntry(card)));
+        let embeds = [];
+
+        for (let i = 0; i < cards_f.length; i++) {
+            // Create the embed page
+            let embed = embed_template()
+                .setDescription(cards_f[i].join("\n"))
+                .setFooter({ text: `page ${i + 1} of ${cards_f.length || 1}` });
+            
+            embeds.push(embed);
+        }
+
+        return embeds;
+    }
+
+    // Return the different embed views
+    return [
+        embed_list(),
+        embed_all()
+    ];
+
+    /* // Parse the card into a human readable format
     let cards_shop_f = cards_shop.map(card => cardManager.toString.shopEntry(card));
     cards_shop_f = arrayTools.chunk(cards_shop_f, 10);
 
@@ -82,7 +125,7 @@ function globalShop_ES(user) {
     };
 
     // Return the array of embeds
-    return embeds;
+    return embeds; */
 }
 
 // Command -> User -> /DROP
