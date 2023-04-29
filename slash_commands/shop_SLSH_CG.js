@@ -34,6 +34,9 @@ module.exports = {
             isDefault: (idx === 0)
         }));
 
+        // Add the an option to view the badge shop
+        navigationify.addSelectMenuOption({ label: "Badges" });
+
         navigationify.toggleSelectMenu();
         navigationify.togglePagination();
 
