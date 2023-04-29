@@ -126,7 +126,6 @@ function globalShop_ES(user) {
                 _embeds.push(embed);
             }
 
-
             embeds.push(_embeds);
         }
 
@@ -139,32 +138,6 @@ function globalShop_ES(user) {
         embed_all(),
         ...embed_cardSets()
     ];
-
-    /* // Parse the card into a human readable format
-    let cards_shop_f = cards_shop.map(card => cardManager.toString.shopEntry(card));
-    cards_shop_f = arrayTools.chunk(cards_shop_f, 10);
-
-    // Create an array to store the inventory pages for easy pagination
-    let embeds = [];
-
-    // Keep track of the page index
-    let pageIndex = 1;
-
-    // Go through each group in (cards_f) and create an embed for it
-    for (let group of cards_shop_f) {
-        // Create a new embed for this inventory page
-        let embed_page = new EmbedBuilder()
-            .setAuthor({ name: `${user.username} | shop`, iconURL: user.avatarURL({ dynamic: true }) })
-            .setDescription(group[0] ? group.join("\n") : "the shop is empty!")
-            .setFooter({ text: `page ${pageIndex++} of ${cards_shop_f.length || 1} • /shop buy <gid> • /view gid <gid>` })
-            .setColor(botSettings.embedColor || null);
-
-        // Push the newly created embed to our collection
-        embeds.push(embed_page);
-    };
-
-    // Return the array of embeds
-    return embeds; */
 }
 
 // Command -> User -> /DROP
