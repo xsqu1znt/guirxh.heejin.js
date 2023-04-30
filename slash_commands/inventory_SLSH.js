@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 const { botSettings } = require('../configs/heejinSettings.json');
-const { userInventory_ES } = require('../modules/embedStyles');
+const { userInventory_ES, userDuplicates_ES } = require('../modules/embedStyles');
 const { messageTools } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 const { dateTools } = require('../modules/jsTools');
@@ -10,7 +10,8 @@ module.exports = {
     builder: new SlashCommandBuilder().setName("inventory")
         .setDescription("View your card inventory")
 
-        .addStringOption(option => option.setName("set_id").setDescription("Filter by set ID"))
+        .addStringOption(option => option.setName("gid").setDescription("View duplicates by global ID"))
+        .addStringOption(option => option.setName("sid").setDescription("Filter by set ID"))
         .addStringOption(option => option.setName("group").setDescription("Filter by group"))
 
         .addStringOption(option => option.setName("sorting")
@@ -35,7 +36,8 @@ module.exports = {
      */
     execute: async (client, interaction) => {
         // Get interaction options
-        let setID = interaction.options.getString("set_id") || null;
+        let globalID = interaction.options.getString("gid") || null;
+        let setID = interaction.options.getString("sid") || null;
         let groupName = interaction.options.getString("group_name") || null;
         if (groupName) groupName = groupName.toLowerCase();
 
@@ -46,7 +48,12 @@ module.exports = {
         let userData = await userManager.fetch(interaction.user.id, "full", true);
 
         // Build the user's inventory pages
-        let embed_inventory = userInventory_ES(interaction.user, userData, sorting, order, { setID, groupName });
+        let embed_inventory;
+
+        if (globalID)
+            embed_inventory = userDuplicates_ES(interaction.user, userData, globalID);
+        else
+            embed_inventory = userInventory_ES(interaction.user, userData, sorting, order, { setID, groupName });
 
         // Paginatation-ify-inator 9000!!!!11
         return await messageTools.paginationify(interaction, embed_inventory, {

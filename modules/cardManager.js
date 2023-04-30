@@ -1,26 +1,27 @@
 const { botSettings, userSettings, dropSettings, eventSettings, shopSettings } = require('../configs/heejinSettings.json');
+const { markdown } = require('./discordTools');
 const { randomTools } = require('./jsTools');
 const logger = require('./logger');
 
 const cards = {
-    common: require('../cards/cards_common.json'),
-    uncommon: require('../cards/cards_uncommon.json'),
-    rare: require('../cards/cards_rare.json'),
-    epic: require('../cards/cards_epic.json'),
-    mint: require('../cards/cards_mint.json'),
+    common: require('../items/cards/cards_common.json'),
+    uncommon: require('../items/cards/cards_uncommon.json'),
+    rare: require('../items/cards/cards_rare.json'),
+    epic: require('../items/cards/cards_epic.json'),
+    mint: require('../items/cards/cards_mint.json'),
 
-    seasonal: require('../cards/cards_seasonal.json'),
-    holiday: require('../cards/cards_holiday.json'),
-    bday: require('../cards/cards_bday.json'),
+    seasonal: require('../items/cards/cards_seasonal.json'),
+    holiday: require('../items/cards/cards_holiday.json'),
+    bday: require('../items/cards/cards_bday.json'),
 
     event: [
-        ...require('../cards/cards_event1.json'),
-        ...require('../cards/cards_event2.json'),
-        ...require('../cards/cards_event3.json'),
+        ...require('../items/cards/cards_event1.json'),
+        ...require('../items/cards/cards_event2.json'),
+        ...require('../items/cards/cards_event3.json'),
     ],
 
-    custom: require('../cards/cards_custom.json'),
-    shop: require('../cards/cards_shop.json')
+    custom: require('../items/cards/cards_custom.json'),
+    shop: require('../items/cards/cards_shop.json')
 };
 
 let cards_all = []; Object.entries(cards).forEach(entry => cards_all = [...cards_all, ...entry[1]]);
@@ -34,8 +35,10 @@ function resetUID(card, userCards = null) {
         let uid = card?.uid || newUID();
 
         // Loop this function until we have a unique UID
-        if (userCards.find(card => card.uid === uid))
+        if (userCards.find(card => card.uid === uid)) {
+            console.log("uid reset");
             return this.resetUID(card, userCards);
+        }
 
         card.uid = uid;
     } else card.uid = newUID();
@@ -154,40 +157,7 @@ function parse_fromCardLike(cardLike) {
 }
 
 //! To String
-function inline(space = true, ...str) {
-    if (!Array.isArray(str)) str = [str];
-
-    return space ? (`\`${str.join(" ")}\``) : (`\`${str.join("")}\``);
-}
-
-function bold(space = true, ...str) {
-    if (!Array.isArray(str)) str = [str];
-
-    return space ? (`**${str.join(" ")}**`) : (`**${str.join("")}**`);
-}
-
-function italic(space = true, ...str) {
-    if (!Array.isArray(str)) str = [str];
-
-    return space ? (`*${str.join(" ")}*`) : (`*${str.join("")}*`);
-}
-
-function quote(space = true, ...str) {
-    if (!Array.isArray(str)) str = [str];
-
-    return space ? (`> ${str.join(" ")}`) : (`> ${str.join("")}`);
-}
-
-/** @param {"left" | "right" | "both"} side */
-function space(side = "both", ...str) {
-    if (!Array.isArray(str)) str = [str];
-
-    switch (side) {
-        case "left": return space ? (" " + str.join(" ")) : (" " + str.join(""));
-        case "right": return space ? (str.join(" ") + " ") : (str.join("") + " ");
-        case "both": return space ? (" " + str.join(" ") + " ") : (" " + str.join("") + " ");
-    }
-}
+const { bold, italic, inline, quote, link, space } = markdown;
 
 function toString_basic(card) {
     return "%UID %EMOJI %GROUP :: %SINGLE - %NAME"
@@ -195,7 +165,7 @@ function toString_basic(card) {
         .replace("%EMOJI", inline(true, card.emoji))
         .replace("%GROUP", bold(true, card.group))
         .replace("%SINGLE", card.single)
-        .replace("%NAME", card.name);
+        .replace("%NAME", link(card.name, card.imageURL));
 }
 
 function toString_setEntry(card, count = 1, simplify = false) {
@@ -219,7 +189,7 @@ function toString_shopEntry(card) {
         .replace("%EMOJI", inline(true, card.emoji))
         .replace("%GROUP", bold(true, card.group))
         .replace("%SINGLE", card.single)
-        .replace("%NAME", card.name)
+        .replace("%NAME", link(card.name, card.imageURL))
         .replace("%SET_ID", inline(true, "🗣️", card.setID))
         .replace("%PRICE", inline(true, botSettings.currencyIcon, card.price));
 }
@@ -240,13 +210,13 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
 
         .replace("%GROUP", bold(true, card.group))
         .replace("%SINGLE", card.single)
-        .replace("%NAME", card.name)
+        .replace("%NAME", link(card.name, card.imageURL))
 
         .replace("%GLOBAL_ID", space("left", inline(true, card.globalID)))
         .replace("%SET_ID", inline(true, "🗣️", card.setID))
         .replace("%RARITY", inline(false, "R", card.rarity))
         .replace("%CATEGORY", inline(true, card.category))
-        
+
         .replace("%SELL_PRICE", options.simplify ? "" : space("left", inline(true, "💰", card.sellPrice)))
         .replace("%LOCKED", card.locked ? space("both", inline(true, "🔒")) : "")
 

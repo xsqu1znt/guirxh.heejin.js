@@ -14,17 +14,28 @@ const { botSettings } = require('../configs/heejinSettings.json');
 const { randomTools, arrayTools } = require('./jsTools');
 const logger = require('./logger');
 
-// Message Tools
+//! Message Tools
 /** Create a simple embed with a description. */
 class message_Embedinator {
     /** @param {CommandInteraction} interaction */
-    constructor(interaction, options = { title: "", author: null }) {
-        options = { title: "", author: null, ...options };
+    constructor(interaction, options = { author: null, title: "", description: "" }) {
+        options = { author: null, title: "title", description: "", ...options };
 
         this.interaction = interaction;
+        this.author = options.author;
         this.title = options.title
             .replace("%USER", options.author?.username || interaction.user.username);
-        this.author = options.author;
+        this.description = options.description;
+
+        // Create the embed
+        this.embed = new EmbedBuilder().setColor(botSettings.embedColor || null);
+
+        if (this.description) this.embed.setDescription(this.description);
+        if (this.title) this.embed.setAuthor({ name: this.title });
+        if (this.author) this.embed.setAuthor({
+            name: this.embed.data.author.name,
+            iconURL: this.author.avatarURL({ dynamic: true })
+        });
     }
 
     /** Change the title.
@@ -46,24 +57,16 @@ class message_Embedinator {
     async send(description, options = { followUp: false, ephemeral: false }) {
         options = { followUp: false, ephemeral: false, ...options };
 
-        // Create the embed
-        let embed = new EmbedBuilder()
-            .setDescription(description)
-            .setColor(botSettings.embedColor || null);
-
-        if (this.title) embed.setAuthor({ name: this.title });
-        if (this.author) embed.setAuthor({ name: embed.data.author.name, iconURL: this.author.avatarURL({ dynamic: true }) });
-
         // Send the embed
         if (options.followUp)
-            return await this.interaction.followUp({ embeds: [embed], ephemeral: options.ephemeral });
+            return await this.interaction.followUp({ embeds: [this.embed], ephemeral: options.ephemeral });
         else
             try {
-                return await this.interaction.reply({ embeds: [embed], ephemeral: options.ephemeral });
+                return await this.interaction.reply({ embeds: [this.embed], ephemeral: options.ephemeral });
             } catch {
                 // If you edit a reply you can't change the message to ephemeral unfortunately
                 // unless you do a follow up message and then delete the original reply but that's pretty scuffed
-                return await this.interaction.editReply({ embeds: [embed] });
+                return await this.interaction.editReply({ embeds: [this.embed] });
             }
     }
 }
@@ -450,6 +453,46 @@ async function message_deleteAfter(message, time) {
     return m;
 }
 
+//! Markdown
+function bold(space = true, ...str) {
+    if (!Array.isArray(str)) str = [str];
+
+    return space ? (`**${str.join(" ")}**`) : (`**${str.join("")}**`);
+}
+
+function italic(space = true, ...str) {
+    if (!Array.isArray(str)) str = [str];
+
+    return space ? (`*${str.join(" ")}*`) : (`*${str.join("")}*`);
+}
+
+function inline(space = true, ...str) {
+    if (!Array.isArray(str)) str = [str];
+
+    return space ? (`\`${str.join(" ")}\``) : (`\`${str.join("")}\``);
+}
+
+function quote(space = true, ...str) {
+    if (!Array.isArray(str)) str = [str];
+
+    return space ? (`> ${str.join(" ")}`) : (`> ${str.join("")}`);
+}
+
+function link(label, url, tooltip = "") {
+    return `[${label}](${url}${tooltip ? ` "${tooltip}"` : ""})`;
+}
+
+/** @param {"left" | "right" | "both"} side */
+function space(side = "both", ...str) {
+    if (!Array.isArray(str)) str = [str];
+
+    switch (side) {
+        case "left": return space ? (" " + str.join(" ")) : (" " + str.join(""));
+        case "right": return space ? (str.join(" ") + " ") : (str.join("") + " ");
+        case "both": return space ? (" " + str.join(" ") + " ") : (" " + str.join("") + " ");
+    }
+}
+
 module.exports = {
     messageTools: {
         Embedinator: message_Embedinator,
@@ -457,5 +500,7 @@ module.exports = {
 
         deleteAfter: message_deleteAfter,
         paginationify: message_paginationify
-    }
+    },
+
+    markdown: { bold, italic, inline, quote, link, space }
 };

@@ -1,0 +1,24 @@
+[
+    {
+        "id": "b1",
+        "setID": "123",
+        "emoji": "<a:boost:1102060660784898172>",
+        "emojiURL": "https://cdn.discordapp.com/emojis/1102060660784898172.gif?size=128&quality=lossless",
+        "name": "boost",
+        "description": "This player boosted the bot community's server!",
+        "category": "comun",
+        "rarity": 100,
+        "price": 1000
+    },
+    {
+        "id": "b2",
+        "setID": "456",
+        "emoji": "<a:diamond:1102060761020379210>",
+        "emojiURL": "https://cdn.discordapp.com/emojis/1102060761020379210.gif?size=128&quality=lossless",
+        "name": "diamond",
+        "description": "This player started the bot 99 years ago!",
+        "category": "plyr",
+        "rarity": 100,
+        "price": 9999
+    }
+]

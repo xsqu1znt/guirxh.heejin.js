@@ -1,8 +1,10 @@
 const { EmbedBuilder, quote, bold, TimestampStyles } = require('discord.js');
 
-const { botSettings, userSettings } = require('../configs/heejinSettings.json');
+const { botSettings, shopSettings, userSettings } = require('../configs/heejinSettings.json');
 const { arrayTools, stringTools, numberTools, dateTools } = require('../modules/jsTools');
+const { messageTools } = require('../modules/discordTools');
 const cardManager = require('../modules/cardManager');
+const badgeManager = require('../modules/badgeManager');
 const userParser = require('../modules/userParser');
 
 // Command -> General -> /COLLECTIONS
@@ -132,11 +134,29 @@ function globalShop_ES(user) {
         return embeds;
     };
 
+    let embed_badges = () => {
+        let badges_f = badgeManager.badges.map(badge => badgeManager.toString(badge));
+        badges_f = arrayTools.chunk(badges_f, 10);
+
+        let embeds = [];
+
+        for (let i = 0; i < badges_f.length; i++) {
+            let embed = embed_template()
+                .setDescription(badges_f[i].join("\n"))
+                .setFooter({ text: `page ${i + 1} of ${badges_f.length || 1}` });
+
+            embeds.push(embed);
+        }
+
+        return embeds;
+    }
+
     // Return the different embed views
     return [
         embed_list(),
         embed_all(),
-        ...embed_cardSets()
+        ...embed_cardSets(),
+        embed_badges()
     ];
 }
 
@@ -306,6 +326,61 @@ function userInventory_ES(user, userData, sorting = "set", order = "descending",
     return embeds;
 }
 
+function userDuplicates_ES(user, userData, globalID) {
+    let card_duplicates = userParser.cards.duplicates(userData.card_inventory, { globalID });
+
+    // Create a base embed
+    let { embed } = new messageTools.Embedinator(null, {
+        author: user,
+        title: "%USER | duplicates",
+        description: `\`${globalID}\` is not a valid global card ID.`
+    });
+
+    if (!card_duplicates) return [embed];
+    if (card_duplicates.card_duplicates.length === 0) {
+        embed.setDescription("You don't have any duplicates of that card.")
+        return [embed];
+    }
+
+    card_duplicates = [card_duplicates.card_primary, ...card_duplicates.card_duplicates]
+        .map(card => cardManager.parse.fromCardLike(card));
+
+    let card_duplicates_f = []; for (let card of card_duplicates) {
+        // Whether or not this is the user's favorited card
+        let isFavorite = (card.uid === userData.card_favorite_uid);
+
+        // Whether or not this is the user's selected card
+        let isSelected = (card.uid === userData.card_selected_uid);
+
+        card_duplicates_f.push(cardManager.toString.inventory(card, {
+            favorited: isFavorite,
+            selected: isSelected
+        }));
+    }
+
+    card_duplicates_f = arrayTools.chunk(card_duplicates_f, 10);
+
+    // Create the embeds
+    let embeds = [];
+
+    for (let i = 0; i < card_duplicates_f.length; i++) {
+        let { embed: _embed } = new messageTools.Embedinator(null, { title: "%USER | duplicates", author: user });
+
+        _embed.setDescription(card_duplicates_f[i].join("\n"))
+            .setFooter({
+                text: `page %PAGE of %PAGE_COUNT • total: %TOTAL_CARDS`
+                    .replace("%PAGE", i + 1)
+                    .replace("%PAGE_COUNT", card_duplicates_f.length)
+                    .replace("%TOTAL_CARDS", card_duplicates.length)
+            });
+
+        embeds.push(_embed);
+    }
+
+    // Return the embeds array
+    return embeds;
+}
+
 // Command -> User -> /VIEW UID | /VIEW GID | /VIEW FAVORITE
 /** @param {"uid" | "global" | "favorite" | "idol"} viewStyle */
 function userView_ES(user, userData, card, viewStyle = "uid", showDuplicates = true) {
@@ -436,6 +511,7 @@ module.exports = {
     userCooldowns_ES,
     userProfile_ES,
     userInventory_ES,
+    userDuplicates_ES,
     userView_ES,
     userTeamView_ES,
     userGift_ES
