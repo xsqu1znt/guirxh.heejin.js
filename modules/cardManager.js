@@ -35,10 +35,8 @@ function resetUID(card, userCards = null) {
         let uid = card?.uid || newUID();
 
         // Loop this function until we have a unique UID
-        if (userCards.find(card => card.uid === uid)) {
-            console.log("uid reset");
+        if (userCards.find(card => card.uid === uid))
             return this.resetUID(card, userCards);
-        }
 
         card.uid = uid;
     } else card.uid = newUID();
@@ -204,7 +202,7 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
     };
 
     let { duplicate_count } = options;
-    let formated = "%UID%EMOJI %GROUP : %SINGLE - %NAME %DUPE\n> %SET_ID %GLOBAL_ID %RARITY %CATEGORY%SELL_PRICE%LOCKED\n %LEVEL%STATS%FAVORITED%SELECTED"
+    let formated = "%UID%EMOJI %GROUP : %SINGLE - %NAME %DUPE\n> %SET_ID %GLOBAL_ID %RARITY %CATEGORY%SELL_PRICE%LOCKED%NEW_LINE%LEVEL%STATS%FAVORITED%SELECTED"
         .replace("%UID", card.uid ? space("right", inline(true, card.uid)) : "")
         .replace("%EMOJI", inline(true, card.emoji))
 
@@ -219,6 +217,8 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
 
         .replace("%SELL_PRICE", options.simplify ? "" : space("left", inline(true, "💰", card.sellPrice)))
         .replace("%LOCKED", card.locked ? space("both", inline(true, "🔒")) : "")
+
+        .replace("%NEW_LINE", options.simplify ? "" : "\n")
 
         .replace("%LEVEL", options.simplify ? "" : quote(true, inline(false, "LV.", card.stats.level)))
         .replace("%STATS", options.simplify ? ""

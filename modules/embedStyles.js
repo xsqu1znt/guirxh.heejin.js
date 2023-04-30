@@ -368,7 +368,7 @@ function userDuplicates_ES(user, userData, globalID) {
 
         _embed.setDescription(card_duplicates_f[i].join("\n"))
             .setFooter({
-                text: `page %PAGE of %PAGE_COUNT • total: %TOTAL_CARDS`
+                text: `page %PAGE of %PAGE_COUNT | total cards: %TOTAL_CARDS`
                     .replace("%PAGE", i + 1)
                     .replace("%PAGE_COUNT", card_duplicates_f.length)
                     .replace("%TOTAL_CARDS", card_duplicates.length)

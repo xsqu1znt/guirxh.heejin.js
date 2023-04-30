@@ -10,8 +10,16 @@ module.exports = {
     builder: new SlashCommandBuilder().setName("inventory")
         .setDescription("View your card inventory")
 
-        .addStringOption(option => option.setName("gid").setDescription("View duplicates by global ID"))
-        .addStringOption(option => option.setName("sid").setDescription("Filter by set ID"))
+        .addSubcommand(subcommand => subcommand.setName("view")
+            .setDescription("View your card inventory")
+
+        )
+
+        .addSubcommand(subcommand => subcommand.setName("dupes")
+            .addStringOption(option => option.setName("global_id").setDescription("View duplicates by global ID"))
+        )
+
+        .addStringOption(option => option.setName("set_id").setDescription("Filter by set ID"))
         .addStringOption(option => option.setName("group").setDescription("Filter by group"))
 
         .addStringOption(option => option.setName("sorting")

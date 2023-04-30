@@ -57,6 +57,8 @@ class message_Embedinator {
     async send(description, options = { followUp: false, ephemeral: false }) {
         options = { followUp: false, ephemeral: false, ...options };
 
+        if (description) this.embed.setDescription(description);
+
         // Send the embed
         if (options.followUp)
             return await this.interaction.followUp({ embeds: [this.embed], ephemeral: options.ephemeral });
