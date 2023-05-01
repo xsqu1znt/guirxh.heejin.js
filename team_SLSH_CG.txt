@@ -61,7 +61,7 @@ module.exports = {
         // Parse the card into a human readable format
         let card_f = cardManager.toString.basic(card);
 
-        // Determine the operation type
+        // Determine the operation type type
         switch (interaction.options.getSubcommand()) {
             case "add":
                 // Don't allow duplicate card entries

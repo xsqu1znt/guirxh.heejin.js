@@ -329,7 +329,7 @@ function userInventory_ES(user, userData, sorting = "set", order = "descending",
 function userDuplicates_ES(user, userData, globalID) {
     let card_duplicates = userParser.cards.duplicates(userData.card_inventory, { globalID });
 
-    // Create the base embed
+    // Create a base embed
     let { embed } = new messageTools.Embedinator(null, {
         author: user,
         title: "%USER | duplicates",
@@ -433,7 +433,7 @@ function userTeamView_ES(user, userData) {
     // Convert the user's card_inventory into an array
     let teamCards = userParser.cards.getMultiple(userData.card_inventory, userData.card_team_uids);
 
-    // Create the base embed
+    // Create a base embed
     let { embed } = new messageTools.Embedinator(null, {
         author: user,
         title: "%USER | team",

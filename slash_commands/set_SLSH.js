@@ -8,14 +8,14 @@ const userParser = require('../modules/userParser');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("set")
-        .setDescription("An arsenal of commands for the player to enchance their life")
+        .setDescription("Add/remove a card from something")
 
         .addStringOption(option => option.setName("edit")
             .setDescription("Choose what you want to set")
             .addChoices(
-                { name: "favorite", value: "favorite" },
-                { name: "idol", value: "idol" },
-                { name: "team", value: "team" }
+                { name: "Favorite", value: "favorite" },
+                { name: "Idol", value: "idol" },
+                { name: "Team", value: "team" }
             )
             .setRequired(true)
         )
@@ -26,43 +26,7 @@ module.exports = {
 
         .addStringOption(option => option.setName("remove")
             .setDescription("Remove a card using its unique ID")
-        )
-
-        // /SET BIOGRAPHY
-        /* .addSubcommand(subcommand => subcommand.setName("biography")
-            .setDescription("Set your profile biography")
-
-            .addStringOption(option => option.setName("text")
-                .setDescription("What you want your biography to be | use \"reset\" to remove")
-                .setRequired(true))
-        ) */
-
-        // /SET FAVORITE
-        /* .addSubcommand(subcommand => subcommand.setName("favorite")
-            .setDescription("Set a card as your favorite")
-
-            .addStringOption(option => option.setName("uid")
-                .setDescription("The unique ID of the card | use \"reset\" to unfavorite")
-                .setRequired(true))
-        ) */
-
-        // /SET IDOL
-        /* .addSubcommand(subcommand => subcommand.setName("idol")
-            .setDescription("Set a card to level up using /stage")
-
-            .addStringOption(option => option.setName("uid")
-                .setDescription("The unique ID of the card | use \"reset\" to unset")
-                .setRequired(true))
-        ) */
-
-        // /SET TEAM
-        /* .addSubcommand(subcommand => subcommand.setName("team")
-            .setDescription("Add/remove a card in your team | MAX 4 Cards")
-
-            .addStringOption(option => option.setName("uid")
-                .setDescription("The unique ID of the card | use the same UID to remove")
-                .setRequired(true))
-        ) */,
+        ),
 
     /**
      * @param {Client} client
@@ -72,8 +36,6 @@ module.exports = {
         // Interaction options and stuff
         let uid_add = interaction.options.getString("add");
         let uid_remove = interaction.options.getString("remove");
-        uid_add &&= uid_add.toLowerCase(); uid_remove &&= uid_remove.toLowerCase();
-
         let userData, card, card_f;
 
         // Create a base embed
@@ -85,8 +47,8 @@ module.exports = {
         if (!uid_add && !uid_remove)
             return await embedinator.send("You need to give a valid card ID.");
 
-        // Determine the operation
-        switch (interaction.options.getString("operation")) {
+        // Determine the operation type
+        switch (interaction.options.getString("edit")) {
             case "favorite":
                 if (uid_add) {
                     // Fetch the user from Mongo
