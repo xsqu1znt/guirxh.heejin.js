@@ -79,8 +79,8 @@ class message_Navigationify {
      * @param {CommandInteraction} interaction
      * @param {Array<Embed | Array<Embed>} embedViews
      */
-    constructor(interaction, embedViews, options = { ephemeral: false, followUp: false, timeout: 10000 }) {
-        options = { ephemeral: false, followUp: false, timeout: 10000, ...options };
+    constructor(interaction, embedViews, options = { pagination: false, selectMenu: false, ephemeral: false, followUp: false, timeout: 10000 }) {
+        options = { pagination: false, selectMenu: false, ephemeral: false, followUp: false, timeout: 10000, ...options };
 
         this.interaction = interaction;
         this.fetchedReply = null;
@@ -88,9 +88,9 @@ class message_Navigationify {
         this.views = embedViews;
         this.options = options;
 
-        this.selectMenu_enabled = false;
+        this.selectMenu_enabled = options.selectMenu;
         this.selectMenu_values = [];
-        this.pagination_enabled = false;
+        this.pagination_enabled = options.pagination;
 
         this.viewIndex = 0; this.nestedPageIndex = 0;
 

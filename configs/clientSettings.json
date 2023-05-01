@@ -1,6 +1,6 @@
 {
     "ownerID": "",
-    "creatorID": "",
+    "admins": [""],
 
     "clientPresence": {
         "default": {

@@ -2,7 +2,6 @@
 
 const { Client, BaseInteraction } = require('discord.js');
 
-// const { botSettings } = require('../../../configs/heejinSettings.json');
 const { userManager } = require('../../../modules/mongo');
 const { stringTools } = require('../../../modules/jsTools');
 const { messageTools } = require('../../../modules/discordTools');

@@ -10,32 +10,39 @@ module.exports = {
     builder: new SlashCommandBuilder().setName("inventory")
         .setDescription("View your card inventory")
 
-        .addSubcommand(subcommand => subcommand.setName("view")
-            .setDescription("View your card inventory")
+        .addSubcommand(subcommand => subcommand.setName("all")
+            .setDescription("View your cards")
 
+            .addStringOption(option => option.setName("setid")
+                .setDescription("Filter by set ID"))
+            .addStringOption(option => option.setName("group")
+                .setDescription("Filter by group name"))
+
+            .addStringOption(option => option.setName("sorting")
+                .setDescription("Default: Set ID")
+
+                .addChoices(
+                    { name: "Global ID", value: "global" },
+                    { name: "Set ID", value: "set" }
+                )
+            )
+
+            .addStringOption(option => option.setName("order")
+                .setDescription("Default: Descending")
+
+                .addChoices(
+                    { name: "Ascending", value: "ascending" },
+                    { name: "Descending", value: "descending" }
+                )
+            )
         )
 
         .addSubcommand(subcommand => subcommand.setName("dupes")
-            .addStringOption(option => option.setName("global_id").setDescription("View duplicates by global ID"))
-        )
+            .setDescription("View your duplicate cards")
 
-        .addStringOption(option => option.setName("set_id").setDescription("Filter by set ID"))
-        .addStringOption(option => option.setName("group").setDescription("Filter by group"))
-
-        .addStringOption(option => option.setName("sorting")
-            .setDescription("Default: Set ID")
-            .addChoices(
-                { name: "Global ID", value: "global" },
-                { name: "Set ID", value: "set" }
-            )
-        )
-
-        .addStringOption(option => option.setName("order")
-            .setDescription("Default: Descending")
-            .addChoices(
-                { name: "Ascending", value: "ascending" },
-                { name: "Descending", value: "descending" }
-            )
+            .addStringOption(option => option.setName("gid")
+                .setDescription("The global ID of the card")
+                .setRequired(true))
         ),
 
     /**
@@ -45,8 +52,8 @@ module.exports = {
     execute: async (client, interaction) => {
         // Get interaction options
         let globalID = interaction.options.getString("gid") || null;
-        let setID = interaction.options.getString("sid") || null;
-        let groupName = interaction.options.getString("group_name") || null;
+        let setID = interaction.options.getString("setid") || null;
+        let groupName = interaction.options.getString("group") || null;
         if (groupName) groupName = groupName.toLowerCase();
 
         let sorting = interaction.options.getString("sorting") || null;
@@ -55,17 +62,26 @@ module.exports = {
         // Fetch the user from Mongo
         let userData = await userManager.fetch(interaction.user.id, "full", true);
 
-        // Build the user's inventory pages
-        let embed_inventory;
+        // Create the embed
+        let embed;
 
-        if (globalID)
-            embed_inventory = userDuplicates_ES(interaction.user, userData, globalID);
-        else
-            embed_inventory = userInventory_ES(interaction.user, userData, sorting, order, { setID, groupName });
+        // Determine the operation
+        switch (interaction.options.getSubcommand()) {
+            case "all":
+                embed = userInventory_ES(interaction.user, userData, sorting, order, { setID, groupName });
+                break;
 
-        // Paginatation-ify-inator 9000!!!!11
-        return await messageTools.paginationify(interaction, embed_inventory, {
-            timeout: dateTools.parseStr(botSettings.timeout.pagination)
+            case "dupes":
+                embed = userDuplicates_ES(interaction.user, userData, globalID);
+                break;
+        }
+
+        // Navigateinator-ify-er 9000!!!!11
+        let navigationify = new messageTools.Navigationify(interaction, embed, {
+            timeout: dateTools.parseStr(botSettings.timeout.pagination),
+            pagination: true
         });
+
+        return await navigationify.send();
     }
 };

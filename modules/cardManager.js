@@ -34,9 +34,8 @@ function resetUID(card, userCards = null) {
     if (userCards) {
         let uid = card?.uid || newUID();
 
-        // Loop this function until we have a unique UID
-        if (userCards.find(card => card.uid === uid))
-            return this.resetUID(card, userCards);
+        // Loop until we have a unique UID
+        while (userCards.find(card => card.uid === uid)) uid = newUID();
 
         card.uid = uid;
     } else card.uid = newUID();
