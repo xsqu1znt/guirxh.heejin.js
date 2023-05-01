@@ -1,8 +1,10 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
-const { userManager } = require('../modules/mongo');
+const { botSettings } = require('../configs/heejinSettings.json');
+const { userView_ES, userTeamView_ES } = require('../modules/embedStyles');
 const { messageTools } = require('../modules/discordTools');
-const { userView_ES } = require('../modules/embedStyles');
+const { userManager } = require('../modules/mongo');
+const { dateTools } = require('../modules/jsTools');
 const cardManager = require('../modules/cardManager');
 const userParser = require('../modules/userParser');
 
@@ -10,6 +12,7 @@ module.exports = {
     builder: new SlashCommandBuilder().setName("view")
         .setDescription("View a card's information")
 
+        // /VIEW UID
         .addSubcommand(subcommand => subcommand.setName("uid")
             .setDescription("View a card in your inventory")
 
@@ -18,16 +21,28 @@ module.exports = {
                 .setRequired(true))
         )
 
+        // /VIEW GID
         .addSubcommand(subcommand => subcommand.setName("gid")
             .setDescription("View any card")
 
-            .addStringOption(option => option.setName("global_id")
+            .addStringOption(option => option.setName("giod")
                 .setDescription("The global ID of the card")
                 .setRequired(true))
         )
 
+        // /VIEW FAVORITE
         .addSubcommand(subcommand => subcommand.setName("favorite")
             .setDescription("View your favorited card")
+        )
+
+        // /VIEW IDOL
+        .addSubcommand(subcommand => subcommand.setName("idol")
+            .setDescription("View the card you level up when you win /stage")
+        )
+
+        // /VIEW TEAM
+        .addSubcommand(subcommand => subcommand.setName("team")
+            .setDescription("View your team")
         ),
 
     /**
@@ -57,6 +72,7 @@ module.exports = {
 
                 // Create the embed
                 embed_view = userView_ES(interaction.user, userData, card, "uid");
+
                 break;
 
             case "gid":
@@ -77,11 +93,38 @@ module.exports = {
 
                 // Get the card from the user's card_inventory
                 card = userParser.cards.get(userData.card_inventory, userData.card_favorite_uid);
-                if (!card) return await embedinator.send("You don't have a favorite card. Use **/favorite** first");
+                if (!card) return await embedinator.send("You don't have a favorite card. Use **/favorite** first.");
 
                 // Create the embed
                 embed_view = userView_ES(interaction.user, userData, card, "favorite");
+
                 break;
+
+            case "idol":
+                // Fetch the user from Mongo
+                userData = await userManager.fetch(interaction.user.id, "full", true);
+
+                // Get the card from the user's card_inventory
+                card = userParser.cards.get(userData.card_inventory, userData.card_selected_uid);
+                if (!card) return await embedinator.send("You don't have a card selected. Use **/idol set** first.");
+
+                // Create the embed
+                embed_view = userView_ES(interaction.user, userData, card, "idol");
+
+                break;
+
+            case "team":
+                // Fetch the user from Mongo
+                userData = await userManager.fetch(interaction.user.id, "full", true);
+
+                // Create the embeds
+                embed_view = userTeamView_ES(interaction.user, userData);
+
+                // Navigateinator-ify-er 9000!!!!11
+                return await new messageTools.Navigationify(interaction, embed_view, {
+                    timeout: dateTools.parseStr(botSettings.timeout.pagination),
+                    pagination: true
+                }).send();
         }
 
         // Send the embed

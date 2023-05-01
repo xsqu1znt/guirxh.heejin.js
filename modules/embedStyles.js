@@ -329,7 +329,7 @@ function userInventory_ES(user, userData, sorting = "set", order = "descending",
 function userDuplicates_ES(user, userData, globalID) {
     let card_duplicates = userParser.cards.duplicates(userData.card_inventory, { globalID });
 
-    // Create a base embed
+    // Create the base embed
     let { embed } = new messageTools.Embedinator(null, {
         author: user,
         title: "%USER | duplicates",
@@ -366,6 +366,7 @@ function userDuplicates_ES(user, userData, globalID) {
     for (let i = 0; i < card_duplicates_f.length; i++) {
         let { embed: _embed } = new messageTools.Embedinator(null, { title: "%USER | duplicates", author: user });
 
+        // Add details to the embed
         _embed.setDescription(card_duplicates_f[i].join("\n"))
             .setFooter({
                 text: `page %PAGE of %PAGE_COUNT | total cards: %TOTAL_CARDS`
@@ -430,47 +431,59 @@ function userView_ES(user, userData, card, viewStyle = "uid", showDuplicates = t
 // Command -> User -> /TEAM VIEW
 function userTeamView_ES(user, userData) {
     // Convert the user's card_inventory into an array
-    let cards_team = userParser.cards.getMultiple(userData.card_inventory, userData.card_team_uids);
+    let teamCards = userParser.cards.getMultiple(userData.card_inventory, userData.card_team_uids);
+
+    // Create the base embed
+    let { embed } = new messageTools.Embedinator(null, {
+        author: user,
+        title: "%USER | team",
+        description: "You don't have a team set yet."
+    });
+
+    // Return the base embed if the user doesn't have a team set
+    if (teamCards.length === 0) return [embed];
 
     // Parse every card in the (cards) array into a readable [String] entry
     // then split the array into groups of 10 cards each
     // so we can easily create embed inventory pages of only 10 entries per
-    let cards_team_f = arrayTools.chunk(cards_team.map(card => {
+    let teamCards_f = arrayTools.chunk(teamCards.map(card => {
         // Whether or not this is the user's favorited card
         let isFavorite = (card.uid === userData.card_favorite_uid);
 
         return cardManager.toString.inventory(card, { favorited: isFavorite });
     }), 1);
 
-    // Get the total team's ability
-    let totalAbility = 0; cards_team.map(card => totalAbility += card.stats.ability);
-    totalAbility = stringTools.formatNumber(totalAbility, { round: true });
+    let ability_total = (() => {
+        let total = 0;
 
-    // Create an array to store the inventory pages for easy pagination
+        // Add together the ability of each card in the user's team
+        teamCards.forEach(card => total += card.stats.ability);
+
+        return stringTools.formatNumber(total);
+    })();
+
+    // Create the embeds
     let embeds = [];
 
-    // Keep track of the page index
-    let pageIndex = 1;
+    for (let i = 0; i < teamCards_f.length; i++) {
+        let { embed: _embed } = new messageTools.Embedinator(null, { title: "%USER | team", author: user });
 
-    // Go through each group in (cards_f) and create an embed for it
-    for (let group of cards_team_f) {
-        let card_image = cards_team[pageIndex - 1]?.imageURL;
+        // Add details to the embed
+        _embed.setDescription(teamCards_f[i].join("\n"))
+            .setFooter({
+                text: "page %PAGE of %PAGE_COUNT | team ability: %TOTAL_ABILITY"
+                    .replace("%PAGE", i + 1)
+                    .replace("%PAGE_COUNT", teamCards_f.length)
+                    .replace("%TOTAL_ABILITY", ability_total)
+            });
+        
+        // Add the card's image if available
+        if (teamCards[i].imageURL) _embed.setImage(teamCards[i].imageURL);
 
-        // Create a new embed for this team page
-        let embed_page = new EmbedBuilder()
-            .setAuthor({ name: `${user.username} | team`, iconURL: user.avatarURL({ dynamic: true }) })
-            .setDescription(group[0] ? group.join("\n") : "You don't have a team set yet.")
-            .setFooter({ text: `${pageIndex++} of ${cards_team_f.length || 1} | team ability: ${totalAbility}` })
-            .setColor(botSettings.embedColor || null);
-
-        // Add the card image to the embed if available
-        if (card_image) embed_page.setImage(card_image);
-
-        // Push the newly created embed to our collection
-        embeds.push(embed_page);
+        embeds.push(_embed);
     }
 
-    // Return the array of embeds
+    // Return the embed array
     return embeds;
 }
 

@@ -63,25 +63,23 @@ module.exports = {
         let userData = await userManager.fetch(interaction.user.id, "full", true);
 
         // Create the embed
-        let embed;
+        let embed_view;
 
         // Determine the operation
         switch (interaction.options.getSubcommand()) {
             case "all":
-                embed = userInventory_ES(interaction.user, userData, sorting, order, { setID, groupName });
+                embed_view = userInventory_ES(interaction.user, userData, sorting, order, { setID, groupName });
                 break;
 
             case "dupes":
-                embed = userDuplicates_ES(interaction.user, userData, globalID);
+                embed_view = userDuplicates_ES(interaction.user, userData, globalID);
                 break;
         }
 
         // Navigateinator-ify-er 9000!!!!11
-        let navigationify = new messageTools.Navigationify(interaction, embed, {
+        return await new messageTools.Navigationify(interaction, embed_view, {
             timeout: dateTools.parseStr(botSettings.timeout.pagination),
             pagination: true
-        });
-
-        return await navigationify.send();
+        }).send();
     }
 };
