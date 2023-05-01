@@ -1,9 +1,9 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 const { botSettings } = require('../configs/heejinSettings.json');
+const { arrayTools, dateTools } = require('../modules/jsTools');
 const { globalShop_ES } = require('../modules/embedStyles');
 const { messageTools } = require('../modules/discordTools');
-const { arrayTools, dateTools } = require('../modules/jsTools');
 const cardManager = require('../modules/cardManager');
 
 module.exports = {
@@ -20,7 +20,9 @@ module.exports = {
 
         // Navigateinator-ify-er 9000!!!!11
         let navigationify = new messageTools.Navigationify(interaction, embed_shop, {
-            timeout: dateTools.parseStr(botSettings.timeout.pagination)
+            timeout: dateTools.parseStr(botSettings.timeout.pagination),
+            pagination: true,
+            selectMenu: true
         });
 
         // Get an array of unique cards based on the set ID
@@ -43,9 +45,6 @@ module.exports = {
 
         // navigationify.addSelectMenuOption({ label: "Card Packs", description: "Buy a pack of random cards." });
         navigationify.addSelectMenuOption({ emoji: "📛", label: "Badges", description: "Buy a badge for your profile." });
-
-        navigationify.toggleSelectMenu();
-        navigationify.togglePagination();
 
         return await navigationify.send();
     }

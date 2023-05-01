@@ -9,12 +9,14 @@ module.exports = {
     builder: new SlashCommandBuilder().setName("vault")
         .setDescription("Lock/unlock a card in your inventory")
 
+        // /VAULT ADD
         .addSubcommand(subcommand => subcommand.setName("add")
             .setDescription("Add a card in your inventory to your vault")
             .addStringOption(option => option.setName("uid")
                 .setDescription("The unique ID of the card")
                 .setRequired(true)))
 
+        // /VAULT REMOVE
         .addSubcommand(subcommand => subcommand.setName("remove")
             .setDescription("Remove a card in your inventory from your vault")
             .addStringOption(option => option.setName("uid")

@@ -10,6 +10,7 @@ module.exports = {
     builder: new SlashCommandBuilder().setName("inventory")
         .setDescription("View your card inventory")
 
+        // /INVENTORY ALL
         .addSubcommand(subcommand => subcommand.setName("all")
             .setDescription("View your cards")
 
@@ -37,6 +38,7 @@ module.exports = {
             )
         )
 
+        // /INVENTORY DUPES
         .addSubcommand(subcommand => subcommand.setName("dupes")
             .setDescription("View your duplicate cards")
 
