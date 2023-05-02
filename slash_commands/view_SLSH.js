@@ -13,9 +13,9 @@ module.exports = {
         .setDescription("View a card's information")
 
         .addStringOption(option => option.setName("card")
-            .setDescription("Choose what you want to set")
+            .setDescription("Choose what you want to view")
             .addChoices(
-                { name: "Unique ID", value: "uid" },
+                { name: "Owned ID", value: "uid" },
                 { name: "Global ID", value: "gid" },
                 { name: "Favorite", value: "favorite" },
                 { name: "Idol", value: "idol" },
@@ -24,42 +24,13 @@ module.exports = {
             .setRequired(true)
         )
 
-        .addStringOption(option => option.setName("id")
-            .setDescription("The unique/global ID of the card")
-        ),
-
-    /* // /VIEW UID
-    .addSubcommand(subcommand => subcommand.setName("uid")
-        .setDescription("View a card in your inventory")
-
         .addStringOption(option => option.setName("uid")
             .setDescription("The unique ID of the card")
-            .setRequired(true))
-    )
-
-    // /VIEW GID
-    .addSubcommand(subcommand => subcommand.setName("gid")
-        .setDescription("View any card")
+        )
 
         .addStringOption(option => option.setName("gid")
             .setDescription("The global ID of the card")
-            .setRequired(true))
-    )
-
-    // /VIEW FAVORITE
-    .addSubcommand(subcommand => subcommand.setName("favorite")
-        .setDescription("View your favorited card")
-    )
-
-    // /VIEW IDOL
-    .addSubcommand(subcommand => subcommand.setName("idol")
-        .setDescription("View the card you level up when you win /stage")
-    )
-
-    // /VIEW TEAM
-    .addSubcommand(subcommand => subcommand.setName("team")
-        .setDescription("View your team")
-    ), */
+        ),
 
     /**
      * @param {Client} client
@@ -67,7 +38,8 @@ module.exports = {
      */
     execute: async (client, interaction) => {
         // Interaction options and stuff
-        let cardID = interaction.options.getString("id");
+        let uid = interaction.options.getString("uid");
+        let globalID = interaction.options.getString("gid");
         let userData, card, embed_view;
 
         // Create a base embed
@@ -79,14 +51,14 @@ module.exports = {
         switch (interaction.options.getString("card")) {
             case "uid":
                 // Fallback
-                if (!cardID) return await embedinator.send("You need to give a valid card ID.");
+                if (!uid) return await embedinator.send("You need to give a valid card ID.");
 
                 // Fetch the user from Mongo
                 userData = await userManager.fetch(interaction.user.id, "full", true);
 
                 // Get the card from the user's card_inventory
-                card = userParser.cards.get(userData.card_inventory, cardID);
-                if (!card) return await embedinator.send(`\`${cardID}\` is not a valid card ID.`);
+                card = userParser.cards.get(userData.card_inventory, uid);
+                if (!card) return await embedinator.send(`\`${uid}\` is not a valid card ID.`);
 
                 // Create the embed
                 embed_view = userView_ES(interaction.user, userData, card, "uid");
@@ -95,11 +67,11 @@ module.exports = {
 
             case "gid":
                 // Fallback
-                if (!cardID) return await embedinator.send("You need to give a valid card ID.");
+                if (!globalID) return await embedinator.send("You need to give a valid card ID.");
 
                 // Get the card from our global collection
-                card = cardManager.get.byGlobalID(cardID);
-                if (!card) return await embedinator.send(`\`${cardID}\` is not a valid global card ID.`);
+                card = cardManager.get.byGlobalID(globalID);
+                if (!card) return await embedinator.send(`\`${globalID}\` is not a valid global card ID.`);
 
                 // Create the embed
                 embed_view = userView_ES(interaction.user, userData, card, "global");

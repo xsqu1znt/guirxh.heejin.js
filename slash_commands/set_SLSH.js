@@ -15,6 +15,7 @@ module.exports = {
             .addChoices(
                 { name: "Favorite", value: "favorite" },
                 { name: "Idol", value: "idol" },
+                { name: "Vault", value: "vault" },
                 { name: "Team", value: "team" }
             )
             .setRequired(true)
@@ -109,6 +110,60 @@ module.exports = {
                     await userManager.update(interaction.user.id, { card_selected_uid: "" });
 
                     return await embedinator.send("You no longer have an idol set.");
+                }
+
+            case "vault":
+                if (uid_add) {
+                    // Fetch the user from Mongo
+                    userData = await userManager.fetch(interaction.user.id, "full", true);
+
+                    // Get the card from the user's card_inventory
+                    card = userParser.cards.get(userData.card_inventory, uid_add);
+                    if (!card) return await embedinator.send(
+                        `\`${uid_add}\` is not a valid card ID.`
+                    );
+
+                    // Check if the card is already selected
+                    if (card.locked) return await embedinator.send(
+                        `\`${uid_add}\` is already locked.`
+                    );
+
+                    // Lock the card
+                    card.locked = true;
+
+                    // Update the card in the user's inventory in Mongo
+                    await userManager.cards.update(interaction.user.id, card);
+
+                    // Let the user know the result
+                    card_f = cardManager.toString.basic(card);
+                    return await embedinator.send(`You added a card to your vault:\n> ${card_f}`);
+                }
+
+                // Unlock a card
+                else if (uid_remove) {
+                    // Fetch the user from Mongo
+                    userData = await userManager.fetch(interaction.user.id, "full", true);
+
+                    // Get the card from the user's card_inventory
+                    card = userParser.cards.get(userData.card_inventory, uid_remove);
+                    if (!card) return await embedinator.send(
+                        `\`${uid_remove}\` is not a valid card ID.`
+                    );
+
+                    // Check if the card is already selected
+                    if (!card.locked) return await embedinator.send(
+                        `\`${uid_remove}\` is already unlocked.`
+                    );
+
+                    // Lock the card
+                    card.locked = false;
+
+                    // Update the card in the user's inventory in Mongo
+                    await userManager.cards.update(interaction.user.id, card);
+
+                    // Let the user know the result
+                    card_f = cardManager.toString.basic(card);
+                    return await embedinator.send(`You removed a card from your vault:\n> ${card_f}`);
                 }
 
             case "team":

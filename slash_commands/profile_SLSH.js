@@ -12,7 +12,11 @@ module.exports = {
             .setDescription("View another player's profile"))
 
         .addBooleanOption(option => option.setName("compact")
-            .setDescription("Toggle to show less information in your profile")),
+            .setDescription("Toggle to show less information in your profile"))
+
+        .addStringOption(option => option.setName("biography")
+            .setDescription("Change your biography | use \"reset\" to remove")
+        ),
 
     /**
      * @param {Client} client
@@ -27,6 +31,21 @@ module.exports = {
         // Get interaction options
         let user = interaction.options.getUser("player") || interaction.user;
         let compact = interaction.options.getBoolean("compact") || false;
+        let biography = interaction.options.getString("biography"); biography &&= biography.trim();
+
+        // Change the user's profile biography if they gave a value
+        if (biography) {
+            // Update the user's biography in Mongo
+            await userManager.update(interaction.user.id, {
+                biography: biography.toLowerCase() === "reset" ? "" : biography
+            });
+
+            // Let the user know the result
+            let result = biography.toLowerCase() === "reset"
+                ? "Biography reset."
+                : `Your biography has been changed to:\n> ${biography}`;
+            return await embedinator.send(result);
+        }
 
         // Check if the given user exists in Mongo
         let userExists = await userManager.exists(user.id);

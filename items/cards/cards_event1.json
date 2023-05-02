@@ -1,5 +1,47 @@
 [
   {
+    "name": "Olivia Hye",
+    "group": "LOOΠΔ",
+    "single": "Egoist",
+    "category": "mint",
+    "description": "LOOΠΔ - Solo",
+    "emoji": "🐺",
+    "globalID": "1212",
+    "setID": "120",
+    "rarity": 12,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715778311368746/egoist_oliviahye.png"
+  },
+  {
+    "name": "Yves",
+    "group": "LOOΠΔ",
+    "single": "new",
+    "category": "mint",
+    "description": "LOOΠΔ - Solo",
+    "emoji": "🦢",
+    "globalID": "1209",
+    "setID": "120",
+    "rarity": 12,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715808933982239/new_yves.png"
+  },
+  {
     "name": "HeeJin",
     "group": "LOOΠΔ",
     "single": "ViViD",
@@ -40,48 +82,6 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715777556385812/aroundyou_hyunjin.png"
-  },
-  {
-    "name": "HaSeul",
-    "group": "LOOΠΔ",
-    "single": "Let Me In",
-    "category": "mint",
-    "description": "LOOΠΔ - Solo",
-    "emoji": "🐦",
-    "globalID": "1203",
-    "setID": "120",
-    "rarity": 12,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715808556490752/letmein_haseul.png"
-  },
-  {
-    "name": "YeoJin",
-    "group": "LOOΠΔ",
-    "single": "Kiss Later",
-    "category": "mint",
-    "description": "LOOΠΔ - Solo",
-    "emoji": "🐸",
-    "globalID": "1204",
-    "setID": "120",
-    "rarity": 12,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715807746990120/kisslater_yeojin.png"
   },
   {
     "name": "ViVi",
@@ -147,13 +147,13 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715809802203176/sitr_jinsoul.png"
   },
   {
-    "name": "Choerry",
+    "name": "Go Won",
     "group": "LOOΠΔ",
-    "single": "Love Cherry Motion",
+    "single": "One & Only",
     "category": "mint",
     "description": "LOOΠΔ - Solo",
-    "emoji": "🦇",
-    "globalID": "1208",
+    "emoji": "🦋",
+    "globalID": "1211",
     "setID": "120",
     "rarity": 12,
     "price": 10,
@@ -165,16 +165,16 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715808170618890/lcm_choerry.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715809357615144/oneonly_gowon.png"
   },
   {
-    "name": "Yves",
+    "name": "YeoJin",
     "group": "LOOΠΔ",
-    "single": "new",
+    "single": "Kiss Later",
     "category": "mint",
     "description": "LOOΠΔ - Solo",
-    "emoji": "🦢",
-    "globalID": "1209",
+    "emoji": "🐸",
+    "globalID": "1204",
     "setID": "120",
     "rarity": 12,
     "price": 10,
@@ -186,7 +186,7 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715808933982239/new_yves.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715807746990120/kisslater_yeojin.png"
   },
   {
     "name": "Chuu",
@@ -210,13 +210,13 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715807344349294/heartattack_chuu.png"
   },
   {
-    "name": "Go Won",
+    "name": "Choerry",
     "group": "LOOΠΔ",
-    "single": "One & Only",
+    "single": "Love Cherry Motion",
     "category": "mint",
     "description": "LOOΠΔ - Solo",
-    "emoji": "🦋",
-    "globalID": "1211",
+    "emoji": "🦇",
+    "globalID": "1208",
     "setID": "120",
     "rarity": 12,
     "price": 10,
@@ -228,16 +228,16 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715809357615144/oneonly_gowon.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715808170618890/lcm_choerry.png"
   },
   {
-    "name": "Olivia Hye",
+    "name": "HaSeul",
     "group": "LOOΠΔ",
-    "single": "Egoist",
+    "single": "Let Me In",
     "category": "mint",
     "description": "LOOΠΔ - Solo",
-    "emoji": "🐺",
-    "globalID": "1212",
+    "emoji": "🐦",
+    "globalID": "1203",
     "setID": "120",
     "rarity": 12,
     "price": 10,
@@ -249,7 +249,7 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715778311368746/egoist_oliviahye.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715808556490752/letmein_haseul.png"
   },
   {
     "name": "Doyoung",
@@ -591,7 +591,7 @@
     "name": "Hyuna",
     "group": "Trouble Maker",
     "single": "Trouble Maker",
-    "category": "mint",
+    "category": "unit",
     "description": "Trouble Maker - Trouble Maker",
     "emoji": "😟",
     "globalID": "2194",
@@ -612,7 +612,7 @@
     "name": "Hyunseung",
     "group": "Trouble Maker",
     "single": "Trouble Maker",
-    "category": "mint",
+    "category": "unit",
     "description": "Trouble Maker - Trouble Maker",
     "emoji": "😟",
     "globalID": "2195",
@@ -633,7 +633,7 @@
     "name": "Irene",
     "group": "Irene & Seulgi",
     "single": "Monster",
-    "category": "mint",
+    "category": "unit",
     "description": "Irene & Seulgi - Monster",
     "emoji": "👾",
     "globalID": "2192",
@@ -654,7 +654,7 @@
     "name": "Seulgi",
     "group": "Irene & Seulgi",
     "single": "Monster",
-    "category": "mint",
+    "category": "unit",
     "description": "Irene & Seulgi - Monster",
     "emoji": "👾",
     "globalID": "2193",
@@ -672,31 +672,10 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081972600831496304/monster_seulgi.png"
   },
   {
-    "name": "DK",
-    "group": "BSS",
-    "single": "Fighting",
-    "category": "mint",
-    "description": "BSS - Fighting",
-    "emoji": "🏃",
-    "globalID": "2189",
-    "setID": "234",
-    "rarity": 21,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081972449165443152/fighting_dk.png"
-  },
-  {
     "name": "Hoshi",
     "group": "BSS",
     "single": "Fighting",
-    "category": "mint",
+    "category": "unit",
     "description": "BSS - Fighting",
     "emoji": "🏃",
     "globalID": "2190",
@@ -714,10 +693,31 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081972449417105448/fighting_hoshi.png"
   },
   {
+    "name": "DK",
+    "group": "BSS",
+    "single": "Fighting",
+    "category": "unit",
+    "description": "BSS - Fighting",
+    "emoji": "🏃",
+    "globalID": "2189",
+    "setID": "234",
+    "rarity": 21,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081972449165443152/fighting_dk.png"
+  },
+  {
     "name": "Seungkwan",
     "group": "BSS",
     "single": "Fighting",
-    "category": "mint",
+    "category": "unit",
     "description": "BSS - Fighting",
     "emoji": "🏃",
     "globalID": "2191",
@@ -738,7 +738,7 @@
     "name": "Baekhyun",
     "group": "EXO-CBX",
     "single": "Blooming Day",
-    "category": "mint",
+    "category": "unit",
     "description": "EXO-CBX - Blooming Day",
     "emoji": "🧩",
     "globalID": "2186",
@@ -759,7 +759,7 @@
     "name": "Chen",
     "group": "EXO-CBX",
     "single": "Blooming Day",
-    "category": "mint",
+    "category": "unit",
     "description": "EXO-CBX - Blooming Day",
     "emoji": "🧩",
     "globalID": "2187",
@@ -780,7 +780,7 @@
     "name": "Xiumin",
     "group": "EXO-CBX",
     "single": "Blooming Day",
-    "category": "mint",
+    "category": "unit",
     "description": "EXO-CBX - Blooming Day",
     "emoji": "🧩",
     "globalID": "2188",

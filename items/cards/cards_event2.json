@@ -3,7 +3,7 @@
     "name": "Chanmi",
     "group": "AOA CREAM",
     "single": "I'm Jelly BABY",
-    "category": "mint",
+    "category": "unit",
     "description": "AOA CREAM - I'm Jelly BABY",
     "emoji": "🍨",
     "globalID": "2183",
@@ -24,7 +24,7 @@
     "name": "Hyejeong",
     "group": "AOA CREAM",
     "single": "I'm Jelly BABY",
-    "category": "mint",
+    "category": "unit",
     "description": "AOA CREAM - I'm Jelly BABY",
     "emoji": "🍨",
     "globalID": "2184",
@@ -45,7 +45,7 @@
     "name": "Yuna",
     "group": "AOA CREAM",
     "single": "I'm Jelly BABY",
-    "category": "mint",
+    "category": "unit",
     "description": "AOA CREAM - I'm Jelly BABY",
     "emoji": "🍨",
     "globalID": "2185",
@@ -61,6 +61,111 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1081972553133858887/ijb_yuna.png"
+  },
+  {
+    "name": "Yuta",
+    "group": "NCT U",
+    "single": "Work It",
+    "category": "nctu",
+    "description": "NCT U - Work It",
+    "emoji": "🕺",
+    "globalID": "2151",
+    "setID": "237",
+    "rarity": 23,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079431262974001193/workit_yuta.png"
+  },
+  {
+    "name": "Johnny",
+    "group": "NCT U",
+    "single": "Work It",
+    "category": "nctu",
+    "description": "NCT U - Work It",
+    "emoji": "🕺",
+    "globalID": "2148",
+    "setID": "237",
+    "rarity": 23,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079431262126743653/workit_johnny.png"
+  },
+  {
+    "name": "Ten",
+    "group": "NCT U",
+    "single": "Work It",
+    "category": "nctu",
+    "description": "NCT U - Work It",
+    "emoji": "🕺",
+    "globalID": "2150",
+    "setID": "237",
+    "rarity": 23,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079431262634254457/workit_ten.png"
+  },
+  {
+    "name": "Jisung",
+    "group": "NCT U",
+    "single": "Work It",
+    "category": "nctu",
+    "description": "NCT U - Work It",
+    "emoji": "🕺",
+    "globalID": "2147",
+    "setID": "237",
+    "rarity": 23,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079431261849915402/workit_jisung.png"
+  },
+  {
+    "name": "Jungwoo",
+    "group": "NCT U",
+    "single": "Work It",
+    "category": "nctu",
+    "description": "NCT U - Work It",
+    "emoji": "🕺",
+    "globalID": "2149",
+    "setID": "237",
+    "rarity": 23,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079431262390992996/workit_jungwoo.png"
   },
   {
     "name": "Hendery",
@@ -105,118 +210,13 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079431261552124034/workit_jaemin.png"
   },
   {
-    "name": "Jisung",
-    "group": "NCT U",
-    "single": "Work It",
-    "category": "nctu",
-    "description": "NCT U - Work It",
-    "emoji": "🕺",
-    "globalID": "2147",
-    "setID": "237",
-    "rarity": 23,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079431261849915402/workit_jisung.png"
-  },
-  {
-    "name": "Johnny",
-    "group": "NCT U",
-    "single": "Work It",
-    "category": "nctu",
-    "description": "NCT U - Work It",
-    "emoji": "🕺",
-    "globalID": "2148",
-    "setID": "237",
-    "rarity": 23,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079431262126743653/workit_johnny.png"
-  },
-  {
-    "name": "Jungwoo",
-    "group": "NCT U",
-    "single": "Work It",
-    "category": "nctu",
-    "description": "NCT U - Work It",
-    "emoji": "🕺",
-    "globalID": "2149",
-    "setID": "237",
-    "rarity": 23,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079431262390992996/workit_jungwoo.png"
-  },
-  {
-    "name": "Ten",
-    "group": "NCT U",
-    "single": "Work It",
-    "category": "nctu",
-    "description": "NCT U - Work It",
-    "emoji": "🕺",
-    "globalID": "2150",
-    "setID": "237",
-    "rarity": 23,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079431262634254457/workit_ten.png"
-  },
-  {
-    "name": "Yuta",
-    "group": "NCT U",
-    "single": "Work It",
-    "category": "nctu",
-    "description": "NCT U - Work It",
-    "emoji": "🕺",
-    "globalID": "2151",
-    "setID": "237",
-    "rarity": 23,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079431262974001193/workit_yuta.png"
-  },
-  {
-    "name": "Doyoung",
+    "name": "Mark",
     "group": "NCT U",
     "single": "BOSS",
     "category": "nctu",
     "description": "NCT U - BOSS",
     "emoji": "💪",
-    "globalID": "2138",
+    "globalID": "2142",
     "setID": "238",
     "rarity": 23,
     "price": 10,
@@ -228,7 +228,7 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079431150491156601/boss_doyoung.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079431151464222740/boss_mark.png"
   },
   {
     "name": "Jaehyun",
@@ -273,6 +273,27 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079431150986088458/boss_jungwoo.png"
   },
   {
+    "name": "Winwin",
+    "group": "NCT U",
+    "single": "BOSS",
+    "category": "nctu",
+    "description": "NCT U - BOSS",
+    "emoji": "💪",
+    "globalID": "2144",
+    "setID": "238",
+    "rarity": 23,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079431151984328904/boss_winwin.png"
+  },
+  {
     "name": "Lucas",
     "group": "NCT U",
     "single": "BOSS",
@@ -292,27 +313,6 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079431151246131310/boss_lucas.png"
-  },
-  {
-    "name": "Mark",
-    "group": "NCT U",
-    "single": "BOSS",
-    "category": "nctu",
-    "description": "NCT U - BOSS",
-    "emoji": "💪",
-    "globalID": "2142",
-    "setID": "238",
-    "rarity": 23,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079431151464222740/boss_mark.png"
   },
   {
     "name": "Taeyong",
@@ -336,13 +336,13 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079431151699120150/boss_taeyong.png"
   },
   {
-    "name": "Winwin",
+    "name": "Doyoung",
     "group": "NCT U",
     "single": "BOSS",
     "category": "nctu",
     "description": "NCT U - BOSS",
     "emoji": "💪",
-    "globalID": "2144",
+    "globalID": "2138",
     "setID": "238",
     "rarity": 23,
     "price": 10,
@@ -354,28 +354,7 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079431151984328904/boss_winwin.png"
-  },
-  {
-    "name": "Chaehyun",
-    "group": "Kep1er",
-    "single": "WA DA DA",
-    "category": "mint",
-    "description": "Kep1er - WA DA DA",
-    "emoji": "🔭",
-    "globalID": "2129",
-    "setID": "239",
-    "rarity": 24,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078267783782420/Chaehyun_Wadada.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079431150491156601/boss_doyoung.png"
   },
   {
     "name": "Dayeon",
@@ -399,6 +378,27 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078268341616670/Dayeon_Wadada.png"
   },
   {
+    "name": "Yujin",
+    "group": "Kep1er",
+    "single": "WA DA DA",
+    "category": "mint",
+    "description": "Kep1er - WA DA DA",
+    "emoji": "🔭",
+    "globalID": "2136",
+    "setID": "239",
+    "rarity": 24,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078267481796679/Yujin_Wadada.png"
+  },
+  {
     "name": "Hikaru",
     "group": "Kep1er",
     "single": "WA DA DA",
@@ -420,6 +420,27 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078268677173359/Hikaru_Wadada.png"
   },
   {
+    "name": "Chaehyun",
+    "group": "Kep1er",
+    "single": "WA DA DA",
+    "category": "mint",
+    "description": "Kep1er - WA DA DA",
+    "emoji": "🔭",
+    "globalID": "2129",
+    "setID": "239",
+    "rarity": 24,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078267783782420/Chaehyun_Wadada.png"
+  },
+  {
     "name": "Huening Bahiyyih",
     "group": "Kep1er",
     "single": "WA DA DA",
@@ -439,6 +460,27 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078266290602055/Huening_Bahiyyih_Wadada.png"
+  },
+  {
+    "name": "Youngeun",
+    "group": "Kep1er",
+    "single": "WA DA DA",
+    "category": "mint",
+    "description": "Kep1er - WA DA DA",
+    "emoji": "🔭",
+    "globalID": "2135",
+    "setID": "239",
+    "rarity": 24,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078267192377494/Youngeun_Wadada.png"
   },
   {
     "name": "Mashiro",
@@ -483,48 +525,6 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078266554855494/Xiaoting_Wadada.png"
   },
   {
-    "name": "Youngeun",
-    "group": "Kep1er",
-    "single": "WA DA DA",
-    "category": "mint",
-    "description": "Kep1er - WA DA DA",
-    "emoji": "🔭",
-    "globalID": "2135",
-    "setID": "239",
-    "rarity": 24,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078267192377494/Youngeun_Wadada.png"
-  },
-  {
-    "name": "Yujin",
-    "group": "Kep1er",
-    "single": "WA DA DA",
-    "category": "mint",
-    "description": "Kep1er - WA DA DA",
-    "emoji": "🔭",
-    "globalID": "2136",
-    "setID": "239",
-    "rarity": 24,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078267481796679/Yujin_Wadada.png"
-  },
-  {
     "name": "Yeseo",
     "group": "Kep1er",
     "single": "WA DA DA",
@@ -546,6 +546,27 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078266819092480/Yeseo_Wadada.png"
   },
   {
+    "name": "Yuri",
+    "group": "IZ\\*ONE",
+    "single": "La Vie en Rose",
+    "category": "mint",
+    "description": "I\\*ZONE - La Vie en Rose",
+    "emoji": "🌹",
+    "globalID": "2128",
+    "setID": "240",
+    "rarity": 24,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078378140127352/lavienrose_Yuri.png"
+  },
+  {
     "name": "Chaewon",
     "group": "IZ\\*ONE",
     "single": "La Vie en Rose",
@@ -565,27 +586,6 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078268953993397/lavienrose_Chaewon.png"
-  },
-  {
-    "name": "Chaeyeon",
-    "group": "IZ\\*ONE",
-    "single": "La Vie en Rose",
-    "category": "mint",
-    "description": "I\\*ZONE - La Vie en Rose",
-    "emoji": "🌹",
-    "globalID": "2118",
-    "setID": "240",
-    "rarity": 24,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078363866902620/lavienrose_Chaeyeon.png"
   },
   {
     "name": "Eunbi",
@@ -630,69 +630,6 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078364437336135/lavienrose_Hitomi.png"
   },
   {
-    "name": "Hyewon",
-    "group": "IZ\\*ONE",
-    "single": "La Vie en Rose",
-    "category": "mint",
-    "description": "I\\*ZONE - La Vie en Rose",
-    "emoji": "🌹",
-    "globalID": "2121",
-    "setID": "240",
-    "rarity": 24,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078364760285214/lavienrose_Hyewon.png"
-  },
-  {
-    "name": "Minju",
-    "group": "IZ\\*ONE",
-    "single": "La Vie en Rose",
-    "category": "mint",
-    "description": "I\\*ZONE - La Vie en Rose",
-    "emoji": "🌹",
-    "globalID": "2122",
-    "setID": "240",
-    "rarity": 24,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078365066481754/lavienrose_Minju.png"
-  },
-  {
-    "name": "Nako",
-    "group": "IZ\\*ONE",
-    "single": "La Vie en Rose",
-    "category": "mint",
-    "description": "I\\*ZONE - La Vie en Rose",
-    "emoji": "🌹",
-    "globalID": "2123",
-    "setID": "240",
-    "rarity": 24,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078365334908928/lavienrose_Nako.png"
-  },
-  {
     "name": "Sakura",
     "group": "IZ\\*ONE",
     "single": "La Vie en Rose",
@@ -712,48 +649,6 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078365657866312/lavienrose_Sakura.png"
-  },
-  {
-    "name": "Wonyoung",
-    "group": "IZ\\*ONE",
-    "single": "La Vie en Rose",
-    "category": "mint",
-    "description": "I\\*ZONE - La Vie en Rose",
-    "emoji": "🌹",
-    "globalID": "2125",
-    "setID": "240",
-    "rarity": 24,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078365909536818/lavienrose_Wonyoung.png"
-  },
-  {
-    "name": "Yena",
-    "group": "IZ\\*ONE",
-    "single": "La Vie en Rose",
-    "category": "mint",
-    "description": "I\\*ZONE - La Vie en Rose",
-    "emoji": "🌹",
-    "globalID": "2126",
-    "setID": "240",
-    "rarity": 24,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078366278627418/lavienrose_Yena.png"
   },
   {
     "name": "Yujin",
@@ -777,13 +672,13 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078366534475947/lavienrose_Yujin.png"
   },
   {
-    "name": "Yuri",
+    "name": "Hyewon",
     "group": "IZ\\*ONE",
     "single": "La Vie en Rose",
     "category": "mint",
     "description": "I\\*ZONE - La Vie en Rose",
     "emoji": "🌹",
-    "globalID": "2128",
+    "globalID": "2121",
     "setID": "240",
     "rarity": 24,
     "price": 10,
@@ -795,18 +690,18 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078378140127352/lavienrose_Yuri.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078364760285214/lavienrose_Hyewon.png"
   },
   {
-    "name": "BoA",
-    "group": "GOT the beat",
-    "single": "Step Back",
+    "name": "Nako",
+    "group": "IZ\\*ONE",
+    "single": "La Vie en Rose",
     "category": "mint",
-    "description": "GOT the beat - Step Back",
-    "emoji": "😠️",
-    "globalID": "2079",
-    "setID": "242",
-    "rarity": 26,
+    "description": "I\\*ZONE - La Vie en Rose",
+    "emoji": "🌹",
+    "globalID": "2123",
+    "setID": "240",
+    "rarity": 24,
     "price": 10,
     "sellPrice": 10,
     "stats": {
@@ -816,18 +711,18 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1046093962152247317/stepback_boa.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078365334908928/lavienrose_Nako.png"
   },
   {
-    "name": "Hyoyeon",
-    "group": "GOT the beat",
-    "single": "Step Back",
+    "name": "Minju",
+    "group": "IZ\\*ONE",
+    "single": "La Vie en Rose",
     "category": "mint",
-    "description": "GOT the beat - Step Back",
-    "emoji": "😠️",
-    "globalID": "2080",
-    "setID": "242",
-    "rarity": 26,
+    "description": "I\\*ZONE - La Vie en Rose",
+    "emoji": "🌹",
+    "globalID": "2122",
+    "setID": "240",
+    "rarity": 24,
     "price": 10,
     "sellPrice": 10,
     "stats": {
@@ -837,18 +732,18 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1046093962445869136/stepback_hyoyeon.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078365066481754/lavienrose_Minju.png"
   },
   {
-    "name": "Karina",
-    "group": "GOT the beat",
-    "single": "Step Back",
+    "name": "Yena",
+    "group": "IZ\\*ONE",
+    "single": "La Vie en Rose",
     "category": "mint",
-    "description": "GOT the beat - Step Back",
-    "emoji": "😠️",
-    "globalID": "2081",
-    "setID": "242",
-    "rarity": 26,
+    "description": "I\\*ZONE - La Vie en Rose",
+    "emoji": "🌹",
+    "globalID": "2126",
+    "setID": "240",
+    "rarity": 24,
     "price": 10,
     "sellPrice": 10,
     "stats": {
@@ -858,18 +753,18 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1046093962773008525/stepback_karina.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078366278627418/lavienrose_Yena.png"
   },
   {
-    "name": "Seulgi",
-    "group": "GOT the beat",
-    "single": "Step Back",
+    "name": "Chaeyeon",
+    "group": "IZ\\*ONE",
+    "single": "La Vie en Rose",
     "category": "mint",
-    "description": "GOT the beat - Step Back",
-    "emoji": "😠️",
-    "globalID": "2082",
-    "setID": "242",
-    "rarity": 26,
+    "description": "I\\*ZONE - La Vie en Rose",
+    "emoji": "🌹",
+    "globalID": "2118",
+    "setID": "240",
+    "rarity": 24,
     "price": 10,
     "sellPrice": 10,
     "stats": {
@@ -879,7 +774,28 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1046093963108548679/stepback_seulgi.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078363866902620/lavienrose_Chaeyeon.png"
+  },
+  {
+    "name": "Wonyoung",
+    "group": "IZ\\*ONE",
+    "single": "La Vie en Rose",
+    "category": "mint",
+    "description": "I\\*ZONE - La Vie en Rose",
+    "emoji": "🌹",
+    "globalID": "2125",
+    "setID": "240",
+    "rarity": 24,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066078365909536818/lavienrose_Wonyoung.png"
   },
   {
     "name": "Taeyeon",
@@ -924,6 +840,48 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1046093963750281216/stepback_wendy.png"
   },
   {
+    "name": "Karina",
+    "group": "GOT the beat",
+    "single": "Step Back",
+    "category": "mint",
+    "description": "GOT the beat - Step Back",
+    "emoji": "😠️",
+    "globalID": "2081",
+    "setID": "242",
+    "rarity": 26,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1046093962773008525/stepback_karina.png"
+  },
+  {
+    "name": "Seulgi",
+    "group": "GOT the beat",
+    "single": "Step Back",
+    "category": "mint",
+    "description": "GOT the beat - Step Back",
+    "emoji": "😠️",
+    "globalID": "2082",
+    "setID": "242",
+    "rarity": 26,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1046093963108548679/stepback_seulgi.png"
+  },
+  {
     "name": "Winter",
     "group": "GOT the beat",
     "single": "Step Back",
@@ -943,6 +901,69 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1046093964073238558/stepback_winter.png"
+  },
+  {
+    "name": "BoA",
+    "group": "GOT the beat",
+    "single": "Step Back",
+    "category": "mint",
+    "description": "GOT the beat - Step Back",
+    "emoji": "😠️",
+    "globalID": "2079",
+    "setID": "242",
+    "rarity": 26,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1046093962152247317/stepback_boa.png"
+  },
+  {
+    "name": "Hyoyeon",
+    "group": "GOT the beat",
+    "single": "Step Back",
+    "category": "mint",
+    "description": "GOT the beat - Step Back",
+    "emoji": "😠️",
+    "globalID": "2080",
+    "setID": "242",
+    "rarity": 26,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1046093962445869136/stepback_hyoyeon.png"
+  },
+  {
+    "name": "Lucas",
+    "group": "SuperM",
+    "single": "Jopping",
+    "category": "mint",
+    "description": "SuperM - Jopping",
+    "emoji": "🤸‍♂️",
+    "globalID": "2074",
+    "setID": "243",
+    "rarity": 26,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1046093904442839111/jopping_lucas.png"
   },
   {
     "name": "Baekhyun",
@@ -987,48 +1008,6 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1046093904149229640/jopping_kai.png"
   },
   {
-    "name": "Lucas",
-    "group": "SuperM",
-    "single": "Jopping",
-    "category": "mint",
-    "description": "SuperM - Jopping",
-    "emoji": "🤸‍♂️",
-    "globalID": "2074",
-    "setID": "243",
-    "rarity": 26,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1046093904442839111/jopping_lucas.png"
-  },
-  {
-    "name": "Mark",
-    "group": "SuperM",
-    "single": "Jopping",
-    "category": "mint",
-    "description": "SuperM - Jopping",
-    "emoji": "🤸‍♂️",
-    "globalID": "2075",
-    "setID": "243",
-    "rarity": 26,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1046093904749010984/jopping_mark.png"
-  },
-  {
     "name": "Taemin",
     "group": "SuperM",
     "single": "Jopping",
@@ -1048,27 +1027,6 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1046093905034227752/jopping_taemin.png"
-  },
-  {
-    "name": "Taeyong",
-    "group": "SuperM",
-    "single": "Jopping",
-    "category": "mint",
-    "description": "SuperM - Jopping",
-    "emoji": "🤸‍♂️",
-    "globalID": "2077",
-    "setID": "243",
-    "rarity": 26,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1046093905348808785/jopping_taeyong.png"
   },
   {
     "name": "Ten",
@@ -1092,15 +1050,15 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1046093905650786444/jopping_ten.png"
   },
   {
-    "name": "Chenle",
-    "group": "NCT 2018",
-    "single": "EMPATHY",
+    "name": "Taeyong",
+    "group": "SuperM",
+    "single": "Jopping",
     "category": "mint",
-    "description": "NCT 2018 - EMPATHY",
-    "emoji": "🌈",
-    "globalID": "2054",
-    "setID": "244",
-    "rarity": 27,
+    "description": "SuperM - Jopping",
+    "emoji": "🤸‍♂️",
+    "globalID": "2077",
+    "setID": "243",
+    "rarity": 26,
     "price": 10,
     "sellPrice": 10,
     "stats": {
@@ -1110,18 +1068,18 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1045074646418063420/empathy_chenle.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1046093905348808785/jopping_taeyong.png"
   },
   {
-    "name": "Doyoung",
-    "group": "NCT 2018",
-    "single": "EMPATHY",
+    "name": "Mark",
+    "group": "SuperM",
+    "single": "Jopping",
     "category": "mint",
-    "description": "NCT 2018 - EMPATHY",
-    "emoji": "🌈",
-    "globalID": "2055",
-    "setID": "244",
-    "rarity": 27,
+    "description": "SuperM - Jopping",
+    "emoji": "🤸‍♂️",
+    "globalID": "2075",
+    "setID": "243",
+    "rarity": 26,
     "price": 10,
     "sellPrice": 10,
     "stats": {
@@ -1131,28 +1089,7 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1045074646762004661/empathy_doyoung.png"
-  },
-  {
-    "name": "Haechan",
-    "group": "NCT 2018",
-    "single": "EMPATHY",
-    "category": "mint",
-    "description": "NCT 2018 - EMPATHY",
-    "emoji": "🌈",
-    "globalID": "2056",
-    "setID": "244",
-    "rarity": 27,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1045074647072391300/empathy_haechan.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1046093904749010984/jopping_mark.png"
   },
   {
     "name": "Jaehyun",
@@ -1197,27 +1134,6 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1045074647777026148/empathy_jaemin.png"
   },
   {
-    "name": "Jeno",
-    "group": "NCT 2018",
-    "single": "EMPATHY",
-    "category": "mint",
-    "description": "NCT 2018 - EMPATHY",
-    "emoji": "🌈",
-    "globalID": "2059",
-    "setID": "244",
-    "rarity": 27,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1045074648204853248/empathy_jeno.png"
-  },
-  {
     "name": "Jisung",
     "group": "NCT 2018",
     "single": "EMPATHY",
@@ -1260,13 +1176,13 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1045074648871739402/empathy_johnny.png"
   },
   {
-    "name": "Jungwoo",
+    "name": "Yuta",
     "group": "NCT 2018",
     "single": "EMPATHY",
     "category": "mint",
     "description": "NCT 2018 - EMPATHY",
     "emoji": "🌈",
-    "globalID": "2062",
+    "globalID": "2071",
     "setID": "244",
     "rarity": 27,
     "price": 10,
@@ -1278,7 +1194,28 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1045074649123405886/empathy_jungwoo.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1045074747106529320/empathy_yuta.png"
+  },
+  {
+    "name": "Doyoung",
+    "group": "NCT 2018",
+    "single": "EMPATHY",
+    "category": "mint",
+    "description": "NCT 2018 - EMPATHY",
+    "emoji": "🌈",
+    "globalID": "2055",
+    "setID": "244",
+    "rarity": 27,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1045074646762004661/empathy_doyoung.png"
   },
   {
     "name": "Kun",
@@ -1302,27 +1239,6 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1045074649572180050/empathy_kun.png"
   },
   {
-    "name": "Lucas",
-    "group": "NCT 2018",
-    "single": "EMPATHY",
-    "category": "mint",
-    "description": "NCT 2018 - EMPATHY",
-    "emoji": "🌈",
-    "globalID": "2064",
-    "setID": "244",
-    "rarity": 27,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1045074744803872878/empathy_lucas.png"
-  },
-  {
     "name": "Mark",
     "group": "NCT 2018",
     "single": "EMPATHY",
@@ -1342,6 +1258,69 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1045074745151983626/empathy_mark.png"
+  },
+  {
+    "name": "Haechan",
+    "group": "NCT 2018",
+    "single": "EMPATHY",
+    "category": "mint",
+    "description": "NCT 2018 - EMPATHY",
+    "emoji": "🌈",
+    "globalID": "2056",
+    "setID": "244",
+    "rarity": 27,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1045074647072391300/empathy_haechan.png"
+  },
+  {
+    "name": "Taeil",
+    "group": "NCT 2018",
+    "single": "EMPATHY",
+    "category": "mint",
+    "description": "NCT 2018 - EMPATHY",
+    "emoji": "🌈",
+    "globalID": "2067",
+    "setID": "244",
+    "rarity": 27,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1045074745835671634/empathy_taeil.png"
+  },
+  {
+    "name": "Jungwoo",
+    "group": "NCT 2018",
+    "single": "EMPATHY",
+    "category": "mint",
+    "description": "NCT 2018 - EMPATHY",
+    "emoji": "🌈",
+    "globalID": "2062",
+    "setID": "244",
+    "rarity": 27,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1045074649123405886/empathy_jungwoo.png"
   },
   {
     "name": "Renjun",
@@ -1365,13 +1344,13 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1045074745474957393/empathy_renjun.png"
   },
   {
-    "name": "Taeil",
+    "name": "Chenle",
     "group": "NCT 2018",
     "single": "EMPATHY",
     "category": "mint",
     "description": "NCT 2018 - EMPATHY",
     "emoji": "🌈",
-    "globalID": "2067",
+    "globalID": "2054",
     "setID": "244",
     "rarity": 27,
     "price": 10,
@@ -1383,7 +1362,49 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1045074745835671634/empathy_taeil.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1045074646418063420/empathy_chenle.png"
+  },
+  {
+    "name": "Jeno",
+    "group": "NCT 2018",
+    "single": "EMPATHY",
+    "category": "mint",
+    "description": "NCT 2018 - EMPATHY",
+    "emoji": "🌈",
+    "globalID": "2059",
+    "setID": "244",
+    "rarity": 27,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1045074648204853248/empathy_jeno.png"
+  },
+  {
+    "name": "Lucas",
+    "group": "NCT 2018",
+    "single": "EMPATHY",
+    "category": "mint",
+    "description": "NCT 2018 - EMPATHY",
+    "emoji": "🌈",
+    "globalID": "2064",
+    "setID": "244",
+    "rarity": 27,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1045074744803872878/empathy_lucas.png"
   },
   {
     "name": "Taeyong",
@@ -1449,15 +1470,15 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1045074746796167188/empathy_winwin.png"
   },
   {
-    "name": "Yuta",
-    "group": "NCT 2018",
-    "single": "EMPATHY",
-    "category": "mint",
-    "description": "NCT 2018 - EMPATHY",
-    "emoji": "🌈",
-    "globalID": "2071",
-    "setID": "244",
-    "rarity": 27,
+    "name": "Lucas",
+    "group": "NCT U",
+    "single": "Make a Wish",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🧞",
+    "globalID": "2049",
+    "setID": "245",
+    "rarity": 28,
     "price": 10,
     "sellPrice": 10,
     "stats": {
@@ -1467,7 +1488,28 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1045074747106529320/empathy_yuta.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345992328552531/maw_lucas.png"
+  },
+  {
+    "name": "Shotaro",
+    "group": "NCT U",
+    "single": "Make a Wish",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🧞",
+    "globalID": "2050",
+    "setID": "245",
+    "rarity": 28,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345992672489492/maw_shotaro.png"
   },
   {
     "name": "Doyoung",
@@ -1489,6 +1531,27 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345991217061899/maw_doyoung.png"
+  },
+  {
+    "name": "Xiaojun",
+    "group": "NCT U",
+    "single": "Make a Wish",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🧞",
+    "globalID": "2052",
+    "setID": "245",
+    "rarity": 28,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345993255493652/maw_xiaojun.png"
   },
   {
     "name": "Jaehyun",
@@ -1533,48 +1596,6 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345991930097775/maw_jaemin.png"
   },
   {
-    "name": "Lucas",
-    "group": "NCT U",
-    "single": "Make a Wish",
-    "category": "nctu",
-    "description": "Event - NCT U",
-    "emoji": "🧞",
-    "globalID": "2049",
-    "setID": "245",
-    "rarity": 28,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345992328552531/maw_lucas.png"
-  },
-  {
-    "name": "Shotaro",
-    "group": "NCT U",
-    "single": "Make a Wish",
-    "category": "nctu",
-    "description": "Event - NCT U",
-    "emoji": "🧞",
-    "globalID": "2050",
-    "setID": "245",
-    "rarity": 28,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345992672489492/maw_shotaro.png"
-  },
-  {
     "name": "Taeyong",
     "group": "NCT U",
     "single": "Make a Wish",
@@ -1594,48 +1615,6 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345992966078504/maw_taeyong.png"
-  },
-  {
-    "name": "Xiaojun",
-    "group": "NCT U",
-    "single": "Make a Wish",
-    "category": "nctu",
-    "description": "Event - NCT U",
-    "emoji": "🧞",
-    "globalID": "2052",
-    "setID": "245",
-    "rarity": 28,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345993255493652/maw_xiaojun.png"
-  },
-  {
-    "name": "Jeno",
-    "group": "NCT U",
-    "single": "90's Love",
-    "category": "nctu",
-    "description": "Event - NCT U",
-    "emoji": "🏒",
-    "globalID": "2040",
-    "setID": "246",
-    "rarity": 28,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345940990279810/90slove_jeno.png"
   },
   {
     "name": "Mark",
@@ -1659,13 +1638,13 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345941552320562/90slove_mark.png"
   },
   {
-    "name": "Sungchan",
+    "name": "Haechan",
     "group": "NCT U",
     "single": "90's Love",
     "category": "nctu",
     "description": "Event - NCT U",
     "emoji": "🏒",
-    "globalID": "2042",
+    "globalID": "2053",
     "setID": "246",
     "rarity": 28,
     "price": 10,
@@ -1677,16 +1656,16 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345941946585119/90slove_sungchan.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031532687686635560/90slove_haechan.png"
   },
   {
-    "name": "Ten",
+    "name": "Jeno",
     "group": "NCT U",
     "single": "90's Love",
     "category": "nctu",
     "description": "Event - NCT U",
     "emoji": "🏒",
-    "globalID": "2043",
+    "globalID": "2040",
     "setID": "246",
     "rarity": 28,
     "price": 10,
@@ -1698,7 +1677,7 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345942345039932/90slove_ten.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345940990279810/90slove_jeno.png"
   },
   {
     "name": "Winwin",
@@ -1722,6 +1701,48 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345942684782643/90slove_winwin.png"
   },
   {
+    "name": "Ten",
+    "group": "NCT U",
+    "single": "90's Love",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🏒",
+    "globalID": "2043",
+    "setID": "246",
+    "rarity": 28,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345942345039932/90slove_ten.png"
+  },
+  {
+    "name": "Sungchan",
+    "group": "NCT U",
+    "single": "90's Love",
+    "category": "nctu",
+    "description": "Event - NCT U",
+    "emoji": "🏒",
+    "globalID": "2042",
+    "setID": "246",
+    "rarity": 28,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345941946585119/90slove_sungchan.png"
+  },
+  {
     "name": "Yangyang",
     "group": "NCT U",
     "single": "90's Love",
@@ -1741,26 +1762,5 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031345943108407397/90slove_yangyang.png"
-  },
-  {
-    "name": "Haechan",
-    "group": "NCT U",
-    "single": "90's Love",
-    "category": "nctu",
-    "description": "Event - NCT U",
-    "emoji": "🏒",
-    "globalID": "2053",
-    "setID": "246",
-    "rarity": 28,
-    "price": 10,
-    "sellPrice": 10,
-    "stats": {
-      "level": 1,
-      "xp": 0,
-      "xp_for_next_level": 100,
-      "ability": 100,
-      "reputation": 100
-    },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1031532687686635560/90slove_haechan.png"
   }
 ]
