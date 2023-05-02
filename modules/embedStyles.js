@@ -202,7 +202,7 @@ function userCooldowns_ES(user, userData) {
         return "\`%VISUAL %NAME:\` %AVAILABILITY"
             .replace("%VISUAL", cooldownETA ? "❌" : "✔️")
             .replace("%NAME", stringTools.toTitleCase(cooldown.name.replace(/_/g, " ")))
-            .replace("%AVAILABILITY", bold(cooldownETA
+            .replace("%AVAILABILITY", bold(true, cooldownETA
                 ? `<t:${numberTools.milliToSeconds(cooldown.timestamp)}:${TimestampStyles.RelativeTime}>`
                 : "Available"));
     });
@@ -307,61 +307,6 @@ function userProfile_ES(user, userData) {
             favorite: card_favorite ? true : false
         }
     };
-
-    /* let embed = new EmbedBuilder()
-        .setAuthor({ name: `${user.username} | profile`, iconURL: user.avatarURL({ dynamic: true }) })
-        .setThumbnail(user.avatarURL({ dynamic: true }))
-        .setColor(botSettings.embedColor || null);
-
-    if (userData.biography) embed.addFields({ name: "\`👤\` Biography", value: userData.biography });
-
-    let profile_info = "\`🥕 %BALANCE\` :: \`🃏 %CARD_TOTAL\` :: \`🎚️ LV. %LEVEL\`"
-        .replace("%BALANCE", userData.balance)
-        .replace("%CARD_TOTAL", `${userData.card_inventory.length}/${cardManager.cardTotal}`)
-        .replace("%LEVEL", userData.level);
-
-    embed.addFields([{ name: "\`📄\` Information", value: quote(true, profile_info) }]); */
-
-    /* // Add the user's badges if they have them
-    if (userData.badges.length > 0) {
-        // Convert the BadgeLike objects to full badges
-        let badges = userData.badges.map(badge => badgeManager.parse.fromBadgeLike(badge));
-        let badges_f = badges.map(badge => badgeManager.toString.profile(badge));
-        
-        // Have a max of 8 badges per line
-        badges_f = arrayTools.chunk(badges_f, 3);
-
-        // Parse the chunks into an array of strings
-        badges_f = badges_f.map(chunk_badges => quote(true, chunk_badges.join(" ")));
-
-        embed.addFields([{ name: "\`📛\` Badges", value: badges_f.join("\n") }]);
-    }
-
-    if (!compactMode) {
-        let card_selected = userParser.cards.get(userData.card_inventory, userData.card_selected_uid);
-        if (card_selected) {
-            let card_selected_isFavorited = (card_selected.uid === userData.card_favorite_uid)
-            let card_selected_f = cardManager.toString.inventory(card_selected, {
-                favorited: card_selected_isFavorited, selected: true
-            });
-
-            embed.addFields({ name: "\`📄\` Stage", value: quote(card_selected_f) });
-        }
-
-        let card_favorite = userParser.cards.get(userData.card_inventory, userData.card_favorite_uid);
-        if (card_favorite) {
-            let card_favorite_f = cardManager.toString.inventory(card_favorite, {
-                favorited: true, selected: card_selected
-            });
-
-            embed.addFields({ name: "\`🌟\` Favorite", value: quote(card_favorite_f) });
-
-            // Add the card's image to the user's profile
-            if (card_favorite.imageURL) embed.setImage(card_favorite.imageURL);
-        }
-    }
-
-    return embed; */
 }
 
 // Command -> User -> /INVENTORY
