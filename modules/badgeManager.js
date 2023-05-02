@@ -4,8 +4,19 @@ const { botSettings } = require('../configs/heejinSettings.json');
 const { markdown } = require('./discordTools');
 const { bold, italic, inline, quote, link, space } = markdown;
 
-function get(id) {
+function getBadgeByID(id) {
     return badges.find(badge => badge.id === id) || null;
+}
+
+function parse_toBadgeLike(badge) {
+    return {
+        id: badge.id,
+        setID: badge.setID,
+    }
+}
+
+function parse_fromBadgeLike(badgeLike) {
+    return { ...getBadgeByID(badgeLike.id), ...badgeLike };
 }
 
 function toString(badge) {
@@ -20,4 +31,14 @@ function toString(badge) {
         .replace("%CATEGORY", inline(true, badge.category));
 }
 
-module.exports = { badges, get, toString };
+module.exports = {
+    badges,
+
+    get: getBadgeByID,
+    toString,
+
+    parse: {
+        toBadgeLike: parse_toBadgeLike,
+        fromBadgeLike: parse_fromBadgeLike
+    }
+};

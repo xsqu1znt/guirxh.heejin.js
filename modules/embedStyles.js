@@ -213,11 +213,6 @@ function userCooldowns_ES(user, userData) {
 
 // Command -> User -> /PROFILE
 function userProfile_ES(user, userData, compactMode = false) {
-    let profile_info = "\`🥕 %BALANCE\` :: \`🃏 %CARD_TOTAL\` :: \`🎚️ LV. %LEVEL\`"
-        .replace("%BALANCE", userData.balance)
-        .replace("%CARD_TOTAL", `${userData.card_inventory.length}/${cardManager.cardTotal}`)
-        .replace("%LEVEL", userData.level);
-
     let embed = new EmbedBuilder()
         .setAuthor({ name: `${user.username} | profile`, iconURL: user.avatarURL({ dynamic: true }) })
         .setThumbnail(user.avatarURL({ dynamic: true }))
@@ -225,7 +220,21 @@ function userProfile_ES(user, userData, compactMode = false) {
 
     if (userData.biography) embed.addFields({ name: "\`👤\` Biography", value: userData.biography });
 
+    let profile_info = "\`🥕 %BALANCE\` :: \`🃏 %CARD_TOTAL\` :: \`🎚️ LV. %LEVEL\`"
+        .replace("%BALANCE", userData.balance)
+        .replace("%CARD_TOTAL", `${userData.card_inventory.length}/${cardManager.cardTotal}`)
+        .replace("%LEVEL", userData.level);
+
     embed.addFields([{ name: "\`📄\` Information", value: quote(profile_info) }]);
+
+    // Add the user's badges if they have them
+    if (userData.badges.length > 0) {
+        // Convert the BadgeLike objects to full badges
+        let badges = userData.badges.map(badge => badgeManager.parse.fromBadgeLike(badge));
+        let badges_f = badges.map(badge => badgeManager.toString(badge));
+
+        embed.addFields([{ name: "Badges", value: badges_f.join("\n") }]);
+    }
 
     if (!compactMode) {
         let card_selected = userParser.cards.get(userData.card_inventory, userData.card_selected_uid);
@@ -476,7 +485,7 @@ function userTeamView_ES(user, userData) {
                     .replace("%PAGE_COUNT", teamCards_f.length)
                     .replace("%TOTAL_ABILITY", ability_total)
             });
-        
+
         // Add the card's image if available
         if (teamCards[i].imageURL) _embed.setImage(teamCards[i].imageURL);
 

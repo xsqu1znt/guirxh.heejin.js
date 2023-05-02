@@ -13,7 +13,7 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
-        // Reusable embedinator to send success/error messages
+        // Create a base embed
         const embedinator = new messageTools.Embedinator(interaction, {
             title: "Welcome, %USER!", author: interaction.user
         });

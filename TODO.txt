@@ -1,11 +1,9 @@
-/event start
-/event addCards
-/event retireCards
-/event restoreRetiredCards
-/event end
+add badges to the user's profile
+add card packs to the shop
+
+be able to add multiple cards to vault
+add cooldowns to the appropriate commands
+$push $pull cooldowns
 
 /applycard to update global/set ids
-/unfavorite card
-/idol set
-
-change all global_id references to gid
+use modal for /customizecard and /submitorder

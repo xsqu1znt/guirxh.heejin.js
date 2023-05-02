@@ -1,6 +1,7 @@
 // Connects us to our Mongo database so we can save and retrieve data.
 
 const { userSettings } = require('../configs/heejinSettings.json');
+const badgeManager = require('./badgeManager');
 const cardManager = require('./cardManager');
 const logger = require('./logger');
 
@@ -172,6 +173,38 @@ async function cardInventory_updateCard(userID, card) {
     return;
 }
 
+//! User -> Badges
+async function userBadge_addBadge(userID, badges) {
+    // Convert a single badge into an array
+    if (!Array.isArray(badges)) badges = [badges];
+
+    let promiseArray = [];
+    for (let badge of badges) {
+        // Convert the badge object to a slimmer "BadgeLike" object
+        badge = badgeManager.parse.toBadgeLike(badge);
+
+        // Push the BadgeLike to the user's badge array in Mongo
+        promiseArray.push(user_update(userID, { $push: { badges: badge } }));
+    }
+
+    // Wait for mongo to finish
+    await Promise.all(promiseArray); return;
+}
+
+async function userBadge_removeBadge(userID, badgeIDs) {
+    // Convert a single badge ID into an array
+    if (!Array.isArray(badgeIDs)) badgeIDs = [badgeIDs];
+
+    let promiseArray = [];
+    for (let id of badgeIDs) {
+        // Send a pull request to Mongo
+        promiseArray.push(user_update(userID, { $pull: { badges: { id } } }));
+    }
+
+    // Wait for mongo to finish
+    await Promise.all(promiseArray); return;
+}
+
 module.exports = {
     /** Connect to MongoDB. */
     connect: () => {
@@ -192,6 +225,11 @@ module.exports = {
             add: cardInventory_addCards,
             remove: cardInventory_removeCards,
             update: cardInventory_updateCard
+        },
+
+        badges: {
+            add: userBadge_addBadge,
+            remove: userBadge_removeBadge
         }
     }
 };

@@ -13,7 +13,7 @@ const schema_user = Schema({
     biography: { type: String, default: new String() },
     balance: { type: Number, default: 0 },
 
-    badges: { type: Map, default: new Map() },
+    badges: { type: Array, default: new Array() },
 
     card_selected_uid: { type: String, default: new String() },
     card_favorite_uid: { type: String, default: new String() },
