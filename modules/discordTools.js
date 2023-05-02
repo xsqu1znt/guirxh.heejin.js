@@ -11,7 +11,7 @@ const {
 } = require('discord.js');
 
 const { botSettings } = require('../configs/heejinSettings.json');
-const { randomTools, arrayTools } = require('./jsTools');
+const { randomTools, arrayTools, dateTools } = require('./jsTools');
 const logger = require('./logger');
 
 //! Message Tools
@@ -79,8 +79,12 @@ class message_Navigationify {
      * @param {CommandInteraction} interaction
      * @param {Array<Embed | Array<Embed>} embedViews
      */
-    constructor(interaction, embedViews, options = { pagination: false, selectMenu: false, ephemeral: false, followUp: false, timeout: 10000 }) {
-        options = { pagination: false, selectMenu: false, ephemeral: false, followUp: false, timeout: 10000, ...options };
+    constructor(interaction, embedViews, options = { pagination: false, selectMenu: false, ephemeral: false, followUp: false, timeout: 0 }) {
+        options = {
+            pagination: false, selectMenu: false, ephemeral: false, followUp: false,
+            timeout: dateTools.parseStr(botSettings.timeout.pagination),
+            ...options
+        };
 
         this.interaction = interaction;
         this.fetchedReply = null;

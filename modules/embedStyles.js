@@ -216,8 +216,99 @@ function userCooldowns_ES(user, userData) {
 }
 
 // Command -> User -> /PROFILE
-function userProfile_ES(user, userData, compactMode = false) {
-    let embed = new EmbedBuilder()
+function userProfile_ES(user, userData) {
+    // Create a base embed
+    let embed_template = () => new messageTools.Embedinator(null, {
+        title: "%USER | profile", author: user
+    }).embed;
+
+    let card_selected = userParser.cards.get(userData.card_inventory, userData.card_selected_uid);
+    let card_favorite = userParser.cards.get(userData.card_inventory, userData.card_favorite_uid);
+
+    let embed_main = () => {
+        let _embed = embed_template();
+
+        // Have the embed thumbnail the user's favorite card if they have one, or their pfp
+        _embed.setThumbnail(card_favorite ? card_favorite.imageURL : user.avatarURL({ dynamic: true }));
+
+        // Add the user's profile biography if they have one
+        if (userData.biography) _embed.addFields({ name: "\`👤\` Biography", value: userData.biography });
+
+        // Add the user's basic information
+        let profile_info = "\`🥕 %BALANCE\` :: \`🃏 %CARD_TOTAL\` :: \`🎚️ LV. %LEVEL\`"
+            .replace("%BALANCE", userData.balance)
+            .replace("%CARD_TOTAL", `${userData.card_inventory.length}/${cardManager.cardTotal}`)
+            .replace("%LEVEL", userData.level);
+
+        _embed.addFields([{ name: "\`📄\` Information", value: quote(true, profile_info) }]);
+
+        // Return the embed
+        return _embed;
+    };
+
+    let embed_badges = () => {
+        let _embed = embed_template();
+
+        // Convert the BadgeLike objects to full badges
+        let badges = userData.badges.map(badge => badgeManager.parse.fromBadgeLike(badge));
+        let badges_f = badges.map(badge => badgeManager.toString.profile(badge));
+
+        // Have a max of 3 badges per line
+        badges_f = arrayTools.chunk(badges_f, 3);
+
+        // Format the chunks into an array of strings
+        badges_f = badges_f.map(chunk_badges => quote(true, chunk_badges.join(" ")));
+
+        // Add the badges to the embed
+        // embed.addFields([{ name: "\`📛\` Badges", value: badges_f.join("\n") }]);
+        _embed.setDescription(badges_f.join("\n"))
+
+        // Return the embed
+        return _embed;
+    }
+
+    let embed_card = (card) => {
+        let _embed = embed_template();
+
+        // Check if the card is favorited
+        let isFavorited = card.uid === card_favorite?.uid;
+
+        // Parse the card into a human readable string
+        let card_f = cardManager.toString.inventory(card, { selected: true, favorited: isFavorited });
+
+        // Add the card's information to the embed
+        _embed.setDescription(card_f);
+
+        // Add the card's image to the embed if available
+        if (card.imageURL) _embed.setImage(card.imageURL);
+
+        // Return the embed
+        return _embed;
+    }
+
+    // Create the dynamic profile pages
+    let embeds = [embed_main()];
+
+    // Add the badge page if the user has badges
+    if (userData.badges.length > 0) embeds.push(embed_badges());
+
+    // Add the idol card page if the user has a selected idol
+    if (card_selected) embeds.push(embed_card(card_selected));
+    // Add the favorite card page if the user has a favorite card
+    if (card_favorite) embeds.push(embed_card(card_favorite));
+
+    // Return the embed pages
+    return {
+        embeds,
+
+        pageExists: {
+            badges: (userData.badges.length > 0),
+            idol: card_selected ? true : false,
+            favorite: card_favorite ? true : false
+        }
+    };
+
+    /* let embed = new EmbedBuilder()
         .setAuthor({ name: `${user.username} | profile`, iconURL: user.avatarURL({ dynamic: true }) })
         .setThumbnail(user.avatarURL({ dynamic: true }))
         .setColor(botSettings.embedColor || null);
@@ -229,9 +320,9 @@ function userProfile_ES(user, userData, compactMode = false) {
         .replace("%CARD_TOTAL", `${userData.card_inventory.length}/${cardManager.cardTotal}`)
         .replace("%LEVEL", userData.level);
 
-    embed.addFields([{ name: "\`📄\` Information", value: quote(true, profile_info) }]);
+    embed.addFields([{ name: "\`📄\` Information", value: quote(true, profile_info) }]); */
 
-    // Add the user's badges if they have them
+    /* // Add the user's badges if they have them
     if (userData.badges.length > 0) {
         // Convert the BadgeLike objects to full badges
         let badges = userData.badges.map(badge => badgeManager.parse.fromBadgeLike(badge));
@@ -270,7 +361,7 @@ function userProfile_ES(user, userData, compactMode = false) {
         }
     }
 
-    return embed;
+    return embed; */
 }
 
 // Command -> User -> /INVENTORY

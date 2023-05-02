@@ -11,9 +11,6 @@ module.exports = {
         .addUserOption(option => option.setName("player")
             .setDescription("View another player's profile"))
 
-        .addBooleanOption(option => option.setName("compact")
-            .setDescription("Toggle to show less information in your profile"))
-
         .addStringOption(option => option.setName("biography")
             .setDescription("Change your biography | use \"reset\" to remove")
         ),
@@ -30,7 +27,6 @@ module.exports = {
 
         // Get interaction options
         let user = interaction.options.getUser("player") || interaction.user;
-        let compact = interaction.options.getBoolean("compact") || false;
         let biography = interaction.options.getString("biography"); biography &&= biography.trim();
 
         // Change the user's profile biography if they gave a value
@@ -53,9 +49,25 @@ module.exports = {
             "That user hasn't started yet."
         );
 
+        // Fetch the user from Mongo
         let userData = await userManager.fetch(user.id, "full", true);
-        let embed_profile = userProfile_ES(user, userData, compact);
 
-        return await interaction.editReply({ embeds: [embed_profile] });
+        // Create the profile pages
+        let { embeds, pageExists } = userProfile_ES(user, userData);
+
+        // Navigateinator-ify-er 9000!!!!11
+        let navigationify = new messageTools.Navigationify(interaction, embeds, {
+            selectMenu: (Object.values(pageExists).find(exists => exists))
+        });
+
+        // Add select menu options if necessary
+        navigationify.addSelectMenuOption({ label: "Info", description: "View your info.", isDefault: true });
+
+        if (pageExists.badges) navigationify.addSelectMenuOption({ label: "Badges", description: "View your badges." });
+        if (pageExists.idol) navigationify.addSelectMenuOption({ label: "Idol", description: "View your idol card." });
+        if (pageExists.favorite) navigationify.addSelectMenuOption({ label: "Favorite", description: "View your favorite card." });
+
+        // Send the embed
+        return await navigationify.send();
     }
 };
