@@ -26,7 +26,7 @@ module.exports = {
         });
 
         //* Try buying the item if the user gave an ID
-        let buyID = interaction.options.getString("buy");
+        let buyID = interaction.options.getString("buy"); buyID &&= buyID.toLowerCase();
         if (buyID) {
             let userData = await userManager.fetch(interaction.user.id, "essential", true);
             let _card = cardManager.get.byGlobalID(buyID);
@@ -59,8 +59,8 @@ module.exports = {
                 // Subtract the badge's price from the user's balance
                 await userManager.update(interaction.user.id, { balance: userData.balance - _badge.price });
 
-                let _badge_f = badgeManager.toString(_badge);
-                buyResult = `You bought a badge:\n${_badge_f}`;
+                let _badge_f = badgeManager.toString.basic(_badge);
+                buyResult = `You bought a badge:\n> ${_badge_f}`;
             }
 
             // Let the user know the result

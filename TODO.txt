@@ -1,7 +1,7 @@
-add badges to the user's profile
+split profile into pages
 add card packs to the shop
 
-be able to add multiple cards to vault
+be able to add/remove multiple cards using vault
 add cooldowns to the appropriate commands
 $push $pull cooldowns
 

@@ -1,24 +1,26 @@
 [
     {
-        "id": "b1",
-        "setID": "123",
-        "emoji": "<a:boost:1102060660784898172>",
-        "emojiURL": "https://cdn.discordapp.com/emojis/1102060660784898172.gif?size=128&quality=lossless",
-        "name": "boost",
-        "description": "This player boosted the bot community's server!",
-        "category": "comun",
-        "rarity": 100,
-        "price": 1000
+        "id": "IL01",
+        "setID": "BO1",
+        "name": "Boost",
+        "description": "To love or not to love...",
+        "category": "bdge",
+        "set": "ILOVE",
+        "emoji": "🎙️",
+        "emojiURL": "https://discord.com/assets/59bdcc534c0d1adc1fb7575a1a4785a6.svg",
+        "rarity": 1,
+        "price": 500
     },
     {
-        "id": "b2",
-        "setID": "456",
-        "emoji": "<a:diamond:1102060761020379210>",
-        "emojiURL": "https://cdn.discordapp.com/emojis/1102060761020379210.gif?size=128&quality=lossless",
-        "name": "diamond",
-        "description": "This player started the bot 99 years ago!",
-        "category": "plyr",
-        "rarity": 100,
-        "price": 9999
+        "id": "IL02",
+        "setID": "BO2",
+        "name": "Diamond",
+        "description": "Heejin!",
+        "category": "bdge",
+        "set": "ILOVE",
+        "emoji": "✨",
+        "emojiURL": "https://discord.com/assets/e820a306c732b90515989dada9995a97.svg",
+        "rarity": 2,
+        "price": 1000
     }
 ]

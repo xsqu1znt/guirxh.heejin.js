@@ -1,4 +1,7 @@
-const { EmbedBuilder, quote, bold, TimestampStyles } = require('discord.js');
+const { EmbedBuilder, TimestampStyles } = require('discord.js');
+
+const { markdown } = require('./discordTools');
+const { bold, italic, inline, quote, link, space } = markdown;
 
 const { botSettings, shopSettings, userSettings } = require('../configs/heejinSettings.json');
 const { arrayTools, stringTools, numberTools, dateTools } = require('../modules/jsTools');
@@ -6,6 +9,7 @@ const { messageTools } = require('../modules/discordTools');
 const cardManager = require('../modules/cardManager');
 const badgeManager = require('../modules/badgeManager');
 const userParser = require('../modules/userParser');
+
 
 // Command -> General -> /COLLECTIONS
 /** @param {"ascending" | "decending"} order */
@@ -135,7 +139,7 @@ function globalShop_ES(user) {
     };
 
     let embed_badges = () => {
-        let badges_f = badgeManager.badges.map(badge => badgeManager.toString(badge));
+        let badges_f = badgeManager.badges.map(badge => badgeManager.toString.shop(badge));
         badges_f = arrayTools.chunk(badges_f, 10);
 
         let embeds = [];
@@ -225,15 +229,21 @@ function userProfile_ES(user, userData, compactMode = false) {
         .replace("%CARD_TOTAL", `${userData.card_inventory.length}/${cardManager.cardTotal}`)
         .replace("%LEVEL", userData.level);
 
-    embed.addFields([{ name: "\`📄\` Information", value: quote(profile_info) }]);
+    embed.addFields([{ name: "\`📄\` Information", value: quote(true, profile_info) }]);
 
     // Add the user's badges if they have them
     if (userData.badges.length > 0) {
         // Convert the BadgeLike objects to full badges
         let badges = userData.badges.map(badge => badgeManager.parse.fromBadgeLike(badge));
-        let badges_f = badges.map(badge => badgeManager.toString(badge));
+        let badges_f = badges.map(badge => badgeManager.toString.profile(badge));
+        
+        // Have a max of 8 badges per line
+        badges_f = arrayTools.chunk(badges_f, 3);
 
-        embed.addFields([{ name: "Badges", value: badges_f.join("\n") }]);
+        // Parse the chunks into an array of strings
+        badges_f = badges_f.map(chunk_badges => quote(true, chunk_badges.join(" ")));
+
+        embed.addFields([{ name: "\`📛\` Badges", value: badges_f.join("\n") }]);
     }
 
     if (!compactMode) {
