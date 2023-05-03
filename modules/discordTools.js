@@ -334,6 +334,67 @@ class message_Navigationify {
     }
 }
 
+async function message_awaitConfirmation(interaction, options = { title: "", description: "", showAuthor: true, timeout: 0 }) {
+    options = {
+        title: "Are you sure?", description: null, showAuthor: true,
+        timeout: dateTools.parseStr(botSettings.timeout.confirmation),
+        ...options
+    };
+
+    let confirmed = false;
+
+    // Format a dynamic title
+    options.title = options.title
+        .replace("%USER", options.author?.username || interaction.user.username);
+
+    // Create the embed
+    let embed = new EmbedBuilder()
+        .setAuthor({ name: options.title })
+        .setColor(botSettings.embedColor || null);
+
+    // Set the author of the embed if applicable
+    if (options.showAuthor) embed.setAuthor({
+        name: embed.data.author.name,
+        iconURL: interaction.user.avatarURL({ dynamic: true })
+    });
+
+    // Set the embed description
+    if (options.description) embed.setDescription(options.description);
+
+    // Create the confirm/cancel buttons
+    let btn_confirm = new ButtonBuilder({ label: "Confirm", style: ButtonStyle.Success, custom_id: "btn_confirm" });
+    let btn_cancel = new ButtonBuilder({ label: "Cancel", style: ButtonStyle.Danger, custom_id: "btn_cancel" });
+
+    // Create the action row
+    let actionRow = new ActionRowBuilder()
+        .addComponents(btn_confirm, btn_cancel);
+
+    // Send the confirmation message embed
+    let message = await interaction.followUp({ embeds: [embed], components: [actionRow] });
+
+    // Create a promise to await the user's decision
+    return new Promise(resolve => {
+        // Collect button interactions
+        let filter = i => (i.componentType === ComponentType.Button) && (i.user.id === interaction.user.id);
+        message.awaitMessageComponent({ filter, time: options.timeout }).then(i => {
+            // Will return true since the user clicked the comfirm button
+            if (i.customId === "btn_confirm") confirmed = true;
+
+            // Delete the confirmation message
+            message.delete();
+
+            // Resolve the promise with the confirmation
+            return resolve(confirmed);
+        }).catch(async () => {
+            // Delete the confirmation message if it still exists
+            try { await message.delete() } catch { };
+
+            // Return false since the user didn't click anything
+            return resolve(confirmed);
+        });
+    });
+}
+
 async function message_deleteAfter(message, time) {
     let m;
 
@@ -386,6 +447,7 @@ module.exports = {
         Embedinator: message_Embedinator,
         Navigationify: message_Navigationify,
 
+        awaitConfirmation: message_awaitConfirmation,
         deleteAfter: message_deleteAfter
     },
 

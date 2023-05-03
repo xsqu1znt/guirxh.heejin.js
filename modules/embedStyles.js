@@ -169,17 +169,27 @@ function userDrop_ES(user, cards, cards_isDuplicate, dropTitle = "drop") {
     if (!Array.isArray(cards)) cards = [cards];
     if (!Array.isArray(cards_isDuplicate)) cards_isDuplicate = [cards_isDuplicate];
 
+    let { number: emoji_number } = botSettings.customEmojis;
+
+    let cards_f = cards.map((card, idx) => "%IDX%CARD"
+        .replace("%IDX", cards.length > 1 ? `${emoji_number[idx]} ` : "")
+        .replace("%CARD", cardManager.toString.inventory(card, {
+            isDuplicate: cards_isDuplicate[idx] || false,
+            simplify: true
+        }))
+    );
+
     // Create the embed
     let embed = new EmbedBuilder()
         .setAuthor({ name: `${user.username} | ${dropTitle}`, iconURL: user.avatarURL({ dynamic: true }) })
-        .setDescription(cards.map((card, idx) => cardManager.toString.inventory(card, {
-            isDuplicate: cards_isDuplicate[idx] || false,
-            simplify: true
-        })).join("\n"))
+        .setDescription(cards_f.join("\n"))
         .setColor(botSettings.embedColor || null);
 
     let card_last = cards.slice(-1)[0];
     if (card_last.imageURL) embed.setImage(card_last.imageURL);
+
+    // Let the user know they can sell the card by reacting
+    if (cards.length > 1) embed.setFooter({ text: "use the reactions to choose what you want to sell" });
 
     return embed;
 }

@@ -1,11 +1,24 @@
 {
     "botSettings": {
         "currencyIcon": "🥕",
+
+        "customEmojis": {
+            "number": [
+                "<:one:1103208748924813333>",
+                "<:two:1103208760639504465>",
+                "<:three:1103208757992902696>",
+                "<:four:1103208746362093659>",
+                "<:five:1103208750489280542>"
+            ]
+        },
+
         "embedColor": "#2B2D31",
+
         "timeout": {
             "stage_start": "3s",
             "stage_turn": "500ms",
-            "pagination": "60s"
+            "pagination": "60s",
+            "confirmation": "10s"
         }
     },
 

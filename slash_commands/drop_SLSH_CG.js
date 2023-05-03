@@ -1,6 +1,6 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
-const { userSettings, eventSettings } = require('../configs/heejinSettings.json');
+const { botSettings, userSettings, eventSettings } = require('../configs/heejinSettings.json');
 const { dateTools, randomTools } = require('../modules/jsTools');
 const { userDrop_ES } = require('../modules/embedStyles');
 const { messageTools } = require('../modules/discordTools');
@@ -100,7 +100,19 @@ module.exports = {
         // Create the embed
         let embed_drop = userDrop_ES(interaction.user, cards, cards_isDuplicate, dropEmbedTitle);
 
-        // Let the user know the result
-        return await interaction.editReply({ embeds: [embed_drop] });
+        // Send the drop embed
+        await interaction.editReply({ embeds: [embed_drop] });
+
+        // Add reactions to sell
+        if (cards.length > 1) {
+            let reply = await interaction.fetchReply();
+
+            // Add reactions
+            for (let i = 0; i < cards.length; i++)
+                await reply.react(botSettings.customEmojis.number[i]);
+
+            // Add the sell reaction
+            await reply.react("✅");
+        }
     }
 };
