@@ -442,18 +442,18 @@ function userDuplicates_ES(user, userData, globalID) {
     card_duplicates = [card_duplicates.card_primary, ...card_duplicates.card_duplicates]
         .map(card => cardManager.parse.fromCardLike(card));
 
-    let card_duplicates_f = []; for (let card of card_duplicates) {
+    let card_duplicates_f = card_duplicates.map(card => {
         // Whether or not this is the user's favorited card
         let isFavorite = (card.uid === userData.card_favorite_uid);
 
         // Whether or not this is the user's selected card
         let isSelected = (card.uid === userData.card_selected_uid);
 
-        card_duplicates_f.push(cardManager.toString.inventory(card, {
+        return cardManager.toString.inventory(card, {
             favorited: isFavorite,
             selected: isSelected
-        }));
-    }
+        });
+    });
 
     card_duplicates_f = arrayTools.chunk(card_duplicates_f, 10);
 
@@ -470,6 +470,62 @@ function userDuplicates_ES(user, userData, globalID) {
                     .replace("%PAGE", i + 1)
                     .replace("%PAGE_COUNT", card_duplicates_f.length)
                     .replace("%TOTAL_CARDS", card_duplicates.length)
+            });
+
+        // Set the embed thumbnail to the card's image if available
+        if (card_duplicates[0].imageURL) _embed.setThumbnail(card_duplicates[0].imageURL);
+
+        embeds.push(_embed);
+    }
+
+    // Return the embeds array
+    return embeds;
+}
+
+function userVault_ES(user, userData) {
+    // Create a base embed
+    let embed_template = () => new messageTools.Embedinator(null, {
+        title: "%USER | vault", author: user
+    }).embed;
+
+    let lockedCards = userData.card_inventory.filter(card => card.locked);
+    if (lockedCards.length === 0) {
+        let _embed = embed_template();
+        _embed.setDescription("You don't have any locked cards.");
+
+        return [_embed];
+    }
+
+    lockedCards = lockedCards.map(cardLike => cardManager.parse.fromCardLike(cardLike));
+
+    let lockedCards_f = lockedCards.map(card => {
+        // Whether or not this is the user's favorited card
+        let isFavorite = (card.uid === userData.card_favorite_uid);
+
+        // Whether or not this is the user's selected card
+        let isSelected = (card.uid === userData.card_selected_uid);
+
+        return cardManager.toString.inventory(card, {
+            favorited: isFavorite,
+            selected: isSelected
+        });
+    });
+
+    lockedCards_f = arrayTools.chunk(lockedCards_f, 10);
+
+    // Create the embeds
+    let embeds = [];
+
+    for (let i = 0; i < lockedCards_f.length; i++) {
+        let _embed = embed_template();
+
+        // Add details to the embed
+        _embed.setDescription(lockedCards_f[i].join("\n"))
+            .setFooter({
+                text: `page %PAGE of %PAGE_COUNT | total cards: %TOTAL_CARDS`
+                    .replace("%PAGE", i + 1)
+                    .replace("%PAGE_COUNT", lockedCards_f.length)
+                    .replace("%TOTAL_CARDS", lockedCards.length)
             });
 
         embeds.push(_embed);
@@ -618,11 +674,16 @@ module.exports = {
 
     // User Commands
     userDrop_ES,
-    userCooldowns_ES,
+
     userProfile_ES,
+    userCooldowns_ES,
+
     userInventory_ES,
     userDuplicates_ES,
+    userVault_ES,
+
     userView_ES,
     userTeamView_ES,
+
     userGift_ES
 };

@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 const { botSettings } = require('../configs/heejinSettings.json');
-const { userView_ES, userTeamView_ES } = require('../modules/embedStyles');
+const { userView_ES, userTeamView_ES, userVault_ES } = require('../modules/embedStyles');
 const { messageTools } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 const { dateTools } = require('../modules/jsTools');
@@ -19,7 +19,8 @@ module.exports = {
                 { name: "Global ID", value: "gid" },
                 { name: "Favorite", value: "favorite" },
                 { name: "Idol", value: "idol" },
-                { name: "Team", value: "team" },
+                { name: "Vault", value: "vault" },
+                { name: "Team", value: "team" }
             )
             .setRequired(true)
         )
@@ -102,6 +103,19 @@ module.exports = {
                 embed_view = userView_ES(interaction.user, userData, card, "idol");
 
                 break;
+
+            case "vault":
+                // Fetch the user from Mongo
+                userData = await userManager.fetch(interaction.user.id, "full", true);
+
+                // Create the embeds
+                embed_view = userVault_ES(interaction.user, userData);
+
+                // Navigateinator-ify-er 9000!!!!11
+                return await new messageTools.Navigationify(interaction, [embed_view], {
+                    timeout: dateTools.parseStr(botSettings.timeout.pagination),
+                    pagination: true
+                }).send();
 
             case "team":
                 // Fetch the user from Mongo
