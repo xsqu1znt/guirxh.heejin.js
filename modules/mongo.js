@@ -207,10 +207,19 @@ async function userBadge_removeBadge(userID, badgeIDs) {
 
 module.exports = {
     /** Connect to MongoDB. */
-    connect: () => {
-        mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-            .then(() => logger.success("successfully connected to MongoDB"))
-            .catch(err => logger.error("failed to connect to MongoDB", null, err));
+    connect: async (uri = MONGO_URI) => {
+        // Try to connect to MongoDB
+        let connection = await new Promise((resolve, reject) => {
+            return mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+                .then(() => resolve(true))
+                .catch(err => reject(err));
+        });
+
+        // Log the success if successful
+        if (connection) return logger.success("successfully connected to MongoDB");
+
+        // Log the error if unsuccessful
+        logger.error("failed to connect to MongoDB", null, connection);
     },
 
     userManager: {

@@ -302,11 +302,11 @@ function userProfile_ES(user, userData) {
             // Get each unique card rarity from the current category
             let rarities = arrayTools.unique(category, (card, cardCompare) => card.rarity === cardCompare.rarity)
                 .map(card => card.rarity);
-            
+
             // Return an array of the user's cards that match that category
             return userData.card_inventory.filter(card => rarities.includes(card.rarity));
         });
-        
+
         // Parse the sorted user cards into a readable string
         let inventoryStats_f = userCards.map((category, idx) => quote(true, "%CATEGORY: %STATS"
             .replace("%CATEGORY", bold(true, categories[idx]))
@@ -314,7 +314,12 @@ function userProfile_ES(user, userData) {
         ));
 
         // Set the embed's description to the inventory stat result
-        _embed.setDescription(inventoryStats_f.join("\n"));
+        // _embed.setDescription(inventoryStats_f.join("\n"));
+
+        _embed.addFields(
+            { name: "\`🗃️\` Normal", value: inventoryStats_f.slice(0, 5).join("\n"), inline: true },
+            { name: "\`✨\` Special", value: inventoryStats_f.slice(5).join("\n"), inline: true }
+        );
 
         // Return the embed
         return _embed;
