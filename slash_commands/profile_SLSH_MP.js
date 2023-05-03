@@ -57,15 +57,19 @@ module.exports = {
 
         // Navigateinator-ify-er 9000!!!!11
         let navigationify = new messageTools.Navigationify(interaction, embeds, {
-            selectMenu: (Object.values(pageExists).find(exists => exists))
+            selectMenu: true
         });
 
-        // Add select menu options if necessary
+        // This page option is always first
         navigationify.addSelectMenuOption({ label: "Info", description: "View your info.", isDefault: true });
-
+        
+        // Add select menu options if necessary
         if (pageExists.badges) navigationify.addSelectMenuOption({ label: "Badges", description: "View your badges." });
         if (pageExists.idol) navigationify.addSelectMenuOption({ label: "Idol", description: "View your idol card." });
         if (pageExists.favorite) navigationify.addSelectMenuOption({ label: "Favorite", description: "View your favorite card." });
+        
+        // This page option is always last
+        navigationify.addSelectMenuOption({ label: "Inventory", description: "View your inventory stats." });
 
         // Send the embed
         return await navigationify.send();

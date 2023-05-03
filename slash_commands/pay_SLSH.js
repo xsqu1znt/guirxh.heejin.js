@@ -64,7 +64,7 @@ module.exports = {
         let amount_f = `\`${botSettings.currencyIcon} ${amount}\``;
         let balance_f = `\`${botSettings.currencyIcon} ${userData.balance - amount}\``;
         return await embedinator.send(
-            `You gave \`${amount_f}\` to **${recipient.username}**.\nBalance remaining: \`${balance_f}\``
+            `You gave \`${amount_f}\` to **${recipient}**.\nBalance remaining: \`${balance_f}\``
         );
     }
 };

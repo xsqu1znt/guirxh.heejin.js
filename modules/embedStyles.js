@@ -265,7 +265,7 @@ function userProfile_ES(user, userData) {
 
         // Return the embed
         return _embed;
-    }
+    };
 
     let embed_card = (card) => {
         let _embed = embed_template();
@@ -284,7 +284,41 @@ function userProfile_ES(user, userData) {
 
         // Return the embed
         return _embed;
-    }
+    };
+
+    let embed_inventoryStats = () => {
+        let _embed = embed_template();
+
+        // Get the name of each card category
+        let categories = Object.keys(cardManager.cards).map(category => stringTools.toTitleCase(category));
+        // Get an array of each card category
+        let allCards = Object.values(cardManager.cards);
+
+        // Parse the user's card_inventory into fully detailed cards
+        userData.card_inventory = userData.card_inventory.map(card => cardManager.parse.fromCardLike(card));
+
+        // Create an array of the user's cards sorted by category
+        let userCards = allCards.map(category => {
+            // Get each unique card rarity from the current category
+            let rarities = arrayTools.unique(category, (card, cardCompare) => card.rarity === cardCompare.rarity)
+                .map(card => card.rarity);
+            
+            // Return an array of the user's cards that match that category
+            return userData.card_inventory.filter(card => rarities.includes(card.rarity));
+        });
+        
+        // Parse the sorted user cards into a readable string
+        let inventoryStats_f = userCards.map((category, idx) => quote(true, "%CATEGORY: %STATS"
+            .replace("%CATEGORY", bold(true, categories[idx]))
+            .replace("%STATS", inline(true, "🃏", `${category.length}/${allCards[idx].length}`))
+        ));
+
+        // Set the embed's description to the inventory stat result
+        _embed.setDescription(inventoryStats_f.join("\n"));
+
+        // Return the embed
+        return _embed;
+    };
 
     // Create the dynamic profile pages
     let embeds = [embed_main()];
@@ -296,6 +330,9 @@ function userProfile_ES(user, userData) {
     if (card_selected) embeds.push(embed_card(card_selected));
     // Add the favorite card page if the user has a favorite card
     if (card_favorite) embeds.push(embed_card(card_favorite));
+
+    // This page will always be the last
+    embeds.push(embed_inventoryStats());
 
     // Return the embed pages
     return {
@@ -370,7 +407,7 @@ function userInventory_ES(user, userData, sorting = "set", order = "descending",
         let embed_page = new EmbedBuilder()
             .setAuthor({ name: `${user.username} | inventory`, iconURL: user.avatarURL({ dynamic: true }) })
             .setDescription(group[0] ? group.join("\n") : "try doing \`/drop\` to start filling up your inventory!")
-            .setFooter({ text: `page ${pageIndex++} of ${cards_user_f.length || 1} | total cards: ${cards_user_primary.length}` })
+            .setFooter({ text: `page ${pageIndex++} of ${cards_user_f.length || 1} | total cards: ${cards_user_primary.length} ` })
             .setColor(botSettings.embedColor || null);
 
         // Push the newly created embed to our collection
