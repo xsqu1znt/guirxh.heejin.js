@@ -28,7 +28,7 @@ class message_Embedinator {
         this.description = options.description;
 
         // Create the embed
-        this.embed = new EmbedBuilder().setColor(botSettings.embedColor || null);
+        this.embed = new EmbedBuilder().setColor(botSettings.embed.color || null);
 
         if (this.description) this.embed.setDescription(this.description);
         if (this.title) this.embed.setAuthor({ name: this.title });
@@ -350,7 +350,7 @@ async function message_awaitConfirmation(interaction, options = { title: "", des
     // Create the embed
     let embed = new EmbedBuilder()
         .setAuthor({ name: options.title })
-        .setColor(botSettings.embedColor || null);
+        .setColor(botSettings.embed.color || null);
 
     // Set the author of the embed if applicable
     if (options.showAuthor) embed.setAuthor({

@@ -1,4 +1,4 @@
-const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
+const { Client, CommandInteraction, SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 const { botSettings, userSettings, eventSettings } = require('../configs/heejinSettings.json');
 const { dateTools, randomTools } = require('../modules/jsTools');
@@ -7,6 +7,8 @@ const { messageTools } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 const cardManager = require('../modules/cardManager');
 const userParser = require('../modules/userParser');
+
+const { numbers: emoji_numbers, confirmSell: emoji_confirmSell } = botSettings.customEmojis;
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("drop")
@@ -101,18 +103,83 @@ module.exports = {
         let embed_drop = userDrop_ES(interaction.user, cards, cards_isDuplicate, dropEmbedTitle);
 
         // Send the drop embed
-        await interaction.editReply({ embeds: [embed_drop] });
+        let reply = await interaction.editReply({ embeds: [embed_drop] });
 
-        // Add reactions to sell
-        if (cards.length > 1) {
-            let reply = await interaction.fetchReply();
+        //* End here if there was only 1 card dropped
+        if (cards.length === 1) return reply;
 
-            // Add reactions
-            for (let i = 0; i < cards.length; i++)
-                await reply.react(botSettings.customEmojis.number[i]);
+        // Refresh userData so we can access the user's balance
+        userData = await userManager.fetch(interaction.user.id, "essential");
 
-            // Add the sell reaction
-            await reply.react("✅");
-        }
+        // Create an array, the card the user wants to sell will be inserted at the relative index
+        let sellableCards = cards.map(() => null);
+
+        // Create an array of reaction emojis
+        let reactionEmojis = [...emoji_numbers.slice(0, cards.length), emoji_confirmSell];
+
+        // Create the reaction collector
+        let filter_RC = (reaction, user) =>
+            reactionEmojis.map(emoji => emoji.name).includes(reaction.emoji.name)
+            && user.id === interaction.user.id;
+
+        let collector_RC = reply.createReactionCollector({ filter: filter_RC, time: 30000, dispose: true });
+
+        collector_RC.on("collect", async reaction => {
+            // Reset the reaction collector's timer
+            collector_RC.resetTimer();
+
+            let reactionIndex = emoji_numbers.findIndex(e => e.name === reaction.emoji.name);
+
+            if (reactionIndex >= 0) {
+                if (!sellableCards.find(c => c?.uid === cards[reactionIndex].uid))
+                    sellableCards[reactionIndex] = cards[reactionIndex];
+
+                return;
+            }
+
+            sellableCards = sellableCards.filter(c => c);
+            let sellTotal = sellableCards.length;
+            let sellConfirm = await messageTools.awaitConfirmation(interaction, {
+                // title: "Please confirm this action",
+                description: `Are you sure you want to sell \`${sellTotal}\` ${sellTotal === 1 ? "card" : "cards"}?`,
+                showAuthor: true
+            });
+
+            if (sellConfirm) {
+                await userManager.cards.remove(interaction.user.id, sellableCards.map(c => c.uid));
+
+                // Add to the user's balance
+                let sellBalance = 0; sellableCards.forEach(card => sellBalance += card.sellPrice);
+                await userManager.update(interaction.user.id, { balance: userData.balance + sellBalance });
+
+                let { embed } = new messageTools.Embedinator(null, {
+                    title: "%USER | sell",
+                    description: "You sold cards:\n%CARDS"
+                        .replace("%CARDS", sellableCards.map(card => `> ${cardManager.toString.basic(card)}`).join("\n")),
+                    author: interaction.user,
+                });
+
+                await interaction.followUp({ embeds: [embed] });
+
+                return await reply.reactions.removeAll();
+            }
+        });
+
+        collector_RC.on("remove", async reaction => {
+            collector_RC.resetTimer();
+
+            let reactionIndex = emoji_numbers.findIndex(e => e.name === reaction.emoji.name);
+
+            if (reactionIndex >= 0) {
+                if (sellableCards.find(c => c?.uid === cards[reactionIndex].uid))
+                    sellableCards[reactionIndex] = null;
+            }
+        });
+
+        // Remove all reaction when the reaction collector times out or ends
+        collector_RC.on("end", async () => await reply.reactions.removeAll());
+
+        // Add the appropriate index/confirm emoji reactions
+        for (let { emoji } of reactionEmojis) await reply.react(emoji);
     }
 };

@@ -56,7 +56,7 @@ module.exports = {
                 ? `You tried your luck and won \`${botSettings.currencyIcon} ${currencyGained}\`.`
                 : "You tried your luck and didn't win anything."
             )
-            .setColor(botSettings.embedColor || null);
+            .setColor(botSettings.embed.color || null);
 
         // Let the user know the result
         return await interaction.editReply({ embeds: [embed_random] });

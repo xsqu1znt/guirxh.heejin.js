@@ -2,22 +2,29 @@
     "botSettings": {
         "currencyIcon": "🥕",
 
-        "customEmojis": {
-            "number": [
-                "<:one:1103208748924813333>",
-                "<:two:1103208760639504465>",
-                "<:three:1103208757992902696>",
-                "<:four:1103208746362093659>",
-                "<:five:1103208750489280542>"
-            ]
+        "embed": {
+            "color": "#2B2D31",
+            "footerIcon": "https://cdn.discordapp.com/attachments/831265262309212200/911434990947008552/heejinserver.png"
         },
 
-        "embedColor": "#2B2D31",
+        "customEmojis": {
+            "numbers": [
+                {"name": "one", "emoji": "<:one:1103208748924813333>"},
+                {"name": "two", "emoji": "<:two:1103208760639504465>"},
+                {"name": "three", "emoji": "<:three:1103208757992902696>"},
+                {"name": "four", "emoji": "<:four:1103208746362093659>"},
+                {"name": "five", "emoji": "<:five:1103208750489280542>"}
+            ],
+
+            "confirmSell": {"name": "✅", "emoji": "✅"}
+        },
 
         "timeout": {
             "stage_start": "3s",
             "stage_turn": "500ms",
+
             "pagination": "60s",
+            "reactionSell": "30s",
             "confirmation": "10s"
         }
     },

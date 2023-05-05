@@ -47,7 +47,7 @@ function globalCollections_ES(user, options = { order: "decending", filter: { gr
             .setAuthor({ name: `${user.username} | collections`, iconURL: user.avatarURL({ dynamic: true }) })
             .setDescription(group[0] ? group.join("\n") : "no collections were found.")
             .setFooter({ text: `page ${pageIndex++} of ${collections_f.length || 1} • total sets: ${cards_unique.length}` })
-            .setColor(botSettings.embedColor || null);
+            .setColor(botSettings.embed.color || null);
 
         // Push the newly created embed to our collection
         embeds.push(embed_page);
@@ -72,7 +72,7 @@ function globalShop_ES(user) {
     // Embed creation
     let embed_template = () => new EmbedBuilder()
         .setAuthor({ name: `${user.username} | shop`, iconURL: user.avatarURL({ dynamic: true }) })
-        .setColor(botSettings.embedColor || null);
+        .setColor(botSettings.embed.color || null);
 
     let embed_list = () => {
         let cards_f = cards_shop_unique.map((card, idx) => cardManager.toString.setEntry(card, card_sets[idx].length, true));
@@ -169,10 +169,10 @@ function userDrop_ES(user, cards, cards_isDuplicate, dropTitle = "drop") {
     if (!Array.isArray(cards)) cards = [cards];
     if (!Array.isArray(cards_isDuplicate)) cards_isDuplicate = [cards_isDuplicate];
 
-    let { number: emoji_number } = botSettings.customEmojis;
+    let emoji_numbers = botSettings.customEmojis.numbers;
 
     let cards_f = cards.map((card, idx) => "%IDX%CARD"
-        .replace("%IDX", cards.length > 1 ? `${emoji_number[idx]} ` : "")
+        .replace("%IDX", cards.length > 1 ? `${emoji_numbers[idx].emoji} ` : "")
         .replace("%CARD", cardManager.toString.inventory(card, {
             isDuplicate: cards_isDuplicate[idx] || false,
             simplify: true
@@ -183,13 +183,15 @@ function userDrop_ES(user, cards, cards_isDuplicate, dropTitle = "drop") {
     let embed = new EmbedBuilder()
         .setAuthor({ name: `${user.username} | ${dropTitle}`, iconURL: user.avatarURL({ dynamic: true }) })
         .setDescription(cards_f.join("\n"))
-        .setColor(botSettings.embedColor || null);
+        .setColor(botSettings.embed.color || null);
 
     let card_last = cards.slice(-1)[0];
     if (card_last.imageURL) embed.setImage(card_last.imageURL);
 
     // Let the user know they can sell the card by reacting
-    if (cards.length > 1) embed.setFooter({ text: "use the reactions to choose what you want to sell" });
+    if (cards.length > 1) embed.setFooter({
+        text: "use the reactions to choose what you want to sell",
+    });
 
     return embed;
 }
@@ -220,7 +222,7 @@ function userCooldowns_ES(user, userData) {
     let embed = new EmbedBuilder()
         .setAuthor({ name: `${user.username} | cooldowns`, iconURL: user.avatarURL({ dynamic: true }) })
         .setDescription(cooldowns_f.join("\n"))
-        .setColor(botSettings.embedColor || null);
+        .setColor(botSettings.embed.color || null);
 
     return embed;
 }
@@ -423,7 +425,7 @@ function userInventory_ES(user, userData, sorting = "set", order = "descending",
             .setAuthor({ name: `${user.username} | inventory`, iconURL: user.avatarURL({ dynamic: true }) })
             .setDescription(group[0] ? group.join("\n") : "try doing \`/drop\` to start filling up your inventory!")
             .setFooter({ text: `page ${pageIndex++} of ${cards_user_f.length || 1} | total cards: ${cards_user_primary.length} ` })
-            .setColor(botSettings.embedColor || null);
+            .setColor(botSettings.embed.color || null);
 
         // Push the newly created embed to our collection
         embeds.push(embed_page);
@@ -550,7 +552,7 @@ function userVault_ES(user, userData) {
 function userView_ES(user, userData, card, viewStyle = "uid", showDuplicates = true) {
 
     // Create the embed
-    let embed = new EmbedBuilder().setColor(botSettings.embedColor || null);
+    let embed = new EmbedBuilder().setColor(botSettings.embed.color || null);
     let embed_title = "%USER | view";
 
     switch (viewStyle) {
@@ -657,7 +659,7 @@ function userGift_ES(user, recipient, cards) {
     // Create the embed
     let embed = new EmbedBuilder()
         .setAuthor({ name: `${user.username} | gift`, iconURL: user.avatarURL({ dynamic: true }) })
-        .setColor(botSettings.embedColor || null);
+        .setColor(botSettings.embed.color || null);
 
     if (cards.length === 1) {
         embed.setDescription(cardManager.toString.inventory(cards[0]) + "\n\n" + fromTo);

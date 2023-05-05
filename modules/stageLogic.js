@@ -66,7 +66,7 @@ class Stage {
             )
 
             .setFooter({ text: `battle starting in ${this.delay.start} ${this.delay.start === 1 ? "second" : "seconds"}...` })
-            .setColor(botSettings.embedColor || null);
+            .setColor(botSettings.embed.color || null);
     }
 
     /** Start the stage battle. */
