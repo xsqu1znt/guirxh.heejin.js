@@ -29,8 +29,8 @@ module.exports = {
 
 
         // Use rng to determine if the user gets anything
-        let { xp: { commands: { random: xp_random } }, currency: { range: { random } } } = userSettings;
-        let currencyGained = randomTools.number(rangeRandom.min, rangeRandom.max);
+        let { xp: { commands: { random: xp_random } }, currency: { range } } = userSettings;
+        let currencyGained = randomTools.number(range.random.min, range.random.max);
         let xpGained = randomTools.number(xp_random.min, xp_random.max);
 
         let won = randomTools.chance(userSettings.chances.winRandom); if (won) {
