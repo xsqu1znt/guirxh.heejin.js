@@ -18,20 +18,22 @@ const logger = require('./logger');
 /** Create a simple embed with a description. */
 class message_Embedinator {
     /** @param {CommandInteraction} interaction */
-    constructor(interaction, options = { author: null, title: "", description: "" }) {
-        options = { author: null, title: "title", description: "", ...options };
+    constructor(interaction, options = { author: null, title: "", description: "", footer: "" }) {
+        options = { author: null, title: "title", description: "", footer: "", ...options };
 
         this.interaction = interaction;
         this.author = options.author;
         this.title = options.title
             .replace("%USER", options.author?.username || interaction.user.username);
         this.description = options.description;
+        this.footer = options.footer;
 
         // Create the embed
         this.embed = new EmbedBuilder().setColor(botSettings.embed.color || null);
 
-        if (this.description) this.embed.setDescription(this.description);
         if (this.title) this.embed.setAuthor({ name: this.title });
+        if (this.description) this.embed.setDescription(this.description);
+        if (this.footer) this.embed.setFooter({ text: this.footer });
         if (this.author) this.embed.setAuthor({
             name: this.embed.data.author.name,
             iconURL: this.author.avatarURL({ dynamic: true })
@@ -334,9 +336,10 @@ class message_Navigationify {
     }
 }
 
-async function message_awaitConfirmation(interaction, options = { title: "", description: "", showAuthor: true, timeout: 0 }) {
+async function message_awaitConfirmation(interaction, options = { title: "", description: "", footer: "", showAuthor: true, deleteAfter: true, timeout: 0 }) {
     options = {
-        title: "Please confirm this action", description: null, showAuthor: true,
+        title: "Please confirm this action", description: null, showAuthor: true, footer: "",
+        deleteAfter: true,
         timeout: dateTools.parseStr(botSettings.timeout.confirmation),
         ...options
     };
@@ -361,6 +364,9 @@ async function message_awaitConfirmation(interaction, options = { title: "", des
     // Set the embed description
     if (options.description) embed.setDescription(options.description);
 
+    // Set the embed footer
+    if (options.footer) embed.setFooter({ text: options.footer });
+
     // Create the confirm/cancel buttons
     let btn_confirm = new ButtonBuilder({ label: "Confirm", style: ButtonStyle.Success, custom_id: "btn_confirm" });
     let btn_cancel = new ButtonBuilder({ label: "Cancel", style: ButtonStyle.Danger, custom_id: "btn_cancel" });
@@ -376,12 +382,13 @@ async function message_awaitConfirmation(interaction, options = { title: "", des
     return new Promise(resolve => {
         // Collect button interactions
         let filter = i => (i.componentType === ComponentType.Button) && (i.user.id === interaction.user.id);
-        message.awaitMessageComponent({ filter, time: options.timeout }).then(i => {
+        message.awaitMessageComponent({ filter, time: options.timeout }).then(async i => {
             // Will return true since the user clicked the comfirm button
             if (i.customId === "btn_confirm") confirmed = true;
 
             // Delete the confirmation message
-            message.delete();
+            if (options.deleteAfter) message.delete();
+            else await message.edit({ components: [] });
 
             // Resolve the promise with the confirmation
             return resolve(confirmed);

@@ -117,7 +117,11 @@ module.exports = {
             reactionEmojis.map(emoji => emoji.name).includes(reaction.emoji.name)
             && user.id === interaction.user.id;
 
-        let collector_RC = reply.createReactionCollector({ filter: filter_RC, time: 30000, dispose: true });
+        let collector_RC = reply.createReactionCollector({
+            filter: filter_RC,
+            time: dateTools.parseStr(botSettings.timeout.reactionSell),
+            dispose: true
+        });
 
         // When the user clicks on a reaction
         collector_RC.on("collect", async reaction => {
@@ -129,8 +133,8 @@ module.exports = {
             if (cardIndex !== -1) {
                 // Insert the card at the appropriate index
                 // avoiding adding the same card twice
-                if (!cards_toSell.find(card => card.uid === cardsDropped[cardIndex].uid))
-                    cards_toSell[cardIndex] = cardsDropped[reactionIndex];
+                if (!cards_toSell.find(card => card?.uid === cardsDropped[cardIndex].uid))
+                    cards_toSell[cardIndex] = cardsDropped[cardIndex];
 
                 // Ends the function regardless
                 return;
@@ -155,11 +159,13 @@ module.exports = {
 
             // Parse cards_toSell into a human readable string array
             let cards_toSell_f = cards_toSell.map(card => `> ${cardManager.toString.basic(card)}`);
+            let sellPriceTotal = 0; cards_toSell.forEach(card => sellPriceTotal += card.sellPrice);
 
             // Await the user's confirmation
             let confirm_sell = await messageTools.awaitConfirmation(interaction, {
-                description: "Are you sure you want to sell:\n%CARDS"
+                description: "**Are you sure you want to sell:**\n%CARDS"
                     .replace("%CARDS", cards_toSell_f.join("\n")),
+                footer: `total: ${botSettings.currencyIcon} ${sellPriceTotal}`,
                 showAuthor: true
             });
 
@@ -167,16 +173,17 @@ module.exports = {
             if (confirm_sell) {
                 await userManager.cards.sell(interaction.user.id, cards_toSell);
 
-                // Let the user know they were sold
+                // Let the user know the result
                 let { embed: embed_sell } = new messageTools.Embedinator(null, {
                     title: "%USER | sell",
                     description: "You sold:\n%CARDS"
                         .replace("%CARDS", cards_toSell_f.join("\n")),
+                    footer: `total: ${botSettings.currencyIcon} ${sellPriceTotal}`,
                     author: interaction.user
                 });
 
                 // Let the user know the result
-                await interaction.followUp({ embeds: [embed] }); return collector_RC.stop();
+                await interaction.followUp({ embeds: [embed_sell] }); return collector_RC.stop();
             }
         });
 

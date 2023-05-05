@@ -157,12 +157,13 @@ function parse_fromCardLike(cardLike) {
 const { bold, italic, inline, quote, link, space } = markdown;
 
 function toString_basic(card) {
-    return "%UID %EMOJI %GROUP :: %SINGLE - %NAME"
+    return "%UID %EMOJI %GROUP :: %SINGLE - %NAME %SELL_PRICE"
         .replace("%UID", inline(true, card.uid))
         .replace("%EMOJI", inline(true, card.emoji))
         .replace("%GROUP", bold(true, card.group))
         .replace("%SINGLE", card.single)
-        .replace("%NAME", link(card.name, card.imageURL));
+        .replace("%NAME", link(card.name, card.imageURL))
+        .replace("%SELL_PRICE", inline(true, "💰", card.sellPrice));
 }
 
 function toString_setEntry(card, count = 1, simplify = false) {
@@ -201,7 +202,7 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
     };
 
     let { duplicate_count } = options;
-    let formated = "%UID%EMOJI %GROUP : %SINGLE - %NAME %DUPE\n> %SET_ID %GLOBAL_ID %RARITY %CATEGORY%SELL_PRICE%LOCKED%NEW_LINE%LEVEL%STATS%FAVORITED%SELECTED"
+    let formated = "%UID%EMOJI %GROUP : %SINGLE - %NAME %DUPE\n> %SET_ID %GLOBAL_ID %RARITY %CATEGORY %SELL_PRICE%LOCKED%NEW_LINE%LEVEL%STATS%FAVORITED%SELECTED"
         .replace("%UID", card.uid ? space("right", inline(true, card.uid)) : "")
         .replace("%EMOJI", inline(true, card.emoji))
 
@@ -214,7 +215,7 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
         .replace("%RARITY", inline(false, "R", card.rarity))
         .replace("%CATEGORY", inline(true, card.category))
 
-        .replace("%SELL_PRICE", options.simplify ? "" : space("left", inline(true, "💰", card.sellPrice)))
+        .replace("%SELL_PRICE", inline(true, "💰", card.sellPrice))
         .replace("%LOCKED", card.locked ? space("both", inline(true, "🔒")) : "")
 
         .replace("%NEW_LINE", options.simplify ? "" : "\n")

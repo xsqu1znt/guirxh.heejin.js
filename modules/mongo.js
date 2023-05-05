@@ -170,7 +170,7 @@ async function cardInventory_sellCards(userID, cards) {
     if (!Array.isArray(cards)) cards = [cards];
 
     // Remove the cards from the user's card_inventory
-    await cardInventory_removeCards(userID, uids);
+    await cardInventory_removeCards(userID, cards.map(card => card.uid));
 
     // Get the user's balance
     let userData = await user_fetch(userID, "essential", true);

@@ -11,7 +11,7 @@ module.exports = {
         .setDescription("Sell a card in your inventory")
 
         .addStringOption(option => option.setName("uid")
-            .setDescription("The unique ID of the card (separate multiple by comma)")
+            .setDescription("The unique ID of the card | separate multiple by comma")
             .setRequired(true)),
 
     /**
@@ -32,28 +32,48 @@ module.exports = {
         let userData = await userManager.fetch(interaction.user.id, "full", true);
 
         // Get the cards from the user's card_inventory
-        let cardsToRemove = userParser.cards.getMultiple(userData.card_inventory, uids);
-        if (cardsToRemove.length === 0) return await embedinator.send(
+        let cards_toSell = userParser.cards.getMultiple(userData.card_inventory, uids);
+        if (cards_toSell.length === 0) return await embedinator.send(
             `No cards were found with ${uids.length === 1 ? "that ID" : "those IDs"}.`
         );
 
-        // Remove the cards from the user's card_inventory
-        await userManager.cards.remove(interaction.user.id, cardsToRemove.map(card => card.uid));
+        // Filter out locked and favorited cards
+        cards_toSell = cards_toSell.filter(card =>
+            !card?.locked
+            && card.uid !== userData.card_favorite_uid
+            && card.uid !== userData.card_selected_uid
+        );
+        if (cards_toSell.length === 0) return await embedinator.send(
+            `${uids.length === 1 ? "That card is" : "Those cards are"} locked/favorited.`
+        );
 
-        // Update the user's balance with the total sell amount
-        let currencyGained = 0; cardsToRemove.forEach(card => currencyGained += card.sellPrice);
-        await userManager.update(interaction.user.id, { balance: userData.balance + currencyGained });
+        // Parse cards_toSell into a human readable string array
+        let cards_toSell_f = cards_toSell.map(card => `> ${cardManager.toString.basic(card)}`);
+        let sellPriceTotal = 0; cards_toSell.forEach(card => sellPriceTotal += card.sellPrice);
 
-        // Let the user know the result
-        let result = `You sold \`${cardsToRemove.length}\` cards and received \`${botSettings.currencyIcon} ${currencyGained}\`.`;
+        // Await the user's confirmation
+        let confirm_sell = await messageTools.awaitConfirmation(interaction, {
+            description: "**Are you sure you want to sell:**\n%CARDS"
+                .replace("%CARDS", cards_toSell_f.join("\n")),
+            footer: `total: ${botSettings.currencyIcon} ${sellPriceTotal}`,
+            showAuthor: true
+        });
 
-        if (cardsToRemove.length === 1) {
-            // Parse the card into a human readable format
-            let card_f = cardManager.toString.basic(cardsToRemove[0]);
+        // Sell the cards
+        if (confirm_sell) {
+            await userManager.cards.sell(interaction.user.id, cards_toSell);
 
-            result = `You sold ${card_f} and received \`${botSettings.currencyIcon} ${currencyGained}\`.`;
+            // Let the user know the result
+            let { embed: embed_sell } = new messageTools.Embedinator(null, {
+                title: "%USER | sell",
+                description: "You sold:\n%CARDS"
+                    .replace("%CARDS", cards_toSell_f.join("\n")),
+                footer: `total: ${botSettings.currencyIcon} ${sellPriceTotal}`,
+                author: interaction.user
+            });
+
+            // Let the user know the result
+            await interaction.channel.send({ embeds: [embed_sell] });
         }
-
-        return await embedinator.send(result);
     }
 };

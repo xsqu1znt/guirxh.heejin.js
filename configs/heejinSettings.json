@@ -25,7 +25,7 @@
 
             "pagination": "60s",
             "reactionSell": "30s",
-            "confirmation": "10s"
+            "confirmation": "15s"
         }
     },
 
