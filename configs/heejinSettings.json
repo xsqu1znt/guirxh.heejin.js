@@ -62,9 +62,11 @@
         },
         "currency": {
             "startingBalance": 250,
-            "currencyRange": {
-                "min": 10,
-                "max": 500
+            "range": {
+                "random": {
+                    "min": 10,
+                    "max": 500
+                }
             }
         },
         "chances": {

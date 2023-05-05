@@ -101,16 +101,13 @@ module.exports = {
         // Send the drop embed
         let reply = await interaction.editReply({ embeds: [embed_drop] });
 
-        //* End here if there was only 1 card dropped
-        if (cardsDropped.length === 1) return reply;
-
         // Create an array, the card the user wants to sell will be inserted at the relative index
         let cards_toSell = cardsDropped.map(() => null);
 
         // Create an array of reaction emojis
         let reactionEmojis = [...emoji_numbers.slice(0, cardsDropped.length), emoji_confirmSell];
         // Only leave the confirm sell emoji if there was only 1 card dropped
-        if (cardsDropped.length === 1) reactionEmojis = reactionEmojis[1];
+        if (cardsDropped.length === 1) reactionEmojis = [emoji_confirmSell];
 
         // Create the reaction collector
         let filter_RC = (reaction, user) =>
@@ -142,7 +139,7 @@ module.exports = {
 
             //* Ask the user to confirm if they want to sell
             // Remove the null slots from the array since we don't need them anymore
-            cards_toSell = cards_toSell.filter(card => card);
+            cards_toSell = cardsDropped.length > 1 ? cards_toSell.filter(card => card) : cardsDropped;
 
             // Only send the confirmation if the user actually selected cards
             if (cards_toSell.length === 0) {

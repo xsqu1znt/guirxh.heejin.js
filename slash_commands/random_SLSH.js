@@ -27,12 +27,12 @@ module.exports = {
             `You can use random again **${cooldownETA_random}**.`
         );
 
-        
+
         // Use rng to determine if the user gets anything
-        let { xp: { commands: { random: xp_random } }, currency: { currencyRange } } = userSettings;
-        let currencyGained = randomTools.number(currencyRange.min, currencyRange.max);
+        let { xp: { commands: { random: xp_random } }, currency: { range: { random } } } = userSettings;
+        let currencyGained = randomTools.number(rangeRandom.min, rangeRandom.max);
         let xpGained = randomTools.number(xp_random.min, xp_random.max);
-        
+
         let won = randomTools.chance(userSettings.chances.winRandom); if (won) {
             // Update the user
             userData.xp += xpGained;

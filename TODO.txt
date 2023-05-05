@@ -1,4 +1,4 @@
-split profile into pages
+add . to page jump sentence
 add card packs to the shop
 
 be able to add/remove multiple cards using vault

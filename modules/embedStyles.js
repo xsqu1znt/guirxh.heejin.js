@@ -189,8 +189,10 @@ function userDrop_ES(user, cards, cards_isDuplicate, dropTitle = "drop") {
     if (card_last.imageURL) embed.setImage(card_last.imageURL);
 
     // Let the user know they can sell the card by reacting
-    if (cards.length > 1) embed.setFooter({
-        text: "use the reactions to choose what you want to sell",
+    embed.setFooter({
+        text: cards.length > 1
+            ? "use the reactions to choose what you want to sell"
+            : "react to sell this card"
     });
 
     return embed;
