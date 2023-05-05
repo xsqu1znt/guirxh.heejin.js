@@ -71,7 +71,7 @@
             "winRandom": 40
         },
         "cooldowns": {
-            "drop_5": "5s",
+            "drop_normal": "5s",
             "drop_weekly": "5s",
             "drop_seasonal": "5s",
             "drop_event": "5s",

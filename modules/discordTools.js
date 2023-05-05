@@ -336,7 +336,7 @@ class message_Navigationify {
 
 async function message_awaitConfirmation(interaction, options = { title: "", description: "", showAuthor: true, timeout: 0 }) {
     options = {
-        title: "Are you sure?", description: null, showAuthor: true,
+        title: "Please confirm this action", description: null, showAuthor: true,
         timeout: dateTools.parseStr(botSettings.timeout.confirmation),
         ...options
     };

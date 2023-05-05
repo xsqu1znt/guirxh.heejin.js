@@ -113,13 +113,13 @@ function get_byGlobalID(globalID) {
 }
 
 /**
- * @param {"drop_5" | "weekly" | "seasonal" | "event"} dropCategory 
+ * @param {"normal" | "weekly" | "seasonal" | "event"} dropCategory 
  */
 function get_randomDrop(dropCategory) {
     let card_choices = [];
 
     switch (dropCategory) {
-        case 'drop_5':
+        case 'normal':
             let categories = Object.values(dropSettings.chances).map(c => ({ ...c, rarity: c.chance }));
             let category_picked = randomTools.weightedChoice(categories);
 

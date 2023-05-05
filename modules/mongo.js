@@ -149,7 +149,7 @@ async function cardInventory_addCards(userID, cards, resetUID = false) {
     }
 
     // Wait for Mongo to finish
-    await Promise.all(promiseArray); return;
+    await Promise.all(promiseArray); return null;
 }
 
 async function cardInventory_removeCards(userID, uids) {
@@ -162,7 +162,24 @@ async function cardInventory_removeCards(userID, uids) {
         promiseArray.push(user_update(userID, { $pull: { card_inventory: { uid } } }));
     }
 
-    await Promise.all(promiseArray); return;
+    await Promise.all(promiseArray); return null;
+}
+
+async function cardInventory_sellCards(userID, cards) {
+    // Convert a single card into an array
+    if (!Array.isArray(cards)) cards = [cards];
+
+    // Remove the cards from the user's card_inventory
+    await cardInventory_removeCards(userID, uids);
+
+    // Get the user's balance
+    let userData = await user_fetch(userID, "essential", true);
+
+    // Add to the user's balance
+    cards.forEach(card => userData.balance += card.sellPrice);
+
+    // Update the user's balance in Mongo
+    await user_update(userID, { balance: userData.balance }); return null;
 }
 
 async function cardInventory_updateCard(userID, card) {
@@ -170,7 +187,7 @@ async function cardInventory_updateCard(userID, card) {
         { _id: userID, "card_inventory.uid": card.uid },
         { $set: { "card_inventory.$": card } }
     );
-    return;
+    return null;
 }
 
 //! User -> Badges
@@ -188,7 +205,7 @@ async function userBadge_addBadge(userID, badges) {
     }
 
     // Wait for mongo to finish
-    await Promise.all(promiseArray); return;
+    await Promise.all(promiseArray); return null;
 }
 
 async function userBadge_removeBadge(userID, badgeIDs) {
@@ -202,7 +219,7 @@ async function userBadge_removeBadge(userID, badgeIDs) {
     }
 
     // Wait for mongo to finish
-    await Promise.all(promiseArray); return;
+    await Promise.all(promiseArray); return null;
 }
 
 module.exports = {
@@ -233,6 +250,7 @@ module.exports = {
         cards: {
             add: cardInventory_addCards,
             remove: cardInventory_removeCards,
+            sell: cardInventory_sellCards,
             update: cardInventory_updateCard
         },
 

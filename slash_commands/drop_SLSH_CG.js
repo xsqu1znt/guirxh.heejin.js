@@ -14,21 +14,17 @@ module.exports = {
     builder: new SlashCommandBuilder().setName("drop")
         .setDescription("Drop a random card")
 
-        .addSubcommand(subcommand => subcommand
-            .setName("5")
-            .setDescription("Get 5 random cards of any rarity"))
+        .addStringOption(option => option.setName("card")
+            .setDescription("Choose what you want to drop")
 
-        .addSubcommand(subcommand => subcommand
-            .setName("weekly")
-            .setDescription("Get a random card from the shop"))
-
-        .addSubcommand(subcommand => subcommand
-            .setName("seasonal")
-            .setDescription("Get a random seasonal card"))
-
-        .addSubcommand(subcommand => subcommand
-            .setName("event")
-            .setDescription("Get a random event card")),
+            .addChoices(
+                { name: "Normal", value: "normal" },
+                { name: "Weekly", value: "weekly" },
+                { name: "Seasonal", value: "seasonal" },
+                { name: "Event", value: "event" }
+            )
+            .setRequired(true)
+        ),
 
     /**
      * @param {Client} client
@@ -42,17 +38,17 @@ module.exports = {
 
         let userData = await userManager.fetch(interaction.user.id, "essential");
         let [dropEmbedTitle, dropCooldownType] = "";
-        let cards;
+        let cardsDropped = null;
 
-        switch (interaction.options.getSubcommand()) {
-            case "5":
-                dropEmbedTitle = "drop 5"; dropCooldownType = "drop_5";
-                cards = [...Array(5)].map(() => cardManager.get.drop("drop_5"));
+        switch (interaction.options.getString("card")) {
+            case "normal":
+                dropEmbedTitle = "drop"; dropCooldownType = "drop_normal";
+                cardsDropped = [...Array(5)].map(() => cardManager.get.drop("normal"));
                 break;
 
             case "weekly":
                 dropEmbedTitle = "weekly"; dropCooldownType = "drop_weekly";
-                cards = [cardManager.get.drop("weekly")];
+                cardsDropped = [cardManager.get.drop("weekly")];
                 break;
 
             case "seasonal":
@@ -60,7 +56,7 @@ module.exports = {
                     return await embedinator.send("There isn't a season event right now.");
 
                 dropEmbedTitle = "seasonal"; dropCooldownType = "drop_seasonal";
-                cards = [cardManager.get.drop("seasonal")];
+                cardsDropped = [cardManager.get.drop("seasonal")];
                 break;
 
             case "event":
@@ -68,7 +64,7 @@ module.exports = {
                     return await embedinator.send("There isn't an event right now.");
 
                 dropEmbedTitle = "event"; dropCooldownType = "drop_event";
-                cards = [cardManager.get.drop("event")];
+                cardsDropped = [cardManager.get.drop("event")];
                 break;
         }
 
@@ -89,33 +85,32 @@ module.exports = {
         });
 
         // Add the card to the user's inventory
-        await userManager.cards.add(interaction.user.id, cards, true);
+        await userManager.cards.add(interaction.user.id, cardsDropped, true);
 
         // Refresh userData for the purpose of checking if it's a duplicate card
         userData = await userManager.fetch(interaction.user.id, "cards");
 
         // Used to tell the user if a card they got is a duplicate
-        let cards_isDuplicate = cards.map(card =>
+        let cards_isDuplicate = cardsDropped.map(card =>
             userParser.cards.duplicates(userData.card_inventory, { globalID: card.globalID }).card_duplicates.length > 1
         );
 
         // Create the embed
-        let embed_drop = userDrop_ES(interaction.user, cards, cards_isDuplicate, dropEmbedTitle);
+        let embed_drop = userDrop_ES(interaction.user, cardsDropped, cards_isDuplicate, dropEmbedTitle);
 
         // Send the drop embed
         let reply = await interaction.editReply({ embeds: [embed_drop] });
 
         //* End here if there was only 1 card dropped
-        if (cards.length === 1) return reply;
-
-        // Refresh userData so we can access the user's balance
-        userData = await userManager.fetch(interaction.user.id, "essential");
+        if (cardsDropped.length === 1) return reply;
 
         // Create an array, the card the user wants to sell will be inserted at the relative index
-        let sellableCards = cards.map(() => null);
+        let cards_toSell = cardsDropped.map(() => null);
 
         // Create an array of reaction emojis
-        let reactionEmojis = [...emoji_numbers.slice(0, cards.length), emoji_confirmSell];
+        let reactionEmojis = [...emoji_numbers.slice(0, cardsDropped.length), emoji_confirmSell];
+        // Only leave the confirm sell emoji if there was only 1 card dropped
+        if (cardsDropped.length === 1) reactionEmojis = reactionEmojis[1];
 
         // Create the reaction collector
         let filter_RC = (reaction, user) =>
@@ -124,59 +119,79 @@ module.exports = {
 
         let collector_RC = reply.createReactionCollector({ filter: filter_RC, time: 30000, dispose: true });
 
+        // When the user clicks on a reaction
         collector_RC.on("collect", async reaction => {
             // Reset the reaction collector's timer
             collector_RC.resetTimer();
 
-            let reactionIndex = emoji_numbers.findIndex(e => e.name === reaction.emoji.name);
+            // Check if the user reacted to a card number
+            let cardIndex = emoji_numbers.findIndex(emoji => emoji.name === reaction.emoji.name);
+            if (cardIndex !== -1) {
+                // Insert the card at the appropriate index
+                // avoiding adding the same card twice
+                if (!cards_toSell.find(card => card.uid === cardsDropped[cardIndex].uid))
+                    cards_toSell[cardIndex] = cardsDropped[reactionIndex];
 
-            if (reactionIndex >= 0) {
-                if (!sellableCards.find(c => c?.uid === cards[reactionIndex].uid))
-                    sellableCards[reactionIndex] = cards[reactionIndex];
-
+                // Ends the function regardless
                 return;
             }
 
-            sellableCards = sellableCards.filter(c => c);
-            let sellTotal = sellableCards.length;
-            let sellConfirm = await messageTools.awaitConfirmation(interaction, {
-                // title: "Please confirm this action",
-                description: `Are you sure you want to sell \`${sellTotal}\` ${sellTotal === 1 ? "card" : "cards"}?`,
+            //* Ask the user to confirm if they want to sell
+            // Remove the null slots from the array since we don't need them anymore
+            cards_toSell = cards_toSell.filter(card => card);
+
+            // Only send the confirmation if the user actually selected cards
+            if (cards_toSell.length === 0) {
+                // Let the user know they were sold
+                let { embed: embed_sell } = new messageTools.Embedinator(null, {
+                    title: "%USER | sell",
+                    description: "Use the number reactions to select what you want to sell.",
+                    author: interaction.user
+                });
+
+                // Let the user know the result
+                await interaction.followUp({ embeds: [embed] }); return;
+            }
+
+            // Parse cards_toSell into a human readable string array
+            let cards_toSell_f = cards_toSell.map(card => `> ${cardManager.toString.basic(card)}`);
+
+            // Await the user's confirmation
+            let confirm_sell = await messageTools.awaitConfirmation(interaction, {
+                description: "Are you sure you want to sell:\n%CARDS"
+                    .replace("%CARDS", cards_toSell_f.join("\n")),
                 showAuthor: true
             });
 
-            if (sellConfirm) {
-                await userManager.cards.remove(interaction.user.id, sellableCards.map(c => c.uid));
+            // Sell the cards
+            if (confirm_sell) {
+                await userManager.cards.sell(interaction.user.id, cards_toSell);
 
-                // Add to the user's balance
-                let sellBalance = 0; sellableCards.forEach(card => sellBalance += card.sellPrice);
-                await userManager.update(interaction.user.id, { balance: userData.balance + sellBalance });
-
-                let { embed } = new messageTools.Embedinator(null, {
+                // Let the user know they were sold
+                let { embed: embed_sell } = new messageTools.Embedinator(null, {
                     title: "%USER | sell",
-                    description: "You sold cards:\n%CARDS"
-                        .replace("%CARDS", sellableCards.map(card => `> ${cardManager.toString.basic(card)}`).join("\n")),
-                    author: interaction.user,
+                    description: "You sold:\n%CARDS"
+                        .replace("%CARDS", cards_toSell_f.join("\n")),
+                    author: interaction.user
                 });
 
-                await interaction.followUp({ embeds: [embed] });
-
-                return await reply.reactions.removeAll();
+                // Let the user know the result
+                await interaction.followUp({ embeds: [embed] }); return collector_RC.stop();
             }
         });
 
         collector_RC.on("remove", async reaction => {
+            // Reset the reaction collector's timer
             collector_RC.resetTimer();
 
-            let reactionIndex = emoji_numbers.findIndex(e => e.name === reaction.emoji.name);
+            // Check if the user reacted to a card number
+            let cardIndex = emoji_numbers.findIndex(emoji => emoji.name === reaction.emoji.name);
 
-            if (reactionIndex >= 0) {
-                if (sellableCards.find(c => c?.uid === cards[reactionIndex].uid))
-                    sellableCards[reactionIndex] = null;
-            }
+            // Insert a null at the appropriate index
+            if (cardIndex !== -1) cards_toSell[cardIndex] = null;
         });
 
-        // Remove all reaction when the reaction collector times out or ends
+        // Remove all reactions when the reaction collector times out or ends
         collector_RC.on("end", async () => await reply.reactions.removeAll());
 
         // Add the appropriate index/confirm emoji reactions
