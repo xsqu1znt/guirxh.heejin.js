@@ -42,6 +42,7 @@ module.exports = {
             !card?.locked
             && card.uid !== userData.card_favorite_uid
             && card.uid !== userData.card_selected_uid
+            && !userData.card_team_uids.includes(card.uid)
         );
         if (cards_toSell.length === 0) return await embedinator.send(
             `${uids.length === 1 ? "That card is" : "Those cards are"} locked/favorited.`
