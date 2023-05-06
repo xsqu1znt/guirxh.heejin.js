@@ -50,11 +50,9 @@ module.exports = {
                 // Send a level up message if the user leveled up successfully
                 if (leveled.leveled) {
                     // Gotta have a level up message to actually send
-                    let lvlMsg = `Congratulations, %USER! You are now level %CURRLVL.`
+                    let lvlMsg = `Congratulations, %USER! You are now level %CURRENT_LVL.`
                         .replace("%USER", args.interaction.user)
-                        .replace("%LVLS_GAINED", stringTools.formatNumber(leveled.levels_gained))
-                        .replace("%DYNLVLSTR", leveled.levels_gained > 1 ? "levels" : "level")
-                        .replace("%CURRLVL", stringTools.formatNumber(leveled.level_current));
+                        .replace("%CURRENT_LVL", stringTools.formatNumber(leveled.level_current));
 
                     // Send the level up message we created above
                     // not awaited because we don't need any information from the returned message

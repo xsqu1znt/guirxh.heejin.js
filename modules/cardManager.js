@@ -181,14 +181,18 @@ function toString_setEntry(card, count = 1, simplify = false) {
 }
 
 function toString_missingEntry(card, missing = false) {
-    return "%MISSING %SET_ID %CATEGORY %EMOJI %GROUP :: %SINGLE"
-        .replace("%MISSING", inline(true, missing ? "🚫" : "✔️"))
-
-        .replace("%SET_ID", inline(true, "🗣️", card.setID))
-        .replace("%CATEGORY", inline(true, card.category))
+    return "%GLOBAL_ID %EMOJI %GROUP :: %SINGLE - %NAME\n> %SET_ID %RARITY %CATEGORY %MISSING"
+        .replace("%GLOBAL_ID", inline(true, card.globalID))
         .replace("%EMOJI", inline(true, card.emoji))
         .replace("%GROUP", bold(true, card.group))
-        .replace("%SINGLE", card.single);
+        .replace("%SINGLE", card.single)
+        .replace("%NAME", link(card.name, card.imageURL))
+
+        .replace("%SET_ID", inline(true, "🗣️", card.setID))
+        .replace("%RARITY", inline(false, "R", card.rarity))
+        .replace("%CATEGORY", inline(true, card.category))
+
+        .replace("%MISSING", inline(true, missing ? "🚫 missing" : "✔️ owned"));
 }
 
 function toString_shopEntry(card) {

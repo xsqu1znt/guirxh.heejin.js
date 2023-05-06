@@ -338,21 +338,21 @@ function userProfile_ES(user, userData) {
 function userMissing_ES(user, userData, setID) {
     // Create a base embed
     let embed_template = () => new messageTools.Embedinator(null, {
-        title: "%USER | profile",
+        title: "%USER | missing",
         description: `${inline(true, setID)} is either empty or an invalid set.`,
         author: user
     }).embed;
 
     // Get every card in the set
     let cards_set = cardManager.cards_all.filter(card => card.setID === setID);
-    if (!cards_set) return [embed_template()];
+    if (cards_set.length === 0) return [embed_template()];
 
     // Sort by set ID (decending order)
-    cards_set = cards_set.sort((a, b) => a.setID - b.setID);
+    cards_set = cards_set.sort((a, b) => a.globalID - b.globalID);
 
     // Parse cards_set into an array of human readable strings
     let cards_set_f = cards_set.map(card => {
-        let isMissing = userData.card_inventory.find(c => c.globalID === card.globalID) ? true : false;
+        let isMissing = userData.card_inventory.find(c => c.globalID === card.globalID) ? false : true;
         return cardManager.toString.missingEntry(card, isMissing);
     });
 
