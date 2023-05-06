@@ -1,4 +1,6 @@
 add . to page jump sentence
+fix cards having the same uid in drop
+show dupe if you get the same card twice in drop?
 add card packs to the shop
 
 be able to add/remove multiple cards using vault

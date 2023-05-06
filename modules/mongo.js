@@ -136,33 +136,24 @@ async function cardInventory_addCards(userID, cards, resetUID = false) {
     // Get the user's current cards for unique ID creation
     let userCards; if (resetUID) userCards = (await user_fetch(userID, "cards", true)).card_inventory;
 
-    let promiseArray = [];
     for (let card of cards) {
         // Reset the unique ID
         if (resetUID) card = cardManager.resetUID(card, userCards);
 
         // Convert the card object to a slimmer "CardLike" object
         card = cardManager.parse.toCardLike(card);
-
-        // Push the CardLike to the user's card_inventory in Mongo
-        promiseArray.push(user_update(userID, { $push: { card_inventory: card } }));
     }
-
-    // Wait for Mongo to finish
-    await Promise.all(promiseArray); return null;
+    
+    // Push the CardLikes to the user's card_inventory in Mongo
+    await user_update(userID, { $push: { card_inventory: cards } }); return null;
 }
 
 async function cardInventory_removeCards(userID, uids) {
     // Convert a single card UID into an array
     if (!Array.isArray(uids)) uids = [uids];
-
-    let promiseArray = [];
-    for (let uid of uids) {
-        // Send the pull request to Mongo
-        promiseArray.push(user_update(userID, { $pull: { card_inventory: { uid } } }));
-    }
-
-    await Promise.all(promiseArray); return null;
+    
+    // Send the pull request to Mongo
+    await user_update(userID, { $pull: { card_inventory: { uids } } }); return null;
 }
 
 async function cardInventory_sellCards(userID, cards) {
