@@ -22,11 +22,11 @@ module.exports = {
         )
 
         .addStringOption(option => option.setName("add")
-            .setDescription("Add a card using its unique ID")
+            .setDescription("Add a card using its unique ID | separate multiple by comma")
         )
 
         .addStringOption(option => option.setName("remove")
-            .setDescription("Remove a card using its unique ID")
+            .setDescription("Remove a card using its unique ID | separate multiple by comma")
         ),
 
     /**
@@ -35,9 +35,9 @@ module.exports = {
      */
     execute: async (client, interaction) => {
         // Interaction options and stuff
-        let uid_add = interaction.options.getString("add");
-        let uid_remove = interaction.options.getString("remove");
-        let userData, card, card_f;
+        let uid_add = interaction.options.getString("add"); uid_add &&= uid_add.replace(/ /g, "").split(",");
+        let uid_remove = interaction.options.getString("remove"); uid_remove &&= uid_remove.replace(/ /g, "").split(",");
+        let userData, cards, cards_f;
 
         // Create a base embed
         const embedinator = new messageTools.Embedinator(interaction, {
@@ -45,125 +45,127 @@ module.exports = {
         });
 
         // Fallback
-        if (!uid_add && !uid_remove)
+        if (!uid_add.length > 0 && !uid_remove.length > 0)
             return await embedinator.send("You need to give a valid card ID.");
 
         // Determine the operation type
         switch (interaction.options.getString("edit")) {
             case "favorite":
-                if (uid_add) {
+                if (uid_add[0]) {
                     // Fetch the user from Mongo
                     userData = await userManager.fetch(interaction.user.id, "full", true);
 
                     // Get the card from the user's card_inventory
-                    card = userParser.cards.get(userData.card_inventory, uid_add);
-                    if (!card) return await embedinator.send(
-                        `\`${uid_add}\` is not a valid card ID.`
+                    cards = userParser.cards.get(userData.card_inventory, uid_add[0]);
+                    if (!cards) return await embedinator.send(
+                        `\`${uid_add[0]}\` is not a valid card ID.`
                     );
 
                     // Check if the card is already favorited
-                    if (card.uid === userData.card_favorite_uid) return await embedinator.send(
-                        `\`${uid_add}\` is already favorited.`
+                    if (cards.uid === userData.card_favorite_uid) return await embedinator.send(
+                        `\`${uid_add[0]}\` is already favorited.`
                     );
 
                     // Update the user's card_favorite_uid in Mongo
-                    await userManager.update(interaction.user.id, { card_favorite_uid: card.uid });
+                    await userManager.update(interaction.user.id, { card_favorite_uid: cards.uid });
 
                     // Let the user know the result
-                    card_f = cardManager.toString.basic(card);
-                    return await embedinator.send(`Your favorite card has been set to:\n> ${card_f}`);
+                    cards_f = cardManager.toString.basic(cards);
+                    return await embedinator.send(`Your favorite card has been set to:\n> ${cards_f}`);
                 }
 
                 // Unfavorite the user's favorited card
-                else if (uid_remove) {
+                else if (uid_remove[0]) {
                     await userManager.update(interaction.user.id, { card_favorite_uid: "" });
 
                     return await embedinator.send("You no longer have a favorited card.");
                 }
 
             case "idol":
-                if (uid_add) {
+                if (uid_add[0]) {
                     // Fetch the user from Mongo
                     userData = await userManager.fetch(interaction.user.id, "full", true);
 
                     // Get the card from the user's card_inventory
-                    card = userParser.cards.get(userData.card_inventory, uid_add);
-                    if (!card) return await embedinator.send(
-                        `\`${uid_add}\` is not a valid card ID.`
+                    cards = userParser.cards.get(userData.card_inventory, uid_add[0]);
+                    if (!cards) return await embedinator.send(
+                        `\`${uid_add[0]}\` is not a valid card ID.`
                     );
 
                     // Check if the card is already selected
-                    if (card.uid === userData.card_selected_uid) return await embedinator.send(
-                        `\`${uid_add}\` is already selected.`
+                    if (cards.uid === userData.card_selected_uid) return await embedinator.send(
+                        `\`${uid_add[0]}\` is already selected.`
                     );
 
                     // Update the user's card_favorite_uid in Mongo
-                    await userManager.update(interaction.user.id, { card_selected_uid: card.uid });
+                    await userManager.update(interaction.user.id, { card_selected_uid: cards.uid });
 
                     // Let the user know the result
-                    card_f = cardManager.toString.basic(card);
-                    return await embedinator.send(`Your idol has been set to:\n> ${card_f}`);
+                    cards_f = cardManager.toString.basic(cards);
+                    return await embedinator.send(`Your idol has been set to:\n> ${cards_f}`);
                 }
 
                 // Unfavorite the user's favorited card
-                else if (uid_remove) {
+                else if (uid_remove[0]) {
                     await userManager.update(interaction.user.id, { card_selected_uid: "" });
 
                     return await embedinator.send("You no longer have an idol set.");
                 }
 
             case "vault":
-                if (uid_add) {
+                if (uid_add.length > 0) {
                     // Fetch the user from Mongo
                     userData = await userManager.fetch(interaction.user.id, "full", true);
 
                     // Get the card from the user's card_inventory
-                    card = userParser.cards.get(userData.card_inventory, uid_add);
-                    if (!card) return await embedinator.send(
-                        `\`${uid_add}\` is not a valid card ID.`
+                    cards = uid_add.map(uid => userParser.cards.get(userData.card_inventory, uid));
+                    if (!cards.length > 0) return await embedinator.send(
+                        `\`${uid_add.join(" ").trim()}\` is not a valid card ID.`
                     );
 
                     // Check if the card is already selected
-                    if (card.locked) return await embedinator.send(
-                        `\`${uid_add}\` is already locked.`
+                    cards = cards.filter(card => !card.locked);
+                    if (!cards.length > 0) return await embedinator.send(
+                        `\`${uid_add.join(" ").trim()}\` is already locked.`
                     );
 
-                    // Lock the card
-                    card.locked = true;
+                    // Lock the cards
+                    cards.forEach(card => card.locked = true);
 
                     // Update the card in the user's inventory in Mongo
-                    await userManager.cards.update(interaction.user.id, card);
+                    await userManager.cards.update(interaction.user.id, cards);
 
                     // Let the user know the result
-                    card_f = cardManager.toString.basic(card);
-                    return await embedinator.send(`You added a card to your vault:\n> ${card_f}`);
+                    cards_f = cards.map(card => `> ${cardManager.toString.basic(card)}`);
+                    return await embedinator.send(`You added a card to your vault:\n${cards_f.join("\n")}`);
                 }
 
                 // Unlock a card
-                else if (uid_remove) {
+                else if (uid_remove > 0) {
                     // Fetch the user from Mongo
                     userData = await userManager.fetch(interaction.user.id, "full", true);
 
                     // Get the card from the user's card_inventory
-                    card = userParser.cards.get(userData.card_inventory, uid_remove);
-                    if (!card) return await embedinator.send(
-                        `\`${uid_remove}\` is not a valid card ID.`
+                    cards = uid_remove.map(uid => userParser.cards.get(userData.card_inventory, uid));
+                    if (!cards.length > 0) return await embedinator.send(
+                        `\`${uid_remove.join(" ").trim()}\` is not a valid card ID.`
                     );
 
                     // Check if the card is already selected
-                    if (!card.locked) return await embedinator.send(
-                        `\`${uid_remove}\` is already unlocked.`
+                    cards = cards.filter(card => card.locked);
+                    if (!cards.length > 0) return await embedinator.send(
+                        `\`${uid_remove.join(" ").trim()}\` is already unlocked.`
                     );
 
-                    // Lock the card
-                    card.locked = false;
+                    // Unlock the card
+                    cards.forEach(card => card.locked = false);
 
                     // Update the card in the user's inventory in Mongo
-                    await userManager.cards.update(interaction.user.id, card);
+                    await userManager.cards.update(interaction.user.id, cards);
 
                     // Let the user know the result
-                    card_f = cardManager.toString.basic(card);
-                    return await embedinator.send(`You removed a card from your vault:\n> ${card_f}`);
+                    cards_f = cards.map(card => `> ${cardManager.toString.basic(card)}`);
+                    return await embedinator.send(`You removed a card from your vault:\n> ${cards_f.join("\n")}`);
                 }
 
             case "team":
@@ -194,8 +196,8 @@ module.exports = {
                         await userManager.update(interaction.user.id, { $push: { card_team_uids: card.uid } });
 
                     // Let the user know the result
-                    card_f = cardManager.toString.basic(card);
-                    return await embedinator.send(`Card added to your team:\n> ${card_f}`);
+                    cards_f = cardManager.toString.basic(card);
+                    return await embedinator.send(`Card added to your team:\n> ${cards_f}`);
                 }
 
                 // Unfavorite the user's favorited card
@@ -212,8 +214,8 @@ module.exports = {
                         await userManager.update(interaction.user.id, { $pull: { card_team_uids: card.uid } });
 
                         // Let the user know the result
-                        card_f = cardManager.toString.basic(card);
-                        return await embedinator.send(`Card removed from your team:\n> ${card_f}`);
+                        cards_f = cardManager.toString.basic(card);
+                        return await embedinator.send(`Card removed from your team:\n> ${cards_f}`);
                     } else {
                         return await embedinator.send(`\`${uid_remove}\` is not on your team.`);
                     }
