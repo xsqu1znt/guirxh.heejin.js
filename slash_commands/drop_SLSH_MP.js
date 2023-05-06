@@ -143,15 +143,20 @@ module.exports = {
 
             // Only send the confirmation if the user actually selected cards
             if (cards_toSell.length === 0) {
-                // Let the user know they were sold
-                let { embed: embed_sell } = new messageTools.Embedinator(null, {
+                // Let the user know they need to select something to sell
+                let { embed: embed_error } = new messageTools.Embedinator(null, {
                     title: "%USER | sell",
                     description: "Use the number reactions to select what you want to sell.",
                     author: interaction.user
                 });
 
                 // Let the user know the result
-                await interaction.followUp({ embeds: [embed] }); return;
+                messageTools.deleteAfter(
+                    await interaction.followUp({ embeds: [embed_error] }),
+                    dateTools.parseStr(botSettings.timeout.errorMessage)
+                );
+
+                return;
             }
 
             // Parse cards_toSell into a human readable string array
@@ -196,9 +201,10 @@ module.exports = {
         });
 
         // Remove all reactions when the reaction collector times out or ends
-        collector_RC.on("end", async () => await reply.reactions.removeAll());
+        collector_RC.on("end", async () => { try { await reply.reactions.removeAll() } catch { } });
 
         // Add the appropriate index/confirm emoji reactions
-        for (let { emoji } of reactionEmojis) await reply.react(emoji);
+        // function ends without awaiting completion
+        (async () => { for (let { emoji } of reactionEmojis) await reply.react(emoji); })();
     }
 };

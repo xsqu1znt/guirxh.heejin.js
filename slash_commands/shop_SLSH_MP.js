@@ -53,6 +53,11 @@ module.exports = {
                     "You don't have enough to buy that badge."
                 );
 
+                // Check if the user already owns that badge
+                if (userData.badges.find(badge => badge.id === _badge.id)) return await embedinator.send(
+                    "You already have that badge."
+                );
+
                 // Add the badge to the user
                 await userManager.badges.add(interaction.user.id, _badge);
 

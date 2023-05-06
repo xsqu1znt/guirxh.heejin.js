@@ -403,10 +403,7 @@ async function message_awaitConfirmation(interaction, options = { title: "", des
 }
 
 async function message_deleteAfter(message, time) {
-    let m;
-
-    setTimeout(async () => m = await message.delete(), time);
-    return m;
+    setTimeout(async () => { try { await message.delete() } catch { } }, time); return null;
 }
 
 //! Markdown

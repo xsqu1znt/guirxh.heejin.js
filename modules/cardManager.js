@@ -177,8 +177,18 @@ function toString_setEntry(card, count = 1, simplify = false) {
         .replace("%CATEGORY", inline(true, card.category))
         .replace("%EMOJI", inline(true, card.emoji))
         .replace("%GROUP", bold(true, card.group))
-        .replace("%SINGLE", simplify ? "" : space("left", `:: ${card.single}`))
-        .replace("%RARITY", inline(false, "R", card.rarity));
+        .replace("%SINGLE", simplify ? "" : space("left", `:: ${card.single}`));
+}
+
+function toString_missingEntry(card, missing = false) {
+    return "%MISSING %SET_ID %CATEGORY %EMOJI %GROUP :: %SINGLE"
+        .replace("%MISSING", inline(true, missing ? "🚫" : "✔️"))
+
+        .replace("%SET_ID", inline(true, "🗣️", card.setID))
+        .replace("%CATEGORY", inline(true, card.category))
+        .replace("%EMOJI", inline(true, card.emoji))
+        .replace("%GROUP", bold(true, card.group))
+        .replace("%SINGLE", card.single);
 }
 
 function toString_shopEntry(card) {
@@ -266,6 +276,7 @@ module.exports = {
     toString: {
         basic: toString_basic,
         setEntry: toString_setEntry,
+        missingEntry: toString_missingEntry,
         shopEntry: toString_shopEntry,
         inventory: toString_inventory
     }

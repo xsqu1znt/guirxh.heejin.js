@@ -14,6 +14,7 @@ module.exports = {
 
         .addStringOption(option => option.setName("card")
             .setDescription("Choose what you want to view")
+            
             .addChoices(
                 { name: "Owned ID", value: "uid" },
                 { name: "Global ID", value: "gid" },

@@ -23,7 +23,7 @@ let user_f = {
     card_team_uids: user.Team.map(card => String(card.CardID)),
     card_inventory: Object.entries(user.CardsV2)
         .map(card => cardFormater(card[1], card[0]))
-        .map(card => card.rarity !== 100 ? cardManager.parse.toCardLike(card) : card),
+        .map(card => [100, 101, 102, 103].includes(card.rarity) ? cardManager.parse.toCardLike(card) : card),
 
     timestamp_started: Date.now()
 };

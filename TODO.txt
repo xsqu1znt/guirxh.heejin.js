@@ -1,6 +1,7 @@
 add . to page jump sentence
 fix cards having the same uid in drop
 show dupe if you get the same card twice in drop?
+fix confirm sell without anything selected
 add card packs to the shop
 
 be able to add/remove multiple cards using vault
@@ -9,3 +10,6 @@ $push $pull cooldowns
 
 /applycard to update global/set ids
 use modal for /customizecard and /submitorder
+
+/daily command
+don't await sell reactions before ending the command

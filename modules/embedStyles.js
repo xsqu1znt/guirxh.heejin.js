@@ -88,7 +88,7 @@ function globalShop_ES(user) {
     let embed_all = () => {
         let cardSets_f = card_sets.map(set => set.map(card => cardManager.toString.shopEntry(card)));
 
-        // Break up sets into multiple pages to retain there being a max of 10 cards per page
+        // Break up sets into multiple pages to retain there being a max of 10 sets per page
         cardSets_f = (() => {
             let newArr = [];
 
@@ -194,37 +194,6 @@ function userDrop_ES(user, cards, cards_isDuplicate, dropTitle = "drop") {
             ? "use the reactions to choose what you want to sell"
             : "react to sell this card"
     });
-
-    return embed;
-}
-
-// Command -> User -> /COOLDOWNS
-function userCooldowns_ES(user, userData) {
-    let cooldowns = Object.keys(userSettings.cooldowns).map(name => ({ name, timestamp: 0 }));
-
-    let cooldowns_user = [];
-    userData.cooldowns.forEach((value, key) => cooldowns_user.push({ name: key, timestamp: value }));
-
-    cooldowns_user.forEach(cooldown => {
-        let spliceIndex = cooldowns.findIndex(c => c.name === cooldown.name);
-        if (spliceIndex >= 0) cooldowns.splice(spliceIndex, 1, cooldown);
-    });
-
-    let cooldowns_f = cooldowns.map(cooldown => {
-        let cooldownETA = dateTools.eta(cooldown.timestamp, true);
-
-        return "\`%VISUAL %NAME:\` %AVAILABILITY"
-            .replace("%VISUAL", cooldownETA ? "❌" : "✔️")
-            .replace("%NAME", stringTools.toTitleCase(cooldown.name.replace(/_/g, " ")))
-            .replace("%AVAILABILITY", bold(true, cooldownETA
-                ? `<t:${numberTools.milliToSeconds(cooldown.timestamp)}:${TimestampStyles.RelativeTime}>`
-                : "Available"));
-    });
-
-    let embed = new EmbedBuilder()
-        .setAuthor({ name: `${user.username} | cooldowns`, iconURL: user.avatarURL({ dynamic: true }) })
-        .setDescription(cooldowns_f.join("\n"))
-        .setColor(botSettings.embed.color || null);
 
     return embed;
 }
@@ -365,6 +334,76 @@ function userProfile_ES(user, userData) {
     };
 }
 
+// Command -> User -> /MISSING
+function userMissing_ES(user, userData, setID) {
+    // Create a base embed
+    let embed_template = () => new messageTools.Embedinator(null, {
+        title: "%USER | profile",
+        description: `${inline(true, setID)} is either empty or an invalid set.`,
+        author: user
+    }).embed;
+
+    // Get every card in the set
+    let cards_set = cardManager.cards_all.filter(card => card.setID === setID);
+    if (!cards_set) return [embed_template()];
+
+    // Sort by set ID (decending order)
+    cards_set = cards_set.sort((a, b) => a.setID - b.setID);
+
+    // Parse cards_set into an array of human readable strings
+    let cards_set_f = cards_set.map(card => {
+        let isMissing = userData.card_inventory.find(c => c.globalID === card.globalID) ? true : false;
+        return cardManager.toString.missingEntry(card, isMissing);
+    });
+
+    // Break up cards into multiple pages to retain there being a max of 10 cards per page
+    cards_set_f = arrayTools.chunk(cards_set_f, 10);
+
+    // Create the embeds
+    let embeds = [];
+    for (let i = 0; i < cards_set_f.length; i++) {
+        // Create the embed page
+        let embed = embed_template()
+            .setDescription(cards_set_f[i].join("\n"))
+            .setFooter({ text: `page ${i + 1} of ${cards_set_f.length || 1}` });
+
+        embeds.push(embed);
+    }
+
+    return embeds;
+}
+
+// Command -> User -> /COOLDOWNS
+function userCooldowns_ES(user, userData) {
+    let cooldowns = Object.keys(userSettings.cooldowns).map(name => ({ name, timestamp: 0 }));
+
+    let cooldowns_user = [];
+    userData.cooldowns.forEach((value, key) => cooldowns_user.push({ name: key, timestamp: value }));
+
+    cooldowns_user.forEach(cooldown => {
+        let spliceIndex = cooldowns.findIndex(c => c.name === cooldown.name);
+        if (spliceIndex >= 0) cooldowns.splice(spliceIndex, 1, cooldown);
+    });
+
+    let cooldowns_f = cooldowns.map(cooldown => {
+        let cooldownETA = dateTools.eta(cooldown.timestamp, true);
+
+        return "\`%VISUAL %NAME:\` %AVAILABILITY"
+            .replace("%VISUAL", cooldownETA ? "❌" : "✔️")
+            .replace("%NAME", stringTools.toTitleCase(cooldown.name.replace(/_/g, " ")))
+            .replace("%AVAILABILITY", bold(true, cooldownETA
+                ? `<t:${numberTools.milliToSeconds(cooldown.timestamp)}:${TimestampStyles.RelativeTime}>`
+                : "Available"));
+    });
+
+    let embed = new EmbedBuilder()
+        .setAuthor({ name: `${user.username} | cooldowns`, iconURL: user.avatarURL({ dynamic: true }) })
+        .setDescription(cooldowns_f.join("\n"))
+        .setColor(botSettings.embed.color || null);
+
+    return embed;
+}
+
 // Command -> User -> /INVENTORY
 /**
  * @param {"global" | "set"} sorting
@@ -437,6 +476,7 @@ function userInventory_ES(user, userData, sorting = "set", order = "descending",
     return embeds;
 }
 
+// Command -> User -> /INVENTORY DUPES:
 function userDuplicates_ES(user, userData, globalID) {
     let card_duplicates = userParser.cards.duplicates(userData.card_inventory, { globalID });
 
@@ -496,6 +536,7 @@ function userDuplicates_ES(user, userData, globalID) {
     return embeds;
 }
 
+// Command -> User -> /VIEW CARD:VAULT
 function userVault_ES(user, userData) {
     // Create a base embed
     let embed_template = () => new messageTools.Embedinator(null, {
@@ -690,6 +731,7 @@ module.exports = {
     userDrop_ES,
 
     userProfile_ES,
+    userMissing_ES,
     userCooldowns_ES,
 
     userInventory_ES,

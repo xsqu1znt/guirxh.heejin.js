@@ -37,7 +37,10 @@ async function user_fetch(userID, type = "full", lean = false) {
                 xp_for_next_level: 1,
                 biography: 1,
                 balance: 1,
+                badges: 1,
                 cooldowns: 1,
+                reminders: 1,
+                timestamp_started: 1
             };
             break;
         case "cards": filter = { _id: 0, card_inventory: 1 }; break;
@@ -143,17 +146,17 @@ async function cardInventory_addCards(userID, cards, resetUID = false) {
         // Convert the card object to a slimmer "CardLike" object
         card = cardManager.parse.toCardLike(card);
     }
-    
+
     // Push the CardLikes to the user's card_inventory in Mongo
-    await user_update(userID, { $push: { card_inventory: cards } }); return null;
+    await user_update(userID, { $push: { card_inventory: { $each: cards } } }); return null;
 }
 
 async function cardInventory_removeCards(userID, uids) {
     // Convert a single card UID into an array
     if (!Array.isArray(uids)) uids = [uids];
-    
+
     // Send the pull request to Mongo
-    await user_update(userID, { $pull: { card_inventory: { uids } } }); return null;
+    await user_update(userID, { $pull: { card_inventory: { uid: { $in: uids } } } }); return null;
 }
 
 async function cardInventory_sellCards(userID, cards) {
@@ -186,31 +189,20 @@ async function userBadge_addBadge(userID, badges) {
     // Convert a single badge into an array
     if (!Array.isArray(badges)) badges = [badges];
 
-    let promiseArray = [];
-    for (let badge of badges) {
-        // Convert the badge object to a slimmer "BadgeLike" object
+    // Convert the badge object to a slimmer "BadgeLike" object
+    for (let badge of badges)
         badge = badgeManager.parse.toBadgeLike(badge);
-
-        // Push the BadgeLike to the user's badge array in Mongo
-        promiseArray.push(user_update(userID, { $push: { badges: badge } }));
-    }
-
-    // Wait for mongo to finish
-    await Promise.all(promiseArray); return null;
+    
+    // Push the BadgeLikes to the user's badge array in Mongo
+    await user_update(userID, { $push: { badges: { $each: badges } } }); return null;
 }
 
 async function userBadge_removeBadge(userID, badgeIDs) {
     // Convert a single badge ID into an array
     if (!Array.isArray(badgeIDs)) badgeIDs = [badgeIDs];
 
-    let promiseArray = [];
-    for (let id of badgeIDs) {
-        // Send a pull request to Mongo
-        promiseArray.push(user_update(userID, { $pull: { badges: { id } } }));
-    }
-
-    // Wait for mongo to finish
-    await Promise.all(promiseArray); return null;
+    // Send the pull request to Mongo
+    await user_update(userID, { $pull: { badges: { id: { $in: badgeIDs } } } }); return null;
 }
 
 module.exports = {
