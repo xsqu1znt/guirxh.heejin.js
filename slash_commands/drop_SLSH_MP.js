@@ -69,7 +69,7 @@ module.exports = {
 
         // Check if the user has an active cooldown
         let userCooldownETA = await userManager.cooldowns.check(interaction.user.id, dropCooldownType);
-        if (userCooldownETA) return embed_drop.send(`Your next drop is available **${userCooldownETA}**.`);
+        if (userCooldownETA) return embed_drop.send(`Your next drop is available **${userCooldownETA}**`);
 
         // Update the user in Mongo
         let { xp: { commands: { drop: xp_drop } } } = userSettings;
