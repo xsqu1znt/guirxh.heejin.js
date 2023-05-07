@@ -48,7 +48,7 @@ async function user_update(userID, update) {
     return await models.user.findByIdAndUpdate(userID, update);
 }
 
-async function user_new(userID, query = {}) {
+async function user_new(userID, query = null) {
     let user = await models.user.findById(userID);
 
     if (query) user ||= await new models.user(query).save();
