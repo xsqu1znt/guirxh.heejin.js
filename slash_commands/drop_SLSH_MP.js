@@ -20,7 +20,7 @@ module.exports = {
         .addChoices(
             { name: "🃏 general", value: "normal" },
             { name: "📅 weekly", value: "weekly" },
-            { name: "🍃 season", value: "seasonal" },
+            { name: "🍃 season", value: "season" },
             { name: "🎆 event", value: "event" }
         )
             .setRequired(true)
@@ -50,12 +50,12 @@ module.exports = {
                 cardsDropped = [cardManager.get.drop("weekly")];
                 break;
 
-            case "seasonal":
+            case "season":
                 if (eventSettings.season.name === "none" || eventSettings.season.name === "")
                     return await embed_drop.send("There is no \`season\` right now");
 
-                dropEmbedTitle = "season"; dropCooldownType = "drop_seasonal";
-                cardsDropped = [cardManager.get.drop("seasonal")];
+                dropEmbedTitle = "season"; dropCooldownType = "drop_season";
+                cardsDropped = [cardManager.get.drop("season")];
                 break;
 
             case "event":

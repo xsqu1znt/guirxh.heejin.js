@@ -199,7 +199,7 @@ async function userCooldown_check(userID, cooldownType) {
     return dateTools.eta(cooldown.timestamp, true);
 }
 
-/** @param {"drop_normal" | "drop_weekly" | "drop_seasonal" | "drop_event" | "daily" | "stage" | "random"} cooldownType */
+/** @param {"drop_normal" | "drop_weekly" | "drop_season" | "drop_event" | "daily" | "stage" | "random"} cooldownType */
 async function userCooldown_reset(userID, cooldownType) {
     let cooldown = dateTools.fromNow(userSettings.cooldowns[cooldownType] || 0);
 

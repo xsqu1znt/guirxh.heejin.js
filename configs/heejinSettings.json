@@ -82,7 +82,7 @@
         "cooldowns": {
             "drop_normal": "5s",
             "drop_weekly": "5s",
-            "drop_seasonal": "5s",
+            "drop_season": "5s",
             "drop_event": null,
             "daily": "60s",
             "stage": "30s",

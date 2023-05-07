@@ -10,7 +10,7 @@ const cards = {
     epic: require('../items/cards/cards_epic.json'),
     mint: require('../items/cards/cards_mint.json'),
 
-    seas: require('../items/cards/cards_seasonal.json'),
+    seas: require('../items/cards/cards_season.json'),
     holi: require('../items/cards/cards_holiday.json'),
     bday: require('../items/cards/cards_bday.json'),
 
@@ -112,7 +112,7 @@ function get_byGlobalID(globalID) {
     return card || null;
 }
 
-/** @param {"normal" | "weekly" | "seasonal" | "event"} dropCategory */
+/** @param {"normal" | "weekly" | "season" | "event"} dropCategory */
 function get_randomDrop(dropCategory) {
     let card_choices = [];
 
@@ -126,7 +126,7 @@ function get_randomDrop(dropCategory) {
         case 'weekly':
             card_choices = cards.shop.filter(card => shopSettings.stockSetIDs.filter(id => id !== "100").includes(card.setID));
             break;
-        case 'seasonal':
+        case 'season':
             card_choices = cards.seas.filter(card => eventSettings.season.cardRarityFilter.includes(card.rarity));
             break;
         case 'event':
