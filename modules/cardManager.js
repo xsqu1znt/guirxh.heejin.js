@@ -48,7 +48,7 @@ function recalculateStats(card) {
     let card_base = get_byGlobalID(card.globalID);
     if (!card_base) {
         logger.error("CardManager -> recalculateStats", "base card could not be found");
-        return null;
+        return card;
     }
 
     // Reset it's stats back to its original base stats

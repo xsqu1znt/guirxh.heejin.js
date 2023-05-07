@@ -11,7 +11,9 @@ parseOldDatabase.js
 stressTest.js
 TODO.txt
 
+transferUsers.js
 user_gui_formatted.json
 user_gui.json
+users.json
 
 package-lock.json

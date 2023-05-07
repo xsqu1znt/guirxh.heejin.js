@@ -48,9 +48,11 @@ async function user_update(userID, update) {
     return await models.user.findByIdAndUpdate(userID, update);
 }
 
-async function user_new(userID) {
+async function user_new(userID, query = {}) {
     let user = await models.user.findById(userID);
-    user ||= await new models.user({
+
+    if (query) user ||= await new models.user(query).save();
+    else user ||= await new models.user({
         _id: userID,
         balance: userSettings.currency.startingBalance,
         timestamp_started: Date.now()
@@ -131,7 +133,7 @@ async function cardInventory_addCards(userID, cards, resetUID = false) {
 
         // Convert the card object to a slimmer "CardLike" object
         card = cardManager.parse.toCardLike(card);
-        
+
         // Add the new card to the userCards array to avoid duplicate UIDs
         userCards.push(card);
     }
