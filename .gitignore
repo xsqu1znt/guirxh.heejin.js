@@ -1,0 +1,17 @@
+node_modules
+.env
+
+cards_formated.json
+cards.json
+format_card_json.js
+format_cards.js
+format_user.js
+
+parseOldDatabase.js
+stressTest.js
+TODO.txt
+
+user_gui_formatted.json
+user_gui.json
+
+package-lock.json

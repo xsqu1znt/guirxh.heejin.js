@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Hongjoong",
+    "group": "Ritsuka",
+    "single": "BDAY23",
+    "category": "bday",
+    "description": "Maira - BDAY23",
+    "emoji": "🐈",
+    "globalID": "2207",
+    "setID": "230",
+    "rarity": 20,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1087028722034552953/bday_hongjoong.png"
+  }
+]

@@ -1,0 +1,27 @@
+{
+    "TOKEN": "",
+    "MONGO_URI": "",
+    "DEVMODE": false,
+    "ownerID": "",
+    "admins": [""],
+
+    "clientPresence": {
+        "default": {
+            "STATUS": "online",
+            "activity": {
+                "TYPE": "PLAYING",
+                "NAME": "with rabbits 🐰",
+                "STREAM_URL": ""
+            }
+        },
+
+        "dev": {
+            "STATUS": "dnd",
+            "activity": {
+                "TYPE": "PLAYING",
+                "NAME": "with unstable substances",
+                "STREAM_URL": ""
+            }
+        }
+    }
+}

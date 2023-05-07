@@ -1,0 +1,14 @@
+[
+    {
+        "id": "IL01",
+        "setID": "BO1",
+        "name": "Boost",
+        "description": "To love or not to love...",
+        "category": "bdge",
+        "set": "ILOVE",
+        "emoji": "🎙️",
+        "emojiURL": "https://discord.com/assets/59bdcc534c0d1adc1fb7575a1a4785a6.svg",
+        "rarity": 1,
+        "price": 500
+    }
+]
