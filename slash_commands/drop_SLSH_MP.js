@@ -31,8 +31,7 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
-        // Reusable embedinator to send success/error messages
-        const embedinator = new messageTools.Embedinator(interaction, {
+        let embed_drop = new messageTools.Embedinator(interaction, {
             title: "%USER | drop", author: interaction.user
         });
 
@@ -53,7 +52,7 @@ module.exports = {
 
             case "seasonal":
                 if (eventSettings.season.name === "none" || eventSettings.season.name === "")
-                    return await embedinator.send("There isn't a season event right now.");
+                    return await embed_drop.send("There isn't a season event right now.");
 
                 dropEmbedTitle = "seasonal"; dropCooldownType = "drop_seasonal";
                 cardsDropped = [cardManager.get.drop("seasonal")];
@@ -61,7 +60,7 @@ module.exports = {
 
             case "event":
                 if (eventSettings.name === "none" || eventSettings.name === "")
-                    return await embedinator.send("There isn't an event right now.");
+                    return await embed_drop.send("There isn't an event right now.");
 
                 dropEmbedTitle = "event"; dropCooldownType = "drop_event";
                 cardsDropped = [cardManager.get.drop("event")];
@@ -69,22 +68,19 @@ module.exports = {
         }
 
         // Check if the user has an active cooldown
-        let cooldownETA_drop = dateTools.eta(userData.cooldowns.get(dropCooldownType), true);
-        if (cooldownETA_drop) return await embedinator.send(
-            `You can drop again **${cooldownETA_drop}**.`
-        );
-
-        // Set the user's cooldown and XP
-        let { xp: { commands: { drop: xp_drop } } } = userSettings;
-        userData.cooldowns.set(dropCooldownType, dateTools.fromNow(userSettings.cooldowns[dropCooldownType]));
+        let userCooldownETA = await userManager.cooldowns.check(interaction.user.id, dropCooldownType);
+        if (userCooldownETA) return embed_drop.send(`Your next drop is available **${userCooldownETA}**.`);
 
         // Update the user in Mongo
+        let { xp: { commands: { drop: xp_drop } } } = userSettings;
         await userManager.update(interaction.user.id, {
-            xp: userData.xp += randomTools.number(xp_drop.min, xp_drop.max),
-            cooldowns: userData.cooldowns
+            xp: userData.xp + randomTools.number(xp_drop.min, xp_drop.max)
         });
 
-        // Add the card to the user's inventory
+        // Reset the user's cooldown
+        await userManager.cooldowns.reset(interaction.user.id, dropCooldownType);
+
+        // Add the cards to the user's inventory
         await userManager.cards.add(interaction.user.id, cardsDropped, true);
 
         // Refresh userData for the purpose of checking if it's a duplicate card
@@ -96,7 +92,7 @@ module.exports = {
         );
 
         // Create the embed
-        let embed_drop = userDrop_ES(interaction.user, cardsDropped, cards_isDuplicate, dropEmbedTitle);
+        embed_drop = userDrop_ES(interaction.user, cardsDropped, cards_isDuplicate, dropEmbedTitle);
 
         // Send the drop embed
         let reply = await interaction.editReply({ embeds: [embed_drop] });

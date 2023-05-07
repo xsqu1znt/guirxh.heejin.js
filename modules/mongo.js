@@ -1,6 +1,7 @@
 // Connects us to our Mongo database so we can save and retrieve data.
 
 const { userSettings } = require('../configs/heejinSettings.json');
+const { dateTools } = require('../modules/jsTools');
 const badgeManager = require('./badgeManager');
 const cardManager = require('./cardManager');
 const logger = require('./logger');
@@ -19,9 +20,7 @@ async function user_exists(userID) {
     return exists ? true : false;
 }
 
-/**
- * @param {"full" | "essential" | "cards" | "!cards"} type 
- */
+/** @param {"full" | "essential" | "cards"} type */
 async function user_fetch(userID, type = "full", lean = false) {
     let filter = {};
     let user;
@@ -29,22 +28,9 @@ async function user_fetch(userID, type = "full", lean = false) {
     switch (type) {
         case "full": filter = { __v: 0 }; break;
         case "essential":
-            filter = {
-                daily_streak: 1,
-                daily_streak_expires: 1,
-                level: 1,
-                xp: 1,
-                xp_for_next_level: 1,
-                biography: 1,
-                balance: 1,
-                badges: 1,
-                cooldowns: 1,
-                reminders: 1,
-                timestamp_started: 1
-            };
+            filter = { card_inventory: 0 };
             break;
         case "cards": filter = { _id: 0, card_inventory: 1 }; break;
-        case "!cards": filter = { card_inventory: 0, __v: 0 }; break;
     }
 
     if (userID) {
@@ -180,8 +166,7 @@ async function cardInventory_updateCard(userID, card) {
     await models.user.updateOne(
         { _id: userID, "card_inventory.uid": card.uid },
         { $set: { "card_inventory.$": card } }
-    );
-    return null;
+    ); return null;
 }
 
 //! User -> Badges
@@ -192,7 +177,7 @@ async function userBadge_addBadge(userID, badges) {
     // Convert the badge object to a slimmer "BadgeLike" object
     for (let badge of badges)
         badge = badgeManager.parse.toBadgeLike(badge);
-    
+
     // Push the BadgeLikes to the user's badge array in Mongo
     await user_update(userID, { $push: { badges: { $each: badges } } }); return null;
 }
@@ -203,6 +188,34 @@ async function userBadge_removeBadge(userID, badgeIDs) {
 
     // Send the pull request to Mongo
     await user_update(userID, { $pull: { badges: { id: { $in: badgeIDs } } } }); return null;
+}
+
+//! User -> Cooldowns
+/** @param {"drop_normal" | "drop_weekly" | "drop_seasonal" | "drop_event" | "daily" | "stage" | "random"} cooldownType */
+async function userCooldown_check(userID, cooldownType) {
+    let userData = await user_fetch(userID, "essential", true);
+
+    let cooldown = userData.cooldowns.find(cooldown => cooldown.type === cooldownType) || 0;
+    return dateTools.eta(cooldown.timestamp, true);
+}
+
+/** @param {"drop_normal" | "drop_weekly" | "drop_seasonal" | "drop_event" | "daily" | "stage" | "random"} cooldownType */
+async function userCooldown_reset(userID, cooldownType) {
+    let cooldown = dateTools.fromNow(userSettings.cooldowns[cooldownType] || 0);
+
+    let cooldownExists = await models.user.exists({ _id: userID, "cooldowns.type": cooldownType });
+
+    // Push the cooldown to the user in Mongo
+    if (cooldownExists) await models.user.updateOne(
+        { _id: userID, "cooldowns.type": cooldownType },
+        { $set: { "cooldowns.$": { type: cooldownType, timestamp: cooldown } } }
+    );
+    else await models.user.updateOne(
+        { _id: userID },
+        { $addToSet: { "cooldowns": { type: cooldownType, timestamp: cooldown } } }
+    );
+
+    return null;
 }
 
 module.exports = {
@@ -240,6 +253,11 @@ module.exports = {
         badges: {
             add: userBadge_addBadge,
             remove: userBadge_removeBadge
+        },
+
+        cooldowns: {
+            check: userCooldown_check,
+            reset: userCooldown_reset
         }
     }
 };

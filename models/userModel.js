@@ -20,8 +20,8 @@ const schema_user = Schema({
     card_team_uids: { type: Array, default: new Array() },
     card_inventory: { type: Array, default: new Array() },
 
-    cooldowns: { type: Map, default: new Map() },
-    reminders: { type: Map, default: new Map() },
+    cooldowns: { type: Array, default: new Array() },
+    reminders: { type: Array, default: new Array() },
 
     timestamp_started: { type: Number, require: true }
 }, { collection: "users" });

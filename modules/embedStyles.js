@@ -375,13 +375,13 @@ function userMissing_ES(user, userData, setID) {
 
 // Command -> User -> /COOLDOWNS
 function userCooldowns_ES(user, userData) {
-    let cooldowns = Object.keys(userSettings.cooldowns).map(name => ({ name, timestamp: 0 }));
+    let cooldownTypes = Object.entries(userSettings.cooldowns).filter(([type, time]) => time !== null);
+    let cooldowns = cooldownTypes.map(([type, time]) => ({ type, timestamp: 0 }));
 
-    let cooldowns_user = [];
-    userData.cooldowns.forEach((value, key) => cooldowns_user.push({ name: key, timestamp: value }));
+    let cooldowns_user = userData.cooldowns;
 
     cooldowns_user.forEach(cooldown => {
-        let spliceIndex = cooldowns.findIndex(c => c.name === cooldown.name);
+        let spliceIndex = cooldowns.findIndex(c => c.type === cooldown.type);
         if (spliceIndex >= 0) cooldowns.splice(spliceIndex, 1, cooldown);
     });
 
@@ -390,7 +390,7 @@ function userCooldowns_ES(user, userData) {
 
         return "\`%VISUAL %NAME:\` %AVAILABILITY"
             .replace("%VISUAL", cooldownETA ? "❌" : "✔️")
-            .replace("%NAME", stringTools.toTitleCase(cooldown.name.replace(/_/g, " ")))
+            .replace("%NAME", stringTools.toTitleCase(cooldown.type.replace(/_/g, " ")))
             .replace("%AVAILABILITY", bold(true, cooldownETA
                 ? `<t:${numberTools.milliToSeconds(cooldown.timestamp)}:${TimestampStyles.RelativeTime}>`
                 : "Available"));

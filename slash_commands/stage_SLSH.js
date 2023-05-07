@@ -19,43 +19,47 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
-        // Reusable embedinator to send success/error messages
-        const embedinator = new messageTools.Embedinator(interaction, {
+        let embed_stage = new messageTools.Embedinator(interaction, {
             title: "%USER | stage", author: interaction.user
         });
 
+        // Check if the user has an active cooldown
+        let userCooldownETA = await userManager.cooldowns.check(interaction.user.id, "stage");
+        if (userCooldownETA) return embed_stage.send(`You can use stage again **${userCooldownETA}**.`);
+
         // Get interaction options
         let user_rival = interaction.options.getUser("player") || null;
-        if (user_rival?.id === interaction.user.id) return await embedinator.send(
+        if (user_rival?.id === interaction.user.id) return await embed_stage.send(
             "You can't duel yourself!"
         );
 
         //! Player
-
         // Fetch the user from Mongo
         let userData = await userManager.fetch(interaction.user.id, "full", true);
 
         // Get the user's idol card from their card_inventory
         let card_idol = userParser.cards.get(userData.card_inventory, userData.card_selected_uid);
-        if (!card_idol) return await embedinator.send(
-            "You don't have an idol set. Use **/idol set** first."
+        if (!card_idol) return await embed_stage.send(
+            "You don't have an idol set. Use **/set edit:idol** first."
         );
 
         //! Player Rival
-
         // Fetch the rival user from Mongo
         let userData_rival; if (user_rival) {
             userData_rival = await userManager.fetch(user_rival.id);
-            if (!userData_rival) return await embedinator.send(
+            if (!userData_rival) return await embed_stage.send(
                 "That user hasn't started yet."
             );
 
             // Get the rival user's idol card from their card_inventory
             let card_idol_rival = userParser.cards.get(userData_rival.card_inventory, userData_rival.card_selected_uid);
-            if (!card_idol_rival) return await embedinator.send(
-                "That user doesn't have an idol set. They must use **/idol set** first."
+            if (!card_idol_rival) return await embed_stage.send(
+                "That user doesn't have an idol set. They must use **/set edit:idol** first."
             );
         }
+
+        // Reset the user's cooldown
+        await userManager.cooldowns.reset(interaction.user.id, "stage");
 
         //! Create the stage battle
         let stage = new Stage(interaction, user_rival, {

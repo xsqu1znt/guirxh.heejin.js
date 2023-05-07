@@ -6,9 +6,9 @@
         "default": {
             "STATUS": "online",
             "activity": {
-                "TYPE": "WATCHING",
-                "NAME": "/start",
-                "URL": ""
+                "TYPE": "PLAYING",
+                "NAME": "with rabbits 🐰",
+                "STREAM_URL": ""
             }
         },
 
@@ -17,7 +17,7 @@
             "activity": {
                 "TYPE": "PLAYING",
                 "NAME": "with unstable substances",
-                "URL": ""
+                "STREAM_URL": ""
             }
         }
     }

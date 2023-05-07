@@ -31,11 +31,11 @@
     },
 
     "eventSettings": {
-        "name": "Iconic Subunits Part 2",
+        "name": "",
         "cardRarityFilter": [17],
         
         "season": {
-            "name": "Spring23",
+            "name": "",
             "cardRarityFilter": [18]
         }
     },
@@ -63,6 +63,10 @@
         },
         "currency": {
             "startingBalance": 250,
+            "daily": {
+                "amount": 50,
+                "maxMultiplier": 10
+            },
             "range": {
                 "random": {
                     "min": 10,
@@ -74,12 +78,12 @@
             "winRandom": 40
         },
         "cooldowns": {
-            "drop_normal": "5s",
-            "drop_weekly": "5s",
-            "drop_seasonal": "5s",
-            "drop_event": "5s",
-            "daily": "5s",
-            "stage": "5s",
+            "drop_normal": "15s",
+            "drop_weekly": "15s",
+            "drop_seasonal": null,
+            "drop_event": null,
+            "daily": "60s",
+            "stage": "30s",
             "random": "5s"
         }
     },

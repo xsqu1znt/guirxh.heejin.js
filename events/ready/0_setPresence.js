@@ -26,7 +26,7 @@ module.exports = {
         client.user.setActivity({
             name: presence.activity.NAME,
             type: presence.activity.TYPE,
-            url: presence.activity.URL ? presence.activity.URL : null
+            url: presence.activity.STREAM_URL ? presence.activity.STREAM_URL : null
         });
         client.user.setStatus(presence.STATUS);
     }

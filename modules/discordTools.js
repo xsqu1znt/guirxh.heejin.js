@@ -52,6 +52,11 @@ class message_Embedinator {
      */
     setAuthor(author) { this.author = author; }
 
+    /** Add embed fields.
+     * @param {{name: String, value: String, inline: Boolean}} fields
+     */
+    addFields(...fields) { this.embed.addFields(fields) }
+
     /** Send the embed.
      * @param {string} description The description of the embed.
      * @param {{followUp: boolean, ephemeral: boolean}} options Optional options.
