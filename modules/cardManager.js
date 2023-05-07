@@ -112,9 +112,7 @@ function get_byGlobalID(globalID) {
     return card || null;
 }
 
-/**
- * @param {"normal" | "weekly" | "seasonal" | "event"} dropCategory 
- */
+/** @param {"normal" | "weekly" | "seasonal" | "event"} dropCategory */
 function get_randomDrop(dropCategory) {
     let card_choices = [];
 
@@ -129,7 +127,7 @@ function get_randomDrop(dropCategory) {
             card_choices = cards.shop.filter(card => shopSettings.stockSetIDs.filter(id => id !== "100").includes(card.setID));
             break;
         case 'seasonal':
-            card_choices = cards.seasonal.filter(card => eventSettings.season.cardRarityFilter.includes(card.rarity));
+            card_choices = cards.seas.filter(card => eventSettings.season.cardRarityFilter.includes(card.rarity));
             break;
         case 'event':
             card_choices = cards.event.filter(card => eventSettings.cardRarityFilter.includes(card.rarity));

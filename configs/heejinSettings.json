@@ -37,13 +37,13 @@
         "cardRarityFilter": [17],
         
         "season": {
-            "name": "",
+            "name": "Spring23",
             "cardRarityFilter": [18]
         }
     },
 
     "shopSettings": {
-        "stockSetIDs": ["100", "104", "162"]
+        "stockSetIDs": ["100", "104"]
     },
 
     "userSettings": {
@@ -80,9 +80,9 @@
             "winRandom": 40
         },
         "cooldowns": {
-            "drop_normal": "15s",
-            "drop_weekly": "15s",
-            "drop_seasonal": null,
+            "drop_normal": "5s",
+            "drop_weekly": "5s",
+            "drop_seasonal": "5s",
             "drop_event": null,
             "daily": "60s",
             "stage": "30s",
