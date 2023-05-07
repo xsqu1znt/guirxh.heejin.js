@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 const { botSettings } = require('../configs/heejinSettings.json');
-const { globalCollections_ES } = require('../modules/embedStyles');
+const { generalCollections_ES } = require('../modules/embedStyles');
 const { messageTools } = require('../modules/discordTools');
 const { dateTools } = require('../modules/jsTools');
 
@@ -38,7 +38,7 @@ module.exports = {
         let order = interaction.options.getString("order") || null;
 
         // Build the set collection pages
-        let embed_collections = globalCollections_ES(interaction.user, { order, filter: { group, category } });
+        let embed_collections = generalCollections_ES(interaction.user, { order, filter: { group, category } });
 
         // Navigateinator-ify-er 9000!!!!11
         let navigationify = new messageTools.Navigationify(interaction, [embed_collections], {

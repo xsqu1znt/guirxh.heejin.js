@@ -4,15 +4,15 @@ const { userSettings } = require('../configs/heejinSettings.json');
 const { dateTools } = require('../modules/jsTools');
 const badgeManager = require('./badgeManager');
 const cardManager = require('./cardManager');
+const mongoose = require('mongoose');
 const logger = require('./logger');
+
+const MONGO_URI = process.env.MONGO_URI || require('../configs/clientSettings.json').MONGO_URI;
 
 // Models
 const models = {
     user: require('../models/userModel')
 };
-
-const mongoose = require('mongoose');
-const MONGO_URI = process.env.MONGO_URI;
 
 //! User
 async function user_exists(userID) {

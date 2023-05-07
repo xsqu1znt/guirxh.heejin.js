@@ -2,7 +2,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js'
 
 const { botSettings } = require('../configs/heejinSettings.json');
 const { arrayTools, dateTools } = require('../modules/jsTools');
-const { globalShop_ES } = require('../modules/embedStyles');
+const { generalShop_ES } = require('../modules/embedStyles');
 const { messageTools } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 const badgeManager = require('../modules/badgeManager');
@@ -74,7 +74,7 @@ module.exports = {
 
         //* Display the shop if the user didn't give an ID
         // Build the shop pages
-        let embed_shop = globalShop_ES(interaction.user);
+        let embed_shop = generalShop_ES(interaction.user);
 
         // Navigateinator-ify-er 9000!!!!11
         let navigationify = new messageTools.Navigationify(interaction, embed_shop, {
@@ -99,7 +99,7 @@ module.exports = {
         navigationify.addSelectMenuOption({ emoji: "📁", label: "All Cards", description: "View all cards available" });
 
         // Add a select menu option for each card group
-        shopCards_unique.forEach(card => navigationify.addSelectMenuOption({ emoji: card.emoji, label: card.group, description: "View card.description" }));
+        shopCards_unique.forEach(card => navigationify.addSelectMenuOption({ emoji: card.emoji, label: card.group, description: `View ${card.description}` }));
 
         // navigationify.addSelectMenuOption({ label: "Card Packs", description: "Buy a pack of random cards." });
         navigationify.addSelectMenuOption({ emoji: "📛", label: "Badges", description: "Buy a badge for your profile" });

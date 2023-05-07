@@ -3,7 +3,7 @@ const { EmbedBuilder, TimestampStyles } = require('discord.js');
 const { markdown } = require('./discordTools');
 const { bold, italic, inline, quote, link, space } = markdown;
 
-const { botSettings, shopSettings, userSettings } = require('../configs/heejinSettings.json');
+const { botSettings, userSettings } = require('../configs/heejinSettings.json');
 const { arrayTools, stringTools, numberTools, dateTools } = require('../modules/jsTools');
 const { messageTools } = require('../modules/discordTools');
 const cardManager = require('../modules/cardManager');
@@ -12,7 +12,7 @@ const userParser = require('../modules/userParser');
 
 // Command -> General -> /COLLECTIONS
 /** @param {"ascending" | "decending"} order */
-function globalCollections_ES(user, options = { order: "decending", filter: { group: "", category: "" } }) {
+function generalCollections_ES(user, options = { order: "decending", filter: { group: "", category: "" } }) {
     let { cards_all } = cardManager;
 
     // Sort by set ID (decending order)
@@ -57,7 +57,7 @@ function globalCollections_ES(user, options = { order: "decending", filter: { gr
 }
 
 // Command -> General -> /SHOP
-function globalShop_ES(user) {
+function generalShop_ES(user) {
     let { cards_shop } = cardManager;
 
     // Sort by global ID (decending order)
@@ -272,10 +272,11 @@ function userProfile_ES(user, userData) {
     let embed_inventoryStats = () => {
         let _embed = embed_template();
 
-        // Get the name of each card category
-        let categories = Object.keys(cardManager.cards).map(category => stringTools.toTitleCase(category));
         // Get an array of each card category
         let allCards = Object.values(cardManager.cards);
+        // Get the short-form name of each card category
+        let categories = arrayTools.unique(allCards, (card, compareCard) => card.category === compareCard.category)
+            .map(card => card.category);
 
         // Parse the user's card_inventory into fully detailed cards
         userData.card_inventory = userData.card_inventory.map(card => cardManager.parse.fromCardLike(card));
@@ -724,8 +725,8 @@ function userGift_ES(user, recipient, cards) {
 
 module.exports = {
     // General Commands
-    globalCollections_ES,
-    globalShop_ES,
+    generalCollections_ES,
+    generalShop_ES,
 
     // User Commands
     userDrop_ES,

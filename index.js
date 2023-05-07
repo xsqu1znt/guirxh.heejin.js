@@ -8,6 +8,8 @@ const slashCommandManager = require('./modules/slashCommandManager');
 const logger = require('./modules/logger');
 const mongo = require('./modules/mongo');
 
+const TOKEN = process.env.TOKEN || require('./configs/clientSettings.json').TOKEN;
+
 logger.log("initializing...");
 
 const client = new Client({
@@ -36,7 +38,7 @@ importers_dir.forEach(fn => {
 
 // Connect the client to discord
 logger.log("connecting to Discord...");
-client.login(process.env.TOKEN).then(async () => {
+client.login(TOKEN).then(async () => {
     await mongo.connect();
 
     // await slashCommandManager.push(client, "1052726201086656612");
