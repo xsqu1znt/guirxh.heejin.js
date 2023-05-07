@@ -20,8 +20,7 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
-        // Create a base embed
-        const embedinator = new messageTools.Embedinator(interaction, {
+        let embed_shop = new messageTools.Embedinator(interaction, {
             title: "%USER | shop", author: interaction.user
         });
 
@@ -36,7 +35,7 @@ module.exports = {
 
             // Determine the operation type
             if (_card) { // The user buys a card
-                if (userData.balance < _card.price) return await embedinator.send(
+                if (userData.balance < _card.price) return await embed_shop.send(
                     "You do not have enough to buy this card"
                 );
 
@@ -49,12 +48,12 @@ module.exports = {
                 let _card_f = cardManager.toString.basic(_card);
                 buyResult = `You bought a card:\n${_card_f}`;
             } else if (_badge) { // The user buys a badge
-                if (userData.balance < _badge.price) return await embedinator.send(
+                if (userData.balance < _badge.price) return await embed_shop.send(
                     "You do not have enough to buy that badge."
                 );
 
                 // Check if the user already owns that badge
-                if (userData.badges.find(badge => badge.id === _badge.id)) return await embedinator.send(
+                if (userData.badges.find(badge => badge.id === _badge.id)) return await embed_shop.send(
                     "You already have that badge."
                 );
 
@@ -69,12 +68,12 @@ module.exports = {
             }
 
             // Let the user know the result
-            return await embedinator.send(buyResult);
+            return await embed_shop.send(buyResult);
         }
 
         //* Display the shop if the user didn't give an ID
         // Build the shop pages
-        let embed_shop = generalShop_ES(interaction.user);
+        embed_shop = generalShop_ES(interaction.user);
 
         // Navigateinator-ify-er 9000!!!!11
         let navigationify = new messageTools.Navigationify(interaction, embed_shop, {

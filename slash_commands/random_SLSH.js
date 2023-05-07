@@ -24,7 +24,6 @@ module.exports = {
         let userCooldownETA = await userManager.cooldowns.check(interaction.user.id, "random");
         if (userCooldownETA) return embed_random.send(`You can use random again **${userCooldownETA}**`);
 
-
         // Use rng to determine if the user gets anything
         let { xp: { commands: { random: xp_random } }, currency: { range } } = userSettings;
         let currencyGained = randomTools.number(range.random.min, range.random.max);

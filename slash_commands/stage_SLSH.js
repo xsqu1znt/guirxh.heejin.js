@@ -9,7 +9,7 @@ const userParser = require('../modules/userParser');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("stage")
-    .setDescription("LV. your idol by challenging rival to a duel")
+    .setDescription("LV. your idol by challenging a rival to a duel")
 
         .addUserOption(option => option.setName("player")
             .setDescription("Challenge a player to a duel")),

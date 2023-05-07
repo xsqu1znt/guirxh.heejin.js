@@ -145,8 +145,9 @@ function generalShop_ES(user) {
 
         for (let i = 0; i < badges_f.length; i++) {
             let embed = embed_template()
-                .setDescription(badges_f[i].join("\n"))
-                .setFooter({ text: `Page ${i + 1}/${badges_f.length || 1}` });
+                .setDescription(badges_f[i].length > 0 ? badges_f[i].join("\n") : "There are no badges available");
+
+            if (badges_f[i].length > 0) embed.setFooter({ text: `Page ${i + 1}/${badges_f.length || 1}` });
 
             embeds.push(embed);
         }
@@ -218,9 +219,12 @@ function userProfile_ES(user, userData) {
         if (userData.biography) _embed.addFields({ name: "\`👤\` Biography", value: userData.biography });
 
         // Add the user's basic information
+        let uniqueUserCardTotal = arrayTools.unique(userData.card_inventory,
+            (card, compareCard) => card.globalID === compareCard.globalID
+        ).length;
         let profile_info = "%BALANCE :: \`🃏 %CARD_TOTAL\` :: \`📈 LV. %LEVEL\`"
             .replace("%BALANCE", inline(true, botSettings.currencyIcon, userData.balance))
-            .replace("%CARD_TOTAL", `${userData.card_inventory.length}/${cardManager.cardTotal}`)
+            .replace("%CARD_TOTAL", `${uniqueUserCardTotal}/${cardManager.cardTotal}`)
             .replace("%LEVEL", userData.level);
 
         _embed.addFields([{ name: "\`📄\` Information", value: quote(true, profile_info) }]);
@@ -274,9 +278,10 @@ function userProfile_ES(user, userData) {
 
         // Get an array of each card category
         let allCards = Object.values(cardManager.cards);
-        // Get the short-form name of each card category
-        let categories = arrayTools.unique(allCards, (card, compareCard) => card.category === compareCard.category)
-            .map(card => card.category);
+
+        // Get the name of each card category
+        // TODO: separate each event
+        let categories = Object.keys(cardManager.cards);
 
         // Parse the user's card_inventory into fully detailed cards
         userData.card_inventory = userData.card_inventory.map(card => cardManager.parse.fromCardLike(card));

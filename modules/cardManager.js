@@ -4,14 +4,14 @@ const { randomTools } = require('./jsTools');
 const logger = require('./logger');
 
 const cards = {
-    common: require('../items/cards/cards_common.json'),
-    uncommon: require('../items/cards/cards_uncommon.json'),
+    comn: require('../items/cards/cards_common.json'),
+    uncm: require('../items/cards/cards_uncommon.json'),
     rare: require('../items/cards/cards_rare.json'),
     epic: require('../items/cards/cards_epic.json'),
     mint: require('../items/cards/cards_mint.json'),
 
-    seasonal: require('../items/cards/cards_seasonal.json'),
-    holiday: require('../items/cards/cards_holiday.json'),
+    seas: require('../items/cards/cards_seasonal.json'),
+    holi: require('../items/cards/cards_holiday.json'),
     bday: require('../items/cards/cards_bday.json'),
 
     event: [
@@ -20,12 +20,12 @@ const cards = {
         ...require('../items/cards/cards_event3.json'),
     ],
 
-    custom: require('../items/cards/cards_custom.json'),
+    cust: require('../items/cards/cards_custom.json'),
     shop: require('../items/cards/cards_shop.json')
 };
 
-let cards_all = []; Object.entries(cards).forEach(entry => cards_all = [...cards_all, ...entry[1]]);
-const cards_basic = [...cards.common, ...cards.uncommon, ...cards.rare, ...cards.epic, ...cards.mint];
+let cards_all = []; Object.values(cards).forEach(category => cards_all = [...cards_all, ...category]);
+const cards_general = [...cards.comn, ...cards.uncm, ...cards.rare, ...cards.epic, ...cards.mint];
 
 //! General
 function resetUID(card, userCards = null) {
@@ -104,7 +104,7 @@ function tryLevelUp(card, session = null) {
 
 //! Fetch
 function get_random(basicOnly = false) {
-    return randomTools.choice(basicOnly ? cards_basic : cards_all);
+    return randomTools.choice(basicOnly ? cards_general : cards_all);
 }
 
 function get_byGlobalID(globalID) {
@@ -123,7 +123,7 @@ function get_randomDrop(dropCategory) {
             let categories = Object.values(dropSettings.chances).map(c => ({ ...c, rarity: c.chance }));
             let category_picked = randomTools.weightedChoice(categories);
 
-            card_choices = cards_basic.filter(card => card.rarity === category_picked.cardRarityFilter);
+            card_choices = cards_general.filter(card => card.rarity === category_picked.cardRarityFilter);
             break;
         case 'weekly':
             card_choices = cards.shop.filter(card => shopSettings.stockSetIDs.filter(id => id !== "100").includes(card.setID));
@@ -258,7 +258,7 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
 }
 
 module.exports = {
-    cards, cards_all, cards_basic,
+    cards, cards_all, cards_general,
     cards_shop: cards_all.filter(card => shopSettings.stockSetIDs.includes(card.setID)),
     cardTotal: cards_all.length,
 
