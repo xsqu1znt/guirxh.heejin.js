@@ -35,8 +35,8 @@ module.exports = {
      */
     execute: async (client, interaction) => {
         // Interaction options and stuff
-        let uid_add = interaction.options.getString("add"); uid_add &&= uid_add.replace(/ /g, "").split(",");
-        let uid_remove = interaction.options.getString("remove"); uid_remove &&= uid_remove.replace(/ /g, "").split(",");
+        let uid_add = interaction.options.getString("add") || ""; uid_add &&= uid_add.replace(/ /g, "").split(",");
+        let uid_remove = interaction.options.getString("remove") || ""; uid_remove &&= uid_remove.replace(/ /g, "").split(",");
         let userData, cards, cards_f;
 
         // Create a base embed
@@ -45,7 +45,7 @@ module.exports = {
         });
 
         // Fallback
-        if (!uid_add.length > 0 && !uid_remove.length > 0)
+        if (!uid_add?.length > 0 && !uid_remove?.length > 0)
             return await embedinator.send("You need to give a valid card ID");
 
         // Determine the operation type
@@ -71,7 +71,7 @@ module.exports = {
 
                     // Let the user know the result
                     cards_f = cardManager.toString.basic(cards);
-                    return await embedinator.send(`Your \`⭐ favorite\` has been set to:\n> ${card_f}`);
+                    return await embedinator.send(`Your \`⭐ favorite\` has been set to:\n> ${cards_f}`);
                 }
 
                 // Unfavorite the user's favorited card
@@ -102,7 +102,7 @@ module.exports = {
 
                     // Let the user know the result
                     cards_f = cardManager.toString.basic(cards);
-                    return await embedinator.send(`Your \`🏃 idol\` has been set to:\n> ${card_f}`);
+                    return await embedinator.send(`Your \`🏃 idol\` has been set to:\n> ${cards_f}`);
                 }
 
                 // Unfavorite the user's favorited card
@@ -132,16 +132,16 @@ module.exports = {
                     // Lock the cards
                     cards.forEach(card => card.locked = true);
 
-                    // Update the card in the user's inventory in Mongo
-                    await userManager.cards.update(interaction.user.id, cards);
+                    // Update the cards in the user's inventory in Mongo
+                    await Promise.all(cards.map(card => userManager.cards.update(interaction.user.id, card)));
 
                     // Let the user know the result
                     cards_f = cards.map(card => `> ${cardManager.toString.basic(card)}`);
-                    return await embedinator.send(`\`🔒 vault edit\` You successfully added:\n> ${card_f}`);
+                    return await embedinator.send(`\`🔒 vault edit\` You successfully added:\n ${cards_f.join("\n")}`);
                 }
 
                 // Unlock a card
-                else if (uid_remove > 0) {
+                else if (uid_remove.length > 0) {
                     // Fetch the user from Mongo
                     userData = await userManager.fetch(interaction.user.id, "full", true);
 
@@ -157,15 +157,15 @@ module.exports = {
                         `\`${uid_remove.join(" ").trim()}\` is already NOT in your \`🔒 vault\``
                     );
 
-                    // Unlock the card
+                    // Unlock the cards
                     cards.forEach(card => card.locked = false);
 
-                    // Update the card in the user's inventory in Mongo
-                    await userManager.cards.update(interaction.user.id, cards);
+                    // Update the cards in the user's inventory in Mongo
+                    await Promise.all(cards.map(card => userManager.cards.update(interaction.user.id, card)));
 
                     // Let the user know the result
                     cards_f = cards.map(card => `> ${cardManager.toString.basic(card)}`);
-                    return await embedinator.send(`\`🔒 vault edit\` You successfully removed:\n> ${cards_f.join("\n")}`);
+                    return await embedinator.send(`\`🔒 vault edit\` You successfully removed:\n ${cards_f.join("\n")}`);
                 }
 
             case "team":
@@ -182,7 +182,7 @@ module.exports = {
                     );
 
                     // Get the card from the user's card_inventory
-                    let card = userParser.cards.get(userData.card_inventory, uid_add);
+                    let card = userParser.cards.get(userData.card_inventory, uid_add[0]);
                     if (!card) return await embedinator.send(`\`${uid_add[0]}\` is not a valid UID`);
 
                     // Add the card's uid to the user's card_team_uids
@@ -197,7 +197,7 @@ module.exports = {
 
                     // Let the user know the result
                     cards_f = cardManager.toString.basic(card);
-                    return await embedinator.send(`\`👯 team edit\` You successfully added:\n> ${card_f}`);
+                    return await embedinator.send(`\`👯 team edit\` You successfully added:\n> ${cards_f}`);
                 }
 
                 // Unfavorite the user's favorited card
@@ -206,7 +206,7 @@ module.exports = {
                     userData = await userManager.fetch(interaction.user.id, "full", true);
 
                     // Get the card from the user's card_inventory
-                    let card = userParser.cards.get(userData.card_inventory, uid_remove);
+                    let card = userParser.cards.get(userData.card_inventory, uid_remove[0]);
                     if (!card) return await embedinator.send(`\`${uid_remove[0]}\` is not a valid UID.`);
 
                     if (userData.card_team_uids.find(uid => uid === uid_remove)) {

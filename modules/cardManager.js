@@ -14,7 +14,7 @@ const cards = {
     holi: require('../items/cards/cards_holiday.json'),
     bday: require('../items/cards/cards_bday.json'),
 
-    event: [
+    evnt: [
         ...require('../items/cards/cards_event1.json'),
         ...require('../items/cards/cards_event2.json'),
         ...require('../items/cards/cards_event3.json'),
@@ -130,7 +130,7 @@ function get_randomDrop(dropCategory) {
             card_choices = cards.seas.filter(card => eventSettings.season.cardRarityFilter.includes(card.rarity));
             break;
         case 'event':
-            card_choices = cards.event.filter(card => eventSettings.cardRarityFilter.includes(card.rarity));
+            card_choices = cards.evnt.filter(card => eventSettings.cardRarityFilter.includes(card.rarity));
             break;
     }
 

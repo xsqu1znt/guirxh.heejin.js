@@ -44,7 +44,7 @@ module.exports = {
             && !userData.card_team_uids.includes(card.uid)
         );
         if (cards_toSell.length === 0) return await embed_sell.send(
-            "%UIDS cannot be gifted, it is either:\n\`🔒 vault\` \`🧑🏾‍🤝‍🧑 team\` \`🏃 idol\` \`⭐ favorite\`"
+            "\`%UIDS\` cannot be gifted, it is either:\n\`🔒 vault\` \`🧑🏾‍🤝‍🧑 team\` \`🏃 idol\` \`⭐ favorite\`"
                 .replace("%UIDS", uids.join(" ").trim())
         );
 

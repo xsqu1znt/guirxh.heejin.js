@@ -61,7 +61,7 @@ module.exports = {
         // Filter out locked and favorited cards
         cardsToGift = cardsToGift.filter(card => card.uid !== userData.card_favorite_uid && !card?.locked);
         if (cardsToGift.length === 0) return await embed_gift.send(
-            "%UIDS cannot be gifted, it is either:\n\`🔒 vault\` \`🧑🏾‍🤝‍🧑 team\` \`🏃 idol\` \`⭐ favorite\`"
+            "\`%UIDS\` cannot be gifted, it is either:\n\`🔒 vault\` \`🧑🏾‍🤝‍🧑 team\` \`🏃 idol\` \`⭐ favorite\`"
                 .replace("%UIDS", uids.join(" ").trim())
         );
 
