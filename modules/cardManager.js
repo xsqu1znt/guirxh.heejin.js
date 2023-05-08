@@ -3,6 +3,8 @@ const { markdown } = require('./discordTools');
 const { randomTools } = require('./jsTools');
 const logger = require('./logger');
 
+const { bold, italic, inline, quote, link, space } = markdown;
+
 const cards = {
     comn: require('../items/cards/cards_common.json'),
     uncm: require('../items/cards/cards_uncommon.json'),
@@ -45,7 +47,7 @@ function resetUID(card, userCards = null) {
 }
 
 function recalculateStats(card) {
-    let card_base = get_byGlobalID(card.globalID);
+    let card_base = get_byGlobalID(card.globalID !== "100" ? card.globalID : "101");
     if (!card_base) {
         logger.error("CardManager -> recalculateStats", "base card could not be found");
         return card;
@@ -143,6 +145,7 @@ function parse_toCardLike(card) {
     return {
         uid: card.uid,
         globalID: card.globalID,
+        locked: card?.locked || false,
         stats: card.stats
     };
 }
@@ -152,8 +155,6 @@ function parse_fromCardLike(cardLike) {
 }
 
 //! To String
-const { bold, italic, inline, quote, link, space } = markdown;
-
 function toString_basic(card) {
     return "%UID %EMOJI %GROUP :: %SINGLE - %NAME %SELL_PRICE"
         .replace("%UID", inline(true, card.uid))

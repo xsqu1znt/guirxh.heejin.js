@@ -28,6 +28,7 @@ const client = new Client({
 
 // Collections that hold valuable information for the client
 client.slashCommands = new Collection();
+client.slashCommands_admin = new Collection();
 
 // Run importers
 let importers_dir = fs.readdirSync('./modules/importers').filter(fn => fn.startsWith('import_') && fn.endsWith('.js'));
@@ -42,6 +43,7 @@ client.login(TOKEN).then(async () => {
     await mongo.connect();
 
     // await slashCommandManager.push(client, "1052726201086656612");
+    // await slashCommandManager.push(client, "1052726201086656612", false, true);
     // await slashCommandManager.remove(client);
     // await slashCommandManager.refresh(client);
 });

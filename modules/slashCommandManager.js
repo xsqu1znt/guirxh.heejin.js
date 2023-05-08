@@ -14,9 +14,11 @@ module.exports = {
      * @param {Array<string> | string} guildIDs The IDs of the Guilds you wish to push to.
      * @param {boolean} global Whether to push the slash commands globally. False is locally per server.
      */
-    push: async (client, guildIDs, global = false) => {
-        let slash_commands = [...client.slashCommands.values()].map(slsh => slsh.builder);
-
+    push: async (client, guildIDs, global = false, admin = false) => {
+        let slash_commands = !admin
+            ? [...client.slashCommands.values()].map(slsh => slsh.builder)
+            : [...client.slashCommands_admin.values()].map(slsh => slsh.builder);
+        
         // Push slash commands globally
         if (global) try {
             // Log what's currently happening
@@ -145,8 +147,8 @@ module.exports = {
      * @param {Array<string> | string} guildIDs The IDs of the Guilds you wish to refresh.
      * @param {boolean} global Whether to refresh the slash commands globally. False is locally per server.
      */
-    refresh: async (client, guildIDs, global = false) => {
+    refresh: async (client, guildIDs, global = false, admin = false) => {
         await this.remove(client, guildIDs, global);
-        await this.push(client, guildIDs, global);
+        await this.push(client, guildIDs, global, admin);
     }
 };

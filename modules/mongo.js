@@ -132,10 +132,10 @@ async function cardInventory_addCards(userID, cards, resetUID = false) {
         if (resetUID) card = cardManager.resetUID(card, userCards);
 
         // Convert the card object to a slimmer "CardLike" object
-        card = cardManager.parse.toCardLike(card);
+        if (card.rarity !== 100) card = cardManager.parse.toCardLike(card);
 
         // Add the new card to the userCards array to avoid duplicate UIDs
-        userCards.push(card);
+        if (resetUID) userCards.push(card);
     }
 
     // Push the CardLikes to the user's card_inventory in Mongo

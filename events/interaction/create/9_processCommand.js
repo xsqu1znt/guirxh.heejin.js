@@ -23,7 +23,9 @@ module.exports = {
         if (!args.interaction.guild || !args.interaction.isCommand()) return;
 
         // Get the slash command function from the client if it exists
-        let slashCommand = client.slashCommands.get(args.interaction.commandName) || null;
+        let slashCommand = client.slashCommands.get(args.interaction.commandName)
+            || client.slashCommands_admin.get(args.interaction.commandName)
+            || null;
 
         // Try to execute the slash command function
         if (slashCommand) try {
