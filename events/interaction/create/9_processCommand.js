@@ -31,10 +31,10 @@ module.exports = {
         // Try to execute the slash command function
         if (slashCommand) try {
             // Defer the reply
-            if (!slashCommand?.options.dontDefer) await args.interaction.deferReply();
+            if (!slashCommand?.options?.dontDefer) await args.interaction.deferReply();
 
             // Check if the command requires the user to be an admin for the bot
-            if (slashCommand?.options.botAdminOnly && ![ownerID, ...adminIDs].includes(args.interaction.user.id))
+            if (slashCommand?.options?.botAdminOnly && ![ownerID, ...adminIDs].includes(args.interaction.user.id))
                 return await embedinator.send(
                     `You must either be the owner, or a bot admin to use this command`
                 );

@@ -52,6 +52,9 @@ class message_Embedinator {
      */
     setAuthor(author) { this.author = author; }
 
+    /** Set the description. */
+    setDescription(description) { this.description = description; }
+
     /** Add embed fields.
      * @param {{name: String, value: String, inline: Boolean}} fields
      */
@@ -61,10 +64,12 @@ class message_Embedinator {
      * @param {string} description The description of the embed.
      * @param {{followUp: boolean, ephemeral: boolean}} options Optional options.
      */
-    async send(description, options = { followUp: false, ephemeral: false }) {
+    async send(description = "", options = { followUp: false, ephemeral: false }) {
         options = { followUp: false, ephemeral: false, ...options };
 
-        if (description) this.embed.setDescription(description);
+        if (description) this.description = description;
+
+        this.embed.setDescription(this.description);
 
         // Send the embed
         if (options.followUp)
