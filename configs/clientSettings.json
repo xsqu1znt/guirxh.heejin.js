@@ -3,8 +3,8 @@
     "MONGO_URI": "",
     "DEVMODE": false,
 
-    "ownerID": "",
-    "admins": [""],
+    "ownerID": "797233513136390175",
+    "adminIDs": ["842555247145779211"],
 
     "clientPresence": {
         "default": {

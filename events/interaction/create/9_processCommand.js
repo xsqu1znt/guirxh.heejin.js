@@ -2,6 +2,7 @@
 
 const { Client, BaseInteraction } = require('discord.js');
 
+const { ownerID, adminIDs } = require('../../../configs/clientSettings.json');
 const { userManager } = require('../../../modules/mongo');
 const { stringTools } = require('../../../modules/jsTools');
 const { messageTools } = require('../../../modules/discordTools');
@@ -30,7 +31,13 @@ module.exports = {
         // Try to execute the slash command function
         if (slashCommand) try {
             // Defer the reply
-            await args.interaction.deferReply();
+            if (!slashCommand?.options.dontDefer) await args.interaction.deferReply();
+
+            // Check if the command requires the user to be an admin for the bot
+            if (slashCommand?.options.botAdminOnly && ![ownerID, ...adminIDs].includes(args.interaction.user.id))
+                return await embedinator.send(
+                    `You must either be the owner, or a bot admin to use this command`
+                );
 
             // Check if the user's in the database
             if (!await userManager.exists(args.interaction.user.id) && args.interaction.commandName !== "start") {

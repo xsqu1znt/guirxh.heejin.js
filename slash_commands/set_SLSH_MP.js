@@ -1,7 +1,6 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 const { messageTools } = require('../modules/discordTools');
-const { randomTools } = require('../modules/jsTools');
 const { userManager } = require('../modules/mongo');
 const cardManager = require('../modules/cardManager');
 const userParser = require('../modules/userParser');
