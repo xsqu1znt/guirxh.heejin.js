@@ -193,4 +193,4 @@ async function exportUser(userID, fn) {
     logger.success(`file saved: \`${fn}\``);
 }
 
-// return exportUser("797233513136390175", "user_gui.json");
+// return exportUser("776318919266664499", "user_sarq.json");
