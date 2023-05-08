@@ -25,8 +25,8 @@ module.exports = {
         ),
 
     options: {
-        botAdminOnly: true,
-        dontDefer: true
+        botAdminOnly: true
+        // dontDefer: true
     },
 
     /**
@@ -236,7 +236,7 @@ module.exports = {
                     let modalSubmit_changeImage = await awaitModal();
 
                     // Update card data
-                    card.imageURl = modalSubmit_changeImage.fields.getTextInputValue("mti_imageURL");
+                    card.imageURL = modalSubmit_changeImage.fields.getTextInputValue("mti_imageURL");
 
                     return await refreshEmbed();
 

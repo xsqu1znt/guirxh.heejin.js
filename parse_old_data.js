@@ -8,8 +8,8 @@ const cardManager = require('./modules/cardManager');
 const logger = require('./modules/logger');
 const mongo = require('./modules/mongo');
 
-let users = require('./users_05_07_23.json'); /* users = users.slice(0, 1); */
-let cards = require('./cards_05_07_23.json');
+let users = require('./users_5_5_2023.json'); /* users = users.slice(0, 1); */
+let cards = require('./cards_5_5_2023.json');
 
 function parseUser(user) {
     return {
@@ -107,8 +107,8 @@ async function removeCustoms() {
     users_current.forEach(user => {
         console.log(`working on user: (${user._id})`);
 
-        user.card_inventory = user.card_inventory.filter(card => card.rarity !== 100 && card.globalID !== "100")
-            .map(card => [100, 101, 102, 103].includes(card.rarity) ? card : cardManager.parse.toCardLike(card));
+        user.card_inventory = user.card_inventory.filter(card => !["100", "101", "102", "103"].includes(card.globalID));
+        // .map(card => [100, 101, 102, 103].includes(card.rarity) ? card : cardManager.parse.toCardLike(card));
     });
 
     console.log("awaiting mongo...");
@@ -129,7 +129,7 @@ async function reAddCustoms() {
 
     await Promise.all(users.map(user => {
         user = parseUser(user);
-        let customs = user.card_inventory.filter(card => [100].includes(card.rarity));
+        let customs = user.card_inventory.filter(card => card.setID === "100");
 
         return mongo.userManager.cards.add(user._id, customs);
     }));
@@ -138,6 +138,39 @@ async function reAddCustoms() {
 }
 
 // return reAddCustoms();
+
+async function restoreVault() {
+    await mongo.connect(process.env.MONGO_URI_OLD);
+
+    console.log("getting users...");
+
+    let users_current = await mongo.userManager.fetch(null, "full");
+
+    console.log("fixing inventories...");
+
+    users_current.forEach(user => {
+        console.log(`working on user: (${user._id})`);
+
+        let user_backup = users.find(u => u.UserID === user._id);
+        if (!user_backup) return;
+
+        for (let card of user.card_inventory) {
+            let card_backup = user_backup.CardsV2[card.uid];
+
+            if (card_backup && card_backup.Locked) card.locked = true;
+        }
+    });
+
+    console.log("awaiting mongo...");
+
+    await Promise.all(users_current.map(user =>
+        mongo.userManager.update(user._id, { card_inventory: user.card_inventory }))
+    );
+
+    console.log("done");
+}
+
+// restoreVault();
 
 async function exportUser(userID, fn) {
     await mongo.connect(process.env.MONGO_URI_OLD);
