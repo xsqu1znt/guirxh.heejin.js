@@ -13,6 +13,7 @@ module.exports = {
     init: (client) => {
         let events = {
             ready: importEvents('../../events/ready'),
+            // ready: importEvents('./events/ready'),
 
             guild: {
                 // create: importEventFunctions('../../events/guild/create'),
@@ -27,6 +28,7 @@ module.exports = {
 
             interaction: {
                 create: importEvents('../../events/interaction/create')
+                // create: importEvents('./events/interaction/create')
             }
         }
 
@@ -80,9 +82,11 @@ module.exports = {
 // ! Helper Functions
 function importEvents(dir) {
     let files = fs.readdirSync(`.${dir}`).filter(fn => fn.endsWith('.js'));
+    // let files = fs.readdirSync(`${dir}`).filter(fn => fn.endsWith('.js'));
     let funcs = [];
 
     files.forEach(fn => funcs.push(require(`${dir}/${fn}`)));
+    // files.forEach(fn => funcs.push(require(`../.${dir}/${fn}`)));
     return funcs;
 }
 
