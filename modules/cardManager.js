@@ -205,8 +205,8 @@ function toString_shopEntry(card) {
         .replace("%PRICE", inline(true, botSettings.currencyIcon, card.price));
 }
 
-function toString_inventory(card, options = { duplicate_count: 0, favorited: false, selected: false, isDuplicate: false, simplify: false, }) {
-    options = { duplicate_count: 0, favorited: false, selected: false, isDuplicate: false, simplify: false, ...options };
+function toString_inventory(card, options = { duplicate_count: 0, favorited: false, selected: false, team: false, isDuplicate: false, simplify: false, }) {
+    options = { duplicate_count: 0, favorited: false, selected: false, team: false, isDuplicate: false, simplify: false, ...options };
 
     // Special charactors
     let superscript = {
@@ -215,7 +215,7 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
     };
 
     let { duplicate_count } = options;
-    let formated = "%UID%EMOJI %GROUP : %SINGLE - %NAME %DUPE\n> %SET_ID %GLOBAL_ID %RARITY %CATEGORY %SELL_PRICE%LOCKED%NEW_LINE%LEVEL%STATS%FAVORITED%SELECTED"
+    let formated = "%UID%EMOJI %GROUP : %SINGLE - %NAME %DUPE\n> %SET_ID %GLOBAL_ID %RARITY %CATEGORY %SELL_PRICE%LOCKED%NEW_LINE%LEVEL%STATS%FAVORITED%SELECTED%TEAM"
         .replace("%UID", card.uid ? space("right", inline(true, card.uid)) : "")
         .replace("%EMOJI", inline(true, card.emoji))
 
@@ -238,7 +238,8 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
             : space("left", inline(true, "🎤", card.stats.ability), ":", inline(true, "💖", card.stats.reputation)))
 
         .replace("%FAVORITED", options.favorited ? space("left", inline(true, "⭐")) : "")
-        .replace("%SELECTED", options.selected ? space("left", inline(true, "🏃")) : "");
+        .replace("%SELECTED", options.selected ? space("left", inline(true, "🏃")) : "")
+        .replace("%TEAM", options.team ? space("left", inline(true, "👯")) : "");
 
     // For special cases with dupeified things
     if (options.isDuplicate)

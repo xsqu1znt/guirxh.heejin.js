@@ -258,10 +258,20 @@ function userProfile_ES(user, userData) {
         let _embed = embed_template();
 
         // Check if the card is favorited
-        let isFavorited = card.uid === card_favorite?.uid;
+        let isFavorite = (card.uid === card_favorite?.uid);
+
+        // Whether or not this is the user's selected card
+        let isSelected = (card.uid === card_selected?.uid);
+
+        // Whether or not this is on the user's team
+        let isOnTeam = (userData.card_team_uids.includes(card.uid));
 
         // Parse the card into a human readable string
-        let card_f = cardManager.toString.inventory(card, { selected: true, favorited: isFavorited });
+        let card_f = cardManager.toString.inventory(card, {
+            favorited: isFavorite,
+            selected: isSelected,
+            team: isOnTeam
+        });
 
         // Add the card's information to the embed
         _embed.setDescription(card_f);
@@ -292,8 +302,16 @@ function userProfile_ES(user, userData) {
             let rarities = arrayTools.unique(category, (card, cardCompare) => card.rarity === cardCompare.rarity)
                 .map(card => card.rarity);
 
-            // Return an array of the user's cards that match that category
-            return userData.card_inventory.filter(card => rarities.includes(card.rarity));
+            // Create an array of every card that matches that category
+            let userCards_categoryGroup = userData.card_inventory.filter(card => rarities.includes(card.rarity));
+
+            // Filter out non-unique cards
+            if (userCards_categoryGroup.length > 0) userCards_categoryGroup = arrayTools.unique(userCards_categoryGroup,
+                (card, cardCompare) => card.globalID === cardCompare.globalID
+            );
+
+            // Return an array of unique user cards that match the category
+            return userCards_categoryGroup;
         });
 
         // Parse the sorted user cards into a readable string
@@ -306,8 +324,8 @@ function userProfile_ES(user, userData) {
         // _embed.setDescription(inventoryStats_f.join("\n"));
 
         _embed.addFields(
-            { name: "\`🌗\` General Sets", value: inventoryStats_f.slice(0, 5).join("\n"), inline: true },
-            { name: "\`🌓\` Unique Sets", value: inventoryStats_f.slice(5).join("\n"), inline: true }
+            { name: "\`🌕\` Normal Sets", value: inventoryStats_f.slice(0, 5).join("\n"), inline: true },
+            { name: "\`🌗\` Special Sets 1", value: inventoryStats_f.slice(5).join("\n"), inline: true }
         );
 
         // Return the embed
@@ -371,7 +389,7 @@ function userMissing_ES(user, userData, setID) {
         // Create the embed page
         let embed = embed_template()
             .setDescription(cards_set_f[i].join("\n"))
-            .setFooter({ text: `page ${i + 1} of ${cards_set_f.length || 1}` });
+            .setFooter({ text: `Page ${i + 1}/${cards_set_f.length || 1}` });
 
         embeds.push(embed);
     }
@@ -450,10 +468,14 @@ function userInventory_ES(user, userData, sorting = "set", order = "descending",
         // Whether or not this is the user's selected card
         let isSelected = (card.uid === userData.card_selected_uid);
 
+        // Whether or not this is on the user's team
+        let isOnTeam = (userData.card_team_uids.includes(card.uid));
+
         cards_user_f.push(cardManager.toString.inventory(card, {
             duplicate_count: card_duplicates.length,
             favorited: isFavorite,
-            selected: isSelected
+            selected: isSelected,
+            team: isOnTeam
         }));
     }
 
@@ -614,7 +636,18 @@ function userView_ES(user, userData, card, viewStyle = "uid", showDuplicates = t
             // Whether or not this is the user's favorite card
             let isFavorite = (card.uid === userData.card_favorite_uid);
 
-            embed.setDescription(cardManager.toString.inventory(card, { duplicate_count, favorited: isFavorite }));
+            // Whether or not this is the user's selected card
+            let isSelected = (card.uid === userData.card_selected_uid);
+
+            // Whether or not this is on the user's team
+            let isOnTeam = (userData.card_team_uids.includes(card.uid));
+
+            embed.setDescription(cardManager.toString.inventory(card, {
+                duplicate_count,
+                favorited: isFavorite,
+                selected: isSelected,
+                team: isOnTeam
+            }));
             break;
 
         case "global":
@@ -703,7 +736,7 @@ function userTeamView_ES(user, userData) {
 
 // Command -> User -> /GIFT
 function userGift_ES(user, recipient, cards) {
-    let fromTo = `from: ${user} to: ${recipient}`;
+    let fromTo = `**From:** ${user}\n**To:** ${recipient}`;
 
     // Create the embed
     let embed = new EmbedBuilder()

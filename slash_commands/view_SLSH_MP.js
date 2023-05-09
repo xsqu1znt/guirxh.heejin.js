@@ -16,12 +16,12 @@ module.exports = {
             .setDescription("Choose what you want to view")
             
             .addChoices(
-                { name: "Owned ID", value: "uid" },
-                { name: "Global ID", value: "gid" },
-                { name: "Favorite", value: "favorite" },
-                { name: "Idol", value: "idol" },
-                { name: "Vault", value: "vault" },
-                { name: "Team", value: "team" }
+                { name: "🆔 uid", value: "uid" },
+                { name: "🆔 gid", value: "gid" },
+                { name: "⭐ favorite", value: "favorite" },
+                { name: "🏃 idol", value: "idol" },
+                { name: "🔒 vault", value: "vault" },
+                { name: "👯 team", value: "team" }
             )
             .setRequired(true)
         )

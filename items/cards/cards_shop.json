@@ -1689,7 +1689,7 @@
     "globalID": "1086",
     "setID": "104",
     "rarity": 104,
-    "price": 2500,
+    "price": 500,
     "sellPrice": 10,
     "stats": {
       "level": 1,
@@ -1710,7 +1710,7 @@
     "globalID": "1082",
     "setID": "104",
     "rarity": 104,
-    "price": 2500,
+    "price": 500,
     "sellPrice": 10,
     "stats": {
       "level": 1,
@@ -1731,7 +1731,7 @@
     "globalID": "1090",
     "setID": "104",
     "rarity": 104,
-    "price": 2500,
+    "price": 500,
     "sellPrice": 10,
     "stats": {
       "level": 1,
@@ -1752,7 +1752,7 @@
     "globalID": "1088",
     "setID": "104",
     "rarity": 104,
-    "price": 2500,
+    "price": 500,
     "sellPrice": 10,
     "stats": {
       "level": 1,
@@ -1773,7 +1773,7 @@
     "globalID": "1084",
     "setID": "104",
     "rarity": 104,
-    "price": 2500,
+    "price": 500,
     "sellPrice": 10,
     "stats": {
       "level": 1,
@@ -1794,7 +1794,7 @@
     "globalID": "1087",
     "setID": "104",
     "rarity": 104,
-    "price": 2500,
+    "price": 500,
     "sellPrice": 10,
     "stats": {
       "level": 1,
@@ -1815,7 +1815,7 @@
     "globalID": "1081",
     "setID": "104",
     "rarity": 104,
-    "price": 2500,
+    "price": 500,
     "sellPrice": 10,
     "stats": {
       "level": 1,
@@ -1836,7 +1836,7 @@
     "globalID": "1083",
     "setID": "104",
     "rarity": 104,
-    "price": 2500,
+    "price": 500,
     "sellPrice": 10,
     "stats": {
       "level": 1,
@@ -1857,7 +1857,7 @@
     "globalID": "1085",
     "setID": "104",
     "rarity": 104,
-    "price": 2500,
+    "price": 500,
     "sellPrice": 10,
     "stats": {
       "level": 1,
@@ -1878,7 +1878,7 @@
     "globalID": "1089",
     "setID": "104",
     "rarity": 104,
-    "price": 2500,
+    "price": 500,
     "sellPrice": 10,
     "stats": {
       "level": 1,
@@ -1888,5 +1888,426 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1091487938132578445/suit_momo.png"
+  },
+  {
+    "name": "Chungha",
+    "single": "Solo",
+    "group": "SUIT",
+    "category": "suit",
+    "description": "Special - SUIT",
+    "emoji": "👔",
+    "globalID": "1091",
+    "setID": "104",
+    "rarity": 104,
+    "price": 500,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1105183328925126737/suit_chungha.png"
+  },
+  {
+    "name": "Dawon",
+    "single": "WJSN",
+    "group": "SUIT",
+    "category": "suit",
+    "description": "Special - SUIT",
+    "emoji": "👔",
+    "globalID": "1092",
+    "setID": "104",
+    "rarity": 104,
+    "price": 500,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1105183329210355873/suit_dawon.png"
+  },
+  {
+    "name": "Heejin",
+    "single": "ARTMS",
+    "group": "SUIT",
+    "category": "suit",
+    "description": "Special - SUIT",
+    "emoji": "👔",
+    "globalID": "1093",
+    "setID": "104",
+    "rarity": 104,
+    "price": 500,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1105183329722044537/suit_heejin.png"
+  },
+  {
+    "name": "Inseong",
+    "single": "SF9",
+    "group": "SUIT",
+    "category": "suit",
+    "description": "Special - SUIT",
+    "emoji": "👔",
+    "globalID": "1094",
+    "setID": "104",
+    "rarity": 104,
+    "price": 500,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1105183330103742484/suit_inseong.png"
+  },
+  {
+    "name": "Jaehyun",
+    "single": "NCT",
+    "group": "SUIT",
+    "category": "suit",
+    "description": "Special - SUIT",
+    "emoji": "👔",
+    "globalID": "1095",
+    "setID": "104",
+    "rarity": 104,
+    "price": 500,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1105183330409910383/suit_jaehyun.png"
+  },
+  {
+    "name": "Jake",
+    "single": "ENHYPEN",
+    "group": "SUIT",
+    "category": "suit",
+    "description": "Special - SUIT",
+    "emoji": "👔",
+    "globalID": "1096",
+    "setID": "104",
+    "rarity": 104,
+    "price": 500,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1105183330695139499/suit_jake.png"
+  },
+  {
+    "name": "Jennie",
+    "single": "BLΛƆKPIИK",
+    "group": "SUIT",
+    "category": "suit",
+    "description": "Special - SUIT",
+    "emoji": "👔",
+    "group": "SUIT",
+    "globalID": "1097",
+    "setID": "104",
+    "rarity": 104,
+    "price": 500,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1105183331039051856/suit_jennie.png"
+  },
+  {
+    "name": "Jinjin",
+    "single": "ASTRO",
+    "group": "SUIT",
+    "category": "suit",
+    "description": "Special - SUIT",
+    "emoji": "👔",
+    "globalID": "1098",
+    "setID": "104",
+    "rarity": 104,
+    "price": 500,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1105183331324285008/suit_jinjin.png"
+  },
+  {
+    "name": "Jiwoong",
+    "single": "ZB1",
+    "group": "SUIT",
+    "category": "suit",
+    "description": "Special - SUIT",
+    "emoji": "👔",
+    "globalID": "1099",
+    "setID": "104",
+    "rarity": 104,
+    "price": 500,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1105183331580117072/suit_jiwoong.png"
+  },
+  {
+    "name": "Jungkook",
+    "single": "BTS",
+    "group": "SUIT",
+    "category": "suit",
+    "description": "Special - SUIT",
+    "emoji": "👔",
+    "globalID": "1100",
+    "setID": "104",
+    "rarity": 104,
+    "price": 500,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1105183331827585215/suit_jungkook.png"
+  },
+  {
+    "name": "Karina",
+    "single": "æspa",
+    "group": "SUIT",
+    "category": "suit",
+    "description": "Special - SUIT",
+    "emoji": "👔",
+    "globalID": "1101",
+    "setID": "104",
+    "rarity": 104,
+    "price": 500,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1105183385304965230/suit_karina.png"
+  },
+  {
+    "name": "Lucas",
+    "single": "NCT",
+    "group": "SUIT",
+    "category": "suit",
+    "description": "Special - SUIT",
+    "emoji": "👔",
+    "globalID": "1102",
+    "setID": "104",
+    "rarity": 104,
+    "price": 500,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1105183385644699698/suit_lucas.png"
+  },
+  {
+    "name": "Ryujin",
+    "single": "ITZY",
+    "group": "SUIT",
+    "category": "suit",
+    "description": "Special - SUIT",
+    "emoji": "👔",
+    "globalID": "1103",
+    "setID": "104",
+    "rarity": 104,
+    "price": 500,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1105183385942499398/suit_ryujin.png"
+  },
+  {
+    "name": "Sehun",
+    "single": "EXO",
+    "group": "SUIT",
+    "category": "suit",
+    "description": "Special - SUIT",
+    "emoji": "👔",
+    "globalID": "1104",
+    "setID": "104",
+    "rarity": 104,
+    "price": 500,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1105183386252882032/suit_sehun.png"
+  },
+  {
+    "name": "Seolhyun",
+    "single": "AOA",
+    "group": "SUIT",
+    "category": "suit",
+    "description": "Special - SUIT",
+    "emoji": "👔",
+    "globalID": "1105",
+    "setID": "104",
+    "rarity": 104,
+    "price": 500,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1105183386613583993/suit_seolhyun.png"
+  },
+  {
+    "name": "Seulgi",
+    "single": "Red Velvet",
+    "group": "SUIT",
+    "category": "suit",
+    "description": "Special - SUIT",
+    "emoji": "👔",
+    "globalID": "1106",
+    "setID": "104",
+    "rarity": 104,
+    "price": 500,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1105183386915578016/suit_seulgi.png"
+  },
+  {
+    "name": "Shownu",
+    "single": "MONSTA X",
+    "group": "SUIT",
+    "category": "suit",
+    "description": "Special - SUIT",
+    "emoji": "👔",
+    "globalID": "1107",
+    "setID": "104",
+    "rarity": 104,
+    "price": 500,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1105183387318227065/suit_shownu.png"
+  },
+  {
+    "name": "Shuhua",
+    "single": "(G)I-dle",
+    "group": "SUIT",
+    "category": "suit",
+    "description": "Special - SUIT",
+    "emoji": "👔",
+    "globalID": "1108",
+    "setID": "104",
+    "rarity": 104,
+    "price": 500,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1105183387746050249/suit_shuhua.png"
+  },
+  {
+    "name": "Wonwoo",
+    "single": "SEVENTEEN",
+    "group": "SUIT",
+    "category": "suit",
+    "description": "Special - SUIT",
+    "emoji": "👔",
+    "globalID": "1109",
+    "setID": "104",
+    "rarity": 104,
+    "price": 500,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1105183388115152969/suit_wonwoo.png"
+  },
+  {
+    "name": "Yunjin",
+    "single": "LE SSERAFIM",
+    "group": "SUIT",
+    "category": "suit",
+    "description": "Special - SUIT",
+    "emoji": "👔",
+    "globalID": "1110",
+    "setID": "104",
+    "rarity": 104,
+    "price": 500,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1105183388467466371/suit_yunjin.png"
   }
 ]
