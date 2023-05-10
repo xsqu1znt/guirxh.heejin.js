@@ -64,8 +64,8 @@ class message_Embedinator {
      * @param {string} description The description of the embed.
      * @param {{followUp: boolean, ephemeral: boolean}} options Optional options.
      */
-    async send(description = "", options = { followUp: false, ephemeral: false }) {
-        options = { followUp: false, ephemeral: false, ...options };
+    async send(description = "", options = { sendSeparate: false, followUp: false, ephemeral: false }) {
+        options = { sendSeparate: false, followUp: false, ephemeral: false, ...options };
 
         if (description) this.description = description;
 
@@ -74,6 +74,8 @@ class message_Embedinator {
         // Send the embed
         if (options.followUp)
             return await this.interaction.followUp({ embeds: [this.embed], ephemeral: options.ephemeral });
+        else if (options.sendSeparate)
+            return await this.interaction.channel.send({ embeds: [this.embed] });
         else
             try {
                 return await this.interaction.reply({ embeds: [this.embed], ephemeral: options.ephemeral });

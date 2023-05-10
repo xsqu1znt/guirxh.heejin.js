@@ -69,33 +69,51 @@ module.exports = {
                     .setLabel("The card's name:")
                     .setStyle(TextInputStyle.Short)
                     .setValue(card.name)
-                    .setRequired(true),
+                    .setRequired(false),
 
                 new TextInputBuilder().setCustomId("mti_description")
                     .setLabel("The card's description:")
                     .setStyle(TextInputStyle.Short)
                     .setValue(card.description)
-                    .setRequired(true),
-            ],
-
-            editDetails: [
+                    .setRequired(false),
+                
                 new TextInputBuilder().setCustomId("mti_group")
                     .setLabel("The group the card is in:")
                     .setStyle(TextInputStyle.Short)
                     .setValue(card.group)
-                    .setRequired(true),
+                    .setRequired(false),
 
                 new TextInputBuilder().setCustomId("mti_single")
                     .setLabel("The single the card is from:")
                     .setStyle(TextInputStyle.Short)
                     .setValue(card.single)
-                    .setRequired(true),
+                    .setRequired(false),
 
                 new TextInputBuilder().setCustomId("mti_category")
                     .setLabel("The category the card is in:")
                     .setStyle(TextInputStyle.Short)
                     .setValue(card.category)
-                    .setRequired(true)
+                    .setRequired(false)
+            ],
+
+            editDetails: [
+                new TextInputBuilder().setCustomId("mti_setid")
+                    .setLabel("The set ID the card belongs to:")
+                    .setStyle(TextInputStyle.Short)
+                    .setValue(card.setID)
+                    .setRequired(false),
+
+                new TextInputBuilder().setCustomId("mti_gid")
+                    .setLabel("The global ID of the card:")
+                    .setStyle(TextInputStyle.Short)
+                    .setValue(card.globalID)
+                    .setRequired(false),
+                
+                    new TextInputBuilder().setCustomId("mti_sellPrice")
+                    .setLabel("The price the card can be sold for:")
+                    .setStyle(TextInputStyle.Short)
+                    .setValue(String(card.sellPrice))
+                    .setRequired(false)
             ],
 
             changeImage: [
@@ -103,7 +121,7 @@ module.exports = {
                     .setLabel("The card's image URL:")
                     .setStyle(TextInputStyle.Short)
                     .setValue(card.imageURL)
-                    .setRequired(true)
+                    .setRequired(false)
             ]
         };
 
@@ -223,9 +241,15 @@ module.exports = {
                     // Change card data
                     let cardName = modalSubmit_editInfo.fields.getTextInputValue("mti_name");
                     let cardDescription = modalSubmit_editInfo.fields.getTextInputValue("mti_description");
+                    let cardGroup = modalSubmit_editInfo.fields.getTextInputValue("mti_group");
+                    let cardSingle = modalSubmit_editInfo.fields.getTextInputValue("mti_single");
+                    let cardCategory = modalSubmit_editInfo.fields.getTextInputValue("mti_category");
 
                     card.name = cardName; components_modal.editInfo[0].setValue(cardName);
                     card.description = cardDescription; components_modal.editInfo[1].setValue(cardDescription);
+                    card.group = cardGroup; components_modal.editInfo[2].setValue(cardGroup);
+                    card.single = cardSingle; components_modal.editInfo[3].setValue(cardSingle);
+                    card.category = cardCategory; components_modal.editInfo[4].setValue(cardCategory);
 
                     return await refreshEmbed();
 
@@ -239,13 +263,13 @@ module.exports = {
                     let modalSubmit_editDetails = await awaitModal();
 
                     // Change card data
-                    let cardGroup = modalSubmit_editDetails.fields.getTextInputValue("mti_group");
-                    let cardSingle = modalSubmit_editDetails.fields.getTextInputValue("mti_single");
-                    let cardCategory = modalSubmit_editDetails.fields.getTextInputValue("mti_category");
+                    let cardSetID = modalSubmit_editDetails.fields.getTextInputValue("mti_setid");
+                    let cardGlobalID = modalSubmit_editDetails.fields.getTextInputValue("mti_gid");
+                    let cardSellPrice = modalSubmit_editDetails.fields.getTextInputValue("mti_sellPrice");
 
-                    card.group = cardGroup; components_modal.editDetails[0].setValue(cardGroup);
-                    card.single = cardSingle; components_modal.editDetails[1].setValue(cardSingle);
-                    card.category = cardCategory; components_modal.editDetails[2].setValue(cardCategory);
+                    card.setID = cardSetID; components_modal.editDetails[0].setValue(cardSetID);
+                    card.globalID = cardGlobalID; components_modal.editDetails[1].setValue(cardGlobalID);
+                    card.sellPrice = +cardSellPrice; components_modal.editDetails[2].setValue(cardSellPrice);
 
                     return await refreshEmbed();
 
@@ -277,7 +301,7 @@ module.exports = {
                         title: "%USER | customize",
                         description: `Successfully edited card \`${uid}\` for user \`${userID}\``,
                         author: interaction.author
-                    }).send();
+                    }).send(null, { sendSeperate: true });
 
                     // End the collector
                     collector.stop(); return;
