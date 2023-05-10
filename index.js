@@ -60,6 +60,3 @@ client.login(TOKEN).then(async () => {
     // Remove all commands (this is global | does not work if using local commands) (this is global)
     // await slashCommandManager.remove(client, null, true);
 });
-
-// Export the client
-module.exports = client;
