@@ -301,7 +301,7 @@ module.exports = {
                         title: "%USER | customize",
                         description: `Successfully edited card \`${uid}\` for user \`${userID}\``,
                         author: interaction.author
-                    }).send(null, { sendSeperate: true });
+                    }).send(null, { followUp: true });
 
                     // End the collector
                     collector.stop(); return;

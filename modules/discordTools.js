@@ -62,7 +62,7 @@ class message_Embedinator {
 
     /** Send the embed.
      * @param {string} description The description of the embed.
-     * @param {{followUp: boolean, ephemeral: boolean}} options Optional options.
+     * @param {{sendSeparate: boolean, followUp: boolean, ephemeral: boolean}} options Optional options.
      */
     async send(description = "", options = { sendSeparate: false, followUp: false, ephemeral: false }) {
         options = { sendSeparate: false, followUp: false, ephemeral: false, ...options };
