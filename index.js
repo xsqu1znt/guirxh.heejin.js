@@ -42,10 +42,23 @@ logger.log("connecting to Discord...");
 client.login(TOKEN).then(async () => {
     await mongo.connect();
 
+    // Push all commands including admin to a specific server (use this if Heejin is using local commands) (this is local)
+    // await slashCommandManager.push(client, "1052726201086656612", false, true);
+    
+    // Push only admin commands to a specific server (use this if Heejin is using global commands) (this is local)
+    // await slashCommandManager.push(client, "1052726201086656612", false, true, true);
+
+    // Push all commands excluding admin to a specific server (this is local) - use this to refresh local also
     // await slashCommandManager.push(client, "1052726201086656612");
-    // await slashCommandManager.push(client, "1052726201086656612", false, true); // Pushes admin commands
-    // await slashCommandManager.remove(client);
-    // await slashCommandManager.refresh(client);
+
+    // Push all commands excluding admin (this is global) - use this to refresh global also
+    // await slashCommandManager.push(client, null, true);
+
+    // Remove all commands (this is local | does not work if using global commands) (this is local)
+    // await slashCommandManager.remove(client, "1052726201086656612")
+
+    // Remove all commands (this is global | does not work if using local commands) (this is global)
+    // await slashCommandManager.remove(client, null, true);
 });
 
 // Export the client
