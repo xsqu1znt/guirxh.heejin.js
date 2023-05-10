@@ -3,8 +3,10 @@
 const { Client, REST, Routes } = require('discord.js');
 const logger = require('./logger');
 
+const TOKEN = process.env.TOKEN || require('../configs/clientSettings.json').TOKEN;
+
 // Create an instance of the REST api
-const rest = new REST().setToken(process.env.TOKEN);
+const rest = new REST().setToken(TOKEN);
 
 module.exports = {
     /** Push slash commands to one or more guilds.
@@ -12,8 +14,12 @@ module.exports = {
      * @param {Array<string> | string} guildIDs The IDs of the Guilds you wish to push to.
      * @param {boolean} global Whether to push the slash commands globally. False is locally per server.
      */
-    push: async (client, guildIDs, global = false) => {
-        let slash_commands = [...client.slashCommands.values()].map(slsh => slsh.builder);
+    push: async (client, guildIDs, global = false, includeAdmin = false, onlyAdmin = true) => {
+        let slash_commands = !includeAdmin
+            ? [...client.slashCommands.values()].map(slsh => slsh.builder)
+            : onlyAdmin
+                ? [...client.slashCommands_admin.values()].map(slsh => slsh.builder)
+                : [...client.slashCommands.values(), ...client.slashCommands_admin.values()].map(slsh => slsh.builder);
 
         // Push slash commands globally
         if (global) try {
@@ -50,7 +56,7 @@ module.exports = {
                 await Promise.all(promiseArray);
 
                 // Log success
-                return logger.success("slash commands registered successfully");
+                return logger.success("slash commands pushed successfully");
             } else { //* Iterate through every guild the bot is currently in and push the slash commands
                 // Fetch each guild the bot's currently in
                 let guilds = await client.guilds.fetch();
@@ -143,8 +149,8 @@ module.exports = {
      * @param {Array<string> | string} guildIDs The IDs of the Guilds you wish to refresh.
      * @param {boolean} global Whether to refresh the slash commands globally. False is locally per server.
      */
-    refresh: async (client, guildIDs, global = false) => {
+    refresh: async (client, guildIDs, global = false, includeAdmin = false, onlyAdmin = false) => {
         await this.remove(client, guildIDs, global);
-        await this.push(client, guildIDs, global);
+        await this.push(client, guildIDs, global, includeAdmin, onlyAdmin);
     }
 };

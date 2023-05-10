@@ -1,0 +1,102 @@
+{
+    "communityServerURL": "https://discord.gg/G4YHSMNZQp",
+
+    "botSettings": {
+        "currencyIcon": "🥕",
+
+        "embed": {
+            "color": "#2B2D31",
+            "footerIcon": "https://cdn.discordapp.com/attachments/831265262309212200/911434990947008552/heejinserver.png"
+        },
+
+        "customEmojis": {
+            "numbers": [
+                {"name": "one", "emoji": "<:one:1103208748924813333>"},
+                {"name": "two", "emoji": "<:two:1103208760639504465>"},
+                {"name": "three", "emoji": "<:three:1103208757992902696>"},
+                {"name": "four", "emoji": "<:four:1103208746362093659>"},
+                {"name": "five", "emoji": "<:five:1103208750489280542>"}
+            ],
+
+            "confirmSell": {"name": "✅", "emoji": "✅"}
+        },
+
+        "timeout": {
+            "stage_start": "3s",
+            "stage_turn": "500ms",
+
+            "pagination": "60s",
+            "reactionSell": "30s",
+            "confirmation": "15s",
+            "errorMessage": "5s"
+        }
+    },
+
+    "eventSettings": {
+        "name": "",
+        "cardRarityFilter": [17],
+        
+        "season": {
+            "name": "Spring23",
+            "cardRarityFilter": [18]
+        }
+    },
+
+    "shopSettings": {
+        "stockSetIDs": ["100", "104"]
+    },
+
+    "userSettings": {
+        "xp": {
+            "maxLevel": 100,
+            "nextLevelXPMultiplier": 50,
+            "commands": {
+                "drop": { "min": 10, "max": 30 },
+                "random": { "min": 10, "max": 250 },
+                "stage": { "min": 10, "max": 250 }
+            },
+            
+            "card": {
+                "maxLevel": 100,
+                "nextLevelXPMultiplier": 50,
+                "nextLevelStatReward": { "ability": 9, "reputation": 9 },
+                "stage": { "min": 50, "max": 200 }
+            }
+        },
+        "currency": {
+            "startingBalance": 250,
+            "daily": {
+                "amount": 50,
+                "maxMultiplier": 10
+            },
+            "range": {
+                "random": {
+                    "min": 10,
+                    "max": 500
+                }
+            }
+        },
+        "chances": {
+            "winRandom": 40
+        },
+        "cooldowns": {
+            "drop_normal": "5s",
+            "drop_weekly": "5s",
+            "drop_season": "5s",
+            "drop_event": null,
+            "daily": "60s",
+            "stage": "30s",
+            "random": "5s"
+        }
+    },
+
+    "dropSettings": {
+        "chances": {
+            "common": { "chance": 100, "cardRarityFilter": 70 },
+            "uncommon": { "chance": 25, "cardRarityFilter": 60 },
+            "rare": { "chance": 15, "cardRarityFilter": 50 },
+            "epic": { "chance": 10, "cardRarityFilter": 40 },
+            "mint": { "chance": 5, "cardRarityFilter": 30 }
+        }
+    }
+}
