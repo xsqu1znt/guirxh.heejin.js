@@ -43,7 +43,7 @@ client.login(TOKEN).then(async () => {
     await mongo.connect();
 
     // await slashCommandManager.push(client, "1052726201086656612");
-    // await slashCommandManager.push(client, "1052726201086656612", false, true);
+    // await slashCommandManager.push(client, "1052726201086656612", false, true); // Pushes admin commands
     // await slashCommandManager.remove(client);
     // await slashCommandManager.refresh(client);
 });

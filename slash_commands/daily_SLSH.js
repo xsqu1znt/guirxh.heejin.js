@@ -20,7 +20,7 @@ module.exports = {
 
         // Check if the user has an active cooldown
         let userCooldownETA = await userManager.cooldowns.check(interaction.user.id, "daily");
-        if (userCooldownETA) return embed_daily.send(`You can claim your daily **${userCooldownETA}**.`);
+        if (userCooldownETA) return embed_daily.send(`You can claim your daily **${userCooldownETA}**`);
 
         // Fetch the user from Mongo
         let userData = await userManager.fetch(interaction.user.id, "essential", true);

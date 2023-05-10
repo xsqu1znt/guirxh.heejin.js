@@ -64,7 +64,7 @@ module.exports = {
 
         // Inputs
         let components_modal = {
-            editInfo: [
+            basicInfo: [
                 new TextInputBuilder().setCustomId("mti_name")
                     .setLabel("The card's name:")
                     .setStyle(TextInputStyle.Short)
@@ -78,7 +78,7 @@ module.exports = {
                     .setRequired(true),
             ],
 
-            editDetails: [
+            inventoryDetails: [
                 new TextInputBuilder().setCustomId("mti_group")
                     .setLabel("The group the card is in:")
                     .setStyle(TextInputStyle.Short)
@@ -108,12 +108,12 @@ module.exports = {
         };
 
         // Action rows
-        let actionRows_modal = {
-            editInfo: components_modal.editInfo.map(textInput =>
+        let actionRow_modal = {
+            basicInfo: components_modal.basicInfo.map(textInput =>
                 new ActionRowBuilder().addComponents(textInput)
             ),
 
-            editDetails: components_modal.editDetails.map(textInput =>
+            inventoryDetails: components_modal.inventoryDetails.map(textInput =>
                 new ActionRowBuilder().addComponents(textInput)
             ),
 
@@ -130,13 +130,13 @@ module.exports = {
 
         // Create the customizer's action row
         let buttons_customizer = {
-            editInfo: new ButtonBuilder().setLabel("Edit Info")
+            basicInfo: new ButtonBuilder().setLabel("Basic Info")
                 .setStyle(ButtonStyle.Secondary)
-                .setCustomId("btn_editInfo"),
+                .setCustomId("btn_basicInfo"),
 
-            editDetails: new ButtonBuilder().setLabel("Edit Details")
+            inventoryDetails: new ButtonBuilder().setLabel("Inventory Details")
                 .setStyle(ButtonStyle.Secondary)
-                .setCustomId("btn_editDetails"),
+                .setCustomId("btn_inventoryDetails"),
 
             changeImage: new ButtonBuilder().setLabel("Change Image")
                 .setStyle(ButtonStyle.Secondary)
@@ -151,10 +151,10 @@ module.exports = {
                 .setCustomId("btn_cancel")
         };
 
-        let actionRows_customizer = {
+        let actionRow_customizer = {
             edit: new ActionRowBuilder().addComponents(
-                buttons_customizer.editInfo,
-                buttons_customizer.editDetails,
+                buttons_customizer.basicInfo,
+                buttons_customizer.inventoryDetails,
                 buttons_customizer.changeImage
             ),
 
@@ -167,35 +167,28 @@ module.exports = {
         // Send the customize embed
         let message = await interaction.reply({
             embeds: [embed], components: [
-                actionRows_customizer.edit,
-                actionRows_customizer.confirmCancel
+                actionRow_customizer.edit,
+                actionRow_customizer.confirmCancel
             ]
         });
 
-        //! Collect button interactions
-        // Create a filter to look for only button interactions from the user that ran this command
+        //* Collect button interactions
         let filter = i => (i.componentType === ComponentType.Button) && (i.user.id === interaction.user.id);
-        // Create a collector to catch interactions | timeout after 5 minutes
-        let collector = message.createMessageComponentCollector({ filter, time: 300000 });
+        let collector = message.createMessageComponentCollector({ filter, time: 30000 });
 
         // Refreshes the card info displayed in the embed
         let refreshEmbed = async () => {
-            // Re-parse the edited card into a human readable string
             card_f = cardManager.toString.inventory(card);
 
-            // Change the embed's description and image to display the card
             embed.setDescription(card_f).setImage(card.imageURL);
-
-            // Edit the message with the updated embed data
-            await message.edit({ embeds: [embed] }); return null;
+            message.edit({ embeds: [embed] });
         }
 
         // Wait for the modal to be submitted and return the modal interaction
         let awaitModal = async () => {
-            // Create a filter to look for the right modal
-            let modalSubmit_filter = i => i.customId === modal_customEmbed.data.custom_id;
-            // Create a collector to catch the modal submit | timeout after 5 minutes
-            let modalSubmit = await interaction.awaitModalSubmit({ filter: modalSubmit_filter, time: 300000 });
+            // Wait for the modal to be submitted and return the interaction
+            let modalSubmit_filter = i => i.customId === modal_customize.data.custom_id;
+            let modalSubmit = await interaction.awaitModalSubmit({ filter: modalSubmit_filter, time: 30000 });
 
             // Close the modal
             await modalSubmit.deferUpdate();
@@ -204,94 +197,53 @@ module.exports = {
             return modalSubmit;
         }
 
-        // Triggered whenever a button is pressed in the connected message
         collector.on("collect", async i => {
-            // Resets the collector timer
             collector.resetTimer();
 
             switch (i.customId) {
                 // Show the modal for editing basic info
-                case "btn_editInfo":
-                    // Set the modal components to be relevant to the button the user pressed
-                    modal_customize.setComponents(...actionRows_modal.editInfo);
-                    // Show the modal
+                case "btn_basicInfo":
+                    modal_customize.setComponents(...actionRow_modal.basicInfo);
                     await i.showModal(modal_customize);
 
-                    // Await the returned modal data
-                    let modalSubmit_editInfo = await awaitModal();
+                    let modalSubmit_basicInfo = await awaitModal();
 
-                    // Change card data
-                    let cardName = modalSubmit_editInfo.fields.getTextInputValue("mti_name");
-                    let cardDescription = modalSubmit_editInfo.fields.getTextInputValue("mti_description");
-
-                    card.name = cardName; components_modal.editInfo[0].setValue(cardName);
-                    card.description = cardDescription; components_modal.editInfo[1].setValue(cardDescription);
+                    // Update card data
+                    card.name = modalSubmit_basicInfo.fields.getTextInputValue("mti_name");
+                    card.description = modalSubmit_basicInfo.fields.getTextInputValue("mti_description");
 
                     return await refreshEmbed();
 
-                case "btn_editDetails":
-                    // Set the modal components to be relevant to the button the user pressed
-                    modal_customize.setComponents(...actionRows_modal.editDetails);
-                    // Show the modal
+                case "btn_inventoryDetails":
+                    modal_customize.setComponents(...actionRow_modal.inventoryDetails);
                     await i.showModal(modal_customize);
 
-                    // Await the returned modal data
-                    let modalSubmit_editDetails = await awaitModal();
+                    let modalSubmit_inventoryDetails = await awaitModal();
 
-                    // Change card data
-                    let cardGroup = modalSubmit_editDetails.fields.getTextInputValue("mti_group");
-                    let cardSingle = modalSubmit_editDetails.fields.getTextInputValue("mti_single");
-                    let cardCategory = modalSubmit_editDetails.fields.getTextInputValue("mti_category");
-
-                    card.group = cardGroup; components_modal.editDetails[0].setValue(cardGroup);
-                    card.single = cardSingle; components_modal.editDetails[1].setValue(cardSingle);
-                    card.category = cardCategory; components_modal.editDetails[2].setValue(cardCategory);
+                    // Update card data
+                    card.group = modalSubmit_inventoryDetails.fields.getTextInputValue("mti_group");
+                    card.single = modalSubmit_inventoryDetails.fields.getTextInputValue("mti_single");
+                    card.category = modalSubmit_inventoryDetails.fields.getTextInputValue("mti_category");
 
                     return await refreshEmbed();
 
                 case "btn_changeImage":
-                    // Set the modal components to be relevant to the button the user pressed
-                    modal_customize.setComponents(...actionRows_modal.editDetails);
-                    // Show the modal
+                    modal_customize.setComponents(...actionRow_modal.changeImage);
                     await i.showModal(modal_customize);
 
-                    // Await the returned modal data
                     let modalSubmit_changeImage = await awaitModal();
 
-                    // Change card data
-                    let cardImageURL = modalSubmit_changeImage.fields.getTextInputValue("mti_imageURL");
-
-                    card.imageURL = cardImageURL; components_modal.changeImage[0].setValue(cardImageURL);
+                    // Update card data
+                    card.imageURL = modalSubmit_changeImage.fields.getTextInputValue("mti_imageURL");
 
                     return await refreshEmbed();
 
-                case "btn_confirm":
-                    // Allow the button to know it was submitted
-                    i.deferUpdate();
-
-                    // Update the user's card in Mongo
-                    userManager.cards.update(userID, card);
-
-                    // Let the user know the result
-                    await new messageTools.Embedinator(interaction, {
-                        title: "%USER | customize",
-                        description: `Successfully edited card \`${uid}\` for user \`${userID}\``,
-                        author: interaction.author
-                    }).send();
-
-                    // End the collector
-                    collector.stop(); return;
-
-                case "btn_cancel":
-                    // Delete the customize message
-                    try { await message.delete(); } catch { };
-
-                    // End the collector
-                    collector.stop(); return;
+                case "btn_confirm": collector.stop(); return;
+                case "btn_cancel": collector.stop(); return;
             }
         });
 
-        // Delete the message on timeout
+        // Remove the action row on timeout/confirm/cancel
         collector.on("end", async () => {
             try { await message.edit({ components: [] }); } catch { };
         });
