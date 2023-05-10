@@ -124,7 +124,7 @@ module.exports = {
 
         //* Create the customizer embed
         let embed = embed_customize.embed
-            .setDescription(card_f)
+            .setDescription(card_f + `\n\n> ${card.description}`)
             .setImage(card.imageURL)
             .setFooter({ text: "Use the buttons below to customize the card" });
 
@@ -165,7 +165,7 @@ module.exports = {
         };
 
         // Send the customize embed
-        let message = await interaction.reply({
+        let message = await interaction.editReply({
             embeds: [embed], components: [
                 actionRows_customizer.edit,
                 actionRows_customizer.confirmCancel
@@ -184,7 +184,7 @@ module.exports = {
             card_f = cardManager.toString.inventory(card);
 
             // Change the embed's description and image to display the card
-            embed.setDescription(card_f).setImage(card.imageURL);
+            embed.setDescription(card_f + `\n\n> ${card.description}`).setImage(card.imageURL);
 
             // Edit the message with the updated embed data
             await message.edit({ embeds: [embed] }); return null;
@@ -193,7 +193,7 @@ module.exports = {
         // Wait for the modal to be submitted and return the modal interaction
         let awaitModal = async () => {
             // Create a filter to look for the right modal
-            let modalSubmit_filter = i => i.customId === modal_customEmbed.data.custom_id;
+            let modalSubmit_filter = i => i.customId === modal_customize.data.custom_id;
             // Create a collector to catch the modal submit | timeout after 5 minutes
             let modalSubmit = await interaction.awaitModalSubmit({ filter: modalSubmit_filter, time: 300000 });
 
@@ -251,7 +251,7 @@ module.exports = {
 
                 case "btn_changeImage":
                     // Set the modal components to be relevant to the button the user pressed
-                    modal_customize.setComponents(...actionRows_modal.editDetails);
+                    modal_customize.setComponents(...actionRows_modal.changeImage);
                     // Show the modal
                     await i.showModal(modal_customize);
 
