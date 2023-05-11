@@ -87,13 +87,13 @@ module.exports = {
             };
 
             // Return a formatted guild string
-            return "%GUILD_NAME :: %GUILD_ID\n> %MEMBER_COUNT \`📆\` %JOINED"
+            return "%GUILD_NAME ・ %GUILD_ID\n> %MEMBER_COUNT : \`📆\` %JOINED"
                 .replace("%GUILD_NAME", bold(true, invite_url ? link(guild.name, invite_url) : guild.name))
                 .replace("%GUILD_ID", inline(true, "🆔", guild.id))
                 .replace("%MEMBER_COUNT", inline(true, "👥", guild.memberCount))
                 .replace("%JOINED", time(
                     numberTools.milliToSeconds(guild.members.me.joinedTimestamp),
-                    TimestampStyles.ShortDate
+                    TimestampStyles.LongDate
                 ))
         }));
 
