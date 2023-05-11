@@ -84,7 +84,7 @@ module.exports = {
             } catch (err) {
                 // Log the error
                 logger.error("Could not create server invite", `server id: ${serverID}`, err);
-            };
+            }
 
             // Return a formatted guild string
             return "%GUILD_NAME ・ %GUILD_ID\n> %MEMBER_COUNT : \`📆\` %JOINED"
@@ -94,7 +94,7 @@ module.exports = {
                 .replace("%JOINED", time(
                     numberTools.milliToSeconds(guild.members.me.joinedTimestamp),
                     TimestampStyles.LongDate
-                ))
+                ));
         }));
 
         // Break up the formatted servers to only show 10 per page
