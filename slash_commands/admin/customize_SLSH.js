@@ -76,7 +76,7 @@ module.exports = {
                     .setStyle(TextInputStyle.Short)
                     .setValue(card.description)
                     .setRequired(false),
-                
+
                 new TextInputBuilder().setCustomId("mti_group")
                     .setLabel("The group the card is in:")
                     .setStyle(TextInputStyle.Short)
@@ -108,8 +108,8 @@ module.exports = {
                     .setStyle(TextInputStyle.Short)
                     .setValue(card.globalID)
                     .setRequired(false),
-                
-                    new TextInputBuilder().setCustomId("mti_sellPrice")
+
+                new TextInputBuilder().setCustomId("mti_sellPrice")
                     .setLabel("The price the card can be sold for:")
                     .setStyle(TextInputStyle.Short)
                     .setValue(String(card.sellPrice))
@@ -205,7 +205,7 @@ module.exports = {
             embed.setDescription(card_f + `\n\n> ${card.description}`).setImage(card.imageURL);
 
             // Edit the message with the updated embed data
-            await message.edit({ embeds: [embed] }); return null;
+            try { await message.edit({ embeds: [embed] }); } catch { };
         }
 
         // Wait for the modal to be submitted and return the modal interaction
@@ -216,7 +216,7 @@ module.exports = {
             let modalSubmit = await interaction.awaitModalSubmit({ filter: modalSubmit_filter, time: 300000 });
 
             // Close the modal
-            await modalSubmit.deferUpdate();
+            try { await modalSubmit.deferUpdate(); } catch { };
 
             // Return the modal interaction
             return modalSubmit;
@@ -233,7 +233,7 @@ module.exports = {
                     // Set the modal components to be relevant to the button the user pressed
                     modal_customize.setComponents(...actionRows_modal.editInfo);
                     // Show the modal
-                    await i.showModal(modal_customize);
+                    try { await i.showModal(modal_customize); } catch { };
 
                     // Await the returned modal data
                     let modalSubmit_editInfo = await awaitModal();
@@ -257,7 +257,7 @@ module.exports = {
                     // Set the modal components to be relevant to the button the user pressed
                     modal_customize.setComponents(...actionRows_modal.editDetails);
                     // Show the modal
-                    await i.showModal(modal_customize);
+                    try { await i.showModal(modal_customize); } catch { };
 
                     // Await the returned modal data
                     let modalSubmit_editDetails = await awaitModal();
@@ -277,7 +277,7 @@ module.exports = {
                     // Set the modal components to be relevant to the button the user pressed
                     modal_customize.setComponents(...actionRows_modal.changeImage);
                     // Show the modal
-                    await i.showModal(modal_customize);
+                    try { await i.showModal(modal_customize); } catch { };
 
                     // Await the returned modal data
                     let modalSubmit_changeImage = await awaitModal();
