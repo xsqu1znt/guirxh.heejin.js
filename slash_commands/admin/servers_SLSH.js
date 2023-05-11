@@ -1,8 +1,8 @@
-const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
+const { Client, CommandInteraction, SlashCommandBuilder, time, TimestampStyles } = require('discord.js');
 
 const { botSettings } = require('../../configs/heejinSettings.json');
 const { messageTools, markdown } = require('../../modules/discordTools');
-const { arrayTools, dateTools } = require('../../modules/jsTools');
+const { arrayTools, numberTools, dateTools } = require('../../modules/jsTools');
 const logger = require('../../modules/logger');
 
 const { bold, inline, italic, quote, link, space } = markdown;
@@ -87,10 +87,14 @@ module.exports = {
             };
 
             // Return a formatted guild string
-            return "> %GUILD_NAME :: %MEMBER_COUNT %GUILD_ID"
+            return "%GUILD_NAME :: %GUILD_ID\n> %MEMBER_COUNT \`📆\` %JOINED"
                 .replace("%GUILD_NAME", bold(true, invite_url ? link(guild.name, invite_url) : guild.name))
                 .replace("%GUILD_ID", inline(true, "🆔", guild.id))
                 .replace("%MEMBER_COUNT", inline(true, "👥", guild.memberCount))
+                .replace("%JOINED", time(
+                    numberTools.milliToSeconds(guild.members.me.joinedTimestamp),
+                    TimestampStyles.ShortDate
+                ))
         }));
 
         // Break up the formatted servers to only show 10 per page
