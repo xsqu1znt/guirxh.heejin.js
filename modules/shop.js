@@ -2,15 +2,36 @@ const badges = require('../items/badges.json');
 const cardPacks = require('../items/card_packs.json');
 
 const { botSettings: { currencyIcon } } = require('../configs/heejinSettings.json');
-const cardManager = require('./cardManager');
 const { randomTools } = require('./jsTools');
 const { userManager } = require('./mongo');
+const cardManager = require('./cardManager');
 
 const bold = (...str) => `**${str.join(" ")}**`;
 const italic = (...str) => `*${str.join(" ")}*`;
 const inline = (...str) => `\`${str.join(" ")}\``;
 const quote = (...str) => `> ${str.join(" ")}`;
 const link = (label, url, tooltip = "") => `[${label}](${url}${tooltip ? ` "${tooltip}"` : ""})`;
+
+//! Cards
+function card_get(globalID) {
+    return cardManager.cards_shop.find(card => card.globalID === globalID) || null;
+}
+
+async function card_buy(userID, globalID) {
+    let card = cardManager.cards_shop.find(card => card.globalID === globalID);
+    if (!card) return null;
+
+    await Promise.all([
+        // Subtract the card's price from the user's balance
+        userManager.update(userID, { $inc: { balance: -card.price } }),
+
+        // Add the card to the user's card_inventory
+        userManager.cards.add(userID, card, true)
+    ]);
+
+    // Return the card
+    return card;
+}
 
 //! Badges
 function badge_get(id) {
@@ -37,6 +58,7 @@ async function badge_buy(userID, badgeID) {
         userManager.badges.add(userID, badge)
     ]);
 
+    // Return the badge
     return badge;
 }
 
@@ -110,9 +132,14 @@ function cardPack_toString_shop(cardPack) {
 }
 
 module.exports = {
-    badges, cardPacks,
+    cards: {
+        all: cardManager.cards_shop,
+        get: card_get,
+        buy: card_buy
+    },
 
-    badgeManager: {
+    badges: {
+        all: badges,
         get: badge_get,
         buy: badge_buy,
 
@@ -126,7 +153,8 @@ module.exports = {
         }
     },
 
-    cardPackManager: {
+    cardPacks: {
+        all: cardPacks,
         get: cardPack_get,
         buy: cardPack_buy,
 
