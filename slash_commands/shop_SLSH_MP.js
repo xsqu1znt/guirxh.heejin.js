@@ -28,6 +28,7 @@ module.exports = {
         //* Try buying the item if the user gave an ID
         let buyID = interaction.options.getString("buy"); buyID &&= buyID.toLowerCase();
         if (buyID) {
+            // Fetch the user from Mongo
             let userData = await userManager.fetch(interaction.user.id, "essential", true);
 
             let _card = shop.cards.get(buyID); if (_card) {
@@ -36,13 +37,12 @@ module.exports = {
                 );
 
                 // Buy the card and add it to the user's card_inventory
-                await shop.cards.buy(interaction.user.id, _card.globalID);
+                await shop.cards.buy(interaction.user.id, buyID);
 
                 // Let the user know the result
                 let _card_f = cardManager.toString.basic(_card);
                 return await embed_shop.send(`You bought a card:\n${_card_f}`);
             }
-
 
             let _badge = shop.badges.get(buyID); if (_badge) {
                 if (userData.balance < _badge.price) return await embed_shop.send(
@@ -55,61 +55,28 @@ module.exports = {
                 );
 
                 // Buy the badge and add it to the user's profile
-                await shop.badges.buy(interaction.user.id, _badge.id);
+                await shop.badges.buy(interaction.user.id, buyID);
 
                 // Let the user know the result
                 let _badge_f = shop.badges.toString.basic(_badge);
                 return await embed_shop.send(`You bought a badge:\n> ${_badge_f}`);
             }
 
-            let _cardPack = cardPackManager.get(buyID);
+            let _cardPack = shop.cardPacks.get(buyID); if (_cardPack) {
+                if (userData.balance < _cardPack.price) return await embed_shop.send(
+                    "You do not have enough to buy that card pack"
+                );
+
+                // Buy the card pack and add it to the user's card_inventory
+                let _receivedCards = await shop.cardPacks.buy(interaction.user.id, buyID);
+
+                // Let the user know the result
+                let _receivedCards_f = _receivedCards.map(card => cardManager.toString.basic(card));
+                return await embed_shop.send(`You bought a card pack and received:\n${_receivedCards_f.join("\n")}`);
+            }
 
             // Let the user know they gave an invalid ID
             return await embed_shop.send(`\`${buyID}\` is not a valid ID`);
-
-
-
-            // let _card = cardManager.get.byGlobalID(buyID);
-            // let _badge = badgeManager.get(buyID);
-
-            // let buyResult = `\`${buyID}\` is not a valid ID`;
-
-            // Determine the operation type
-            /*             if (_card) { // The user buys a card
-                            if (userData.balance < _card.price) return await embed_shop.send(
-                                "You do not have enough to buy this card"
-                            );
-            
-                            // Add the card to the user's card_inventory
-                            await userManager.cards.add(interaction.user.id, _card, true);
-            
-                            // Subtract the card's price from the user's balance
-                            await userManager.update(interaction.user.id, { balance: userData.balance - _card.price });
-            
-                            let _card_f = cardManager.toString.basic(_card);
-                            buyResult = `You bought a card:\n${_card_f}`;
-                        } else if (_badge) { // The user buys a badge
-                            if (userData.balance < _badge.price) return await embed_shop.send(
-                                "You do not have enough to buy that badge."
-                            );
-            
-                            // Check if the user already owns that badge
-                            if (userData.badges.find(badge => badge.id === _badge.id)) return await embed_shop.send(
-                                "You already have that badge."
-                            );
-            
-                            // Add the badge to the user
-                            await userManager.badges.add(interaction.user.id, _badge);
-            
-                            // Subtract the badge's price from the user's balance
-                            await userManager.update(interaction.user.id, { balance: userData.balance - _badge.price });
-            
-                            let _badge_f = badgeManager.toString.basic(_badge);
-                            buyResult = `You bought a badge:\n> ${_badge_f}`;
-                        } */
-
-            // Let the user know the result
-            // return await embed_shop.send(buyResult);
         }
 
         //* Display the shop if the user didn't give an ID
