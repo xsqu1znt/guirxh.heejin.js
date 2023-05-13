@@ -100,7 +100,7 @@ module.exports = {
         // Add a select menu option for each card group
         shopCards_unique.forEach(card => navigationify.addSelectMenuOption({ emoji: card.emoji, label: card.group, description: `View ${card.description}` }));
 
-        // navigationify.addSelectMenuOption({ label: "Card Packs", description: "Buy a pack of random cards." });
+        navigationify.addSelectMenuOption({ emoji: "🃏", label: "Card Packs", description: "Buy a pack of random cards" });
         navigationify.addSelectMenuOption({ emoji: "📛", label: "Badges", description: "Buy a badge for your profile" });
 
         // Send the shop embed

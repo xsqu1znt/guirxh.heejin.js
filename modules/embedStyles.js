@@ -137,6 +137,10 @@ function generalShop_ES(user) {
         return embeds;
     };
 
+    let embed_cardPacks = () => {
+
+    };
+
     let embed_badges = () => {
         let badges_f = badgeManager.badges.map(badge => badgeManager.toString.shop(badge));
         badges_f = arrayTools.chunk(badges_f, 10);
@@ -153,7 +157,7 @@ function generalShop_ES(user) {
         }
 
         return embeds;
-    }
+    };
 
     // Return the different embed views
     return [

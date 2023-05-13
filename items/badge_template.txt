@@ -1,7 +1,7 @@
 [
     {
         "id": "IL01",
-        "setID": "BO1",
+        "setID": "B01",
         "name": "Boost",
         "description": "To love or not to love...",
         "category": "bdge",
