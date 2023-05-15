@@ -98,8 +98,8 @@ function generalShop_ES(user) {
         );
 
         let shop_f = "";
-        shop_f += cards_f ? `**Cards**\n${cards_f.map(card_f => `> ${card_f}`).join("\n")}` : "";
-        shop_f += badges_f ? `\n\n**Badges**\n${badges_f.map(badge_f => `> ${badge_f}`).join("\n")}` : "";
+        shop_f += cards_f ? `**Cards Sets**\n${cards_f.map(card_f => `> ${card_f}`).join("\n")}` : "";
+        shop_f += badges_f ? `\n\n**Badges Sets**\n${badges_f.map(badge_f => `> ${badge_f}`).join("\n")}` : "";
         shop_f += itemPacks_f ? `\n\n**Item Packs**\n${itemPacks_f.map(pack_f => `> ${pack_f}`).join("\n")}` : "";
 
         // Create the embed
