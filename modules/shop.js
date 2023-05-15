@@ -1,5 +1,5 @@
 const badges = require('../items/badges.json');
-const cardPacks = require('../items/card_packs.json');
+const itemPacks = require('../items/item_packs.json');
 
 const { botSettings: { currencyIcon } } = require('../configs/heejinSettings.json');
 const { randomTools } = require('./jsTools');
@@ -91,22 +91,35 @@ function badge_toString_shop(badge) {
         .replace("%DESCRIPTION", italic(badge.description));
 }
 
-//! Card Packs
-function cardPack_get(id) {
-    return cardPacks.find(cardPack => cardPack.id.toLowerCase() === id) || null;
+function badge_toString_setEntry(badge, count = 1) {
+    if (count < 10) count = `0${count}`;
+
+    return "%SET_ID %BADGE_COUNT %CATEGORY %EMOJI %SET"
+        .replace("%SET_ID", inline("🗣️", badge.setID))
+
+        .replace("%BADGE_COUNT", inline("📁", count || 1))
+
+        .replace("%CATEGORY", inline(badge.category))
+        .replace("%EMOJI", inline(badge.emoji))
+        .replace("%SET", bold(badge.set));
 }
 
-async function cardPack_buy(userID, cardPackID) {
-    let cardPack = cardPack_get(cardPackID);
-    if (!cardPack) return [];
+//! Card Packs
+function itemPack_get(id) {
+    return itemPacks.find(itemPack => itemPack.id.toLowerCase() === id) || null;
+}
 
-    let cards = cardPack.cardSetIDs.map(setID =>
+async function itemPack_buy(userID, itemPackID) {
+    let itemPack = itemPack_get(itemPackID);
+    if (!itemPack) return [];
+
+    let cards = itemPack.cardSetIDs.map(setID =>
         randomTools.choice(cardManager.cards_all.filter(card => card.setID === setID))
     );
 
     await Promise.all([
         // Subtract the card pack's price from the user's balance
-        userManager.update(userID, { $inc: { balance: -cardPack.price } }),
+        userManager.update(userID, { $inc: { balance: -itemPack.price } }),
 
         // Add the cards to the user's card_inventory
         userManager.cards.add(userID, cards, true)
@@ -116,19 +129,31 @@ async function cardPack_buy(userID, cardPackID) {
     return cards;
 }
 
-function cardPack_toString_shop(cardPack) {
-    return "%ID %EMOJI %SET :: %NAME %PRICE\n> %SET_ID %RARITY %CATEGORY\n> %DESCRIPTION"
-        .replace("%ID", inline(cardPack.id))
-        .replace("%EMOJI", cardPack.emoji)
-        .replace("%NAME", italic(cardPack.name))
-        .replace("%PRICE", inline(true, currencyIcon, cardPack.price))
+function itemPack_toString_shop(itemPack) {
+    return "%ID %SET :: %NAME %PRICE\n> %SET_ID %RARITY %CATEGORY\n> %DESCRIPTION"
+        .replace("%ID", inline(itemPack.id))
+        .replace("%SET", bold(itemPack.set))
+        .replace("%NAME", italic(itemPack.name))
+        .replace("%PRICE", inline(currencyIcon, itemPack.price))
 
-        .replace("%SET_ID", inline("🗣️", cardPack.setID))
-        .replace("%SET", bold(cardPack.set))
-        .replace("%RARITY", inline(`RB${cardPack.rarity}`))
-        .replace("%CATEGORY", inline(cardPack.category))
+        .replace("%SET_ID", inline("🗣️", itemPack.setID))
+        .replace("%RARITY", inline(`RB${itemPack.rarity}`))
+        .replace("%CATEGORY", inline(itemPack.category))
 
-        .replace("%DESCRIPTION", italic(cardPack.description));
+        .replace("%DESCRIPTION", italic(itemPack.description));
+}
+
+function itemPack_toString_setEntry(itemPack, count = 1) {
+    if (count < 10) count = `0${count}`;
+
+    return "%SET_ID %ITEMPACK_COUNT %CATEGORY %EMOJI %SET"
+        .replace("%SET_ID", inline("🗣️", itemPack.setID))
+
+        .replace("%ITEMPACK_COUNT", inline("📁", count || 1))
+
+        .replace("%CATEGORY", inline(itemPack.category))
+        .replace("%EMOJI", inline(itemPack.emoji))
+        .replace("%SET", bold(itemPack.set));
 }
 
 module.exports = {
@@ -149,17 +174,19 @@ module.exports = {
         toString: {
             basic: badge_toString_basic,
             profile: badge_toString_profile,
-            shop: badge_toString_shop
+            shop: badge_toString_shop,
+            setEntry: badge_toString_setEntry
         }
     },
 
-    cardPacks: {
-        all: cardPacks,
-        get: cardPack_get,
-        buy: cardPack_buy,
+    itemPacks: {
+        all: itemPacks,
+        get: itemPack_get,
+        buy: itemPack_buy,
 
         toString: {
-            shop: cardPack_toString_shop
+            shop: itemPack_toString_shop,
+            setEntry: itemPack_toString_setEntry
         }
     }
-}
+};

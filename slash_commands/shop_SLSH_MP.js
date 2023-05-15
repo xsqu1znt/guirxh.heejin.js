@@ -32,7 +32,7 @@ module.exports = {
             let userData = await userManager.fetch(interaction.user.id, "essential", true);
 
             let _card = shop.cards.get(buyID); if (_card) {
-                if (userData.balance < _badge.price) return await embed_shop.send(
+                if (userData.balance < _card.price) return await embed_shop.send(
                     "You do not have enough to buy that card"
                 );
 
@@ -41,7 +41,7 @@ module.exports = {
 
                 // Let the user know the result
                 let _card_f = cardManager.toString.basic(_card);
-                return await embed_shop.send(`You bought a card:\n${_card_f}`);
+                return await embed_shop.send(`You bought a card:\n> ${_card_f}`);
             }
 
             let _badge = shop.badges.get(buyID); if (_badge) {
@@ -62,17 +62,24 @@ module.exports = {
                 return await embed_shop.send(`You bought a badge:\n> ${_badge_f}`);
             }
 
-            let _cardPack = shop.cardPacks.get(buyID); if (_cardPack) {
-                if (userData.balance < _cardPack.price) return await embed_shop.send(
-                    "You do not have enough to buy that card pack"
+            let _itemPack = shop.itemPacks.get(buyID); if (_itemPack) {
+                if (userData.balance < _itemPack.price) return await embed_shop.send(
+                    "You do not have enough to buy that item pack"
                 );
 
                 // Buy the card pack and add it to the user's card_inventory
-                let _receivedCards = await shop.cardPacks.buy(interaction.user.id, buyID);
+                let _receivedCards = await shop.itemPacks.buy(interaction.user.id, buyID);
 
                 // Let the user know the result
-                let _receivedCards_f = _receivedCards.map(card => cardManager.toString.basic(card));
-                return await embed_shop.send(`You bought a card pack and received:\n${_receivedCards_f.join("\n")}`);
+                let _receivedCards_f = _receivedCards.map(card => cardManager.toString.inventory(card, { simplify: true }));
+
+                // Add the last card's image if available
+                let lastCard = _receivedCards.slice(-1)[0];
+                if (lastCard) embed_shop.embed.setImage(lastCard.imageURL);
+
+                embed_shop.embed.setFooter({ text: `${interaction.user.username} opened ${_itemPack.name}` });
+
+                return await embed_shop.send(_receivedCards_f.join("\n"));
             }
 
             // Let the user know they gave an invalid ID
@@ -108,7 +115,7 @@ module.exports = {
         // Add a select menu option for each card group
         shopCards_unique.forEach(card => navigationify.addSelectMenuOption({ emoji: card.emoji, label: card.group, description: `View ${card.description}` }));
 
-        navigationify.addSelectMenuOption({ emoji: "🃏", label: "Card Packs", description: "Buy a pack of random cards" });
+        navigationify.addSelectMenuOption({ emoji: "✨", label: "Item Packs", description: "Buy a boost/card pack" });
         navigationify.addSelectMenuOption({ emoji: "📛", label: "Badges", description: "Buy a badge for your profile" });
 
         // Send the shop embed

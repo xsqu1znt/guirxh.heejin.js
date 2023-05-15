@@ -15,9 +15,7 @@ module.exports = {
             .setDescription("The ID of the server you want Heejin to leave")
         ),
 
-    options: {
-        botAdminOnly: true
-    },
+    isOwnerCommand: true,
 
     /**
      * @param {Client} client
@@ -83,7 +81,7 @@ module.exports = {
                 if (invite) invite_url = invite.url;
             } catch (err) {
                 // Log the error
-                logger.error("Could not create server invite", `server id: ${serverID}`, err);
+                // logger.error("Could not create server invite", `server id: ${serverID}`, err);
             }
 
             // Return a formatted guild string

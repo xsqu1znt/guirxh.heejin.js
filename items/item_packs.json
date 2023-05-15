@@ -6,7 +6,8 @@
         "description": "Retirement's overrated anyway",
         "category": "pack",
         "set": "RECS",
-        "cardSetIDs": [230, 229],
+        "emoji": "🧑‍🦽",
+        "cardSetIDs": ["230", "229"],
         "rarity": 1,
         "price": 500
     },
@@ -16,9 +17,10 @@
         "name": "Happy Late Bday",
         "description": "Remind me next time, will you?",
         "category": "pack",
-        "set": "RECS",
-        "cardSetIDs": [236],
+        "set": "BDAY",
+        "emoji": "🎂",
+        "cardSetIDs": ["236"],
         "rarity": 1,
-        "price": 500
+        "price": 1000
     }
 ]

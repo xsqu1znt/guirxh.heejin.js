@@ -24,7 +24,7 @@ module.exports = {
         // Push slash commands globally
         if (global) try {
             // Log what's currently happening
-            logger.log(`pushing slash commands for (${guildIDs.length}) ${guildIDs.length > 1 ? "guilds" : "guild"}`);
+            logger.log(`pushing slash commands globally`);
 
             await rest.put(Routes.applicationCommands(client.user.id), { body: slash_commands });
 

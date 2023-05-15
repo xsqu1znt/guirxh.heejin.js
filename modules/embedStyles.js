@@ -9,6 +9,7 @@ const { messageTools } = require('../modules/discordTools');
 const cardManager = require('../modules/cardManager');
 const badgeManager = require('../modules/badgeManager');
 const userParser = require('../modules/userParser');
+const shop = require('../modules/shop');
 
 // Command -> General -> /COLLECTIONS
 /** @param {"ascending" | "decending"} order */
@@ -76,9 +77,34 @@ function generalShop_ES(user) {
     let embed_list = () => {
         let cards_f = cards_shop_unique.map((card, idx) => cardManager.toString.setEntry(card, card_sets[idx].length, true));
 
+        // Badges
+        let uniqueSet_badges = arrayTools.unique(shop.badges.all.sort((a, b) => a.setID - b.setID),
+            (badge, badgeCompare) => badgeCompare.setID === badge.setID
+        );
+
+        let sets_badges = uniqueSet_badges.map(badge => shop.badges.all.filter(b => b.setID === badge.setID));
+        let badges_f = uniqueSet_badges.map((badge, idx) =>
+            shop.badges.toString.setEntry(badge, sets_badges[idx].length)
+        );
+
+        // Item packs
+        let uniqueSet_itemPacks = arrayTools.unique(shop.itemPacks.all.sort((a, b) => a.setID - b.setID),
+            (pack, packCompare) => packCompare.setID === pack.setID
+        );
+
+        let sets_itemPacks = uniqueSet_itemPacks.map(pack => shop.itemPacks.all.filter(p => p.setID === pack.setID));
+        let itemPacks_f = uniqueSet_itemPacks.map((pack, idx) =>
+            shop.itemPacks.toString.setEntry(pack, sets_itemPacks[idx].length)
+        );
+
+        let shop_f = "";
+        shop_f += cards_f ? `**Cards**\n${cards_f.map(card_f => `> ${card_f}`).join("\n")}` : "";
+        shop_f += badges_f ? `\n\n**Badges**\n${badges_f.map(badge_f => `> ${badge_f}`).join("\n")}` : "";
+        shop_f += itemPacks_f ? `\n\n**Item Packs**\n${itemPacks_f.map(pack_f => `> ${pack_f}`).join("\n")}` : "";
+
         // Create the embed
         let embed = embed_template()
-            .setDescription(cards_f ? cards_f.join("\n") : "Shop is empty!");
+            .setDescription(shop_f || "Shop is empty!");
 
         // Return the embed
         return embed;
@@ -137,8 +163,22 @@ function generalShop_ES(user) {
         return embeds;
     };
 
-    let embed_cardPacks = () => {
+    let embed_itemPacks = () => {
+        let itemPacks_f = shop.itemPacks.all.map(cardPack => shop.itemPacks.toString.shop(cardPack));
+        itemPacks_f = arrayTools.chunk(itemPacks_f, 10);
 
+        let embeds = [];
+
+        for (let i = 0; i < itemPacks_f.length; i++) {
+            let embed = embed_template()
+                .setDescription(itemPacks_f[i].length > 0 ? itemPacks_f[i].join("\n") : "There are no item packs available");
+
+            if (itemPacks_f[i].length > 0) embed.setFooter({ text: `Page ${i + 1}/${itemPacks_f.length || 1}` });
+
+            embeds.push(embed);
+        }
+
+        return embeds;
     };
 
     let embed_badges = () => {
@@ -164,6 +204,7 @@ function generalShop_ES(user) {
         embed_list(),
         embed_all(),
         ...embed_cardSets(),
+        embed_itemPacks(),
         embed_badges()
     ];
 }
@@ -228,7 +269,7 @@ function userProfile_ES(user, userData) {
         ).length;
         let profile_info = "%BALANCE :: \`🃏 %CARD_TOTAL\` :: \`📈 LV. %LEVEL\`"
             .replace("%BALANCE", inline(true, botSettings.currencyIcon, userData.balance))
-            .replace("%CARD_TOTAL", `${uniqueUserCardTotal}/${cardManager.cardTotal}`)
+            .replace("%CARD_TOTAL", `${uniqueUserCardTotal}/${cardManager.cardCount}`)
             .replace("%LEVEL", userData.level);
 
         _embed.addFields([{ name: "\`📄\` Information", value: quote(true, profile_info) }]);

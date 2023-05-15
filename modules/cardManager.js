@@ -260,7 +260,7 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
 module.exports = {
     cards, cards_all, cards_general,
     cards_shop: cards_all.filter(card => shopSettings.stockSetIDs.includes(card.setID)),
-    cardTotal: cards_all.length,
+    cardCount: cards_all.length,
 
     resetUID,
     recalculateStats,

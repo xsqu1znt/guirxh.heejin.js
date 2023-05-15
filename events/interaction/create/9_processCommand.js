@@ -1,11 +1,12 @@
 // Executes commands requested by a command interaction.
 
-const { Client, BaseInteraction, PermissionsBitField } = require('discord.js');
+const { Client, BaseInteraction, PermissionsBitField, EmbedBuilder } = require('discord.js');
 
 const { ownerID, adminIDs } = require('../../../configs/clientSettings.json');
-const { userManager } = require('../../../modules/mongo');
-const { stringTools } = require('../../../modules/jsTools');
+const { communityServer, botSettings } = require('../../../configs/heejinSettings.json');
+const { randomTools, stringTools } = require('../../../modules/jsTools');
 const { messageTools } = require('../../../modules/discordTools');
+const { userManager } = require('../../../modules/mongo');
 const logger = require('../../../modules/logger');
 
 module.exports = {
@@ -51,13 +52,16 @@ module.exports = {
             // Check if the user's in the database
             if (!await userManager.exists(args.interaction.user.id) && args.interaction.commandName !== "start") {
                 // Get the /start command ID
-                let guildCommands = await args.interaction.guild.commands.fetch();
-                let startCommandID = guildCommands.find(slash_commands => slash_commands.name === "start").id;
+                try {
+                    let guildCommands = await args.interaction.guild.commands.fetch();
+                    let startCommandID = guildCommands.find(slash_commands => slash_commands.name === "start").id;
 
-                // Send the mebed
-                return await embedinator.send(
-                    `**You haven't started yet!** Use </start:${startCommandID}> first!`
-                );
+                    // Send the mebed
+                    return await embedinator.send(`**You haven't started yet!** Use </start:${startCommandID}> first!`);
+                } catch {
+                    // Send the mebed
+                    return await embedinator.send(`**You haven't started yet!** Use \`/start\` first!`);
+                }
             }
 
             // Execute the command function
@@ -75,6 +79,21 @@ module.exports = {
                     // Send the level up message we created above
                     // not awaited because we don't need any information from the returned message
                     await args.interaction.channel.send({ content: lvlMsg, allowedMentions: { repliedUser: false } });
+                }
+
+                // Have a chance to send the invite link to the main server
+                if (randomTools.chance(communityServer.chanceToShow) && args.interaction.guild.id !== communityServer.id) {
+                    let clientGuildMember = args.interaction.guild.members.me;
+
+                    let embed_invite = new EmbedBuilder()
+                        .setAuthor({
+                            name: clientGuildMember.displayName,
+                            iconURL: clientGuildMember.user.avatarURL({ dynamic: true })
+                        })
+                        .setDescription(`Join our official server!\n${communityServer.url}`)
+                        .setColor(botSettings.embed.color || null);
+
+                    return await args.interaction.channel.send({ embeds: [embed_invite] });
                 }
             });
         } catch (err) {
