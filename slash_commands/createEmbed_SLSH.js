@@ -4,9 +4,19 @@ const {
     ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType
 } = require('discord.js');
 
+const { communityServer, botSettings } = require('../configs/heejinSettings.json');
+
 module.exports = {
     builder: new SlashCommandBuilder().setName("createembed")
-        .setDescription("Create a custom embed"),
+        .setDescription("Create a custom embed")
+        .addStringOption(option => option.setName("template")
+            .setDescription("Choose from a template to start with")
+
+            .addChoices(
+                { name: "Board", value: "template_board" },
+                { name: "Update", value: "template_update" }
+            )
+        ),
 
     requireGuildAdmin: true,
 
@@ -17,8 +27,62 @@ module.exports = {
     execute: async (client, interaction) => {
         // Create a base embed
         let embed = new EmbedBuilder()
-            .setTitle("Embed")
-            .setColor("Random");
+            .setAuthor({ name: "Hi there!" })
+            .setColor(botSettings.embed.color);
+
+        // Apply a template if given
+        switch (interaction.options.getString("template")) {
+            case "template_board":
+                embed.setAuthor({
+                    name: `Overall Updates (${new Date().toLocaleDateString()})`,
+                    iconURL: interaction.guild.members.me.user.avatarURL({ dynamic: true })
+                });
+
+                let description_board =
+                    "-----------------------------\n\n" +
+
+                    "A reminder you can invite anyone to join with this link:\n" +
+                    `${communityServer.url}\n\n` +
+
+                    "> \`⚠️\` **CUSTOMS ARE OPEN UNTIL null**\n" +
+                    "> You can order up to 5 customs now! <#1030897348777365585>\n\n" +
+
+                    "-----------------------------\n\n" +
+
+                    "Here is a new poll of the week.\n\n" +
+
+                    "*Theme is: **null***\n\n" +
+
+                    "<:1one:919372432735879218> **null**\n" +
+                    "<:2two:919372433184686140> **null**\n" +
+                    "<:3three:919372433109164043> **null**\n" +
+                    "<:4four:919372432677175406> **null**\n" +
+                    "<:5five:919372432886870117> **null**\n" +
+                    "<:6six:919372433067221022> **null**\n" +
+                    "<:7seven:919372432698118144> **null**\n" +
+                    "<:8eight:919372431418859560> **null**\n" +
+                    "<:9nine:919372432291282966> **null**\n" +
+                    "<:10ten:919372433025286175> **null**";
+
+                embed.setDescription(description_board); break;
+
+            case "template_update":
+                embed.setAuthor({
+                    name: `New Weekly Collections (${new Date().toLocaleDateString()})`,
+                    iconURL: interaction.guild.members.me.user.avatarURL({ dynamic: true })
+                });
+
+                let description_update =
+                    "Hello hello! Here are the collections for this week! \`💕\`\n\n" +
+
+                    "> \`comn\` **null** - null `000`\n" +
+                    "> \`uncn\` **null** - null `000`\n" +
+                    "> \`rare\` **null** - null `000`\n" +
+                    "> \`epic\` **null** - null `000`\n" +
+                    "> \`mint\` **null** - null `000`\n";
+
+                embed.setDescription(description_update); break;
+        }
 
         //* Create the modals
         let modal_customEmbed = new ModalBuilder()
@@ -27,41 +91,13 @@ module.exports = {
 
         // Inputs
         let components_modal = {
-            editContent: [
+            edit: [
                 new TextInputBuilder().setCustomId("mti_messageContent")
                     .setLabel("Message content (outside the embed):")
                     .setStyle(TextInputStyle.Paragraph)
                     .setMaxLength(2000)
                     .setRequired(false),
 
-                new TextInputBuilder().setCustomId("mti_title")
-                    .setLabel("Embed title: ")
-                    .setStyle(TextInputStyle.Short)
-                    .setValue(embed.data?.title)
-                    .setMaxLength(256)
-                    .setRequired(false),
-
-                new TextInputBuilder().setCustomId("mti_description")
-                    .setLabel("Embed description:")
-                    .setStyle(TextInputStyle.Paragraph)
-                    .setValue(embed.data?.description || "")
-                    .setMaxLength(4000)
-                    .setRequired(false),
-
-                new TextInputBuilder().setCustomId("mti_thumbnailURL")
-                    .setLabel("Embed thumbnail URL:")
-                    .setStyle(TextInputStyle.Short)
-                    .setValue(embed.data?.thumbnail?.url || "")
-                    .setRequired(false),
-
-                new TextInputBuilder().setCustomId("mti_imageURL")
-                    .setLabel("Embed image URL:")
-                    .setStyle(TextInputStyle.Short)
-                    .setValue(embed.data?.image?.url || "")
-                    .setRequired(false)
-            ],
-
-            editDetails: [
                 new TextInputBuilder().setCustomId("mti_authorName")
                     .setLabel("Embed author name:")
                     .setStyle(TextInputStyle.Short)
@@ -75,66 +111,33 @@ module.exports = {
                     .setValue(embed.data?.author?.icon_url || "")
                     .setRequired(false),
 
-                new TextInputBuilder().setCustomId("mti_titleURL")
-                    .setLabel("Embed title URL (makes title a link):")
-                    .setStyle(TextInputStyle.Short)
-                    .setValue(embed.data?.url || "")
+                new TextInputBuilder().setCustomId("mti_description")
+                    .setLabel("Embed description:")
+                    .setStyle(TextInputStyle.Paragraph)
+                    .setValue(embed.data?.description || "")
+                    .setMaxLength(4000)
                     .setRequired(false),
 
-                new TextInputBuilder().setCustomId("mti_footerText")
-                    .setLabel("Embed footer text:")
+                new TextInputBuilder().setCustomId("mti_imageURL")
+                    .setLabel("Embed image URL:")
                     .setStyle(TextInputStyle.Short)
-                    .setValue(embed.data?.footer?.text || "")
-                    .setMaxLength(2048)
-                    .setRequired(false),
-
-                new TextInputBuilder().setCustomId("mti_footerIconURL")
-                    .setLabel("Embed footer icon URL:")
-                    .setStyle(TextInputStyle.Short)
-                    .setValue(embed.data?.footer?.icon_url || "")
+                    .setValue(embed.data?.image?.url || "")
                     .setRequired(false)
-            ],
-
-            setColor: [
-                new TextInputBuilder().setCustomId("mti_color")
-                    .setLabel("Embed color:")
-                    .setStyle(TextInputStyle.Short)
-                    .setRequired(false)
-            ],
+            ]
         };
 
         // Action rows
         let actionRows_modal = {
-            editContent: components_modal.editContent.map(component =>
-                new ActionRowBuilder().addComponents(component)
-            ),
-
-            editDetails: components_modal.editDetails.map(component =>
-                new ActionRowBuilder().addComponents(component)
-            ),
-
-            setColor: components_modal.setColor.map(component =>
+            edit: components_modal.edit.map(component =>
                 new ActionRowBuilder().addComponents(component)
             )
         };
 
         // Create the customizer's action row
         let buttons_customizer = {
-            editContent: new ButtonBuilder().setLabel("Edit Content")
+            edit: new ButtonBuilder().setLabel("Edit")
                 .setStyle(ButtonStyle.Secondary)
-                .setCustomId("btn_editContent"),
-
-            editDetails: new ButtonBuilder().setLabel("Edit Details")
-                .setStyle(ButtonStyle.Secondary)
-                .setCustomId("btn_editDetails"),
-
-            setColor: new ButtonBuilder().setLabel("Set Color")
-                .setStyle(ButtonStyle.Secondary)
-                .setCustomId("btn_setColor"),
-
-            toggleTimestamp: new ButtonBuilder().setLabel("Toggle Timestamp")
-                .setStyle(ButtonStyle.Secondary)
-                .setCustomId("btn_toggleTimestamp"),
+                .setCustomId("btn_edit"),
 
             confirm: new ButtonBuilder().setLabel("Confirm")
                 .setStyle(ButtonStyle.Success)
@@ -147,16 +150,7 @@ module.exports = {
 
         let actionRow_customizer = {
             edit: new ActionRowBuilder().addComponents(
-                buttons_customizer.editContent,
-                buttons_customizer.editDetails
-            ),
-
-            edit2: new ActionRowBuilder().addComponents(
-                buttons_customizer.toggleTimestamp,
-                buttons_customizer.setColor
-            ),
-
-            confirmCancel: new ActionRowBuilder().addComponents(
+                buttons_customizer.edit,
                 buttons_customizer.confirm,
                 buttons_customizer.cancel
             )
@@ -166,9 +160,7 @@ module.exports = {
         let messageContent = "";
         let message = await interaction.editReply({
             embeds: [embed], components: [
-                actionRow_customizer.edit,
-                actionRow_customizer.edit2,
-                actionRow_customizer.confirmCancel
+                actionRow_customizer.edit
             ]
         });
 
@@ -221,118 +213,47 @@ module.exports = {
 
             try {
                 switch (i.customId) {
-                    case "btn_editContent":
+                    case "btn_edit":
                         // Set the modal components to be relevant to the button the user pressed
-                        modal_customEmbed.setComponents(...actionRows_modal.editContent);
+                        modal_customEmbed.setComponents(...actionRows_modal.edit);
                         // Show the modal
                         try { await i.showModal(modal_customEmbed); } catch { };
 
                         // Await the returned modal data
-                        let modalSubmit_editContent = await awaitModal();
+                        let modalSubmit_edit = await awaitModal();
 
                         // Change embed data
-                        messageContent = modalSubmit_editContent.fields.getTextInputValue("mti_messageContent");
-                        let embedTitle = modalSubmit_editContent.fields.getTextInputValue("mti_title");
-                        let embedDescription = modalSubmit_editContent.fields.getTextInputValue("mti_description");
-                        let embedThumbnailURL = modalSubmit_editContent.fields.getTextInputValue("mti_thumbnailURL");
-                        let embedImageURL = modalSubmit_editContent.fields.getTextInputValue("mti_imageURL");
+                        messageContent = modalSubmit_edit.fields.getTextInputValue("mti_messageContent");
+                        let embedAuthorName = modalSubmit_edit.fields.getTextInputValue("mti_authorName");
+                        let embedAuthorIconURL = modalSubmit_edit.fields.getTextInputValue("mti_authorIconURL");
+                        let embedDescription = modalSubmit_edit.fields.getTextInputValue("mti_description");
+                        let embedImageURL = modalSubmit_edit.fields.getTextInputValue("mti_imageURL");
 
-                        components_modal.editContent[0].setValue(messageContent);
-                        components_modal.editContent[1].setValue(embedTitle);
-                        components_modal.editContent[2].setValue(embedDescription);
-                        components_modal.editContent[3].setValue(embedThumbnailURL);
-                        components_modal.editContent[4].setValue(embedImageURL);
+                        components_modal.edit[0].setValue(messageContent);
+                        components_modal.edit[1].setValue(embedAuthorName);
+                        components_modal.edit[2].setValue(embedAuthorIconURL);
+                        components_modal.edit[3].setValue(embedDescription);
+                        components_modal.edit[4].setValue(embedImageURL);
 
                         if (messageContent) await message.edit({ content: messageContent });
-                        if (embedTitle) embed.setTitle(embedTitle);
-                        if (embedDescription) embed.setDescription(embedDescription);
-                        if (embedThumbnailURL) try {
-                            embed.setThumbnail(embedThumbnailURL);
-                        } catch {
-                            await i.followUp({ content: `${i.user} that is an invalid thumbnail URL!`, ephemeral: true });
-                            components_modal.editContent[3].setValue("");
-                        };
-                        if (embedImageURL) try {
-                            embed.setImage(embedImageURL);
-                        } catch {
-                            await i.followUp({ content: `${i.user} that is an invalid image URL!`, ephemeral: true });
-                            components_modal.editContent[4].setValue("");
-                        };
-
-                        return await refreshEmbed();
-
-                    case "btn_editDetails":
-                        // Set the modal components to be relevant to the button the user pressed
-                        modal_customEmbed.setComponents(...actionRows_modal.editDetails);
-                        // Show the modal
-                        try { await i.showModal(modal_customEmbed); } catch { };
-
-                        // Await the returned modal data
-                        let modalSubmit_editDetails = await awaitModal();
-
-                        // Change embed data
-                        let embedAuthorName = modalSubmit_editDetails.fields.getTextInputValue("mti_authorName");
-                        let embedAuthorIconURL = modalSubmit_editDetails.fields.getTextInputValue("mti_authorIconURL");
-                        let embedTitleURL = modalSubmit_editDetails.fields.getTextInputValue("mti_titleURL");
-                        let embedFooterText = modalSubmit_editDetails.fields.getTextInputValue("mti_footerText");
-                        let embedFooterIconURL = modalSubmit_editDetails.fields.getTextInputValue("mti_footerIconURL");
-
-                        components_modal.editDetails[0].setValue(embedAuthorName);
-                        components_modal.editDetails[1].setValue(embedAuthorIconURL);
-                        components_modal.editDetails[2].setValue(embedTitleURL);
-                        components_modal.editDetails[3].setValue(embedFooterText);
-                        components_modal.editDetails[4].setValue(embedFooterIconURL);
 
                         if (embedAuthorName) embed.setAuthor({ name: embedAuthorName });
+
                         if (embedAuthorIconURL) try {
                             embed.setAuthor({ name: embed.data.author.name, iconURL: embedAuthorIconURL });
                         } catch {
                             await i.followUp({ content: `${i.user} that is an invalid author icon URL!`, ephemeral: true });
-                            components_modal.editDetails[1].setValue("");
+                            components_modal.edit[2].setValue("");
                         };
-                        if (embedTitleURL) try {
-                            embed.setURL(embedTitleURL);
+
+                        if (embedDescription) embed.setDescription(embedDescription);
+
+                        if (embedImageURL) try {
+                            embed.setImage(embedImageURL);
                         } catch {
-                            await i.followUp({ content: `${i.user} that is an invalid title URL!`, ephemeral: true });
-                            components_modal.editDetails[2].setValue("");
+                            await i.followUp({ content: `${i.user} that is an invalid image URL!`, ephemeral: true });
+                            components_modal.edit[4].setValue("");
                         };
-                        if (embedFooterText) embed.setFooter({ text: embedFooterText });
-                        if (embedFooterIconURL) try {
-                            embed.setFooter({ text: embed.data?.footer?.text || "", iconURL: embedFooterIconURL });
-                        } catch {
-                            await i.followUp({ content: `${i.user} that is an invalid footer URL!`, ephemeral: true });
-                            components_modal.editDetails[4].setValue("");
-                        };
-
-                        return await refreshEmbed();
-
-                    case "btn_setColor":
-                        // Set the modal components to be relevant to the button the user pressed
-                        modal_customEmbed.setComponents(...actionRows_modal.setColor);
-                        // Show the modal
-                        try { await i.showModal(modal_customEmbed); } catch { };
-
-                        // Await the returned modal data
-                        let modalSubmit_setColor = await awaitModal();
-
-                        // Change embed data
-                        let embedColor = modalSubmit_setColor.fields.getTextInputValue("mti_color");
-
-                        if (embedColor) try { embed.setColor(embedColor); } catch {
-                            return await i.followUp({ content: `${i.user} that is an invalid color!`, ephemeral: true });
-                        };
-
-                        components_modal.setColor[0].setValue(embedColor);
-
-                        return await refreshEmbed();
-
-                    case "btn_toggleTimestamp":
-                        // Allow the button to know it was submitted
-                        try { i.deferUpdate(); } catch { };
-
-                        // Toggle on/off the embed's timestamp
-                        if (embed.data.timestamp) embed.setTimestamp(null);
-                        else embed.setTimestamp(Date.now());
 
                         return await refreshEmbed();
 
