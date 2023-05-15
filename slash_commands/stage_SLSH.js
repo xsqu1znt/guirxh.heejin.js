@@ -9,7 +9,7 @@ const userParser = require('../modules/userParser');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("stage")
-    .setDescription("LV. your idol by challenging a rival to a duel")
+        .setDescription("LV. your idol by challenging a rival to a duel")
 
         .addUserOption(option => option.setName("player")
             .setDescription("Challenge a player to a duel")),
@@ -45,14 +45,14 @@ module.exports = {
 
         //! Player Rival
         // Fetch the rival user from Mongo
-        let userData_rival; if (user_rival) {
+        let userData_rival, card_idol_rival; if (user_rival) {
             userData_rival = await userManager.fetch(user_rival.id);
             if (!userData_rival) return await embed_stage.send(
                 "That user has not started yet"
             );
 
             // Get the rival user's idol card from their card_inventory
-            let card_idol_rival = userParser.cards.get(userData_rival.card_inventory, userData_rival.card_selected_uid);
+            card_idol_rival = userParser.cards.get(userData_rival.card_inventory, userData_rival.card_selected_uid);
             if (!card_idol_rival) return await embed_stage.send(
                 "That user does not have \`🏃 idol\`\nUse \`/set edit: 🏃 idol add: UID\`"
             );
@@ -64,7 +64,7 @@ module.exports = {
         //! Create the stage battle
         let stage = new Stage(interaction, user_rival, {
             card_player: card_idol,
-            card_rival: user_rival ? user_rival : null,
+            card_rival: card_idol_rival ? card_idol_rival : null,
             startDelay: dateTools.parseStr(botSettings.timeout.stage_start, "s"),
             turnDelay: dateTools.parseStr(botSettings.timeout.stage_turn)
         });
