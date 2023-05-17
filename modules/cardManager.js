@@ -30,20 +30,9 @@ let cards_all = []; Object.values(cards).forEach(category => cards_all = [...car
 const cards_general = [...cards.comn, ...cards.uncm, ...cards.rare, ...cards.epic, ...cards.mint];
 
 //! General
-function resetUID(card, userCards = null) {
-    let newUID = () => randomTools.numberString(6);
-
-    if (userCards) {
-        let uid = card?.uid || newUID();
-
-        // Loop until we have a unique UID
-        while (userCards.find(card => card.uid === uid)) uid = newUID();
-
-        card.uid = uid;
-    } else card.uid = newUID();
-
-    // Return the card
-    return card;
+function createUID() {
+    // Create a new UID for the card
+    return randomTools.numberString(6);
 }
 
 function recalculateStats(card) {
@@ -262,7 +251,7 @@ module.exports = {
     cards_shop: cards_all.filter(card => shopSettings.stockSetIDs.includes(card.setID)),
     cardCount: cards_all.length,
 
-    resetUID,
+    createUID,
     recalculateStats,
     tryLevelUp,
 

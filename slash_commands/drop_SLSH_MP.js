@@ -15,14 +15,14 @@ module.exports = {
         .setDescription("Drop a random card")
 
         .addStringOption(option => option.setName("card")
-        .setDescription("Pick a type of drop")
+            .setDescription("Pick a type of drop")
 
-        .addChoices(
-            { name: "🃏 general", value: "normal" },
-            { name: "📅 weekly", value: "weekly" },
-            { name: "🍃 season", value: "season" },
-            { name: "🎆 event", value: "event" }
-        )
+            .addChoices(
+                { name: "🃏 general", value: "normal" },
+                { name: "📅 weekly", value: "weekly" },
+                { name: "🍃 season", value: "season" },
+                { name: "🎆 event", value: "event" }
+            )
             .setRequired(true)
         ),
 
@@ -35,7 +35,7 @@ module.exports = {
             title: "%USER | drop", author: interaction.user
         });
 
-        let userData = await userManager.fetch(interaction.user.id, "essential");
+        let userData = await userManager.fetch(interaction.user.id, "full");
         let [dropEmbedTitle, dropCooldownType] = "";
         let cardsDropped = null;
 
@@ -81,14 +81,15 @@ module.exports = {
         await userManager.cooldowns.reset(interaction.user.id, dropCooldownType);
 
         // Add the cards to the user's inventory
-        await userManager.cards.add(interaction.user.id, cardsDropped, true);
+        cardsDropped = await userManager.cards.add(interaction.user.id, cardsDropped, true);
 
         // Refresh userData for the purpose of checking if it's a duplicate card
-        userData = await userManager.fetch(interaction.user.id, "cards");
+        // userData = await userManager.fetch(interaction.user.id, "cards", true);
 
         // Used to tell the user if a card they got is a duplicate
         let cards_isDuplicate = cardsDropped.map(card =>
-            userParser.cards.duplicates(userData.card_inventory, { globalID: card.globalID }).card_duplicates.length > 1
+            userParser.cards.duplicates([...userData.card_inventory, ...cardsDropped],
+                { globalID: card.globalID }).cards.length > 1
         );
 
         // Create the embed

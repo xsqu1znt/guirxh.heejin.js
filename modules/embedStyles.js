@@ -3,7 +3,7 @@ const { EmbedBuilder, TimestampStyles } = require('discord.js');
 const { markdown } = require('./discordTools');
 const { bold, italic, inline, quote, link, space } = markdown;
 
-const { botSettings, userSettings } = require('../configs/heejinSettings.json');
+const { communityServer, botSettings, userSettings } = require('../configs/heejinSettings.json');
 const { arrayTools, stringTools, numberTools, dateTools } = require('../modules/jsTools');
 const { messageTools } = require('../modules/discordTools');
 const cardManager = require('../modules/cardManager');
@@ -128,10 +128,16 @@ function generalShop_ES(user) {
         let embeds = [];
 
         for (let i = 0; i < cardSets_f.length; i++) {
+            let cardEntries = cardSets_f[i].join("\n");
+
             // Create the embed page
             let embed = embed_template()
-                .setDescription(cardSets_f[i].join("\n"))
+                .setDescription(cardEntries)
                 .setFooter({ text: `Page ${i + 1}/${cardSets_f.length || 1}` });
+
+            // Let the user know how to request customs
+            if (cardEntries.includes("cust"))
+                embed.setDescription(`[join our server to request your custom](${communityServer.url})\n\n${cardEntries}`);
 
             embeds.push(embed);
         }
@@ -150,9 +156,15 @@ function generalShop_ES(user) {
 
             let _embeds = [];
             for (let i = 0; i < cardSet_f.length; i++) {
+                let cardEntries = cardSet_f[i].join("\n");
+
                 let embed = embed_template()
-                    .setDescription(cardSet_f[i].join("\n"))
+                    .setDescription(cardEntries)
                     .setFooter({ text: `Page ${i + 1}/${cardSet_f.length || 1}` });
+
+                // Let the user know how to request customs
+                if (cardEntries.includes("cust"))
+                    embed.setDescription(`[join our server to request your custom](${communityServer.url})\n\n${cardEntries}`);
 
                 _embeds.push(embed);
             }
@@ -566,8 +578,7 @@ function userDuplicates_ES(user, userData, globalID) {
         return [embed];
     }
 
-    card_duplicates = [card_duplicates.card_primary, ...card_duplicates.card_duplicates]
-        .map(card => cardManager.parse.fromCardLike(card));
+    card_duplicates = card_duplicates.cards.map(card => cardManager.parse.fromCardLike(card));
 
     let card_duplicates_f = card_duplicates.map(card => {
         // Whether or not this is the user's favorited card
@@ -754,6 +765,15 @@ function userTeamView_ES(user, userData) {
         return stringTools.formatNumber(total);
     })();
 
+    let reputation_total = (() => {
+        let total = 0;
+
+        // Add together the reputation of each card in the user's team
+        teamCards.forEach(card => total += card.stats.reputation);
+
+        return stringTools.formatNumber(total);
+    })();
+
     // Create the embeds
     let embeds = [];
 
@@ -763,10 +783,11 @@ function userTeamView_ES(user, userData) {
         // Add details to the embed
         _embed.setDescription(teamCards_f[i].join("\n"))
             .setFooter({
-                text: "Page %PAGE/%PAGE_COUNT | Total ABI. %TOTAL_ABILITY"
+                text: "Page %PAGE/%PAGE_COUNT | Total :: ABI. %TOTAL_ABILITY / REP. %TOTAL_REPUTATION"
                     .replace("%PAGE", i + 1)
                     .replace("%PAGE_COUNT", teamCards_f.length)
                     .replace("%TOTAL_ABILITY", ability_total)
+                    .replace("%TOTAL_REPUTATION", reputation_total)
             });
 
         // Add the card's image if available

@@ -113,17 +113,19 @@ async function itemPack_buy(userID, itemPackID) {
     let itemPack = itemPack_get(itemPackID);
     if (!itemPack) return [];
 
-    let cards = itemPack.cardSetIDs.map(setID =>
-        randomTools.choice(cardManager.cards_all.filter(card => card.setID === setID))
-    );
+    let cards = [...new Array(itemPack.items.cards.count)].map(() => {
+        // Reformat to work with randomTools.weightedChoice()
+        let sets = itemPack.items.cards.fromSet.map(set => ({ id: set.id, rarity: set.chance }));
 
-    await Promise.all([
-        // Subtract the card pack's price from the user's balance
-        userManager.update(userID, { $inc: { balance: -itemPack.price } }),
+        let { id: setID } = randomTools.weightedChoice(sets);
+        return randomTools.choice(cardManager.cards_all.filter(card => card.setID === setID));
+    });
 
-        // Add the cards to the user's card_inventory
-        userManager.cards.add(userID, cards, true)
-    ]);
+    // Subtract the card pack's price from the user's balance
+    await userManager.update(userID, { $inc: { balance: -itemPack.price } });
+
+    // Add the cards to the user's card_inventory
+    cards = await userManager.cards.add(userID, cards, true);
 
     // Return the cards the user received
     return cards;

@@ -1,7 +1,7 @@
 // Connects us to our Mongo database so we can save and retrieve data.
 
 const { userSettings } = require('../configs/heejinSettings.json');
-const { dateTools } = require('../modules/jsTools');
+const { dateTools, randomTools } = require('../modules/jsTools');
 const badgeManager = require('./badgeManager');
 const cardManager = require('./cardManager');
 const mongoose = require('mongoose');
@@ -124,22 +124,33 @@ async function cardInventory_addCards(userID, cards, resetUID = false) {
     // Convert a single card into an array
     if (!Array.isArray(cards)) cards = [cards];
 
-    // Get the user's current cards for unique ID creation
-    let userCards; if (resetUID) userCards = (await user_fetch(userID, "cards", true)).card_inventory;
+    // Create a deep copy of the cards to avoid conflicts
+    cards = JSON.parse(JSON.stringify(cards));
 
-    for (let card of cards) {
-        // Reset the unique ID
-        if (resetUID) card = cardManager.resetUID(card, userCards);
+    // Get an array of all the card UIDs in the user's card_inventory to avoid duplicates
+    let userCardUIDs; if (resetUID) {
+        // Fetch the user's card_inventory
+        let { card_inventory } = await user_fetch(userID, "cards", true);
 
-        // Convert the card object to a slimmer "CardLike" object
-        if (card.rarity !== 100) card = cardManager.parse.toCardLike(card);
-
-        // Add the new card to the userCards array to avoid duplicate UIDs
-        if (resetUID) userCards.push(card);
+        // Get only the card UIDs from the fetched card_inventory
+        userCardUIDs = card_inventory.map(card => card?.uid);
     }
 
+    if (resetUID) for (let i = 0; i < cards.length; i++) {
+        // Reset the unique ID
+        let uid = cardManager.createUID();
+
+        // Recursivly reset the unique ID if another card exists with that ID
+        while (userCardUIDs.includes(uid)) uid = cardManager.createUID();
+
+        cards[i].uid = uid; userCardUIDs.push(uid);
+    }
+
+    // Convert the cards object to a slimmer "CardLike" object
+    let cardLikes = cards.map(card => [100].includes(card.rarity) ? card : cardManager.parse.toCardLike(card));
+
     // Push the CardLikes to the user's card_inventory in Mongo
-    await user_update(userID, { $push: { card_inventory: { $each: cards } } }); return null;
+    await user_update(userID, { $push: { card_inventory: { $each: cardLikes } } }); return cards;
 }
 
 async function cardInventory_removeCards(userID, uids) {

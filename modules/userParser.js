@@ -9,10 +9,10 @@ function cards_get(cardArray, uid) {
 
 /** Get multiple cards from the user's card_inventory. */
 function cards_getMultiple(cardArray, uids, filterInvalid = true) {
-    let cards = uids.map(uid => cardArray.find(card => card.uid === uid));
+    let cards = uids.map(uid => cardArray.find(card => card.uid === uid) || null);
     if (filterInvalid) cards = cards.filter(card => card);
 
-    return cards.map(card => cardManager.parse.fromCardLike(card));
+    return cards.map(card => card ? cardManager.parse.fromCardLike(card) : card);
 }
 
 /** Filter out duplicate cards from the user's card_inventory. */
@@ -40,7 +40,7 @@ function cards_duplicates(cardArray, filter = { uid: "", globalID: "" }) {
     // Remove the first card in the array because that's the primary card
     card_duplicates.shift();
 
-    return { card_primary, card_duplicates };
+    return { card_primary, card_duplicates, cards: [card_primary, ...card_duplicates] };
 }
 
 module.exports = {
