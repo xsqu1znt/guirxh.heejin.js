@@ -118,6 +118,7 @@ module.exports = {
 
                     // Get the card from the user's card_inventory
                     cards = uid_add.map(uid => userParser.cards.get(userData.card_inventory, uid));
+                    cards = cards.filter(card => card);
                     if (!cards.length > 0) return await embedinator.send(
                         `\`${uid_add.join(" ").trim()}\` is not a valid UID`
                     );
@@ -146,6 +147,7 @@ module.exports = {
 
                     // Get the card from the user's card_inventory
                     cards = uid_remove.map(uid => userParser.cards.get(userData.card_inventory, uid));
+                    cards = cards.filter(card => card);
                     if (!cards.length > 0) return await embedinator.send(
                         `\`${uid_remove.join(" ").trim()}\` is not a valid UID`
                     );

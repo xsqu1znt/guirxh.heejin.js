@@ -138,7 +138,7 @@ async function cardInventory_addCards(userID, cards, resetUID = false) {
 
     if (resetUID) for (let i = 0; i < cards.length; i++) {
         // Reset the unique ID
-        let uid = cardManager.createUID();
+        let uid = cards[i]?.uid || cardManager.createUID();
 
         // Recursivly reset the unique ID if another card exists with that ID
         while (userCardUIDs.includes(uid)) uid = cardManager.createUID();
