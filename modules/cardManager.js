@@ -1,9 +1,7 @@
 const { botSettings, userSettings, dropSettings, eventSettings, shopSettings } = require('../configs/heejinSettings.json');
-const { markdown } = require('./discordTools');
+const { markdown: { bold, italic, inline, quote, link, space } } = require('./discordTools');
 const { randomTools } = require('./jsTools');
 const logger = require('./logger');
-
-const { bold, italic, inline, quote, link, space } = markdown;
 
 const cards = {
     comn: require('../items/cards/cards_common.json'),
@@ -146,52 +144,52 @@ function parse_fromCardLike(cardLike) {
 //! To String
 function toString_basic(card) {
     return "%UID %EMOJI %GROUP :: %SINGLE - %NAME %SELL_PRICE"
-        .replace("%UID", inline(true, card.uid))
-        .replace("%EMOJI", inline(true, card.emoji))
-        .replace("%GROUP", bold(true, card.group))
+        .replace("%UID", inline(card.uid))
+        .replace("%EMOJI", inline(card.emoji))
+        .replace("%GROUP", bold(card.group))
         .replace("%SINGLE", card.single)
         .replace("%NAME", link(card.name, card.imageURL))
-        .replace("%SELL_PRICE", inline(true, "💰", card.sellPrice));
+        .replace("%SELL_PRICE", inline("💰", card.sellPrice));
 }
 
 function toString_setEntry(card, count = 1, simplify = false) {
     if (count < 10) count = `0${count}`;
 
     return "%SET_ID %CARD_COUNT %CATEGORY %EMOJI %GROUP%SINGLE"
-        .replace("%SET_ID", inline(true, "🗣️", card.setID))
+        .replace("%SET_ID", inline("🗣️", card.setID))
 
-        .replace("%CARD_COUNT", inline(true, "📁", count || 1))
+        .replace("%CARD_COUNT", inline("📁", count || 1))
 
-        .replace("%CATEGORY", inline(true, card.category))
-        .replace("%EMOJI", inline(true, card.emoji))
-        .replace("%GROUP", bold(true, card.group))
+        .replace("%CATEGORY", inline(card.category))
+        .replace("%EMOJI", inline(card.emoji))
+        .replace("%GROUP", bold(card.group))
         .replace("%SINGLE", simplify ? "" : space("left", `:: ${card.single}`));
 }
 
 function toString_missingEntry(card, missing = false) {
     return "%GLOBAL_ID %EMOJI %GROUP :: %SINGLE - %NAME\n> %SET_ID %RARITY %CATEGORY %MISSING"
-        .replace("%GLOBAL_ID", inline(true, card.globalID))
-        .replace("%EMOJI", inline(true, card.emoji))
-        .replace("%GROUP", bold(true, card.group))
+        .replace("%GLOBAL_ID", inline( card.globalID))
+        .replace("%EMOJI", inline( card.emoji))
+        .replace("%GROUP", bold( card.group))
         .replace("%SINGLE", card.single)
         .replace("%NAME", link(card.name, card.imageURL))
 
-        .replace("%SET_ID", inline(true, "🗣️", card.setID))
-        .replace("%RARITY", inline(false, "R", card.rarity))
-        .replace("%CATEGORY", inline(true, card.category))
+        .replace("%SET_ID", inline( "🗣️", card.setID))
+        .replace("%RARITY", inline(`R${card.rarity}`))
+        .replace("%CATEGORY", inline( card.category))
 
-        .replace("%MISSING", inline(true, missing ? "🚫 missing" : "✔️ owned"));
+        .replace("%MISSING", inline( missing ? "🚫 missing" : "✔️ owned"));
 }
 
 function toString_shopEntry(card) {
     return "%GLOBAL_ID %EMOJI %GROUP :: %SINGLE : %NAME %SET_ID %PRICE"
-        .replace("%GLOBAL_ID", inline(true, card.globalID))
-        .replace("%EMOJI", inline(true, card.emoji))
-        .replace("%GROUP", bold(true, card.group))
+        .replace("%GLOBAL_ID", inline(card.globalID))
+        .replace("%EMOJI", inline(card.emoji))
+        .replace("%GROUP", bold(card.group))
         .replace("%SINGLE", card.single)
         .replace("%NAME", link(card.name, card.imageURL))
-        .replace("%SET_ID", inline(true, "🗣️", card.setID))
-        .replace("%PRICE", inline(true, botSettings.currencyIcon, card.price));
+        .replace("%SET_ID", inline("🗣️", card.setID))
+        .replace("%PRICE", inline(botSettings.currencyIcon, card.price));
 }
 
 function toString_inventory(card, options = { duplicate_count: 0, favorited: false, selected: false, team: false, isDuplicate: false, simplify: false, }) {
@@ -205,39 +203,39 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
 
     let { duplicate_count } = options;
     let formated = "%UID%EMOJI %GROUP : %SINGLE - %NAME %DUPE\n> %SET_ID %GLOBAL_ID %RARITY %CATEGORY %SELL_PRICE%LOCKED%NEW_LINE%LEVEL%STATS%FAVORITED%SELECTED%TEAM"
-        .replace("%UID", card.uid ? space("right", inline(true, card.uid)) : "")
-        .replace("%EMOJI", inline(true, card.emoji))
+        .replace("%UID", card.uid ? space("right", inline(card.uid)) : "")
+        .replace("%EMOJI", inline(card.emoji))
 
-        .replace("%GROUP", bold(true, card.group))
+        .replace("%GROUP", bold(card.group))
         .replace("%SINGLE", card.single)
         .replace("%NAME", link(card.name, card.imageURL))
 
-        .replace("%GLOBAL_ID", space("left", inline(true, card.globalID)))
-        .replace("%SET_ID", inline(true, "🗣️", card.setID))
-        .replace("%RARITY", inline(false, "R", card.rarity))
-        .replace("%CATEGORY", inline(true, card.category))
+        .replace("%GLOBAL_ID", space("left", inline(card.globalID)))
+        .replace("%SET_ID", inline("🗣️", card.setID))
+        .replace("%RARITY", inline(`R${card.rarity}`))
+        .replace("%CATEGORY", inline(card.category))
 
-        .replace("%SELL_PRICE", inline(true, "💰", card.sellPrice))
-        .replace("%LOCKED", card.locked ? space("both", inline(true, "🔒")) : "")
+        .replace("%SELL_PRICE", inline("💰", card.sellPrice))
+        .replace("%LOCKED", card.locked ? space("both", inline("🔒")) : "")
 
         .replace("%NEW_LINE", options.simplify ? "" : "\n")
 
-        .replace("%LEVEL", options.simplify ? "" : quote(true, inline(false, "LV.", card.stats.level)))
+        .replace("%LEVEL", options.simplify ? "" : quote(inline(`LV.${card.stats.level}`)))
         .replace("%STATS", options.simplify ? ""
-            : space("left", inline(true, "🎤", card.stats.ability), ":", inline(true, "💖", card.stats.reputation)))
+            : space("left", inline("🎤", card.stats.ability), ":", inline("💖", card.stats.reputation)))
 
-        .replace("%FAVORITED", options.favorited ? space("left", inline(true, "⭐")) : "")
-        .replace("%SELECTED", options.selected ? space("left", inline(true, "🏃")) : "")
-        .replace("%TEAM", options.team ? space("left", inline(true, "👯")) : "");
+        .replace("%FAVORITED", options.favorited ? space("left", inline("⭐")) : "")
+        .replace("%SELECTED", options.selected ? space("left", inline("🏃")) : "")
+        .replace("%TEAM", options.team ? space("left", inline("👯")) : "");
 
     // For special cases with dupeified things
     if (options.isDuplicate)
-        formated = formated.replace("%DUPE", bold(true, italic(true, superscript.dupe)));
+        formated = formated.replace("%DUPE", bold(italic(superscript.dupe)));
     else if (options.duplicate_count > 0) {
         // Special charactor formatting
         let duplicate_count_f = String(duplicate_count).split("").map(num => superscript.number[+num]).join("");
 
-        formated = formated.replace("%DUPE", bold(true, "--", duplicate_count_f));
+        formated = formated.replace("%DUPE", bold("--", duplicate_count_f));
     }
     else
         formated = formated.replace("%DUPE", "");

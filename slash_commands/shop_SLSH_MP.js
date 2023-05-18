@@ -5,9 +5,9 @@ const { arrayTools, dateTools } = require('../modules/jsTools');
 const { generalShop_ES } = require('../modules/embedStyles');
 const { messageTools } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
-// const badgeManager = require('../modules/badgeManager');
 const cardManager = require('../modules/cardManager');
 const shop = require('../modules/shop');
+const userParser = require('../modules/userParser');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("shop")
@@ -37,7 +37,7 @@ module.exports = {
                 );
 
                 // Buy the card and add it to the user's card_inventory
-                await shop.cards.buy(interaction.user.id, buyID);
+                _card = await shop.cards.buy(interaction.user.id, buyID);
 
                 // Let the user know the result
                 let _card_f = cardManager.toString.basic(_card);
@@ -70,8 +70,19 @@ module.exports = {
                 // Buy the card pack and add it to the user's card_inventory
                 let _receivedCards = await shop.itemPacks.buy(interaction.user.id, buyID);
 
+                // Fetch the user's card_inventory
+                userData = await userManager.fetch(interaction.user.id, "cards", true);
+
+                // Used to tell the user if a card they got is a duplicate
+                let _receivedCards_isDuplicate = _receivedCards.map(card =>
+                    userParser.cards.duplicates(userData.card_inventory,
+                        { globalID: card.globalID }).cards.length > 1
+                );
+
                 // Let the user know the result
-                let _receivedCards_f = _receivedCards.map(card => cardManager.toString.inventory(card, { simplify: true }));
+                let _receivedCards_f = _receivedCards.map((card, idx) =>
+                    cardManager.toString.inventory(card, { simplify: true, isDuplicate: _receivedCards_isDuplicate[idx] })
+                );
 
                 // Add the last card's image if available
                 let lastCard = _receivedCards.slice(-1)[0];

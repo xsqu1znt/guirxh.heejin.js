@@ -2,15 +2,10 @@ const badges = require('../items/badges.json');
 const itemPacks = require('../items/item_packs.json');
 
 const { botSettings: { currencyIcon } } = require('../configs/heejinSettings.json');
+const { markdown: { bold, italic, inline, link } } = require('./discordTools');
 const { randomTools } = require('./jsTools');
 const { userManager } = require('./mongo');
 const cardManager = require('./cardManager');
-
-const bold = (...str) => `**${str.join(" ")}**`;
-const italic = (...str) => `*${str.join(" ")}*`;
-const inline = (...str) => `\`${str.join(" ")}\``;
-const quote = (...str) => `> ${str.join(" ")}`;
-const link = (label, url, tooltip = "") => `[${label}](${url}${tooltip ? ` "${tooltip}"` : ""})`;
 
 //! Cards
 function card_get(globalID) {
@@ -26,11 +21,11 @@ async function card_buy(userID, globalID) {
         userManager.update(userID, { $inc: { balance: -card.price } }),
 
         // Add the card to the user's card_inventory
-        userManager.cards.add(userID, card, true)
+        (async () => card = await userManager.cards.add(userID, card, true))()
     ]);
 
     // Return the card
-    return card;
+    return card[0];
 }
 
 //! Badges

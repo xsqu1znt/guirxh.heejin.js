@@ -419,38 +419,14 @@ async function message_deleteAfter(message, time) {
 }
 
 //! Markdown
-function bold(space = true, ...str) {
-    if (!Array.isArray(str)) str = [str];
-
-    return space ? (`**${str.join(" ")}**`) : (`**${str.join("")}**`);
-}
-
-function italic(space = true, ...str) {
-    if (!Array.isArray(str)) str = [str];
-
-    return space ? (`*${str.join(" ")}*`) : (`*${str.join("")}*`);
-}
-
-function inline(space = true, ...str) {
-    if (!Array.isArray(str)) str = [str];
-
-    return space ? (`\`${str.join(" ")}\``) : (`\`${str.join("")}\``);
-}
-
-function quote(space = true, ...str) {
-    if (!Array.isArray(str)) str = [str];
-
-    return space ? (`> ${str.join(" ")}`) : (`> ${str.join("")}`);
-}
-
-function link(label, url, tooltip = "") {
-    return `[${label}](${url}${tooltip ? ` "${tooltip}"` : ""})`;
-}
+const bold = (...str) => `**${str.join(" ")}**`;
+const italic = (...str) => `*${str.join(" ")}*`;
+const inline = (...str) => `\`${str.join(" ")}\``;
+const quote = (...str) => `> ${str.join(" ")}`;
+const link = (label, url, tooltip = "") => `[${label}](${url}${tooltip ? ` "${tooltip}"` : ""})`;
 
 /** @param {"left" | "right" | "both"} side */
-function space(side = "both", ...str) {
-    if (!Array.isArray(str)) str = [str];
-
+const space = (side = "both", ...str) => {
     switch (side) {
         case "left": return space ? (" " + str.join(" ")) : (" " + str.join(""));
         case "right": return space ? (str.join(" ") + " ") : (str.join("") + " ");
