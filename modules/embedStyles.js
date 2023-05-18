@@ -1,7 +1,6 @@
 const { EmbedBuilder, TimestampStyles } = require('discord.js');
 
-const { markdown } = require('./discordTools');
-const { bold, italic, inline, quote, link, space } = markdown;
+const { markdown: { bold, inline, quote } } = require('./discordTools');
 
 const { communityServer, botSettings, userSettings } = require('../configs/heejinSettings.json');
 const { arrayTools, stringTools, numberTools, dateTools } = require('../modules/jsTools');
@@ -280,11 +279,11 @@ function userProfile_ES(user, userData) {
             (card, compareCard) => card.globalID === compareCard.globalID
         ).length;
         let profile_info = "%BALANCE :: \`🃏 %CARD_TOTAL\` :: \`📈 LV. %LEVEL\`"
-            .replace("%BALANCE", inline(true, botSettings.currencyIcon, userData.balance))
+            .replace("%BALANCE", inline(botSettings.currencyIcon, userData.balance))
             .replace("%CARD_TOTAL", `${uniqueUserCardTotal}/${cardManager.cardCount}`)
             .replace("%LEVEL", userData.level);
 
-        _embed.addFields([{ name: "\`📄\` Information", value: quote(true, profile_info) }]);
+        _embed.addFields([{ name: "\`📄\` Information", value: quote(profile_info) }]);
 
         // Return the embed
         return _embed;
@@ -301,7 +300,7 @@ function userProfile_ES(user, userData) {
         badges_f = arrayTools.chunk(badges_f, 3);
 
         // Format the chunks into an array of strings
-        badges_f = badges_f.map(chunk_badges => quote(true, chunk_badges.join(" ")));
+        badges_f = badges_f.map(chunk_badges => quote(chunk_badges.join(" ")));
 
         // Add the badges to the embed
         // embed.addFields([{ name: "\`📛\` Badges", value: badges_f.join("\n") }]);
@@ -372,9 +371,9 @@ function userProfile_ES(user, userData) {
         });
 
         // Parse the sorted user cards into a readable string
-        let inventoryStats_f = userCards.map((category, idx) => quote(true, "%CATEGORY: %STATS"
-            .replace("%CATEGORY", bold(true, "🃏", categories[idx]))
-            .replace("%STATS", inline(true, `${category.length}/${allCards[idx].length}`))
+        let inventoryStats_f = userCards.map((category, idx) => quote("%CATEGORY: %STATS"
+            .replace("%CATEGORY", bold("🃏", categories[idx]))
+            .replace("%STATS", inline(`${category.length}/${allCards[idx].length}`))
         ));
 
         // Set the embed's description to the inventory stat result
@@ -420,7 +419,7 @@ function userMissing_ES(user, userData, setID) {
     // Create a base embed
     let embed_template = () => new messageTools.Embedinator(null, {
         title: "%USER | missing",
-        description: `${inline(true, setID)} is either empty or an invalid set.`,
+        description: `${inline(setID)} is either empty or an invalid set.`,
         author: user
     }).embed;
 
@@ -472,7 +471,7 @@ function userCooldowns_ES(user, userData) {
         return "\`%VISUAL %NAME:\` %AVAILABILITY"
             .replace("%VISUAL", cooldownETA ? "❌" : "✔️")
             .replace("%NAME", stringTools.toTitleCase(cooldown.type.replace(/_/g, " ")))
-            .replace("%AVAILABILITY", bold(true, cooldownETA
+            .replace("%AVAILABILITY", bold(cooldownETA
                 ? `<t:${numberTools.milliToSeconds(cooldown.timestamp)}:${TimestampStyles.RelativeTime}>`
                 : "Available"));
     });
