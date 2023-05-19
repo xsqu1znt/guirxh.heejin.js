@@ -2,10 +2,14 @@
 
 https://cdn.discordapp.com/avatars/957160832339423242/8ac4bfc48d4323d89e3779c70807cb12.webp
 
-`1.` **added command** </reminders:1109068222046679160>
+`1.` **added command** </reminders:1109076451904475216>
 > *You can now enable the bot to remind you when you cooldown is up!*
+> *Heejin will ping you in the last channel you ran the command to be reminded of*
 > ***NOTE:** this will only apply to new cooldowns*
 
 `2.` **visual change** </cooldowns:1106915320230314147>
 > ***Drop Normal** has been changed to **Drop General** to match how it is in `/drop`*
 > ***NOTE:** If you had a previous drop normal cooldown, it has been reset due to the change*
+
+`3.` **added** `bot down message`
+> *Now no one should freak out when the bot suddenly goes down for an update without warning! ||hopefully||*

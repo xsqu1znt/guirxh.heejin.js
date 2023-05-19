@@ -42,7 +42,10 @@ module.exports = {
                                 .setColor(botSettings.embed.color || null);
 
                             // Send the reminder in the appropriate channel
-                            await channel_fetched.send({ content: userMention(reminder.user.id), embeds: [embed_reminder] });
+                            await channel_fetched.send({
+                                content: `\`📬\` ${userMention(reminder.user.id)} **Something is happening! You've got a reminder!**`,
+                                embeds: [embed_reminder]
+                            });
                         }
 
                         // Remove the reminder from Mongo
