@@ -2,7 +2,7 @@
 
 https://cdn.discordapp.com/avatars/957160832339423242/8ac4bfc48d4323d89e3779c70807cb12.webp
 
-`1.` **added command** </reminders:1109076451904475216>
+`1.` **added command** </reminder:1109093835000250458>
 > *You can now enable the bot to remind you when you cooldown is up!*
 > *Heejin will ping you in the last channel you ran the command in question*
 > ***NOTE:** this will only apply to new cooldowns*
