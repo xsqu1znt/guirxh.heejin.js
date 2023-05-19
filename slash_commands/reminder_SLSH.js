@@ -15,7 +15,7 @@ module.exports = {
     builder: new SlashCommandBuilder().setName("reminder")
         .setDescription("Toggle reminders for a command cooldown")
 
-        .addStringOption(option => option.setName("for")
+        .addStringOption(option => option.setName("to")
             .setDescription("The command you want to toggle being reminded for")
             .setRequired(true)
 
@@ -28,7 +28,7 @@ module.exports = {
      */
     execute: async (client, interaction) => {
         // Get interaction options
-        let reminderType = interaction.options.getString("for");
+        let reminderType = interaction.options.getString("to");
 
         // Toggle whether the reminder is enabled or not for the user
         let toggle = await userManager.reminders.toggle(interaction.user.id, reminderType);
