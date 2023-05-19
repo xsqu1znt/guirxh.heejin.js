@@ -3,7 +3,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js'
 const { botSettings, userSettings } = require('../configs/heejinSettings.json');
 const { messageTools } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
-const { dateTools, numberTools } = require('../modules/jsTools');
+const { dateTools } = require('../modules/jsTools');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("daily")
@@ -56,6 +56,12 @@ module.exports = {
 
         // Reset the user's cooldown
         await userManager.cooldowns.reset(interaction.user.id, "daily");
+
+        // Reset the user's reminder
+        await userManager.reminders.reset(
+            interaction.user.id, interaction.guild.id, interaction.channel.id,
+            interaction.user, "daily"
+        );
 
         // Let the user know the result
         const streakMultiplierProgressBar = () => {

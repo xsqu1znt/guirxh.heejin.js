@@ -18,10 +18,11 @@ module.exports = {
             .setDescription("Pick a type of drop")
 
             .addChoices(
-                { name: "🃏 general", value: "normal" },
+                { name: "🃏 general", value: "general" },
                 { name: "📅 weekly", value: "weekly" },
                 { name: "🍃 season", value: "season" },
-                { name: "🎆 event", value: "event" }
+                { name: "🎆 event 1", value: "event_1" },
+                { name: "🎆 event 2", value: "event_2" }
             )
             .setRequired(true)
         ),
@@ -40,9 +41,9 @@ module.exports = {
         let cardsDropped = null;
 
         switch (interaction.options.getString("card")) {
-            case "normal":
-                dropEmbedTitle = "drop"; dropCooldownType = "drop_normal";
-                cardsDropped = [...Array(5)].map(() => cardManager.get.drop("normal"));
+            case "general":
+                dropEmbedTitle = "drop"; dropCooldownType = "drop_general";
+                cardsDropped = [...Array(5)].map(() => cardManager.get.drop("general"));
                 break;
 
             case "weekly":
@@ -58,12 +59,20 @@ module.exports = {
                 cardsDropped = [cardManager.get.drop("season")];
                 break;
 
-            case "event":
-                if (eventSettings.name === "none" || eventSettings.name === "")
-                    return await embed_drop.send("There is no \`event\` right now");
+            case "event_1":
+                if (eventSettings.event1.name === "none" || eventSettings.event1.name === "")
+                    return await embed_drop.send("There is no \`event 1\` right now");
 
-                dropEmbedTitle = "event"; dropCooldownType = "drop_event";
-                cardsDropped = [cardManager.get.drop("event")];
+                dropEmbedTitle = "event 1"; dropCooldownType = "drop_event_1";
+                cardsDropped = [cardManager.get.drop("event_1")];
+                break;
+
+            case "event_2":
+                if (eventSettings.event2.name === "none" || eventSettings.event2.name === "")
+                    return await embed_drop.send("There is no \`event 2\` right now");
+
+                dropEmbedTitle = "event 2"; dropCooldownType = "drop_event_2";
+                cardsDropped = [cardManager.get.drop("event_2")];
                 break;
         }
 
@@ -79,6 +88,12 @@ module.exports = {
 
         // Reset the user's cooldown
         await userManager.cooldowns.reset(interaction.user.id, dropCooldownType);
+
+        // Reset the user's reminder
+        await userManager.reminders.reset(
+            interaction.user.id, interaction.guild.id, interaction.channel.id,
+            interaction.user, dropCooldownType
+        );
 
         // Add the cards to the user's inventory
         cardsDropped = await userManager.cards.add(interaction.user.id, cardsDropped, true);

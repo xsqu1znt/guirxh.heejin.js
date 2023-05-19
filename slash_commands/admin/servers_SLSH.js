@@ -59,8 +59,11 @@ module.exports = {
         // Fetch each guild to get the full guild object
         let guilds_full = await Promise.all(guilds_partial.map(guild => guild.fetch()));
 
+        // Sort by join date
+        guilds_full = guilds_full.sort((a, b) => a.joinedTimestamp - b.joinedTimestamp);
+
         // Parse each guild into a human readable string
-        let guilds_full_f = await Promise.all(guilds_full.map(async guild => {
+        let guilds_full_f = await Promise.all(guilds_full.map(async (guild, idx) => {
             let invite_url = "";
 
             try {
@@ -85,10 +88,11 @@ module.exports = {
             }
 
             // Return a formatted guild string
-            return "%GUILD_NAME ・ %GUILD_ID\n> %MEMBER_COUNT : \`📆\` %JOINED"
-                .replace("%GUILD_NAME", bold(true, invite_url ? link(guild.name, invite_url) : guild.name))
-                .replace("%GUILD_ID", inline(true, "🆔", guild.id))
-                .replace("%MEMBER_COUNT", inline(true, "👥", guild.memberCount))
+            return "%IDX %GUILD_NAME ・ %GUILD_ID\n> %MEMBER_COUNT : \`📆\` %JOINED"
+                .replace("%IDX", inline(`${idx + 1}.`))
+                .replace("%GUILD_NAME", bold(invite_url ? link(guild.name, invite_url) : guild.name))
+                .replace("%GUILD_ID", inline("🆔", guild.id))
+                .replace("%MEMBER_COUNT", inline("👥", guild.memberCount))
                 .replace("%JOINED", time(
                     numberTools.milliToSeconds(guild.members.me.joinedTimestamp),
                     TimestampStyles.LongDate

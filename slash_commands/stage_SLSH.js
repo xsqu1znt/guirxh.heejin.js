@@ -4,8 +4,8 @@ const { botSettings } = require('../configs/heejinSettings.json');
 const { messageTools } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 const { dateTools } = require('../modules/jsTools');
-const Stage = require('../modules/stageLogic');
 const userParser = require('../modules/userParser');
+const Stage = require('../modules/stageLogic');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("stage")
@@ -60,6 +60,13 @@ module.exports = {
 
         // Reset the user's cooldown
         await userManager.cooldowns.reset(interaction.user.id, "stage");
+
+        // Add a reminder for the user
+        // Reset the user's reminder
+        await userManager.reminders.reset(
+            interaction.user.id, interaction.guild.id, interaction.channel.id,
+            interaction.user, "stage"
+        );
 
         //! Create the stage battle
         let stage = new Stage(interaction, user_rival, {

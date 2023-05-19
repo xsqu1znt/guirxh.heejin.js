@@ -101,12 +101,12 @@ function get_byGlobalID(globalID) {
     return card || null;
 }
 
-/** @param {"normal" | "weekly" | "season" | "event"} dropCategory */
+/** @param {"general" | "weekly" | "season" | "event_1" | "event_2"} dropCategory */
 function get_randomDrop(dropCategory) {
     let card_choices = [];
 
     switch (dropCategory) {
-        case 'normal':
+        case 'general':
             let categories = Object.values(dropSettings.chances).map(c => ({ ...c, rarity: c.chance }));
             let category_picked = randomTools.weightedChoice(categories);
 
@@ -118,8 +118,11 @@ function get_randomDrop(dropCategory) {
         case 'season':
             card_choices = cards.seas.filter(card => eventSettings.season.cardRarityFilter.includes(card.rarity));
             break;
-        case 'event':
-            card_choices = cards.evnt.filter(card => eventSettings.cardRarityFilter.includes(card.rarity));
+        case 'event_1':
+            card_choices = cards.evnt.filter(card => eventSettings.event1.cardRarityFilter.includes(card.rarity));
+            break;
+        case 'event_2':
+            card_choices = cards.evnt.filter(card => eventSettings.event2.cardRarityFilter.includes(card.rarity));
             break;
     }
 
@@ -168,17 +171,17 @@ function toString_setEntry(card, count = 1, simplify = false) {
 
 function toString_missingEntry(card, missing = false) {
     return "%GLOBAL_ID %EMOJI %GROUP :: %SINGLE - %NAME\n> %SET_ID %RARITY %CATEGORY %MISSING"
-        .replace("%GLOBAL_ID", inline( card.globalID))
-        .replace("%EMOJI", inline( card.emoji))
-        .replace("%GROUP", bold( card.group))
+        .replace("%GLOBAL_ID", inline(card.globalID))
+        .replace("%EMOJI", inline(card.emoji))
+        .replace("%GROUP", bold(card.group))
         .replace("%SINGLE", card.single)
         .replace("%NAME", link(card.name, card.imageURL))
 
-        .replace("%SET_ID", inline( "🗣️", card.setID))
+        .replace("%SET_ID", inline("🗣️", card.setID))
         .replace("%RARITY", inline(`R${card.rarity}`))
-        .replace("%CATEGORY", inline( card.category))
+        .replace("%CATEGORY", inline(card.category))
 
-        .replace("%MISSING", inline( missing ? "🚫 missing" : "✔️ owned"));
+        .replace("%MISSING", inline(missing ? "🚫 missing" : "✔️ owned"));
 }
 
 function toString_shopEntry(card) {

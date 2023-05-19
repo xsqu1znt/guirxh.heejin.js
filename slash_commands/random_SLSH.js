@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 const { botSettings, userSettings } = require('../configs/heejinSettings.json');
-const { randomTools, dateTools } = require('../modules/jsTools');
+const { randomTools } = require('../modules/jsTools');
 const { messageTools } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 
@@ -43,6 +43,12 @@ module.exports = {
 
         // Reset the user's cooldown
         await userManager.cooldowns.reset(interaction.user.id, "random");
+
+        // Reset the user's reminder
+        await userManager.reminders.reset(
+            interaction.user.id, interaction.guild.id, interaction.channel.id,
+            interaction.user, "random"
+        );
 
         // Let the user know the result
         return await embed_random.send(won

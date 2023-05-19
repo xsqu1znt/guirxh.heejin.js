@@ -7,9 +7,7 @@ module.exports = {
     name: "SET_PRESENCE",
     event: "ready",
 
-    /**
-     * @param {Client} client 
-     */
+    /** @param {Client} client */
     execute: async (client) => {
         let presence = (process.env.DEVMODE || DEVMODE) ? clientPresence.dev : clientPresence.default;
 
