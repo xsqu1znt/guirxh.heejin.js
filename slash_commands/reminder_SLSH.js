@@ -12,7 +12,7 @@ const stringChoices = cooldownValues.map(value => ({
 }));
 
 module.exports = {
-    builder: new SlashCommandBuilder().setName("reminders")
+    builder: new SlashCommandBuilder().setName("reminder")
         .setDescription("Toggle reminders for a command cooldown")
 
         .addStringOption(option => option.setName("for")
