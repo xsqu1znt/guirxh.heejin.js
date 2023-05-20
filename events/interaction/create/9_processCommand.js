@@ -2,7 +2,7 @@
 
 const { Client, BaseInteraction, PermissionsBitField, EmbedBuilder } = require('discord.js');
 
-const { ownerID, adminIDs } = require('../../../configs/clientSettings.json');
+const { ownerID, adminIDs, adminBypassIDs } = require('../../../configs/clientSettings.json');
 const { communityServer, botSettings } = require('../../../configs/heejinSettings.json');
 const { randomTools, stringTools } = require('../../../modules/jsTools');
 const { messageTools } = require('../../../modules/discordTools');
@@ -32,10 +32,13 @@ module.exports = {
         // Try to execute the slash command function
         if (slashCommand) try {
             // Check if the command requires the user to be an admin for the bot
-            if (slashCommand?.isOwnerCommand && ![ownerID, ...adminIDs].includes(args.interaction.user.id))
-                return await args.interaction.reply({
-                    content: "You don't have permission to use this command, silly!", ephemeral: true
-                });
+            if (slashCommand?.isOwnerCommand
+                && ![ownerID, ...adminIDs].includes(args.interaction.user.id)
+                // Special command bypass
+                && !adminBypassIDs[args.interaction.commandName].includes(args.interaction.user.id)
+            ) return await args.interaction.reply({
+                content: "You don't have permission to use this command, silly!", ephemeral: true
+            });
 
             // Check if the command requires the user to have admin in the guild
             if (slashCommand?.requireGuildAdmin) {

@@ -1,15 +1,30 @@
 const {
-    CommandInteraction,
+    CommandInteraction, SlashCommandBuilder,
     ModalBuilder, TextInputBuilder, TextInputStyle,
     ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType
 } = require('discord.js');
 
-const { messageTools } = require('../../../modules/discordTools');
-const { userManager } = require('../../../modules/mongo');
-const userParser = require('../../../modules/userParser');
-const cardManager = require('../../../modules/cardManager');
+const { messageTools } = require('../../modules/discordTools');
+const { userManager } = require('../../modules/mongo');
+const userParser = require('../../modules/userParser');
+const cardManager = require('../../modules/cardManager');
 
 module.exports = {
+    builder: new SlashCommandBuilder().setName("customizecard")
+        .setDescription("Customize a card in a user's inventory")
+
+        .addStringOption(option => option.setName("userid")
+            .setDescription("ID of the user")
+            .setRequired(true)
+        )
+
+        .addStringOption(option => option.setName("uid")
+            .setDescription("UID of the card")
+            .setRequired(true)
+    ),
+    
+    isOwnerCommand: true,
+
     /**
      * @param {Client} client
      * @param {CommandInteraction} interaction
