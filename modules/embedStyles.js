@@ -221,7 +221,9 @@ function generalShop_ES(user) {
 }
 
 // General -> /view card:set
-function generalSetView_ES(user, cards, setID) {
+function generalSetView_ES(user, cards) {
+    cards = cards.sort((a, b) => a.globalID - b.globalID);
+
     let embed_template = (titleAddon = "", text = "", imageURL = "") => new BetterEmbed({
         author: { text: `%AUTHOR_NAME | ${titleAddon}`, user },
         description: text || "There are no cards in this set", imageURL

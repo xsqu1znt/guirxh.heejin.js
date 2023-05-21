@@ -38,7 +38,7 @@ module.exports = {
             return await baseEmbed.send({ description: `\`${setID}\` is an invalid set ID` });
 
         // Create the view embed
-        let embeds_card = generalSetView_ES(interaction.user, cards, setID);
+        let embeds_card = generalSetView_ES(interaction.user, cards);
 
         // Navigateinator-ify-er 9000!!!!11
         return await new messageTools.Navigationify(interaction, [embeds_card], {
