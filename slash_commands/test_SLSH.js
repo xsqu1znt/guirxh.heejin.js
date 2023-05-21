@@ -14,7 +14,7 @@ module.exports = {
      */
     execute: async (client, interaction) => {
         //! Daily/weekly DM reminder
-        /* let embed_dailyReminder = new BetterEmbed({
+        let embed_dailyReminder = new BetterEmbed({
             interaction, showTimestamp: true,
             author: { iconURL: null, user: interaction.user },
             title: { text: "\`📬\` You have a message!" }
@@ -24,7 +24,7 @@ module.exports = {
             { name: "Reminders", value: ">>> Your \`Daily\` is available!\nYour \`Weekly\` is available!" }
         );
 
-        return await embed_dailyReminder.send(); */
+        return await embed_dailyReminder.send();
 
         //! Card gifted
         /* let card = cardManager.get.random();
@@ -42,7 +42,7 @@ module.exports = {
         return await embed_giftRecieved.send({ description: `You got a gift from <@957160832339423242>\n> ${card_f}` }); */
 
         //! Currency gifted
-        let embed_currencyRecieved = new BetterEmbed({
+        /* let embed_currencyRecieved = new BetterEmbed({
             interaction, showTimestamp: true,
             author: { iconURL: null, user: interaction.user },
             title: { text: "\`📬\` You have a message!" }
@@ -50,6 +50,6 @@ module.exports = {
 
         return await embed_currencyRecieved.send({
             description: `You recieved from <@957160832339423242>\n> \`${currencyIcon} 1000\``
-        });
+        }); */
     }
 };
