@@ -573,6 +573,7 @@ const space = (side = "both", ...str) => {
 
 module.exports = {
     messageTools: {
+        BetterEmbed: message_betterEmbed,
         Embedinator: message_Embedinator,
         Navigationify: message_Navigationify,
 
