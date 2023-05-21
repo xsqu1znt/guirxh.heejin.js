@@ -1,20 +1,157 @@
 const {
     CommandInteraction,
-    Embed,
     EmbedBuilder,
     StringSelectMenuBuilder,
     StringSelectMenuOptionBuilder,
     ActionRowBuilder,
     ButtonBuilder,
     ButtonStyle,
-    ComponentType
+    ComponentType,
+    User
 } = require('discord.js');
 
 const { botSettings } = require('../configs/heejinSettings.json');
+const { botSettings: { embed: embed_defaults } } = require('../configs/heejinSettings.json');
 const { randomTools, arrayTools, dateTools } = require('./jsTools');
 const logger = require('./logger');
 
 //! Message Tools
+const mBE_constructorOptions = {
+    /** @type {CommandInteraction | null} */
+    interaction: null,
+
+    author: {
+        /** @type {User | null} */
+        user: null, text: "", iconURL: "", linkURL: ""
+    },
+
+    title: { text: "", linkURL: "" },
+    description: "",
+    footer: { text: "", iconURL: "" },
+    color: embed_defaults.color
+};
+
+const mBE_sendOptions = {
+    /** Add a message outside of the embed. */
+    messageContent: "",
+
+    /** Send the embed with a new description.
+     * 
+     * Useful for cleaner code. */
+    description: "",
+
+    /** Send the embed with a new image.
+     * 
+     * Useful for cleaner code. */
+    imageURL: "",
+
+    /** The method to send the embed.
+     * 
+     * If "reply" isn't possible, it will fallback to "editReply".
+     * 
+     * @type {"reply" | "editReply" | "followUp" | "send"} */
+    method: "reply",
+
+    /** Send the message as ephemeral. */
+    ephemeral: false
+}
+
+/** A better embed builder. */
+class message_betterEmbed extends EmbedBuilder {
+    /** @param {mBE_constructorOptions} constructorOptions */
+    constructor(constructorOptions) {
+        constructorOptions = { ...mBE_constructorOptions, ...constructorOptions };
+
+        /// Variables
+        this.interaction = constructorOptions.interaction;
+
+        /// Configure the embed
+        //* Embed Author
+        this.setAuthor({
+            name: constructorOptions.author.text
+                // Formatting
+                .replace("%USER", constructorOptions.author.user?.username)
+        });
+
+        if (constructorOptions.author.iconURL) this.setAuthor({
+            name: this.data.author.name, iconURL: constructorOptions.author.iconURL
+        });
+
+        if (constructorOptions.author.linkURL) this.setAuthor({
+            name: this.data.author.name, iconURL: this.data.author.icon_url,
+            url: constructorOptions.author.linkURL
+        });
+
+        //* Embed Title
+        this.setTitle(constructorOptions.title.text);
+        if (constructorOptions.title.linkURL) this.setURL(constructorOptions.title.linkURL);
+
+        //* Embed Description
+        this.setDescription(constructorOptions.description);
+
+        //* Embed Footer
+        this.setFooter({ text: constructorOptions.footer.text, iconURL: constructorOptions.footer.iconURL });
+        if (constructorOptions.footer.iconURL) this.setFooter({
+            text: this.data.footer.text, iconURL: constructorOptions.footer.iconURL
+        });
+
+        //* Embed Color
+        this.setColor(this.color);
+    }
+
+    /** Send the embed using the given interaction. */
+    /** @param {mBE_sendOptions} sendOptions */
+    async send(sendOptions) {
+        sendOptions = { ...mBE_sendOptions, ...sendOptions };
+
+        // Change the embed's description if applicable
+        if (sendOptions.description) this.setDescription(sendOptions.description);
+
+        // Change the embed's image if applicable
+        if (sendOptions.imageURL) try {
+            this.setImage(sendOptions.imageURL);
+        } catch {
+            return logger.error("Failed to send embed", `invalid image URL: \`${sendOptions.imageURL}\``);
+        }
+
+        // Send the embed
+        try {
+            switch (sendOptions.method) {
+                case "reply": try {
+                    return await this.interaction.reply({
+                        content: sendOptions.messageContent,
+                        embeds: [this], ephemeral: sendOptions.ephemeral
+                    });
+                } catch { // Fallback to "editReply"
+                    return await this.interaction.editReply({
+                        content: sendOptions.messageContent,
+                        embeds: [this]
+                    });
+                }
+
+                case "editReply": return await this.interaction.editReply({
+                    content: sendOptions.messageContent,
+                    embeds: [this]
+                });
+
+                case "followUp": return await this.interaction.followUp({
+                    content: sendOptions.messageContent,
+                    embeds: [this], ephemeral: sendOptions.ephemeral
+                });
+
+                case "send": return await this.interaction.channel.send({
+                    content: sendOptions.messageContent,
+                    embeds: [this]
+                });
+
+                default: return logger.error("Failed to send embed", `invalid send method: \"${sendOptions.method}\"`)
+            }
+        } catch (err) {
+            return logger.error("Failed to send embed", "message_embed.send", err)
+        }
+    }
+}
+
 /** Create a simple embed with a description. */
 class message_Embedinator {
     /** @param {CommandInteraction} interaction */

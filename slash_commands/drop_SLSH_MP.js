@@ -158,7 +158,7 @@ module.exports = {
                 // Let the user know they need to select something to sell
                 let { embed: embed_error } = new messageTools.Embedinator(null, {
                     title: "%USER | sell",
-                    description: "Use the reactions to pick what you want to sell.",
+                    description: "Use the reactions to pick what you want to sell",
                     author: interaction.user
                 });
 
