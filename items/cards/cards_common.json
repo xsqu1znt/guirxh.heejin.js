@@ -5500,5 +5500,194 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1102235452892774410/wnw_sungjae.png"
+  },
+  {
+    "name": "DPR LIVE¹",
+    "group": "DPR LIVE",
+    "single": "Summer Tights️",
+    "category": "comn",
+    "description": "DPR LIVE - Summer Tights",
+    "emoji": "☀️",
+    "globalID": "8763",
+    "setID": "895",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353892582334484/Summer_Tights_DprLive1.png"
+  },
+  {
+    "name": "DPR LIVE²",
+    "group": "DPR LIVE",
+    "single": "Summer Tights",
+    "category": "comn",
+    "description": "DPR LIVE - Summer Tights",
+    "emoji": "☀️",
+    "globalID": "8764",
+    "setID": "895",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353892909502494/Summer_Tights_DprLive2.png"
+  },
+  {
+    "name": "DPR LIVE³",
+    "group": "DPR LIVE",
+    "single": "Summer Tights",
+    "category": "comn",
+    "description": "DPR LIVE - Summer Tights",
+    "emoji": "☀️",
+    "globalID": "8765",
+    "setID": "895",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353893198897152/Summer_Tights_DprLive3.png"
+  },
+  {
+    "name": "Eunha",
+    "group": "GFriend",
+    "single": "Fever",
+    "category": "comn",
+    "description": "GFriend - Fever",
+    "emoji": "🤒",
+    "globalID": "8766",
+    "setID": "896",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353893484114021/Fever_Eunha.png"
+  },
+  {
+    "name": "SinB",
+    "group": "GFriend",
+    "single": "Fever",
+    "category": "comn",
+    "description": "GFriend - Fever",
+    "emoji": "🤒",
+    "globalID": "8767",
+    "setID": "896",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353893811277864/Fever_Sinb.png"
+  },
+  {
+    "name": "Sowon",
+    "group": "GFriend",
+    "single": "Fever",
+    "category": "comn",
+    "description": "GFriend - Fever",
+    "emoji": "🤒",
+    "globalID": "8768",
+    "setID": "896",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353894138421419/Fever_Sowon.png"
+  },
+  {
+    "name": "Umji",
+    "group": "GFriend",
+    "single": "Fever",
+    "category": "comn",
+    "description": "GFriend - Fever",
+    "emoji": "🤒",
+    "globalID": "8769",
+    "setID": "896",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353894494949457/Fever_Umji.png"
+  },
+  {
+    "name": "Yerin",
+    "group": "GFriend",
+    "single": "Fever",
+    "category": "comn",
+    "description": "GFriend - Fever",
+    "emoji": "🤒",
+    "globalID": "8770",
+    "setID": "896",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353894897590463/Fever_Yerin.png"
+  },
+  {
+    "name": "Yuju",
+    "group": "GFriend",
+    "single": "Fever",
+    "category": "comn",
+    "description": "GFriend - Fever",
+    "emoji": "🤒",
+    "globalID": "8771",
+    "setID": "896",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353895224750160/Fever_Yuju.png"
   }
 ]

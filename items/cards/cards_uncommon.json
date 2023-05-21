@@ -5836,5 +5836,278 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1102235669897674874/seed_taeyang3.png"
+  },
+  {
+    "name": "Jaehee",
+    "group": "Weeekly",
+    "single": "Tag Me",
+    "category": "uncn",
+    "description": "Weeekly - Tag Me",
+    "emoji": "🙈",
+    "globalID": "7232",
+    "setID": "745",
+    "rarity": 60,
+    "price": 35,
+    "sellPrice": 35,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353655046316113/Tag_Me_Jaehee.png"
+  },
+  {
+    "name": "Jihan",
+    "group": "Weeekly",
+    "single": "Tag Me",
+    "category": "uncn",
+    "description": "Weeekly - Tag Me",
+    "emoji": "🙈",
+    "globalID": "7233",
+    "setID": "745",
+    "rarity": 60,
+    "price": 35,
+    "sellPrice": 35,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353655402823700/Tag_Me_Jihan.png"
+  },
+  {
+    "name": "Jiyoon",
+    "group": "Weeekly",
+    "single": "Tag Me",
+    "category": "uncn",
+    "description": "Weeekly - Tag Me",
+    "emoji": "🙈",
+    "globalID": "7234",
+    "setID": "745",
+    "rarity": 60,
+    "price": 35,
+    "sellPrice": 35,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353655792902245/Tag_Me_Jiyoon.png"
+  },
+  {
+    "name": "Monday",
+    "group": "Weeekly",
+    "single": "Tag Me",
+    "category": "uncn",
+    "description": "Weeekly - Tag Me",
+    "emoji": "🙈",
+    "globalID": "7235",
+    "setID": "745",
+    "rarity": 60,
+    "price": 35,
+    "sellPrice": 35,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353656120049745/Tag_Me_Monday.png"
+  },
+  {
+    "name": "Soeun",
+    "group": "Weeekly",
+    "single": "Tag Me",
+    "category": "uncn",
+    "description": "Weeekly - Tag Me",
+    "emoji": "🙈",
+    "globalID": "7236",
+    "setID": "745",
+    "rarity": 60,
+    "price": 35,
+    "sellPrice": 35,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353656531095592/Tag_Me_Soeun.png"
+  },
+  {
+    "name": "Soojin",
+    "group": "Weeekly",
+    "single": "Tag Me",
+    "category": "uncn",
+    "description": "Weeekly - Tag Me",
+    "emoji": "🙈",
+    "globalID": "7237",
+    "setID": "745",
+    "rarity": 60,
+    "price": 35,
+    "sellPrice": 35,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353656828887180/Tag_Me_Soojin.png"
+  },
+  {
+    "name": "Zoa",
+    "group": "Weeekly",
+    "single": "Tag Me",
+    "category": "uncn",
+    "description": "Weeekly - Tag Me",
+    "emoji": "🙈",
+    "globalID": "7238",
+    "setID": "745",
+    "rarity": 60,
+    "price": 35,
+    "sellPrice": 35,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353657143468082/Tag_Me_Zoa.png"
+  },
+  {
+    "name": "Bobby",
+    "group": "iKON",
+    "single": "U",
+    "category": "uncn",
+    "description": "iKON - U",
+    "emoji": "🫵",
+    "globalID": "7239",
+    "setID": "746",
+    "rarity": 60,
+    "price": 35,
+    "sellPrice": 35,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353751674691705/Bobby.png"
+  },
+  {
+    "name": "Chan",
+    "group": "iKON",
+    "single": "U",
+    "category": "uncn",
+    "description": "iKON - U",
+    "emoji": "🫵",
+    "globalID": "7240",
+    "setID": "746",
+    "rarity": 60,
+    "price": 35,
+    "sellPrice": 35,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353751976693780/Chan.png"
+  },
+  {
+    "name": "DK",
+    "group": "iKON",
+    "single": "U",
+    "category": "uncn",
+    "description": "iKON - U",
+    "emoji": "🫵",
+    "globalID": "7241",
+    "setID": "746",
+    "rarity": 60,
+    "price": 35,
+    "sellPrice": 35,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353752295456918/DK.png"
+  },
+  {
+    "name": "Jay",
+    "group": "iKON",
+    "single": "U",
+    "category": "uncn",
+    "description": "iKON - U",
+    "emoji": "🫵",
+    "globalID": "7242",
+    "setID": "746",
+    "rarity": 60,
+    "price": 35,
+    "sellPrice": 35,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353752589049876/Jay.png"
+  },
+  {
+    "name": "Ju-ne",
+    "group": "iKON",
+    "single": "U",
+    "category": "uncn",
+    "description": "iKON - U",
+    "emoji": "🫵",
+    "globalID": "7243",
+    "setID": "746",
+    "rarity": 60,
+    "price": 35,
+    "sellPrice": 35,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353752899440761/Ju-ne.png"
+  },
+  {
+    "name": "Song",
+    "group": "iKON",
+    "single": "U",
+    "category": "uncn",
+    "description": "iKON - U",
+    "emoji": "🫵",
+    "globalID": "7244",
+    "setID": "746",
+    "rarity": 60,
+    "price": 35,
+    "sellPrice": 35,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353753218195596/Song.png"
   }
 ]

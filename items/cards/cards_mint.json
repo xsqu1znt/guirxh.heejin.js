@@ -5080,5 +5080,215 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1102236526307446865/Unforgiven_Yunjin.png"
+  },
+  {
+    "name": "Irene",
+    "group": "Red Velvet",
+    "single": "Psycho",
+    "category": "mint",
+    "description": "Red Velvet - Psycho",
+    "emoji": "🔪",
+    "globalID": "2744",
+    "setID": "295",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353051527905432/Psycho_Irene.png"
+  },
+  {
+    "name": "Joy",
+    "group": "Red Velvet",
+    "single": "Psycho",
+    "category": "mint",
+    "description": "Red Velvet - Psycho",
+    "emoji": "🔪",
+    "globalID": "2745",
+    "setID": "295",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353051863457822/Psycho_Joy.png"
+  },
+  {
+    "name": "Seulgi",
+    "group": "Red Velvet",
+    "single": "Psycho",
+    "category": "mint",
+    "description": "Red Velvet - Psycho",
+    "emoji": "🔪",
+    "globalID": "2746",
+    "setID": "295",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353052618428427/Psycho_Seulgi.png"
+  },
+  {
+    "name": "Wendy",
+    "group": "Red Velvet",
+    "single": "Psycho",
+    "category": "mint",
+    "description": "Red Velvet - Psycho",
+    "emoji": "🔪",
+    "globalID": "2747",
+    "setID": "295",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353053067214969/Psycho_Wendy.png"
+  },
+  {
+    "name": "Yeri",
+    "group": "Red Velvet",
+    "single": "Psycho",
+    "category": "mint",
+    "description": "Red Velvet - Psycho",
+    "emoji": "🔪",
+    "globalID": "2748",
+    "setID": "295",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353053578924072/Psycho_Yeri.png"
+  },
+  {
+    "name": "Minnie",
+    "group": "(G)I-dle",
+    "single": "Queencard",
+    "category": "mint",
+    "description": "(G)I-dle - Queencard",
+    "emoji": "👑",
+    "globalID": "2749",
+    "setID": "296",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353057097941013/Queencard_Minnie.png"
+  },
+  {
+    "name": "Miyeon",
+    "group": "(G)I-dle",
+    "single": "Queencard",
+    "category": "mint",
+    "description": "(G)I-dle - Queencard",
+    "emoji": "👑",
+    "globalID": "2750",
+    "setID": "296",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353057525768192/Queencard_Miyeon.png"
+  },
+  {
+    "name": "Shuhua",
+    "group": "(G)I-dle",
+    "single": "Queencard",
+    "category": "mint",
+    "description": "(G)I-dle - Queencard",
+    "emoji": "👑",
+    "globalID": "2751",
+    "setID": "296",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353058226212885/Queencard_Shuhua.png"
+  },
+  {
+    "name": "Soyeon",
+    "group": "(G)I-dle",
+    "single": "Queencard",
+    "category": "mint",
+    "description": "(G)I-dle - Queencard",
+    "emoji": "👑",
+    "globalID": "2752",
+    "setID": "296",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353059144761426/Queencard_Soyeon.png"
+  },
+  {
+    "name": "Yuqi",
+    "group": "(G)I-dle",
+    "single": "Queencard",
+    "category": "mint",
+    "description": "(G)I-dle - Queencard",
+    "emoji": "👑",
+    "globalID": "2753",
+    "setID": "296",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353059731972146/Queencard_Yuqi.png"
   }
 ]

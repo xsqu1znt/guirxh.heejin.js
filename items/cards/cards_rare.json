@@ -5542,5 +5542,404 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1102245196416176138/predator_gikwang3.png"
+  },
+  {
+    "name": "Hyoyeon",
+    "group": "Girls' Generation",
+    "single": "The Boys",
+    "category": "rare",
+    "description": "Girls' Generation - The Boys",
+    "emoji": "👦",
+    "globalID": "5765",
+    "setID": "595",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353392554180638/The_Boys_Hyoyeon.png"
+  },
+  {
+    "name": "Jessica",
+    "group": "Girls' Generation",
+    "single": "The Boys",
+    "category": "rare",
+    "description": "Girls' Generation - The Boys",
+    "emoji": "👦",
+    "globalID": "5766",
+    "setID": "595",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353392889729034/The_Boys_Jessica.png"
+  },
+  {
+    "name": "Seohyun",
+    "group": "Girls' Generation",
+    "single": "The Boys",
+    "category": "rare",
+    "description": "Girls' Generation - The Boys",
+    "emoji": "👦",
+    "globalID": "5767",
+    "setID": "595",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353393204297888/The_Boys_Seohyun.png"
+  },
+  {
+    "name": "Sooyoung",
+    "group": "Girls' Generation",
+    "single": "The Boys",
+    "category": "rare",
+    "description": "Girls' Generation - The Boys",
+    "emoji": "👦",
+    "globalID": "5768",
+    "setID": "595",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353393565016094/The_Boys_Sooyoung.png"
+  },
+  {
+    "name": "Sunny",
+    "group": "Girls' Generation",
+    "single": "The Boys",
+    "category": "rare",
+    "description": "Girls' Generation - The Boys",
+    "emoji": "👦",
+    "globalID": "5769",
+    "setID": "595",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353393900552332/The_Boys_Sunny.png"
+  },
+  {
+    "name": "Taeyeon",
+    "group": "Girls' Generation",
+    "single": "The Boys",
+    "category": "rare",
+    "description": "Girls' Generation - The Boys",
+    "emoji": "👦",
+    "globalID": "5770",
+    "setID": "595",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353394219323454/The_Boys_Taeyeon.png"
+  },
+  {
+    "name": "Tiffany",
+    "group": "Girls' Generation",
+    "single": "The Boys",
+    "category": "rare",
+    "description": "Girls' Generation - The Boys",
+    "emoji": "👦",
+    "globalID": "5771",
+    "setID": "595",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353394500337674/The_Boys_Tiffany.png"
+  },
+  {
+    "name": "Yoona",
+    "group": "Girls' Generation",
+    "single": "The Boys",
+    "category": "rare",
+    "description": "Girls' Generation - The Boys",
+    "emoji": "👦",
+    "globalID": "5772",
+    "setID": "595",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353394831691786/The_Boys_Yoona.png"
+  },
+  {
+    "name": "Yuri",
+    "group": "Girls' Generation",
+    "single": "The Boys",
+    "category": "rare",
+    "description": "Girls' Generation - The Boys",
+    "emoji": "👦",
+    "globalID": "5773",
+    "setID": "595",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353395125297172/The_Boys_Yuri.png"
+  },
+  {
+    "name": "Hunter",
+    "group": "xikers",
+    "single": "ROCKSTAR",
+    "category": "rare",
+    "description": "xikers - ROCKSTAR",
+    "emoji": "🤘",
+    "globalID": "5774",
+    "setID": "596",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353516617515120/Rockstar_Hunter.png"
+  },
+  {
+    "name": "Hyunwoo",
+    "group": "xikers",
+    "single": "ROCKSTAR",
+    "category": "rare",
+    "description": "xikers - ROCKSTAR",
+    "emoji": "🤘",
+    "globalID": "5775",
+    "setID": "596",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353516957257849/Rockstar_Hyunwoo.png"
+  },
+  {
+    "name": "Jinsik",
+    "group": "xikers",
+    "single": "ROCKSTAR",
+    "category": "rare",
+    "description": "xikers - ROCKSTAR",
+    "emoji": "🤘",
+    "globalID": "5776",
+    "setID": "596",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353517238255706/Rockstar_Jinsik.png"
+  },
+  {
+    "name": "Junghoon",
+    "group": "xikers",
+    "single": "ROCKSTAR",
+    "category": "rare",
+    "description": "xikers - ROCKSTAR",
+    "emoji": "🤘",
+    "globalID": "5777",
+    "setID": "596",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353517582209145/Rockstar_Junghoon.png"
+  },
+  {
+    "name": "Junmin",
+    "group": "xikers",
+    "single": "ROCKSTAR",
+    "category": "rare",
+    "description": "xikers - ROCKSTAR",
+    "emoji": "🤘",
+    "globalID": "5778",
+    "setID": "596",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353517959675964/Rockstar_Junmin.png"
+  },
+  {
+    "name": "Minjae",
+    "group": "xikers",
+    "single": "ROCKSTAR",
+    "category": "rare",
+    "description": "xikers - ROCKSTAR",
+    "emoji": "🤘",
+    "globalID": "5779",
+    "setID": "596",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353518257487892/Rockstar_Minjae.png"
+  },
+  {
+    "name": "Seeun",
+    "group": "xikers",
+    "single": "ROCKSTAR",
+    "category": "rare",
+    "description": "xikers - ROCKSTAR",
+    "emoji": "🤘",
+    "globalID": "5780",
+    "setID": "596",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353518580453417/Rockstar_Seeun.png"
+  },
+  {
+    "name": "Sumin",
+    "group": "xikers",
+    "single": "ROCKSTAR",
+    "category": "rare",
+    "description": "xikers - ROCKSTAR",
+    "emoji": "🤘",
+    "globalID": "5781",
+    "setID": "596",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353518865645701/Rockstar_Sumin.png"
+  },
+  {
+    "name": "Yechan",
+    "group": "xikers",
+    "single": "ROCKSTAR",
+    "category": "rare",
+    "description": "xikers - ROCKSTAR",
+    "emoji": "🤘",
+    "globalID": "5782",
+    "setID": "596",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353519217983518/Rockstar_Yechan.png"
+  },
+  {
+    "name": "Yujin",
+    "group": "xikers",
+    "single": "ROCKSTAR",
+    "category": "rare",
+    "description": "xikers - ROCKSTAR",
+    "emoji": "🤘",
+    "globalID": "5783",
+    "setID": "596",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353519566094470/Rockstar_Yujun.png"
   }
 ]
