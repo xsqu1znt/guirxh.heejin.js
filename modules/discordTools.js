@@ -31,7 +31,7 @@ class bE_constructorOptions {
         this.description = "";
         this.footer = { text: "", iconURL: "" };
 
-        this.color = embed_defaults.color;
+        this.color = embed_defaults.color || null;
 
         this.showTimestamp = false;
     }
