@@ -1,7 +1,7 @@
 [
   {
     "name": "Hyuna²",
-    "group": "Solo",
+    "group": "Hyuna",
     "single": "Nabillera",
     "category": "rare",
     "description": "Hyuna - Nabillera",
@@ -22,7 +22,7 @@
   },
   {
     "name": "Hyuna³",
-    "group": "Solo",
+    "group": "Hyuna",
     "single": "Nabillera",
     "category": "rare",
     "description": "Hyuna - Nabillera",
@@ -43,7 +43,7 @@
   },
   {
     "name": "Hyuna¹",
-    "group": "Solo",
+    "group": "Hyuna",
     "single": "Nabillera",
     "category": "rare",
     "description": "Hyuna - Nabillera",
@@ -169,7 +169,7 @@
   },
   {
     "name": "Key¹",
-    "group": "Solo",
+    "group": "Key",
     "single": "Gasoline",
     "category": "rare",
     "description": "Key - Gasoline",
@@ -190,7 +190,7 @@
   },
   {
     "name": "Key³",
-    "group": "Solo",
+    "group": "Key",
     "single": "Gasoline",
     "category": "rare",
     "description": "Key - Gasoline",
@@ -211,7 +211,7 @@
   },
   {
     "name": "Key²",
-    "group": "Solo",
+    "group": "Key",
     "single": "Gasoline",
     "category": "rare",
     "description": "Key - Gasoline",
@@ -2311,7 +2311,7 @@
   },
   {
     "name": "KAI¹",
-    "group": "Solo",
+    "group": "KAI",
     "single": "Peaches",
     "category": "rare",
     "description": "KAI - Peaches",
@@ -2332,7 +2332,7 @@
   },
   {
     "name": "KAI²",
-    "group": "Solo",
+    "group": "KAI",
     "single": "Peaches",
     "category": "rare",
     "description": "KAI - Peaches",
@@ -2353,7 +2353,7 @@
   },
   {
     "name": "KAI³",
-    "group": "Solo",
+    "group": "KAI",
     "single": "Peaches",
     "category": "rare",
     "description": "KAI - Peaches",
@@ -2500,7 +2500,7 @@
   },
   {
     "name": "BoA¹",
-    "group": "Solo",
+    "group": "BoA",
     "single": "Forgive Me",
     "category": "rare",
     "description": "BoA - Forgive Me",
@@ -2521,7 +2521,7 @@
   },
   {
     "name": "BoA²",
-    "group": "Solo",
+    "group": "BoA",
     "single": "Forgive Me",
     "category": "rare",
     "description": "BoA - Forgive Me",
@@ -2542,7 +2542,7 @@
   },
   {
     "name": "BoA³",
-    "group": "Solo",
+    "group": "BoA",
     "single": "Forgive Me",
     "category": "rare",
     "description": "BoA - Forgive Me",
@@ -2857,7 +2857,7 @@
   },
   {
     "name": "DPR LIVE¹",
-    "group": "Solo",
+    "group": "DPR LIVE",
     "single": "Yellow Cab",
     "category": "rare",
     "description": "DPR LIVE - Yellow Cab",
@@ -2878,7 +2878,7 @@
   },
   {
     "name": "DPR LIVE²",
-    "group": "Solo",
+    "group": "DPR LIVE",
     "single": "Yellow Cab",
     "category": "rare",
     "description": "DPR LIVE - Yellow Cab",
@@ -2899,7 +2899,7 @@
   },
   {
     "name": "DPR LIVE³",
-    "group": "Solo",
+    "group": "DPR LIVE",
     "single": "Yellow Cab",
     "category": "rare",
     "description": "DPR LIVE - Yellow Cab",
@@ -3613,7 +3613,7 @@
   },
   {
     "name": "Jimin",
-    "group": "Solo",
+    "group": "Jimin",
     "single": "Vibe",
     "category": "rare",
     "description": "Taeyang - Vibe",
@@ -3634,7 +3634,7 @@
   },
   {
     "name": "Taeyang",
-    "group": "Solo",
+    "group": "Taeyang",
     "single": "Vibe",
     "category": "rare",
     "description": "Taeyang - Vibe",
@@ -3865,7 +3865,7 @@
   },
   {
     "name": "Taeyeon¹",
-    "group": "Solo",
+    "group": "Taeyeon",
     "single": "Weekend",
     "category": "rare",
     "description": "Taeyeon - Weekend",
@@ -3886,7 +3886,7 @@
   },
   {
     "name": "Taeyeon²",
-    "group": "Solo",
+    "group": "Taeyeon",
     "single": "Weekend",
     "category": "rare",
     "description": "Taeyeon - Weekend",
@@ -3907,7 +3907,7 @@
   },
   {
     "name": "Taeyeon³",
-    "group": "Solo",
+    "group": "Taeyeon",
     "single": "Weekend",
     "category": "rare",
     "description": "Taeyeon - Weekend",
@@ -5482,7 +5482,7 @@
   },
   {
     "name": "GIKWANG¹",
-    "group": "Solo",
+    "group": "GIKWANG",
     "single": "Predator",
     "category": "rare",
     "description": "GIKWANG - Predator",
@@ -5503,7 +5503,7 @@
   },
   {
     "name": "GIKWANG²",
-    "group": "Solo",
+    "group": "GIKWANG",
     "single": "Predator",
     "category": "rare",
     "description": "GIKWANG - Predator",
@@ -5524,7 +5524,7 @@
   },
   {
     "name": "GIKWANG³",
-    "group": "Solo",
+    "group": "GIKWANG",
     "single": "Predator",
     "category": "rare",
     "description": "GIKWANG - Predator",

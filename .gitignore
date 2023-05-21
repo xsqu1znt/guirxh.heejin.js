@@ -7,6 +7,7 @@ format_card_json.js
 format_cards.js
 
 
+changeCardGroups.js
 transferUsers.js
 parseOldData.js
 TODO.txt
@@ -14,7 +15,9 @@ TODO.txt
 
 cards_5_5_2023.json
 cards_5_5_2023_formated.json
+cards_20_5_2023.json
 
 users_5_5_2023.json
 users_7_5_2023.json
 users_8_5_2023.json
+users_19_5_2023.json

@@ -1345,7 +1345,7 @@
   },
   {
     "name": "Wonho³",
-    "group": "Solo",
+    "group": "Wonho",
     "single": "Don't Regret",
     "category": "comn",
     "description": "Wonho - Don't Regret",
@@ -1366,7 +1366,7 @@
   },
   {
     "name": "Wonho¹",
-    "group": "Solo",
+    "group": "Wonho",
     "single": "Don't Regret",
     "category": "comn",
     "description": "Wonho - Don't Regret",
@@ -1387,7 +1387,7 @@
   },
   {
     "name": "Wonho²",
-    "group": "Solo",
+    "group": "Wonho",
     "single": "Don't Regret",
     "category": "comn",
     "description": "Wonho - Don't Regret",
@@ -1870,7 +1870,7 @@
   },
   {
     "name": "Chaeyeon¹",
-    "group": "Solo",
+    "group": "Chaeyeon",
     "single": "HUSH RUSH",
     "category": "comn",
     "description": "Chaeyeon - HUSH RUSH",
@@ -1891,7 +1891,7 @@
   },
   {
     "name": "Chaeyeon²",
-    "group": "Solo",
+    "group": "Chaeyeon",
     "single": "HUSH RUSH",
     "category": "comn",
     "description": "Chaeyeon - HUSH RUSH",
@@ -1912,7 +1912,7 @@
   },
   {
     "name": "Chaeyeon³",
-    "group": "Solo",
+    "group": "Chaeyeon",
     "single": "HUSH RUSH",
     "category": "comn",
     "description": "Chaeyeon - HUSH RUSH",
@@ -2332,7 +2332,7 @@
   },
   {
     "name": "Jihoon²",
-    "group": "Solo",
+    "group": "Jihoon",
     "single": "Moon&Back",
     "category": "comn",
     "description": "Jihoon - Moon&Back",
@@ -2353,7 +2353,7 @@
   },
   {
     "name": "Jihoon³",
-    "group": "Solo",
+    "group": "Jihoon",
     "single": "Moon&Back",
     "category": "comn",
     "description": "Jihoon - Moon&Back",
@@ -2374,7 +2374,7 @@
   },
   {
     "name": "Jihoon¹",
-    "group": "Solo",
+    "group": "Jihoon",
     "single": "Moon&Back",
     "category": "comn",
     "description": "Jihoon - Moon&Back",
@@ -2395,7 +2395,7 @@
   },
   {
     "name": "Chen³",
-    "group": "Solo",
+    "group": "Chen",
     "single": "Last Scene",
     "category": "comn",
     "description": "Chen - Last Scene",
@@ -2416,7 +2416,7 @@
   },
   {
     "name": "Chen²",
-    "group": "Solo",
+    "group": "Chen",
     "single": "Last Scene",
     "category": "comn",
     "description": "Chen - Last Scene",
@@ -2437,7 +2437,7 @@
   },
   {
     "name": "Chen¹",
-    "group": "Solo",
+    "group": "Chen",
     "single": "Last Scene",
     "category": "comn",
     "description": "Chen - Last Scene",
@@ -2542,7 +2542,7 @@
   },
   {
     "name": "DPR IAN¹",
-    "group": "Solo",
+    "group": "DPR IAN",
     "single": "Ribbon",
     "category": "comn",
     "description": "BLɅϽKPIИK - Lovesick Girls",
@@ -2563,7 +2563,7 @@
   },
   {
     "name": "DPR IAN³",
-    "group": "Solo",
+    "group": "DPR IAN",
     "single": "Ribbon",
     "category": "comn",
     "description": "BLɅϽKPIИK - Lovesick Girls",
@@ -2584,7 +2584,7 @@
   },
   {
     "name": "DPR IAN²",
-    "group": "Solo",
+    "group": "DPR IAN",
     "single": "Ribbon",
     "category": "comn",
     "description": "BLɅϽKPIИK - Lovesick Girls",
@@ -2899,7 +2899,7 @@
   },
   {
     "name": "Taeyeon¹",
-    "group": "Solo",
+    "group": "Taeyeon",
     "single": "Something New",
     "category": "comn",
     "description": "Taeyeon - Something New",
@@ -2920,7 +2920,7 @@
   },
   {
     "name": "Taeyeon²",
-    "group": "Solo",
+    "group": "Taeyeon",
     "single": "Something New",
     "category": "comn",
     "description": "Taeyeon - Something New",
@@ -2941,7 +2941,7 @@
   },
   {
     "name": "Taeyeon³",
-    "group": "Solo",
+    "group": "Taeyeon",
     "single": "Something New",
     "category": "comn",
     "description": "Taeyeon - Something New",
@@ -2962,7 +2962,7 @@
   },
   {
     "name": "WOODZ²",
-    "group": "Solo",
+    "group": "WOODZ",
     "single": "WAITING",
     "category": "comn",
     "description": "WOODZ - WAITING",
@@ -2983,7 +2983,7 @@
   },
   {
     "name": "WOODZ¹",
-    "group": "Solo",
+    "group": "WOODZ",
     "single": "WAITING",
     "category": "comn",
     "description": "WOODZ - WAITING",
@@ -3004,7 +3004,7 @@
   },
   {
     "name": "WOODZ³",
-    "group": "Solo",
+    "group": "WOODZ",
     "single": "WAITING",
     "category": "comn",
     "description": "WOODZ - WAITING",
@@ -3865,7 +3865,7 @@
   },
   {
     "name": "Chungha¹",
-    "group": "Solo",
+    "group": "Chungha",
     "single": "Demente",
     "category": "comn",
     "description": "Chungha - Demente",
@@ -3886,7 +3886,7 @@
   },
   {
     "name": "Chungha³",
-    "group": "Solo",
+    "group": "Chungha",
     "single": "Demente",
     "category": "comn",
     "description": "Chungha - Demente",
@@ -3907,7 +3907,7 @@
   },
   {
     "name": "Chungha²",
-    "group": "Solo",
+    "group": "Chungha",
     "single": "Demente",
     "category": "comn",
     "description": "Chungha - Demente",
@@ -4726,7 +4726,7 @@
   },
   {
     "name": "IU³",
-    "group": "Solo",
+    "group": "IU",
     "single": "The red shoes",
     "category": "comn",
     "description": "IU - The red shoes",
@@ -4747,7 +4747,7 @@
   },
   {
     "name": "IU²",
-    "group": "Solo",
+    "group": "IU",
     "single": "The red shoes",
     "category": "comn",
     "description": "IU - The red shoes",
@@ -4768,7 +4768,7 @@
   },
   {
     "name": "IU¹",
-    "group": "Solo",
+    "group": "IU",
     "single": "The red shoes",
     "category": "comn",
     "description": "IU - The red shoes",
@@ -4789,7 +4789,7 @@
   },
   {
     "name": "WOOZI¹",
-    "group": "Solo",
+    "group": "WOOZI",
     "single": "Ruby",
     "category": "comn",
     "description": "WOOZI - Ruby",
@@ -4810,7 +4810,7 @@
   },
   {
     "name": "WOOZI³",
-    "group": "Solo",
+    "group": "WOOZI",
     "single": "Ruby",
     "category": "comn",
     "description": "WOOZI - Ruby",
@@ -4831,7 +4831,7 @@
   },
   {
     "name": "WOOZI²",
-    "group": "Solo",
+    "group": "WOOZI",
     "single": "Ruby",
     "category": "comn",
     "description": "WOOZI - Ruby",
@@ -4999,7 +4999,7 @@
   },
   {
     "name": "BOBBY³",
-    "group": "Solo",
+    "group": "BOBBY",
     "single": "Drowing",
     "category": "comn",
     "description": "BOBBY - Drowning",
@@ -5020,7 +5020,7 @@
   },
   {
     "name": "BOBBY¹",
-    "group": "Solo",
+    "group": "BOBBY",
     "single": "Drowing",
     "category": "comn",
     "description": "BOBBY - Drowning",
@@ -5041,7 +5041,7 @@
   },
   {
     "name": "BOBBY²",
-    "group": "Solo",
+    "group": "BOBBY",
     "single": "Drowing",
     "category": "comn",
     "description": "BOBBY - Drowning",
@@ -5314,7 +5314,7 @@
   },
   {
     "name": "HA:TFELT¹",
-    "group": "Solo",
+    "group": "HATFELT",
     "single": "La Luna",
     "category": "comn",
     "description": "HA:TFELT - La Luna",
@@ -5335,7 +5335,7 @@
   },
   {
     "name": "HA:TFELT²",
-    "group": "Solo",
+    "group": "HATFELT",
     "single": "La Luna",
     "category": "comn",
     "description": "HA:TFELT - La Luna",
@@ -5356,7 +5356,7 @@
   },
   {
     "name": "HA:TFELT³",
-    "group": "Solo",
+    "group": "HATFELT",
     "single": "La Luna",
     "category": "comn",
     "description": "HA:TFELT - La Luna",

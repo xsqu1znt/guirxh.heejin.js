@@ -1,7 +1,7 @@
 [
   {
     "name": "Nayeon²",
-    "group": "Solo",
+    "group": "Nayeon",
     "single": "POP!",
     "category": "mint",
     "description": "Nayeon - POP!",
@@ -22,7 +22,7 @@
   },
   {
     "name": "Nayeon¹",
-    "group": "Solo",
+    "group": "Nayeon",
     "single": "POP!",
     "category": "mint",
     "description": "Nayeon - POP!",
@@ -43,7 +43,7 @@
   },
   {
     "name": "Nayeon³",
-    "group": "Solo",
+    "group": "Nayeon",
     "single": "POP!",
     "category": "mint",
     "description": "Nayeon - POP!",
@@ -841,7 +841,7 @@
   },
   {
     "name": "Taeyeon³",
-    "group": "Solo",
+    "group": "Taeyeon",
     "single": "INVU",
     "category": "mint",
     "description": "Taeyeon - INVU",
@@ -862,7 +862,7 @@
   },
   {
     "name": "Taeyeon²",
-    "group": "Solo",
+    "group": "Taeyeon",
     "single": "INVU",
     "category": "mint",
     "description": "Taeyeon - INVU",
@@ -883,7 +883,7 @@
   },
   {
     "name": "Taeyeon¹",
-    "group": "Solo",
+    "group": "Taeyeon",
     "single": "INVU",
     "category": "mint",
     "description": "Taeyeon - INVU",
@@ -1828,7 +1828,7 @@
   },
   {
     "name": "YooA²",
-    "group": "Solo",
+    "group": "YooA",
     "single": "Selfish",
     "category": "mint",
     "description": "YooA - Selfish",
@@ -1849,7 +1849,7 @@
   },
   {
     "name": "YooA¹",
-    "group": "Solo",
+    "group": "YooA",
     "single": "Selfish",
     "category": "mint",
     "description": "YooA - Selfish",
@@ -1870,7 +1870,7 @@
   },
   {
     "name": "YooA³",
-    "group": "Solo",
+    "group": "YooA",
     "single": "Selfish",
     "category": "mint",
     "description": "YooA - Selfish",
@@ -2122,7 +2122,7 @@
   },
   {
     "name": "Chungha³",
-    "group": "Solo",
+    "group": "Chungha",
     "single": "Gotta Go",
     "category": "mint",
     "description": "Chungha - Gotta Go",
@@ -2143,7 +2143,7 @@
   },
   {
     "name": "Chungha²",
-    "group": "Solo",
+    "group": "Chungha",
     "single": "Gotta Go",
     "category": "mint",
     "description": "Chungha - Gotta Go",
@@ -2164,7 +2164,7 @@
   },
   {
     "name": "Chungha¹",
-    "group": "Solo",
+    "group": "Chungha",
     "single": "Gotta Go",
     "category": "mint",
     "description": "Chungha - Gotta Go",
@@ -2689,7 +2689,7 @@
   },
   {
     "name": "Minho³",
-    "group": "Solo",
+    "group": "Minho",
     "single": "Chase",
     "category": "mint",
     "description": "Minho - Chase",
@@ -2710,7 +2710,7 @@
   },
   {
     "name": "Minho¹",
-    "group": "Solo",
+    "group": "Minho",
     "single": "Chase",
     "category": "mint",
     "description": "Minho - Chase",
@@ -2731,7 +2731,7 @@
   },
   {
     "name": "Minho²",
-    "group": "Solo",
+    "group": "Minho",
     "single": "Chase",
     "category": "mint",
     "description": "Minho - Chase",
@@ -2752,7 +2752,7 @@
   },
   {
     "name": "RM²",
-    "group": "Solo",
+    "group": "RM",
     "single": "Wild Flower",
     "category": "mint",
     "description": "RM - Wild Flower",
@@ -2773,7 +2773,7 @@
   },
   {
     "name": "RM¹",
-    "group": "Solo",
+    "group": "RM",
     "single": "Wild Flower",
     "category": "mint",
     "description": "RM - Wild Flower",
@@ -2794,7 +2794,7 @@
   },
   {
     "name": "RM³",
-    "group": "Solo",
+    "group": "RM",
     "single": "Wild Flower",
     "category": "mint",
     "description": "RM - Wild Flower",
@@ -2815,7 +2815,7 @@
   },
   {
     "name": "Baekhyun²",
-    "group": "Solo",
+    "group": "Baekhyun",
     "single": "Candy",
     "category": "mint",
     "description": "Baekhyun - Candy",
@@ -2836,7 +2836,7 @@
   },
   {
     "name": "Baekhyun³",
-    "group": "Solo",
+    "group": "Baekhyun",
     "single": "Candy",
     "category": "mint",
     "description": "Baekhyun - Candy",
@@ -2857,7 +2857,7 @@
   },
   {
     "name": "Baekhyun¹",
-    "group": "Solo",
+    "group": "Baekhyun",
     "single": "Candy",
     "category": "mint",
     "description": "Baekhyun - Candy",
@@ -3760,7 +3760,7 @@
   },
   {
     "name": "JEON SOYEON²",
-    "group": "Solo",
+    "group": "JEON SOYEON",
     "single": "BEAM BEAM",
     "category": "mint",
     "description": "JEON SOYEON - BEAM BEAM",
@@ -3781,7 +3781,7 @@
   },
   {
     "name": "JEON SOYEON¹",
-    "group": "Solo",
+    "group": "JEON SOYEON",
     "single": "BEAM BEAM",
     "category": "mint",
     "description": "JEON SOYEON - BEAM BEAM",
@@ -3802,7 +3802,7 @@
   },
   {
     "name": "JEON SOYEON³",
-    "group": "Solo",
+    "group": "JEON SOYEON",
     "single": "BEAM BEAM",
     "category": "mint",
     "description": "JEON SOYEON - BEAM BEAM",
@@ -4327,7 +4327,7 @@
   },
   {
     "name": "BamBam²",
-    "group": "Solo",
+    "group": "BamBam",
     "single": "Sour & Sweet",
     "category": "mint",
     "description": "BamBam - Sour & Sweet",
@@ -4348,7 +4348,7 @@
   },
   {
     "name": "BamBam¹",
-    "group": "Solo",
+    "group": "BamBam",
     "single": "Sour & Sweet",
     "category": "mint",
     "description": "BamBam - Sour & Sweet",
@@ -4369,7 +4369,7 @@
   },
   {
     "name": "BamBam³",
-    "group": "Solo",
+    "group": "BamBam",
     "single": "Sour & Sweet",
     "category": "mint",
     "description": "BamBam - Sour & Sweet",
@@ -4579,7 +4579,7 @@
   },
   {
     "name": "Onew¹",
-    "group": "Solo",
+    "group": "Onew",
     "single": "DICE",
     "category": "mint",
     "description": "ONEW - DICE",
@@ -4600,7 +4600,7 @@
   },
   {
     "name": "Onew²",
-    "group": "Solo",
+    "group": "Onew",
     "single": "DICE",
     "category": "mint",
     "description": "ONEW - DICE",
@@ -4621,7 +4621,7 @@
   },
   {
     "name": "Onew³",
-    "group": "Solo",
+    "group": "Onew",
     "single": "DICE",
     "category": "mint",
     "description": "ONEW - DICE",
@@ -4642,7 +4642,7 @@
   },
   {
     "name": "JISOO¹",
-    "group": "Solo",
+    "group": "JISOO",
     "single": "FLOWER",
     "category": "mint",
     "description": "JISOO - FLOWER",
@@ -4663,7 +4663,7 @@
   },
   {
     "name": "JISOO²",
-    "group": "Solo",
+    "group": "JISOO",
     "single": "FLOWER",
     "category": "mint",
     "description": "JISOO - FLOWER",
@@ -4684,7 +4684,7 @@
   },
   {
     "name": "JISOO³",
-    "group": "Solo",
+    "group": "JISOO",
     "single": "FLOWER",
     "category": "mint",
     "description": "JISOO - FLOWER",
@@ -4831,7 +4831,7 @@
   },
   {
     "name": "JONGHYUN¹",
-    "group": "Solo",
+    "group": "JONGHYUN",
     "single": "Crazy (Guilty Pleasure)",
     "category": "mint",
     "description": "JONGHYUN - Crazy (Guilty Pleasure)",
@@ -4852,7 +4852,7 @@
   },
   {
     "name": "JONGHYUN²",
-    "group": "Solo",
+    "group": "JONGHYUN",
     "single": "Crazy (Guilty Pleasure)",
     "category": "mint",
     "description": "JONGHYUN - Crazy (Guilty Pleasure)",
@@ -4873,7 +4873,7 @@
   },
   {
     "name": "JONGHYUN³",
-    "group": "Solo",
+    "group": "JONGHYUN",
     "single": "Crazy (Guilty Pleasure)",
     "category": "mint",
     "description": "JONGHYUN - Crazy (Guilty Pleasure)",

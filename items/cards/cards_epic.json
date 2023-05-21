@@ -421,7 +421,7 @@
   },
   {
     "name": "IU¹",
-    "group": "Solo",
+    "group": "IU",
     "single": "LILAC",
     "category": "epic",
     "description": "IU - LILAC",
@@ -442,7 +442,7 @@
   },
   {
     "name": "IU³",
-    "group": "Solo",
+    "group": "IU",
     "single": "LILAC",
     "category": "epic",
     "description": "IU - LILAC",
@@ -463,7 +463,7 @@
   },
   {
     "name": "IU²",
-    "group": "Solo",
+    "group": "IU",
     "single": "LILAC",
     "category": "epic",
     "description": "IU - LILAC",
@@ -1219,7 +1219,7 @@
   },
   {
     "name": "Seulgi¹",
-    "group": "Solo",
+    "group": "Seulgi",
     "single": "28 Reasons",
     "category": "epic",
     "description": "Seulgi - 28 Reasons",
@@ -1240,7 +1240,7 @@
   },
   {
     "name": "Seulgi²",
-    "group": "Solo",
+    "group": "Seulgi",
     "single": "28 Reasons",
     "category": "epic",
     "description": "Seulgi - 28 Reasons",
@@ -1261,7 +1261,7 @@
   },
   {
     "name": "Seulgi³",
-    "group": "Solo",
+    "group": "Seulgi",
     "single": "28 Reasons",
     "category": "epic",
     "description": "Seulgi - 28 Reasons",
@@ -1891,7 +1891,7 @@
   },
   {
     "name": "Baekho²",
-    "group": "Solo",
+    "group": "Baekho",
     "single": "No Rules",
     "category": "epic",
     "description": "Baekho - No Rules",
@@ -1912,7 +1912,7 @@
   },
   {
     "name": "Baekho¹",
-    "group": "Solo",
+    "group": "Baekho",
     "single": "No Rules",
     "category": "epic",
     "description": "Baekho - No Rules",
@@ -1933,7 +1933,7 @@
   },
   {
     "name": "Baekho³",
-    "group": "Solo",
+    "group": "Baekho",
     "single": "No Rules",
     "category": "epic",
     "description": "Baekho - No Rules",
@@ -1954,7 +1954,7 @@
   },
   {
     "name": "Jin¹",
-    "group": "Solo",
+    "group": "Jin",
     "single": "The Astronaut",
     "category": "epic",
     "description": "Jin - The Austronaut",
@@ -1975,7 +1975,7 @@
   },
   {
     "name": "Jin²",
-    "group": "Solo",
+    "group": "Jin",
     "single": "The Astronaut",
     "category": "epic",
     "description": "Jin - The Austronaut",
@@ -1996,7 +1996,7 @@
   },
   {
     "name": "Jin³",
-    "group": "Solo",
+    "group": "Jin",
     "single": "The Astronaut",
     "category": "epic",
     "description": "Jin - The Austronaut",
@@ -3844,7 +3844,7 @@
   },
   {
     "name": "Yena¹",
-    "group": "Solo",
+    "group": "Yena",
     "single": "Love War",
     "category": "epic",
     "description": "Yena - Love War",
@@ -3865,7 +3865,7 @@
   },
   {
     "name": "Yena³",
-    "group": "Solo",
+    "group": "Yena",
     "single": "Love War",
     "category": "epic",
     "description": "Yena - Love War",
@@ -3886,7 +3886,7 @@
   },
   {
     "name": "Yena²",
-    "group": "Solo",
+    "group": "Yena",
     "single": "Love War",
     "category": "epic",
     "description": "Yena - Love War",
@@ -3991,7 +3991,7 @@
   },
   {
     "name": "KEY¹",
-    "group": "Solo",
+    "group": "KEY",
     "single": "Killer",
     "category": "epic",
     "description": "KEY - Killer",
@@ -4012,7 +4012,7 @@
   },
   {
     "name": "KEY³",
-    "group": "Solo",
+    "group": "KEY",
     "single": "Killer",
     "category": "epic",
     "description": "KEY - Killer",
@@ -4033,7 +4033,7 @@
   },
   {
     "name": "KEY²",
-    "group": "Solo",
+    "group": "KEY",
     "single": "Killer",
     "category": "epic",
     "description": "KEY - Killer",
