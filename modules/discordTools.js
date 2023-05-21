@@ -16,141 +16,172 @@ const { randomTools, arrayTools, dateTools } = require('./jsTools');
 const logger = require('./logger');
 
 //! Message Tools
-const mBE_constructorOptions = {
-    /** @type {CommandInteraction | null} */
-    interaction: null,
+class bE_constructorOptions {
+    constructor() {
+        /** @type {CommandInteraction | null} */
+        this.interaction = null;
 
-    author: {
-        /** @type {User | null} */
-        user: null, text: "", iconURL: "", linkURL: ""
-    },
+        this.author = {
+            /** @type {User | null} */
+            user: null, text: "", iconURL: "", linkURL: ""
+        };
 
-    title: { text: "", linkURL: "" },
-    description: "",
-    footer: { text: "", iconURL: "" },
-    color: embed_defaults.color
+        this.title = { text: "", linkURL: "" };
+        this.imageURL = "";
+        this.description = "";
+        this.footer = { text: "", iconURL: "" };
+
+        this.color = embed_defaults.color;
+    }
 };
 
-const mBE_sendOptions = {
-    /** Add a message outside of the embed. */
-    messageContent: "",
+class bE_sendOptions {
+    constructor() {
+        /** Add a message outside of the embed. */
+        this.messageContent = "";
 
-    /** Send the embed with a new description.
-     * 
-     * Useful for cleaner code. */
-    description: "",
+        /** Send the embed with a new description.
+         * 
+         * Useful for cleaner code. */
+        this.description = "";
 
-    /** Send the embed with a new image.
-     * 
-     * Useful for cleaner code. */
-    imageURL: "",
+        /** Send the embed with a new image.
+         * 
+         * Useful for cleaner code. */
+        this.imageURL = "";
 
-    /** The method to send the embed.
-     * 
-     * If "reply" isn't possible, it will fallback to "editReply".
-     * 
-     * @type {"reply" | "editReply" | "followUp" | "send"} */
-    method: "reply",
+        /** The method to send the embed.
+         * 
+         * If "reply" isn't possible, it will fallback to "editReply".
+         * 
+         * @type {"reply" | "editReply" | "followUp" | "send"} */
+        this.method = "reply";
 
-    /** Send the message as ephemeral. */
-    ephemeral: false
-}
+        /** Send the message as ephemeral. */
+        this.ephemeral = false;
+    }
+};
 
 /** A better embed builder. */
-class message_betterEmbed extends EmbedBuilder {
-    /** @param {mBE_constructorOptions} constructorOptions */
-    constructor(constructorOptions) {
-        constructorOptions = { ...mBE_constructorOptions, ...constructorOptions };
+class BetterEmbed extends EmbedBuilder {
+    /** @param {bE_constructorOptions} options */
+    constructor(options) {
+        options = { ...new bE_constructorOptions(), ...options };
 
         /// Variables
-        this.interaction = constructorOptions.interaction;
+        this.interaction = options.interaction;
+        this.author = options.author;
 
         /// Configure the embed
         //* Embed Author
         this.setAuthor({
-            name: constructorOptions.author.text
-                // Formatting
-                .replace("%USER", constructorOptions.author.user?.username)
+            name: options.author.text
+                // Formatting shorthand
+                .replace("%USER", options.author.user?.username)
         });
 
-        if (constructorOptions.author.iconURL) this.setAuthor({
-            name: this.data.author.name, iconURL: constructorOptions.author.iconURL
+        if (options.author.iconURL || options.author.user) this.setAuthor({
+            name: this.data.author.name, iconURL: options.author.iconURL
+                || options.author.user.avatarURL({ dynamic: true })
         });
 
-        if (constructorOptions.author.linkURL) this.setAuthor({
+        if (options.author.linkURL) this.setAuthor({
             name: this.data.author.name, iconURL: this.data.author.icon_url,
-            url: constructorOptions.author.linkURL
+            url: options.author.linkURL
         });
 
         //* Embed Title
-        this.setTitle(constructorOptions.title.text);
-        if (constructorOptions.title.linkURL) this.setURL(constructorOptions.title.linkURL);
+        this.setTitle(options.title.text);
+        if (options.title.linkURL) this.setURL(options.title.linkURL);
 
         //* Embed Description
-        this.setDescription(constructorOptions.description);
+        this.setDescription(options.description);
+
+        //* Embed Image
+        if (options.imageURL) try {
+            this.setImage(options.imageURL);
+        } catch {
+            return logger.error("Failed to create embed", `invalid image URL: \`${options.imageURL}\``);
+        }
 
         //* Embed Footer
-        this.setFooter({ text: constructorOptions.footer.text, iconURL: constructorOptions.footer.iconURL });
-        if (constructorOptions.footer.iconURL) this.setFooter({
-            text: this.data.footer.text, iconURL: constructorOptions.footer.iconURL
+        this.setFooter({ text: options.footer.text, iconURL: options.footer.iconURL });
+        if (options.footer.iconURL) this.setFooter({
+            text: this.data.footer.text, iconURL: options.footer.iconURL
         });
 
         //* Embed Color
         this.setColor(this.color);
     }
 
-    /** Send the embed using the given interaction. */
-    /** @param {mBE_sendOptions} sendOptions */
-    async send(sendOptions) {
-        sendOptions = { ...mBE_sendOptions, ...sendOptions };
+    /** Send the embed using the given interaction.
+     * 
+     * @example
+     // Text formatting shorthand:
+     * "%USER" = "author's username";
+     * "%USER_MENTION" = "author's mention";
+     * 
+     * @param {bE_sendOptions} options */
+    async send(options) {
+        options = { ...new bE_sendOptions(), ...options };
+
+        // Format message content
+        options.messageContent = options.messageContent
+            // Formatting shorthand
+            .replace("%USER", this.author.user?.username)
+            .replace("%USER_MENTION", this.author.user?.toString());
 
         // Change the embed's description if applicable
-        if (sendOptions.description) this.setDescription(sendOptions.description);
+        if (options.description) this.setDescription(options.description
+            // Formatting shorthand
+            .replace("%USER", this.author.user?.username)
+            .replace("%USER_MENTION", this.author.user?.toString())
+        );
 
         // Change the embed's image if applicable
-        if (sendOptions.imageURL) try {
-            this.setImage(sendOptions.imageURL);
+        if (options.imageURL) try {
+            this.setImage(options.imageURL);
         } catch {
-            return logger.error("Failed to send embed", `invalid image URL: \`${sendOptions.imageURL}\``);
+            return logger.error("Failed to send embed", `invalid image URL: \`${options.imageURL}\``);
         }
 
         // Send the embed
         try {
-            switch (sendOptions.method) {
+            switch (options.method) {
                 case "reply": try {
                     return await this.interaction.reply({
-                        content: sendOptions.messageContent,
-                        embeds: [this], ephemeral: sendOptions.ephemeral
+                        content: options.messageContent,
+                        embeds: [this], ephemeral: options.ephemeral
                     });
                 } catch { // Fallback to "editReply"
                     return await this.interaction.editReply({
-                        content: sendOptions.messageContent,
+                        content: options.messageContent,
                         embeds: [this]
                     });
                 }
 
                 case "editReply": return await this.interaction.editReply({
-                    content: sendOptions.messageContent,
+                    content: options.messageContent,
                     embeds: [this]
                 });
 
                 case "followUp": return await this.interaction.followUp({
-                    content: sendOptions.messageContent,
-                    embeds: [this], ephemeral: sendOptions.ephemeral
+                    content: options.messageContent,
+                    embeds: [this], ephemeral: options.ephemeral
                 });
 
                 case "send": return await this.interaction.channel.send({
-                    content: sendOptions.messageContent,
+                    content: options.messageContent,
                     embeds: [this]
                 });
 
-                default: return logger.error("Failed to send embed", `invalid send method: \"${sendOptions.method}\"`)
+                default: return logger.error("Failed to send embed", `invalid send method: \"${options.method}\"`)
             }
         } catch (err) {
             return logger.error("Failed to send embed", "message_embed.send", err)
         }
     }
-}
+};
 
 /** Create a simple embed with a description. */
 class message_Embedinator {
@@ -572,8 +603,9 @@ const space = (side = "both", ...str) => {
 }
 
 module.exports = {
+    BetterEmbed,
+
     messageTools: {
-        BetterEmbed: message_betterEmbed,
         Embedinator: message_Embedinator,
         Navigationify: message_Navigationify,
 
