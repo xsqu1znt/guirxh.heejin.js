@@ -35,7 +35,7 @@ class bE_constructorOptions {
 
         this.showTimestamp = false;
     }
-};
+}
 
 class bE_sendOptions {
     constructor() {
@@ -62,7 +62,7 @@ class bE_sendOptions {
         /** Send the message as ephemeral. */
         this.ephemeral = false;
     }
-};
+}
 
 /** A better embed builder. */
 class BetterEmbed extends EmbedBuilder {
@@ -191,7 +191,7 @@ class BetterEmbed extends EmbedBuilder {
             logger.error("Failed to send embed", "message_embed.send", err); return null;
         }
     }
-};
+}
 
 /** Create a simple embed with a description. */
 class message_Embedinator {
@@ -610,7 +610,7 @@ const space = (side = "both", ...str) => {
         case "right": return space ? (str.join(" ") + " ") : (str.join("") + " ");
         case "both": return space ? (" " + str.join(" ") + " ") : (" " + str.join("") + " ");
     }
-}
+};
 
 module.exports = {
     BetterEmbed,

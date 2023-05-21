@@ -91,7 +91,11 @@ function tryLevelUp(card, session = null) {
     session.card = card; return session;
 }
 
-//! Fetch
+//! Get
+function get_set(setID) {
+    return cards_all.filter(card => card.setID === setID);
+}
+
 function get_random(basicOnly = false) {
     return randomTools.choice(basicOnly ? cards_general : cards_all);
 }
@@ -257,6 +261,7 @@ module.exports = {
     tryLevelUp,
 
     get: {
+        set: get_set,
         random: get_random,
         byGlobalID: get_byGlobalID,
         drop: get_randomDrop

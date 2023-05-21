@@ -4,7 +4,7 @@ const { markdown: { bold, inline, quote } } = require('./discordTools');
 
 const { communityServer, botSettings, userSettings } = require('../configs/heejinSettings.json');
 const { arrayTools, stringTools, numberTools, dateTools } = require('../modules/jsTools');
-const { messageTools } = require('../modules/discordTools');
+const { BetterEmbed, messageTools } = require('../modules/discordTools');
 const cardManager = require('../modules/cardManager');
 const badgeManager = require('../modules/badgeManager');
 const userParser = require('../modules/userParser');
@@ -218,6 +218,27 @@ function generalShop_ES(user) {
         embed_itemPacks(),
         embed_badges()
     ];
+}
+
+// General -> /view card:set
+function generalSetView_ES(user, cards, setID) {
+    let embed_template = (titleAddon = "", text = "", imageURL = "") => new BetterEmbed({
+        author: { text: `%AUTHOR_NAME | ${titleAddon}`, user },
+        description: text || "There are no cards in this set", imageURL
+    });
+
+    let embeds = [];
+    for (let i = 0; i < cards.length; i++) {
+        let card_f = cardManager.toString.inventory(cards[i], { simplify: true });
+        let _embed = embed_template(
+            `${cards[i].group} - ${cards[i].single}`,
+            card_f, cards[i].imageURL
+        ).setFooter({ text: `Card ${i + 1}/${cards.length}` });
+
+        embeds.push(_embed);
+    }
+
+    return embeds.length ? embeds : [embed_template()];
 }
 
 // Command -> User -> /DROP
@@ -830,6 +851,7 @@ module.exports = {
     // General Commands
     generalCollections_ES,
     generalShop_ES,
+    generalSetView_ES,
 
     // User Commands
     userDrop_ES,
