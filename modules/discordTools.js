@@ -32,6 +32,8 @@ class bE_constructorOptions {
         this.footer = { text: "", iconURL: "" };
 
         this.color = embed_defaults.color;
+
+        this.showTimestamp = false;
     }
 };
 
@@ -64,9 +66,14 @@ class bE_sendOptions {
 
 /** A better embed builder. */
 class BetterEmbed extends EmbedBuilder {
-    /** @param {bE_constructorOptions} options */
+    /**
+     * @example
+     // Text formatting shorthand:
+     * "%AUTHOR_NAME" = "the author's username"
+     * 
+     * @param {bE_constructorOptions} options */
     constructor(options) {
-        options = { ...new bE_constructorOptions(), ...options };
+        super(); options = { ...new bE_constructorOptions(), ...options };
 
         /// Variables
         this.interaction = options.interaction;
@@ -74,13 +81,13 @@ class BetterEmbed extends EmbedBuilder {
 
         /// Configure the embed
         //* Embed Author
-        this.setAuthor({
+        if (options.author.text) this.setAuthor({
             name: options.author.text
                 // Formatting shorthand
-                .replace("%USER", options.author.user?.username)
+                .replace("%AUTHOR_NAME", options.author.user?.username)
         });
 
-        if (options.author.iconURL || options.author.user) this.setAuthor({
+        if ((options.author.iconURL || options.author.user) && options.author.iconURL !== null) this.setAuthor({
             name: this.data.author.name, iconURL: options.author.iconURL
                 || options.author.user.avatarURL({ dynamic: true })
         });
@@ -91,35 +98,38 @@ class BetterEmbed extends EmbedBuilder {
         });
 
         //* Embed Title
-        this.setTitle(options.title.text);
+        if (options.title.text) this.setTitle(options.title.text);
         if (options.title.linkURL) this.setURL(options.title.linkURL);
 
         //* Embed Description
-        this.setDescription(options.description);
+        if (options.description) this.setDescription(options.description);
 
         //* Embed Image
         if (options.imageURL) try {
             this.setImage(options.imageURL);
         } catch {
-            return logger.error("Failed to create embed", `invalid image URL: \`${options.imageURL}\``);
+            logger.error("Failed to create embed", `invalid image URL: \`${options.imageURL}\``); return null;
         }
 
         //* Embed Footer
-        this.setFooter({ text: options.footer.text, iconURL: options.footer.iconURL });
+        if (options.footer.text) this.setFooter({ text: options.footer.text, iconURL: options.footer.iconURL });
         if (options.footer.iconURL) this.setFooter({
             text: this.data.footer.text, iconURL: options.footer.iconURL
         });
 
         //* Embed Color
-        this.setColor(this.color);
+        if (options.color) this.setColor(options.color);
+
+        //* Embed Timestamp
+        if (options.showTimestamp) this.setTimestamp();
     }
 
     /** Send the embed using the given interaction.
      * 
      * @example
      // Text formatting shorthand:
-     * "%USER" = "author's username";
-     * "%USER_MENTION" = "author's mention";
+     * "%AUTHOR_NAME" = "the author's username"
+     * "%AUTHOR_MENTION" = "the author's mention"
      * 
      * @param {bE_sendOptions} options */
     async send(options) {
@@ -128,21 +138,21 @@ class BetterEmbed extends EmbedBuilder {
         // Format message content
         options.messageContent = options.messageContent
             // Formatting shorthand
-            .replace("%USER", this.author.user?.username)
-            .replace("%USER_MENTION", this.author.user?.toString());
+            .replace("%AUTHOR_NAME", this.author.user?.username)
+            .replace("%AUTHOR_MENTION", this.author.user?.toString());
 
         // Change the embed's description if applicable
         if (options.description) this.setDescription(options.description
             // Formatting shorthand
-            .replace("%USER", this.author.user?.username)
-            .replace("%USER_MENTION", this.author.user?.toString())
+            .replace("%AUTHOR_NAME", this.author.user?.username)
+            .replace("%AUTHOR_MENTION", this.author.user?.toString())
         );
 
         // Change the embed's image if applicable
         if (options.imageURL) try {
             this.setImage(options.imageURL);
         } catch {
-            return logger.error("Failed to send embed", `invalid image URL: \`${options.imageURL}\``);
+            logger.error("Failed to send embed", `invalid image URL: \`${options.imageURL}\``); return null;
         }
 
         // Send the embed
@@ -175,10 +185,10 @@ class BetterEmbed extends EmbedBuilder {
                     embeds: [this]
                 });
 
-                default: return logger.error("Failed to send embed", `invalid send method: \"${options.method}\"`)
+                default: logger.error("Failed to send embed", `invalid send method: \"${options.method}\"`); return null;
             }
         } catch (err) {
-            return logger.error("Failed to send embed", "message_embed.send", err)
+            logger.error("Failed to send embed", "message_embed.send", err); return null;
         }
     }
 };

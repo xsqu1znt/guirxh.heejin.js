@@ -12,12 +12,15 @@ module.exports = {
      */
     execute: async (client, interaction) => {
         let embed_dailyReminder = new BetterEmbed({
-            interaction,
-            author: { text: "%USER | daily", user: interaction.user }
+            interaction, showTimestamp: true,
+            author: { iconURL: null, user: interaction.user },
+            title: { text: "\`📬\` You have a message!" }
         });
 
-        return await embed_dailyReminder.send({
-            description: "Hey there, %USER_MENTION! Your \`Daily\` is available!"
-        });
+        embed_dailyReminder.addFields(
+            { name: "Reminders", value: ">>> Your \`Daily\` is available!\nYour \`Weekly\` is available!" }
+        );
+
+        return await embed_dailyReminder.send();
     }
 };
