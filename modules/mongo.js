@@ -41,7 +41,7 @@ async function guild_update(guildID, update) {
 
 //! Guild -> Reminders
 /** @param {cooldownTypes} reminderType */
-async function guildReminder_add(guildID, channelID, user = { id: "", name: "" }, reminderType) {
+/* async function guildReminder_add(guildID, channelID, user = { id: "", name: "" }, reminderType) {
     if (!await guild_exists(guildID)) await guild_fetch(guildID);
 
     // Create the reminder object
@@ -64,7 +64,7 @@ async function guildReminder_remove(guildID, reminderID) {
 
     // Send a pull request to Mongo
     await guild_update(guildID, { $pull: { reminders: { id: reminderID } } }); return null;
-}
+} */
 
 //! User
 async function user_exists(userID) {
@@ -72,17 +72,16 @@ async function user_exists(userID) {
     return exists ? true : false;
 }
 
-/** @param {"full" | "essential" | "cards"} type */
+/** @param {"full" | "essential" | "reminders" | "cards"} type */
 async function user_fetch(userID, type = "full", lean = false) {
     let filter = {};
     let user;
 
     switch (type) {
         case "full": filter = { __v: 0 }; break;
-        case "essential":
-            filter = { card_inventory: 0 };
-            break;
-        case "cards": filter = { _id: 0, card_inventory: 1 }; break;
+        case "essential": filter = { card_inventory: 0, __v: 0 }; break;
+        case "reminders": filter = { daily_streak: 1, cooldowns: 1, reminders: 1, __v: 0 }; break;
+        case "cards": filter = { card_inventory: 1, __v: 0 }; break;
     }
 
     if (userID) {
@@ -288,8 +287,8 @@ async function userCooldown_reset(userID, cooldownType) {
 //! User -> Reminders
 /** @param {cooldownTypes} reminderType */
 async function userReminder_toggle(userID, reminderType) {
-    let userData = await user_fetch(userID, "essential", true);
-    let reminder = userData.reminders.find(reminder => reminder.type === reminderType);
+    let userData = await user_fetch(userID, "reminders");
+    let reminder = userData.reminders.find(r => r.type === reminderType);
 
     let enabled = true;
 
@@ -304,14 +303,14 @@ async function userReminder_toggle(userID, reminderType) {
     }
     else await models.user.updateOne(
         { _id: userID },
-        { $addToSet: { "reminders": { type: reminderType, enabled } } }
+        { $addToSet: { "reminders.$": { type: reminderType, enabled } } }
     );
 
     return enabled;
 }
 
 /** @param {cooldownTypes} reminderType */
-async function userReminder_reset(userID, guildID, channelID, user, reminderType) {
+/* async function userReminder_reset(userID, guildID, channelID, user, reminderType) {
     let userData = await user_fetch(userID, "essential", true);
 
     // Check if the user has reminders enabled before resetting
@@ -320,7 +319,7 @@ async function userReminder_reset(userID, guildID, channelID, user, reminderType
     );
 
     return null;
-}
+} */
 
 module.exports = {
     /** Connect to MongoDB. */
@@ -343,12 +342,12 @@ module.exports = {
         exists: guild_exists,
         fetch: guild_fetch,
         fetchAll: guild_fetchAll,
-        update: guild_update,
+        update: guild_update/* ,
 
         reminders: {
             add: guildReminder_add,
             remove: guildReminder_remove
-        }
+        } */
     },
 
     userManager: {
@@ -377,8 +376,8 @@ module.exports = {
         },
 
         reminders: {
-            toggle: userReminder_toggle,
-            reset: userReminder_reset
+            toggle: userReminder_toggle/* ,
+            reset: userReminder_reset */
         }
     }
 };
