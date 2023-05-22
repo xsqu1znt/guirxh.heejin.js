@@ -72,6 +72,10 @@ async function user_exists(userID) {
     return exists ? true : false;
 }
 
+async function user_count() {
+    return await models.user.count();
+}
+
 /** @param {"full" | "essential" | "reminders" | "cards"} type */
 async function user_fetch(userID, type = "full", lean = false) {
     let filter = {};
@@ -352,6 +356,7 @@ module.exports = {
 
     userManager: {
         exists: user_exists,
+        count: user_count,
         fetch: user_fetch,
         update: user_update,
         new: user_new,

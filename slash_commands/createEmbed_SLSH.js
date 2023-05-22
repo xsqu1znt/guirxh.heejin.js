@@ -30,11 +30,23 @@ module.exports = {
             .setAuthor({ name: "Hi there!" })
             .setColor(botSettings.embed.color);
 
+        let messageContent = "";
+        let date = {
+            year: new Date().getFullYear().toString().substring(2),
+            month: new Date().getMonth().toString(),
+            day: new Date().getDate().toString()
+        };
+
+        if (date.month.length === 1) date.month = `0${date.month}`;
+        if (date.day.length === 1) date.day = `0${date.day}`;
+
         // Apply a template if given
         switch (interaction.options.getString("template")) {
             case "template_board":
+                messageContent = "<@&911414367550074941>";
+
                 embed.setAuthor({
-                    name: `Overall Updates (${new Date().toLocaleDateString()})`,
+                    name: `Overall Updates (${date.year}/${date.month}/${date.day})`,
                     iconURL: interaction.guild.members.me.user.avatarURL({ dynamic: true })
                 });
 
@@ -67,8 +79,10 @@ module.exports = {
                 embed.setDescription(description_board); break;
 
             case "template_update":
+                messageContent = "<@&903998336980385813>";
+
                 embed.setAuthor({
-                    name: `New Weekly Collections (${new Date().toLocaleDateString()})`,
+                    name: `New Weekly Collections (${date.year}/${date.month}/${date.day})`,
                     iconURL: interaction.guild.members.me.user.avatarURL({ dynamic: true })
                 });
 
@@ -95,6 +109,7 @@ module.exports = {
                 new TextInputBuilder().setCustomId("mti_messageContent")
                     .setLabel("Message content (outside the embed):")
                     .setStyle(TextInputStyle.Paragraph)
+                    .setValue(messageContent || " ")
                     .setMaxLength(2000)
                     .setRequired(false),
 
@@ -157,7 +172,6 @@ module.exports = {
         };
 
         // Send the base embed
-        let messageContent = "";
         let message = await interaction.editReply({
             embeds: [embed], components: [
                 actionRow_customizer.edit

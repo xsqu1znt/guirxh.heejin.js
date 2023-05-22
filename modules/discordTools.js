@@ -88,17 +88,21 @@ class BetterEmbed extends EmbedBuilder {
         });
 
         if ((options.author.iconURL || options.author.user) && options.author.iconURL !== null) this.setAuthor({
-            name: this.data.author.name, iconURL: options.author.iconURL
+            name: this.data.author?.name || null, iconURL: options.author.iconURL
                 || options.author.user.avatarURL({ dynamic: true })
         });
 
         if (options.author.linkURL) this.setAuthor({
-            name: this.data.author.name, iconURL: this.data.author.icon_url,
+            name: this.data.author?.name, iconURL: this.data.author.icon_url,
             url: options.author.linkURL
         });
 
         //* Embed Title
-        if (options.title.text) this.setTitle(options.title.text);
+        if (options.title.text) this.setTitle(options.title.text
+            // Formatting shorthand
+            .replace("%AUTHOR_NAME", options.author.user?.username)
+        );
+
         if (options.title.linkURL) this.setURL(options.title.linkURL);
 
         //* Embed Description
