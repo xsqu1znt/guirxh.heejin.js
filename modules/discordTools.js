@@ -199,17 +199,23 @@ class BetterEmbed extends EmbedBuilder {
 }
 
 /** @type {"short" | "shortJump" | "long" | "longJump" | false} */
-const paginationType = null;
+const nav_paginationType = null;
+
+/** @type {BetterEmbed | EmbedBuilder | Array<BetterEmbed | EmbedBuilder> | Array<Array<BetterEmbed | EmbedBuilder>>} */
+const nav_embedsType = null;
+
+/** @type {BetterEmbed | EmbedBuilder} */
+const nav_embedsType2 = null;
 
 class nav_constructorOptions {
     constructor() {
         /** @type {CommandInteraction | null} */
         this.interaction = null;
 
-        /** @type {BetterEmbed | EmbedBuilder | Array<BetterEmbed | EmbedBuilder> | Array<Array<BetterEmbed | EmbedBuilder>>} */
+        /** @type {nav_embedsType} */
         this.embeds = null;
 
-        /** @type {paginationType} */
+        /** @type {nav_paginationType} */
         this.paginationType = false;
         this.selectMenu = false;
 
@@ -267,7 +273,9 @@ class Navigationinator {
 
             embeds: options.embeds,
 
-            pageIdx: { current: 0, nested: 0 },
+            /** @type {nav_embedsType2} */
+            page_current: null,
+            page_idx: { current: 0, nested: 0 },
 
             selectMenuEnabled: options.selectMenu,
             selectMenuValues: [],
@@ -301,11 +309,11 @@ class Navigationinator {
         this.data.actionRows.selectMenu.setComponents(this.data.components.selectMenu);
     }
 
-    /** Toggle the select menu on/off */
+    /** Toggle the select menu on/off. */
     async toggleSelectMenu() {
         this.data.selectMenuEnabled = !this.data.selectMenuEnabled;
 
-        // await this.refresh();
+        return await this.refresh();
     }
 
     /** Add an option to the select menu.
@@ -338,6 +346,13 @@ class Navigationinator {
         this.data.components.selectMenu.spliceOptions(idx, 1);
     }
 
+    /** Toggle pagination on/off. */
+    async togglePagination() {
+        this.data.paginationType = false;
+
+        return await this.refresh();
+    }
+
     /** Set pagination type. Set to false to disable.
      * @param {paginationType} type */
     async setPaginationType(type) {
@@ -346,23 +361,32 @@ class Navigationinator {
         // await this.refresh();
     }
 
-    #updatePagination() {
-        // Get the current page to check if it's an array
-        let page_current = this.data.embeds[this.data.pageIdx.current];
+    #getCurrentPage() {
+        let page = this.data.embeds[this.data.page_idx.current];
 
-        // Check whether or not there are multiple nested pages
-        this.data.requiresPagination = page_current?.length >= 2;
+        if (page?.length)
+            this.data.page_current = page[this.data.page_idx.current];
+        else
+            this.data.page_current = page;
+
+        // Determine whether or not pagination is required
+        this.data.requiresPagination = page?.length >= 2;
+    }
+
+    #updatePagination() {
+        this.#getCurrentPage();
 
         // Check whether or not it would be necessary to use long pagination
-        this.data.requiresLongPagination = page_current?.length >= 4;
+        this.data.requiresLongPagination = this.data.page_current?.length >= 4;
 
         // Check whether or not there's enough pages to enable page jumping
-        this.data.canJumpToPage = page_current?.length >= 4;
+        this.data.canJumpToPage = this.data.page_current?.length >= 4;
 
         // Shorthand variables
         let ar_pagination = this.data.actionRows.pagination;
         let btns_nav = this.data.components.pagination;
 
+        // Set pagination buttons depending on the circumstance
         if (this.data.requiresPagination) switch (this.data.paginationType) {
             case "short": ar_pagination.setComponents(
                 btns_nav.back, btns_nav.next
@@ -388,82 +412,84 @@ class Navigationinator {
             ); break;
         }
 
-        /* switch (this.data.paginationType) {
-            case "short": if (this.data.pageRequiresPagination) this.data.actionRows.pagination.setComponents(
-                this.data.components.pagination.back,
-                this.data.components.pagination.next
-            ); return;
-
-            case "shortJump": return this.data.actionRows.pagination.setComponents(
-                this.data.components.pagination.back,
-                this.data.components.pagination.jump,
-                this.data.components.pagination.next
-            ); return;
-
-            case "long": return this.data.actionRows.pagination.setComponents(
-                this.data.components.pagination.toFirst,
-                this.data.components.pagination.back,
-                this.data.components.pagination.next,
-                this.data.components.pagination.toLast
-            ); return;
-
-            case "long": return this.data.actionRows.pagination.setComponents(
-                this.data.components.pagination.toFirst,
-                this.data.components.pagination.back,
-                this.data.components.pagination.jump,
-                this.data.components.pagination.next,
-                this.data.components.pagination.toLast
-            ); return;
-        } */
+        return this.data.requiresPagination ? ar_pagination : null;
     }
 
+    /** Refresh the message with the current page and action rows. */
     async refresh() {
+        // Check if the message is editable
+        if (!this.data.message?.editable) {
+            logger.error("(Navigationator) Failed to edit message", "message not sent/editable");
+            return null;
+        }
 
+        this.#getCurrentPage();
+
+        // Reset message components
+        this.data.messageComponents = [];
+
+        // Add the select menu if enabled
+        if (this.data.selectMenuEnabled)
+            this.data.messageComponents.push(this.data.actionRows.selectMenu);
+
+        // Add pagination if enabled
+        if (this.data.paginationType && this.#updatePagination())
+            this.data.messageComponents.push(this.data.actionRows.pagination);
+
+        // Edit & return the message
+        this.data.message = await this.data.message.edit({
+            embeds: [this.data.page_current], components: this.data.messageComponents
+        }); return this.data.message;
     }
 
     /** Send the embed with navigation.
      * @param {nav_sendOptions} options */
     async send(options) {
-        options = { ...new nav_sendOptions(), ...options };
+        options = { ...new nav_sendOptions(), ...options }; this.#getCurrentPage();
 
         // Add the select menu if enabled
-        if (this.data.selectMenuEnabled) this.data.messageComponents.push(this.data.actionRows.selectMenu);
+        if (this.data.selectMenuEnabled)
+            this.data.messageComponents.push(this.data.actionRows.selectMenu);
 
-        // Add page navigation buttons if enabled
-        // if (this.data.paginationType)
+        // Add pagination if enabled
+        if (this.data.paginationType && this.#updatePagination())
+            this.data.messageComponents.push(this.data.actionRows.pagination);
 
-        // let view = this.views[this.viewIndex];
-        // if (Array.isArray(view)) view = view[this.nestedPageIndex];
+        // Send the message
+        try {
+            switch (options.method) {
+                case "reply": try {
+                    this.data.message = await this.data.interaction.reply({
+                        embeds: [this.data.page_current], ephemeral: options.ephemeral,
+                        components: this.data.messageComponents
+                    }); break;
+                } catch { // Fallback to "editReply"
+                    this.data.message = await this.data.interaction.editReply({
+                        embeds: [this.data.page_current], components: this.data.messageComponents
+                    }); break;
+                }
 
-        /* let replyOptions = {
-            embeds: [view],
-            components: [],
-            ephemeral: this.options.ephemeral
-        }; */
+                case "editReply": this.data.message = await this.data.interaction.editReply({
+                    embeds: [this.data.page_current], components: this.data.messageComponents
+                }); break;
 
-        /* // If enabled, add in the select menu action row
-        if (this.selectMenu_enabled) replyOptions.components.push(this.actionRow.selectMenu);
+                case "followUp": this.data.message = await this.data.interaction.followUp({
+                    embeds: [this.data.page_current], ephemeral: options.ephemeral,
+                    components: this.data.messageComponents
+                }); break;
 
-        // If enabled, add in the pagination action row
-        if (this.views[this.viewIndex]?.length > 1 && this.pagination_enabled) {
-            this.determinePageinationStyle();
-            replyOptions.components.push(this.actionRow.pagination);
+                case "send": this.data.message = await this.data.interaction.channel.send({
+                    embeds: [this.data.page_current], components: this.data.messageComponents
+                }); break;
+
+                default: logger.error("Failed to send embed", `invalid send method: \"${options.method}\"`); return null;
+            }
+        } catch (err) {
+            logger.error("Failed to send embed", "message_embed.send", err); return null;
         }
 
-        // Send the embed and neccesary components
-        if (this.options.followUp)
-            this.fetchedReply = await this.interaction.followUp(replyOptions);
-        else
-            try {
-                this.fetchedReply = await this.interaction.reply(replyOptions);
-            } catch {
-                // If you edit a reply you can't change the message to ephemeral
-                // unless you do a follow up message and then delete the original reply but that's pretty scuffed
-                this.fetchedReply = await this.interaction.editReply(replyOptions);
-            }
-
-        // Collect message component interactions
-        this.collectInteractions(); return this.fetchedReply; */
+        // Collect message component interactions & return the message
+        this.#collectInteractions(); return this.data.message;
     }
 
     async #collectInteractions() {
@@ -811,6 +837,8 @@ class message_Navigationify {
         });
     }
 }
+
+// new message_Navigationify().
 
 async function message_awaitConfirmation(interaction, options = { title: "", description: "", footer: "", showAuthor: true, deleteAfter: true, timeout: 0 }) {
     options = {
