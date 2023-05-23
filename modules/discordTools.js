@@ -7,7 +7,8 @@ const {
     ButtonBuilder,
     ButtonStyle,
     ComponentType,
-    User
+    User,
+    Message
 } = require('discord.js');
 
 const { botSettings } = require('../configs/heejinSettings.json');
@@ -197,6 +198,9 @@ class BetterEmbed extends EmbedBuilder {
     }
 }
 
+/** @type {"short" | "shortJump" | "long" | "longJump" | false} */
+const paginationType = null;
+
 class nav_constructorOptions {
     constructor() {
         /** @type {CommandInteraction | null} */
@@ -205,31 +209,57 @@ class nav_constructorOptions {
         /** @type {BetterEmbed | EmbedBuilder | Array<BetterEmbed | EmbedBuilder> | Array<Array<BetterEmbed | EmbedBuilder>>} */
         this.embeds = null;
 
-        /** @type {false | "short" | "shortJump" | "long" | "longJump"} */
+        /** @type {paginationType} */
         this.paginationType = false;
         this.selectMenu = false;
-
-        this.ephemeral = false;
 
         this.timeout = dateTools.parseStr(botSettings.timeout.pagination);
     }
 }
 
+class nav_selectMenuOptionData {
+    constructor(idx = 0) {
+        this.emoji = "";
+        this.label = `page ${idx}`;
+        this.description = "";
+        this.value = `ssm_${randomTools.alphaNumericString(4, true)}`;
+        this.isDefault = idx === 0 ? true : false;
+    }
+}
+
+class nav_sendOptions {
+    constructor() {
+        /** The method to send the embed.
+         * 
+         * If "reply" isn't possible, it will fallback to "editReply".
+         * 
+         * @type {"reply" | "editReply" | "followUp" | "send"} */
+        this.method = "reply";
+
+        /** Send the message as ephemeral. */
+        this.ephemeral = false;
+    }
+}
+
 /** Add a navigation system to embeds. */
 class Navigationinator {
+    #createButton(label, customID) {
+        return new ButtonBuilder({
+            label, style: ButtonStyle.Secondary, custom_id: customID
+        });
+    }
+
     /** @param {nav_constructorOptions} options */
     constructor(options) {
         options = { ...new nav_constructorOptions(), ...options };
         if (!options.interaction) return logger.error("Failed to navigationate", "interaction not given");
 
         let paginationButton_emojis = customEmojis.pagination;
-        let paginationButton = (label, customID) => new ButtonBuilder({
-            label, style: ButtonStyle.Secondary, custom_id: customID
-        });
 
         // Variables
         this.data = {
             interaction: options.interaction,
+            /** @type {Message} */
             message: null,
 
             embeds: options.embeds,
@@ -247,14 +277,76 @@ class Navigationinator {
                 selectMenu: new StringSelectMenuBuilder().setCustomId("ssm_page").setPlaceholder("choose a page to view..."),
 
                 pagination: {
-                    toFirst: paginationButton(paginationButton_emojis.toFirst, "btn_toFirst"),
-                    back: paginationButton(paginationButton_emojis.back, "btn_back"),
-                    jump: paginationButton(paginationButton_emojis.jump, "btn_jump"),
-                    next: paginationButton(paginationButton_emojis.next, "btn_next"),
-                    toLast: paginationButton(paginationButton_emojis.toLast, "btn_toLast")
+                    toFirst: this.#createButton(paginationButton_emojis.toFirst, "btn_toFirst"),
+                    back: this.#createButton(paginationButton_emojis.back, "btn_back"),
+                    jump: this.#createButton(paginationButton_emojis.jump, "btn_jump"),
+                    next: this.#createButton(paginationButton_emojis.next, "btn_next"),
+                    toLast: this.#createButton(paginationButton_emojis.toLast, "btn_toLast")
                 }
             }
         }
+
+        // Configure
+        if (!Array.isArray(this.data.embeds)) this.data.embeds = [this.data.embeds];
+
+        this.data.actionRows.selectMenu.setComponents(this.data.components.selectMenu);
+    }
+
+    /** Toggle the select menu on/off */
+    async toggleSelectMenu() {
+        this.data.selectMenuEnabled = !this.data.selectMenuEnabled;
+
+        // await this.refresh();
+    }
+
+    /** Add an option to the select menu.
+     * @param {nav_selectMenuOptionData} data */
+    addToSelectMenu(data) {
+        data = { ...new nav_selectMenuOptionData(this.data.selectMenuValues.length + 1), ...data };
+
+        // Append a new value to reference this select menu option
+        this.data.selectMenuValues.push(data.value);
+
+        // Create the select menu option
+        let option = new StringSelectMenuOptionBuilder()
+            .setLabel(data.label)
+            .setValue(data.value)
+            .setDefault(data.isDefault);
+
+        // Add a description if applicable
+        if (data.description) option.setDescription(data.description);
+
+        // Add an emoji if applicable
+        if (data.emoji) option.setEmoji(data.emoji);
+
+        // Add the newly created option to the select menu
+        this.data.components.selectMenu.addOptions(option);
+    }
+
+    /** Remove an option from the select menu using its index.
+     * @param {number} idx */
+    removeFromSelectMenu(idx) {
+        this.data.components.selectMenu.spliceOptions(idx, 1);
+    }
+
+    /** Set pagination type. Set to false to disable.
+     * @param {paginationType} type */
+    async setPaginationType(type) {
+        this.data.paginationType = type;
+
+        // await this.refresh();
+    }
+
+    async refresh() {
+
+    }
+
+    async send(options) {
+
+    }
+
+    async #collectInteractions() {
+
     }
 }
 
