@@ -22,6 +22,14 @@
                 {"name": "five", "emoji": "<:five:1103208750489280542>"}
             ],
 
+            "pagination": {
+                "toFirst": {"name": "left2", "emoji": "<:left2:1110403342611513344>"},
+                "back": {"name": "left1", "emoji": "<:left1:1110403341378396280>"},
+                "jump": {"name": "left1", "emoji": "<:left1:1110403341378396280>"},
+                "next": {"name": "right1", "emoji": "<:right1:1110403344461209680>"},
+                "toLast": {"name": "right2", "emoji": "<:right2:1110403345702735963>"}
+            },
+
             "confirmSell": {"name": "✅", "emoji": "✅"}
         },
 

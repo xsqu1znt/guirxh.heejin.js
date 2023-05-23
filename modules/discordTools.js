@@ -11,7 +11,7 @@ const {
 } = require('discord.js');
 
 const { botSettings } = require('../configs/heejinSettings.json');
-const { botSettings: { embed: embed_defaults } } = require('../configs/heejinSettings.json');
+const { botSettings: { embed: embed_defaults, customEmojis } } = require('../configs/heejinSettings.json');
 const { randomTools, arrayTools, dateTools } = require('./jsTools');
 const logger = require('./logger');
 
@@ -197,6 +197,69 @@ class BetterEmbed extends EmbedBuilder {
     }
 }
 
+class nav_constructorOptions {
+    constructor() {
+        /** @type {CommandInteraction | null} */
+        this.interaction = null;
+
+        /** @type {BetterEmbed | EmbedBuilder | Array<BetterEmbed | EmbedBuilder> | Array<Array<BetterEmbed | EmbedBuilder>>} */
+        this.embeds = null;
+
+        /** @type {false | "short" | "shortJump" | "long" | "longJump"} */
+        this.paginationType = false;
+        this.selectMenu = false;
+
+        this.ephemeral = false;
+
+        this.timeout = dateTools.parseStr(botSettings.timeout.pagination);
+    }
+}
+
+/** Add a navigation system to embeds. */
+class Navigationinator {
+    /** @param {nav_constructorOptions} options */
+    constructor(options) {
+        options = { ...new nav_constructorOptions(), ...options };
+        if (!options.interaction) return logger.error("Failed to navigationate", "interaction not given");
+
+        let paginationButton_emojis = customEmojis.pagination;
+        let paginationButton = (label, customID) => new ButtonBuilder({
+            label, style: ButtonStyle.Secondary, custom_id: customID
+        });
+
+        // Variables
+        this.data = {
+            interaction: options.interaction,
+            message: null,
+
+            embeds: options.embeds,
+
+            paginationType: options.paginationType,
+            selectMenuEnabled: options.selectMenu,
+            selectMenuValues: [],
+
+            actionRows: {
+                selectMenu: new ActionRowBuilder(),
+                pagination: new ActionRowBuilder()
+            },
+
+            components: {
+                selectMenu: new StringSelectMenuBuilder().setCustomId("ssm_page").setPlaceholder("choose a page to view..."),
+
+                pagination: {
+                    toFirst: paginationButton(paginationButton_emojis.toFirst, "btn_toFirst"),
+                    back: paginationButton(paginationButton_emojis.back, "btn_back"),
+                    jump: paginationButton(paginationButton_emojis.jump, "btn_jump"),
+                    next: paginationButton(paginationButton_emojis.next, "btn_next"),
+                    toLast: paginationButton(paginationButton_emojis.toLast, "btn_toLast")
+                }
+            }
+        }
+    }
+}
+
+// new Navigationinator().
+
 /** Create a simple embed with a description. */
 class message_Embedinator {
     /** @param {CommandInteraction} interaction */
@@ -350,7 +413,13 @@ class message_Navigationify {
     determinePageinationStyle() {
         let nestedPageCount = this.views[this.viewIndex]?.length || 0;
 
-        if (nestedPageCount > 1) this.actionRow.pagination.setComponents(
+        this.actionRow.pagination.setComponents(
+            this.components.pagination.pageBack,
+            this.components.pagination.jump,
+            this.components.pagination.pageNext
+        );
+
+        /* if (nestedPageCount > 1) this.actionRow.pagination.setComponents(
             this.components.pagination.pageBack,
             this.components.pagination.pageNext
         );
@@ -361,7 +430,7 @@ class message_Navigationify {
             this.components.pagination.jump,
             this.components.pagination.pageNext,
             this.components.pagination.skipLast
-        );
+        ); */
     }
 
     async setSelectMenuDisabled(disabled = true) {

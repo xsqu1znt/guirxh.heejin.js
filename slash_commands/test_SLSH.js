@@ -1,6 +1,6 @@
-const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
+const { Client, CommandInteraction, SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
-const { botSettings: { currencyIcon } } = require('../configs/heejinSettings.json');
+const { communityServer, botSettings: { currencyIcon } } = require('../configs/heejinSettings.json');
 const { BetterEmbed } = require('../modules/discordTools');
 const cardManager = require('../modules/cardManager');
 
@@ -13,8 +13,17 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
+        //! Join our offical server button
+        let buttonRow = new ActionRowBuilder().addComponents(new ButtonBuilder()
+            .setLabel("Join our offical server!")
+            .setStyle(ButtonStyle.Link)
+            .setURL(communityServer.url)
+        );
+
+        return await interaction.editReply({ components: [buttonRow] });
+
         //! Daily/weekly DM reminder
-        let embed_dailyReminder = new BetterEmbed({
+        /* let embed_dailyReminder = new BetterEmbed({
             interaction, showTimestamp: true,
             author: { iconURL: null, user: interaction.user },
             title: { text: "\`📬\` You have a message!" }
@@ -24,7 +33,7 @@ module.exports = {
             { name: "Reminders", value: ">>> Your \`Daily\` is available!\nYour \`Weekly\` is available!" }
         );
 
-        return await embed_dailyReminder.send();
+        return await embed_dailyReminder.send(); */
 
         //! Card gifted
         /* let card = cardManager.get.random();
