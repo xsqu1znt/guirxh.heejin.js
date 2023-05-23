@@ -415,7 +415,7 @@ class Navigationinator {
         return this.data.requiresPagination ? ar_pagination : null;
     }
 
-    /** Refresh the message with the current page and action rows. */
+    /** Refresh the message with the current page and components. */
     async refresh() {
         // Check if the message is editable
         if (!this.data.message?.editable) {
