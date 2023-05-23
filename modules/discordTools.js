@@ -257,6 +257,9 @@ class Navigationinator {
         let paginationButton_emojis = customEmojis.pagination;
 
         // Variables
+        // this.#requiresPagination = false;
+        // this.#canJumpPage = false;
+
         this.data = {
             interaction: options.interaction,
             /** @type {Message} */
@@ -264,9 +267,15 @@ class Navigationinator {
 
             embeds: options.embeds,
 
-            paginationType: options.paginationType,
+            pageIdx: { current: 0, nested: 0 },
+
             selectMenuEnabled: options.selectMenu,
             selectMenuValues: [],
+
+            paginationType: options.paginationType,
+            requiresPagination: false, requiresLongPagination: false, canJumpToPage: false,
+
+            messageComponents: [],
 
             actionRows: {
                 selectMenu: new ActionRowBuilder(),
@@ -337,12 +346,124 @@ class Navigationinator {
         // await this.refresh();
     }
 
+    #updatePagination() {
+        // Get the current page to check if it's an array
+        let page_current = this.data.embeds[this.data.pageIdx.current];
+
+        // Check whether or not there are multiple nested pages
+        this.data.requiresPagination = page_current?.length >= 2;
+
+        // Check whether or not it would be necessary to use long pagination
+        this.data.requiresLongPagination = page_current?.length >= 4;
+
+        // Check whether or not there's enough pages to enable page jumping
+        this.data.canJumpToPage = page_current?.length >= 4;
+
+        // Shorthand variables
+        let ar_pagination = this.data.actionRows.pagination;
+        let btns_nav = this.data.components.pagination;
+
+        if (this.data.requiresPagination) switch (this.data.paginationType) {
+            case "short": ar_pagination.setComponents(
+                btns_nav.back, btns_nav.next
+            ); break;
+
+            case "shortJump": ar_pagination.setComponents(...this.data.canJumpToPage
+                ? [btns_nav.back, btns_nav.jump, btns_nav.next]
+                : [btns_nav.back, btns_nav.next]
+            ); break;
+
+            case "long": ar_pagination.setComponents(...this.data.requiresLongPagination
+                ? [btns_nav.toFirst, btns_nav.back, btns_nav.next, btns_nav.toLast]
+                : [btns_nav.back, btns_nav.next]
+            ); break;
+
+            case "longJump": ar_pagination.setComponents(...this.data.requiresLongPagination
+                ? this.data.canJumpToPage
+                    ? [btns_nav.toFirst, btns_nav.back, btns_nav.jump, btns_nav.next, btns_nav.toLast]
+                    : [btns_nav.toFirst, btns_nav.back, btns_nav.next, btns_nav.toLast]
+                : this.data.canJumpToPage
+                    ? [btns_nav.back, btns_nav.jump, btns_nav.next]
+                    : [btns_nav.back, btns_nav.next]
+            ); break;
+        }
+
+        /* switch (this.data.paginationType) {
+            case "short": if (this.data.pageRequiresPagination) this.data.actionRows.pagination.setComponents(
+                this.data.components.pagination.back,
+                this.data.components.pagination.next
+            ); return;
+
+            case "shortJump": return this.data.actionRows.pagination.setComponents(
+                this.data.components.pagination.back,
+                this.data.components.pagination.jump,
+                this.data.components.pagination.next
+            ); return;
+
+            case "long": return this.data.actionRows.pagination.setComponents(
+                this.data.components.pagination.toFirst,
+                this.data.components.pagination.back,
+                this.data.components.pagination.next,
+                this.data.components.pagination.toLast
+            ); return;
+
+            case "long": return this.data.actionRows.pagination.setComponents(
+                this.data.components.pagination.toFirst,
+                this.data.components.pagination.back,
+                this.data.components.pagination.jump,
+                this.data.components.pagination.next,
+                this.data.components.pagination.toLast
+            ); return;
+        } */
+    }
+
     async refresh() {
 
     }
 
+    /** Send the embed with navigation.
+     * @param {nav_sendOptions} options */
     async send(options) {
+        options = { ...new nav_sendOptions(), ...options };
 
+        // Add the select menu if enabled
+        if (this.data.selectMenuEnabled) this.data.messageComponents.push(this.data.actionRows.selectMenu);
+
+        // Add page navigation buttons if enabled
+        // if (this.data.paginationType)
+
+        // let view = this.views[this.viewIndex];
+        // if (Array.isArray(view)) view = view[this.nestedPageIndex];
+
+        /* let replyOptions = {
+            embeds: [view],
+            components: [],
+            ephemeral: this.options.ephemeral
+        }; */
+
+        /* // If enabled, add in the select menu action row
+        if (this.selectMenu_enabled) replyOptions.components.push(this.actionRow.selectMenu);
+
+        // If enabled, add in the pagination action row
+        if (this.views[this.viewIndex]?.length > 1 && this.pagination_enabled) {
+            this.determinePageinationStyle();
+            replyOptions.components.push(this.actionRow.pagination);
+        }
+
+        // Send the embed and neccesary components
+        if (this.options.followUp)
+            this.fetchedReply = await this.interaction.followUp(replyOptions);
+        else
+            try {
+                this.fetchedReply = await this.interaction.reply(replyOptions);
+            } catch {
+                // If you edit a reply you can't change the message to ephemeral
+                // unless you do a follow up message and then delete the original reply but that's pretty scuffed
+                this.fetchedReply = await this.interaction.editReply(replyOptions);
+            }
+
+        // Collect message component interactions
+        this.collectInteractions(); return this.fetchedReply; */
     }
 
     async #collectInteractions() {
