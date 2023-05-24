@@ -198,6 +198,8 @@ class BetterEmbed extends EmbedBuilder {
     }
 }
 
+const paginationButton_emojis = customEmojis.pagination;
+
 /** @type {"short" | "shortJump" | "long" | "longJump" | false} */
 const nav_paginationType = null;
 
@@ -226,9 +228,9 @@ class nav_constructorOptions {
 class nav_selectMenuOptionData {
     constructor(idx = 0) {
         this.emoji = "";
-        this.label = `page ${idx}`;
+        this.label = `page ${idx + 1}`;
         this.description = "";
-        this.value = `ssm_${randomTools.alphaNumericString(4, true)}`;
+        this.value = `ssm_o_${idx + 1}`;
         this.isDefault = idx === 0 ? true : false;
     }
 }
@@ -249,9 +251,9 @@ class nav_sendOptions {
 
 /** Add a navigation system to embeds. */
 class Navigationinator {
-    #createButton(label, customID) {
+    #createButton(emoji, label, customID) {
         return new ButtonBuilder({
-            label, style: ButtonStyle.Secondary, custom_id: customID
+            emoji, label, style: ButtonStyle.Secondary, custom_id: customID
         });
     }
 
@@ -260,12 +262,7 @@ class Navigationinator {
         options = { ...new nav_constructorOptions(), ...options };
         if (!options.interaction) return logger.error("Failed to navigationate", "interaction not given");
 
-        let paginationButton_emojis = customEmojis.pagination;
-
         // Variables
-        // this.#requiresPagination = false;
-        // this.#canJumpPage = false;
-
         this.data = {
             interaction: options.interaction,
             /** @type {Message} */
@@ -275,6 +272,7 @@ class Navigationinator {
 
             /** @type {nav_embedsType2} */
             page_current: null,
+            page_nestedLength: 0,
             page_idx: { current: 0, nested: 0 },
 
             selectMenuEnabled: options.selectMenu,
@@ -291,14 +289,14 @@ class Navigationinator {
             },
 
             components: {
-                selectMenu: new StringSelectMenuBuilder().setCustomId("ssm_page").setPlaceholder("choose a page to view..."),
+                selectMenu: new StringSelectMenuBuilder().setCustomId("ssm_pageSelect").setPlaceholder("choose a page to view..."),
 
                 pagination: {
-                    toFirst: this.#createButton(paginationButton_emojis.toFirst, "btn_toFirst"),
-                    back: this.#createButton(paginationButton_emojis.back, "btn_back"),
-                    jump: this.#createButton(paginationButton_emojis.jump, "btn_jump"),
-                    next: this.#createButton(paginationButton_emojis.next, "btn_next"),
-                    toLast: this.#createButton(paginationButton_emojis.toLast, "btn_toLast")
+                    toFirst: this.#createButton(paginationButton_emojis.toFirst.emoji, null, "btn_toFirst"),
+                    back: this.#createButton(paginationButton_emojis.back.emoji, null, "btn_back"),
+                    jump: this.#createButton(paginationButton_emojis.jump.emoji, null, "btn_jump"),
+                    next: this.#createButton(paginationButton_emojis.next.emoji, null, "btn_next"),
+                    toLast: this.#createButton(paginationButton_emojis.toLast.emoji, null, "btn_toLast")
                 }
             }
         }
@@ -319,7 +317,7 @@ class Navigationinator {
     /** Add an option to the select menu.
      * @param {nav_selectMenuOptionData} data */
     addToSelectMenu(data) {
-        data = { ...new nav_selectMenuOptionData(this.data.selectMenuValues.length + 1), ...data };
+        data = { ...new nav_selectMenuOptionData(this.data.selectMenuValues.length), ...data };
 
         // Append a new value to reference this select menu option
         this.data.selectMenuValues.push(data.value);
@@ -354,14 +352,14 @@ class Navigationinator {
     }
 
     /** Set pagination type. Set to false to disable.
-     * @param {paginationType} type */
+     * @param {nav_paginationType} type */
     async setPaginationType(type) {
         this.data.paginationType = type;
 
         // await this.refresh();
     }
 
-    #getCurrentPage() {
+    #updateCurrentPage() {
         let page = this.data.embeds[this.data.page_idx.current];
 
         if (page?.length)
@@ -369,18 +367,21 @@ class Navigationinator {
         else
             this.data.page_current = page;
 
+        // Keep track of how many nested pages are on this page
+        this.data.page_nestedLength = page?.length || 0;
+
         // Determine whether or not pagination is required
         this.data.requiresPagination = page?.length >= 2;
+
+        // Check whether or not it would be necessary to use long pagination
+        this.data.requiresLongPagination = page?.length >= 4;
+
+        // Check whether or not there's enough pages to enable page jumping
+        this.data.canJumpToPage = page?.length >= 4;
     }
 
     #updatePagination() {
-        this.#getCurrentPage();
-
-        // Check whether or not it would be necessary to use long pagination
-        this.data.requiresLongPagination = this.data.page_current?.length >= 4;
-
-        // Check whether or not there's enough pages to enable page jumping
-        this.data.canJumpToPage = this.data.page_current?.length >= 4;
+        this.#updateCurrentPage();
 
         // Shorthand variables
         let ar_pagination = this.data.actionRows.pagination;
@@ -423,7 +424,7 @@ class Navigationinator {
             return null;
         }
 
-        this.#getCurrentPage();
+        this.#updateCurrentPage();
 
         // Reset message components
         this.data.messageComponents = [];
@@ -445,7 +446,7 @@ class Navigationinator {
     /** Send the embed with navigation.
      * @param {nav_sendOptions} options */
     async send(options) {
-        options = { ...new nav_sendOptions(), ...options }; this.#getCurrentPage();
+        options = { ...new nav_sendOptions(), ...options }; this.#updateCurrentPage();
 
         // Add the select menu if enabled
         if (this.data.selectMenuEnabled)
@@ -493,7 +494,57 @@ class Navigationinator {
     }
 
     async #collectInteractions() {
+        // Create an interaction collector
+        let filter = i => i.user.id === this.data.interaction.user.id;
+        let collector = this.data.message.createMessageComponentCollector({ filter, time: this.options.timeout });
 
+        collector.on("collect", async i => {
+            // Defer the interaction and reset the collector's timer
+            await i.deferUpdate(); collector.resetTimer();
+
+            // Ignore non-button/select menu interactions
+            if (![ComponentType.Button, ComponentType.StringSelect].includes(i.componentType)) return;
+
+            switch (i.customId) {
+                case "ssm_pageSelect":
+                    this.data.page_idx.current = this.data.selectMenuValues.findIndex(val => val === i.values[0]);
+                    this.data.page_idx.nested = 0;
+                    await this.refresh(); return;
+
+                case "btn_toFirst":
+                    this.data.page_idx.nested = 0;
+                    await this.refresh(); return;
+
+                case "btn_back":
+                    this.data.page_idx.nested--;
+                    if (this.data.page_idx.nested < 0)
+                        this.data.page_idx.nested = (this.data.page_nestedLength - 1);
+
+                    await this.refresh(); return;
+
+                case "btn_jump":
+                    this.data.page_idx.nested = 0;
+                    await this.refresh(); return;
+
+                case "btn_next":
+                    this.data.page_idx.nested++;
+                    if (this.data.page_idx.nested > (this.data.page_nestedLength - 1))
+                        this.data.page_idx.nested = 0;
+
+                    await this.refresh(); return;
+
+                case "btn_toLast":
+                    this.data.page_idx.nested = (this.data.page_nestedLength - 1);
+                    await this.refresh(); return;
+                
+                default: return;
+            }
+        });
+
+        // Remove message components on timeout
+        collector.on("end", async () => {
+            try { await this.data.message.edit({ components: [] }) } catch { };
+        });
     }
 }
 
@@ -927,7 +978,7 @@ const space = (side = "both", ...str) => {
 };
 
 module.exports = {
-    BetterEmbed,
+    BetterEmbed, Navigationinator,
 
     messageTools: {
         Embedinator: message_Embedinator,
