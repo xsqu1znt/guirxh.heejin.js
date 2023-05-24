@@ -97,9 +97,9 @@ function generalShop_ES(user) {
         );
 
         let shop_f = "";
-        shop_f += cards_f.length ? `**Cards Sets**\n${cards_f.map(card_f => `> ${card_f}`).join("\n")}` : "";
-        shop_f += badges_f.length ? `\n\n**Badges Sets**\n${badges_f.map(badge_f => `> ${badge_f}`).join("\n")}` : "";
-        shop_f += itemPacks_f.length ? `\n\n**Item Packs**\n${itemPacks_f.map(pack_f => `> ${pack_f}`).join("\n")}` : "";
+        shop_f += cards_f.length ? `\`🃏\` **Cards**\n${cards_f.map(card_f => `> ${card_f}`).join("\n")}` : "";
+        shop_f += badges_f.length ? `\n\n\`📛\` **Badges**\n${badges_f.map(badge_f => `> ${badge_f}`).join("\n")}` : "";
+        shop_f += itemPacks_f.length ? `\n\n\`📦\` **Items**\n${itemPacks_f.map(pack_f => `> ${pack_f}`).join("\n")}` : "";
 
         // Create the embed
         let embed = embed_template()
