@@ -76,7 +76,7 @@ async function user_count() {
     return await models.user.count();
 }
 
-/** @param {"full" | "essential" | "reminders" | "cards"} type */
+/** @param {"full" | "essential" | "reminders" | "cards" | "id"} type */
 async function user_fetch(userID, type = "full", lean = false) {
     let filter = {};
     let user;
@@ -86,6 +86,7 @@ async function user_fetch(userID, type = "full", lean = false) {
         case "essential": filter = { card_inventory: 0, __v: 0 }; break;
         case "reminders": filter = { daily_streak: 1, cooldowns: 1, reminders: 1, __v: 0 }; break;
         case "cards": filter = { card_inventory: 1, __v: 0 }; break;
+        case "id": filter = { _id: 1, __v: 0 }; break;
     }
 
     if (userID) {

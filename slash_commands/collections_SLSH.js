@@ -2,7 +2,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js'
 
 const { botSettings } = require('../configs/heejinSettings.json');
 const { generalCollections_ES } = require('../modules/embedStyles');
-const { Navigationinator } = require('../modules/discordTools');
+const { EmbedNavigation } = require('../modules/discordTools');
 const { dateTools } = require('../modules/jsTools');
 
 module.exports = {
@@ -40,9 +40,9 @@ module.exports = {
         // Build the set collection pages
         let embed_collections = generalCollections_ES(interaction.user, { order, filter: { group, category } });
 
-        // Send the collection pages with navigation
-        let navigationinator = new Navigationinator({ interaction, embeds: embed_collections, paginationType: "shortJump" });
+        // Add navigation for the embeds
+        let embedNav = new EmbedNavigation({ interaction, embeds: [embed_collections], paginationType: "longJump" });
 
-        return await navigationinator.send();
+        return await embedNav.send();
     }
 };

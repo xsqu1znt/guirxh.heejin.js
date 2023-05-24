@@ -2,6 +2,7 @@
     "communityServer": {
         "id": "802930323095814144",
         "url": "https://discord.gg/G4YHSMNZQp",
+        "iconURL": "https://cdn.discordapp.com/attachments/831265262309212200/911434990947008552/heejinserver.png",
         "chanceToShow": 5
     },
 
@@ -9,8 +10,7 @@
         "currencyIcon": "🥕",
 
         "embed": {
-            "color": "#2B2D31",
-            "footerIcon": "https://cdn.discordapp.com/attachments/831265262309212200/911434990947008552/heejinserver.png"
+            "color": "#2B2D31"
         },
 
         "customEmojis": {

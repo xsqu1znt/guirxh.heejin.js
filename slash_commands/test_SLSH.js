@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 const { communityServer, botSettings: { currencyIcon } } = require('../configs/heejinSettings.json');
-const { BetterEmbed, Navigationinator } = require('../modules/discordTools');
+const { BetterEmbed, EmbedNavigation } = require('../modules/discordTools');
 const cardManager = require('../modules/cardManager');
 
 module.exports = {
@@ -14,27 +14,27 @@ module.exports = {
      */
     execute: async (client, interaction) => {
         //! Navigationinator test
-        let embed_array = [...Array(4)].map((e, idx) =>
-            new BetterEmbed({ interaction, title: { text: `Page ${idx + 1}` } })
-        );
+        // let embed_array = [...Array(4)].map((e, idx) =>
+        //     new BetterEmbed({ interaction, title: { text: `Page ${idx + 1}` } })
+        // );
 
-        let navigationinator = new Navigationinator({
-            interaction, embeds: embed_array,
-            /* selectMenu: true, */ paginationType: "shortJump"
-        });
+        // let embedNav = new EmbedNavigation({
+        //     interaction, embeds: embed_array,
+        //     /* selectMenu: true, */ paginationType: "shortJump"
+        // });
 
         // embed_array.forEach(() => navigationinator.addToSelectMenu());
 
-        return await navigationinator.send();
+        // return await embedNav.send();
 
         //! Join our offical server button
-        /* let buttonRow = new ActionRowBuilder().addComponents(new ButtonBuilder()
+        let buttonRow = new ActionRowBuilder().addComponents(new ButtonBuilder()
             .setLabel("Join our offical server!")
             .setStyle(ButtonStyle.Link)
             .setURL(communityServer.url)
         );
 
-        return await interaction.editReply({ components: [buttonRow] }); */
+        return await interaction.editReply({ components: [buttonRow] });
 
         //! Daily/weekly DM reminder
         /* let embed_dailyReminder = new BetterEmbed({

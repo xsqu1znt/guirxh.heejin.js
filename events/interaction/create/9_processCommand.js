@@ -1,6 +1,6 @@
 // Executes commands requested by a command interaction.
 
-const { Client, BaseInteraction, PermissionsBitField, EmbedBuilder } = require('discord.js');
+const { Client, BaseInteraction, PermissionsBitField, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 const { ownerID, adminIDs, adminBypassIDs } = require('../../../configs/clientSettings.json');
 const { communityServer, botSettings } = require('../../../configs/heejinSettings.json');
@@ -86,17 +86,13 @@ module.exports = {
 
                 // Have a chance to send the invite link to the main server
                 if (randomTools.chance(communityServer.chanceToShow) && args.interaction.guild.id !== communityServer.id) {
-                    let clientGuildMember = args.interaction.guild.members.me;
+                    let buttonRow = new ActionRowBuilder().addComponents(new ButtonBuilder()
+                        .setLabel("Join our offical server!")
+                        .setStyle(ButtonStyle.Link)
+                        .setURL(communityServer.url)
+                    );
 
-                    let embed_invite = new EmbedBuilder()
-                        .setAuthor({
-                            name: clientGuildMember.displayName,
-                            iconURL: clientGuildMember.user.avatarURL({ dynamic: true })
-                        })
-                        .setDescription(`Join our official server!\n${communityServer.url}`)
-                        .setColor(botSettings.embed.color || null);
-
-                    return await args.interaction.channel.send({ embeds: [embed_invite] });
+                    return await interaction.editReply({ components: [buttonRow] });
                 }
             });
         } catch (err) {
