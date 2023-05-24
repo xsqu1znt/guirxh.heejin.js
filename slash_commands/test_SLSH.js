@@ -19,8 +19,9 @@ module.exports = {
         );
 
         let navigationinator = new Navigationinator({
-            interaction, embeds: [embed_array],
-            paginationType: "short"
+            interaction, embeds: embed_array,
+            // selectMenu: true
+            // paginationType: "shortJump"
         });
 
         // embed_array.forEach(() => navigationinator.addToSelectMenu());

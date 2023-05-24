@@ -270,6 +270,8 @@ class Navigationinator {
 
             embeds: options.embeds,
 
+            timeout: options.timeout,
+
             /** @type {nav_embedsType2} */
             page_current: null,
             page_nestedLength: 0,
@@ -399,7 +401,7 @@ class Navigationinator {
         let page = this.data.embeds[this.data.page_idx.current];
 
         if (page?.length)
-            this.data.page_current = page[this.data.page_idx.current];
+            this.data.page_current = page[this.data.page_idx.nested];
         else
             this.data.page_current = page;
 
@@ -424,10 +426,11 @@ class Navigationinator {
             this.data.page_idx.current = (this.data.embeds.length - 1);
 
         /// Nested
-        if (this.data.page_idx.nested < 0) this.data.page_idx.current = 0;
+        if (this.data.page_idx.nested < 0)
+            this.data.page_idx.nested = (this.data.page_nestedLength - 1);
 
         if (this.data.page_idx.nested > (this.data.page_nestedLength - 1))
-            this.data.page_idx.nested = (this.data.page_nestedLength - 1);
+            this.data.page_idx.nested = 0;
     }
 
     async #awaitChoosePageNumber() {
@@ -455,13 +458,11 @@ class Navigationinator {
                     }), dateTools.parseStr(timeouts.errorMessage));
 
                 // Set the nested page index
-                this.data.page_idx.nested = _nested;
+                this.data.page_idx.nested = _number - 1;
             })
             .catch(async () => {
                 try { await msg.delete() } catch { };
             });
-
-        return chosenNumber;
     }
 
     /** Refresh the message with the current page and components. */
@@ -544,7 +545,7 @@ class Navigationinator {
     async #collectInteractions() {
         // Create an interaction collector
         let filter = i => i.user.id === this.data.interaction.user.id;
-        let collector = this.data.message.createMessageComponentCollector({ filter, time: this.options.timeout });
+        let collector = this.data.message.createMessageComponentCollector({ filter, time: this.data.timeout });
 
         collector.on("collect", async i => {
             // Defer the interaction and reset the collector's timer
@@ -557,6 +558,11 @@ class Navigationinator {
                 case "ssm_pageSelect":
                     this.data.page_idx.current = this.data.selectMenuValues.findIndex(val => val === i.values[0]);
                     this.data.page_idx.nested = 0;
+
+                    // Change the default select menu option
+                    this.data.components.selectMenu.options.forEach(option => option.setDefault(false));
+                    this.data.components.selectMenu.options[this.data.page_idx.current].setDefault(true);
+
                     await this.refresh(); return;
 
                 case "btn_toFirst":
@@ -589,8 +595,6 @@ class Navigationinator {
         });
     }
 }
-
-// new Navigationinator().
 
 /** Create a simple embed with a description. */
 class message_Embedinator {
@@ -930,8 +934,6 @@ class message_Navigationify {
         });
     }
 }
-
-// new message_Navigationify().
 
 async function message_awaitConfirmation(interaction, options = { title: "", description: "", footer: "", showAuthor: true, deleteAfter: true, timeout: 0 }) {
     options = {
