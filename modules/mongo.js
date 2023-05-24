@@ -83,10 +83,10 @@ async function user_fetch(userID, type = "full", lean = false) {
 
     switch (type) {
         case "full": filter = { __v: 0 }; break;
-        case "essential": filter = { card_inventory: 0, __v: 0 }; break;
+        case "essential": filter = { card_inventory: 0  }; break;
         case "reminders": filter = { daily_streak: 1, cooldowns: 1, reminders: 1, __v: 0 }; break;
-        case "cards": filter = { card_inventory: 1, __v: 0 }; break;
-        case "id": filter = { _id: 1, __v: 0 }; break;
+        case "cards": filter = { card_inventory: 1  }; break;
+        case "id": filter = { _id: 1 }; break;
     }
 
     if (userID) {

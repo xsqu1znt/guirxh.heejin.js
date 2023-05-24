@@ -7,8 +7,8 @@ const { userManager } = require('../modules/mongo');
 const cardManager = require('../modules/cardManager');
 
 module.exports = {
-    builder: new SlashCommandBuilder().setName("info")
-        .setDescription("View useful info"),
+    builder: new SlashCommandBuilder().setName("information")
+        .setDescription("View useful information"),
 
     /**
      * @param {Client} client
@@ -19,7 +19,7 @@ module.exports = {
 
         // A base embed template
         let page_template = () => new BetterEmbed({
-            author: { text: "%AUTHOR_NAME | info", user: interaction.user },
+            author: { text: "%AUTHOR_NAME | information", user: interaction.user },
         });
 
         //! Page -> Summary
@@ -59,8 +59,8 @@ module.exports = {
 
             // Set the embed description
             let _description = "";
-            _description += `${link("Join our official server!", communityServer.url)}\n\n`;
-            _description += `\`🎂 Birthday:\` ${time(bday, TimestampStyles.LongDate)}`;
+            _description += `\`🎂 birthday\` ${time(bday, TimestampStyles.LongDate)}\n\n`;
+            _description += `> ${link("Join our official server!", communityServer.url)}\n\u200b`;
 
             _embed.setDescription(_description);
 
@@ -68,21 +68,22 @@ module.exports = {
             _embed.addFields(
                 {
                     name: "\`📝\` Basic Information", value: ">>> %CARD_COUNT\n%USER_COUNT\n%GUILD_COUNT"
-                        .replace("%CARD_COUNT", `\`🃏\` Cards ${inline(cardCount)}`)
-                        .replace("%USER_COUNT", `\`👥\` Users ${inline(userCount)}`)
-                        .replace("%GUILD_COUNT", `\`📣\` Servers ${inline(guildCount)}`),
+                        .replace("%CARD_COUNT", `\`🃏 cards\` ${cardCount}`)
+                        .replace("%USER_COUNT", `\`👥 users\` ${userCount}`)
+                        .replace("%GUILD_COUNT", `\`📣 servers\` ${guildCount}`),
                     inline: true
                 },
-
                 {
-                    name: "\`💁\` Bot Team", value: ">>> Owner: %OWNER Developer %DEVELOPER\n**Designers**: %DESIGNERS"
-                        .replace("%OWNER", "\`🌸\` <@797233513136390175>")
-                        .replace("%DEVELOPER", "\`🦑\` <@842555247145779211>")
-                        .replace("%DESIGNERS", "\`👩‍🎨\` <@797233513136390175> <@668835955687424050> <@607643855323660310> <@428873096888320013>"),
-
-                    // .replace("%UPTIME", `${inline("⏱", "Uptime:")} ${uptime}`)
-                    // .replace("%PING", `${inline("⌛", "Ping:")} ${inline(`${ping}ms`)}`),
+                    name: "\`💁\` Bot Team", value: ">>> %OWNER\n%DEVELOPER\n%DESIGNERS"
+                        .replace("%OWNER", "\`🌸 owner\` <@797233513136390175>")
+                        .replace("%DEVELOPER", "\`🦑 developer\` <@842555247145779211>")
+                        .replace("%DESIGNERS", "\`👩‍🎨 designers\` <@797233513136390175> <@668835955687424050> <@607643855323660310> <@428873096888320013>"),
                     inline: true
+                },
+                {
+                    name: "\`📃\` Inside Information", value: ">>> %UPTIME\n%PING"
+                        .replace("%UPTIME", `\`⏱ uptime\` ${uptime}`)
+                        .replace("%PING", `\`⌛ ping\` ${ping}ms`)
                 }
             ); return _embed;
         };
@@ -103,12 +104,12 @@ module.exports = {
             return _embed;
         };
 
-        let embed_server = () => {
+        let embed_server = async () => {
             let guildIcon = interaction.guild.iconURL({ dynamic: true });
             let guildJoined = time(numberTools.milliToSeconds(botMember.joinedTimestamp), TimestampStyles.RelativeTime);
 
-            let playerIDs = userManager.fetch(null, "id").map(user => user._id);
-            let playersInGuild = interaction.guild.members.cache.filter(gm => playerIDs.includes(gm.id)).length;
+            let playerIDs = (await userManager.fetch(null, "id", true)).map(user => user._id);
+            let playersInGuild = interaction.guild.members.cache.filter(gm => playerIDs.includes(gm.id)).size;
 
             // Create the base embed from the template
             let _embed = page_template();
@@ -118,22 +119,23 @@ module.exports = {
 
             // Set the embed description
             let _description = "";
-            _description += `${link("Join our official server!", communityServer.url)}\n\n`;
+            _description += `> ${link("Join our official server!", communityServer.url)}\n\n`;
 
             _embed.setDescription(_description);
 
             // Infomational fields
             _embed.addFields(
                 {
-                    name: "Details", value: ">>> %JOINED"
-                        .replace("%JOINED", `${inline("📆", "Joined:")} ${guildJoined}`),
+                    name: "Category", value: ">>> %JOINED\n%ACTIVE_PLAYER_COUNT"
+                        .replace("%JOINED", `\`📆 joined\` ${guildJoined}`)
+                        .replace("%ACTIVE_PLAYER_COUNT", `\`👥 players\` ${playersInGuild}`),
                     inline: true
                 }
             ); return _embed;
         };
 
         // Create an array of info pages
-        let embed_pages = [embed_summary(), await embed_heejin(), embed_player(), embed_server()];
+        let embed_pages = [embed_summary(), await embed_heejin(), embed_player(), await embed_server()];
 
         // Add navigation for the embeds
         let embedNav = new EmbedNavigation({ interaction, embeds: embed_pages, selectMenu: true });
