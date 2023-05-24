@@ -20,8 +20,7 @@ module.exports = {
 
         let navigationinator = new Navigationinator({
             interaction, embeds: embed_array,
-            // selectMenu: true
-            // paginationType: "shortJump"
+            /* selectMenu: true, */ paginationType: "shortJump"
         });
 
         // embed_array.forEach(() => navigationinator.addToSelectMenu());
