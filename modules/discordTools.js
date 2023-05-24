@@ -250,7 +250,7 @@ class nav_sendOptions {
 }
 
 /** Add a navigation system to embeds. */
-class Navigationinator {
+class EmbedNavigation {
     #createButton(emoji, label, customID) {
         return new ButtonBuilder({
             emoji, label, style: ButtonStyle.Secondary, custom_id: customID
@@ -1022,7 +1022,7 @@ const space = (side = "both", ...str) => {
 };
 
 module.exports = {
-    BetterEmbed, Navigationinator,
+    BetterEmbed, EmbedNavigation,
 
     messageTools: {
         Embedinator: message_Embedinator,
