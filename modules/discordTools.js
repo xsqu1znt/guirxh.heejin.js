@@ -12,7 +12,7 @@ const {
 } = require('discord.js');
 
 const { botSettings } = require('../configs/heejinSettings.json');
-const { botSettings: { embed: embed_defaults, customEmojis } } = require('../configs/heejinSettings.json');
+const { botSettings: { embed: embed_defaults, customEmojis, timeout: timeouts } } = require('../configs/heejinSettings.json');
 const { randomTools, arrayTools, dateTools } = require('./jsTools');
 const logger = require('./logger');
 
@@ -359,27 +359,6 @@ class Navigationinator {
         // await this.refresh();
     }
 
-    #updateCurrentPage() {
-        let page = this.data.embeds[this.data.page_idx.current];
-
-        if (page?.length)
-            this.data.page_current = page[this.data.page_idx.current];
-        else
-            this.data.page_current = page;
-
-        // Keep track of how many nested pages are on this page
-        this.data.page_nestedLength = page?.length || 0;
-
-        // Determine whether or not pagination is required
-        this.data.requiresPagination = page?.length >= 2;
-
-        // Check whether or not it would be necessary to use long pagination
-        this.data.requiresLongPagination = page?.length >= 4;
-
-        // Check whether or not there's enough pages to enable page jumping
-        this.data.canJumpToPage = page?.length >= 4;
-    }
-
     #updatePagination() {
         this.#updateCurrentPage();
 
@@ -414,6 +393,75 @@ class Navigationinator {
         }
 
         return this.data.requiresPagination ? ar_pagination : null;
+    }
+
+    #updateCurrentPage() {
+        let page = this.data.embeds[this.data.page_idx.current];
+
+        if (page?.length)
+            this.data.page_current = page[this.data.page_idx.current];
+        else
+            this.data.page_current = page;
+
+        // Keep track of how many nested pages are on this page
+        this.data.page_nestedLength = page?.length || 0;
+
+        // Determine whether or not pagination is required
+        this.data.requiresPagination = page?.length >= 2;
+
+        // Check whether or not it would be necessary to use long pagination
+        this.data.requiresLongPagination = page?.length >= 4;
+
+        // Check whether or not there's enough pages to enable page jumping
+        this.data.canJumpToPage = page?.length >= 4;
+    }
+
+    #clampPageIndex() {
+        /// Current
+        if (this.data.page_idx.current < 0) this.data.page_idx.current = 0;
+
+        if (this.data.page_idx.current > (this.data.embeds.length - 1))
+            this.data.page_idx.current = (this.data.embeds.length - 1);
+
+        /// Nested
+        if (this.data.page_idx.nested < 0) this.data.page_idx.current = 0;
+
+        if (this.data.page_idx.nested > (this.data.page_nestedLength - 1))
+            this.data.page_idx.nested = (this.data.page_nestedLength - 1);
+    }
+
+    async #awaitChoosePageNumber() {
+        // Tell the user to choose a page number
+        let msg = await this.data.message.reply({
+            content: `${this.data.interaction.user.toString()} what page do you want to jump to?`
+        });
+
+        // Create a message collector to await the user's next message
+        let filter = m => m.author.id === this.data.interaction.user.id;
+        await msg.channel.awaitMessages({ filter, time: dateTools.parseStr(timeouts.confirmation), max: 1 })
+            .then(async collected => {
+                // Delete the user's message along with the confirmation message
+                await Promise.all([collected.first().delete(), msg.delete()]);
+
+                // Parse the user's message into a number
+                let _content = collected.first().content;
+                let _number = +_content;
+
+                // Check whether it's a valid number
+                if (isNaN(_number) || (_number > this.data.page_nestedLength && _number < 0))
+                    // Send a self destructing error message
+                    await message_deleteAfter(await this.data.interaction.followUp({
+                        content: `${this.data.interaction.user.toString()} \`${_content}\` is an invalid page number`
+                    }), dateTools.parseStr(timeouts.errorMessage));
+
+                // Set the nested page index
+                this.data.page_idx.nested = _nested;
+            })
+            .catch(async () => {
+                try { await msg.delete() } catch { };
+            });
+
+        return chosenNumber;
     }
 
     /** Refresh the message with the current page and components. */
@@ -516,27 +564,21 @@ class Navigationinator {
                     await this.refresh(); return;
 
                 case "btn_back":
-                    this.data.page_idx.nested--;
-                    if (this.data.page_idx.nested < 0)
-                        this.data.page_idx.nested = (this.data.page_nestedLength - 1);
-
+                    this.data.page_idx.nested--; this.#clampPageIndex();
                     await this.refresh(); return;
 
                 case "btn_jump":
-                    this.data.page_idx.nested = 0;
+                    await this.#awaitChoosePageNumber();
                     await this.refresh(); return;
 
                 case "btn_next":
-                    this.data.page_idx.nested++;
-                    if (this.data.page_idx.nested > (this.data.page_nestedLength - 1))
-                        this.data.page_idx.nested = 0;
-
+                    this.data.page_idx.nested++; this.#clampPageIndex();
                     await this.refresh(); return;
 
                 case "btn_toLast":
                     this.data.page_idx.nested = (this.data.page_nestedLength - 1);
                     await this.refresh(); return;
-                
+
                 default: return;
             }
         });
