@@ -82,11 +82,11 @@ module.exports = {
             });
 
             // Create the embeds
-            let _embed_view = generalView_ES(interaction.member, null, _cards, "set");
+            let _embeds_view = generalView_ES(interaction.member, null, _cards, "set");
 
             // Send the embeds with navigation
-            let embedNav = new EmbedNavigation({ interaction, embeds: [_embed_view], paginationType: "shortJump" });
-            return await embedNav.send();
+            let _embedNav = new EmbedNavigation({ interaction, embeds: [_embeds_view], paginationType: "shortJump" });
+            return await _embedNav.send();
         } else if (section) {
             // Fetch the user from Mongo
             let _userData = await userManager.fetch(interaction.user.id, "full");
@@ -120,18 +120,29 @@ module.exports = {
 
                 case "vault":
                     // Get the user's vault from their card_inventory
-                    let _cards = userParser.cards.getVault(_userData); if (!_cards.length) return await baseEmbed.send({
+                    let _cards_vault = userParser.cards.getVault(_userData); if (!_cards_vault.length) return await baseEmbed.send({
                         description: "**You don't have anything in your vault!**\n> Use \`/set\` \`edit:🔒 vault\` to change"
                     });
 
                     // Create the embeds
-                    let _embed_view = generalView_ES(interaction.member, null, _cards, "vault");
+                    let _embeds_vault = generalView_ES(interaction.member, _userData, _cards_vault, "vault");
 
                     // Send the embeds with navigation
-                    let embedNav = new EmbedNavigation({ interaction, embeds: [_embed_view], paginationType: "shortJump" });
-                    return await embedNav.send();
+                    let _embedNav_vault = new EmbedNavigation({ interaction, embeds: [_embeds_vault], paginationType: "shortJump" });
+                    return await _embedNav_vault.send();
 
-                case "team": return;
+                case "team":
+                    // Get the user's vault from their card_inventory
+                    let _cards_team = userParser.cards.getTeam(_userData); if (!_cards_team.length) return await baseEmbed.send({
+                        description: "**You don't have a team!**\n> Use \`/set\` \`edit:👯 team\` to change"
+                    });
+
+                    // Create the embeds
+                    let _embeds_team = generalView_ES(interaction.member, _userData, _cards_team, "team");
+
+                    // Send the embeds with navigation
+                    let _embedNav_team = new EmbedNavigation({ interaction, embeds: [_embeds_team], paginationType: "shortJump" });
+                    return await _embedNav_team.send();
             }
         } else return await baseEmbed.send({
             description: "You need to give a card ID or section, silly!"

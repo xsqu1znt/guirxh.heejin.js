@@ -331,18 +331,41 @@ function generalView_ES(member, userData, card, viewType = "uid") {
             });
 
             // Create the embed
-            let _embed = embed_template("%AUTHOR_NAME | vault",
-                _cardChunk_f.join("\n"), _cardChunk.slice(-1).imageURL
-            ).setFooter({ text: `Page ${idx + 1}/${_cards.length}` });
+            let _embed = embed_template("%AUTHOR_NAME | vault", _cardChunk_f.join("\n"))
+                .setFooter({ text: `Page ${idx + 1}/${_cards.length}` });
 
             _embeds.push(_embed);
-
-            return _embeds;
         });
+
+        return _embeds;
     };
 
     let embed_viewTeam = () => {
+        //// Sort the cards by set ID and global ID, then group them by 10 per embed
+        // let _cards = arrayTools.chunk(card.sort((a, b) => a.setID - b.setID || a.globalID - b.globalID), 10);
+        let _cards = card;
 
+        let abilityTotal = 0; _cards.forEach(card => abilityTotal += card.stats.ability);
+        let reputationTotal = 0; _cards.forEach(card => abilityTotal += card.stats.reputation);
+
+        /** @type {Array<BetterEmbed>} */
+        let _embeds = [];
+
+        _cards.forEach((_card, idx) => {
+            // Parse the card into a string
+            let _card_f = cardManager.toString.inventory(_card, { simplify: true });
+
+            // Create the embed
+            let _embed = embed_template("%AUTHOR_NAME | team", _card_f, _card.imageURL).setFooter({
+                text: `Card ${idx + 1}/${_cards.length} | Total :: ABI. %TOTAL_ABILITY / REP. %TOTAL_REPUTATION`
+                    .replace("%TOTAL_ABILITY", abilityTotal)
+                    .replace("%TOTAL_REPUTATION", reputationTotal)
+            });
+
+            _embeds.push(_embed);
+        });
+
+        return _embeds;
     };
 
     switch (viewType) {

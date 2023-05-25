@@ -37,6 +37,10 @@ function cards_getVault(userData) {
     return cardInventory.filter(card => card.locked) || [];
 }
 
+function cards_getTeam(userData) {
+    return userData.card_inventory.filter(card => userData.card_team_uids.includes(card.uid)) || [];
+}
+
 /** Filter out duplicate cards from the user's card_inventory. */
 function cards_primary(cardArray) {
     return arrayTools.unique(cardArray, (card, compareCard) => card.globalID === compareCard.globalID);
@@ -71,6 +75,7 @@ module.exports = {
         getMultiple: cards_getMultiple,
         getDuplicates: cards_getDuplicates,
         getVault: cards_getVault,
+        getTeam: cards_getTeam,
         primary: cards_primary,
         duplicates: cards_duplicates
     }
