@@ -62,7 +62,7 @@ class Stage {
                 { name: interaction.user.username, value: cardManager.toString.inventory(this.card_home), inline: true },
 
                 // The rival's team
-                { name: "Rival", value: cardManager.toString.inventory(this.card_away), inline: true }
+                { name: this.rival?.username || "Rival", value: cardManager.toString.inventory(this.card_away), inline: true }
             )
 
             .setFooter({ text: `battle starting in ${this.delay.start} ${this.delay.start === 1 ? "second" : "seconds"}...` })

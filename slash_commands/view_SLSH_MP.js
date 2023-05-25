@@ -8,7 +8,7 @@ const cardManager = require('../modules/cardManager');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("view")
-        .setDescription("View info about a card")
+        .setDescription("View information about a card")
 
         .addStringOption(option => option.setName("uid")
             .setDescription("UID of a card you own")
@@ -96,7 +96,7 @@ module.exports = {
                     // Get the card from the user's card_inventory
                     let _card_idol = userParser.cards.get(_userData, _userData.card_selected_uid);
                     if (!_card_idol) return await baseEmbed.send({
-                        description: "**You don't have an idol!**\n> Use \`/set\` \`edit:🏃 idol\` to change"
+                        description: "You don't have an idol!\n> Use \`/set\` \`edit:🏃 idol\` to change"
                     });
 
                     // Create the embed
@@ -109,7 +109,7 @@ module.exports = {
                     // Get the card from the user's card_inventory
                     let _card_favorite = userParser.cards.get(_userData, _userData.card_favorite_uid);
                     if (!_card_favorite) return await baseEmbed.send({
-                        description: "**You don't have a favorite!**\n> Use \`/set\` \`edit:⭐ favorite\` to change"
+                        description: "You don't have a favorite!\n> Use \`/set\` \`edit:⭐ favorite\` to change"
                     });
 
                     // Create the embed
@@ -121,7 +121,7 @@ module.exports = {
                 case "vault":
                     // Get the user's vault from their card_inventory
                     let _cards_vault = userParser.cards.getVault(_userData); if (!_cards_vault.length) return await baseEmbed.send({
-                        description: "**You don't have anything in your vault!**\n> Use \`/set\` \`edit:🔒 vault\` to change"
+                        description: "You don't have anything in your vault!\n> Use \`/set\` \`edit:🔒 vault\` to change"
                     });
 
                     // Create the embeds
@@ -134,7 +134,7 @@ module.exports = {
                 case "team":
                     // Get the user's vault from their card_inventory
                     let _cards_team = userParser.cards.getTeam(_userData); if (!_cards_team.length) return await baseEmbed.send({
-                        description: "**You don't have a team!**\n> Use \`/set\` \`edit:👯 team\` to change"
+                        description: "You don't have a team!\n> Use \`/set\` \`edit:👯 team\` to change"
                     });
 
                     // Create the embeds

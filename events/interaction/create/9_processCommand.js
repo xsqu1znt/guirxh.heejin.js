@@ -92,7 +92,7 @@ module.exports = {
                         .setURL(communityServer.url)
                     );
 
-                    return await interaction.editReply({ components: [buttonRow] });
+                    return await args.interaction.channel.send({ components: [buttonRow] });
                 }
             });
         } catch (err) {

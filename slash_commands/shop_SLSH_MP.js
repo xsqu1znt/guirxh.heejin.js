@@ -3,7 +3,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js'
 const { botSettings } = require('../configs/heejinSettings.json');
 const { arrayTools, dateTools } = require('../modules/jsTools');
 const { generalShop_ES } = require('../modules/embedStyles');
-const { messageTools } = require('../modules/discordTools');
+const { EmbedNavigation, messageTools } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 const cardManager = require('../modules/cardManager');
 const shop = require('../modules/shop');
@@ -101,37 +101,36 @@ module.exports = {
         // Build the shop pages
         embed_shop = generalShop_ES(interaction.user);
 
-        // Navigateinator-ify-er 9000!!!!11
-        let navigationify = new messageTools.Navigationify(interaction, embed_shop, {
-            timeout: dateTools.parseStr(botSettings.timeout.pagination),
-            pagination: true,
-            selectMenu: true
-        });
-
         // Get an array of unique cards based on the set ID
         let shopCards_unique = arrayTools.unique(cardManager.cards_shop,
             (card, compareCard) => card.setID === compareCard.setID
         );
 
+        // Send the embeds with navigation
+        let embedNav = new EmbedNavigation({
+            interaction, embeds: embed_shop,
+            paginationType: "longJump", selectMenu: true
+        });
+
         // ! Select menu options
-        navigationify.addSelectMenuOption({
+        embedNav.addToSelectMenu({
             emoji: "🛍️",
             label: "Shop Sets",
             description: "View a list of every set available",
             isDefault: true
         });
 
-        navigationify.addSelectMenuOption({ emoji: "📁", label: "All Cards", description: "View all cards available" });
+        embedNav.addToSelectMenu({ emoji: "📁", label: "All Cards", description: "View all cards available" });
 
         // Add a select menu option for each card group
         shopCards_unique.forEach(card =>
-            navigationify.addSelectMenuOption({ emoji: card.emoji, label: card.group, description: `View ${card.description}` })
+            embedNav.addToSelectMenu({ emoji: card.emoji, label: card.group, description: `View ${card.description}` })
         );
 
-        navigationify.addSelectMenuOption({ emoji: "✨", label: "Item Packs", description: "Buy a boost/card pack" });
-        navigationify.addSelectMenuOption({ emoji: "📛", label: "Badges", description: "Buy a badge for your profile" });
+        embedNav.addToSelectMenu({ emoji: "✨", label: "Item Packs", description: "Buy a boost/card pack" });
+        embedNav.addToSelectMenu({ emoji: "📛", label: "Badges", description: "Buy a badge for your profile" });
 
-        // Send the shop embed
-        return await navigationify.send();
+        // Send the embeds with navigation
+        return await embedNav.send();
     }
 };

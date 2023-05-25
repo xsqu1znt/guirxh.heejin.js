@@ -2,7 +2,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js'
 
 const { botSettings } = require('../configs/heejinSettings.json');
 const { userInventory_ES, userDuplicates_ES } = require('../modules/embedStyles');
-const { messageTools } = require('../modules/discordTools');
+const { EmbedNavigation, messageTools } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 const { dateTools } = require('../modules/jsTools');
 
@@ -61,10 +61,9 @@ module.exports = {
         if (globalID) embed_view = userDuplicates_ES(interaction.user, userData, globalID);
         else embed_view = userInventory_ES(interaction.user, userData, sorting, order, { setID, groupName });
 
-        // Navigateinator-ify-er 9000!!!!11
-        return await new messageTools.Navigationify(interaction, [embed_view], {
-            timeout: dateTools.parseStr(botSettings.timeout.pagination),
-            pagination: true
-        }).send();
+        let embedNav = new EmbedNavigation({ interaction, embeds: [embed_view], paginationType: "shortJump" });
+
+        // Send the embeds with navigation
+        return await embedNav.send();
     }
 };

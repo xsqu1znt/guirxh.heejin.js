@@ -2,7 +2,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js'
 
 const { userManager } = require('../modules/mongo');
 const { userProfile_ES } = require('../modules/embedStyles');
-const { messageTools } = require('../modules/discordTools');
+const { EmbedNavigation, messageTools } = require('../modules/discordTools');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("profile")
@@ -54,23 +54,20 @@ module.exports = {
         // Create the profile pages
         let { embeds, pageExists } = userProfile_ES(user, userData);
 
-        // Navigateinator-ify-er 9000!!!!11
-        let navigationify = new messageTools.Navigationify(interaction, embeds, {
-            selectMenu: true
-        });
+        let embedNav = new EmbedNavigation({ interaction, embeds, selectMenu: true });
 
         // This page option is always first
-        navigationify.addSelectMenuOption({ label: "📄 Basic Information", description: "View your basic information", isDefault: true });
-        
-        // Add select menu options if necessary
-        if (pageExists.badges) navigationify.addSelectMenuOption({ label: "📛 User Badges", description: "View your badges" });
-        if (pageExists.idol) navigationify.addSelectMenuOption({ label: "🏃 Stage Idol", description: "View your stage idol" });
-        if (pageExists.favorite) navigationify.addSelectMenuOption({ label: "⭐ Favorite Card", description: "View your favorite" });
-        
-        // This page option is always last
-        navigationify.addSelectMenuOption({ label: "🃏 Detailed Collection", description: "View your detailed collection" });
+        embedNav.addToSelectMenu({ label: "📄 Basic Information", description: "View your basic information", isDefault: true });
 
-        // Send the embed
-        return await navigationify.send();
+        // Add select menu options if necessary
+        if (pageExists.badges) embedNav.addToSelectMenu({ label: "📛 User Badges", description: "View your badges" });
+        if (pageExists.idol) embedNav.addToSelectMenu({ label: "🏃 Stage Idol", description: "View your stage idol" });
+        if (pageExists.favorite) embedNav.addToSelectMenu({ label: "⭐ Favorite Card", description: "View your favorite" });
+
+        // This page option is always last
+        embedNav.addToSelectMenu({ label: "🃏 Detailed Collection", description: "View your detailed collection" });
+
+        // Send the embeds with navigation
+        return await embedNav.send();
     }
 };

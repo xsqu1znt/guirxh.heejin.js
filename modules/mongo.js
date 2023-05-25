@@ -41,7 +41,7 @@ async function guild_update(guildID, update) {
 
 //! Guild -> Reminders
 /** @param {cooldownTypes} reminderType */
-/* async function guildReminder_add(guildID, channelID, user = { id: "", name: "" }, reminderType) {
+async function guildReminder_add(guildID, channelID, user = { id: "", name: "" }, reminderType) {
     if (!await guild_exists(guildID)) await guild_fetch(guildID);
 
     // Create the reminder object
@@ -64,7 +64,7 @@ async function guildReminder_remove(guildID, reminderID) {
 
     // Send a pull request to Mongo
     await guild_update(guildID, { $pull: { reminders: { id: reminderID } } }); return null;
-} */
+}
 
 //! User
 async function user_exists(userID) {
@@ -315,7 +315,7 @@ async function userReminder_toggle(userID, reminderType) {
 }
 
 /** @param {cooldownTypes} reminderType */
-/* async function userReminder_reset(userID, guildID, channelID, user, reminderType) {
+async function userReminder_reset(userID, guildID, channelID, user, reminderType) {
     let userData = await user_fetch(userID, "essential", true);
 
     // Check if the user has reminders enabled before resetting
@@ -324,7 +324,7 @@ async function userReminder_toggle(userID, reminderType) {
     );
 
     return null;
-} */
+}
 
 module.exports = {
     /** Connect to MongoDB. */
@@ -347,12 +347,12 @@ module.exports = {
         exists: guild_exists,
         fetch: guild_fetch,
         fetchAll: guild_fetchAll,
-        update: guild_update/* ,
+        update: guild_update,
 
         reminders: {
             add: guildReminder_add,
             remove: guildReminder_remove
-        } */
+        }
     },
 
     userManager: {
@@ -382,8 +382,8 @@ module.exports = {
         },
 
         reminders: {
-            toggle: userReminder_toggle/* ,
-            reset: userReminder_reset */
+            toggle: userReminder_toggle,
+            reset: userReminder_reset
         }
     }
 };

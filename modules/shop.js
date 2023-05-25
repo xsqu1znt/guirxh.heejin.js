@@ -76,7 +76,7 @@ function badge_toString_shop(badge) {
         .replace("%ID", inline(badge.id))
         .replace("%EMOJI", badge.emoji)
         .replace("%NAME", italic(link(badge.name, badge.emojiURL, badge.description)))
-        .replace("%PRICE", inline(botSettings.currencyIcon, badge.price))
+        .replace("%PRICE", inline(currencyIcon, badge.price))
 
         .replace("%SET_ID", inline("🗣️", badge.setID))
         .replace("%SET", bold(badge.set))

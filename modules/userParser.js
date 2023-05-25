@@ -80,6 +80,7 @@ module.exports = {
         getDuplicates: cards_getDuplicates,
         getVault: cards_getVault,
         getTeam: cards_getTeam,
+
         primary: cards_primary,
         duplicates: cards_duplicates
     }
