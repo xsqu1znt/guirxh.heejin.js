@@ -20,6 +20,7 @@ function cards_getMultiple(cardArray, uids, filterInvalid = true) {
 function cards_getDuplicates(userData, globalID) {
     let cardInventory = userData?.card_inventory || userData;
     let cards = cardInventory.filter(card => card.globalID === globalID);
+    cards = cards.map(cardLike => cardManager.parse.fromCardLike(cardLike));
 
     let primary = cards.shift();
     let duplicates = cards;
@@ -33,12 +34,15 @@ function cards_getDuplicates(userData, globalID) {
 
 function cards_getVault(userData) {
     let cardInventory = userData?.card_inventory || userData;
+    let vault = cardInventory.filter(card => card.locked) || [];
 
-    return cardInventory.filter(card => card.locked) || [];
+    return vault.map(cardLike => cardManager.parse.fromCardLike(cardLike));
 }
 
 function cards_getTeam(userData) {
-    return userData.card_inventory.filter(card => userData.card_team_uids.includes(card.uid)) || [];
+    let team = userData.card_inventory.filter(card => userData.card_team_uids.includes(card.uid)) || [];
+
+    return team.map(cardLike => cardManager.parse.fromCardLike(cardLike));
 }
 
 /** Filter out duplicate cards from the user's card_inventory. */

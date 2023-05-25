@@ -346,7 +346,7 @@ function generalView_ES(member, userData, card, viewType = "uid") {
         let _cards = card;
 
         let abilityTotal = 0; _cards.forEach(card => abilityTotal += card.stats.ability);
-        let reputationTotal = 0; _cards.forEach(card => abilityTotal += card.stats.reputation);
+        let reputationTotal = 0; _cards.forEach(card => reputationTotal += card.stats.reputation);
 
         /** @type {Array<BetterEmbed>} */
         let _embeds = [];
