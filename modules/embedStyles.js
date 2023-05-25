@@ -262,13 +262,13 @@ function generalView_ES(member, userData, card, viewType = "uid") {
 
         let card_f = cardManager.toString.inventory(card, { duplicateCount, selected, favorited, team });
 
-        return embed_template(null, card_f, card.imageURL).setFooter({ text: card.description });
+        return embed_template(null, card_f, card.imageURL);
     };
 
     let embed_viewGID = () => {
         let card_f = cardManager.toString.inventory(card, { simplify: true });
 
-        return embed_template(null, card_f, card.imageURL).setFooter({ text: card.description });
+        return embed_template(null, card_f, card.imageURL);
     };
 
     let embed_viewSet = () => {
@@ -284,7 +284,7 @@ function generalView_ES(member, userData, card, viewType = "uid") {
             // Create the embed
             let _embed = embed_template(`%AUTHOR_NAME | ${_card.group} - ${_card.single}`,
                 _card_f, _card.imageURL
-            ).setFooter({ text: `Card ${idx + 1}/${_cards.length} :: ${_card.description}` });
+            ).setFooter({ text: `Card ${idx + 1}/${_cards.length}` });
 
             _embeds.push(_embed);
         });
@@ -299,7 +299,7 @@ function generalView_ES(member, userData, card, viewType = "uid") {
 
         let card_f = cardManager.toString.inventory(card, { selected: true, favorited, team });
 
-        return embed_template("%AUTHOR_NAME | idol", card_f, card.imageURL).setFooter({ text: card.description });
+        return embed_template("%AUTHOR_NAME | idol", card_f, card.imageURL);
     };
 
     let embed_viewFavorite = () => {
@@ -309,7 +309,7 @@ function generalView_ES(member, userData, card, viewType = "uid") {
 
         let card_f = cardManager.toString.inventory(card, { selected, favorited: true, team });
 
-        return embed_template("%AUTHOR_NAME | favorite", card_f, card.imageURL).setFooter({ text: card.description });
+        return embed_template("%AUTHOR_NAME | favorite", card_f, card.imageURL);
     };
 
     let embed_viewVault = () => {
