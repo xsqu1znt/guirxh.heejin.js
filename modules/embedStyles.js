@@ -244,7 +244,7 @@ function generalSetView_ES(user, cards) {
 }
 
 // Command -> User -> /VIEW UID | /VIEW GID | /VIEW FAVORITE
-/** @param {"uid" | "gid" | "set" | "favorite" | "idol" | "team"} viewType */
+/** @param {"uid" | "gid" | "set" | "idol" | "favorite" | "vault" | "team"} viewType */
 function generalView_ES(member, userData, card, viewType = "uid") {
     // A base embed template
     let embed_template = (title = "%AUTHOR_NAME | view", description = "", imageURL = "") => new BetterEmbed({
@@ -277,11 +277,12 @@ function generalView_ES(member, userData, card, viewType = "uid") {
 
         /** @type {Array<BetterEmbed>} */
         let _embeds = [];
+
         _cards.forEach((_card, idx) => {
             let _card_f = cardManager.toString.inventory(_card, { simplify: true });
 
-            let _embed = embed_template(
-                `%AUTHOR_NAME | ${_card.group} - ${_card.single}`,
+            // Create the embed
+            let _embed = embed_template(`%AUTHOR_NAME | ${_card.group} - ${_card.single}`,
                 _card_f, _card.imageURL
             ).setFooter({ text: `Card ${idx + 1}/${_cards.length} :: ${_card.description}` });
 
@@ -289,16 +290,6 @@ function generalView_ES(member, userData, card, viewType = "uid") {
         });
 
         return _embeds;
-    };
-
-    let embed_viewFavorite = () => {
-        // Whether or not this card is selected, or on the user's team
-        let selected = (card.uid === userData.card_selected_uid);
-        let team = userData.card_team_uids.includes(card.uid);
-
-        let card_f = cardManager.toString.inventory(card, { selected, favorited: true, team });
-
-        return embed_template("%AUTHOR_NAME | favorite", card_f, card.imageURL).setFooter({ text: card.description });
     };
 
     let embed_viewIdol = () => {
@@ -311,6 +302,45 @@ function generalView_ES(member, userData, card, viewType = "uid") {
         return embed_template("%AUTHOR_NAME | idol", card_f, card.imageURL).setFooter({ text: card.description });
     };
 
+    let embed_viewFavorite = () => {
+        // Whether or not this card is selected, or on the user's team
+        let selected = (card.uid === userData.card_selected_uid);
+        let team = userData.card_team_uids.includes(card.uid);
+
+        let card_f = cardManager.toString.inventory(card, { selected, favorited: true, team });
+
+        return embed_template("%AUTHOR_NAME | favorite", card_f, card.imageURL).setFooter({ text: card.description });
+    };
+
+    let embed_viewVault = () => {
+        // Sort the cards by set ID and global ID, then group them by 10 per embed
+        let _cards = arrayTools.chunk(card.sort((a, b) => a.setID - b.setID || a.globalID - b.globalID), 10);
+
+        /** @type {Array<BetterEmbed>} */
+        let _embeds = [];
+
+        _cards.forEach((_cardChunk, idx) => {
+            // Parse each card into a string
+            let _cardChunk_f = _cardChunk.map(_card => {
+                // Whether or not this card is selected, favorited, or on the user's team
+                let selected = (card.uid === userData.card_selected_uid);
+                let favorited = (card.uid === userData.card_favorite_uid);
+                let team = userData.card_team_uids.includes(card.uid);
+
+                return cardManager.toString.inventory(_card, { selected, favorited, team });
+            });
+
+            // Create the embed
+            let _embed = embed_template("%AUTHOR_NAME | vault",
+                _cardChunk_f.join("\n"), _cardChunk.slice(-1).imageURL
+            ).setFooter({ text: `Page ${idx + 1}/${_cards.length}` });
+
+            _embeds.push(_embed);
+
+            return _embeds;
+        });
+    };
+
     let embed_viewTeam = () => {
 
     };
@@ -319,8 +349,9 @@ function generalView_ES(member, userData, card, viewType = "uid") {
         case "uid": return embed_viewUID();
         case "gid": return embed_viewGID();
         case "set": return embed_viewSet();
-        case "favorite": return embed_viewFavorite();
         case "idol": return embed_viewIdol();
+        case "favorite": return embed_viewFavorite();
+        case "vault": return embed_viewVault();
         case "team": return embed_viewTeam();
     }
 }

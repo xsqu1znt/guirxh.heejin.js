@@ -49,11 +49,6 @@ module.exports = {
             interaction, author: { text: "%AUTHOR_NAME | view", user: interaction.member }
         });
 
-        // Check if the user provided any options
-        if (!uid && !globalID && !setID && !section) return await baseEmbed.send({
-            description: "You need to give a card ID or section, silly!"
-        });
-
         // Send the appropriate view based on what option the user provided
         if (uid) {
             // Fetch the user from Mongo
@@ -89,9 +84,57 @@ module.exports = {
             // Create the embeds
             let _embed_view = generalView_ES(interaction.member, null, _cards, "set");
 
-            // Send the embed with navigation
+            // Send the embeds with navigation
             let embedNav = new EmbedNavigation({ interaction, embeds: [_embed_view], paginationType: "shortJump" });
             return await embedNav.send();
-        }
+        } else if (section) {
+            // Fetch the user from Mongo
+            let _userData = await userManager.fetch(interaction.user.id, "full");
+
+            switch (section) {
+                case "idol":
+                    // Get the card from the user's card_inventory
+                    let _card_idol = userParser.cards.get(_userData, _userData.card_selected_uid);
+                    if (!_card_idol) return await baseEmbed.send({
+                        description: "**You don't have an idol!**\n> Use \`/set\` \`edit:🏃 idol\` to change"
+                    });
+
+                    // Create the embed
+                    let _embed_idol = generalView_ES(interaction.member, _userData, _card_idol, "idol");
+
+                    // Send the embed
+                    return await interaction.editReply({ embeds: [_embed_idol] });
+
+                case "favorite":
+                    // Get the card from the user's card_inventory
+                    let _card_favorite = userParser.cards.get(_userData, _userData.card_favorite_uid);
+                    if (!_card_favorite) return await baseEmbed.send({
+                        description: "**You don't have a favorite!**\n> Use \`/set\` \`edit:⭐ favorite\` to change"
+                    });
+
+                    // Create the embed
+                    let _embed_favorite = generalView_ES(interaction.member, _userData, _card_favorite, "favorite");
+
+                    // Send the embed
+                    return await interaction.editReply({ embeds: [_embed_favorite] });
+
+                case "vault":
+                    // Get the user's vault from their card_inventory
+                    let _cards = userParser.cards.getVault(_userData); if (!_cards.length) return await baseEmbed.send({
+                        description: "**You don't have anything in your vault!**\n> Use \`/set\` \`edit:🔒 vault\` to change"
+                    });
+
+                    // Create the embeds
+                    let _embed_view = generalView_ES(interaction.member, null, _cards, "vault");
+
+                    // Send the embeds with navigation
+                    let embedNav = new EmbedNavigation({ interaction, embeds: [_embed_view], paginationType: "shortJump" });
+                    return await embedNav.send();
+
+                case "team": return;
+            }
+        } else return await baseEmbed.send({
+            description: "You need to give a card ID or section, silly!"
+        });
     }
 };

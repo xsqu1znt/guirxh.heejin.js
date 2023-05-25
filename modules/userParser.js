@@ -31,6 +31,12 @@ function cards_getDuplicates(userData, globalID) {
     };
 }
 
+function cards_getVault(userData) {
+    let cardInventory = userData?.card_inventory || userData;
+
+    return cardInventory.filter(card => card.locked) || [];
+}
+
 /** Filter out duplicate cards from the user's card_inventory. */
 function cards_primary(cardArray) {
     return arrayTools.unique(cardArray, (card, compareCard) => card.globalID === compareCard.globalID);
@@ -64,6 +70,7 @@ module.exports = {
         get: cards_get,
         getMultiple: cards_getMultiple,
         getDuplicates: cards_getDuplicates,
+        getVault: cards_getVault,
         primary: cards_primary,
         duplicates: cards_duplicates
     }
