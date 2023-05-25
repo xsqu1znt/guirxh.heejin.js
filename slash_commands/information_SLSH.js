@@ -18,14 +18,14 @@ module.exports = {
         let botMember = interaction.guild.members.me;
 
         // A base embed template
-        let page_template = () => new BetterEmbed({
-            author: { text: "%AUTHOR_NAME | information", user: interaction.user },
+        let embed_template = () => new BetterEmbed({
+            author: { text: "%AUTHOR_NAME | information", user: interaction.user }
         });
 
         //! Page -> Summary
         let embed_summary = () => {
             // Create the base embed from the template
-            let _embed = page_template();
+            let _embed = embed_template();
 
             let _description = "";
             _description += `${link("Join our official server!", communityServer.url)}\n\n`;
@@ -52,7 +52,7 @@ module.exports = {
             let ping = client.ws.ping;
 
             // Create the base embed from the template
-            let _embed = page_template();
+            let _embed = embed_template();
 
             // Set the embed thumbnail
             _embed.setThumbnail(interaction.guild.members.me.user.avatarURL({ dynamic: true }));
@@ -90,7 +90,7 @@ module.exports = {
 
         let embed_player = () => {
             // Create the base embed from the template
-            let _embed = page_template();
+            let _embed = embed_template();
 
             // Set the embed thumbnail
             _embed.setThumbnail(interaction.user.avatarURL({ dynamic: true }));
@@ -112,7 +112,7 @@ module.exports = {
             let playersInGuild = interaction.guild.members.cache.filter(gm => playerIDs.includes(gm.id)).size;
 
             // Create the base embed from the template
-            let _embed = page_template();
+            let _embed = embed_template();
 
             // Set the embed thumbnail
             _embed.setThumbnail(guildIcon);

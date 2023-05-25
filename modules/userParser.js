@@ -2,8 +2,10 @@ const { arrayTools } = require('./jsTools');
 const cardManager = require('./cardManager');
 
 /** Get a card from the user's card_inventory. */
-function cards_get(cardArray, uid) {
-    let card = cardArray.find(card => card.uid === uid);
+function cards_get(userData, uid) {
+    let cardInventory = userData?.card_inventory || userData;
+
+    let card = cardInventory.find(card => card.uid === uid);
     return card ? cardManager.parse.fromCardLike(card) : null;
 }
 
@@ -13,6 +15,20 @@ function cards_getMultiple(cardArray, uids, filterInvalid = true) {
     if (filterInvalid) cards = cards.filter(card => card);
 
     return cards.map(card => card ? cardManager.parse.fromCardLike(card) : card);
+}
+
+function cards_getDuplicates(userData, globalID) {
+    let cardInventory = userData?.card_inventory || userData;
+    let cards = cardInventory.filter(card => card.globalID === globalID);
+
+    let primary = cards.shift();
+    let duplicates = cards;
+
+    return {
+        primary, duplicates,
+        duplicateCount: duplicates.length,
+        all: [primary, ...duplicates]
+    };
 }
 
 /** Filter out duplicate cards from the user's card_inventory. */
@@ -47,6 +63,7 @@ module.exports = {
     cards: {
         get: cards_get,
         getMultiple: cards_getMultiple,
+        getDuplicates: cards_getDuplicates,
         primary: cards_primary,
         duplicates: cards_duplicates
     }

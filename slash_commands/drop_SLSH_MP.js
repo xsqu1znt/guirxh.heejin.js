@@ -90,10 +90,10 @@ module.exports = {
         await userManager.cooldowns.reset(interaction.user.id, dropCooldownType);
 
         // Reset the user's reminder
-        await userManager.reminders.reset(
+        /* await userManager.reminders.reset(
             interaction.user.id, interaction.guild.id, interaction.channel.id,
             interaction.user, dropCooldownType
-        );
+        ); */
 
         // Add the cards to the user's inventory
         cardsDropped = await userManager.cards.add(interaction.user.id, cardsDropped, true);

@@ -46,13 +46,13 @@
 
     "eventSettings": {
         "event1": {
-            "name": "none",
-            "cardRarityFilter": [17]
+            "name": "Produce Groups Part 2",
+            "cardRarityFilter": [16]
         },
 
         "event2": {
-            "name": "none",
-            "cardRarityFilter": [17]
+            "name": "Japanese Releases Part 1",
+            "cardRarityFilter": [15]
         },
         
         "season": {
@@ -102,8 +102,8 @@
             "drop_general": "5s",
             "drop_weekly": "5s",
             "drop_season": "5s",
-            "drop_event_1": null,
-            "drop_event_2": null,
+            "drop_event_1": "5s",
+            "drop_event_2": "5s",
             "daily": "10s",
             "stage": "10s",
             "random": "10s"

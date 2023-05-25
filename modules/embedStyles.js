@@ -220,7 +220,7 @@ function generalShop_ES(user) {
     ];
 }
 
-// General -> /view card:set
+// Command -> General -> /view card:set
 function generalSetView_ES(user, cards) {
     cards = cards.sort((a, b) => a.globalID - b.globalID);
 
@@ -241,6 +241,88 @@ function generalSetView_ES(user, cards) {
     }
 
     return embeds.length ? embeds : [embed_template()];
+}
+
+// Command -> User -> /VIEW UID | /VIEW GID | /VIEW FAVORITE
+/** @param {"uid" | "gid" | "set" | "favorite" | "idol" | "team"} viewType */
+function generalView_ES(member, userData, card, viewType = "uid") {
+    // A base embed template
+    let embed_template = (title = "%AUTHOR_NAME | view", description = "", imageURL = "") => new BetterEmbed({
+        author: { text: title || "%AUTHOR_NAME | view", user: member },
+        description, imageURL
+    });
+
+    let embed_viewUID = () => {
+        // Whether or not this card is selected, favorited, or on the user's team
+        let selected = (card.uid === userData.card_selected_uid);
+        let favorited = (card.uid === userData.card_favorite_uid);
+        let team = userData.card_team_uids.includes(card.uid);
+
+        let { duplicateCount } = userParser.cards.getDuplicates(userData, card.globalID);
+
+        let card_f = cardManager.toString.inventory(card, { duplicateCount, selected, favorited, team });
+
+        return embed_template(null, card_f, card.imageURL).setFooter({ text: card.description });
+    };
+
+    let embed_viewGID = () => {
+        let card_f = cardManager.toString.inventory(card, { simplify: true });
+
+        return embed_template(null, card_f, card.imageURL).setFooter({ text: card.description });
+    };
+
+    let embed_viewSet = () => {
+        // Sort the cards by global ID and split it
+        let _cards = card.sort((a, b) => a.globalID - b.globalID);
+
+        /** @type {Array<BetterEmbed>} */
+        let _embeds = [];
+        _cards.forEach((_card, idx) => {
+            let _card_f = cardManager.toString.inventory(_card, { simplify: true });
+
+            let _embed = embed_template(
+                `%AUTHOR_NAME | ${_card.group} - ${_card.single}`,
+                _card_f, _card.imageURL
+            ).setFooter({ text: `Card ${idx + 1}/${_cards.length} :: ${_card.description}` });
+
+            _embeds.push(_embed);
+        });
+
+        return _embeds;
+    };
+
+    let embed_viewFavorite = () => {
+        // Whether or not this card is selected, or on the user's team
+        let selected = (card.uid === userData.card_selected_uid);
+        let team = userData.card_team_uids.includes(card.uid);
+
+        let card_f = cardManager.toString.inventory(card, { selected, favorited: true, team });
+
+        return embed_template("%AUTHOR_NAME | favorite", card_f, card.imageURL).setFooter({ text: card.description });
+    };
+
+    let embed_viewIdol = () => {
+        // Whether or not this card is favorited, or on the user's team
+        let favorited = (card.uid === userData.card_favorite_uid);
+        let team = userData.card_team_uids.includes(card.uid);
+
+        let card_f = cardManager.toString.inventory(card, { selected: true, favorited, team });
+
+        return embed_template("%AUTHOR_NAME | idol", card_f, card.imageURL).setFooter({ text: card.description });
+    };
+
+    let embed_viewTeam = () => {
+
+    };
+
+    switch (viewType) {
+        case "uid": return embed_viewUID();
+        case "gid": return embed_viewGID();
+        case "set": return embed_viewSet();
+        case "favorite": return embed_viewFavorite();
+        case "idol": return embed_viewIdol();
+        case "team": return embed_viewTeam();
+    }
 }
 
 // Command -> User -> /DROP
@@ -551,7 +633,7 @@ function userInventory_ES(user, userData, sorting = "set", order = "descending",
         let isOnTeam = (userData.card_team_uids.includes(card.uid));
 
         cards_user_f.push(cardManager.toString.inventory(card, {
-            duplicate_count: card_duplicates.length,
+            duplicateCount: card_duplicates.length,
             favorited: isFavorite,
             selected: isSelected,
             team: isOnTeam
@@ -696,10 +778,10 @@ function userVault_ES(user, userData) {
     return embeds;
 }
 
-// Command -> User -> /VIEW UID | /VIEW GID | /VIEW FAVORITE
-/** @param {"uid" | "global" | "favorite" | "idol"} viewStyle */
-function userView_ES(user, userData, card, viewStyle = "uid", showDuplicates = true) {
 
+
+/** @param {"uid" | "global" | "favorite" | "idol"} viewStyle */
+/* function userView_ES(user, userData, card, viewStyle = "uid", showDuplicates = true) {
     // Create the embed
     let embed = new EmbedBuilder().setColor(botSettings.embed.color || null);
     let embed_title = "%USER | view";
@@ -721,7 +803,7 @@ function userView_ES(user, userData, card, viewStyle = "uid", showDuplicates = t
             let isOnTeam = (userData.card_team_uids.includes(card.uid));
 
             embed.setDescription(cardManager.toString.inventory(card, {
-                duplicate_count,
+                duplicateCount: duplicate_count,
                 favorited: isFavorite,
                 selected: isSelected,
                 team: isOnTeam
@@ -751,7 +833,7 @@ function userView_ES(user, userData, card, viewStyle = "uid", showDuplicates = t
 
     // Return the embed
     return embed;
-}
+} */
 
 // Command -> User -> /TEAM VIEW
 function userTeamView_ES(user, userData) {
@@ -854,6 +936,7 @@ module.exports = {
     generalCollections_ES,
     generalShop_ES,
     generalSetView_ES,
+    generalView_ES,
 
     // User Commands
     userDrop_ES,
@@ -866,7 +949,7 @@ module.exports = {
     userDuplicates_ES,
     userVault_ES,
 
-    userView_ES,
+    // userView_ES,
     userTeamView_ES,
 
     userGift_ES

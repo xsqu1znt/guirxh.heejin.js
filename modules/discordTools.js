@@ -7,6 +7,7 @@ const {
     ButtonBuilder,
     ButtonStyle,
     ComponentType,
+    GuildMember,
     User,
     Message
 } = require('discord.js');
@@ -23,7 +24,7 @@ class bE_constructorOptions {
         this.interaction = null;
 
         this.author = {
-            /** @type {User | null} */
+            /** @type {GuildMember | User | null} */
             user: null, text: "", iconURL: "", linkURL: ""
         };
 
@@ -70,7 +71,7 @@ class BetterEmbed extends EmbedBuilder {
     /**
      * @example
      // Text formatting shorthand:
-     * "%AUTHOR_NAME" = "the author's username"
+     * "%AUTHOR_NAME" = "the author's display/user name"
      * 
      * @param {bE_constructorOptions} options */
     constructor(options) {
@@ -82,26 +83,26 @@ class BetterEmbed extends EmbedBuilder {
 
         /// Configure the embed
         //* Embed Author
-        if (options.author.text) this.setAuthor({
-            name: options.author.text
+        if (this.author.text) this.setAuthor({
+            name: this.author.text
                 // Formatting shorthand
-                .replace("%AUTHOR_NAME", options.author.user?.username)
+                .replace("%AUTHOR_NAME", this.author.user?.displayName || this.author.user?.username)
         });
 
-        if ((options.author.iconURL || options.author.user) && options.author.iconURL !== null) this.setAuthor({
-            name: this.data.author?.name || null, iconURL: options.author.iconURL
-                || options.author.user.avatarURL({ dynamic: true })
+        if ((this.author.iconURL || this.author.user) && this.author.iconURL !== null) this.setAuthor({
+            name: this.data.author?.name || null, iconURL: this.author.iconURL
+                || (this.author.user?.user.avatarURL({ dynamic: true }) || this.author.user?.avatarURL({ dynamic: true }))
         });
 
-        if (options.author.linkURL) this.setAuthor({
+        if (this.author.linkURL) this.setAuthor({
             name: this.data.author?.name, iconURL: this.data.author.icon_url,
-            url: options.author.linkURL
+            url: this.author.linkURL
         });
 
         //* Embed Title
         if (options.title.text) this.setTitle(options.title.text
             // Formatting shorthand
-            .replace("%AUTHOR_NAME", options.author.user?.username)
+            .replace("%AUTHOR_NAME", options.author.user?.displayName || options.author.user?.username)
         );
 
         if (options.title.linkURL) this.setURL(options.title.linkURL);
@@ -133,7 +134,7 @@ class BetterEmbed extends EmbedBuilder {
      * 
      * @example
      // Text formatting shorthand:
-     * "%AUTHOR_NAME" = "the author's username"
+     * "%AUTHOR_NAME" = "the author's display/user name"
      * "%AUTHOR_MENTION" = "the author's mention"
      * 
      * @param {bE_sendOptions} options */
@@ -143,13 +144,13 @@ class BetterEmbed extends EmbedBuilder {
         // Format message content
         options.messageContent = options.messageContent
             // Formatting shorthand
-            .replace("%AUTHOR_NAME", this.author.user?.username)
+            .replace("%AUTHOR_NAME", this.author.user?.displayName || this.author.user?.username)
             .replace("%AUTHOR_MENTION", this.author.user?.toString());
 
         // Change the embed's description if applicable
         if (options.description) this.setDescription(options.description
             // Formatting shorthand
-            .replace("%AUTHOR_NAME", this.author.user?.username)
+            .replace("%AUTHOR_NAME", this.author.user?.displayName || this.author.user?.username)
             .replace("%AUTHOR_MENTION", this.author.user?.toString())
         );
 

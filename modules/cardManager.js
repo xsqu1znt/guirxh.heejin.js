@@ -199,8 +199,8 @@ function toString_shopEntry(card) {
         .replace("%PRICE", inline(botSettings.currencyIcon, card.price));
 }
 
-function toString_inventory(card, options = { duplicate_count: 0, favorited: false, selected: false, team: false, isDuplicate: false, simplify: false, }) {
-    options = { duplicate_count: 0, favorited: false, selected: false, team: false, isDuplicate: false, simplify: false, ...options };
+function toString_inventory(card, options = { duplicateCount: 0, favorited: false, selected: false, team: false, isDuplicate: false, simplify: false, }) {
+    options = { duplicateCount: 0, favorited: false, selected: false, team: false, isDuplicate: false, simplify: false, ...options };
 
     // Special charactors
     let superscript = {
@@ -208,7 +208,7 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
         dupe: "ᴰ ᵁ ᴾ ᴱ"
     };
 
-    let { duplicate_count } = options;
+    let { duplicateCount: duplicate_count } = options;
     let formated = "%UID%EMOJI %GROUP : %SINGLE - %NAME %DUPE\n> %SET_ID %GLOBAL_ID %RARITY %CATEGORY %SELL_PRICE%LOCKED%NEW_LINE%LEVEL%STATS%FAVORITED%SELECTED%TEAM"
         .replace("%UID", card.uid ? space("right", inline(card.uid)) : "")
         .replace("%EMOJI", inline(card.emoji))
@@ -238,7 +238,7 @@ function toString_inventory(card, options = { duplicate_count: 0, favorited: fal
     // For special cases with dupeified things
     if (options.isDuplicate)
         formated = formated.replace("%DUPE", bold(italic(superscript.dupe)));
-    else if (options.duplicate_count > 0) {
+    else if (options.duplicateCount > 0) {
         // Special charactor formatting
         let duplicate_count_f = String(duplicate_count).split("").map(num => superscript.number[+num]).join("");
 
