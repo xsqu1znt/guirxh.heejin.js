@@ -2,17 +2,47 @@ const { arrayTools } = require('./jsTools');
 const cardManager = require('./cardManager');
 
 /** Get a card from the user's card_inventory. */
-function cards_get(cardArray, uid) {
-    let card = cardArray.find(card => card.uid === uid);
+function cards_get(userData, uid) {
+    let cardInventory = userData?.card_inventory || userData;
+
+    let card = cardInventory.find(card => card.uid === uid);
     return card ? cardManager.parse.fromCardLike(card) : null;
 }
 
 /** Get multiple cards from the user's card_inventory. */
 function cards_getMultiple(cardArray, uids, filterInvalid = true) {
-    let cards = uids.map(uid => cardArray.find(card => card.uid === uid));
+    let cards = uids.map(uid => cardArray.find(card => card.uid === uid) || null);
     if (filterInvalid) cards = cards.filter(card => card);
 
-    return cards.map(card => cardManager.parse.fromCardLike(card));
+    return cards.map(card => card ? cardManager.parse.fromCardLike(card) : card);
+}
+
+function cards_getDuplicates(userData, globalID) {
+    let cardInventory = userData?.card_inventory || userData;
+    let cards = cardInventory.filter(card => card.globalID === globalID);
+    cards = cards.map(cardLike => cardManager.parse.fromCardLike(cardLike));
+
+    let primary = cards.shift();
+    let duplicates = cards;
+
+    return {
+        primary, duplicates,
+        duplicateCount: duplicates.length,
+        all: [primary, ...duplicates]
+    };
+}
+
+function cards_getVault(userData) {
+    let cardInventory = userData?.card_inventory || userData;
+    let vault = cardInventory.filter(card => card.locked) || [];
+
+    return vault.map(cardLike => cardManager.parse.fromCardLike(cardLike));
+}
+
+function cards_getTeam(userData) {
+    let team = userData.card_inventory.filter(card => userData.card_team_uids.includes(card.uid)) || [];
+
+    return team.map(cardLike => cardManager.parse.fromCardLike(cardLike));
 }
 
 /** Filter out duplicate cards from the user's card_inventory. */
@@ -40,13 +70,17 @@ function cards_duplicates(cardArray, filter = { uid: "", globalID: "" }) {
     // Remove the first card in the array because that's the primary card
     card_duplicates.shift();
 
-    return { card_primary, card_duplicates };
+    return { card_primary, card_duplicates, cards: [card_primary, ...card_duplicates] };
 }
 
 module.exports = {
     cards: {
         get: cards_get,
         getMultiple: cards_getMultiple,
+        getDuplicates: cards_getDuplicates,
+        getVault: cards_getVault,
+        getTeam: cards_getTeam,
+
         primary: cards_primary,
         duplicates: cards_duplicates
     }

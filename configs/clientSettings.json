@@ -5,6 +5,9 @@
 
     "ownerID": "797233513136390175",
     "adminIDs": ["842555247145779211"],
+    "adminBypassIDs": {
+        "customizecard": [""]
+    },
 
     "clientPresence": {
         "default": {
@@ -20,7 +23,7 @@
             "STATUS": "dnd",
             "activity": {
                 "TYPE": "PLAYING",
-                "NAME": "with unstable substances",
+                "NAME": "hide and seek 🐰",
                 "STREAM_URL": ""
             }
         }

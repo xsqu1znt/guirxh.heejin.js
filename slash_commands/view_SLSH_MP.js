@@ -1,37 +1,36 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
-const { botSettings } = require('../configs/heejinSettings.json');
-const { userView_ES, userTeamView_ES, userVault_ES } = require('../modules/embedStyles');
-const { messageTools } = require('../modules/discordTools');
+const { generalView_ES } = require('../modules/embedStyles');
+const { BetterEmbed, EmbedNavigation } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
-const { dateTools } = require('../modules/jsTools');
-const cardManager = require('../modules/cardManager');
 const userParser = require('../modules/userParser');
+const cardManager = require('../modules/cardManager');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("view")
-        .setDescription("View a card's information")
+        .setDescription("View information about a card")
 
-        .addStringOption(option => option.setName("card")
-            .setDescription("Choose what you want to view")
-            
+        .addStringOption(option => option.setName("uid")
+            .setDescription("UID of a card you own")
+        )
+
+        .addStringOption(option => option.setName("gid")
+            .setDescription("GID of any card")
+        )
+
+        .addStringOption(option => option.setName("setid")
+            .setDescription("Set ID to view all cards in a set")
+        )
+
+        .addStringOption(option => option.setName("section")
+            .setDescription("More sections to view")
+
             .addChoices(
-                { name: "🆔 uid", value: "uid" },
-                { name: "🆔 gid", value: "gid" },
                 { name: "⭐ favorite", value: "favorite" },
                 { name: "🏃 idol", value: "idol" },
                 { name: "🔒 vault", value: "vault" },
                 { name: "👯 team", value: "team" }
             )
-            .setRequired(true)
-        )
-
-        .addStringOption(option => option.setName("uid")
-            .setDescription("The unique ID of the card")
-        )
-
-        .addStringOption(option => option.setName("gid")
-            .setDescription("The global ID of the card")
         ),
 
     /**
@@ -39,100 +38,114 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
-        // Interaction options and stuff
+        // Interaction options
         let uid = interaction.options.getString("uid");
         let globalID = interaction.options.getString("gid");
-        let userData, card, embed_view;
+        let setID = interaction.options.getString("setid");
+        let section = interaction.options.getString("section");
 
         // Create a base embed
-        const embedinator = new messageTools.Embedinator(interaction, {
-            title: "%USER | view", author: interaction.user
+        let baseEmbed = new BetterEmbed({
+            interaction, author: { text: "%AUTHOR_NAME | view", user: interaction.member }
         });
 
-        // Determine the operation type
-        switch (interaction.options.getString("card")) {
-            case "uid":
-                // Fallback
-                if (!uid) return await embedinator.send("You need to give a valid card ID.");
+        // Send the appropriate view based on what option the user provided
+        if (uid) {
+            // Fetch the user from Mongo
+            let _userData = await userManager.fetch(interaction.user.id, "full");
 
-                // Fetch the user from Mongo
-                userData = await userManager.fetch(interaction.user.id, "full", true);
+            // Get the card from the user's card_inventory
+            let _card = userParser.cards.get(_userData, uid); if (!_card) return await baseEmbed.send({
+                description: "You need to give a valid UID"
+            });
 
-                // Get the card from the user's card_inventory
-                card = userParser.cards.get(userData.card_inventory, uid);
-                if (!card) return await embedinator.send(`\`${uid}\` is not a valid card ID.`);
+            // Create the embed
+            let _embed_view = generalView_ES(interaction.member, _userData, _card, "uid");
 
-                // Create the embed
-                embed_view = userView_ES(interaction.user, userData, card, "uid");
+            // Send the embed
+            return await interaction.editReply({ embeds: [_embed_view] });
+        } else if (globalID) {
+            // Get the card from our global collection
+            let _card = cardManager.get.byGlobalID(globalID); if (!_card) return await baseEmbed.send({
+                description: "You need to give a valid GID"
+            });
 
-                break;
+            // Create the embed
+            let _embed_view = generalView_ES(interaction.member, null, _card, "gid");
 
-            case "gid":
-                // Fallback
-                if (!globalID) return await embedinator.send("You need to give a valid card ID.");
+            // Send the embed
+            return await interaction.editReply({ embeds: [_embed_view] });
+        } else if (setID) {
+            // Get the card from our global collection
+            let _cards = cardManager.get.set(setID); if (!_cards.length) return await baseEmbed.send({
+                description: "You need to give a valid set ID"
+            });
 
-                // Get the card from our global collection
-                card = cardManager.get.byGlobalID(globalID);
-                if (!card) return await embedinator.send(`\`${globalID}\` is not a valid global card ID.`);
+            // Create the embeds
+            let _embeds_view = generalView_ES(interaction.member, null, _cards, "set");
 
-                // Create the embed
-                embed_view = userView_ES(interaction.user, userData, card, "global");
-                break;
+            // Send the embeds with navigation
+            let _embedNav = new EmbedNavigation({ interaction, embeds: [_embeds_view], paginationType: "shortJump" });
+            return await _embedNav.send();
+        } else if (section) {
+            // Fetch the user from Mongo
+            let _userData = await userManager.fetch(interaction.user.id, "full");
 
-            case "favorite":
-                // Fetch the user from Mongo
-                userData = await userManager.fetch(interaction.user.id, "full", true);
+            switch (section) {
+                case "idol":
+                    // Get the card from the user's card_inventory
+                    let _card_idol = userParser.cards.get(_userData, _userData.card_selected_uid);
+                    if (!_card_idol) return await baseEmbed.send({
+                        description: "You don't have an idol!\n> Use \`/set\` \`edit:🏃 idol\` to change"
+                    });
 
-                // Get the card from the user's card_inventory
-                card = userParser.cards.get(userData.card_inventory, userData.card_favorite_uid);
-                if (!card) return await embedinator.send("You don't have a favorite card. Use **/set edit:favorite** first.");
+                    // Create the embed
+                    let _embed_idol = generalView_ES(interaction.member, _userData, _card_idol, "idol");
 
-                // Create the embed
-                embed_view = userView_ES(interaction.user, userData, card, "favorite");
+                    // Send the embed
+                    return await interaction.editReply({ embeds: [_embed_idol] });
 
-                break;
+                case "favorite":
+                    // Get the card from the user's card_inventory
+                    let _card_favorite = userParser.cards.get(_userData, _userData.card_favorite_uid);
+                    if (!_card_favorite) return await baseEmbed.send({
+                        description: "You don't have a favorite!\n> Use \`/set\` \`edit:⭐ favorite\` to change"
+                    });
 
-            case "idol":
-                // Fetch the user from Mongo
-                userData = await userManager.fetch(interaction.user.id, "full", true);
+                    // Create the embed
+                    let _embed_favorite = generalView_ES(interaction.member, _userData, _card_favorite, "favorite");
 
-                // Get the card from the user's card_inventory
-                card = userParser.cards.get(userData.card_inventory, userData.card_selected_uid);
-                if (!card) return await embedinator.send("You don't have a card selected. Use **/set edit:idol** first.");
+                    // Send the embed
+                    return await interaction.editReply({ embeds: [_embed_favorite] });
 
-                // Create the embed
-                embed_view = userView_ES(interaction.user, userData, card, "idol");
+                case "vault":
+                    // Get the user's vault from their card_inventory
+                    let _cards_vault = userParser.cards.getVault(_userData); if (!_cards_vault.length) return await baseEmbed.send({
+                        description: "You don't have anything in your vault!\n> Use \`/set\` \`edit:🔒 vault\` to change"
+                    });
 
-                break;
+                    // Create the embeds
+                    let _embeds_vault = generalView_ES(interaction.member, _userData, _cards_vault, "vault");
 
-            case "vault":
-                // Fetch the user from Mongo
-                userData = await userManager.fetch(interaction.user.id, "full", true);
+                    // Send the embeds with navigation
+                    let _embedNav_vault = new EmbedNavigation({ interaction, embeds: [_embeds_vault], paginationType: "shortJump" });
+                    return await _embedNav_vault.send();
 
-                // Create the embeds
-                embed_view = userVault_ES(interaction.user, userData);
+                case "team":
+                    // Get the user's vault from their card_inventory
+                    let _cards_team = userParser.cards.getTeam(_userData); if (!_cards_team.length) return await baseEmbed.send({
+                        description: "You don't have a team!\n> Use \`/set\` \`edit:👯 team\` to change"
+                    });
 
-                // Navigateinator-ify-er 9000!!!!11
-                return await new messageTools.Navigationify(interaction, [embed_view], {
-                    timeout: dateTools.parseStr(botSettings.timeout.pagination),
-                    pagination: true
-                }).send();
+                    // Create the embeds
+                    let _embeds_team = generalView_ES(interaction.member, _userData, _cards_team, "team");
 
-            case "team":
-                // Fetch the user from Mongo
-                userData = await userManager.fetch(interaction.user.id, "full", true);
-
-                // Create the embeds
-                embed_view = userTeamView_ES(interaction.user, userData);
-
-                // Navigateinator-ify-er 9000!!!!11
-                return await new messageTools.Navigationify(interaction, [embed_view], {
-                    timeout: dateTools.parseStr(botSettings.timeout.pagination),
-                    pagination: true
-                }).send();
-        }
-
-        // Send the embed
-        return await interaction.editReply({ embeds: [embed_view] });
+                    // Send the embeds with navigation
+                    let _embedNav_team = new EmbedNavigation({ interaction, embeds: [_embeds_team], paginationType: "shortJump" });
+                    return await _embedNav_team.send();
+            }
+        } else return await baseEmbed.send({
+            description: "You need to give a card ID or section, silly!"
+        });
     }
 };

@@ -10,7 +10,7 @@ function importSlashCommands(dir) {
     let files = readdirSync(`.${dir}`);
     // let files = readdirSync(`${dir}`);
 
-    for (let entry of files) if (entry.endsWith('.js')) {
+    for (let entry of files) if (entry.includes("SLSH") && entry.endsWith('.js')) {
         try {
             slash_commands.push(require(`${dir}/${entry}`));
             // slash_commands.push(require(`../.${dir}/${entry}`));

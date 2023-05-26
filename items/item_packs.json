@@ -1,0 +1,72 @@
+[
+    {
+        "id": "P1",
+        "setID": "P01",
+        "name": "Pack 01",
+        "description": "Content: Sugar Rush Ride :: Phantom :: Don't Fight The Feeling",
+        "category": "pack",
+        "set": "PCK1",
+        "emoji": "📦",
+        "rarity": 1,
+        "price": 500,
+        "items": {
+            "cards": {
+                "count": 3,
+                "fromSet": [
+                    { "id": "279", "chance": 100 },
+                    { "id": "276", "chance": 100 },
+                    { "id": "253", "chance": 50 }
+                ]
+            }
+        }
+    },
+    {
+        "id": "P2",
+        "setID": "P01",
+        "name": "Pack 02",
+        "description": "Content: ANY PACK 01 :: Mago :: Black Mamba",
+        "category": "pack",
+        "set": "PCK1",
+        "emoji": "📦",
+        "rarity": 1,
+        "price": 1000,
+        "items": {
+            "cards": {
+                "count": 6,
+                "fromSet": [
+                    { "id": "279", "chance": 100 },
+                    { "id": "276", "chance": 100 },
+                    { "id": "253", "chance": 100 },
+                    { "id": "258", "chance": 50 },
+                    { "id": "260", "chance": 50 }
+                ]
+            }
+        }
+    },
+    {
+        "id": "P3",
+        "setID": "P01",
+        "name": "Pack 03",
+        "description": "Content: ANY PACK 01 AND 02 :: Butterfly :: Spicy :: UNFORGIVEN",
+        "category": "pack",
+        "set": "PCK1",
+        "emoji": "📦",
+        "rarity": 1,
+        "price": 1500,
+        "items": {
+            "cards": {
+                "count": 9,
+                "fromSet": [
+                    { "id": "279", "chance": 100 },
+                    { "id": "276", "chance": 100 },
+                    { "id": "253", "chance": 100 },
+                    { "id": "258", "chance": 50 },
+                    { "id": "260", "chance": 50 },
+                    { "id": "270", "chance": 100 },
+                    { "id": "293", "chance": 50 },
+                    { "id": "294", "chance": 50 }
+                ]
+            } 
+        }
+    }
+]

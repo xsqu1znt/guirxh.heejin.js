@@ -118,6 +118,7 @@ module.exports = {
 
                     // Get the card from the user's card_inventory
                     cards = uid_add.map(uid => userParser.cards.get(userData.card_inventory, uid));
+                    cards = cards.filter(card => card);
                     if (!cards.length > 0) return await embedinator.send(
                         `\`${uid_add.join(" ").trim()}\` is not a valid UID`
                     );
@@ -146,6 +147,7 @@ module.exports = {
 
                     // Get the card from the user's card_inventory
                     cards = uid_remove.map(uid => userParser.cards.get(userData.card_inventory, uid));
+                    cards = cards.filter(card => card);
                     if (!cards.length > 0) return await embedinator.send(
                         `\`${uid_remove.join(" ").trim()}\` is not a valid UID`
                     );
@@ -186,12 +188,10 @@ module.exports = {
 
                     // Add the card's uid to the user's card_team_uids
                     // also check and remove invalid uids if they exist in the user's card_team_uids
-                    if (teamCards_valid.length > 0) {
-                        cards_team = teamCards_valid.map(card => card.uid);
-                        cards_team.push(card.uid);
-
-                        await userManager.update(interaction.user.id, { card_team_uids: cards_team });
-                    } else // If not, just push the new card to the user's card_team_uids
+                    if (teamCards.length > teamCards_valid.length) await userManager.update(interaction.user.id, {
+                        card_team_uids: teamCards_valid.map(card => card.uid)
+                    });
+                    else // If not, just push the new card to the user's card_team_uids
                         await userManager.update(interaction.user.id, { $push: { card_team_uids: card.uid } });
 
                     // Let the user know the result

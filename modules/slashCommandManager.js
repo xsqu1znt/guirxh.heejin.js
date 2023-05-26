@@ -14,7 +14,7 @@ module.exports = {
      * @param {Array<string> | string} guildIDs The IDs of the Guilds you wish to push to.
      * @param {boolean} global Whether to push the slash commands globally. False is locally per server.
      */
-    push: async (client, guildIDs, global = false, includeAdmin = false, onlyAdmin = true) => {
+    push: async (client, guildIDs, global = false, includeAdmin = false, onlyAdmin = false) => {
         let slash_commands = !includeAdmin
             ? [...client.slashCommands.values()].map(slsh => slsh.builder)
             : onlyAdmin
@@ -24,7 +24,7 @@ module.exports = {
         // Push slash commands globally
         if (global) try {
             // Log what's currently happening
-            logger.log(`pushing slash commands for (${guildIDs.length}) ${guildIDs.length > 1 ? "guilds" : "guild"}`);
+            logger.log(`pushing slash commands globally`);
 
             await rest.put(Routes.applicationCommands(client.user.id), { body: slash_commands });
 

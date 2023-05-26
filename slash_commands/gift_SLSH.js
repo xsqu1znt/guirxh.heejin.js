@@ -68,7 +68,7 @@ module.exports = {
         // Update the users' card_inventory in Mongo
         await Promise.all([
             // Add the card to the recipient's card_inventory
-            userManager.cards.add(recipient.id, cardsToGift, true),
+            (async () => cardsToGift = await userManager.cards.add(recipient.id, cardsToGift, true))(),
             // Remove the card from the gifter's card_inventory
             userManager.cards.remove(interaction.user.id, cardsToGift.map(card => card.uid))
         ]);

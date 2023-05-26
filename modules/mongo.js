@@ -1,7 +1,7 @@
 // Connects us to our Mongo database so we can save and retrieve data.
 
 const { userSettings } = require('../configs/heejinSettings.json');
-const { dateTools } = require('../modules/jsTools');
+const { dateTools, randomTools, stringTools } = require('../modules/jsTools');
 const badgeManager = require('./badgeManager');
 const cardManager = require('./cardManager');
 const mongoose = require('mongoose');
@@ -11,8 +11,60 @@ const MONGO_URI = process.env.MONGO_URI || require('../configs/clientSettings.js
 
 // Models
 const models = {
+    guild: require('../models/guildModel'),
     user: require('../models/userModel')
 };
+
+/** @type {"drop_general" | "drop_weekly" | "drop_season" | "drop_event_1" | "drop_event_2" | "daily" | "stage" | "random"} */
+const cooldownTypes = null;
+
+//! Guild
+async function guild_exists(guildID) {
+    let exists = await models.guild.exists({ _id: guildID });
+    return exists ? true : false;
+}
+
+async function guild_fetch(guildID) {
+    let guild = await models.guild.findById(guildID);
+
+    guild ||= await new models.guild({ _id: guildID }).save();
+    return guild;
+}
+
+async function guild_fetchAll() {
+    return await models.guild.find();
+}
+
+async function guild_update(guildID, update) {
+    return await models.guild.findByIdAndUpdate(guildID, update);
+}
+
+//! Guild -> Reminders
+/** @param {cooldownTypes} reminderType */
+async function guildReminder_add(guildID, channelID, user = { id: "", name: "" }, reminderType) {
+    if (!await guild_exists(guildID)) await guild_fetch(guildID);
+
+    // Create the reminder object
+    let reminder = {
+        id: randomTools.alphaNumericString(6, true),
+        guildID, channelID, user,
+        type: reminderType,
+
+        message: `Your \`${stringTools.toTitleCase(reminderType.replace(/_/g, " "))}\` is **available**!`,
+        timestamp: dateTools.fromNow(userSettings.cooldowns[reminderType] || 0)
+    };
+
+    // Push the new reminder to Mongo
+    await guild_update(guildID, { $push: { reminders: reminder } }); return reminder;
+}
+
+async function guildReminder_remove(guildID, reminderID) {
+    if (!await guild_exists(guildID))
+        return logger.error("Remove guild reminder", "guild not found");
+
+    // Send a pull request to Mongo
+    await guild_update(guildID, { $pull: { reminders: { id: reminderID } } }); return null;
+}
 
 //! User
 async function user_exists(userID) {
@@ -20,17 +72,21 @@ async function user_exists(userID) {
     return exists ? true : false;
 }
 
-/** @param {"full" | "essential" | "cards"} type */
+async function user_count() {
+    return await models.user.count();
+}
+
+/** @param {"full" | "essential" | "reminders" | "cards" | "id"} type */
 async function user_fetch(userID, type = "full", lean = false) {
     let filter = {};
     let user;
 
     switch (type) {
         case "full": filter = { __v: 0 }; break;
-        case "essential":
-            filter = { card_inventory: 0 };
-            break;
-        case "cards": filter = { _id: 0, card_inventory: 1 }; break;
+        case "essential": filter = { card_inventory: 0  }; break;
+        case "reminders": filter = { daily_streak: 1, cooldowns: 1, reminders: 1, __v: 0 }; break;
+        case "cards": filter = { card_inventory: 1  }; break;
+        case "id": filter = { _id: 1 }; break;
     }
 
     if (userID) {
@@ -124,22 +180,33 @@ async function cardInventory_addCards(userID, cards, resetUID = false) {
     // Convert a single card into an array
     if (!Array.isArray(cards)) cards = [cards];
 
-    // Get the user's current cards for unique ID creation
-    let userCards; if (resetUID) userCards = (await user_fetch(userID, "cards", true)).card_inventory;
+    // Create a deep copy of the cards to avoid conflicts
+    cards = JSON.parse(JSON.stringify(cards));
 
-    for (let card of cards) {
-        // Reset the unique ID
-        if (resetUID) card = cardManager.resetUID(card, userCards);
+    // Get an array of all the card UIDs in the user's card_inventory to avoid duplicates
+    let userCardUIDs; if (resetUID) {
+        // Fetch the user's card_inventory
+        let { card_inventory } = await user_fetch(userID, "cards", true);
 
-        // Convert the card object to a slimmer "CardLike" object
-        if (card.rarity !== 100) card = cardManager.parse.toCardLike(card);
-
-        // Add the new card to the userCards array to avoid duplicate UIDs
-        if (resetUID) userCards.push(card);
+        // Get only the card UIDs from the fetched card_inventory
+        userCardUIDs = card_inventory.map(card => card?.uid);
     }
 
+    if (resetUID) for (let i = 0; i < cards.length; i++) {
+        // Reset the unique ID
+        let uid = cards[i]?.uid || cardManager.createUID();
+
+        // Recursivly reset the unique ID if another card exists with that ID
+        while (userCardUIDs.includes(uid)) uid = cardManager.createUID();
+
+        cards[i].uid = uid; userCardUIDs.push(uid);
+    }
+
+    // Convert the cards object to a slimmer "CardLike" object
+    let cardLikes = cards.map(card => [100].includes(card.rarity) ? card : cardManager.parse.toCardLike(card));
+
     // Push the CardLikes to the user's card_inventory in Mongo
-    await user_update(userID, { $push: { card_inventory: { $each: cards } } }); return null;
+    await user_update(userID, { $push: { card_inventory: { $each: cardLikes } } }); return cards;
 }
 
 async function cardInventory_removeCards(userID, uids) {
@@ -148,6 +215,13 @@ async function cardInventory_removeCards(userID, uids) {
 
     // Send the pull request to Mongo
     await user_update(userID, { $pull: { card_inventory: { uid: { $in: uids } } } }); return null;
+}
+
+async function cardInventory_updateCard(userID, card) {
+    await models.user.updateOne(
+        { _id: userID, "card_inventory.uid": card.uid },
+        { $set: { "card_inventory.$": card } }
+    ); return null;
 }
 
 async function cardInventory_sellCards(userID, cards) {
@@ -165,13 +239,6 @@ async function cardInventory_sellCards(userID, cards) {
 
     // Update the user's balance in Mongo
     await user_update(userID, { balance: userData.balance }); return null;
-}
-
-async function cardInventory_updateCard(userID, card) {
-    await models.user.updateOne(
-        { _id: userID, "card_inventory.uid": card.uid },
-        { $set: { "card_inventory.$": card } }
-    ); return null;
 }
 
 //! User -> Badges
@@ -196,7 +263,7 @@ async function userBadge_removeBadge(userID, badgeIDs) {
 }
 
 //! User -> Cooldowns
-/** @param {"drop_normal" | "drop_weekly" | "drop_seasonal" | "drop_event" | "daily" | "stage" | "random"} cooldownType */
+/** @param {cooldownTypes} cooldownType */
 async function userCooldown_check(userID, cooldownType) {
     let userData = await user_fetch(userID, "essential", true);
 
@@ -204,7 +271,7 @@ async function userCooldown_check(userID, cooldownType) {
     return dateTools.eta(cooldown.timestamp, true);
 }
 
-/** @param {"drop_normal" | "drop_weekly" | "drop_season" | "drop_event" | "daily" | "stage" | "random"} cooldownType */
+/** @param {cooldownTypes} cooldownType */
 async function userCooldown_reset(userID, cooldownType) {
     let cooldown = dateTools.fromNow(userSettings.cooldowns[cooldownType] || 0);
 
@@ -218,6 +285,42 @@ async function userCooldown_reset(userID, cooldownType) {
     else await models.user.updateOne(
         { _id: userID },
         { $addToSet: { "cooldowns": { type: cooldownType, timestamp: cooldown } } }
+    );
+
+    return null;
+}
+//! User -> Reminders
+/** @param {cooldownTypes} reminderType */
+async function userReminder_toggle(userID, reminderType) {
+    let userData = await user_fetch(userID, "reminders");
+    let reminder = userData.reminders.find(r => r.type === reminderType);
+
+    let enabled = true;
+
+    // Toggle the user's reminder in Mongo
+    if (reminder) {
+        enabled = !reminder.enabled;
+
+        await models.user.updateOne(
+            { _id: userID, "reminders.type": reminderType },
+            { $set: { "reminders.$": { type: reminderType, enabled } } }
+        );
+    }
+    else await models.user.updateOne(
+        { _id: userID },
+        { $addToSet: { "reminders.$": { type: reminderType, enabled } } }
+    );
+
+    return enabled;
+}
+
+/** @param {cooldownTypes} reminderType */
+async function userReminder_reset(userID, guildID, channelID, user, reminderType) {
+    let userData = await user_fetch(userID, "essential", true);
+
+    // Check if the user has reminders enabled before resetting
+    if (userData.reminders.find(r => r.type === reminderType)?.enabled) await guildReminder_add(
+        guildID, channelID, { id: user.id, name: user.username }, reminderType
     );
 
     return null;
@@ -240,8 +343,21 @@ module.exports = {
         logger.error("failed to connect to MongoDB", null, connection);
     },
 
+    guildManager: {
+        exists: guild_exists,
+        fetch: guild_fetch,
+        fetchAll: guild_fetchAll,
+        update: guild_update,
+
+        reminders: {
+            add: guildReminder_add,
+            remove: guildReminder_remove
+        }
+    },
+
     userManager: {
         exists: user_exists,
+        count: user_count,
         fetch: user_fetch,
         update: user_update,
         new: user_new,
@@ -251,8 +367,8 @@ module.exports = {
         cards: {
             add: cardInventory_addCards,
             remove: cardInventory_removeCards,
-            sell: cardInventory_sellCards,
-            update: cardInventory_updateCard
+            update: cardInventory_updateCard,
+            sell: cardInventory_sellCards
         },
 
         badges: {
@@ -263,6 +379,11 @@ module.exports = {
         cooldowns: {
             check: userCooldown_check,
             reset: userCooldown_reset
+        },
+
+        reminders: {
+            toggle: userReminder_toggle,
+            reset: userReminder_reset
         }
     }
 };

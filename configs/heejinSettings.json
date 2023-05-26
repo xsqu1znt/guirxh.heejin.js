@@ -1,12 +1,16 @@
 {
-    "communityServerURL": "https://discord.gg/G4YHSMNZQp",
+    "communityServer": {
+        "id": "802930323095814144",
+        "url": "https://discord.gg/G4YHSMNZQp",
+        "iconURL": "https://cdn.discordapp.com/attachments/831265262309212200/911434990947008552/heejinserver.png",
+        "chanceToShow": 5
+    },
 
     "botSettings": {
         "currencyIcon": "🥕",
 
         "embed": {
-            "color": "#2B2D31",
-            "footerIcon": "https://cdn.discordapp.com/attachments/831265262309212200/911434990947008552/heejinserver.png"
+            "color": "#2B2D31"
         },
 
         "customEmojis": {
@@ -17,6 +21,14 @@
                 {"name": "four", "emoji": "<:four:1103208746362093659>"},
                 {"name": "five", "emoji": "<:five:1103208750489280542>"}
             ],
+
+            "pagination": {
+                "toFirst": {"name": "left2", "emoji": "<:left2:1110403342611513344>"},
+                "back": {"name": "left1", "emoji": "<:left1:1110405467370434670>"},
+                "jump": {"name": "📄", "emoji": "📄"},
+                "next": {"name": "right1", "emoji": "<:right1:1110405469350146089>"},
+                "toLast": {"name": "right2", "emoji": "<:right2:1110403345702735963>"}
+            },
 
             "confirmSell": {"name": "✅", "emoji": "✅"}
         },
@@ -33,8 +45,15 @@
     },
 
     "eventSettings": {
-        "name": "",
-        "cardRarityFilter": [17],
+        "event1": {
+            "name": "Produce Groups Part 2",
+            "cardRarityFilter": [16]
+        },
+
+        "event2": {
+            "name": "Japanese Releases Part 1",
+            "cardRarityFilter": [15]
+        },
         
         "season": {
             "name": "Spring23",
@@ -60,7 +79,7 @@
                 "maxLevel": 100,
                 "nextLevelXPMultiplier": 50,
                 "nextLevelStatReward": { "ability": 9, "reputation": 9 },
-                "stage": { "min": 50, "max": 200 }
+                "stage": { "min": 150, "max": 500 }
             }
         },
         "currency": {
@@ -80,13 +99,14 @@
             "winRandom": 40
         },
         "cooldowns": {
-            "drop_normal": "5s",
+            "drop_general": "5s",
             "drop_weekly": "5s",
             "drop_season": "5s",
-            "drop_event": null,
-            "daily": "60s",
-            "stage": "30s",
-            "random": "5s"
+            "drop_event_1": "5s",
+            "drop_event_2": "5s",
+            "daily": "10s",
+            "stage": "10s",
+            "random": "10s"
         }
     },
 

@@ -1,8 +1,7 @@
 const badges = require('../items/badges.json');
 
 const { botSettings } = require('../configs/heejinSettings.json');
-const { markdown } = require('./discordTools');
-const { bold, italic, inline, quote, link, space } = markdown;
+const { markdown: { bold, italic, inline, link } } = require('./discordTools');
 
 function getBadgeByID(id) {
     return badges.find(badge => badge.id.toLowerCase() === id) || null;
@@ -39,12 +38,12 @@ function toString_shop(badge) {
         .replace("%EMOJI", badge.emoji)
         .replace("%NAME", italic(true, link(badge.name, badge.emojiURL, badge.description)))
         .replace("%PRICE", inline(true, botSettings.currencyIcon, badge.price))
-        
+
         .replace("%SET_ID", inline(true, "🗣️", badge.setID))
         .replace("%SET", bold(true, badge.set))
         .replace("%RARITY", inline(false, "RB", badge.rarity))
         .replace("%CATEGORY", inline(true, badge.category))
-    
+
         .replace("%DESCRIPTION", italic(true, badge.description));
 }
 

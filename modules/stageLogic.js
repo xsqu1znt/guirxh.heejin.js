@@ -42,7 +42,7 @@ class Stage {
                 this.card_away.stats.level = rivalLevel;
 
             this.card_away = cardManager.recalculateStats(this.card_away);
-            this.card_away = cardManager.resetUID(this.card_away);
+            this.card_away.uid = cardManager.createUID();
         }
         this.card_away_startingHP = this.card_away.stats.reputation;
 
@@ -62,7 +62,7 @@ class Stage {
                 { name: interaction.user.username, value: cardManager.toString.inventory(this.card_home), inline: true },
 
                 // The rival's team
-                { name: "Rival", value: cardManager.toString.inventory(this.card_away), inline: true }
+                { name: this.rival?.username || "Rival", value: cardManager.toString.inventory(this.card_away), inline: true }
             )
 
             .setFooter({ text: `battle starting in ${this.delay.start} ${this.delay.start === 1 ? "second" : "seconds"}...` })
@@ -127,7 +127,7 @@ class Stage {
         let { xp: { card: { stage: xp_stage } } } = userSettings;
         let xp = randomTools.number(xp_stage.min, xp_stage.max);
 
-        winner_data.card.stats.xp = xp; winner_data.cardXPGained = xp;
+        winner_data.card.stats.xp += xp; winner_data.cardXPGained = xp;
 
         // Try leveling up the card
         let levelUpSession = cardManager.tryLevelUp(winner_data.card);

@@ -15,14 +15,15 @@ module.exports = {
         .setDescription("Drop a random card")
 
         .addStringOption(option => option.setName("card")
-        .setDescription("Pick a type of drop")
+            .setDescription("Pick a type of drop")
 
-        .addChoices(
-            { name: "🃏 general", value: "normal" },
-            { name: "📅 weekly", value: "weekly" },
-            { name: "🍃 season", value: "season" },
-            { name: "🎆 event", value: "event" }
-        )
+            .addChoices(
+                { name: "🃏 general", value: "general" },
+                { name: "📅 weekly", value: "weekly" },
+                { name: "🍃 season", value: "season" },
+                { name: "🎆 event 1", value: "event_1" },
+                { name: "🎆 event 2", value: "event_2" }
+            )
             .setRequired(true)
         ),
 
@@ -35,14 +36,14 @@ module.exports = {
             title: "%USER | drop", author: interaction.user
         });
 
-        let userData = await userManager.fetch(interaction.user.id, "essential");
+        let userData = await userManager.fetch(interaction.user.id, "full");
         let [dropEmbedTitle, dropCooldownType] = "";
         let cardsDropped = null;
 
         switch (interaction.options.getString("card")) {
-            case "normal":
-                dropEmbedTitle = "drop"; dropCooldownType = "drop_normal";
-                cardsDropped = [...Array(5)].map(() => cardManager.get.drop("normal"));
+            case "general":
+                dropEmbedTitle = "drop"; dropCooldownType = "drop_general";
+                cardsDropped = [...Array(5)].map(() => cardManager.get.drop("general"));
                 break;
 
             case "weekly":
@@ -58,12 +59,20 @@ module.exports = {
                 cardsDropped = [cardManager.get.drop("season")];
                 break;
 
-            case "event":
-                if (eventSettings.name === "none" || eventSettings.name === "")
-                    return await embed_drop.send("There is no \`event\` right now");
+            case "event_1":
+                if (eventSettings.event1.name === "none" || eventSettings.event1.name === "")
+                    return await embed_drop.send("There is no \`event 1\` right now");
 
-                dropEmbedTitle = "event"; dropCooldownType = "drop_event";
-                cardsDropped = [cardManager.get.drop("event")];
+                dropEmbedTitle = "event 1"; dropCooldownType = "drop_event_1";
+                cardsDropped = [cardManager.get.drop("event_1")];
+                break;
+
+            case "event_2":
+                if (eventSettings.event2.name === "none" || eventSettings.event2.name === "")
+                    return await embed_drop.send("There is no \`event 2\` right now");
+
+                dropEmbedTitle = "event 2"; dropCooldownType = "drop_event_2";
+                cardsDropped = [cardManager.get.drop("event_2")];
                 break;
         }
 
@@ -80,15 +89,22 @@ module.exports = {
         // Reset the user's cooldown
         await userManager.cooldowns.reset(interaction.user.id, dropCooldownType);
 
+        // Reset the user's reminder
+        await userManager.reminders.reset(
+            interaction.user.id, interaction.guild.id, interaction.channel.id,
+            interaction.user, dropCooldownType
+        );
+
         // Add the cards to the user's inventory
-        await userManager.cards.add(interaction.user.id, cardsDropped, true);
+        cardsDropped = await userManager.cards.add(interaction.user.id, cardsDropped, true);
 
         // Refresh userData for the purpose of checking if it's a duplicate card
-        userData = await userManager.fetch(interaction.user.id, "cards");
+        // userData = await userManager.fetch(interaction.user.id, "cards", true);
 
         // Used to tell the user if a card they got is a duplicate
         let cards_isDuplicate = cardsDropped.map(card =>
-            userParser.cards.duplicates(userData.card_inventory, { globalID: card.globalID }).card_duplicates.length > 1
+            userParser.cards.duplicates([...userData.card_inventory, ...cardsDropped],
+                { globalID: card.globalID }).cards.length > 1
         );
 
         // Create the embed
@@ -142,7 +158,7 @@ module.exports = {
                 // Let the user know they need to select something to sell
                 let { embed: embed_error } = new messageTools.Embedinator(null, {
                     title: "%USER | sell",
-                    description: "Use the reactions to pick what you want to sell.",
+                    description: "Use the reactions to pick what you want to sell",
                     author: interaction.user
                 });
 

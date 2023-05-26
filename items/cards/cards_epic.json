@@ -337,10 +337,10 @@
   },
   {
     "name": "Jisoo",
-    "group": "BLΛƆKPIИK",
+    "group": "BLACKPINK",
     "single": "Pink Venom",
     "category": "epic",
-    "description": "BLΛƆKPIИK - Pink Venom",
+    "description": "BLACKPINK - Pink Venom",
     "emoji": "🐍",
     "globalID": "4018",
     "setID": "403",
@@ -358,10 +358,10 @@
   },
   {
     "name": "Lisa",
-    "group": "BLΛƆKPIИK",
+    "group": "BLACKPINK",
     "single": "Pink Venom",
     "category": "epic",
-    "description": "BLΛƆKPIИK - Pink Venom",
+    "description": "BLACKPINK - Pink Venom",
     "emoji": "🐍",
     "globalID": "4019",
     "setID": "403",
@@ -379,10 +379,10 @@
   },
   {
     "name": "Rosé",
-    "group": "BLΛƆKPIИK",
+    "group": "BLACKPINK",
     "single": "Pink Venom",
     "category": "epic",
-    "description": "BLΛƆKPIИK - Pink Venom",
+    "description": "BLACKPINK - Pink Venom",
     "emoji": "🐍",
     "globalID": "4020",
     "setID": "403",
@@ -400,10 +400,10 @@
   },
   {
     "name": "Jennie",
-    "group": "BLΛƆKPIИK",
+    "group": "BLACKPINK",
     "single": "Pink Venom",
     "category": "epic",
-    "description": "BLΛƆKPIИK - Pink Venom",
+    "description": "BLACKPINK - Pink Venom",
     "emoji": "🐍",
     "globalID": "4017",
     "setID": "403",
@@ -421,7 +421,7 @@
   },
   {
     "name": "IU¹",
-    "group": "Solo",
+    "group": "IU",
     "single": "LILAC",
     "category": "epic",
     "description": "IU - LILAC",
@@ -442,7 +442,7 @@
   },
   {
     "name": "IU³",
-    "group": "Solo",
+    "group": "IU",
     "single": "LILAC",
     "category": "epic",
     "description": "IU - LILAC",
@@ -463,7 +463,7 @@
   },
   {
     "name": "IU²",
-    "group": "Solo",
+    "group": "IU",
     "single": "LILAC",
     "category": "epic",
     "description": "IU - LILAC",
@@ -1219,7 +1219,7 @@
   },
   {
     "name": "Seulgi¹",
-    "group": "Solo",
+    "group": "Seulgi",
     "single": "28 Reasons",
     "category": "epic",
     "description": "Seulgi - 28 Reasons",
@@ -1240,7 +1240,7 @@
   },
   {
     "name": "Seulgi²",
-    "group": "Solo",
+    "group": "Seulgi",
     "single": "28 Reasons",
     "category": "epic",
     "description": "Seulgi - 28 Reasons",
@@ -1261,7 +1261,7 @@
   },
   {
     "name": "Seulgi³",
-    "group": "Solo",
+    "group": "Seulgi",
     "single": "28 Reasons",
     "category": "epic",
     "description": "Seulgi - 28 Reasons",
@@ -1891,7 +1891,7 @@
   },
   {
     "name": "Baekho²",
-    "group": "Solo",
+    "group": "Baekho",
     "single": "No Rules",
     "category": "epic",
     "description": "Baekho - No Rules",
@@ -1912,7 +1912,7 @@
   },
   {
     "name": "Baekho¹",
-    "group": "Solo",
+    "group": "Baekho",
     "single": "No Rules",
     "category": "epic",
     "description": "Baekho - No Rules",
@@ -1933,7 +1933,7 @@
   },
   {
     "name": "Baekho³",
-    "group": "Solo",
+    "group": "Baekho",
     "single": "No Rules",
     "category": "epic",
     "description": "Baekho - No Rules",
@@ -1954,7 +1954,7 @@
   },
   {
     "name": "Jin¹",
-    "group": "Solo",
+    "group": "Jin",
     "single": "The Astronaut",
     "category": "epic",
     "description": "Jin - The Austronaut",
@@ -1975,7 +1975,7 @@
   },
   {
     "name": "Jin²",
-    "group": "Solo",
+    "group": "Jin",
     "single": "The Astronaut",
     "category": "epic",
     "description": "Jin - The Austronaut",
@@ -1996,7 +1996,7 @@
   },
   {
     "name": "Jin³",
-    "group": "Solo",
+    "group": "Jin",
     "single": "The Astronaut",
     "category": "epic",
     "description": "Jin - The Austronaut",
@@ -3844,7 +3844,7 @@
   },
   {
     "name": "Yena¹",
-    "group": "Solo",
+    "group": "Yena",
     "single": "Love War",
     "category": "epic",
     "description": "Yena - Love War",
@@ -3865,7 +3865,7 @@
   },
   {
     "name": "Yena³",
-    "group": "Solo",
+    "group": "Yena",
     "single": "Love War",
     "category": "epic",
     "description": "Yena - Love War",
@@ -3886,7 +3886,7 @@
   },
   {
     "name": "Yena²",
-    "group": "Solo",
+    "group": "Yena",
     "single": "Love War",
     "category": "epic",
     "description": "Yena - Love War",
@@ -3991,7 +3991,7 @@
   },
   {
     "name": "KEY¹",
-    "group": "Solo",
+    "group": "KEY",
     "single": "Killer",
     "category": "epic",
     "description": "KEY - Killer",
@@ -4012,7 +4012,7 @@
   },
   {
     "name": "KEY³",
-    "group": "Solo",
+    "group": "KEY",
     "single": "Killer",
     "category": "epic",
     "description": "KEY - Killer",
@@ -4033,7 +4033,7 @@
   },
   {
     "name": "KEY²",
-    "group": "Solo",
+    "group": "KEY",
     "single": "Killer",
     "category": "epic",
     "description": "KEY - Killer",
@@ -4051,5 +4051,278 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1074372558448775178/Key2.png"
+  },
+  {
+    "name": "Hwanwoong",
+    "group": "ONEUS",
+    "single": "ERASE ME",
+    "category": "epic",
+    "description": "ONEUS - ERASE ME",
+    "emoji": "🖼️",
+    "globalID": "4241",
+    "setID": "445",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353193307971706/Hwanwoong.png"
+  },
+  {
+    "name": "Keonhee",
+    "group": "ONEUS",
+    "single": "ERASE ME",
+    "category": "epic",
+    "description": "ONEUS - ERASE ME",
+    "emoji": "🖼️",
+    "globalID": "4242",
+    "setID": "445",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353193614159933/Keonhee.png"
+  },
+  {
+    "name": "Leedo",
+    "group": "ONEUS",
+    "single": "ERASE ME",
+    "category": "epic",
+    "description": "ONEUS - ERASE ME",
+    "emoji": "🖼️",
+    "globalID": "4243",
+    "setID": "445",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353193924546640/Leedo.png"
+  },
+  {
+    "name": "Seoho",
+    "group": "ONEUS",
+    "single": "ERASE ME",
+    "category": "epic",
+    "description": "ONEUS - ERASE ME",
+    "emoji": "🖼️",
+    "globalID": "4244",
+    "setID": "445",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353194381713579/Seoho.png"
+  },
+  {
+    "name": "Xion",
+    "group": "ONEUS",
+    "single": "ERASE ME",
+    "category": "epic",
+    "description": "ONEUS - ERASE ME",
+    "emoji": "🖼️",
+    "globalID": "4245",
+    "setID": "445",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353194687901746/Xion.png"
+  },
+  {
+    "name": "Baekgyeul",
+    "group": "E'LAST",
+    "single": "Creature",
+    "category": "epic",
+    "description": "E'LAST - Creature",
+    "emoji": "👾",
+    "globalID": "4246",
+    "setID": "446",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353280209752084/Baekgyeul.png"
+  },
+  {
+    "name": "Choi In",
+    "group": "E'LAST",
+    "single": "Creature",
+    "category": "epic",
+    "description": "E'LAST - Creature",
+    "emoji": "👾",
+    "globalID": "4247",
+    "setID": "446",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353280683704410/Choi_In.png"
+  },
+  {
+    "name": "Rano",
+    "group": "E'LAST",
+    "single": "Creature",
+    "category": "epic",
+    "description": "E'LAST - Creature",
+    "emoji": "👾",
+    "globalID": "4248",
+    "setID": "446",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353281132498944/Rano.png"
+  },
+  {
+    "name": "Romin",
+    "group": "E'LAST",
+    "single": "Creature",
+    "category": "epic",
+    "description": "E'LAST - Creature",
+    "emoji": "👾",
+    "globalID": "4249",
+    "setID": "446",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353281870700627/Romin.png"
+  },
+  {
+    "name": "Seungyeop",
+    "group": "E'LAST",
+    "single": "Creature",
+    "category": "epic",
+    "description": "E'LAST - Creature",
+    "emoji": "👾",
+    "globalID": "4250",
+    "setID": "446",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353282361425981/Seungyeop.png"
+  },
+  {
+    "name": "Wonhyuk",
+    "group": "E'LAST",
+    "single": "Creature",
+    "category": "epic",
+    "description": "E'LAST - Creature",
+    "emoji": "👾",
+    "globalID": "4251",
+    "setID": "446",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353282889912401/Wonhyuk.png"
+  },
+  {
+    "name": "Wonjun",
+    "group": "E'LAST",
+    "single": "Creature",
+    "category": "epic",
+    "description": "E'LAST - Creature",
+    "emoji": "👾",
+    "globalID": "4252",
+    "setID": "446",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353283384844298/Wonjun.png"
+  },
+  {
+    "name": "Yejun",
+    "group": "E'LAST",
+    "single": "Creature",
+    "category": "epic",
+    "description": "E'LAST - Creature",
+    "emoji": "👾",
+    "globalID": "4253",
+    "setID": "446",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353283976237076/Yejun.png"
   }
 ]

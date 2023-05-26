@@ -1,14 +1,14 @@
 const { EmbedBuilder, TimestampStyles } = require('discord.js');
 
-const { markdown } = require('./discordTools');
-const { bold, italic, inline, quote, link, space } = markdown;
+const { markdown: { bold, inline, quote } } = require('./discordTools');
 
-const { botSettings, userSettings } = require('../configs/heejinSettings.json');
+const { communityServer, botSettings, userSettings } = require('../configs/heejinSettings.json');
 const { arrayTools, stringTools, numberTools, dateTools } = require('../modules/jsTools');
-const { messageTools } = require('../modules/discordTools');
+const { BetterEmbed, messageTools } = require('../modules/discordTools');
 const cardManager = require('../modules/cardManager');
 const badgeManager = require('../modules/badgeManager');
 const userParser = require('../modules/userParser');
+const shop = require('../modules/shop');
 
 // Command -> General -> /COLLECTIONS
 /** @param {"ascending" | "decending"} order */
@@ -76,9 +76,34 @@ function generalShop_ES(user) {
     let embed_list = () => {
         let cards_f = cards_shop_unique.map((card, idx) => cardManager.toString.setEntry(card, card_sets[idx].length, true));
 
+        // Badges
+        let uniqueSet_badges = arrayTools.unique(shop.badges.all.sort((a, b) => a.setID - b.setID),
+            (badge, badgeCompare) => badgeCompare.setID === badge.setID
+        );
+
+        let sets_badges = uniqueSet_badges.map(badge => shop.badges.all.filter(b => b.setID === badge.setID));
+        let badges_f = uniqueSet_badges.map((badge, idx) =>
+            shop.badges.toString.setEntry(badge, sets_badges[idx].length)
+        );
+
+        // Item packs
+        let uniqueSet_itemPacks = arrayTools.unique(shop.itemPacks.all.sort((a, b) => a.setID - b.setID),
+            (pack, packCompare) => packCompare.setID === pack.setID
+        );
+
+        let sets_itemPacks = uniqueSet_itemPacks.map(pack => shop.itemPacks.all.filter(p => p.setID === pack.setID));
+        let itemPacks_f = uniqueSet_itemPacks.map((pack, idx) =>
+            shop.itemPacks.toString.setEntry(pack, sets_itemPacks[idx].length)
+        );
+
+        let shop_f = "";
+        shop_f += cards_f.length ? `\`🃏\` **Cards**\n${cards_f.map(card_f => `> ${card_f}`).join("\n")}` : "";
+        shop_f += badges_f.length ? `\n\n\`📛\` **Badges**\n${badges_f.map(badge_f => `> ${badge_f}`).join("\n")}` : "";
+        shop_f += itemPacks_f.length ? `\n\n\`📦\` **Items**\n${itemPacks_f.map(pack_f => `> ${pack_f}`).join("\n")}` : "";
+
         // Create the embed
         let embed = embed_template()
-            .setDescription(cards_f ? cards_f.join("\n") : "Shop is empty!");
+            .setDescription(shop_f || "Shop is empty!");
 
         // Return the embed
         return embed;
@@ -102,10 +127,16 @@ function generalShop_ES(user) {
         let embeds = [];
 
         for (let i = 0; i < cardSets_f.length; i++) {
+            let cardEntries = cardSets_f[i].join("\n");
+
             // Create the embed page
             let embed = embed_template()
-                .setDescription(cardSets_f[i].join("\n"))
+                .setDescription(cardEntries)
                 .setFooter({ text: `Page ${i + 1}/${cardSets_f.length || 1}` });
+
+            // Let the user know how to request customs
+            if (cardEntries.includes("cust"))
+                embed.setDescription(`[join our server to request your custom](${communityServer.url})\n\n${cardEntries}`);
 
             embeds.push(embed);
         }
@@ -124,9 +155,15 @@ function generalShop_ES(user) {
 
             let _embeds = [];
             for (let i = 0; i < cardSet_f.length; i++) {
+                let cardEntries = cardSet_f[i].join("\n");
+
                 let embed = embed_template()
-                    .setDescription(cardSet_f[i].join("\n"))
+                    .setDescription(cardEntries)
                     .setFooter({ text: `Page ${i + 1}/${cardSet_f.length || 1}` });
+
+                // Let the user know how to request customs
+                if (cardEntries.includes("cust"))
+                    embed.setDescription(`[join our server to request your custom](${communityServer.url})\n\n${cardEntries}`);
 
                 _embeds.push(embed);
             }
@@ -137,8 +174,26 @@ function generalShop_ES(user) {
         return embeds;
     };
 
+    let embed_itemPacks = () => {
+        let itemPacks_f = shop.itemPacks.all.map(cardPack => shop.itemPacks.toString.shop(cardPack));
+        itemPacks_f = arrayTools.chunk(itemPacks_f, 10);
+
+        let embeds = [];
+
+        for (let i = 0; i < itemPacks_f.length; i++) {
+            let embed = embed_template()
+                .setDescription(itemPacks_f[i].length > 0 ? itemPacks_f[i].join("\n") : "There are no item packs available");
+
+            if (itemPacks_f[i].length > 0) embed.setFooter({ text: `Page ${i + 1}/${itemPacks_f.length || 1}` });
+
+            embeds.push(embed);
+        }
+
+        return embeds;
+    };
+
     let embed_badges = () => {
-        let badges_f = badgeManager.badges.map(badge => badgeManager.toString.shop(badge));
+        let badges_f = badgeManager.badges.map(badge => shop.badges.toString.shop(badge));
         badges_f = arrayTools.chunk(badges_f, 10);
 
         let embeds = [];
@@ -153,15 +208,152 @@ function generalShop_ES(user) {
         }
 
         return embeds;
-    }
+    };
 
     // Return the different embed views
     return [
         embed_list(),
         embed_all(),
         ...embed_cardSets(),
+        embed_itemPacks(),
         embed_badges()
     ];
+}
+
+// Command -> User -> /VIEW
+/** @param {"uid" | "gid" | "set" | "idol" | "favorite" | "vault" | "team"} viewType */
+function generalView_ES(member, userData, card, viewType = "uid") {
+    // A base embed template
+    let embed_template = (title = "%AUTHOR_NAME | view", description = "", imageURL = "") => new BetterEmbed({
+        author: { text: title || "%AUTHOR_NAME | view", user: member },
+        description, imageURL
+    });
+
+    let embed_viewUID = () => {
+        // Whether or not this card is selected, favorited, or on the user's team
+        let selected = (card.uid === userData.card_selected_uid);
+        let favorited = (card.uid === userData.card_favorite_uid);
+        let team = userData.card_team_uids.includes(card.uid);
+
+        let { duplicateCount } = userParser.cards.getDuplicates(userData, card.globalID);
+
+        let card_f = cardManager.toString.inventory(card, { duplicateCount, selected, favorited, team });
+
+        return embed_template(null, card_f, card.imageURL);
+    };
+
+    let embed_viewGID = () => {
+        let card_f = cardManager.toString.inventory(card, { simplify: true });
+
+        return embed_template(null, card_f, card.imageURL);
+    };
+
+    let embed_viewSet = () => {
+        // Sort the cards by global ID and split it
+        let _cards = card.sort((a, b) => a.globalID - b.globalID);
+
+        /** @type {Array<BetterEmbed>} */
+        let _embeds = [];
+
+        _cards.forEach((_card, idx) => {
+            let _card_f = cardManager.toString.inventory(_card, { simplify: true });
+
+            // Create the embed
+            let _embed = embed_template(`%AUTHOR_NAME | ${_card.group} - ${_card.single}`,
+                _card_f, _card.imageURL
+            ).setFooter({ text: `Card ${idx + 1}/${_cards.length}` });
+
+            _embeds.push(_embed);
+        });
+
+        return _embeds;
+    };
+
+    let embed_viewIdol = () => {
+        // Whether or not this card is favorited, or on the user's team
+        let favorited = (card.uid === userData.card_favorite_uid);
+        let team = userData.card_team_uids.includes(card.uid);
+
+        let card_f = cardManager.toString.inventory(card, { selected: true, favorited, team });
+
+        return embed_template("%AUTHOR_NAME | idol", card_f, card.imageURL);
+    };
+
+    let embed_viewFavorite = () => {
+        // Whether or not this card is selected, or on the user's team
+        let selected = (card.uid === userData.card_selected_uid);
+        let team = userData.card_team_uids.includes(card.uid);
+
+        let card_f = cardManager.toString.inventory(card, { selected, favorited: true, team });
+
+        return embed_template("%AUTHOR_NAME | favorite", card_f, card.imageURL);
+    };
+
+    let embed_viewVault = () => {
+        // Sort the cards by set ID and global ID, then group them by 10 per embed
+        let _cards = arrayTools.chunk(card.sort((a, b) => a.setID - b.setID || a.globalID - b.globalID), 10);
+
+        /** @type {Array<BetterEmbed>} */
+        let _embeds = [];
+
+        _cards.forEach((_cardChunk, idx) => {
+            // Parse each card into a string
+            let _cardChunk_f = _cardChunk.map(_card => {
+                // Whether or not this card is selected, favorited, or on the user's team
+                let selected = (card.uid === userData.card_selected_uid);
+                let favorited = (card.uid === userData.card_favorite_uid);
+                let team = userData.card_team_uids.includes(card.uid);
+
+                return cardManager.toString.inventory(_card, { selected, favorited, team });
+            });
+
+            // Create the embed
+            let _embed = embed_template("%AUTHOR_NAME | vault", _cardChunk_f.join("\n"))
+                .setFooter({ text: `Page ${idx + 1}/${_cards.length}` });
+
+            _embeds.push(_embed);
+        });
+
+        return _embeds;
+    };
+
+    let embed_viewTeam = () => {
+        //// Sort the cards by set ID and global ID, then group them by 10 per embed
+        // let _cards = arrayTools.chunk(card.sort((a, b) => a.setID - b.setID || a.globalID - b.globalID), 10);
+        let _cards = card;
+
+        let abilityTotal = 0; _cards.forEach(card => abilityTotal += card.stats.ability);
+        let reputationTotal = 0; _cards.forEach(card => reputationTotal += card.stats.reputation);
+
+        /** @type {Array<BetterEmbed>} */
+        let _embeds = [];
+
+        _cards.forEach((_card, idx) => {
+            // Parse the card into a string
+            let _card_f = cardManager.toString.inventory(_card, { simplify: true });
+
+            // Create the embed
+            let _embed = embed_template("%AUTHOR_NAME | team", _card_f, _card.imageURL).setFooter({
+                text: `Card ${idx + 1}/${_cards.length} | Total :: ABI. %TOTAL_ABILITY / REP. %TOTAL_REPUTATION`
+                    .replace("%TOTAL_ABILITY", abilityTotal)
+                    .replace("%TOTAL_REPUTATION", reputationTotal)
+            });
+
+            _embeds.push(_embed);
+        });
+
+        return _embeds;
+    };
+
+    switch (viewType) {
+        case "uid": return embed_viewUID();
+        case "gid": return embed_viewGID();
+        case "set": return embed_viewSet();
+        case "idol": return embed_viewIdol();
+        case "favorite": return embed_viewFavorite();
+        case "vault": return embed_viewVault();
+        case "team": return embed_viewTeam();
+    }
 }
 
 // Command -> User -> /DROP
@@ -223,11 +415,11 @@ function userProfile_ES(user, userData) {
             (card, compareCard) => card.globalID === compareCard.globalID
         ).length;
         let profile_info = "%BALANCE :: \`🃏 %CARD_TOTAL\` :: \`📈 LV. %LEVEL\`"
-            .replace("%BALANCE", inline(true, botSettings.currencyIcon, userData.balance))
-            .replace("%CARD_TOTAL", `${uniqueUserCardTotal}/${cardManager.cardTotal}`)
+            .replace("%BALANCE", inline(botSettings.currencyIcon, userData.balance))
+            .replace("%CARD_TOTAL", `${uniqueUserCardTotal}/${cardManager.cardCount}`)
             .replace("%LEVEL", userData.level);
 
-        _embed.addFields([{ name: "\`📄\` Information", value: quote(true, profile_info) }]);
+        _embed.addFields([{ name: "\`📄\` Information", value: quote(profile_info) }]);
 
         // Return the embed
         return _embed;
@@ -244,7 +436,7 @@ function userProfile_ES(user, userData) {
         badges_f = arrayTools.chunk(badges_f, 3);
 
         // Format the chunks into an array of strings
-        badges_f = badges_f.map(chunk_badges => quote(true, chunk_badges.join(" ")));
+        badges_f = badges_f.map(chunk_badges => quote(chunk_badges.join(" ")));
 
         // Add the badges to the embed
         // embed.addFields([{ name: "\`📛\` Badges", value: badges_f.join("\n") }]);
@@ -315,9 +507,9 @@ function userProfile_ES(user, userData) {
         });
 
         // Parse the sorted user cards into a readable string
-        let inventoryStats_f = userCards.map((category, idx) => quote(true, "%CATEGORY: %STATS"
-            .replace("%CATEGORY", bold(true, "🃏", categories[idx]))
-            .replace("%STATS", inline(true, `${category.length}/${allCards[idx].length}`))
+        let inventoryStats_f = userCards.map((category, idx) => quote("%CATEGORY: %STATS"
+            .replace("%CATEGORY", bold("🃏", categories[idx]))
+            .replace("%STATS", inline(`${category.length}/${allCards[idx].length}`))
         ));
 
         // Set the embed's description to the inventory stat result
@@ -363,7 +555,7 @@ function userMissing_ES(user, userData, setID) {
     // Create a base embed
     let embed_template = () => new messageTools.Embedinator(null, {
         title: "%USER | missing",
-        description: `${inline(true, setID)} is either empty or an invalid set.`,
+        description: `${inline(setID)} is either empty or an invalid set.`,
         author: user
     }).embed;
 
@@ -415,7 +607,7 @@ function userCooldowns_ES(user, userData) {
         return "\`%VISUAL %NAME:\` %AVAILABILITY"
             .replace("%VISUAL", cooldownETA ? "❌" : "✔️")
             .replace("%NAME", stringTools.toTitleCase(cooldown.type.replace(/_/g, " ")))
-            .replace("%AVAILABILITY", bold(true, cooldownETA
+            .replace("%AVAILABILITY", bold(cooldownETA
                 ? `<t:${numberTools.milliToSeconds(cooldown.timestamp)}:${TimestampStyles.RelativeTime}>`
                 : "Available"));
     });
@@ -472,7 +664,7 @@ function userInventory_ES(user, userData, sorting = "set", order = "descending",
         let isOnTeam = (userData.card_team_uids.includes(card.uid));
 
         cards_user_f.push(cardManager.toString.inventory(card, {
-            duplicate_count: card_duplicates.length,
+            duplicateCount: card_duplicates.length,
             favorited: isFavorite,
             selected: isSelected,
             team: isOnTeam
@@ -521,8 +713,7 @@ function userDuplicates_ES(user, userData, globalID) {
         return [embed];
     }
 
-    card_duplicates = [card_duplicates.card_primary, ...card_duplicates.card_duplicates]
-        .map(card => cardManager.parse.fromCardLike(card));
+    card_duplicates = card_duplicates.cards.map(card => cardManager.parse.fromCardLike(card));
 
     let card_duplicates_f = card_duplicates.map(card => {
         // Whether or not this is the user's favorited card
@@ -564,176 +755,6 @@ function userDuplicates_ES(user, userData, globalID) {
     return embeds;
 }
 
-// Command -> User -> /VIEW CARD:VAULT
-function userVault_ES(user, userData) {
-    // Create a base embed
-    let embed_template = () => new messageTools.Embedinator(null, {
-        title: "%USER | vault", author: user
-    }).embed;
-
-    let lockedCards = userData.card_inventory.filter(card => card.locked);
-    if (lockedCards.length === 0) {
-        let _embed = embed_template();
-        _embed.setDescription("You don't have any \`🔒 locked\` cards");
-
-        return [_embed];
-    }
-
-    lockedCards = lockedCards.map(cardLike => cardManager.parse.fromCardLike(cardLike));
-
-    let lockedCards_f = lockedCards.map(card => {
-        // Whether or not this is the user's favorited card
-        let isFavorite = (card.uid === userData.card_favorite_uid);
-
-        // Whether or not this is the user's selected card
-        let isSelected = (card.uid === userData.card_selected_uid);
-
-        return cardManager.toString.inventory(card, {
-            favorited: isFavorite,
-            selected: isSelected
-        });
-    });
-
-    lockedCards_f = arrayTools.chunk(lockedCards_f, 10);
-
-    // Create the embeds
-    let embeds = [];
-
-    for (let i = 0; i < lockedCards_f.length; i++) {
-        let _embed = embed_template();
-
-        // Add details to the embed
-        _embed.setDescription(lockedCards_f[i].join("\n"))
-            .setFooter({
-                text: `page %PAGE of %PAGE_COUNT | total cards: %TOTAL_CARDS`
-                    .replace("%PAGE", i + 1)
-                    .replace("%PAGE_COUNT", lockedCards_f.length)
-                    .replace("%TOTAL_CARDS", lockedCards.length)
-            });
-
-        embeds.push(_embed);
-    }
-
-    // Return the embeds array
-    return embeds;
-}
-
-// Command -> User -> /VIEW UID | /VIEW GID | /VIEW FAVORITE
-/** @param {"uid" | "global" | "favorite" | "idol"} viewStyle */
-function userView_ES(user, userData, card, viewStyle = "uid", showDuplicates = true) {
-
-    // Create the embed
-    let embed = new EmbedBuilder().setColor(botSettings.embed.color || null);
-    let embed_title = "%USER | view";
-
-    switch (viewStyle) {
-        case "uid":
-            let duplicate_count = 0; if (showDuplicates) {
-                let { card_duplicates } = userParser.cards.duplicates(userData.card_inventory, { globalID: card.globalID });
-                duplicate_count = card_duplicates.length;
-            }
-
-            // Whether or not this is the user's favorite card
-            let isFavorite = (card.uid === userData.card_favorite_uid);
-
-            // Whether or not this is the user's selected card
-            let isSelected = (card.uid === userData.card_selected_uid);
-
-            // Whether or not this is on the user's team
-            let isOnTeam = (userData.card_team_uids.includes(card.uid));
-
-            embed.setDescription(cardManager.toString.inventory(card, {
-                duplicate_count,
-                favorited: isFavorite,
-                selected: isSelected,
-                team: isOnTeam
-            }));
-            break;
-
-        case "global":
-            embed.setDescription(cardManager.toString.inventory(card, { simplify: true }));
-            break;
-
-        case "favorite":
-            embed_title = "%USER | favorite"
-            embed.setDescription(cardManager.toString.inventory(card, { favorited: true }));
-            break;
-
-        case "idol":
-            embed_title = "%USER | idol"
-            embed.setDescription(cardManager.toString.inventory(card, { selected: true }));
-            break;
-    }
-
-    // Set the title and author icon for the embed
-    embed.setAuthor({ name: embed_title.replace("%USER", user.username), iconURL: user.avatarURL({ dynamic: true }) })
-
-    // Add the card image to the embed if available
-    if (card.imageURL) embed.setImage(card.imageURL);
-
-    // Return the embed
-    return embed;
-}
-
-// Command -> User -> /TEAM VIEW
-function userTeamView_ES(user, userData) {
-    // Convert the user's card_inventory into an array
-    let teamCards = userParser.cards.getMultiple(userData.card_inventory, userData.card_team_uids);
-
-    // Create a base embed
-    let { embed } = new messageTools.Embedinator(null, {
-        author: user,
-        title: "%USER | team",
-        description: "You don't have a \`🧑🏾‍🤝‍🧑🏼 team\` yet"
-    });
-
-    // Return the base embed if the user doesn't have a team set
-    if (teamCards.length === 0) return [embed];
-
-    // Parse every card in the (cards) array into a readable [String] entry
-    // then split the array into groups of 10 cards each
-    // so we can easily create embed inventory pages of only 10 entries per
-    let teamCards_f = arrayTools.chunk(teamCards.map(card => {
-        // Whether or not this is the user's favorited card
-        let isFavorite = (card.uid === userData.card_favorite_uid);
-
-        return cardManager.toString.inventory(card, { favorited: isFavorite });
-    }), 1);
-
-    let ability_total = (() => {
-        let total = 0;
-
-        // Add together the ability of each card in the user's team
-        teamCards.forEach(card => total += card.stats.ability);
-
-        return stringTools.formatNumber(total);
-    })();
-
-    // Create the embeds
-    let embeds = [];
-
-    for (let i = 0; i < teamCards_f.length; i++) {
-        let { embed: _embed } = new messageTools.Embedinator(null, { title: "%USER | team", author: user });
-
-        // Add details to the embed
-        _embed.setDescription(teamCards_f[i].join("\n"))
-            .setFooter({
-                text: "Page %PAGE/%PAGE_COUNT | Total ABI. %TOTAL_ABILITY"
-                    .replace("%PAGE", i + 1)
-                    .replace("%PAGE_COUNT", teamCards_f.length)
-                    .replace("%TOTAL_ABILITY", ability_total)
-            });
-
-        // Add the card's image if available
-        if (teamCards[i].imageURL) _embed.setImage(teamCards[i].imageURL);
-
-        embeds.push(_embed);
-    }
-
-    // Return the embed array
-    return embeds;
-}
-
 // Command -> User -> /GIFT
 function userGift_ES(user, recipient, cards) {
     let fromTo = `**From:** ${user}\n**To:** ${recipient}`;
@@ -765,6 +786,7 @@ module.exports = {
     // General Commands
     generalCollections_ES,
     generalShop_ES,
+    generalView_ES,
 
     // User Commands
     userDrop_ES,
@@ -775,10 +797,6 @@ module.exports = {
 
     userInventory_ES,
     userDuplicates_ES,
-    userVault_ES,
-
-    userView_ES,
-    userTeamView_ES,
 
     userGift_ES
 };
