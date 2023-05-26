@@ -3,13 +3,13 @@ node_modules
 .env
 
 
-format_card_json.js
-format_cards.js
+# format_card_json.js
+# format_cards.js
 
 
-changeCardData.js
-transferUsers.js
-parseOldData.js
+# changeCardData.js
+# transferUsers.js
+# parseOldData.js
 TODO.txt
 
 
