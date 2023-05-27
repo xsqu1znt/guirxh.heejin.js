@@ -62,7 +62,7 @@
     },
 
     "shopSettings": {
-        "stockSetIDs": ["100", "104"]
+        "setsInStock": ["100", "104"]
     },
 
     "userSettings": {

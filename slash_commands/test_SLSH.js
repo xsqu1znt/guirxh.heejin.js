@@ -17,9 +17,9 @@ module.exports = {
      */
     execute: async (client, interaction) => {
         //! Drop rework
-        let cards = [...Array(5)].map(() => cardManager.get.drop("general"));
+        /* let cards = [...Array(5)].map(() => cardManager.get.drop("general"));
         cards.forEach(card => card.uid = cardManager.createUID());
-        
+
         let card_last = cards.slice(-1)[0];
         let cards_f = cards.map(card => cardManager.toString.inventory(card, { simplify: true }));
 
@@ -28,7 +28,62 @@ module.exports = {
             description: cards_f.join("\n"), imageURL: card_last.imageURL
         });
 
-        return await embed_drop.send();
+        let carrotButtonRow = new ActionRowBuilder().addComponents(
+            new ButtonBuilder().setCustomId("btn_sell").setLabel(currencyIcon).setStyle(ButtonStyle.Secondary),
+            new ButtonBuilder().setCustomId("btn_vault").setLabel("🔒").setStyle(ButtonStyle.Secondary)
+        );
+
+        await embed_drop.send({ components: carrotButtonRow });
+
+        ///
+        let embed_dropSell = new BetterEmbed({
+            interaction, author: { text: "%AUTHOR_NAME | sell", user: interaction.member },
+            description: "Use the buttons to select what cards you want to sell"
+        });
+
+        let sellButtonRow = new ActionRowBuilder().addComponents(cards.map((card, idx) =>
+            new ButtonBuilder().setCustomId(`btn_${idx}`).setEmoji(customEmojis.numbers[idx].emoji).setStyle(ButtonStyle.Secondary)
+        ));
+
+        // let sellSelectMenuRow = new ActionRowBuilder().addComponents(
+        //     new StringSelectMenuBuilder().setCustomId("ssm").setMaxValues(cards.length).addOptions(
+        //         cards.map((card, idx) =>
+        //             new StringSelectMenuOptionBuilder().setLabel(`${card.group} - ${card.name}`).setValue(`ssmo_${idx}`)
+        //         )
+        //     )
+        // );
+
+        let sellConfirmButtonRow = new ActionRowBuilder().addComponents(
+            new ButtonBuilder().setCustomId(`btn_confirm`).setLabel("Confirm").setStyle(ButtonStyle.Success),
+            new ButtonBuilder().setCustomId(`btn_cancel`).setLabel("Cancel").setStyle(ButtonStyle.Danger)
+        );
+
+        await embed_dropSell.send({ method: "send", components: [sellButtonRow, sellConfirmButtonRow] });
+
+        ///
+        let embed_dropVault = new BetterEmbed({
+            interaction, author: { text: "%AUTHOR_NAME | vault", user: interaction.member },
+            description: "Use the buttons to select what cards you want to vault"
+        });
+
+        let vaultButtonRow = new ActionRowBuilder().addComponents(cards.map((card, idx) =>
+            new ButtonBuilder().setCustomId(`btn_${idx}`).setEmoji(customEmojis.numbers[idx].emoji).setStyle(ButtonStyle.Secondary)
+        ));
+
+        // let vaultSelectMenuRow = new ActionRowBuilder().addComponents(
+        //     new StringSelectMenuBuilder().setCustomId("ssm").setMaxValues(cards.length).addOptions(
+        //         cards.map((card, idx) =>
+        //             new StringSelectMenuOptionBuilder().setLabel(`${card.group} - ${card.name}`).setValue(`ssmo_${idx}`)
+        //         )
+        //     )
+        // );
+
+        let vaultConfirmButtonRow = new ActionRowBuilder().addComponents(
+            new ButtonBuilder().setCustomId(`btn_confirm`).setLabel("Confirm").setStyle(ButtonStyle.Success),
+            new ButtonBuilder().setCustomId(`btn_cancel`).setLabel("Cancel").setStyle(ButtonStyle.Danger)
+        );
+
+        await embed_dropVault.send({ method: "send", components: [vaultButtonRow, vaultConfirmButtonRow] }); */
 
         //! Navigationinator test
         // let embed_array = [...Array(4)].map((e, idx) =>

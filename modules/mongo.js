@@ -83,9 +83,9 @@ async function user_fetch(userID, type = "full", lean = false) {
 
     switch (type) {
         case "full": filter = { __v: 0 }; break;
-        case "essential": filter = { card_inventory: 0  }; break;
+        case "essential": filter = { card_inventory: 0 }; break;
         case "reminders": filter = { daily_streak: 1, cooldowns: 1, reminders: 1, __v: 0 }; break;
-        case "cards": filter = { card_inventory: 1  }; break;
+        case "cards": filter = { card_inventory: 1 }; break;
         case "id": filter = { _id: 1 }; break;
     }
 
@@ -176,7 +176,36 @@ async function user_tryLevelUp(userID, userData = null) {
 }
 
 //! User -> Card Inventory
-async function cardInventory_addCards(userID, cards, resetUID = false) {
+async function cardInventory_add(userID, cards) {
+    // Create an array if only a single card object was passed
+    if (!Array.isArray(cards)) cards = [cards];
+
+    /// Get an array of all the card UIDs in the user's card_inventory to avoid duplicates
+    // Fetch the user's card_inventory
+    let { card_inventory } = await user_fetch(userID, "cards", true);
+
+    // Get only the card UIDs from the card_inventory
+    let existingUIDs = card_inventory.map(card => card?.uid);
+
+    /// Parse the given cards
+    let cards_parsed = [];
+
+    for (let i = 0; i < cards.length; i++) {
+        // Recursivly reset the card's UID if another card exists with the same UID
+        while (existingUIDs.includes(cards[i].uid)) cardManager.resetUID(cards[i]);
+
+        // Keep track of the new UID
+        existingUIDs.push(cards[i].uid);
+
+        /// Convert the card object into a slimmer CardLike object, ignoring customs
+        cards_parsed.push(["100"].includes(cards[i].rarity) ? cards[i] : cardManager.parse.toCardLike(cards[i]));
+    }
+
+    // Push the cards to the user's card_inventory in Mongo
+    await user_update(userID, { $push: { card_inventory: { $each: cards_parsed } } }); return;
+}
+
+/* async function cardInventory_addCards_OLD(userID, cards, resetUID = false) {
     // Convert a single card into an array
     if (!Array.isArray(cards)) cards = [cards];
 
@@ -207,7 +236,7 @@ async function cardInventory_addCards(userID, cards, resetUID = false) {
 
     // Push the CardLikes to the user's card_inventory in Mongo
     await user_update(userID, { $push: { card_inventory: { $each: cardLikes } } }); return cards;
-}
+} */
 
 async function cardInventory_removeCards(userID, uids) {
     // Convert a single card UID into an array
@@ -365,7 +394,7 @@ module.exports = {
         tryLevelUp: user_tryLevelUp,
 
         cards: {
-            add: cardInventory_addCards,
+            add: cardInventory_add,
             remove: cardInventory_removeCards,
             update: cardInventory_updateCard,
             sell: cardInventory_sellCards

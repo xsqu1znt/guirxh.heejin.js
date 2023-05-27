@@ -11,7 +11,7 @@ const userParser = require('../modules/userParser');
 const { numbers: emoji_numbers, confirmSell: emoji_confirmSell } = botSettings.customEmojis;
 
 module.exports = {
-    builder: new SlashCommandBuilder().setName("drop")
+    builder: new SlashCommandBuilder().setName("dropold")
         .setDescription("Drop a random card")
 
         .addStringOption(option => option.setName("card")

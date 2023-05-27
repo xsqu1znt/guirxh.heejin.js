@@ -44,7 +44,8 @@ class bE_sendOptions {
         /** Add a message outside of the embed. */
         this.messageContent = "";
 
-        /** Send the embed with additional components. */
+        /** Send the embed with additional components.
+         * @type {ActionRowBuilder | Array<ActionRowBuilder>} */
         this.components = [];
 
         /** Send the embed with a new description.
@@ -164,7 +165,7 @@ class BetterEmbed extends EmbedBuilder {
             logger.error("Failed to send embed", `invalid image URL: \`${options.imageURL}\``); return null;
         }
 
-        // Check if components is an array
+        // Create an array if a single object was given
         if (!Array.isArray(options.components)) options.components = [options.components];
 
         // Send the embed

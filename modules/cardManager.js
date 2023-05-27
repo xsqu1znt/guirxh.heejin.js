@@ -1,4 +1,5 @@
 const { botSettings, userSettings, dropSettings, eventSettings, shopSettings } = require('../configs/heejinSettings.json');
+const { shopSettings: { setsInStock: shopSetsInStock } } = require('../configs/heejinSettings.json');
 const { markdown: { bold, italic, inline, quote, link, space } } = require('./discordTools');
 const { randomTools } = require('./jsTools');
 const logger = require('./logger');
@@ -24,10 +25,12 @@ const cards = {
     shop: require('../items/cards/cards_shop.json')
 };
 
-let cards_all = []; Object.values(cards).forEach(category => cards_all = [...cards_all, ...category]);
+let cards_all = [].concat(...Object.values(cards));
 const cards_general = [...cards.comn, ...cards.uncm, ...cards.rare, ...cards.epic, ...cards.mint];
 
-//! General
+const categories_general = Object.values(dropSettings.chances).map(c => ({ ...c, rarity: c.chance }));
+
+//! General - DEPRECATED
 function createUID() {
     // Create a new UID for the card
     return randomTools.numberString(6);
@@ -89,6 +92,65 @@ function tryLevelUp(card, session = null) {
 
     // Return whether the card was leveled up or not
     session.card = card; return session;
+}
+
+//! General
+function resetUID(card) {
+    card.uid = randomTools.numberString(6);
+}
+
+//! Drop
+/** @param {"general" | "weekly" | "season" | "event1" | "event2"} dropType */
+function drop(dropType, count = 1) {
+    let cards_dropped = [];
+
+    switch (dropType) {
+        case "general":
+            for (let i = 0; i < count; i++) {
+                let pickedCategory = randomTools.weightedChoice(categories_general);
+                let pickedCategory_cards = cards_general.filter(card => card.rarity === pickedCategory.cardRarityFilter);
+
+                cards_dropped.push(randomTools.choice(pickedCategory_cards));
+            } break;
+
+        case "weekly":
+            let _cards_weekly = cards.shop.filter(card => shopSetsInStock.filter(id => id !== "100").includes(card.setID));
+
+            for (let i = 0; i < count; i++)
+                cards_dropped.push(randomTools.choice(_cards_weekly));
+
+            break;
+
+        case "season":
+            let _cards_season = cards.seas.filter(card => eventSettings.season.cardRarityFilter.includes(card.rarity));
+
+            for (let i = 0; i < count; i++)
+                cards_dropped.push(randomTools.choice(_cards_season));
+
+            break;
+
+        case "event1":
+            let _cards_event1 = cards.evnt.filter(card => eventSettings.event1.cardRarityFilter.includes(card.rarity));
+
+            for (let i = 0; i < count; i++)
+                cards_dropped.push(randomTools.choice(_cards_event1));
+
+            break;
+
+        case "event2":
+            let _cards_event2 = cards.evnt.filter(card => eventSettings.event2.cardRarityFilter.includes(card.rarity));
+
+            for (let i = 0; i < count; i++)
+                cards_dropped.push(randomTools.choice(_cards_event2));
+
+            break;
+    }
+
+    // Reset each card's UID
+    cards_dropped.forEach(card => resetUID(card));
+
+    // Return the chosen cards
+    return cards_dropped;
 }
 
 //! Get
@@ -253,12 +315,15 @@ function toString_inventory(card, options = { duplicateCount: 0, favorited: fals
 
 module.exports = {
     cards, cards_all, cards_general,
-    cards_shop: cards_all.filter(card => shopSettings.stockSetIDs.includes(card.setID)),
+    cards_shop: cards_all.filter(card => shopSettings.setsInStock.includes(card.setID)),
     cardCount: cards_all.length,
 
     createUID,
+    resetUID,
     recalculateStats,
     tryLevelUp,
+
+    drop,
 
     get: {
         set: get_set,
