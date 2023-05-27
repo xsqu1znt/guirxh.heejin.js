@@ -66,7 +66,7 @@ module.exports = {
         }
 
         // Add the cards to the user's card_inventory (can cause UIDs to be reset)
-        // await userManager.cards.add(interaction.user.id, cards_dropped);
+        await userManager.cards.add(interaction.user.id, cards_dropped);
 
         // Add details to embed_drop
         let cards_dropped_f = cards_dropped.map(card => cardManager.toString.inventory(card, { simplify: true }));
@@ -114,7 +114,7 @@ module.exports = {
 
         /// Create the reaction collector        
         let rc_filter = (reaction, user) =>
-            reactionEmojis.map(emoji => emoji.name).includes(reaction.emoji.name)
+            [...reactionEmojis.map(emoji => emoji.name), customEmojis.confirmSell.name].includes(reaction.emoji.name)
             && user.id === interaction.user.id;
 
         let rc_collector = message.createReactionCollector({
@@ -127,30 +127,60 @@ module.exports = {
             // Reset the collector's timer
             rc_collector.resetTimer();
 
-            // Ignore user added reactions
-            if (![...reactionEmojis.map(e => e.name), customEmojis.confirmSell.name].includes(reaction.emoji.name)) return;
             // Check if the user reacted to a card number
             let card_idx = reactionEmojis.findIndex(emoji => emoji.name === reaction.emoji.name);
             if (card_idx !== -1) {
                 // Insert the card at the appropriate index
                 // avoiding adding the same card twice
                 if (!cards_toSell.find(card => card?.uid === cards_dropped[card_idx].uid))
-                    cards_toSell[card_idx] = cards_dropped[card_idx].uid;
+                    cards_toSell[card_idx] = cards_dropped[card_idx];
                 return;
             }
 
             // Remove the sell reactions
             await removeReactions();
 
+            // Filter out the nulls
+            cards_toSell = cards_toSell.filter(c => c);
+
             // Check that there's cards selected
-            if (!cards_toSell.filter(c => c).length) {
+            if (!cards_toSell.length) {
                 await messageTools.deleteAfter(
                     await embed_nothingSelected.send({ method: "followUp" }),
                     dateTools.parseStr(timeout.errorMessage)
                 );
 
-                return await addReactions();
+                // Add back the reactions and reset the collector's timer
+                await addReactions(); rc_collector.resetTimer(); return;
             }
+
+            //! Sell the cards
+            // Parse the cards into a string
+            let cards_toSell_f = cards_toSell.map(card => `> ${cardManager.toString.basic(card)}`);
+            let sellPriceTotal = 0; cards_toSell.forEach(card => sellPriceTotal += card.sellPrice);
+
+            // Await the user's confirmation
+            let confirm_sell = await messageTools.awaitConfirmation(interaction, {
+                description: `**Are you sure you want to sell:**\n${cards_toSell_f.join("\n")}`,
+                footer: `total: ${currencyIcon} ${sellPriceTotal}`,
+                showAuthor: true
+            });
+
+            // Add back the reactions and reset the collector's timer
+            if (!confirm_sell) {
+                await addReactions(); rc_collector.resetTimer();
+                cards_toSell = cards_dropped.map(() => null); return;
+            }
+
+            // Remove the cards from the user's card_inventory and give them currency
+            await userManager.cards.sell(interaction.user.id, cards_toSell.map(card => card.uid));
+
+            // Let the user know the result
+            return await new BetterEmbed({
+                interaction, author: { text: "%AUTHOR_NAME | sell", user: interaction.member },
+                description: `You sold:\n${cards_toSell_f.join("\n")}`,
+                footer: `total: ${currencyIcon} ${sellPriceTotal}`
+            }).send();
         });
 
         // Deselect a card on reaction remove
@@ -164,5 +194,8 @@ module.exports = {
             // Insert a null at the appropriate index
             if (cardIndex !== -1) cards_toSell[cardIndex] = null;
         });
+
+        // Remove all reactions when the reaction collector times out or ends
+        rc_collector.on("end", async () => await removeReactions());
     }
 };
