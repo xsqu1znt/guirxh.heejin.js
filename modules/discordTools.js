@@ -44,6 +44,9 @@ class bE_sendOptions {
         /** Add a message outside of the embed. */
         this.messageContent = "";
 
+        /** Send the embed with additional components. */
+        this.components = [];
+
         /** Send the embed with a new description.
          * 
          * Useful for cleaner code. */
@@ -161,33 +164,36 @@ class BetterEmbed extends EmbedBuilder {
             logger.error("Failed to send embed", `invalid image URL: \`${options.imageURL}\``); return null;
         }
 
+        // Check if components is an array
+        if (!Array.isArray(options.components)) options.components = [options.components];
+
         // Send the embed
         try {
             switch (options.method) {
                 case "reply": try {
                     return await this.interaction.reply({
-                        content: options.messageContent,
+                        content: options.messageContent, components: options.components,
                         embeds: [this], ephemeral: options.ephemeral
                     });
                 } catch { // Fallback to "editReply"
                     return await this.interaction.editReply({
-                        content: options.messageContent,
+                        content: options.messageContent, components: options.components,
                         embeds: [this]
                     });
                 }
 
                 case "editReply": return await this.interaction.editReply({
-                    content: options.messageContent,
+                    content: options.messageContent, components: options.components,
                     embeds: [this]
                 });
 
                 case "followUp": return await this.interaction.followUp({
-                    content: options.messageContent,
+                    content: options.messageContent, components: options.components,
                     embeds: [this], ephemeral: options.ephemeral
                 });
 
                 case "send": return await this.interaction.channel.send({
-                    content: options.messageContent,
+                    content: options.messageContent, components: options.components,
                     embeds: [this]
                 });
 

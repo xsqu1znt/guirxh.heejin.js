@@ -1,6 +1,9 @@
-const { Client, CommandInteraction, SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const {
+    Client, CommandInteraction, SlashCommandBuilder, ActionRowBuilder,
+    StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ButtonBuilder, ButtonStyle
+} = require('discord.js');
 
-const { communityServer, botSettings: { currencyIcon } } = require('../configs/heejinSettings.json');
+const { communityServer, botSettings: { currencyIcon, customEmojis } } = require('../configs/heejinSettings.json');
 const { BetterEmbed, EmbedNavigation } = require('../modules/discordTools');
 const cardManager = require('../modules/cardManager');
 
@@ -13,6 +16,20 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
+        //! Drop rework
+        let cards = [...Array(5)].map(() => cardManager.get.drop("general"));
+        cards.forEach(card => card.uid = cardManager.createUID());
+        
+        let card_last = cards.slice(-1)[0];
+        let cards_f = cards.map(card => cardManager.toString.inventory(card, { simplify: true }));
+
+        let embed_drop = new BetterEmbed({
+            interaction, author: { text: "%AUTHOR_NAME | drop", user: interaction.member },
+            description: cards_f.join("\n"), imageURL: card_last.imageURL
+        });
+
+        return await embed_drop.send();
+
         //! Navigationinator test
         // let embed_array = [...Array(4)].map((e, idx) =>
         //     new BetterEmbed({ interaction, title: { text: `Page ${idx + 1}` } })
@@ -28,13 +45,13 @@ module.exports = {
         // return await embedNav.send();
 
         //! Join our offical server button
-        let buttonRow = new ActionRowBuilder().addComponents(new ButtonBuilder()
+        /* let buttonRow = new ActionRowBuilder().addComponents(new ButtonBuilder()
             .setLabel("Join our offical server!")
             .setStyle(ButtonStyle.Link)
             .setURL(communityServer.url)
         );
 
-        return await interaction.editReply({ components: [buttonRow] });
+        return await interaction.editReply({ components: [buttonRow] }); */
 
         //! Daily/weekly DM reminder
         /* let embed_dailyReminder = new BetterEmbed({
