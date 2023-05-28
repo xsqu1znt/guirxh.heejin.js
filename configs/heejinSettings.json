@@ -8,8 +8,7 @@
 
     "botSettings": {
         "currencyIcon": "🥕",
-
-        "chanceToShowTips": 100,
+        "chanceToShowTips": 5,
 
         "embed": {
             "color": "#2B2D31"
