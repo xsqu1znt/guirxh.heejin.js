@@ -84,7 +84,7 @@ async function user_fetch(userID, type = "full", lean = false) {
     switch (type) {
         case "full": filter = { __v: 0 }; break;
         case "essential": filter = { card_inventory: 0 }; break;
-        case "reminders": filter = { daily_streak: 1, cooldowns: 1, reminders: 1, __v: 0 }; break;
+        case "reminders": filter = { daily_streak: 1, cooldowns: 1, reminders: 1 }; break;
         case "cards": filter = { card_inventory: 1 }; break;
         case "id": filter = { _id: 1 }; break;
     }
@@ -322,7 +322,7 @@ async function userCooldown_reset(userID, cooldownType) {
 /** @param {cooldownTypes} reminderType */
 async function userReminder_toggle(userID, reminderType) {
     let userData = await user_fetch(userID, "reminders");
-    let reminder = userData.reminders.find(r => r.type === reminderType);
+    let reminder = userData.reminders.find(r => r.type === reminderType) || null;
 
     let enabled = true;
 
@@ -337,7 +337,7 @@ async function userReminder_toggle(userID, reminderType) {
     }
     else await models.user.updateOne(
         { _id: userID },
-        { $addToSet: { "reminders.$": { type: reminderType, enabled } } }
+        { $addToSet: { "reminders": { type: reminderType, enabled } } }
     );
 
     return enabled;
