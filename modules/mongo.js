@@ -50,7 +50,7 @@ async function guildReminder_add(guildID, channelID, user = { id: "", name: "" }
         guildID, channelID, user,
         type: reminderType,
 
-        message: `Your \`${stringTools.toTitleCase(reminderType.replace(/_/g, " "))}\` is **available**!`,
+        message: `> \`⏰ ${stringTools.toTitleCase(reminderType.replace(/_/g, " "))}\` is **available**!`,
         timestamp: dateTools.fromNow(userSettings.cooldowns[reminderType] || 0)
     };
 
