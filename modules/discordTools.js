@@ -95,7 +95,7 @@ class BetterEmbed extends EmbedBuilder {
 
         if ((this.author.iconURL || this.author.user) && this.author.iconURL !== null) this.setAuthor({
             name: this.data.author?.name || null, iconURL: this.author.iconURL
-                || (this.author.user?.user.avatarURL({ dynamic: true }) || this.author.user?.avatarURL({ dynamic: true }))
+                || (this.author.user?.user?.avatarURL({ dynamic: true }) || this.author.user?.avatarURL({ dynamic: true }))
         });
 
         if (this.author.linkURL) this.setAuthor({

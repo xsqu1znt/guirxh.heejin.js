@@ -1,8 +1,8 @@
 const { Client, CommandInteraction, SlashCommandBuilder, time, TimestampStyles } = require('discord.js');
 
 const { communityServer } = require('../configs/heejinSettings.json');
-const { BetterEmbed, EmbedNavigation, messageTools: { Navigationify }, markdown: { inline, link } } = require('../modules/discordTools');
-const { numberTools, stringTools, dateTools } = require('../modules/jsTools');
+const { BetterEmbed, EmbedNavigation, markdown: { inline, link } } = require('../modules/discordTools');
+const { stringTools, numberTools, dateTools } = require('../modules/jsTools');
 const { userManager } = require('../modules/mongo');
 const cardManager = require('../modules/cardManager');
 
@@ -19,7 +19,7 @@ module.exports = {
 
         // A base embed template
         let embed_template = () => new BetterEmbed({
-            author: { text: "%AUTHOR_NAME | information", user: interaction.user }
+            author: { text: "%AUTHOR_NAME | information", user: interaction.member }
         });
 
         //! Page -> Summary
