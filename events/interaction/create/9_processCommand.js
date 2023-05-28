@@ -1,11 +1,12 @@
 // Executes commands requested by a command interaction.
 
-const { Client, BaseInteraction, PermissionsBitField, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { Client, BaseInteraction, PermissionsBitField } = require('discord.js');
 
+const heejinTips = require('../../../configs/heejinTips.json');
 const { ownerID, adminIDs, adminBypassIDs } = require('../../../configs/clientSettings.json');
-const { communityServer, botSettings } = require('../../../configs/heejinSettings.json');
+const { botSettings: { chanceToShowTips } } = require('../../../configs/heejinSettings.json');
 const { randomTools, stringTools } = require('../../../modules/jsTools');
-const { messageTools } = require('../../../modules/discordTools');
+const { BetterEmbed, messageTools } = require('../../../modules/discordTools');
 const { userManager } = require('../../../modules/mongo');
 const logger = require('../../../modules/logger');
 
@@ -70,7 +71,7 @@ module.exports = {
             // Execute the command function
             return await slashCommand.execute(client, args.interaction).then(async () => {
                 // Check if the user can level up
-                let leveled = await userManager.tryLevelUp(args.interaction.user.id);
+                let leveled = await userManager.xp.tryLevelUp(args.interaction.user.id);
 
                 // Send a level up message if the user leveled up successfully
                 if (leveled.leveled) {
@@ -83,6 +84,12 @@ module.exports = {
                     // not awaited because we don't need any information from the returned message
                     await args.interaction.channel.send({ content: lvlMsg, allowedMentions: { repliedUser: false } });
                 }
+
+                // Have a chance to send a random tip to the channel
+                if (randomTools.chance(chanceToShowTips)) return await new BetterEmbed({
+                    interaction: args.interaction, title: { text: "\`⚠️\` **Did You Know?**" },
+                    description: randomTools.choice(heejinTips)
+                }).send({ method: "send" });
 
                 /* // Have a chance to send the invite link to the main server
                 if (randomTools.chance(communityServer.chanceToShow) && args.interaction.guild.id !== communityServer.id) {

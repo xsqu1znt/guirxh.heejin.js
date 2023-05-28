@@ -23,3 +23,16 @@ Remember to report any issues in <#1014513978560499732>
 > - *New informational commands: `/information` and `/help`*
 > - *Show random tips when running a command*
 > - *Use player's server name instead of their username for embeds*
+
+
+
+🔧 Changelog (23/05/28) - Heejin 2.0.74
+
+Remember to report any issues in <#1014513978560499732>
+
+`🛠️` **updated command** </drop:1106915320230314150>
+> - *Sell reactions will now be removed after pressing confirm, and added back if the confirmation times out, or the player cancels. This is to help prevent exploiting sell*
+
+`⚙️` **fixes**
+> - *`/drop` allowed you to sell the same card(s) multiple times if Heejin was lagging*
+> - *`/sell` allowed you to sell the same card(s) multiple times if you [REDACTED]*

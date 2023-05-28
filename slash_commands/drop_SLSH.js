@@ -1,9 +1,13 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
-const { botSettings: { currencyIcon, customEmojis, timeout } } = require('../configs/heejinSettings.json');
+const {
+    botSettings: { currencyIcon, customEmojis, timeout },
+    eventSettings: { event1, event2, season },
+    userSettings: { xp: { commands: { drop: xp_drop } } }
+} = require('../configs/heejinSettings.json');
 const { BetterEmbed, messageTools } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
-const { dateTools } = require('../modules/jsTools');
+const { randomTools, dateTools } = require('../modules/jsTools');
 const cardManager = require('../modules/cardManager');
 const userParser = require('../modules/userParser');
 
@@ -32,7 +36,7 @@ module.exports = {
         // Create an embed template
         let embed_template = (commandAddon = "", description = "", imageURL = "") => new BetterEmbed({
             interaction, description, imageURL,
-            author: { text: `%AUTHOR_NAME | ${commandAddon}`, user: interaction.member }
+            author: { text: `%AUTHOR_NAME | ${commandAddon || "drop"}`, user: interaction.member }
         });
 
         // Create an embed reference
@@ -54,16 +58,25 @@ module.exports = {
                 dropCooldownType = "drop_weekly"; break;
 
             case "season":
+                if (season.name === "none" || season.name === "")
+                    return await embed_drop.send({ description: "There is no \`season\` right now" });
+
                 embed_drop = embed_template("season");
                 cards_dropped = cardManager.drop("season", 1);
                 dropCooldownType = "drop_season"; break;
 
             case "event1":
+                if (event1.name === "none" || event1.name === "")
+                    return await embed_drop.send({ description: "There is no \`event 1\` right now" });
+
                 embed_drop = embed_template("event 1");
                 cards_dropped = cardManager.drop("event1", 1);
                 dropCooldownType = "drop_event_1"; break;
 
             case "event2":
+                if (event2.name === "none" || event2.name === "")
+                    return await embed_drop.send({ description: "There is no \`event 2\` right now" });
+
                 embed_drop = embed_template("event 2");
                 cards_dropped = cardManager.drop("event2", 1);
                 dropCooldownType = "drop_event_2"; break;
@@ -76,6 +89,8 @@ module.exports = {
         await Promise.all([
             // Add the cards to the user's card_inventory (can cause UIDs to be reset)
             userManager.cards.add(interaction.user.id, cards_dropped),
+            // Give the user XP
+            userManager.xp.add(interaction.user.id, randomTools.number(xp_drop.min, xp_drop.max)),
             // Reset the user's cooldown
             userManager.cooldowns.reset(interaction.user.id, dropCooldownType),
             // Reset the user's reminder

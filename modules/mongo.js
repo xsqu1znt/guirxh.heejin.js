@@ -118,7 +118,13 @@ async function user_new(userID, query = null) {
     return user || null;
 }
 
-async function user_tryLevelUp(userID, userData = null) {
+//! User -> XP
+async function userXP_add(userID, amount) {
+    let userData = await user_fetch(userID, "essential", true);
+    await user_update(userID, { xp: (userData.xp + amount) }); return;
+}
+
+async function userXP_tryLevelUp(userID, userData = null) {
     let res = {
         leveled: userData?.session_res?.leveled || false,
         levels_gained: userData?.session_res?.levels_gained || 0,
@@ -159,7 +165,7 @@ async function user_tryLevelUp(userID, userData = null) {
 
             // Recursively level up the user if they still have enough (xp)
             if (userData.xp >= userData.xp_for_next_level)
-                return await user_tryLevelUp(userID, userData);
+                return await userXP_tryLevelUp(userID, userData);
         }
     }
 
@@ -398,7 +404,10 @@ module.exports = {
         update: user_update,
         new: user_new,
 
-        tryLevelUp: user_tryLevelUp,
+        xp: {
+            add: userXP_add,
+            tryLevelUp: userXP_tryLevelUp
+        },
 
         cards: {
             add: cardInventory_add,
