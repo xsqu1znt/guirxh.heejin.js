@@ -4,6 +4,7 @@ const { userSettings } = require('../configs/heejinSettings.json');
 const { dateTools, randomTools, stringTools } = require('../modules/jsTools');
 const badgeManager = require('./badgeManager');
 const cardManager = require('./cardManager');
+const userParser = require('./userParser');
 const mongoose = require('mongoose');
 const logger = require('./logger');
 
@@ -253,21 +254,26 @@ async function cardInventory_updateCard(userID, card) {
     ); return null;
 }
 
-async function cardInventory_sellCards(userID, cards) {
+async function cardInventory_sell(userID, cards, checkExists = true) {
     // Convert a single card into an array
     if (!Array.isArray(cards)) cards = [cards];
 
-    // Remove the cards from the user's card_inventory
-    await cardInventory_removeCards(userID, cards.map(card => card.uid));
-
     // Get the user's balance
-    let userData = await user_fetch(userID, "essential", true);
+    let userData = await user_fetch(userID, checkExists ? "full" : "essential", true);
+
+    // Check if the user still has the given cards in their inventory
+    cards = cards.filter(card => userParser.cards.get(userData, card.uid));
+    if (!cards.length) return false;
 
     // Add to the user's balance
     cards.forEach(card => userData.balance += card.sellPrice);
 
-    // Update the user's balance in Mongo
-    await user_update(userID, { balance: userData.balance }); return null;
+    await Promise.all([
+        // Update the user's balance in Mongo
+        user_update(userID, { balance: userData.balance }),
+        // Remove the cards from the user's card_inventory
+        cardInventory_removeCards(userID, cards.map(card => card.uid))
+    ]); return true;
 }
 
 //! User -> Badges
@@ -318,6 +324,7 @@ async function userCooldown_reset(userID, cooldownType) {
 
     return null;
 }
+
 //! User -> Reminders
 /** @param {cooldownTypes} reminderType */
 async function userReminder_toggle(userID, reminderType) {
@@ -397,7 +404,7 @@ module.exports = {
             add: cardInventory_add,
             remove: cardInventory_removeCards,
             update: cardInventory_updateCard,
-            sell: cardInventory_sellCards
+            sell: cardInventory_sell
         },
 
         badges: {

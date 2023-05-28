@@ -1,9 +1,9 @@
 // Runs as soon as the bot's connected to discord.
 
-const { Client, EmbedBuilder, userMention } = require('discord.js');
+const { Client, userMention } = require('discord.js');
 
-const { botSettings } = require('../../configs/heejinSettings.json');
 const { guildManager, userManager } = require('../../modules/mongo');
+const { BetterEmbed } = require('../../modules/discordTools');
 
 module.exports = {
     name: "REMINDER_INTERVAL",
@@ -27,19 +27,18 @@ module.exports = {
                         let userData = await userManager.fetch(reminder.user.id, "essential", true);
 
                         // Check whether the user has a reminder enabled for that command
-                        let userReminder = userData.reminders.find(reminder => reminder.type === reminder.type);
+                        let userReminder = userData.reminders.find(r => r.type === reminder.type);
                         if (userReminder?.enabled) {
                             // Fetch the channel
                             let channel_fetched = await guild_fetched.channels.fetch(reminder.channelID);
 
                             // Create the embed
-                            let embed_reminder = new EmbedBuilder()
-                                .setAuthor({
-                                    name: `${reminder.user.name} | reminder`,
+                            let embed_reminder = new BetterEmbed({
+                                author: {
+                                    text: `${reminder.user.name} | reminder`,
                                     iconURL: guild_fetched.members.me.user.avatarURL({ dynamic: true })
-                                })
-                                .setDescription(reminder.message)
-                                .setColor(botSettings.embed.color || null);
+                                }, description: reminder.message
+                            });
 
                             // Send the reminder in the appropriate channel
                             await channel_fetched.send({

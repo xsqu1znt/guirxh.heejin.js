@@ -84,7 +84,7 @@ module.exports = {
                     await args.interaction.channel.send({ content: lvlMsg, allowedMentions: { repliedUser: false } });
                 }
 
-                // Have a chance to send the invite link to the main server
+                /* // Have a chance to send the invite link to the main server
                 if (randomTools.chance(communityServer.chanceToShow) && args.interaction.guild.id !== communityServer.id) {
                     let buttonRow = new ActionRowBuilder().addComponents(new ButtonBuilder()
                         .setLabel("Join our offical server!")
@@ -93,7 +93,7 @@ module.exports = {
                     );
 
                     return await args.interaction.channel.send({ components: [buttonRow] });
-                }
+                } */
             });
         } catch (err) {
             // Log the error

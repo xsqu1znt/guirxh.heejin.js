@@ -1,13 +1,11 @@
-const {
-    Client, CommandInteraction, SlashCommandBuilder, ComponentType,
-    ActionRowBuilder, ButtonBuilder, ButtonStyle
-} = require('discord.js');
+const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 const { botSettings: { currencyIcon, customEmojis, timeout } } = require('../configs/heejinSettings.json');
 const { BetterEmbed, messageTools } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 const { dateTools } = require('../modules/jsTools');
 const cardManager = require('../modules/cardManager');
+const userParser = require('../modules/userParser');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("drop")
@@ -42,34 +40,60 @@ module.exports = {
 
         /// Get the drop cards
         let cards_dropped = [];
+        let dropCooldownType = "";
 
         switch (interaction.options.getString("card")) {
             case "general":
                 embed_drop = embed_template("drop");
-                cards_dropped = cardManager.drop("general", 5); break;
+                cards_dropped = cardManager.drop("general", 5);
+                dropCooldownType = "drop_general"; break;
 
             case "weekly":
                 embed_drop = embed_template("weekly");
-                cards_dropped = cardManager.drop("weekly", 1); break;
+                cards_dropped = cardManager.drop("weekly", 1);
+                dropCooldownType = "drop_weekly"; break;
 
             case "season":
                 embed_drop = embed_template("season");
-                cards_dropped = cardManager.drop("season", 1); break;
+                cards_dropped = cardManager.drop("season", 1);
+                dropCooldownType = "drop_season"; break;
 
             case "event1":
                 embed_drop = embed_template("event 1");
-                cards_dropped = cardManager.drop("event1", 1); break;
+                cards_dropped = cardManager.drop("event1", 1);
+                dropCooldownType = "drop_event_1"; break;
 
             case "event2":
                 embed_drop = embed_template("event 2");
-                cards_dropped = cardManager.drop("event2", 1); break;
+                cards_dropped = cardManager.drop("event2", 1);
+                dropCooldownType = "drop_event_2"; break;
         }
 
-        // Add the cards to the user's card_inventory (can cause UIDs to be reset)
-        await userManager.cards.add(interaction.user.id, cards_dropped);
+        // Check if the user has an active cooldown
+        let userCooldownETA = await userManager.cooldowns.check(interaction.user.id, dropCooldownType);
+        if (userCooldownETA) return await embed_drop.send({ description: `Your next drop is available **${userCooldownETA}**` });
 
-        // Add details to embed_drop
-        let cards_dropped_f = cards_dropped.map(card => cardManager.toString.inventory(card, { simplify: true }));
+        await Promise.all([
+            // Add the cards to the user's card_inventory (can cause UIDs to be reset)
+            userManager.cards.add(interaction.user.id, cards_dropped),
+            // Reset the user's cooldown
+            userManager.cooldowns.reset(interaction.user.id, dropCooldownType),
+            // Reset the user's reminder
+            userManager.reminders.reset(
+                interaction.user.id, interaction.guild.id, interaction.channel.id,
+                interaction.user, dropCooldownType
+            )
+        ]);
+
+        //! Add details to embed_drop
+        // Fetch the user's card_inventory from Mongo
+        let userData = await userManager.fetch(interaction.user.id, "cards", true);
+
+        let cards_dropped_f = cards_dropped.map(card => {
+            let { duplicateCount } = userParser.cards.getDuplicates(userData, card.globalID);
+
+            return cardManager.toString.inventory(card, { isDuplicate: (duplicateCount > 0), simplify: true });
+        });
 
         // Add a number emoji infront of the card info if there's more than 1 card
         if (cards_dropped_f.length > 1) cards_dropped_f = cards_dropped_f.map((str, idx) =>
@@ -85,15 +109,19 @@ module.exports = {
         // Send the drop embed
         let message = await embed_drop.send();
 
-        //! Separate embeds
+        //! Collect reactions
         let embed_nothingSelected = new BetterEmbed({
             interaction, author: { text: "%AUTHOR_NAME | sell", user: interaction.member },
-            description: "Use the reactions to select what you want to sell"
+            description: "Use the reactions to pick what you want to sell"
         });
 
-        //! Collect reactions
+        let embed_failedToSell = new BetterEmbed({
+            interaction, author: { text: "%AUTHOR_NAME | sell", user: interaction.member },
+            description: "Can not sell cards that are not in your inventory"
+        });
+
         // Create an array to hold which cards the user wants to sell
-        let cards_toSell = cards_dropped.map(() => null);
+        let cards_toSell = cards_dropped.length > 1 ? cards_dropped.map(() => null) : cards_dropped;
 
         // Create an array of reaction emojis
         let reactionEmojis = cards_dropped.length > 1 ? [...customEmojis.numbers.slice(0, cards_dropped.length)] : [];
@@ -110,7 +138,7 @@ module.exports = {
             try { await message.reactions.removeAll() } catch { }
         };
 
-        addReactions();
+        addReactions(); `q`
 
         /// Create the reaction collector        
         let rc_filter = (reaction, user) =>
@@ -137,22 +165,25 @@ module.exports = {
                 return;
             }
 
-            // Remove the sell reactions
-            await removeReactions();
-
             // Filter out the nulls
             cards_toSell = cards_toSell.filter(c => c);
 
             // Check that there's cards selected
             if (!cards_toSell.length) {
+                // Remove the user's confirm reaction
+                await reaction.users.remove(interaction.user.id);
+
                 await messageTools.deleteAfter(
                     await embed_nothingSelected.send({ method: "followUp" }),
                     dateTools.parseStr(timeout.errorMessage)
                 );
 
-                // Add back the reactions and reset the collector's timer
-                await addReactions(); rc_collector.resetTimer(); return;
+                // Reset the collector's timer
+                rc_collector.resetTimer(); return;
             }
+
+            // Remove the sell reactions
+            await removeReactions();
 
             //! Sell the cards
             // Parse the cards into a string
@@ -168,19 +199,21 @@ module.exports = {
 
             // Add back the reactions and reset the collector's timer
             if (!confirm_sell) {
-                await addReactions(); rc_collector.resetTimer();
-                cards_toSell = cards_dropped.map(() => null); return;
+                addReactions(); rc_collector.resetTimer();
+                cards_toSell = cards_dropped.length > 1 ? cards_dropped.map(() => null) : cards_dropped;
+                return;
             }
 
             // Remove the cards from the user's card_inventory and give them currency
-            await userManager.cards.sell(interaction.user.id, cards_toSell.map(card => card.uid));
+            if (!await userManager.cards.sell(interaction.user.id, cards_toSell))
+                return await embed_failedToSell.send();
 
             // Let the user know the result
             return await new BetterEmbed({
                 interaction, author: { text: "%AUTHOR_NAME | sell", user: interaction.member },
                 description: `You sold:\n${cards_toSell_f.join("\n")}`,
                 footer: `total: ${currencyIcon} ${sellPriceTotal}`
-            }).send();
+            }).send({ method: "followUp" });
         });
 
         // Deselect a card on reaction remove

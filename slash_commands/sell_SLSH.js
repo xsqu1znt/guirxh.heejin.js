@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
-const { botSettings } = require('../configs/heejinSettings.json');
-const { messageTools } = require('../modules/discordTools');
+const { botSettings: { currencyIcon } } = require('../configs/heejinSettings.json');
+const { BetterEmbed, messageTools } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 const userParser = require('../modules/userParser');
 const cardManager = require('../modules/cardManager');
@@ -19,8 +19,9 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
-        let embed_sell = new messageTools.Embedinator(interaction, {
-            title: "%USER | sell", author: interaction.user
+        let embed_sell = new BetterEmbed({
+            interaction, author: { text: "%AUTHOR_NAME | sell", user: interaction.member },
+            description: "You need to give a valid card UID"
         });
 
         // Get interaction options
@@ -32,9 +33,7 @@ module.exports = {
 
         // Get the cards from the user's card_inventory
         let cards_toSell = userParser.cards.getMultiple(userData.card_inventory, uids);
-        if (cards_toSell.length === 0) return await embed_sell.send(
-            `No cards were found with \`${uids.join(" ").trim()}\``
-        );
+        if (!cards_toSell.length) return await embed_sell.send();
 
         // Filter out locked and favorited cards
         cards_toSell = cards_toSell.filter(card =>
@@ -43,10 +42,10 @@ module.exports = {
             && card.uid !== userData.card_selected_uid
             && !userData.card_team_uids.includes(card.uid)
         );
-        if (cards_toSell.length === 0) return await embed_sell.send(
-            "\`%UIDS\` cannot be gifted, it is either:\n\`🔒 vault\` \`🧑🏾‍🤝‍🧑 team\` \`🏃 idol\` \`⭐ favorite\`"
+        if (cards_toSell.length === 0) return await embed_sell.send({
+            description: "\`%UIDS\` cannot be sold, it is either:\n\`🔒 vault\` \`🧑🏾‍🤝‍🧑 team\` \`🏃 idol\` \`⭐ favorite\`"
                 .replace("%UIDS", uids.join(" ").trim())
-        );
+        });
 
         // Parse cards_toSell into a human readable string array
         let cards_toSell_f = cards_toSell.map(card => `> ${cardManager.toString.basic(card)}`);
@@ -56,25 +55,24 @@ module.exports = {
         let confirm_sell = await messageTools.awaitConfirmation(interaction, {
             description: "**Are you sure you want to sell:**\n%CARDS"
                 .replace("%CARDS", cards_toSell_f.join("\n")),
-            footer: `total: ${botSettings.currencyIcon} ${sellPriceTotal}`,
+            footer: `total: ${currencyIcon} ${sellPriceTotal}`,
             showAuthor: true
         });
 
         // Sell the cards
         if (confirm_sell) {
-            await userManager.cards.sell(interaction.user.id, cards_toSell);
-
-            // Let the user know the result
-            let { embed: embed_sell } = new messageTools.Embedinator(null, {
-                title: "%USER | sell",
-                description: "You sold:\n%CARDS"
-                    .replace("%CARDS", cards_toSell_f.join("\n")),
-                footer: `total: ${botSettings.currencyIcon} ${sellPriceTotal}`,
-                author: interaction.user
+            // Let the user know sell failed
+            if (!await userManager.cards.sell(interaction.user.id, cards_toSell)) return await embed_sell.send({
+                description: "Can not sell cards that are not in your inventory",
+                method: "send"
             });
 
             // Let the user know the result
-            await interaction.channel.send({ embeds: [embed_sell] });
+            embed_sell.setFooter({ text: `total: ${currencyIcon} ${sellPriceTotal}` });
+            return await embed_sell.send({
+                description: `You sold:\n${cards_toSell_f.join("\n")}`,
+                method: "send"
+            });
         }
     }
 };
