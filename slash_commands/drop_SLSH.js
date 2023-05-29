@@ -153,7 +153,7 @@ module.exports = {
             try { await message.reactions.removeAll() } catch { }
         };
 
-        addReactions(); `q`
+        addReactions();
 
         /// Create the reaction collector        
         let rc_filter = (reaction, user) =>

@@ -41,8 +41,11 @@ module.exports = {
         let embed_collections = generalCollections_ES(interaction.user, { order, filter: { group, category } });
 
         // Add navigation for the embeds
-        let embedNav = new EmbedNavigation({ interaction, embeds: [embed_collections], paginationType: "longJump" });
+        let embedNav = new EmbedNavigation({
+            interaction, embeds: [embed_collections],
+            paginationType: "longJump", useReactionsForPagination: true
+        });
 
-        return await embedNav.send();
+        await embedNav.send();
     }
 };

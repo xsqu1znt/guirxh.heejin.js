@@ -206,7 +206,13 @@ class BetterEmbed extends EmbedBuilder {
     }
 }
 
-const paginationButton_emojis = customEmojis.pagination;
+const nav_emojis = {
+    toFirst: customEmojis.pagination.toFirst,
+    back: customEmojis.pagination.back,
+    jump: customEmojis.pagination.jump,
+    next: customEmojis.pagination.next,
+    toLast: customEmojis.pagination.toLast,
+};
 
 /** @type {"short" | "shortJump" | "long" | "longJump" | false} */
 const nav_paginationType = null;
@@ -227,6 +233,7 @@ class nav_constructorOptions {
 
         /** @type {nav_paginationType} */
         this.paginationType = false;
+        this.useReactionsForPagination = false;
         this.selectMenu = false;
 
         this.timeout = dateTools.parseStr(botSettings.timeout.pagination);
@@ -289,6 +296,8 @@ class EmbedNavigation {
             selectMenuValues: [],
 
             paginationType: options.paginationType,
+            /** @type {Array<{name: string, emoji: string}>} */
+            paginationReactions: [], useReactionsForPagination: options.useReactionsForPagination,
             requiresPagination: false, requiresLongPagination: false, canJumpToPage: false,
 
             messageComponents: [],
@@ -302,11 +311,11 @@ class EmbedNavigation {
                 selectMenu: new StringSelectMenuBuilder().setCustomId("ssm_pageSelect").setPlaceholder("choose a page to view..."),
 
                 pagination: {
-                    toFirst: this.#createButton(paginationButton_emojis.toFirst.emoji, null, "btn_toFirst"),
-                    back: this.#createButton(paginationButton_emojis.back.emoji, null, "btn_back"),
-                    jump: this.#createButton(paginationButton_emojis.jump.emoji, null, "btn_jump"),
-                    next: this.#createButton(paginationButton_emojis.next.emoji, null, "btn_next"),
-                    toLast: this.#createButton(paginationButton_emojis.toLast.emoji, null, "btn_toLast")
+                    toFirst: this.#createButton(nav_emojis.toFirst.emoji, null, "btn_toFirst"),
+                    back: this.#createButton(nav_emojis.back.emoji, null, "btn_back"),
+                    jump: this.#createButton(nav_emojis.jump.emoji, null, "btn_jump"),
+                    next: this.#createButton(nav_emojis.next.emoji, null, "btn_next"),
+                    toLast: this.#createButton(nav_emojis.toLast.emoji, null, "btn_toLast")
                 }
             }
         }
@@ -354,13 +363,6 @@ class EmbedNavigation {
         this.data.components.selectMenu.spliceOptions(idx, 1);
     }
 
-    /** Toggle pagination on/off. */
-    async togglePagination() {
-        this.data.paginationType = false;
-
-        return await this.refresh();
-    }
-
     /** Set pagination type. Set to false to disable.
      * @param {nav_paginationType} type */
     async setPaginationType(type) {
@@ -375,9 +377,37 @@ class EmbedNavigation {
         // Shorthand variables
         let ar_pagination = this.data.actionRows.pagination;
         let btns_nav = this.data.components.pagination;
+        let reactions_pagination = this.data.paginationReactions;
 
         // Set pagination buttons depending on the circumstance
-        if (this.data.requiresPagination) switch (this.data.paginationType) {
+        if (this.data.useReactionsForPagination) {
+            switch (this.data.paginationType) {
+                case "short": reactions_pagination = [
+                    nav_emojis.back, nav_emojis.next
+                ]; break;
+
+                case "shortJump": reactions_pagination = [...this.data.canJumpToPage
+                    ? [nav_emojis.back, nav_emojis.jump, nav_emojis.next]
+                    : [nav_emojis.back, nav_emojis.next]
+                ]; break;
+
+                case "long": reactions_pagination = [...this.data.requiresLongPagination
+                    ? [nav_emojis.toFirst, nav_emojis.back, nav_emojis.next, nav_emojis.toLast]
+                    : [nav_emojis.back, nav_emojis.next]
+                ]; break;
+
+                case "longJump": reactions_pagination = [...this.data.requiresLongPagination
+                    ? this.data.canJumpToPage
+                        ? [nav_emojis.toFirst, nav_emojis.back, nav_emojis.jump, nav_emojis.next, nav_emojis.toLast]
+                        : [nav_emojis.toFirst, nav_emojis.back, nav_emojis.next, nav_emojis.toLast]
+                    : this.data.canJumpToPage
+                        ? [nav_emojis.back, nav_emojis.jump, nav_emojis.next]
+                        : [nav_emojis.back, nav_emojis.next]
+                ]; break;
+            }
+
+            this.data.paginationReactions = reactions_pagination;
+        } else switch (this.data.paginationType) {
             case "short": ar_pagination.setComponents(
                 btns_nav.back, btns_nav.next
             ); break;
@@ -402,7 +432,10 @@ class EmbedNavigation {
             ); break;
         }
 
-        return this.data.requiresPagination ? ar_pagination : null;
+
+        return this.data.requiresPagination
+            ? this.data.useReactionsForPagination ? reactions_pagination : ar_pagination
+            : null;
     }
 
     #updateCurrentPage() {
@@ -441,6 +474,29 @@ class EmbedNavigation {
             this.data.page_idx.nested = 0;
     }
 
+    async #addPaginationReactions() {
+        try {
+            for (let reaction of this.data.paginationReactions)
+                await this.data.message.react(reaction.emoji);
+        } catch { }
+    }
+
+    async #removePaginationReactions() {
+        let _emojis_nav_names = [...Object.values(nav_emojis)].map(emoji => emoji.name);
+        let currentPaginationReactions = this.data.message.reactions.cache.filter(reaction =>
+            _emojis_nav_names.includes(reaction.emoji.name)
+        );
+
+        try {
+            await Promise.all(currentPaginationReactions.map(reaction => reaction.remove()));
+        } catch { }
+    }
+
+    async #refreshPaginationReaction() {
+        await this.#removePaginationReactions();
+        await this.#addPaginationReactions();
+    }
+
     async #awaitChoosePageNumber() {
         // Tell the user to choose a page number
         let msg = await this.data.message.reply({
@@ -473,33 +529,6 @@ class EmbedNavigation {
             });
     }
 
-    /** Refresh the message with the current page and components. */
-    async refresh() {
-        // Check if the message is editable
-        if (!this.data.message?.editable) {
-            logger.error("(Navigationator) Failed to edit message", "message not sent/editable");
-            return null;
-        }
-
-        this.#updateCurrentPage();
-
-        // Reset message components
-        this.data.messageComponents = [];
-
-        // Add the select menu if enabled
-        if (this.data.selectMenuEnabled)
-            this.data.messageComponents.push(this.data.actionRows.selectMenu);
-
-        // Add pagination if enabled
-        if (this.data.paginationType && this.#updatePagination())
-            this.data.messageComponents.push(this.data.actionRows.pagination);
-
-        // Edit & return the message
-        this.data.message = await this.data.message.edit({
-            embeds: [this.data.page_current], components: this.data.messageComponents
-        }); return this.data.message;
-    }
-
     /** Send the embed with navigation.
      * @param {nav_sendOptions} options */
     async send(options) {
@@ -509,8 +538,8 @@ class EmbedNavigation {
         if (this.data.selectMenuEnabled)
             this.data.messageComponents.push(this.data.actionRows.selectMenu);
 
-        // Add pagination if enabled
-        if (this.data.paginationType && this.#updatePagination())
+        // Add pagination if enabled (buttons)
+        if (this.data.paginationType && this.#updatePagination() && !this.data.useReactionsForPagination)
             this.data.messageComponents.push(this.data.actionRows.pagination);
 
         // Send the message
@@ -546,11 +575,57 @@ class EmbedNavigation {
             logger.error("Failed to send embed", "message_embed.send", err); return null;
         }
 
+        // Add pagination if enabled (reactions)
+        if (this.data.paginationType && this.data.useReactionsForPagination) this.#addPaginationReactions();
+
         // Collect message component interactions
         if (this.data.messageComponents.length) this.#collectInteractions();
 
+        // Collect message reactions
+        if (this.data.paginationReactions.length) this.#collectReactions();
+
         // Return the message object
         return this.data.message;
+    }
+
+    /** Refresh the message with the current page and components. */
+    async refresh() {
+        // Check if the message is editable
+        if (!this.data.message?.editable) {
+            logger.error("(Navigationator) Failed to edit message", "message not sent/editable");
+            return null;
+        }
+
+        this.#updateCurrentPage();
+
+        // Reset message components
+        this.data.messageComponents = [];
+
+        // Add the select menu if enabled
+        if (this.data.selectMenuEnabled)
+            this.data.messageComponents.push(this.data.actionRows.selectMenu);
+
+        // Add pagination if enabled (buttons)
+        if (this.data.paginationType && this.#updatePagination() && !this.data.useReactionsForPagination)
+            this.data.messageComponents.push(this.data.actionRows.pagination);
+
+        // Add pagination if enabled (reactions)
+        if (this.data.paginationType && this.data.useReactionsForPagination) {
+            let _emojis_nav_names = [...Object.values(nav_emojis)].map(emoji => emoji.name);
+
+            // Check if the current pagination reactions are updated
+            let _currentPaginationReactions = this.data.message.reactions.cache.filter(reaction =>
+                _emojis_nav_names.includes(reaction.emoji.name)
+            );
+
+            if (_currentPaginationReactions.size !== this.data.paginationReactions.length)
+                this.#refreshPaginationReaction();
+        }
+
+        // Edit & return the message
+        this.data.message = await this.data.message.edit({
+            embeds: [this.data.page_current], components: this.data.messageComponents
+        }); return this.data.message;
     }
 
     async #collectInteractions() {
@@ -604,6 +679,53 @@ class EmbedNavigation {
         collector.on("end", async () => {
             try { await this.data.message.edit({ components: [] }) } catch { };
         });
+    }
+
+    async #collectReactions() {
+        // Create the reaction collector        
+        let rc_filter = (reaction, user) => {
+            if (user.id !== this.data.interaction.guild.members.me.id) reaction.users.remove(user.id);
+
+            let _paginationEmojis = this.data.paginationReactions.map(emoji => emoji.name);
+
+            return _paginationEmojis.includes(reaction.emoji.name)
+                && user.id === this.data.interaction.user.id;
+        };
+
+        let rc_collector = this.data.message.createReactionCollector({
+            filter: rc_filter, dispose: true,
+            time: this.data.timeout
+        });
+
+        // Collect reactions
+        rc_collector.on("collect", async reaction => {
+            switch (reaction.emoji.name) {
+                case nav_emojis.toFirst.name:
+                    this.data.page_idx.nested = 0;
+                    await this.refresh(); return;
+
+                case nav_emojis.back.name:
+                    this.data.page_idx.nested--; this.#clampPageIndex();
+                    await this.refresh(); return;
+
+                case nav_emojis.jump.name:
+                    await this.#awaitChoosePageNumber();
+                    await this.refresh(); return;
+
+                case nav_emojis.next.name:
+                    this.data.page_idx.nested++; this.#clampPageIndex();
+                    await this.refresh(); return;
+
+                case nav_emojis.toLast.name:
+                    this.data.page_idx.nested = (this.data.page_nestedLength - 1);
+                    await this.refresh(); return;
+
+                default: return;
+            }
+        });
+
+        // Remove all reactions when the reaction collector times out or ends
+        rc_collector.on("end", async () => await this.#removePaginationReactions());
     }
 }
 
@@ -679,7 +801,7 @@ class message_Embedinator {
     }
 }
 
-/** Send a message with a select menu/pagination to switch to different views. */
+/** Send a message with a select menu and or pagination to switch to different views. */
 class message_Navigationify {
     /**
      * @param {CommandInteraction} interaction
