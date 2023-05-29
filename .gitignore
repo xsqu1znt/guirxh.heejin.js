@@ -2,6 +2,7 @@ package-lock.json
 node_modules
 .env
 
+commandTemplate_SLSH.js
 
 format_card_json.js
 format_cards.js

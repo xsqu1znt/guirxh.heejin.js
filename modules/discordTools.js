@@ -546,8 +546,11 @@ class EmbedNavigation {
             logger.error("Failed to send embed", "message_embed.send", err); return null;
         }
 
-        // Collect message component interactions & return the message
-        this.#collectInteractions(); return this.data.message;
+        // Collect message component interactions
+        if (this.data.messageComponents.length) this.#collectInteractions();
+
+        // Return the message object
+        return this.data.message;
     }
 
     async #collectInteractions() {

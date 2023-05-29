@@ -183,7 +183,7 @@ async function userXP_tryLevelUp(userID, userData = null) {
 }
 
 //! User -> Card Inventory
-async function cardInventory_add(userID, cards) {
+async function userCard_add(userID, cards) {
     // Create an array if only a single card object was passed
     if (!Array.isArray(cards)) cards = [cards];
 
@@ -209,7 +209,7 @@ async function cardInventory_add(userID, cards) {
     }
 
     // Push the cards to the user's card_inventory in Mongo
-    await user_update(userID, { $push: { card_inventory: { $each: cards_parsed } } }); return;
+    await user_update(userID, { $push: { card_inventory: { $each: cards_parsed } } });
 }
 
 /* async function cardInventory_addCards_OLD(userID, cards, resetUID = false) {
@@ -245,22 +245,22 @@ async function cardInventory_add(userID, cards) {
     await user_update(userID, { $push: { card_inventory: { $each: cardLikes } } }); return cards;
 } */
 
-async function cardInventory_removeCards(userID, uids) {
+async function userCard_remove(userID, uids) {
     // Convert a single card UID into an array
     if (!Array.isArray(uids)) uids = [uids];
 
     // Send the pull request to Mongo
-    await user_update(userID, { $pull: { card_inventory: { uid: { $in: uids } } } }); return null;
+    await user_update(userID, { $pull: { card_inventory: { uid: { $in: uids } } } });
 }
 
-async function cardInventory_updateCard(userID, card) {
+async function userCard_update(userID, card) {
     await models.user.updateOne(
         { _id: userID, "card_inventory.uid": card.uid },
         { $set: { "card_inventory.$": card } }
-    ); return null;
+    );
 }
 
-async function cardInventory_sell(userID, cards, checkExists = true) {
+async function userCard_sell(userID, cards, checkExists = true) {
     // Convert a single card into an array
     if (!Array.isArray(cards)) cards = [cards];
 
@@ -278,7 +278,7 @@ async function cardInventory_sell(userID, cards, checkExists = true) {
         // Update the user's balance in Mongo
         user_update(userID, { balance: userData.balance }),
         // Remove the cards from the user's card_inventory
-        cardInventory_removeCards(userID, cards.map(card => card.uid))
+        userCard_remove(userID, cards.map(card => card.uid))
     ]); return true;
 }
 
@@ -410,10 +410,10 @@ module.exports = {
         },
 
         cards: {
-            add: cardInventory_add,
-            remove: cardInventory_removeCards,
-            update: cardInventory_updateCard,
-            sell: cardInventory_sell
+            add: userCard_add,
+            remove: userCard_remove,
+            update: userCard_update,
+            sell: userCard_sell
         },
 
         badges: {
