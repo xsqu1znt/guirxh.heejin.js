@@ -3,7 +3,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js'
 const { botSettings } = require('../configs/heejinSettings.json');
 const { arrayTools, dateTools } = require('../modules/jsTools');
 const { generalShop_ES } = require('../modules/embedStyles');
-const { EmbedNavigation, messageTools } = require('../modules/discordTools');
+const { EmbedNavigator, messageTools } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 const cardManager = require('../modules/cardManager');
 const shop = require('../modules/shop');
@@ -107,7 +107,7 @@ module.exports = {
         );
 
         // Send the embeds with navigation
-        let embedNav = new EmbedNavigation({
+        let embedNav = new EmbedNavigator({
             interaction, embeds: embed_shop,
             paginationType: "longJump", selectMenu: true
         });

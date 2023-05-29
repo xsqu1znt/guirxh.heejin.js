@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 const { generalView_ES } = require('../modules/embedStyles');
-const { BetterEmbed, EmbedNavigation } = require('../modules/discordTools');
+const { BetterEmbed, EmbedNavigator } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 const userParser = require('../modules/userParser');
 const cardManager = require('../modules/cardManager');
@@ -85,7 +85,7 @@ module.exports = {
             let _embeds_view = generalView_ES(interaction.member, null, _cards, "set");
 
             // Send the embeds with navigation
-            let _embedNav = new EmbedNavigation({ interaction, embeds: [_embeds_view], paginationType: "shortJump" });
+            let _embedNav = new EmbedNavigator({ interaction, embeds: [_embeds_view], paginationType: "shortJump" });
             return await _embedNav.send();
         } else if (section) {
             // Fetch the user from Mongo
@@ -128,7 +128,7 @@ module.exports = {
                     let _embeds_vault = generalView_ES(interaction.member, _userData, _cards_vault, "vault");
 
                     // Send the embeds with navigation
-                    let _embedNav_vault = new EmbedNavigation({ interaction, embeds: [_embeds_vault], paginationType: "shortJump" });
+                    let _embedNav_vault = new EmbedNavigator({ interaction, embeds: [_embeds_vault], paginationType: "shortJump" });
                     return await _embedNav_vault.send();
 
                 case "team":
@@ -141,7 +141,7 @@ module.exports = {
                     let _embeds_team = generalView_ES(interaction.member, _userData, _cards_team, "team");
 
                     // Send the embeds with navigation
-                    let _embedNav_team = new EmbedNavigation({ interaction, embeds: [_embeds_team], paginationType: "shortJump" });
+                    let _embedNav_team = new EmbedNavigator({ interaction, embeds: [_embeds_team], paginationType: "shortJump" });
                     return await _embedNav_team.send();
             }
         } else return await baseEmbed.send({

@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder, time, TimestampStyles } = require('discord.js');
 
 const { communityServer } = require('../configs/heejinSettings.json');
-const { BetterEmbed, EmbedNavigation, markdown: { inline, link } } = require('../modules/discordTools');
+const { BetterEmbed, EmbedNavigator, markdown: { inline, link } } = require('../modules/discordTools');
 const { stringTools, numberTools, dateTools } = require('../modules/jsTools');
 const { userManager } = require('../modules/mongo');
 const cardManager = require('../modules/cardManager');
@@ -138,7 +138,7 @@ module.exports = {
         let embed_pages = [embed_summary(), await embed_heejin(), embed_player(), await embed_server()];
 
         // Add navigation for the embeds
-        let embedNav = new EmbedNavigation({ interaction, embeds: embed_pages, selectMenu: true });
+        let embedNav = new EmbedNavigator({ interaction, embeds: embed_pages, selectMenu: true });
 
         embedNav.addToSelectMenu({ emoji: "🔖", label: "Summary", description: "View the summary" });
         embedNav.addToSelectMenu({ emoji: "🐇", label: "Heejin Info", description: "View information about Heejin" });

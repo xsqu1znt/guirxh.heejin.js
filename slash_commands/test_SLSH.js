@@ -4,7 +4,7 @@ const {
 } = require('discord.js');
 
 const { communityServer, botSettings: { currencyIcon, customEmojis } } = require('../configs/heejinSettings.json');
-const { BetterEmbed, EmbedNavigation } = require('../modules/discordTools');
+const { BetterEmbed, EmbedNavigator } = require('../modules/discordTools');
 const cardManager = require('../modules/cardManager');
 
 module.exports = {
@@ -90,7 +90,7 @@ module.exports = {
         //     new BetterEmbed({ interaction, title: { text: `Page ${idx + 1}` } })
         // );
 
-        // let embedNav = new EmbedNavigation({
+        // let embedNav = new EmbedNavigator({
         //     interaction, embeds: embed_array,
         //     /* selectMenu: true, */ paginationType: "shortJump"
         // });

@@ -2,7 +2,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js'
 
 const { userManager } = require('../modules/mongo');
 const { userProfile_ES } = require('../modules/embedStyles');
-const { EmbedNavigation, messageTools } = require('../modules/discordTools');
+const { EmbedNavigator, messageTools } = require('../modules/discordTools');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("profile")
@@ -54,7 +54,7 @@ module.exports = {
         // Create the profile pages
         let { embeds, pageExists } = userProfile_ES(user, userData);
 
-        let embedNav = new EmbedNavigation({ interaction, embeds, selectMenu: true });
+        let embedNav = new EmbedNavigator({ interaction, embeds, selectMenu: true });
 
         // This page option is always first
         embedNav.addToSelectMenu({ label: "📄 Basic Information", description: "View your basic information", isDefault: true });
