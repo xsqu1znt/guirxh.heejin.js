@@ -61,7 +61,10 @@ module.exports = {
         if (globalID) embed_view = userDuplicates_ES(interaction.user, userData, globalID);
         else embed_view = userInventory_ES(interaction.user, userData, sorting, order, { setID, groupName });
 
-        let embedNav = new EmbedNavigator({ interaction, embeds: [embed_view], paginationType: "shortJump" });
+        let embedNav = new EmbedNavigator({
+            interaction, embeds: [embed_view], useReactionsForPagination: true,
+            paginationType: "longJump"
+        });
 
         // Send the embeds with navigation
         return await embedNav.send();

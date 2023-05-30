@@ -42,8 +42,8 @@ module.exports = {
 
         // Add navigation for the embeds
         let embedNav = new EmbedNavigator({
-            interaction, embeds: [embed_collections],
-            paginationType: "longJump", useReactionsForPagination: true
+            interaction, embeds: [embed_collections],useReactionsForPagination: true,
+            paginationType: "longJump", dynamicPagination: false
         });
 
         await embedNav.send();

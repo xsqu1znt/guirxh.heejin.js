@@ -109,7 +109,7 @@ module.exports = {
         // Send the embeds with navigation
         let embedNav = new EmbedNavigator({
             interaction, embeds: embed_shop, useReactionsForPagination: true,
-            paginationType: "longJump", selectMenu: true
+            paginationType: "shortJump", dynamicPagination: false, selectMenu: true
         });
 
         // ! Select menu options

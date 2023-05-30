@@ -85,7 +85,10 @@ module.exports = {
             let _embeds_view = generalView_ES(interaction.member, null, _cards, "set");
 
             // Send the embeds with navigation
-            let _embedNav = new EmbedNavigator({ interaction, embeds: [_embeds_view], paginationType: "shortJump" });
+            let _embedNav = new EmbedNavigator({
+                interaction, embeds: [_embeds_view], useReactionsForPagination: true,
+                paginationType: "longJump", dynamicPagination: false
+            });
             return await _embedNav.send();
         } else if (section) {
             // Fetch the user from Mongo
@@ -141,7 +144,10 @@ module.exports = {
                     let _embeds_team = generalView_ES(interaction.member, _userData, _cards_team, "team");
 
                     // Send the embeds with navigation
-                    let _embedNav_team = new EmbedNavigator({ interaction, embeds: [_embeds_team], paginationType: "shortJump" });
+                    let _embedNav_team = new EmbedNavigator({
+                        interaction, embeds: [_embeds_team], useReactionsForPagination: true,
+                        paginationType: "short", dynamicPagination: false
+                    });
                     return await _embedNav_team.send();
             }
         } else return await baseEmbed.send({

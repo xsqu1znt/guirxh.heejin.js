@@ -28,7 +28,10 @@ module.exports = {
         // Create the embed
         let embeds_missing = userMissing_ES(interaction.user, userData, setID);
 
-        let embedNav = new EmbedNavigator({ interaction, embeds: [embeds_missing], paginationType: "shortJump" });
+        let embedNav = new EmbedNavigator({
+            interaction, embeds: [embeds_missing], useReactionsForPagination: true,
+            paginationType: "shortJump"
+        });
 
         // Send the embeds with navigation
         return await embedNav.send();
