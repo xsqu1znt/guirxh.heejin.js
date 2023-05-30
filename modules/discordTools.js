@@ -13,11 +13,29 @@ const {
 } = require('discord.js');
 
 const { botSettings } = require('../configs/heejinSettings.json');
-const { botSettings: { embed: embed_defaults, customEmojis, timeout: timeouts } } = require('../configs/heejinSettings.json');
-const { randomTools, arrayTools, dateTools } = require('./jsTools');
+const { botSettings: { embed: embedSettings, customEmojis, timeout } } = require('../configs/heejinSettings.json');
+const { dateTools } = require('./jsTools');
 const logger = require('./logger');
 
-//! Message Tools
+const embed_defaults = {
+    color: embedSettings.color
+};
+
+const timeouts = {
+    pagination: timeout.pagination,
+    confirmation: timeout.confirmation,
+    errorMessage: timeout.errorMessage
+};
+
+const nav_emojis = {
+    toFirst: customEmojis.pagination.toFirst,
+    back: customEmojis.pagination.back,
+    jump: customEmojis.pagination.jump,
+    next: customEmojis.pagination.next,
+    toLast: customEmojis.pagination.toLast,
+};
+
+//! Life Betterment
 class bE_constructorOptions {
     constructor() {
         /** @type {CommandInteraction | null} */
@@ -206,14 +224,6 @@ class BetterEmbed extends EmbedBuilder {
     }
 }
 
-const nav_emojis = {
-    toFirst: customEmojis.pagination.toFirst,
-    back: customEmojis.pagination.back,
-    jump: customEmojis.pagination.jump,
-    next: customEmojis.pagination.next,
-    toLast: customEmojis.pagination.toLast,
-};
-
 /** @type {"short" | "shortJump" | "long" | "longJump" | false} */
 const nav_paginationType = null;
 
@@ -233,10 +243,11 @@ class nav_constructorOptions {
 
         /** @type {nav_paginationType} */
         this.paginationType = false;
+        this.dynamicPagination = true;
         this.useReactionsForPagination = false;
         this.selectMenu = false;
 
-        this.timeout = dateTools.parseStr(botSettings.timeout.pagination);
+        this.timeout = dateTools.parseStr(timeouts.pagination);
     }
 }
 
@@ -296,11 +307,17 @@ class EmbedNavigator {
             selectMenuValues: [],
 
             paginationType: options.paginationType,
+            dynamicPagination: options.dynamicPagination,
             /** @type {Array<{name: string, emoji: string}>} */
             paginationReactions: [], useReactionsForPagination: options.useReactionsForPagination,
             requiresPagination: false, requiresLongPagination: false, canJumpToPage: false,
 
             messageComponents: [],
+
+            collectors: {
+                interaction: null,
+                reaction: null
+            },
 
             actionRows: {
                 selectMenu: new ActionRowBuilder(),
@@ -368,74 +385,51 @@ class EmbedNavigator {
     async setPaginationType(type) {
         this.data.paginationType = type;
 
-        // await this.refresh();
+        await this.refresh();
     }
 
     #updatePagination() {
-        this.#updateCurrentPage();
+        this.#updateCurrentPage(); this.data.paginationReactions = [];
+        let _paginationButtons = [];
 
-        // Shorthand variables
-        let ar_pagination = this.data.actionRows.pagination;
-        let btns_nav = this.data.components.pagination;
-        let reactions_pagination = this.data.paginationReactions;
+        if (this.data.requiresPagination) switch (this.data.paginationType) {
+            case "short": _paginationButtons = ["back", "next"]; break;
 
-        // Set pagination buttons depending on the circumstance
-        if (this.data.useReactionsForPagination) {
-            switch (this.data.paginationType) {
-                case "short": reactions_pagination = [
-                    nav_emojis.back, nav_emojis.next
-                ]; break;
-
-                case "shortJump": reactions_pagination = [...this.data.canJumpToPage
-                    ? [nav_emojis.back, nav_emojis.jump, nav_emojis.next]
-                    : [nav_emojis.back, nav_emojis.next]
-                ]; break;
-
-                case "long": reactions_pagination = [...this.data.requiresLongPagination
-                    ? [nav_emojis.toFirst, nav_emojis.back, nav_emojis.next, nav_emojis.toLast]
-                    : [nav_emojis.back, nav_emojis.next]
-                ]; break;
-
-                case "longJump": reactions_pagination = [...this.data.requiresLongPagination
+            case "shortJump":
+                _paginationButtons = this.data.dynamicPagination
                     ? this.data.canJumpToPage
-                        ? [nav_emojis.toFirst, nav_emojis.back, nav_emojis.jump, nav_emojis.next, nav_emojis.toLast]
-                        : [nav_emojis.toFirst, nav_emojis.back, nav_emojis.next, nav_emojis.toLast]
-                    : this.data.canJumpToPage
-                        ? [nav_emojis.back, nav_emojis.jump, nav_emojis.next]
-                        : [nav_emojis.back, nav_emojis.next]
-                ]; break;
-            }
+                        ? ["back", "jump", "next"]
+                        : ["back", "next"]
+                    : ["back", "jump", "next"]
+                break;
 
-            this.data.paginationReactions = reactions_pagination;
-        } else switch (this.data.paginationType) {
-            case "short": ar_pagination.setComponents(
-                btns_nav.back, btns_nav.next
-            ); break;
+            case "long":
+                _paginationButtons = this.data.dynamicPagination
+                    ? this.data.requiresLongPagination
+                        ? ["toFirst", "back", "next", "toLast"]
+                        : ["back", "next"]
+                    : ["toFirst", "back", "next", "toLast"]
+                break;
 
-            case "shortJump": ar_pagination.setComponents(...this.data.canJumpToPage
-                ? [btns_nav.back, btns_nav.jump, btns_nav.next]
-                : [btns_nav.back, btns_nav.next]
-            ); break;
-
-            case "long": ar_pagination.setComponents(...this.data.requiresLongPagination
-                ? [btns_nav.toFirst, btns_nav.back, btns_nav.next, btns_nav.toLast]
-                : [btns_nav.back, btns_nav.next]
-            ); break;
-
-            case "longJump": ar_pagination.setComponents(...this.data.requiresLongPagination
-                ? this.data.canJumpToPage
-                    ? [btns_nav.toFirst, btns_nav.back, btns_nav.jump, btns_nav.next, btns_nav.toLast]
-                    : [btns_nav.toFirst, btns_nav.back, btns_nav.next, btns_nav.toLast]
-                : this.data.canJumpToPage
-                    ? [btns_nav.back, btns_nav.jump, btns_nav.next]
-                    : [btns_nav.back, btns_nav.next]
-            ); break;
+            case "longJump":
+                // requiresLongPagination and canJumpToPage both activate on the same page length
+                // so we can skip a 2nd canJumpToPage check
+                _paginationButtons = this.data.dynamicPagination
+                    ? this.data.requiresLongPagination
+                        ? this.data.canJumpToPage
+                            ? ["toFirst", "back", "jump", "next", "toLast"]
+                            : ["toFirst", "back", "next", "toLast"]
+                        : ["back", "next"]
+                    : ["toFirst", "back", "jump", "next", "toLast"]
+                break;
         }
 
-
-        return this.data.requiresPagination
-            ? this.data.useReactionsForPagination ? reactions_pagination : ar_pagination
-            : null;
+        // Parse the button string array into button/emoji data
+        if (this.data.useReactionsForPagination)
+            this.data.paginationReactions = _paginationButtons.map(btnType => nav_emojis[btnType]);
+        else this.data.actionRows.pagination.setComponents(
+            ..._paginationButtons.map(btnType => this.data.components.pagination[btnType])
+        );
     }
 
     #updateCurrentPage() {
@@ -481,20 +475,17 @@ class EmbedNavigator {
         } catch { }
     }
 
-    async #removePaginationReactions() {
-        let _emojis_nav_names = [...Object.values(nav_emojis)].map(emoji => emoji.name);
-        let currentPaginationReactions = this.data.message.reactions.cache.filter(reaction =>
-            _emojis_nav_names.includes(reaction.emoji.name)
-        );
-
-        try {
-            await Promise.all(currentPaginationReactions.map(reaction => reaction.remove()));
-        } catch { }
+    async #removeReactions() {
+        try { await this.data.message.reactions.removeAll(); } catch { }
     }
 
-    async #refreshPaginationReaction() {
-        await this.#removePaginationReactions();
+    async #refreshPaginationReactions() {
+        await this.#removeReactions();
         await this.#addPaginationReactions();
+    }
+
+    async #removeComponents() {
+        try { await this.data.message.edit({ components: [] }) } catch { }
     }
 
     async #awaitChoosePageNumber() {
@@ -532,14 +523,15 @@ class EmbedNavigator {
     /** Send the embed with navigation.
      * @param {nav_sendOptions} options */
     async send(options) {
-        options = { ...new nav_sendOptions(), ...options }; this.#updateCurrentPage();
+        options = { ...new nav_sendOptions(), ...options };
+        this.#updateCurrentPage(); this.#updatePagination();
 
         // Add the select menu if enabled
         if (this.data.selectMenuEnabled)
             this.data.messageComponents.push(this.data.actionRows.selectMenu);
 
         // Add pagination if enabled (buttons)
-        if (this.data.paginationType && this.#updatePagination() && !this.data.useReactionsForPagination)
+        if (this.data.requiresPagination && !this.data.useReactionsForPagination)
             this.data.messageComponents.push(this.data.actionRows.pagination);
 
         // Send the message
@@ -576,7 +568,7 @@ class EmbedNavigator {
         }
 
         // Add pagination if enabled (reactions)
-        if (this.data.paginationType && this.data.useReactionsForPagination) this.#addPaginationReactions();
+        if (this.data.requiresPagination && this.data.useReactionsForPagination) this.#addPaginationReactions();
 
         // Collect message component interactions
         if (this.data.messageComponents.length) this.#collectInteractions();
@@ -596,7 +588,7 @@ class EmbedNavigator {
             return null;
         }
 
-        this.#updateCurrentPage();
+        this.#updateCurrentPage(); this.#updatePagination();
 
         // Reset message components
         this.data.messageComponents = [];
@@ -606,11 +598,11 @@ class EmbedNavigator {
             this.data.messageComponents.push(this.data.actionRows.selectMenu);
 
         // Add pagination if enabled (buttons)
-        if (this.data.paginationType && this.#updatePagination() && !this.data.useReactionsForPagination)
+        if (this.data.requiresPagination && !this.data.useReactionsForPagination)
             this.data.messageComponents.push(this.data.actionRows.pagination);
 
-        // Add pagination if enabled (reactions)
-        if (this.data.paginationType && this.data.useReactionsForPagination) {
+        // Add/remove pagination if enabled (reactions)
+        if (this.data.useReactionsForPagination) if (this.data.requiresPagination) {
             let _emojis_nav_names = [...Object.values(nav_emojis)].map(emoji => emoji.name);
 
             // Check if the current pagination reactions are updated
@@ -618,9 +610,18 @@ class EmbedNavigator {
                 _emojis_nav_names.includes(reaction.emoji.name)
             );
 
+            // Update pagination reactions
             if (_currentPaginationReactions.size !== this.data.paginationReactions.length)
-                this.#refreshPaginationReaction();
-        }
+                this.#refreshPaginationReactions();
+        } else this.#removeReactions();
+
+        // Collect message component interactions
+        if (this.data.messageComponents.length && !this.data.collectors.interaction) this.#collectInteractions();
+        if (this.data.collectors.interaction) this.data.collectors.interaction.resetTimer();
+
+        // Collect message reactions
+        if (this.data.paginationReactions.length && !this.data.collectors.reaction) this.#collectReactions();
+        if (this.data.collectors.reaction) this.data.collectors.reaction.resetTimer();
 
         // Edit & return the message
         this.data.message = await this.data.message.edit({
@@ -632,6 +633,7 @@ class EmbedNavigator {
         // Create an interaction collector
         let filter = i => i.user.id === this.data.interaction.user.id;
         let collector = this.data.message.createMessageComponentCollector({ filter, time: this.data.timeout });
+        this.data.collectors.interaction = collector;
 
         collector.on("collect", async i => {
             // Defer the interaction and reset the collector's timer
@@ -677,13 +679,14 @@ class EmbedNavigator {
 
         // Remove message components on timeout
         collector.on("end", async () => {
-            try { await this.data.message.edit({ components: [] }) } catch { };
+            this.data.collectors.reaction = null;
+            await this.#removeComponents();
         });
     }
 
     async #collectReactions() {
         // Create the reaction collector        
-        let rc_filter = (reaction, user) => {
+        let filter = (reaction, user) => {
             if (user.id !== this.data.interaction.guild.members.me.id) reaction.users.remove(user.id);
 
             let _paginationEmojis = this.data.paginationReactions.map(emoji => emoji.name);
@@ -692,13 +695,13 @@ class EmbedNavigator {
                 && user.id === this.data.interaction.user.id;
         };
 
-        let rc_collector = this.data.message.createReactionCollector({
-            filter: rc_filter, dispose: true,
+        let collector = this.data.message.createReactionCollector({
+            filter: filter, dispose: true,
             time: this.data.timeout
-        });
+        }); this.data.collectors.reaction = collector;
 
         // Collect reactions
-        rc_collector.on("collect", async reaction => {
+        collector.on("collect", async reaction => {
             switch (reaction.emoji.name) {
                 case nav_emojis.toFirst.name:
                     this.data.page_idx.nested = 0;
@@ -725,7 +728,10 @@ class EmbedNavigator {
         });
 
         // Remove all reactions when the reaction collector times out or ends
-        rc_collector.on("end", async () => await this.#removePaginationReactions());
+        collector.on("end", async () => {
+            this.data.collectors.reaction = null;
+            await this.#removeReactions();
+        });
     }
 }
 
@@ -1068,11 +1074,12 @@ class message_Navigationify {
     }
 }
 
+//! Message Tools
 async function message_awaitConfirmation(interaction, options = { title: "", description: "", footer: "", showAuthor: true, deleteAfter: true, timeout: 0 }) {
     options = {
         title: "Please confirm this action", description: null, showAuthor: true, footer: "",
         deleteAfter: true,
-        timeout: dateTools.parseStr(botSettings.timeout.confirmation),
+        timeout: dateTools.parseStr(timeouts.confirmation),
         ...options
     };
 
@@ -1085,7 +1092,7 @@ async function message_awaitConfirmation(interaction, options = { title: "", des
     // Create the embed
     let embed = new EmbedBuilder()
         .setAuthor({ name: options.title })
-        .setColor(botSettings.embed.color || null);
+        .setColor(embed_defaults.color || null);
 
     // Set the author of the embed if applicable
     if (options.showAuthor) embed.setAuthor({

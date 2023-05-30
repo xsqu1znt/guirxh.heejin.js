@@ -194,6 +194,8 @@ function date_fromNow(str, type = "ms") {
  * @example parseStr("1m"): 60000
  */
 function date_parseStr(str, type = "ms") {
+    if (!isNaN(str)) return str;
+
     let time = str.match(/[a-zA-Z]+|[0-9]+/g);
 
     let parsed = 0;
