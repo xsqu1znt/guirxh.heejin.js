@@ -87,7 +87,7 @@ module.exports = {
             // Send the embeds with navigation
             let _embedNav = new EmbedNavigator({
                 interaction, embeds: [_embeds_view], useReactionsForPagination: true,
-                paginationType: "longJump", dynamicPagination: false
+                paginationType: "short", dynamicPagination: false
             });
             return await _embedNav.send();
         } else if (section) {
@@ -131,7 +131,10 @@ module.exports = {
                     let _embeds_vault = generalView_ES(interaction.member, _userData, _cards_vault, "vault");
 
                     // Send the embeds with navigation
-                    let _embedNav_vault = new EmbedNavigator({ interaction, embeds: [_embeds_vault], paginationType: "shortJump" });
+                    let _embedNav_vault = new EmbedNavigator({
+                        interaction, embeds: [_embeds_vault], useReactionsForPagination: true,
+                        paginationType: "short", dynamicPagination: false
+                    });
                     return await _embedNav_vault.send();
 
                 case "team":
