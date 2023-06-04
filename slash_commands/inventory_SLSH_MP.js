@@ -1,10 +1,9 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 const { botSettings } = require('../configs/heejinSettings.json');
-const { userInventory_ES, userDuplicates_ES } = require('../modules/embedStyles');
-const { EmbedNavigator, messageTools } = require('../modules/discordTools');
+const { userInventory_ES, userInventory_dupes_ES } = require('../modules/embedStyles');
+const { EmbedNavigator } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
-const { dateTools } = require('../modules/jsTools');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("inventory")
@@ -18,6 +17,8 @@ module.exports = {
             .setDescription("Filter by SETID"))
         .addStringOption(option => option.setName("group")
             .setDescription("Filter by GROUP"))
+        .addStringOption(option => option.setName("name")
+            .setDescription("Filter by NAME"))
 
         .addStringOption(option => option.setName("sorting")
             .setDescription("Default: SETID")
@@ -29,7 +30,7 @@ module.exports = {
         )
 
         .addStringOption(option => option.setName("order")
-            .setDescription("Default: Descending")
+            .setDescription("Default: Ascending")
 
             .addChoices(
                 { name: "Ascending", value: "ascending" },
@@ -42,31 +43,32 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
-        // Get interaction options
-        let globalID = interaction.options.getString("dupes") || null;
-        let setID = interaction.options.getString("setid") || null;
-        let groupName = interaction.options.getString("group") || null;
-        if (groupName) groupName = groupName.toLowerCase();
+        //Interaction options
+        let globalID = interaction.options.getString("dupes");
+        let setID = interaction.options.getString("setid");
+        let group = interaction.options.getString("group"); group &&= group.toLowerCase();
+        let name = interaction.options.getString("name"); name &&= name.toLowerCase();
 
-        let sorting = interaction.options.getString("sorting") || null;
-        let order = interaction.options.getString("order") || null;
+        let sorting = interaction.options.getString("sorting") || "set";
+        let order = interaction.options.getString("order") || "ascending";
 
         // Fetch the user from Mongo
         let userData = await userManager.fetch(interaction.user.id, "full", true);
 
-        // Create the embed
-        let embed_view;
+        // Create the embeds
+        let embed_inventory;
 
-        // Determine the operation type
-        if (globalID) embed_view = userDuplicates_ES(interaction.user, userData, globalID);
-        else embed_view = userInventory_ES(interaction.user, userData, sorting, order, { setID, groupName });
-
-        let embedNav = new EmbedNavigator({
-            interaction, embeds: [embed_view], useReactionsForPagination: true,
-            paginationType: "longJump"
-        });
+        if (globalID) embed_inventory = userInventory_dupes_ES(interaction.member, userData, globalID);
+        else embed_inventory = userInventory_ES(interaction.member, userData,
+            { setID, group, name, sorting, order }
+        );
 
         // Send the embeds with navigation
+        let embedNav = new EmbedNavigator({
+            interaction, embeds: [embed_inventory],
+            paginationType: "longJump", useReactionsForPagination: true
+        });
+
         return await embedNav.send();
     }
 };

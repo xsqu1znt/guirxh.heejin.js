@@ -227,7 +227,7 @@ module.exports = {
             return await new BetterEmbed({
                 interaction, author: { text: "%AUTHOR_NAME | sell", user: interaction.member },
                 description: `You sold:\n${cards_toSell_f.join("\n")}`,
-                footer: `total: ${currencyIcon} ${sellPriceTotal}`
+                footer: { text: `total: ${currencyIcon} ${sellPriceTotal}` }
             }).send({ method: "followUp" });
         });
 

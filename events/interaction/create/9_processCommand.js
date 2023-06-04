@@ -4,7 +4,7 @@ const { Client, BaseInteraction, PermissionsBitField } = require('discord.js');
 
 const heejinTips = require('../../../configs/heejinTips.json');
 const { ownerID, adminIDs, adminBypassIDs } = require('../../../configs/clientSettings.json');
-const { botSettings: { chanceToShowTips } } = require('../../../configs/heejinSettings.json');
+const { communityServer, botSettings: { chanceToShowTips } } = require('../../../configs/heejinSettings.json');
 const { randomTools, stringTools } = require('../../../modules/jsTools');
 const { BetterEmbed, messageTools } = require('../../../modules/discordTools');
 const { userManager } = require('../../../modules/mongo');
@@ -38,7 +38,7 @@ module.exports = {
                 // Special command bypass
                 && !adminBypassIDs[args.interaction.commandName].includes(args.interaction.user.id)
             ) return await args.interaction.reply({
-                content: "You don't have permission to use this command, silly!", ephemeral: true
+                content: "You do not have permission to use this command, silly!", ephemeral: true
             });
 
             // Check if the command requires the user to have admin in the guild
@@ -49,6 +49,20 @@ module.exports = {
                     return await args.interaction.reply({
                         content: "You need admin to use this command, silly!", ephemeral: true
                     });
+            }
+
+            // Only allow admin commands to be used in the admin channel in the community server
+            if (slashCommand?.isOwnerCommand || slashCommand?.requireGuildAdmin) {
+                let _isInCommunityServer = (args.interaction.guildId === communityServer.id);
+                let _isInCommunityAdminChannel = (args.interaction.channelId === communityServer.adminChannelID);
+
+                if (_isInCommunityServer && !_isInCommunityAdminChannel) {
+                    let embed_wrongAdminChannel = new BetterEmbed({
+                        interaction: args.interaction, description: "You cannot use that command here, silly!"
+                    });
+
+                    return await embed_wrongAdminChannel.send({ ephemeral: true });
+                }
             }
 
             await args.interaction.deferReply();

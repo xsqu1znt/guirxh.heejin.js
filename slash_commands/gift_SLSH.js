@@ -2,7 +2,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js'
 
 const { userManager } = require('../modules/mongo');
 const { userGift_ES } = require('../modules/embedStyles');
-const { messageTools } = require('../modules/discordTools');
+const { BetterEmbed } = require('../modules/discordTools');
 const userParser = require('../modules/userParser');
 
 module.exports = {
@@ -22,61 +22,63 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
-        let embed_gift = new messageTools.Embedinator(interaction, {
-            title: "%USER | gift", author: interaction.user
+        let embed_error = new BetterEmbed({
+            interaction, author: { text: "%AUTHOR_NAME | gift", user: interaction.member }
         });
 
-        // Get interaction options
-        let recipient = interaction.options.getUser("player");
-        if (recipient.id === interaction.user.id) return await embed_gift.send(
-            "You cannot gift to yourself, silly!"
-        );
-
+        // Interaction options
         let uids = interaction.options.getString("uid").replace(/ /g, "").split(",");
         if (!Array.isArray(uids)) uids = [uids];
 
-        // Don't exceed the maximum number card that can be gifted at once
-        if (uids.length > 5) return await embed_gift.send(
-            "You cannot gift more than \`🃏 5\` at once"
-        );
+        // A player can only gift 5 cards at once to perserve embed size
+        if (uids.length > 5) return await embed_error.send({
+            description: "You cannot gift more than \`🃏 5\` at once"
+        });
+
+        let recipient = interaction.options.getUser("player");
+
+        // A player can't gift cards to themselves
+        if (recipient.id === interaction.user.id) return await embed_error.send({
+            description: "You cannot gift to yourself, silly!"
+        });
+
+        // Check if the recipient player started
+        if (!await userManager.exists(recipient.id)) return await embed_error.send({
+            description: "That user has not started yet"
+        });
 
         // Fetch the user from Mongo
         let userData = await userManager.fetch(interaction.user.id, "full", true);
 
-        // Check if the recipient user exists in Mongo
-        let recipientExists = await userManager.exists(recipient.id);
-        if (!recipientExists) return await embed_gift.send(
-            "That user has not started yet"
-        );
-
         // Get the cards from the user's card_inventory
-        let cardsToGift = userParser.cards.getMultiple(userData.card_inventory, uids);
-
-        // Filter out invalid cards
-        cardsToGift = cardsToGift.filter(card => card);
-        if (cardsToGift.length === 0) return await embed_gift.send(
-            `No cards were found with \`${uids.join(" ").trim()}\``
-        );
+        let cards = userParser.cards.get(userData, uids);
+        if (!cards.length) return await embed_error.send({
+            description: `You need to give a valid UID`
+        });
 
         // Filter out locked and favorited cards
-        cardsToGift = cardsToGift.filter(card => card.uid !== userData.card_favorite_uid && !card?.locked);
-        if (cardsToGift.length === 0) return await embed_gift.send(
-            "\`%UIDS\` cannot be gifted, it is either:\n\`🔒 vault\` \`🧑🏾‍🤝‍🧑 team\` \`🏃 idol\` \`⭐ favorite\`"
+        cards = cards.filter(card => card.uid !== userData.card_favorite_uid && !card?.locked);
+        if (!cards.length) return await embed_error.send({
+            description: "\`%UIDS\` cannot be gifted, it is either:\n\`🔒 vault\` \`🧑🏾‍🤝‍🧑 team\` \`🏃 idol\` \`⭐ favorite\`"
                 .replace("%UIDS", uids.join(" ").trim())
-        );
+        });
 
         // Update the users' card_inventory in Mongo
         await Promise.all([
-            // Add the card to the recipient's card_inventory
-            (async () => cardsToGift = await userManager.cards.add(recipient.id, cardsToGift, true))(),
-            // Remove the card from the gifter's card_inventory
-            userManager.cards.remove(interaction.user.id, cardsToGift.map(card => card.uid))
+            // Add the card to the recipient player's card_inventory
+            userManager.cards.add(recipient.id, cards),
+            // Remove the card from the gifting player's card_inventory
+            userManager.cards.remove(interaction.user.id, cards.map(card => card.uid))
         ]);
 
-        // Create the embed
-        embed_gift = userGift_ES(interaction.user, recipient, cardsToGift);
+        // Create the embeds
+        let { embed_gift, embed_dm } = userGift_ES(interaction.user, recipient, cards);
 
-        // Let the user know the result
-        return await interaction.editReply({ embeds: [embed_gift] });
+        return await Promise.all([
+            // Let the user know the result
+            interaction.editReply({ embeds: [embed_gift] }),
+            // Send a DM to the recipient
+            recipient.send({ embeds: [embed_dm] })
+        ]);
     }
 };

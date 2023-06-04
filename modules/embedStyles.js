@@ -398,8 +398,8 @@ function userProfile_ES(user, userData) {
         title: "%USER | profile", author: user
     }).embed;
 
-    let card_selected = userParser.cards.get(userData.card_inventory, userData.card_selected_uid);
-    let card_favorite = userParser.cards.get(userData.card_inventory, userData.card_favorite_uid);
+    let card_selected = userParser.cards.get(userData, userData.card_selected_uid);
+    let card_favorite = userParser.cards.get(userData, userData.card_favorite_uid);
 
     let embed_main = () => {
         let _embed = embed_template();
@@ -621,165 +621,135 @@ function userCooldowns_ES(user, userData) {
 }
 
 // Command -> User -> /INVENTORY
-/**
- * @param {"global" | "set"} sorting
- * @param {"ascending" | "descending"} order
- */
-function userInventory_ES(user, userData, sorting = "set", order = "descending", filter = { setID: "", groupName: "" }) {
-    filter = { setID: "", group: "", ...filter };
-    sorting ||= "set"; order ||= "descending";
+class uinv_filter {
+    constructor() {
+        this.setID = "";
+        this.group = "";
+        this.name = "";
 
-    // Parse the CardLike objects into fully detailed cards
-    let cards_user = userData.card_inventory.map(card => cardManager.parse.fromCardLike(card));
+        /** @type {"set" | "global"} */
+        this.sorting = "set";
+        /** @type {"ascending" | "descending"} */
+        this.order = "ascending";
+    }
+}
 
-    // Filter the cards
-    if (filter.setID) cards_user = cards_user.filter(card => card.setID === filter.setID);
-    if (filter.groupName) cards_user = cards_user.filter(card => card.group.toLowerCase() === filter.groupName);
+/** @param {uinv_filter} filter */
+function userInventory_ES(guildMember, userData, filter) {
+    filter = { ...new uinv_filter(), ...filter }; userParser.cards.parseInventory(userData);
+
+    // Apply card filters
+    let cards = userParser.cards.getInventory(userData);
+    let isFiltered = false;
+
+    if (filter.setID) { cards = cards.filter(c => c.card.setID === filter.setID); isFiltered = true; }
+    if (filter.group) { cards = cards.filter(c => c.card.group.toLowerCase().includes(filter.group)); isFiltered = true; }
+    if (filter.name) { cards = cards.filter(c => c.card.name.toLowerCase().includes(filter.name)); isFiltered = true; }
 
     // Sort the cards
-    switch (sorting) {
-        case "global": cards_user = cards_user.sort((a, b) => a.globalID - b.globalID); break;
-        case "set": cards_user = cards_user.sort((a, b) => a.setID - b.setID); break;
+    switch (filter.sorting) {
+        case "set": cards.sort((a, b) => a.card.setID - b.card.setID || a.card.globalID - b.card.globalID); break;
+
+        case "global": cards.sort((a, b) => a.card.globalID - b.card.globalID); break;
     }
 
-    if (order === "ascending") cards_user = cards_user.reverse();
+    if (filter.order === "descending") cards.reverse();
 
-    // Parse every card in the (cards) array into a readable [String] entry
-    // then split the array into groups of 10 cards each
-    // so we can easily create embed inventory pages of only 10 entries per
-    let cards_user_f = [];
+    /// Create the the inventory pages
+    if (!cards.length) return [
+        new BetterEmbed({
+            author: { text: "%AUTHOR_NAME | inventory", user: guildMember },
+            description: isFiltered
+                ? "No cards were found with that search filter"
+                : "You don't have anything in your inventory!\n> Use \`/drop\` to get cards"
+        })
+    ];
 
-    let cards_user_primary = userParser.cards.primary(cards_user);
-    for (let card of cards_user_primary) {
-        // Get the duplicate cards under the primary card
-        let { card_duplicates } = userParser.cards.duplicates(cards_user, { globalID: card.globalID });
+    let cards_f = arrayTools.chunk(cards.map(card => card.card_f), 10);
 
-        // Whether or not this is the user's favorited card
-        let isFavorite = (card.uid === userData.card_favorite_uid);
-
-        // Whether or not this is the user's selected card
-        let isSelected = (card.uid === userData.card_selected_uid);
-
-        // Whether or not this is on the user's team
-        let isOnTeam = (userData.card_team_uids.includes(card.uid));
-
-        cards_user_f.push(cardManager.toString.inventory(card, {
-            duplicateCount: card_duplicates.length,
-            favorited: isFavorite,
-            selected: isSelected,
-            team: isOnTeam
-        }));
-    }
-
-    // Max of 10 entires per page
-    cards_user_f = arrayTools.chunk(cards_user_f, 10);
-    // Create an array to store the inventory pages for easy pagination
+    // Create the embeds
     let embeds = [];
 
-    // Keep track of the page index
-    let pageIndex = 1;
-
-    // Go through each group in (cards_f) and create an embed for it
-    for (let group of cards_user_f) {
-        // Create a new embed for this inventory page
-        let embed_page = new EmbedBuilder()
-            .setAuthor({ name: `${user.username} | inventory`, iconURL: user.avatarURL({ dynamic: true }) })
-            .setDescription(group[0] ? group.join("\n") : "try doing \`/drop\` to start filling up your inventory!")
-            .setFooter({ text: `Page ${pageIndex++}/${cards_user_f.length || 1} | Total: ${cards_user_primary.length}` })
-            .setColor(botSettings.embed.color || null);
-
-        // Push the newly created embed to our collection
-        embeds.push(embed_page);
-    };
+    for (let i = 0; i < cards_f.length; i++) {
+        let _embed = new BetterEmbed({
+            author: { text: "%AUTHOR_NAME | inventory", user: guildMember },
+            description: cards_f[i].join("\n"),
+            footer: { text: `Page ${i + 1}/${cards_f.length || 1} | Total: ${cards.length}` }
+        }); embeds.push(_embed);
+    }
 
     // Return the embed array
     return embeds;
 }
 
 // Command -> User -> /INVENTORY DUPES:
-function userDuplicates_ES(user, userData, globalID) {
-    let card_duplicates = userParser.cards.duplicates(userData.card_inventory, { globalID });
+function userInventory_dupes_ES(guildMember, userData, globalID) {
+    // Filter only cards matching the given global ID
+    let cards = userParser.cards.getDuplicates(userData, globalID);
+    if (cards.all.length <= 1) return [
+        new BetterEmbed({
+            author: { text: "%AUTHOR_NAME | dupes", user: guildMember },
+            description: "No duplicates of that card were found"
+        })
+    ];
 
-    // Create a base embed
-    let { embed } = new messageTools.Embedinator(null, {
-        author: user,
-        title: "%USER | dupes",
-        description: `\`${globalID}\` is not a valid GID`
-    });
-
-    if (!card_duplicates) return [embed];
-    if (card_duplicates.card_duplicates.length === 0) {
-        embed.setDescription("You do not have any dupes with this GID")
-        return [embed];
-    }
-
-    card_duplicates = card_duplicates.cards.map(card => cardManager.parse.fromCardLike(card));
-
-    let card_duplicates_f = card_duplicates.map(card => {
+    let cards_f = arrayTools.chunk(cards.all.map(card => {
         // Whether or not this is the user's favorited card
-        let isFavorite = (card.uid === userData.card_favorite_uid);
+        let _isFavorite = (card.uid === userData.card_favorite_uid);
 
         // Whether or not this is the user's selected card
-        let isSelected = (card.uid === userData.card_selected_uid);
+        let _isSelected = (card.uid === userData.card_selected_uid);
+
+        // Whether or not this is on the user's team
+        let _isOnTeam = (userData.card_team_uids.includes(card.uid));
 
         return cardManager.toString.inventory(card, {
-            favorited: isFavorite,
-            selected: isSelected
+            favorited: _isFavorite, selected: _isSelected, team: _isOnTeam
         });
-    });
+    }), 10);
 
-    card_duplicates_f = arrayTools.chunk(card_duplicates_f, 10);
-
-    // Create the embeds
+    /// Create the the inventory pages
     let embeds = [];
 
-    for (let i = 0; i < card_duplicates_f.length; i++) {
-        let { embed: _embed } = new messageTools.Embedinator(null, { title: "%USER | dupes", author: user });
-
-        // Add details to the embed
-        _embed.setDescription(card_duplicates_f[i].join("\n"))
-            .setFooter({
-                text: `Page %PAGE/%PAGE_COUNT Total: %TOTAL_CARDS`
-                    .replace("%PAGE", i + 1)
-                    .replace("%PAGE_COUNT", card_duplicates_f.length)
-                    .replace("%TOTAL_CARDS", card_duplicates.length)
-            });
-
-        // Set the embed thumbnail to the card's image if available
-        if (card_duplicates[0].imageURL) _embed.setThumbnail(card_duplicates[0].imageURL);
-
-        embeds.push(_embed);
+    for (let i = 0; i < cards_f.length; i++) {
+        let _embed = new BetterEmbed({
+            author: { text: "%AUTHOR_NAME | dupes", user: guildMember },
+            description: cards_f[i].join("\n"),
+            footer: { text: `Page ${i + 1}/${cards_f.length || 1} | Total: ${cards.all.length}` }
+        }); embeds.push(_embed);
     }
 
-    // Return the embeds array
+    // Return the embed array
     return embeds;
 }
 
 // Command -> User -> /GIFT
 function userGift_ES(user, recipient, cards) {
+    if (!Array.isArray(cards)) cards = [cards];
+
+    // Get the last card to show its image
+    let cards_f = cards.map(card => cardManager.toString.inventory(card));
+    let card_last = cards.slice(-1)[0] || cards[0];
+
+    // Create the gift embed
     let fromTo = `**From:** ${user}\n**To:** ${recipient}`;
 
-    // Create the embed
-    let embed = new EmbedBuilder()
-        .setAuthor({ name: `${user.username} | gift`, iconURL: user.avatarURL({ dynamic: true }) })
-        .setColor(botSettings.embed.color || null);
+    let embed_gift = new BetterEmbed({
+        author: { text: "%AUTHOR_NAME | gift", user },
+        description: `${cards_f.join("\n")}n\n${fromTo}`,
+        imageURL: card_last.imageURL
+    });
 
-    if (cards.length === 1) {
-        embed.setDescription(cardManager.toString.inventory(cards[0]) + "\n\n" + fromTo);
+    // Create the DM embed
+    let embed_dm = new BetterEmbed({
+        title: { text: "\`📬\` You have a message!" },
+        description: `You got a gift from **${recipient.username}**\n${cards_f.join("\n")}`,
+        imageURL: card_last.imageURL,
+        showTimestamp: true
+    });
 
-        // Add the card image to the embed if available
-        if (cards[0].imageURL) embed.setImage(cards[0].imageURL);
-
-    } else {
-        embed.setDescription(cards.map(card => cardManager.toString.inventory(card)).join("\n") + "\n\n" + fromTo);
-
-        // Add the last card's image to the embed if available
-        let card_last = cards.slice(-1)[0];
-        if (card_last.imageURL) embed.setImage(card_last.imageURL);
-    }
-
-    // Return the embed
-    return embed;
+    // Return the embeds
+    return { embed_gift, embed_dm };
 }
 
 module.exports = {
@@ -796,7 +766,7 @@ module.exports = {
     userCooldowns_ES,
 
     userInventory_ES,
-    userDuplicates_ES,
+    userInventory_dupes_ES,
 
     userGift_ES
 };

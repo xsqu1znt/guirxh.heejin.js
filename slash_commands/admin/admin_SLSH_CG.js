@@ -1,5 +1,8 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
+const { communityServer } = require('../../configs/heejinSettings.json');
+const { BetterEmbed } = require('../../modules/discordTools');
+
 const subcommands = {
     cardSummon: require('./admin_SLSH_CG/_card_summon'),
     servers: require('./admin_SLSH_CG/_servers')

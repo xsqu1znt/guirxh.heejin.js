@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
-const { botSettings } = require('../configs/heejinSettings.json');
-const { messageTools } = require('../modules/discordTools');
+const { botSettings: { currencyIcon } } = require('../configs/heejinSettings.json');
+const { BetterEmbed } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 
 module.exports = {
@@ -21,50 +21,65 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
-        // Reusable embedinator to send success/error messages
-        const embedinator = new messageTools.Embedinator(interaction, {
-            title: "%USER | pay", author: interaction.user
+        let embed_pay = new BetterEmbed({
+            interaction, author: { text: "%AUTHOR_NAME | gift", user: interaction.member }
         });
 
-        // Get interaction options
+        // Interaction options
         let amount = interaction.options.getNumber("amount");
-        if (amount < 1) return embedinator.send(
-            `You cannot give less than \`${botSettings.currencyIcon} 1\``
-        );
+
+        // A player cannot give less than 🥕 1
+        if (amount < 1) return await embed_pay.send({
+            description: `You cannot give less than \`${currencyIcon} 1\``
+        });
 
         let recipient = interaction.options.getUser("player");
-        if (recipient.id === interaction.user.id) return await embedinator.send(
-            "You cannot pay yourself, silly!"
-        );
 
-        // Fetch the users from Mongo
+        // A player can't send 🥕 to themselves
+        if (recipient.id === interaction.user.id) return await embed_pay.send({
+            description: "You cannot pay yourself, silly!"
+        });
+
+        // Check if the recipient player started
+        if (!await userManager.exists(recipient.id)) return await embed_pay.send({
+            description: "That user has not started yet"
+        });
+
+        // Fetch the user from Mongo
         let userData = await userManager.fetch(interaction.user.id, "essential", true);
+
+        // Check if the user has enough 🥕
+        if (userData.balance < amount) return await embed_pay.send({
+            description: `You do not have enough!\nYou only have \`${currencyIcon} ${userData.balance}\``
+        });
+
+        // Fetch the recipient from Mongo
         let recipientData = await userManager.fetch(recipient.id, "essential", true);
 
-        // Check if the recipient user exists in Mongo
-        let recipientExists = await userManager.exists(recipient.id);
-        if (!recipientExists) return await embedinator.send(
-            "That user has not started yet"
-        );
-
-        // Check if the user has enough
-        if (userData.balance < amount) return await embedinator.send(
-            `You do not have enough!\nYou're missing \`${botSettings.currencyIcon} ${amount - userData.balance}\``
-        );
-
-        // Update the users' balance in mongo
+        // Update the users' balance in Mongo
         await Promise.all([
             // Subtract from the user's balance
-            userManager.update(interaction.user.id, { balance: userData.balance - amount }),
+            userManager.update(interaction.user.id, { $inc: { balance: -amount } }),
             // Add to the recipient's balance
-            userManager.update(recipient.id, { balance: recipientData.balance + amount })
+            userManager.update(recipient.id, { $inc: { balance: amount } })
         ]);
 
-        // Let the user know the result
-        let amount_f = `\`${botSettings.currencyIcon} ${amount}\``;
-        let balance_f = `\`${botSettings.currencyIcon} ${userData.balance - amount}\``;
-        return await embedinator.send(
-            `You gave \`${amount_f}\` to **${recipient}**.\nBalance currently: \`${balance_f}\``
-        );
+        // Send the final embeds
+        let amount_f = `\`${currencyIcon} ${amount}\``;
+        let balance_user_f = `\`${currencyIcon} ${userData.balance - amount}\``;
+        let balance_recipient_f = `\`${currencyIcon} ${recipientData.balance + amount}\``;
+
+        let embed_dm = new BetterEmbed({
+            title: { text: "\`📬\` You have a message!" },
+            description: `You got ${amount_f} from **${interaction.user.username}**\n> Balance currently: ${balance_recipient_f}`,
+            showTimestamp: true
+        });
+
+        return await Promise.all([
+            // Let the user know the result
+            embed_pay.send({ description: `You gave ${amount_f} to **${recipient}**\n> Balance currently: ${balance_user_f}` }),
+            // Send a DM to the recipient
+            recipient.send({ embeds: [embed_dm] })
+        ]);
     }
 };

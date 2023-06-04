@@ -19,11 +19,11 @@ const client = new Client({
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.GuildMessageReactions,
         GatewayIntentBits.MessageContent,
-        GatewayIntentBits.GuildMembers
-        // GatewayIntentBits.DirectMessages
+        GatewayIntentBits.GuildMembers,
+        GatewayIntentBits.DirectMessages
     ],
 
-    // partials: [Partials.Channel] // Allows the bot to read its own DMs
+    partials: [Partials.Channel] // Allows the bot to read its own DMs
 });
 
 // Collections that hold valuable information for the client

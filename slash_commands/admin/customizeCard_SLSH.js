@@ -21,8 +21,8 @@ module.exports = {
         .addStringOption(option => option.setName("uid")
             .setDescription("UID of the card")
             .setRequired(true)
-    ),
-    
+        ),
+
     isOwnerCommand: true,
 
     /**

@@ -174,7 +174,7 @@ module.exports = {
                     // Fetch the user from Mongo
                     userData = await userManager.fetch(interaction.user.id, "full", true);
 
-                    let teamCards = userParser.cards.getMultiple(userData.card_inventory, userData.card_team_uids, false);
+                    let teamCards = userParser.cards.getTeam(userData);
                     let teamCards_valid = teamCards.filter(card => card);
 
                     // Check if the user's team is full
@@ -208,7 +208,7 @@ module.exports = {
                     let card = userParser.cards.get(userData.card_inventory, uid_remove[0]);
                     if (!card) return await embedinator.send(`\`${uid_remove[0]}\` is not a valid UID.`);
 
-                    if (userData.card_team_uids.find(uid => uid === uid_remove)) {
+                    if (userData.card_team_uids.find(uid => uid === uid_remove[0])) {
                         // Remove the card's uid from the user's card_team_uids
                         await userManager.update(interaction.user.id, { $pull: { card_team_uids: card.uid } });
 
