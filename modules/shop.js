@@ -21,11 +21,11 @@ async function card_buy(userID, globalID) {
         userManager.update(userID, { $inc: { balance: -card.price } }),
 
         // Add the card to the user's card_inventory
-        (async () => card = await userManager.cards.add(userID, card, true))()
+        userManager.cards.add(userID, card)
     ]);
 
     // Return the card
-    return card[0];
+    return card;
 }
 
 //! Badges

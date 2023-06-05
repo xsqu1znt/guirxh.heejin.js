@@ -330,7 +330,7 @@ function generalView_ES(guildMember, userData, card, viewType = "uid") {
 
         _cards.forEach((_card, idx) => {
             // Parse the card into a string
-            let _card_f = cardManager.toString.inventory(_card, { simplify: true });
+            let _card_f = cardManager.toString.inventory(_card);
 
             // Create the embed
             let _embed = embed_template("%AUTHOR_NAME | team", _card_f, _card.imageURL).setFooter({
@@ -697,14 +697,14 @@ function userGift_ES(guildMember, recipient, cards) {
 
     let embed_gift = new BetterEmbed({
         author: { text: "%AUTHOR_NAME | gift", user: guildMember },
-        description: `${cards_f.join("\n")}n\n${fromTo}`,
+        description: `${cards_f.join("\n")}\n${fromTo}`,
         imageURL: card_last.imageURL
     });
 
     // Create the DM embed
     let embed_dm = new BetterEmbed({
         title: { text: "\`📬\` You have a message!" },
-        description: `You got a gift from **${recipient.username}**\n${cards_f.join("\n")}`,
+        description: `You got a gift from **${guildMember.user.username}**\n${cards_f.join("\n")}`,
         imageURL: card_last.imageURL,
         showTimestamp: true
     });
