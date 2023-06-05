@@ -11,7 +11,7 @@ function parse_toBadgeLike(badge) {
     return {
         id: badge.id,
         setID: badge.setID,
-    }
+    };
 }
 
 function parse_fromBadgeLike(badgeLike) {

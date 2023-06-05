@@ -2,27 +2,29 @@ const { Client, CommandInteraction, SlashCommandBuilder, EmbedBuilder } = requir
 
 const { botSettings, userSettings } = require('../configs/heejinSettings.json');
 const { randomTools } = require('../modules/jsTools');
-const { messageTools } = require('../modules/discordTools');
+const { BetterEmbed } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("random")
         .setDescription("Get a random amount of carrots"),
 
+    helpIcon: "🎱",
+
     /**
      * @param {Client} client
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
-        let embed_random = new messageTools.Embedinator(interaction, {
-            title: "%USER | random", author: interaction.user
+        let embed_random = new BetterEmbed({
+            interaction, author: { text: "%AUTHOR_NAME | random", user: interaction.member }
         });
 
         let userData = await userManager.fetch(interaction.user.id, "essential");
 
         // Check if the user has an active cooldown
         let userCooldownETA = await userManager.cooldowns.check(interaction.user.id, "random");
-        if (userCooldownETA) return embed_random.send(`You can use random again **${userCooldownETA}**`);
+        if (userCooldownETA) return embed_random.send({ description: `You can use random again **${userCooldownETA}**` });
 
         // Use rng to determine if the user gets anything
         let { xp: { commands: { random: xp_random } }, currency: { range } } = userSettings;
@@ -51,9 +53,10 @@ module.exports = {
         );
 
         // Let the user know the result
-        return await embed_random.send(won
-            ? `You tried your luck and won \`${botSettings.currencyIcon} ${currencyGained}\``
-            : "You tried your luck and did not win anything"
-        );
+        return await embed_random.send({
+            description: won
+                ? `You tried your luck and won \`${botSettings.currencyIcon} ${currencyGained}\``
+                : "You tried your luck and did not win anything"
+        });
     }
 };

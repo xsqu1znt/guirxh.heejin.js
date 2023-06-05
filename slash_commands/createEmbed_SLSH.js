@@ -19,6 +19,7 @@ module.exports = {
         ),
 
     requireGuildAdmin: true,
+    helpIcon: "📄",
 
     /**
      * @param {Client} client

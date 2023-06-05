@@ -1,8 +1,7 @@
 const { Client, CommandInteraction, time, TimestampStyles } = require('discord.js');
 
-const { botSettings } = require('../../../configs/heejinSettings.json');
-const { messageTools, markdown: { bold, inline, link } } = require('../../../modules/discordTools');
-const { arrayTools, numberTools, dateTools } = require('../../../modules/jsTools');
+const { BetterEmbed, EmbedNavigator, markdown: { bold, inline, link } } = require('../../../modules/discordTools');
+const { arrayTools, numberTools } = require('../../../modules/jsTools');
 const logger = require('../../../modules/logger');
 
 module.exports = {
@@ -11,10 +10,9 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
-        let embed_template = () => new messageTools.Embedinator(interaction, {
-            title: "%USER | servers",
-            description: "Could not fetch guilds",
-            author: interaction.user
+        let embed_error = new BetterEmbed({
+            interaction, author: { text: "%AUTHOR_NAME | servers", user: interaction.member },
+            description: "Could not fetch guilds"
         });
 
         // Get interaction options
@@ -35,13 +33,13 @@ module.exports = {
             logger.success(`successfully left server (${serverID})`);
 
             // Let the user know the result
-            return await embed_template().send(`Successfully left server: ${inline(true, "🆔", serverID)}`);
+            return await embed_error.send({ description: `Successfully left server: ${inline(true, "🆔", serverID)}` });
         } catch (err) {
             // Log the error
             logger.error("Could not leave server", `server id: ${serverID}`, err);
 
             // Let the user know that the server couldn't be left
-            return await embed_template().send(`Failed to leave server: ${inline(true, "🆔", serverID)}`);
+            return await embed_error.send({ description: `Failed to leave server: ${inline(true, "🆔", serverID)}` });
         }
 
         //* Show the servers the client's currently in
@@ -94,16 +92,16 @@ module.exports = {
         // Create a page for each chunk
         let embeds_servers = [];
         for (let chunk of guilds_full_f) {
-            let _embed = embed_template().embed;
-            _embed.setDescription(chunk.join("\n"));
+            let _embed = new BetterEmbed({
+                author: { text: "%AUTHOR_NAME | servers", user: interaction.member },
+                description: chunk.join("\n")
+            });
 
             embeds_servers.push(_embed);
         }
 
-        // Navigateinator-ify-er 9000!!!!11
-        return await new messageTools.Navigationify(interaction, [embeds_servers], {
-            timeout: dateTools.parseStr(botSettings.timeout.pagination),
-            pagination: true
-        }).send();
+        // Send the embed with navigation
+        let embedNav = new EmbedNavigator({ interaction, embeds: [embeds_servers], paginationType: "shortJump" });
+        return await embedNav.send();
     }
 };

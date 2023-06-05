@@ -28,6 +28,8 @@ module.exports = {
             .setRequired(true)
         ),
 
+    helpIcon: "💧",
+
     /**
      * @param {Client} client
      * @param {CommandInteraction} interaction
@@ -120,6 +122,12 @@ module.exports = {
 
         embed_drop.setDescription(cards_dropped_f.join("\n"));
         embed_drop.setImage(cards_dropped_last.imageURL);
+        embed_drop.setFooter({
+            text: cards_dropped.length > 1
+                ? "React with any number and confirm to sell"
+                : "React to sell this card",
+            iconURL: "https://cdn.discordapp.com/attachments/1014199645750186044/1104414979798618243/carrot.png"
+        })
 
         // Send the drop embed
         let message = await embed_drop.send();

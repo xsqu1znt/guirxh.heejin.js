@@ -6,6 +6,8 @@ module.exports = {
     builder: new SlashCommandBuilder().setName("help")
         .setDescription("Get information about the commands"),
 
+    helpIcon: "🤝",
+
     /**
      * @param {Client} client
      * @param {CommandInteraction} interaction
@@ -17,13 +19,8 @@ module.exports = {
 
         let slashCommands = [...client.slashCommands.values()];
 
-        let commandEmojis = [
-            "📁", "⏲️", "📄", "💖", "💧", "🎁", "🤝", "📚", "📖", "❌",
-            "🥕", "📈", "🎱", "⏰", "💰", "🏃", "🛍️", "🎤", "🏎️", "👨‍💻", "👀"
-        ];
-
         slashCommands.forEach((slsh, idx) => embed_help.addFields({
-            name: `\`${commandEmojis[idx]}\` ${slsh.builder.name}`,
+            name: `\`${slsh.helpIcon}\` ${slsh.builder.name}`,
             value: `> ${slsh.builder.description}`,
             inline: true
         }));

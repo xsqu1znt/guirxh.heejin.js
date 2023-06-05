@@ -6,7 +6,7 @@ const logger = require('./logger');
 
 const cards = {
     comn: require('../items/cards/cards_common.json'),
-    uncm: require('../items/cards/cards_uncommon.json'),
+    uncn: require('../items/cards/cards_uncommon.json'),
     rare: require('../items/cards/cards_rare.json'),
     epic: require('../items/cards/cards_epic.json'),
     mint: require('../items/cards/cards_mint.json'),
@@ -26,7 +26,7 @@ const cards = {
 };
 
 let cards_all = [].concat(...Object.values(cards));
-const cards_general = [...cards.comn, ...cards.uncm, ...cards.rare, ...cards.epic, ...cards.mint];
+const cards_general = [...cards.comn, ...cards.uncn, ...cards.rare, ...cards.epic, ...cards.mint];
 
 const categories_general = Object.values(dropSettings.chances).map(c => ({ ...c, rarity: c.chance }));
 

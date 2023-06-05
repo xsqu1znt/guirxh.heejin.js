@@ -4,7 +4,7 @@ const { markdown: { bold, inline, quote } } = require('./discordTools');
 
 const { communityServer, botSettings, userSettings } = require('../configs/heejinSettings.json');
 const { arrayTools, stringTools, numberTools, dateTools } = require('../modules/jsTools');
-const { BetterEmbed, messageTools } = require('../modules/discordTools');
+const { BetterEmbed } = require('../modules/discordTools');
 const cardManager = require('../modules/cardManager');
 const badgeManager = require('../modules/badgeManager');
 const userParser = require('../modules/userParser');
@@ -12,7 +12,7 @@ const shop = require('../modules/shop');
 
 // Command -> General -> /COLLECTIONS
 /** @param {"ascending" | "decending"} order */
-function generalCollections_ES(user, options = { order: "decending", filter: { group: "", category: "" } }) {
+function generalCollections_ES(guildMember, options = { order: "decending", filter: { group: "", category: "" } }) {
     let { cards_all } = cardManager;
 
     // Sort by set ID (decending order)
@@ -42,11 +42,11 @@ function generalCollections_ES(user, options = { order: "decending", filter: { g
     // Go through each group in (cards_f) and create an embed for it
     for (let group of collections_f) {
         // Create a new embed for this inventory page
-        let embed_page = new EmbedBuilder()
-            .setAuthor({ name: `${user.username} | collections`, iconURL: user.avatarURL({ dynamic: true }) })
-            .setDescription(group[0] ? group.join("\n") : "No collections found")
-            .setFooter({ text: `Page ${pageIndex++}/${collections_f.length || 1} • Total Sets: ${cards_unique.length}` })
-            .setColor(botSettings.embed.color || null);
+        let embed_page = new BetterEmbed({
+            author: { text: "%AUTHOR_NAME | collections", user: guildMember },
+            description: group[0] ? group.join("\n") : "No collections found",
+            footer: { text: `Page ${pageIndex++}/${collections_f.length || 1} • Total Sets: ${cards_unique.length}` }
+        })
 
         // Push the newly created embed to our collection
         embeds.push(embed_page);
@@ -57,7 +57,7 @@ function generalCollections_ES(user, options = { order: "decending", filter: { g
 }
 
 // Command -> General -> /SHOP
-function generalShop_ES(user) {
+function generalShop_ES(guildMember) {
     let { cards_shop } = cardManager;
 
     // Sort by global ID (decending order)
@@ -69,9 +69,9 @@ function generalShop_ES(user) {
     let card_sets = cards_shop_unique.map(card => cards_shop.filter(c => c.setID === card.setID));
 
     // Embed creation
-    let embed_template = () => new EmbedBuilder()
-        .setAuthor({ name: `${user.username} | shop`, iconURL: user.avatarURL({ dynamic: true }) })
-        .setColor(botSettings.embed.color || null);
+    let embed_template = () => new BetterEmbed({
+        author: { text: "%AUTHOR_NAME | shop", user: guildMember }
+    });
 
     let embed_list = () => {
         let cards_f = cards_shop_unique.map((card, idx) => cardManager.toString.setEntry(card, card_sets[idx].length, true));
@@ -222,10 +222,10 @@ function generalShop_ES(user) {
 
 // Command -> User -> /VIEW
 /** @param {"uid" | "gid" | "set" | "idol" | "favorite" | "vault" | "team"} viewType */
-function generalView_ES(member, userData, card, viewType = "uid") {
+function generalView_ES(guildMember, userData, card, viewType = "uid") {
     // A base embed template
     let embed_template = (title = "%AUTHOR_NAME | view", description = "", imageURL = "") => new BetterEmbed({
-        author: { text: title || "%AUTHOR_NAME | view", user: member },
+        author: { text: title || "%AUTHOR_NAME | view", user: guildMember },
         description, imageURL
     });
 
@@ -356,47 +356,12 @@ function generalView_ES(member, userData, card, viewType = "uid") {
     }
 }
 
-// Command -> User -> /DROP
-function userDrop_ES(user, cards, cards_isDuplicate, dropTitle = "drop") {
-    if (!Array.isArray(cards)) cards = [cards];
-    if (!Array.isArray(cards_isDuplicate)) cards_isDuplicate = [cards_isDuplicate];
-
-    let emoji_numbers = botSettings.customEmojis.numbers;
-
-    let cards_f = cards.map((card, idx) => "%IDX%CARD"
-        .replace("%IDX", cards.length > 1 ? `${emoji_numbers[idx].emoji} ` : "")
-        .replace("%CARD", cardManager.toString.inventory(card, {
-            isDuplicate: cards_isDuplicate[idx] || false,
-            simplify: true
-        }))
-    );
-
-    // Create the embed
-    let embed = new EmbedBuilder()
-        .setAuthor({ name: `${user.username} | ${dropTitle}`, iconURL: user.avatarURL({ dynamic: true }) })
-        .setDescription(cards_f.join("\n"))
-        .setColor(botSettings.embed.color || null);
-
-    let card_last = cards.slice(-1)[0];
-    if (card_last.imageURL) embed.setImage(card_last.imageURL);
-
-    // Let the user know they can sell the card by reacting
-    embed.setFooter({
-        text: cards.length > 1
-            ? "React with any number and confirm to sell"
-            : "React to sell this card",
-        iconURL: "https://cdn.discordapp.com/attachments/1014199645750186044/1104414979798618243/carrot.png"
-    });
-
-    return embed;
-}
-
 // Command -> User -> /PROFILE
-function userProfile_ES(user, userData) {
+function userProfile_ES(guildMember, userData) {
     // Create a base embed
-    let embed_template = () => new messageTools.Embedinator(null, {
-        title: "%USER | profile", author: user
-    }).embed;
+    let embed_template = () => new BetterEmbed({
+        author: { text: "%AUTHOR_NAME | profile", user: guildMember }
+    });
 
     let card_selected = userParser.cards.get(userData, userData.card_selected_uid);
     let card_favorite = userParser.cards.get(userData, userData.card_favorite_uid);
@@ -405,7 +370,7 @@ function userProfile_ES(user, userData) {
         let _embed = embed_template();
 
         // Have the embed thumbnail the user's favorite card if they have one, or their pfp
-        _embed.setThumbnail(card_favorite ? card_favorite.imageURL : user.avatarURL({ dynamic: true }));
+        _embed.setThumbnail(card_favorite ? card_favorite.imageURL : guildMember.avatarURL({ dynamic: true }));
 
         // Add the user's profile biography if they have one
         if (userData.biography) _embed.addFields({ name: "\`👤\` Biography", value: userData.biography });
@@ -551,13 +516,13 @@ function userProfile_ES(user, userData) {
 }
 
 // Command -> User -> /MISSING
-function userMissing_ES(user, userData, setID) {
+function userMissing_ES(guildMember, userData, setID) {
     // Create a base embed
-    let embed_template = () => new messageTools.Embedinator(null, {
-        title: "%USER | missing",
-        description: `${inline(setID)} is either empty or an invalid set.`,
-        author: user
-    }).embed;
+    let embed_template = (description = "", footer_text = "") => new BetterEmbed({
+        author: { text: "%AUTHOR_NAME | missing", user: guildMember },
+        description: description || `\`${setID}\` is either empty or an invalid set.`,
+        footer: { text: footer_text || null }
+    });
 
     // Get every card in the set
     let cards_set = cardManager.cards_all.filter(card => card.setID === setID);
@@ -579,18 +544,14 @@ function userMissing_ES(user, userData, setID) {
     let embeds = [];
     for (let i = 0; i < cards_set_f.length; i++) {
         // Create the embed page
-        let embed = embed_template()
-            .setDescription(cards_set_f[i].join("\n"))
-            .setFooter({ text: `Page ${i + 1}/${cards_set_f.length || 1}` });
-
-        embeds.push(embed);
+        embeds.push(embed_template(cards_set_f[i].join("\n"), `Page ${i + 1}/${cards_set_f.length || 1}`));
     }
 
     return embeds;
 }
 
 // Command -> User -> /COOLDOWNS
-function userCooldowns_ES(user, userData) {
+function userCooldowns_ES(guildMember, userData) {
     let cooldownTypes = Object.entries(userSettings.cooldowns).filter(([type, time]) => time !== null);
     let cooldowns = cooldownTypes.map(([type, time]) => ({ type, timestamp: 0 }));
 
@@ -612,12 +573,12 @@ function userCooldowns_ES(user, userData) {
                 : "Available"));
     });
 
-    let embed = new EmbedBuilder()
-        .setAuthor({ name: `${user.username} | cooldowns`, iconURL: user.avatarURL({ dynamic: true }) })
-        .setDescription(cooldowns_f.join("\n"))
-        .setColor(botSettings.embed.color || null);
+    let embed_cooldowns = new BetterEmbed({
+        author: { text: "%AUTHOR_NAME | cooldowns", user: guildMember },
+        description: cooldowns_f.join("\n")
+    });
 
-    return embed;
+    return embed_cooldowns;
 }
 
 // Command -> User -> /INVENTORY
@@ -724,7 +685,7 @@ function userInventory_dupes_ES(guildMember, userData, globalID) {
 }
 
 // Command -> User -> /GIFT
-function userGift_ES(user, recipient, cards) {
+function userGift_ES(guildMember, recipient, cards) {
     if (!Array.isArray(cards)) cards = [cards];
 
     // Get the last card to show its image
@@ -732,10 +693,10 @@ function userGift_ES(user, recipient, cards) {
     let card_last = cards.slice(-1)[0] || cards[0];
 
     // Create the gift embed
-    let fromTo = `**From:** ${user}\n**To:** ${recipient}`;
+    let fromTo = `**From:** ${guildMember}\n**To:** ${recipient}`;
 
     let embed_gift = new BetterEmbed({
-        author: { text: "%AUTHOR_NAME | gift", user },
+        author: { text: "%AUTHOR_NAME | gift", user: guildMember },
         description: `${cards_f.join("\n")}n\n${fromTo}`,
         imageURL: card_last.imageURL
     });
@@ -759,8 +720,6 @@ module.exports = {
     generalView_ES,
 
     // User Commands
-    userDrop_ES,
-
     userProfile_ES,
     userMissing_ES,
     userCooldowns_ES,

@@ -5941,5 +5941,257 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353519566094470/Rockstar_Yujun.png"
+  },
+  {
+    "name": "JOOHONEY¹",
+    "group": "JOOHONEY",
+    "single": "FREEDOM",
+    "category": "rare",
+    "description": "JOOHONEY - FREEDOM",
+    "emoji": "🙌",
+    "globalID": "5784",
+    "setID": "597",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1109797229016911892/Joohoney_1.png"
+  },
+  {
+    "name": "JOOHONEY²",
+    "group": "JOOHONEY",
+    "single": "FREEDOM",
+    "category": "rare",
+    "description": "JOOHONEY - FREEDOM",
+    "emoji": "🙌",
+    "globalID": "5785",
+    "setID": "597",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1109797229432152064/Joohoney_2.png"
+  },
+  {
+    "name": "JOOHONEY³",
+    "group": "JOOHONEY",
+    "single": "FREEDOM",
+    "category": "rare",
+    "description": "JOOHONEY - FREEDOM",
+    "emoji": "🙌",
+    "globalID": "5786",
+    "setID": "597",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1109797229868363867/Joohoney_3.png"
+  },
+  {
+    "name": "Daehwi",
+    "group": "AB6IX",
+    "single": "LOSER",
+    "category": "rare",
+    "description": "AB6IX - LOSER",
+    "emoji": "🔍",
+    "globalID": "5787",
+    "setID": "598",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1112702732139233290/Daehwi.png"
+  },
+  {
+    "name": "Donghyun",
+    "group": "AB6IX",
+    "single": "LOSER",
+    "category": "rare",
+    "description": "AB6IX - LOSER",
+    "emoji": "🔍",
+    "globalID": "5788",
+    "setID": "598",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1112702732424462356/Donghyun.png"
+  },
+  {
+    "name": "Woong",
+    "group": "AB6IX",
+    "single": "LOSER",
+    "category": "rare",
+    "description": "AB6IX - LOSER",
+    "emoji": "🔍",
+    "globalID": "5789",
+    "setID": "598",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1112702733099729018/Woong.png"
+  },
+{
+    "name": "Woojin",
+    "group": "AB6IX",
+    "single": "LOSER",
+    "category": "rare",
+    "description": "AB6IX - LOSER",
+    "emoji": "🔍",
+    "globalID": "5790",
+    "setID": "598",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1112702732726448190/Woojin.png"
+  },
+{
+    "name": "BX",
+    "group": "CIX",
+    "single": "Save me, Kill me",
+    "category": "rare",
+    "description": "CIX - Save me, Kill me",
+    "emoji": "🤕",
+    "globalID": "5791",
+    "setID": "599",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114529043736440852/smekme_bx.png"
+  },
+{
+    "name": "Hyunsuk",
+    "group": "CIX",
+    "single": "Save me, Kill me",
+    "category": "rare",
+    "description": "CIX - Save me, Kill me",
+    "emoji": "🤕",
+    "globalID": "5792",
+    "setID": "599",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114529044080377906/smekme_hyunsuk.png"
+  },
+{
+    "name": "Jinyoung",
+    "group": "CIX",
+    "single": "Save me, Kill me",
+    "category": "rare",
+    "description": "CIX - Save me, Kill me",
+    "emoji": "🤕",
+    "globalID": "5793",
+    "setID": "599",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114529044378161152/smekme_jinyoung.png"
+  },
+{
+    "name": "Seunghun",
+    "group": "CIX",
+    "single": "Save me, Kill me",
+    "category": "rare",
+    "description": "CIX - Save me, Kill me",
+    "emoji": "🤕",
+    "globalID": "5794",
+    "setID": "599",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114529044717908058/smekme_seunghun.png"
+  },
+{
+    "name": "Yonghee",
+    "group": "CIX",
+    "single": "Save me, Kill me",
+    "category": "rare",
+    "description": "CIX - Save me, Kill me",
+    "emoji": "🤕",
+    "globalID": "5795",
+    "setID": "599",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114529045019902022/smekme_yonghee.png"
   }
 ]

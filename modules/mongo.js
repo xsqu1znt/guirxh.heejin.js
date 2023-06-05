@@ -198,6 +198,8 @@ async function userCard_add(userID, cards) {
     let cards_parsed = [];
 
     for (let i = 0; i < cards.length; i++) {
+        if (!cards[i]?.uid) cardManager.resetUID(cards[i]);
+
         // Recursivly reset the card's UID if another card exists with the same UID
         while (existingUIDs.includes(cards[i].uid)) cardManager.resetUID(cards[i]);
 
@@ -211,39 +213,6 @@ async function userCard_add(userID, cards) {
     // Push the cards to the user's card_inventory in Mongo
     await user_update(userID, { $push: { card_inventory: { $each: cards_parsed } } });
 }
-
-/* async function cardInventory_addCards_OLD(userID, cards, resetUID = false) {
-    // Convert a single card into an array
-    if (!Array.isArray(cards)) cards = [cards];
-
-    // Create a deep copy of the cards to avoid conflicts
-    cards = JSON.parse(JSON.stringify(cards));
-
-    // Get an array of all the card UIDs in the user's card_inventory to avoid duplicates
-    let userCardUIDs; if (resetUID) {
-        // Fetch the user's card_inventory
-        let { card_inventory } = await user_fetch(userID, "cards", true);
-
-        // Get only the card UIDs from the fetched card_inventory
-        userCardUIDs = card_inventory.map(card => card?.uid);
-    }
-
-    if (resetUID) for (let i = 0; i < cards.length; i++) {
-        // Reset the unique ID
-        let uid = cards[i]?.uid || cardManager.createUID();
-
-        // Recursivly reset the unique ID if another card exists with that ID
-        while (userCardUIDs.includes(uid)) uid = cardManager.createUID();
-
-        cards[i].uid = uid; userCardUIDs.push(uid);
-    }
-
-    // Convert the cards object to a slimmer "CardLike" object
-    let cardLikes = cards.map(card => [100].includes(card.rarity) ? card : cardManager.parse.toCardLike(card));
-
-    // Push the CardLikes to the user's card_inventory in Mongo
-    await user_update(userID, { $push: { card_inventory: { $each: cardLikes } } }); return cards;
-} */
 
 async function userCard_remove(userID, uids) {
     // Convert a single card UID into an array

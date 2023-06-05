@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 const { botSettings: { currencyIcon } } = require('../configs/heejinSettings.json');
-const { BetterEmbed, messageTools } = require('../modules/discordTools');
+const { BetterEmbed, awaitConfirmation } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 const userParser = require('../modules/userParser');
 const cardManager = require('../modules/cardManager');
@@ -13,6 +13,8 @@ module.exports = {
         .addStringOption(option => option.setName("uid")
             .setDescription("Use UID separate by comma")
             .setRequired(true)),
+
+    helpIcon: "💰",
 
     /**
      * @param {Client} client
@@ -52,11 +54,10 @@ module.exports = {
         let sellPriceTotal = 0; cards_toSell.forEach(card => sellPriceTotal += card.sellPrice);
 
         // Await the user's confirmation
-        let confirm_sell = await messageTools.awaitConfirmation(interaction, {
-            description: "**Are you sure you want to sell:**\n%CARDS"
-                .replace("%CARDS", cards_toSell_f.join("\n")),
-            footer: `total: ${currencyIcon} ${sellPriceTotal}`,
-            showAuthor: true
+        let confirm_sell = await awaitConfirmation({
+            interaction, showAuthorIcon: true,
+            description: `**Are you sure you want to sell:**\n${cards_toSell_f.join("\n")}`,
+            footer_text: `total: ${currencyIcon} ${sellPriceTotal}`
         });
 
         // Sell the cards

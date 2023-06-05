@@ -1,9 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
-const { botSettings } = require('../configs/heejinSettings.json');
 const { generalCollections_ES } = require('../modules/embedStyles');
 const { EmbedNavigator } = require('../modules/discordTools');
-const { dateTools } = require('../modules/jsTools');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("collections")
@@ -23,6 +21,8 @@ module.exports = {
             )
         ),
 
+    helpIcon: "📁",
+
     /**
      * @param {Client} client
      * @param {CommandInteraction} interaction
@@ -38,11 +38,11 @@ module.exports = {
         let order = interaction.options.getString("order") || null;
 
         // Build the set collection pages
-        let embed_collections = generalCollections_ES(interaction.user, { order, filter: { group, category } });
+        let embed_collections = generalCollections_ES(interaction.member, { order, filter: { group, category } });
 
         // Add navigation for the embeds
         let embedNav = new EmbedNavigator({
-            interaction, embeds: [embed_collections],useReactionsForPagination: true,
+            interaction, embeds: [embed_collections], useReactionsForPagination: true,
             paginationType: "longJump", dynamicPagination: false
         });
 

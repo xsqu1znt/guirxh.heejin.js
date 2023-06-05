@@ -7,13 +7,15 @@ module.exports = {
     builder: new SlashCommandBuilder().setName("cooldowns")
         .setDescription("Check your cooldowns"),
 
+    helpIcon: "⏲️",
+
     /**
      * @param {Client} client
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
         let userData = await userManager.fetch(interaction.user.id, "essential");
-        let embed_cooldowns = userCooldowns_ES(interaction.user, userData);
+        let embed_cooldowns = userCooldowns_ES(interaction.member, userData);
 
         return await interaction.editReply({ embeds: [embed_cooldowns] });
     }

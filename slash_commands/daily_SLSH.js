@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 const { botSettings, userSettings } = require('../configs/heejinSettings.json');
-const { messageTools } = require('../modules/discordTools');
+const { BetterEmbed } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 const { dateTools } = require('../modules/jsTools');
 
@@ -9,18 +9,20 @@ module.exports = {
     builder: new SlashCommandBuilder().setName("daily")
         .setDescription("Claim your daily reward"),
 
+    helpIcon: "💖",
+
     /**
      * @param {Client} client
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
-        let embed_daily = new messageTools.Embedinator(interaction, {
-            title: "%USER | daily", author: interaction.user
+        let embed_daily = new BetterEmbed({
+            interaction, author: { text: "%AUTHOR_NAME | daily", user: interaction.member }
         });
 
         // Check if the user has an active cooldown
         let userCooldownETA = await userManager.cooldowns.check(interaction.user.id, "daily");
-        if (userCooldownETA) return embed_daily.send(`You can claim your daily **${userCooldownETA}**`);
+        if (userCooldownETA) return await embed_daily.send({ description: `You can claim your daily **${userCooldownETA}**` });
 
         // Fetch the user from Mongo
         let userData = await userManager.fetch(interaction.user.id, "essential", true);
@@ -82,10 +84,11 @@ module.exports = {
                 .replace("%MAX_MULTIPLER", userSettings.currency.daily.maxMultiplier)
         });
 
-        return await embed_daily.send(result
-            .replace("%PREVIOUS_STREAK", `\`${previousDailyStreak}\``)
-            .replace("%STREAK", `\`${userData.daily_streak}\``)
-            .replace("%GAINED_CURRENCY", `\`${botSettings.currencyIcon} ${currencyGained}\``)
-        );
+        return await embed_daily.send({
+            description: result
+                .replace("%PREVIOUS_STREAK", `\`${previousDailyStreak}\``)
+                .replace("%STREAK", `\`${userData.daily_streak}\``)
+                .replace("%GAINED_CURRENCY", `\`${botSettings.currencyIcon} ${currencyGained}\``)
+        });
     }
 };

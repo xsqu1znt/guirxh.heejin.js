@@ -14,6 +14,8 @@ module.exports = {
             .setDescription("The ID of the set")
             .setRequired(true)),
 
+    helpIcon: "❌",
+
     /**
      * @param {Client} client
      * @param {CommandInteraction} interaction
@@ -26,7 +28,7 @@ module.exports = {
         let userData = await userManager.fetch(interaction.user.id, "full", true);
 
         // Create the embed
-        let embeds_missing = userMissing_ES(interaction.user, userData, setID);
+        let embeds_missing = userMissing_ES(interaction.member, userData, setID);
 
         let embedNav = new EmbedNavigator({
             interaction, embeds: [embeds_missing], useReactionsForPagination: true,

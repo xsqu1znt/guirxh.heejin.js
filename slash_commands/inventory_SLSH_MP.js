@@ -1,13 +1,15 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
-const { botSettings } = require('../configs/heejinSettings.json');
 const { userInventory_ES, userInventory_dupes_ES } = require('../modules/embedStyles');
-const { EmbedNavigator } = require('../modules/discordTools');
+const { BetterEmbed, EmbedNavigator } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("inventory")
         .setDescription("View your card inventory")
+
+        .addUserOption(option => option.setName("player")
+            .setDescription("View another player's inventory"))
 
         .addStringOption(option => option.setName("dupes")
             .setDescription("View your dupes using GID")
@@ -38,12 +40,15 @@ module.exports = {
             )
         ),
 
+    helpIcon: "📖",
+
     /**
      * @param {Client} client
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
         //Interaction options
+        let targetPlayer = interaction.options.getUser("player") || interaction.member;
         let globalID = interaction.options.getString("dupes");
         let setID = interaction.options.getString("setid");
         let group = interaction.options.getString("group"); group &&= group.toLowerCase();
@@ -52,14 +57,20 @@ module.exports = {
         let sorting = interaction.options.getString("sorting") || "set";
         let order = interaction.options.getString("order") || "ascending";
 
+        // Create an error embed
+        let embed_error = new BetterEmbed({
+            interaction, author: { text: "%AUTHOR_NAME", user: interaction.member }
+        });
+
         // Fetch the user from Mongo
-        let userData = await userManager.fetch(interaction.user.id, "full", true);
+        let userData = await userManager.fetch(targetPlayer.id, "full", true);
+        if (!userData) return await embed_error.send({ description: "That user has not started yet" });
 
         // Create the embeds
         let embed_inventory;
 
-        if (globalID) embed_inventory = userInventory_dupes_ES(interaction.member, userData, globalID);
-        else embed_inventory = userInventory_ES(interaction.member, userData,
+        if (globalID) embed_inventory = userInventory_dupes_ES(targetPlayer, userData, globalID);
+        else embed_inventory = userInventory_ES(targetPlayer, userData,
             { setID, group, name, sorting, order }
         );
 

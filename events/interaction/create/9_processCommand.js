@@ -6,7 +6,7 @@ const heejinTips = require('../../../configs/heejinTips.json');
 const { ownerID, adminIDs, adminBypassIDs } = require('../../../configs/clientSettings.json');
 const { communityServer, botSettings: { chanceToShowTips } } = require('../../../configs/heejinSettings.json');
 const { randomTools, stringTools } = require('../../../modules/jsTools');
-const { BetterEmbed, messageTools } = require('../../../modules/discordTools');
+const { BetterEmbed } = require('../../../modules/discordTools');
 const { userManager } = require('../../../modules/mongo');
 const logger = require('../../../modules/logger');
 
@@ -19,8 +19,7 @@ module.exports = {
      * @param {{ interaction: BaseInteraction }} args
      */
     execute: async (client, args) => {
-        // Reusable embedinator to send success/error messages
-        const embedinator = new messageTools.Embedinator(args.interaction);
+        let embed_error = new BetterEmbed({ interaction: args.interaction });
 
         // Filter out non-guild and non-command interactions
         if (!args.interaction.guild || !args.interaction.isCommand()) return;
@@ -74,11 +73,15 @@ module.exports = {
                     let guildCommands = await args.interaction.guild.commands.fetch();
                     let startCommandID = guildCommands.find(slash_commands => slash_commands.name === "start").id;
 
-                    // Send the mebed
-                    return await embedinator.send(`**You haven't started yet!** Use </start:${startCommandID}> first!`);
+                    // Send an error embed
+                    return await embed_error.send({
+                        description: `**You haven't started yet!** Use </start:${startCommandID}> first!`
+                    });
                 } catch {
-                    // Send the mebed
-                    return await embedinator.send(`**You haven't started yet!** Use \`/start\` first!`);
+                    // Send an error embed
+                    return await embed_error.send({
+                        description: `**You haven't started yet!** Use \`/start\` first!`
+                    });
                 }
             }
 
@@ -104,17 +107,6 @@ module.exports = {
                     interaction: args.interaction, title: { text: "\`⚠️\` **Did You Know?**" },
                     description: randomTools.choice(heejinTips)
                 }).send({ method: "send" });
-
-                /* // Have a chance to send the invite link to the main server
-                if (randomTools.chance(communityServer.chanceToShow) && args.interaction.guild.id !== communityServer.id) {
-                    let buttonRow = new ActionRowBuilder().addComponents(new ButtonBuilder()
-                        .setLabel("Join our offical server!")
-                        .setStyle(ButtonStyle.Link)
-                        .setURL(communityServer.url)
-                    );
-
-                    return await args.interaction.channel.send({ components: [buttonRow] });
-                } */
             });
         } catch (err) {
             // Log the error

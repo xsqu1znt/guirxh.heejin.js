@@ -1,7 +1,7 @@
 [
     "> *You can use* `/inventory` `dupes:(4 numbers)` *to see a duplicate of any card*",
     "> *You can use* `/set` `edit:🔒 vault` `add/remove` *to lock any card from selling or gifting*",
-    "> *You can use* `/collections` `group:setID` *to filter sets by a specific group*",
+    "> *You can use* `/collections` `group:group` *to filter sets by a specific group*",
     "> *You can use* `/sell` *with the card's UID followed by **,** to sell multiple cards at once*",
     "> *You can use* `/reminder` *to receive reminders on any `/cooldowns` command*",
     "> *You can view any card you do not own with* `/view` `gid:(4 numbers)`\n> *And you can do same with cards you own using* `/view` `uid:(6 numbers)`"

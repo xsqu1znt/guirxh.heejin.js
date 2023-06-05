@@ -33,6 +33,8 @@ module.exports = {
             )
         ),
 
+    helpIcon: "👀",
+
     /**
      * @param {Client} client
      * @param {CommandInteraction} interaction

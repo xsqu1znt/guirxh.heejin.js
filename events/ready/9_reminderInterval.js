@@ -42,7 +42,7 @@ module.exports = {
 
                             // Send the reminder in the appropriate channel
                             await channel_fetched.send({
-                                content: `\`📬\` ${userMention(reminder.user.id)} **Something is happening! You've got a reminder!**`,
+                                content: `${userMention(reminder.user.id)} You've got a reminder!`,
                                 embeds: [embed_reminder]
                             });
                         }

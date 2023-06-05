@@ -4,7 +4,7 @@ const {
     ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType
 } = require('discord.js');
 
-const { messageTools } = require('../../modules/discordTools');
+const { BetterEmbed } = require('../../modules/discordTools');
 const { userManager } = require('../../modules/mongo');
 const userParser = require('../../modules/userParser');
 const cardManager = require('../../modules/cardManager');
@@ -30,8 +30,8 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
-        let embed_customize = new messageTools.Embedinator(interaction, {
-            title: "%USER | customize", author: interaction.user
+        let embed_customize = new BetterEmbed({
+            interaction, author: { text: "%AUTHOR_NAME | customize", user: interaction.member }
         });
 
         // Get interaction options
@@ -39,18 +39,18 @@ module.exports = {
         let uid = interaction.options.getString("uid");
 
         // Check if the user exists in the database
-        if (!await userManager.exists(userID)) return embed_customize.send(
-            "That user has not started yet"
-        );
+        if (!await userManager.exists(userID)) return await embed_customize.send({
+            description: "That user has not started yet"
+        });
 
         // Fetch the user's card_inventory
         let userData = await userManager.fetch(userID, "cards", true);
 
         // Check if the card exists
         let card = userParser.cards.get(userData.card_inventory, uid);
-        if (!card) return embed_customize.send(
-            `\`${uid}\` is not a valid uid`
-        );
+        if (!card) return await embed_customize.send({
+            description: `\`${uid}\` is not a valid uid`
+        });
 
         // Parse the card into a human readable string
         let card_f = cardManager.toString.inventory(card);
@@ -139,7 +139,7 @@ module.exports = {
         };
 
         //* Create the customizer embed
-        let embed = embed_customize.embed
+        let embed = embed_customize
             .setDescription(card_f + `\n\n> ${card.description}`)
             .setImage(card.imageURL)
             .setFooter({ text: "Use the buttons below to customize this card" });
@@ -299,11 +299,10 @@ module.exports = {
                         userManager.cards.update(userID, card);
 
                         // Let the user know the result
-                        await new messageTools.Embedinator(interaction, {
-                            title: "%USER | customize",
-                            description: `Successfully edited card \`${uid}\` for user \`${userID}\``,
-                            author: interaction.author
-                        }).send(null, { followUp: true });
+                        await embed_customize.send({
+                            method: "followUp",
+                            description: `Successfully edited card \`${uid}\` for user \`${userID}\``
+                        });
 
                         // End the collector
                         collector.stop(); return;

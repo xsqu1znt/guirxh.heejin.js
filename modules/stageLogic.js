@@ -53,7 +53,7 @@ class Stage {
         // Create the starting embed
         this.embed = new EmbedBuilder()
             .setAuthor({
-                name: `${interaction.user.username} | stage`,
+                name: `${interaction.member.displayName} | stage`,
                 iconURL: interaction.user.avatarURL({ dynamic: true })
             })
 

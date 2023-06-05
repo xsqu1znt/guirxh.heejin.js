@@ -4324,5 +4324,404 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353283976237076/Yejun.png"
-  }
-]
+  },
+  {
+    "name": "BM",
+    "group": "KARD",
+    "single": "ICKY",
+    "category": "epic",
+    "description": "KARD - ICKY",
+    "emoji": "🩹",
+    "globalID": "4254",
+    "setID": "447",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1109797153162928249/Icky_BM.png"
+  },
+  {
+    "name": "J.Seph",
+    "group": "KARD",
+    "single": "ICKY",
+    "category": "epic",
+    "description": "KARD - ICKY",
+    "emoji": "🩹",
+    "globalID": "4255",
+    "setID": "447",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1109797153607516191/Icky_J_Seph.png"
+  },
+  {
+    "name": "Jiwoo",
+    "group": "KARD",
+    "single": "ICKY",
+    "category": "epic",
+    "description": "KARD - ICKY",
+    "emoji": "🩹",
+    "globalID": "4256",
+    "setID": "447",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1109797153863385118/Icky_Jiwoo.png"
+  },
+  {
+    "name": "Somin",
+    "group": "KARD",
+    "single": "ICKY",
+    "category": "epic",
+    "description": "KARD - ICKY",
+    "emoji": "🩹",
+    "globalID": "4257",
+    "setID": "447",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1109797154148589618/Icky_Somin.png"
+  },
+  {
+    "name": "Heeseung",
+    "group": "ENHYPEN",
+    "single": "Bite Me",
+    "category": "epic",
+    "description": "ENHYPEN - Bite Me",
+    "emoji": "🧛",
+    "globalID": "4258",
+    "setID": "448",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1112702675365138432/Bite_Me_-_Heeseung.png"
+ },
+  {
+    "name": "Jake",
+    "group": "ENHYPEN",
+    "single": "Bite Me",
+    "category": "epic",
+    "description": "ENHYPEN - Bite Me",
+    "emoji": "🧛",
+    "globalID": "4259",
+    "setID": "448",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1112702675629375559/Bite_Me_-_Jake.png"
+ },
+  {
+    "name": "Jay",
+    "group": "ENHYPEN",
+    "single": "Bite Me",
+    "category": "epic",
+    "description": "ENHYPEN - Bite Me",
+    "emoji": "🧛",
+    "globalID": "4260",
+    "setID": "448",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1112702675964932177/Bite_Me_-_Jay.png"
+ },
+  {
+    "name": "Jungwon",
+    "group": "ENHYPEN",
+    "single": "Bite Me",
+    "category": "epic",
+    "description": "ENHYPEN - Bite Me",
+    "emoji": "🧛",
+    "globalID": "4261",
+    "setID": "448",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1112702676224970812/Bite_Me_-_Jungwon.png"
+ },
+  {
+    "name": "Ni-Ki",
+    "group": "ENHYPEN",
+    "single": "Bite Me",
+    "category": "epic",
+    "description": "ENHYPEN - Bite Me",
+    "emoji": "🧛",
+    "globalID": "4262",
+    "setID": "448",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1112702676459847730/Bite_Me_-_Ni-Ki.png"
+ },
+  {
+    "name": "Sunghoon",
+    "group": "ENHYPEN",
+    "single": "Bite Me",
+    "category": "epic",
+    "description": "ENHYPEN - Bite Me",
+    "emoji": "🧛",
+    "globalID": "4263",
+    "setID": "448",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1112702676694741062/Bite_Me_-_Sunghoon.png"
+ },
+ {
+    "name": "Sunoo",
+    "group": "ENHYPEN",
+    "single": "Bite Me",
+    "category": "epic",
+    "description": "ENHYPEN - Bite Me",
+    "emoji": "🧛",
+    "globalID": "4264",
+    "setID": "448",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1112702676971556955/Bite_Me_-_Sunoo.png"
+},
+{
+    "name": "Chaeyoung",
+    "group": "fromis_9",
+    "single": "#menow",
+    "category": "epic",
+    "description": "fromis_9 - #menow",
+    "emoji": "🔓",
+    "globalID": "4265",
+    "setID": "449",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114528985574031370/Menow_Chaeyoung.png"
+},
+{
+    "name": "Hayoung",
+    "group": "fromis_9",
+    "single": "#menow",
+    "category": "epic",
+    "description": "fromis_9 - #menow",
+    "emoji": "🔓",
+    "globalID": "4266",
+    "setID": "449",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114528986110894120/Menow_Hayoung.png"
+},
+{
+    "name": "Jiheon",
+    "group": "fromis_9",
+    "single": "#menow",
+    "category": "epic",
+    "description": "fromis_9 - #menow",
+    "emoji": "🔓",
+    "globalID": "4267",
+    "setID": "449",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114528986425462875/Menow_Jiheon.png"
+},
+{
+    "name": "Jisun",
+    "group": "fromis_9",
+    "single": "#menow",
+    "category": "epic",
+    "description": "fromis_9 - #menow",
+    "emoji": "🔓",
+    "globalID": "4268",
+    "setID": "449",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114528986668744834/Menow_Jisun.png"
+},
+{
+    "name": "Jiwon",
+    "group": "fromis_9",
+    "single": "#menow",
+    "category": "epic",
+    "description": "fromis_9 - #menow",
+    "emoji": "🔓",
+    "globalID": "4269",
+    "setID": "449",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114528987004280913/Menow_Jiwon.png"
+},
+{
+    "name": "Nagyung",
+    "group": "fromis_9",
+    "single": "#menow",
+    "category": "epic",
+    "description": "fromis_9 - #menow",
+    "emoji": "🔓",
+    "globalID": "4270",
+    "setID": "449",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114528987297878046/Menow_Nagyung.png"
+},
+{
+    "name": "Saerom",
+    "group": "fromis_9",
+    "single": "#menow",
+    "category": "epic",
+    "description": "fromis_9 - #menow",
+    "emoji": "🔓",
+    "globalID": "4271",
+    "setID": "449",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114528987646017587/Menow_Saerom.png"
+},
+{
+    "name": "Seoyeon",
+    "group": "fromis_9",
+    "single": "#menow",
+    "category": "epic",
+    "description": "fromis_9 - #menow",
+    "emoji": "🔓",
+    "globalID": "4272",
+    "setID": "449",
+    "rarity": 40,
+    "price": 45,
+    "sellPrice": 45,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114528988010913803/Menow_Seoyeon.png"
+}
+    ]

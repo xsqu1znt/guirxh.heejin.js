@@ -23,7 +23,7 @@ const client = new Client({
         GatewayIntentBits.DirectMessages
     ],
 
-    partials: [Partials.Channel] // Allows the bot to read its own DMs
+    partials: [Partials.Channel] // Allows the bot to access DMs
 });
 
 // Collections that hold valuable information for the client

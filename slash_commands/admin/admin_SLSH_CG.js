@@ -1,8 +1,5 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
-const { communityServer } = require('../../configs/heejinSettings.json');
-const { BetterEmbed } = require('../../modules/discordTools');
-
 const subcommands = {
     cardSummon: require('./admin_SLSH_CG/_card_summon'),
     servers: require('./admin_SLSH_CG/_servers')
@@ -22,7 +19,7 @@ module.exports = {
             )
 
             .addStringOption(option => option.setName("gid")
-                .setDescription("GID of the card")
+                .setDescription("Use GID separate by comma")
                 .setRequired(true)
             )
         )

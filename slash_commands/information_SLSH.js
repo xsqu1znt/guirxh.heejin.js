@@ -10,6 +10,8 @@ module.exports = {
     builder: new SlashCommandBuilder().setName("information")
         .setDescription("View useful information"),
 
+    helpIcon: "📚",
+
     /**
      * @param {Client} client
      * @param {CommandInteraction} interaction

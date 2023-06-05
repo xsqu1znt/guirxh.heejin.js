@@ -17,6 +17,8 @@ module.exports = {
             .setDescription("The player you want to gift to")
             .setRequired(true)),
 
+    helpIcon: "🎁",
+
     /**
      * @param {Client} client
      * @param {CommandInteraction} interaction
@@ -51,7 +53,7 @@ module.exports = {
         let userData = await userManager.fetch(interaction.user.id, "full", true);
 
         // Get the cards from the user's card_inventory
-        let cards = userParser.cards.get(userData, uids);
+        let cards = userParser.cards.get(userData, uids, true);
         if (!cards.length) return await embed_error.send({
             description: `You need to give a valid UID`
         });
@@ -72,7 +74,7 @@ module.exports = {
         ]);
 
         // Create the embeds
-        let { embed_gift, embed_dm } = userGift_ES(interaction.user, recipient, cards);
+        let { embed_gift, embed_dm } = userGift_ES(interaction.member, recipient, cards);
 
         return await Promise.all([
             // Let the user know the result

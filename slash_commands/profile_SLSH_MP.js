@@ -2,7 +2,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js'
 
 const { userManager } = require('../modules/mongo');
 const { userProfile_ES } = require('../modules/embedStyles');
-const { EmbedNavigator, messageTools } = require('../modules/discordTools');
+const { BetterEmbed, EmbedNavigator } = require('../modules/discordTools');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("profile")
@@ -15,17 +15,19 @@ module.exports = {
             .setDescription("Change your bio | use \"reset\" to remove")
         ),
 
+    helpIcon: "📈",
+
     /**
      * @param {Client} client
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
-        let embed_profile = new messageTools.Embedinator(interaction, {
-            title: "%USER | profile", author: interaction.user
+        let embed_error = new BetterEmbed({
+            interaction, author: { text: "%AUTHOR_NAME | profile", user: interaction.member }
         });
 
         // Get interaction options
-        let user = interaction.options.getUser("player") || interaction.user;
+        let user = interaction.options.getUser("player") || interaction.member;
         let biography = interaction.options.getString("bio"); biography &&= biography.trim();
 
         // Change the user's profile biography if they gave a value
@@ -39,14 +41,12 @@ module.exports = {
             let result = biography.toLowerCase() === "reset"
                 ? "bio reset"
                 : `Your bio has been changed to:\n> ${biography}`;
-            return await embed_profile.send(result);
+            return await embed_error.send({ description: result });
         }
 
         // Check if the given user exists in Mongo
         let userExists = await userManager.exists(user.id);
-        if (!userExists) return await embed_profile.send(
-            "That user has not started yet"
-        );
+        if (!userExists) return await embed_error.send({ description: "That user has not started yet" });
 
         // Fetch the user from Mongo
         let userData = await userManager.fetch(user.id, "full", true);

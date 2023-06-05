@@ -22,6 +22,8 @@ module.exports = {
             .addChoices(...stringChoices)
         ),
 
+    helpIcon: "⏰",
+
     /**
      * @param {Client} client
      * @param {CommandInteraction} interaction

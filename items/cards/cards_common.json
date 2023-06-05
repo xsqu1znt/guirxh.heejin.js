@@ -5689,5 +5689,488 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353895224750160/Fever_Yuju.png"
-  }
+  },
+  {
+    "name": "Bona",
+    "group": "WJSN",
+    "single": "Dreams Come True",
+    "category": "comn",
+    "description": "WJSN - Dreams Come True",
+    "emoji": "🛏️",
+    "globalID": "8772",
+    "setID": "897",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1109797723336613968/DCT_Bona.png"
+  },
+  {
+    "name": "Cheng Xiao",
+    "group": "WJSN",
+    "single": "Dreams Come True",
+    "category": "comn",
+    "description": "WJSN - Dreams Come True",
+    "emoji": "🛏️",
+    "globalID": "8773",
+    "setID": "897",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1109799378593525770/DCT_Cheng_Xiao.png"
+  },
+  {
+    "name": "Dawon",
+    "group": "WJSN",
+    "single": "Dreams Come True",
+    "category": "comn",
+    "description": "WJSN - Dreams Come True",
+    "emoji": "🛏️",
+    "globalID": "8774",
+    "setID": "897",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1109799378820014170/DCT_Dawon.png"
+  },
+  {
+    "name": "Dayoung",
+    "group": "WJSN",
+    "single": "Dreams Come True",
+    "category": "comn",
+    "description": "WJSN - Dreams Come True",
+    "emoji": "🛏️",
+    "globalID": "8775",
+    "setID": "897",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1109825160250409043/DCT_Dayoung.png"
+  },
+  {
+    "name": "Eunseo",
+    "group": "WJSN",
+    "single": "Dreams Come True",
+    "category": "comn",
+    "description": "WJSN - Dreams Come True",
+    "emoji": "🛏️",
+    "globalID": "8776",
+    "setID": "897",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1109797724368424991/DCT_Eunseo.png"
+  },
+  {
+    "name": "EXY",
+    "group": "WJSN",
+    "single": "Dreams Come True",
+    "category": "comn",
+    "description": "WJSN - Dreams Come True",
+    "emoji": "🛏️",
+    "globalID": "8777",
+    "setID": "897",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1109797724645236826/DCT_Exy.png"
+  },
+  {
+    "name": "Luda",
+    "group": "WJSN",
+    "single": "Dreams Come True",
+    "category": "comn",
+    "description": "WJSN - Dreams Come True",
+    "emoji": "🛏️",
+    "globalID": "8778",
+    "setID": "897",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1109797787593351210/DCT_Luda.png"
+  },
+  {
+    "name": "Mei Qi",
+    "group": "WJSN",
+    "single": "Dreams Come True",
+    "category": "comn",
+    "description": "WJSN - Dreams Come True",
+    "emoji": "🛏️",
+    "globalID": "8779",
+    "setID": "897",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1109797787991818260/DCT_Mei_Qi.png"
+  },
+  {
+    "name": "Seola",
+    "group": "WJSN",
+    "single": "Dreams Come True",
+    "category": "comn",
+    "description": "WJSN - Dreams Come True",
+    "emoji": "🛏️",
+    "globalID": "8780",
+    "setID": "897",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1109797788704845914/DCT_Seola.png"
+  },
+  {
+    "name": "Soobin",
+    "group": "WJSN",
+    "single": "Dreams Come True",
+    "category": "comn",
+    "description": "WJSN - Dreams Come True",
+    "emoji": "🛏️",
+    "globalID": "8781",
+    "setID": "897",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1109797789791166494/DCT_Soobin.png"
+  },
+  {
+    "name": "Xuan Yi",
+    "group": "WJSN",
+    "single": "Dreams Come True",
+    "category": "comn",
+    "description": "WJSN - Dreams Come True",
+    "emoji": "🛏️",
+    "globalID": "8782",
+    "setID": "897",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1109825160556585000/DCT_Xuanyi.png"
+  },
+  {
+    "name": "Yeonjung",
+    "group": "WJSN",
+    "single": "Dreams Come True",
+    "category": "comn",
+    "description": "WJSN - Dreams Come True",
+    "emoji": "🛏️",
+    "globalID": "8783",
+    "setID": "897",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1109797790428700733/DCT_Yeonjung.png"
+  },
+  {
+    "name": "Yeoreum",
+    "group": "WJSN",
+    "single": "Dreams Come True",
+    "category": "comn",
+    "description": "WJSN - Dreams Come True",
+    "emoji": "🛏️",
+    "globalID": "8784",
+    "setID": "897",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1109797790818779187/DCT_Yeoreum.png"
+  },
+  {
+    "name": "Chanyoung",
+    "group": "HAWW",
+    "single": "How Are You",
+    "category": "comn",
+    "description": "HAWW - How Are You",
+    "emoji": "🏀",
+    "globalID": "8785",
+    "setID": "898",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1112431031614722079/Chanyoung.png"
+},
+  {
+    "name": "Jeonggeun",
+    "group": "HAWW",
+    "single": "How Are You",
+    "category": "comn",
+    "description": "HAWW - How Are You",
+    "emoji": "🏀",
+    "globalID": "8786",
+    "setID": "898",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1112431032013176912/Jeonggeun.png"
+},
+ {
+    "name": "Jimin",
+    "group": "HAWW",
+    "single": "How Are You",
+    "category": "comn",
+    "description": "HAWW - How Are You",
+    "emoji": "🏀",
+    "globalID": "8787",
+    "setID": "898",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1112431032629735494/Jimin.png"
+},
+ {
+    "name": "Juho",
+    "group": "HAWW",
+    "single": "How Are You",
+    "category": "comn",
+    "description": "HAWW - How Are You",
+    "emoji": "🏀",
+    "globalID": "8788",
+    "setID": "898",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1112431032998842428/Juho.png"
+},
+ {
+    "name": "Louii",
+    "group": "HAWW",
+    "single": "How Are You",
+    "category": "comn",
+    "description": "HAWW - How Are You",
+    "emoji": "🏀",
+    "globalID": "8789",
+    "setID": "898",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1112431033305022524/Louii.png"
+},
+ {
+    "name": "Minyong",
+    "group": "HAWW",
+    "single": "How Are You",
+    "category": "comn",
+    "description": "HAWW - How Are You",
+    "emoji": "🏀",
+    "globalID": "8790",
+    "setID": "898",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1112431033695088640/Minyong.png"
+},
+ {
+    "name": "Seobin",
+    "group": "HAWW",
+    "single": "How Are You",
+    "category": "comn",
+    "description": "HAWW - How Are You",
+    "emoji": "🏀",
+    "globalID": "8791",
+    "setID": "898",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1112431034265522297/Seobin.png"
+},
+ {
+    "name": "Taeyong¹",
+    "group": "TAEYONG",
+    "single": "SHALALA",
+    "category": "comn",
+    "description": "TAEYONG - SHALALA",
+    "emoji": "🍕",
+    "globalID": "8792",
+    "setID": "899",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114530975989375016/shalala_taeyong1.png"
+},
+ {
+    "name": "Taeyong²",
+    "group": "TAEYONG",
+    "single": "SHALALA",
+    "category": "comn",
+    "description": "TAEYONG - SHALALA",
+    "emoji": "🍕",
+    "globalID": "8793",
+    "setID": "899",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114530976366866583/shalala_taeyong2.png"
+},
+ {
+    "name": "Taeyong³",
+    "group": "TAEYONG",
+    "single": "SHALALA",
+    "category": "comn",
+    "description": "TAEYONG - SHALALA",
+    "emoji": "🍕",
+    "globalID": "8794",
+    "setID": "899",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114530977012793364/shalala_taeyong3.png"
+}
 ]

@@ -5290,5 +5290,446 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353059731972146/Queencard_Yuqi.png"
+  },
+  {
+    "name": "Hoyoung",
+    "group": "VERIVERY",
+    "single": "Crazy Like That",
+    "category": "mint",
+    "description": "VERIVERY - Crazy Like That",
+    "emoji": "🪶",
+    "globalID": "2754",
+    "setID": "297",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1109797049785929809/Hoyoung.png"
+  },
+  {
+    "name": "Dongheon",
+    "group": "VERIVERY",
+    "single": "Crazy Like That",
+    "category": "mint",
+    "description": "VERIVERY - Crazy Like That",
+    "emoji": "🪶",
+    "globalID": "2755",
+    "setID": "297",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1109797050062733342/Dongheon.png"
+  },
+  {
+    "name": "Gyehyeon",
+    "group": "VERIVERY",
+    "single": "Crazy Like That",
+    "category": "mint",
+    "description": "VERIVERY - Crazy Like That",
+    "emoji": "🪶",
+    "globalID": "2756",
+    "setID": "297",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1109797050356346952/Gyehyeon.png"
+  },
+  {
+    "name": "Kangmin",
+    "group": "VERIVERY",
+    "single": "Crazy Like That",
+    "category": "mint",
+    "description": "VERIVERY - Crazy Like That",
+    "emoji": "🪶",
+    "globalID": "2757",
+    "setID": "297",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1109797050704482304/Kangmin.png"
+  },
+  {
+    "name": "Yeonho",
+    "group": "VERIVERY",
+    "single": "Crazy Like That",
+    "category": "mint",
+    "description": "VERIVERY - Crazy Like That",
+    "emoji": "🪶",
+    "globalID": "2758",
+    "setID": "297",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1109797050951925800/Yeonho.png"
+  },
+  {
+    "name": "Yongseung",
+    "group": "VERIVERY",
+    "single": "Crazy Like That",
+    "category": "mint",
+    "description": "VERIVERY - Crazy Like That",
+    "emoji": "🪶",
+    "globalID": "2759",
+    "setID": "297",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1109797051249733632/Yongseung.png"
+  },
+{
+    "name": "Dami",
+    "group": "Dreamcatcher",
+    "single": "BONVOYAGE",
+    "category": "mint",
+    "description": "Dreamcatcher - BONVOYAGE",
+    "emoji": "⚡",
+    "globalID": "2760",
+    "setID": "298",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1112702582700380200/BonVoyage_Dami.png"
+  },
+{
+    "name": "Gahyeon",
+    "group": "Dreamcatcher",
+    "single": "BONVOYAGE",
+    "category": "mint",
+    "description": "Dreamcatcher - BONVOYAGE",
+    "emoji": "⚡",
+    "globalID": "2761",
+    "setID": "298",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1112702582968811630/BonVoyage_Gahyeon.png"
+  },
+{
+    "name": "Handong",
+    "group": "Dreamcatcher",
+    "single": "BONVOYAGE",
+    "category": "mint",
+    "description": "Dreamcatcher - BONVOYAGE",
+    "emoji": "⚡",
+    "globalID": "2762",
+    "setID": "298",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1112702583233060935/BonVoyage_Handong.png"
+  },
+{
+    "name": "Jiu",
+    "group": "Dreamcatcher",
+    "single": "BONVOYAGE",
+    "category": "mint",
+    "description": "Dreamcatcher - BONVOYAGE",
+    "emoji": "⚡",
+    "globalID": "2763",
+    "setID": "298",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1112702583514075146/BonVoyage_Jiu.png"
+  },
+{
+    "name": "Siyeon",
+    "group": "Dreamcatcher",
+    "single": "BONVOYAGE",
+    "category": "mint",
+    "description": "Dreamcatcher - BONVOYAGE",
+    "emoji": "⚡",
+    "globalID": "2764",
+    "setID": "298",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1112702583774117958/BonVoyage_Siyeon.png"
+  },
+{
+    "name": "Sua",
+    "group": "Dreamcatcher",
+    "single": "BONVOYAGE",
+    "category": "mint",
+    "description": "Dreamcatcher - BONVOYAGE",
+    "emoji": "⚡",
+    "globalID": "2765",
+    "setID": "298",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1112702584013201518/BonVoyage_Sua.png"
+  },
+{
+    "name": "Yoohyeon",
+    "group": "Dreamcatcher",
+    "single": "BONVOYAGE",
+    "category": "mint",
+    "description": "Dreamcatcher - BONVOYAGE",
+    "emoji": "⚡",
+    "globalID": "2766",
+    "setID": "298",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1112702584298410025/BonVoyage_Yoohyeon.png"
+  },
+{
+    "name": "Bang Chan",
+    "group": "Stray Kids",
+    "single": "S-Class",
+    "category": "mint",
+    "description": "Stray Kids - S-Class",
+    "emoji": "🌟",
+    "globalID": "2767",
+    "setID": "299",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114528674675425300/Bang_Chan.png"
+  },
+{
+    "name": "Changbin",
+    "group": "Stray Kids",
+    "single": "S-Class",
+    "category": "mint",
+    "description": "Stray Kids - S-Class",
+    "emoji": "🌟",
+    "globalID": "2768",
+    "setID": "299",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114528675015172186/Changbin.png"
+  },
+{
+    "name": "Han",
+    "group": "Stray Kids",
+    "single": "S-Class",
+    "category": "mint",
+    "description": "Stray Kids - S-Class",
+    "emoji": "🌟",
+    "globalID": "2769",
+    "setID": "299",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114528675380080660/Han.png"
+  },
+{
+    "name": "Seungmin",
+    "group": "Stray Kids",
+    "single": "S-Class",
+    "category": "mint",
+    "description": "Stray Kids - S-Class",
+    "emoji": "🌟",
+    "globalID": "2770",
+    "setID": "299",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114528675736592454/Seungmin.png"
+  },
+{
+    "name": "Felix",
+    "group": "Stray Kids",
+    "single": "S-Class",
+    "category": "mint",
+    "description": "Stray Kids - S-Class",
+    "emoji": "🌟",
+    "globalID": "2771",
+    "setID": "299",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114528676080529469/Felix.png"
+  },
+{
+    "name": "Hyunjin",
+    "group": "Stray Kids",
+    "single": "S-Class",
+    "category": "mint",
+    "description": "Stray Kids - S-Class",
+    "emoji": "🌟",
+    "globalID": "2772",
+    "setID": "299",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114528676411867166/Hyunjin.png"
+  },
+{
+    "name": "I.N",
+    "group": "Stray Kids",
+    "single": "S-Class",
+    "category": "mint",
+    "description": "Stray Kids - S-Class",
+    "emoji": "🌟",
+    "globalID": "2773",
+    "setID": "299",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114528676797751326/IN.png"
+  },
+{
+    "name": "Lee Know",
+    "group": "Stray Kids",
+    "single": "S-Class",
+    "category": "mint",
+    "description": "Stray Kids - S-Class",
+    "emoji": "🌟",
+    "globalID": "2774",
+    "setID": "299",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114528677800181841/Lee_Know.png"
   }
 ]

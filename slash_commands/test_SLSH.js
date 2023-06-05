@@ -11,11 +11,20 @@ module.exports = {
     builder: new SlashCommandBuilder().setName("test")
         .setDescription("A test command for dev stuff"),
 
+    helpIcon: "👨‍💻",
+
     /**
      * @param {Client} client
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
+        //! Footer tesr
+        let embed_footer = new BetterEmbed({
+            interaction, footer: { text: "footer" }
+        });
+
+        return await embed_footer.send();
+
         //! Drop rework
         /* let cards = [...Array(5)].map(() => cardManager.get.drop("general"));
         cards.forEach(card => card.uid = cardManager.createUID());
@@ -109,7 +118,7 @@ module.exports = {
         return await interaction.editReply({ components: [buttonRow] }); */
 
         //! Daily/weekly DM reminder
-        let embed_dailyReminder = new BetterEmbed({
+        /* let embed_dailyReminder = new BetterEmbed({
             interaction, showTimestamp: true,
             author: { iconURL: null, user: interaction.user },
             title: { text: "\`📬\` You have a message!" }
@@ -119,7 +128,7 @@ module.exports = {
             { name: "Reminders", value: ">>> Your \`Daily\` is available!\nYour \`Weekly\` is available!" }
         );
 
-        return await embed_dailyReminder.send();
+        return await embed_dailyReminder.send(); */
 
         //! Card gifted
         /* let card = cardManager.get.random();

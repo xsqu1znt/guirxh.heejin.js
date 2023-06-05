@@ -16,6 +16,8 @@ module.exports = {
             .setDescription("The player you want to give to")
             .setRequired(true)),
 
+    helpIcon: "🥕",
+
     /**
      * @param {Client} client
      * @param {CommandInteraction} interaction
