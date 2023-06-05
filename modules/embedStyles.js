@@ -677,7 +677,7 @@ function userInventory_dupes_ES(guildMember, userData, globalID) {
             author: { text: "%AUTHOR_NAME | dupes", user: guildMember },
             description: cards_f[i].join("\n"),
             footer: { text: `Page ${i + 1}/${cards_f.length || 1} | Total: ${cards.all.length}` }
-        }); embeds.push(_embed);
+        }).setThumbnail(cards.primary.imageURL); embeds.push(_embed);
     }
 
     // Return the embed array
