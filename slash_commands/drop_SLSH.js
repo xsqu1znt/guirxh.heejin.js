@@ -5,7 +5,7 @@ const {
     eventSettings: { event1, event2, season },
     userSettings: { xp: { commands: { drop: xp_drop } } }
 } = require('../configs/heejinSettings.json');
-const { BetterEmbed, messageTools } = require('../modules/discordTools');
+const { BetterEmbed, awaitConfirmation } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 const { randomTools, dateTools } = require('../modules/jsTools');
 const cardManager = require('../modules/cardManager');
@@ -214,10 +214,10 @@ module.exports = {
             let sellPriceTotal = 0; cards_toSell.forEach(card => sellPriceTotal += card.sellPrice);
 
             // Await the user's confirmation
-            let confirm_sell = await messageTools.awaitConfirmation(interaction, {
+            let confirm_sell = await awaitConfirmation({
+                interaction, showAuthorIcon: true,
                 description: `**Are you sure you want to sell:**\n${cards_toSell_f.join("\n")}`,
-                footer: `total: ${currencyIcon} ${sellPriceTotal}`,
-                showAuthor: true
+                footer_text: `total: ${currencyIcon} ${sellPriceTotal}`,
             });
 
             // Add back the reactions and reset the collector's timer
