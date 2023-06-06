@@ -1,0 +1,39 @@
+[
+    {
+        "name": "",
+        "description": "",
+        "date": {
+            "start": "",
+            "end": ""
+        },
+
+        "required": {
+            "carrots": 0,
+            "ribbons": 0,
+
+            "cards": {
+                "inventoryTotal": 0,
+                "requiredGlobalIDs": ["100", "101", "102"],
+                "setsCompleted": ["100", "101", "102"],
+                "duplicates": [
+                    { "globalID": "100", "count": 0 }
+                ]
+            },
+
+            "level": {
+                "user": 0,
+                "stage": 0
+            },
+
+            "team": {
+                "ability": 0,
+                "reputation": 0
+            }
+        },
+
+        "reward": {
+            "carrots": 0,
+            "cardGlobalIDs": ["100", "101", "102"]
+        }
+    }
+]

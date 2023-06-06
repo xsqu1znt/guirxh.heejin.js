@@ -77,17 +77,18 @@ async function user_count() {
     return await models.user.count();
 }
 
-/** @param {"full" | "essential" | "reminders" | "cards" | "id"} type */
-async function user_fetch(userID, type = "full", lean = false) {
+/** @param {"id" | "full" | "essential" | "reminders" | "quest" | "cards"} type */
+async function user_fetch(userID, type = "full", lean = true) {
     let filter = {};
     let user;
 
     switch (type) {
+        case "id": filter = { _id: 1 }; break;
         case "full": filter = { __v: 0 }; break;
         case "essential": filter = { card_inventory: 0 }; break;
         case "reminders": filter = { daily_streak: 1, cooldowns: 1, reminders: 1 }; break;
+        case "quest": filter = { quest_cache: 1 }; break;
         case "cards": filter = { card_inventory: 1 }; break;
-        case "id": filter = { _id: 1 }; break;
     }
 
     if (userID) {
@@ -335,6 +336,11 @@ async function userReminder_reset(userID, guildID, channelID, user, reminderType
     );
 
     return null;
+}
+
+//! User -> Quests
+async function userQuest_cache(userID) {
+    let userData = await user_fetch(userID, "full");
 }
 
 module.exports = {
