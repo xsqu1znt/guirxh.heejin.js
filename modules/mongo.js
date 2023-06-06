@@ -340,7 +340,41 @@ async function userReminder_reset(userID, guildID, channelID, user, reminderType
 
 //! User -> Quests
 async function userQuest_cache(userID) {
-    let userData = await user_fetch(userID, "full");
+    // Get the user's data
+    let userData_old = await user_fetch(userID, "full");
+
+    // Return a function to be called again to compare the difference
+    return async () => {
+        let userData_new = await user_fetch(userID, "full");
+
+        let _team_old = userParser.cards.getTeam(userData_old);
+        let _team_new = userParser.cards.getTeam(userData_new);
+
+        let _idol_old = userParser.cards.getIdol(userData_old);
+        let _idol_new = userParser.cards.getIdol(userData_new);
+
+        let difference = {
+            level_user: userData_new.level - userData_old.level,
+            level_stage: _idol_new?.stats.level - _idol_old?.stats.level,
+
+            balance: userData_new.balance - userData_old.balance,
+            ribbons: userData_new.ribbons - userData_old.ribbons,
+
+            inventoryCount: userData_new.inventory.length - userData_old.inventory.length,
+
+            team_ability:
+                (_team_new.reduce((a, b) => a?.stats.ability + b?.stats.ability)
+                    + _team_old.reduce((a, b) => a?.stats.ability + b?.stats.ability))
+                || 0,
+
+            team_reputation:
+                (_team_new.reduce((a, b) => a?.stats.reputation + b?.stats.reputation)
+                    + _team_old.reduce((a, b) => a?.stats.reputation + b?.stats.reputation))
+                || 0,
+        };
+
+        // TODO: duplicates, sets, required cards
+    }
 }
 
 module.exports = {

@@ -12,6 +12,7 @@ const schema_user = Schema({
 
     biography: { type: String, default: new String() },
     balance: { type: Number, default: 0 },
+    ribbons: { type: Number, default: 0 },
 
     badges: { type: Array, default: new Array() },
 

@@ -8,7 +8,7 @@
         },
 
         "required": {
-            "carrots": 0,
+            "balance": 0,
             "ribbons": 0,
 
             "cards": {

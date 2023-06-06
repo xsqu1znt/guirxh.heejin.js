@@ -45,8 +45,11 @@ function cards_getVault(userData) {
 }
 
 function cards_getTeam(userData) {
-    let team = cards_get(userData, userData.card_team_uids, true);
-    return team;
+    return cards_get(userData, userData.card_team_uids, true);
+}
+
+function cards_getIdol(userData) {
+    return cards_get(userData, userData.card_selected_uid);
 }
 
 function cards_parseInventory(userData) {
@@ -125,6 +128,7 @@ module.exports = {
         getInventory: cards_getInventory,
         getVault: cards_getVault,
         getTeam: cards_getTeam,
+        getIdol: cards_getIdol,
 
         parseInventory: cards_parseInventory,
 
