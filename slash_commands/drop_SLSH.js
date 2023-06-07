@@ -5,7 +5,7 @@ const {
     eventSettings: { event1, event2, season },
     userSettings: { xp: { commands: { drop: xp_drop } } }
 } = require('../configs/heejinSettings.json');
-const { BetterEmbed, awaitConfirmation } = require('../modules/discordTools');
+const { BetterEmbed, awaitConfirmation, deleteMesssageAfter } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 const { randomTools, dateTools } = require('../modules/jsTools');
 const cardManager = require('../modules/cardManager');
@@ -196,9 +196,9 @@ module.exports = {
                 // Remove the user's confirm reaction
                 await reaction.users.remove(interaction.user.id);
 
-                await messageTools.deleteAfter(
+                await deleteMesssageAfter(
                     await embed_nothingSelected.send({ method: "followUp" }),
-                    dateTools.parseStr(timeout.errorMessage)
+                    timeout.errorMessage
                 );
 
                 // Reset the collector's timer

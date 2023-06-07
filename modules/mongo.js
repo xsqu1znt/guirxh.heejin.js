@@ -340,6 +340,9 @@ async function userReminder_reset(userID, guildID, channelID, user, reminderType
 
 //! User -> Quests
 async function userQuest_cache(userID) {
+    // Only allow positive numbers to increment the cache
+    let ClampPositive = (num) => num < 0 ? 0 : num;
+
     // Get the user's data
     let userData_old = await user_fetch(userID, "full");
 
@@ -354,27 +357,42 @@ async function userQuest_cache(userID) {
         let _idol_new = userParser.cards.getIdol(userData_new);
 
         let difference = {
-            level_user: userData_new.level - userData_old.level,
-            level_stage: _idol_new?.stats.level - _idol_old?.stats.level,
+            balance: ClampPositive((userData_new?.balance - userData_old?.balance || 0)),
+            ribbons: ClampPositive((userData_new?.ribbons - userData_old?.ribbons) || 0),
 
-            balance: userData_new.balance - userData_old.balance,
-            ribbons: userData_new.ribbons - userData_old.ribbons,
+            inventory_count: ClampPositive((userData_new?.card_inventory.length - userData_old?.card_inventory.length || 0)),
 
-            inventoryCount: userData_new.inventory.length - userData_old.inventory.length,
+            levels: {
+                user: ClampPositive((userData_new?.level - userData_old?.level || 0)),
+                idol: ClampPositive((_idol_new?.stats.level - _idol_old?.stats.level || 0))
+            },
 
-            team_ability:
-                (_team_new.reduce((a, b) => a?.stats.ability + b?.stats.ability)
-                    + _team_old.reduce((a, b) => a?.stats.ability + b?.stats.ability))
-                || 0,
+            team: {
+                ability: ClampPositive((_team_new.reduce((a, b) => a?.stats.ability + b?.stats.ability)
+                    - _team_old.reduce((a, b) => a?.stats.ability + b?.stats.ability))
+                    || 0),
 
-            team_reputation:
-                (_team_new.reduce((a, b) => a?.stats.reputation + b?.stats.reputation)
-                    + _team_old.reduce((a, b) => a?.stats.reputation + b?.stats.reputation))
-                || 0,
+                reputation: ClampPositive((_team_new.reduce((a, b) => a?.stats.reputation + b?.stats.reputation)
+                    - _team_old.reduce((a, b) => a?.stats.reputation + b?.stats.reputation))
+                    || 0)
+            }
         };
 
-        // TODO: duplicates, sets, required cards
-    }
+        // Update the user's quest stats
+        return await user_update(userID, {
+            $inc: {
+                "quest_cache.balance": difference.balance,
+                "quest_cache.ribbons": difference.ribbons,
+                "quest_cache.inventory_count": difference.inventory_count,
+
+                "quest_cache.levels.user": difference.levels.user,
+                "quest_cache.levels.idol": difference.levels.idol,
+
+                "quest_cache.team.ability": difference.team.ability,
+                "quest_cache.team.reputation": difference.team.reputation
+            }
+        });
+    };
 }
 
 module.exports = {
@@ -438,6 +456,10 @@ module.exports = {
         reminders: {
             toggle: userReminder_toggle,
             reset: userReminder_reset
+        },
+
+        quests: {
+            cache: userQuest_cache
         }
     }
 };

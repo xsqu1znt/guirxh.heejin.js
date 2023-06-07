@@ -8,6 +8,7 @@ const { communityServer, botSettings: { chanceToShowTips } } = require('../../..
 const { randomTools, stringTools } = require('../../../modules/jsTools');
 const { BetterEmbed } = require('../../../modules/discordTools');
 const { userManager } = require('../../../modules/mongo');
+const questManager = require('../../../modules/questManager');
 const logger = require('../../../modules/logger');
 
 module.exports = {
@@ -85,6 +86,9 @@ module.exports = {
                 }
             }
 
+            // Cache the user's current data before running the command (quests)
+            let userQuestCache = await userManager.quests.cache(args.interaction.user.id);
+
             // Execute the command function
             return await slashCommand.execute(client, args.interaction).then(async () => {
                 // Check if the user can level up
@@ -101,6 +105,10 @@ module.exports = {
                     // not awaited because we don't need any information from the returned message
                     await args.interaction.channel.send({ content: lvlMsg, allowedMentions: { repliedUser: false } });
                 }
+
+                // Cache the user's new data after running the command (quests)
+                // then check if the user completed any quests
+                questManager.validate(client, await userQuestCache());
 
                 // Have a chance to send a random tip to the channel
                 if (randomTools.chance(chanceToShowTips)) return await new BetterEmbed({
