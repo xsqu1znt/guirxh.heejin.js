@@ -120,7 +120,7 @@ async function itemPack_buy(userID, itemPackID) {
     await userManager.update(userID, { $inc: { balance: -itemPack.price } });
 
     // Add the cards to the user's card_inventory
-    cards = await userManager.cards.add(userID, cards, true);
+    await userManager.cards.add(userID, cards);
 
     // Return the cards the user received
     return cards;

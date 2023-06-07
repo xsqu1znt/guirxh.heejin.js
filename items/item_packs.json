@@ -3,7 +3,7 @@
         "id": "P1",
         "setID": "P01",
         "name": "You get 03 cards",
-        "description": "Content: Fromis_9 - DM :: ATEEZ - Wave\n> SEVENTEEN - Fear",
+        "description": "Content: VERNON - Black Eye :: MONSTA X - Trespass",
         "category": "pack",
         "set": "Pack 01",
         "emoji": "📦",
@@ -13,9 +13,8 @@
             "cards": {
                 "count": 3,
                 "fromSet": [
-                    { "id": "564", "chance": 100 },
-                    { "id": "566", "chance": 100 },
-                    { "id": "587", "chance": 50 }
+                    { "id": "727", "chance": 100 },
+                    { "id": "741", "chance": 50 }
                 ]
             }
         }
@@ -24,7 +23,7 @@
         "id": "P2",
         "setID": "P01",
         "name": "You get 06 cards",
-        "description": "Content: ANY PACK 01\n> NCT DREAM - Hello Future :: Dreamcatcher - Vision",
+        "description": "Content: ANY PACK 01\n> NCT DREAM - Candy :: TWICE - CAN'T STOP ME",
         "category": "pack",
         "set": "Pack 02",
         "emoji": "📦",
@@ -34,11 +33,10 @@
             "cards": {
                 "count": 6,
                 "fromSet": [
-                    { "id": "564", "chance": 100 },
-                    { "id": "566", "chance": 100 },
-                    { "id": "587", "chance": 100 },
-                    { "id": "559", "chance": 50 },
-                    { "id": "582", "chance": 50 }
+                    { "id": "727", "chance": 100 },
+                    { "id": "741", "chance": 100 },
+                    { "id": "725", "chance": 100 },
+                    { "id": "740", "chance": 50 }
                 ]
             }
         }
@@ -47,7 +45,7 @@
         "id": "P3",
         "setID": "P01",
         "name": "You get 09 cards",
-        "description": "Content: ANY PACK 01 AND 02\n> IVE - I AM :: FIFTY FIFTY - Cupid\n> XG - SHOOTING STAR",
+        "description": "Content: ANY PACK 01 AND 02\n> Taeyeon - What Do I Call You :: SEVENTEEN Fck My Life",
         "category": "pack",
         "set": "Pack 03",
         "emoji": "📦",
@@ -57,14 +55,12 @@
             "cards": {
                 "count": 9,
                 "fromSet": [
-                    { "id": "564", "chance": 100 },
-                    { "id": "566", "chance": 100 },
-                    { "id": "587", "chance": 100 },
-                    { "id": "559", "chance": 100 },
-                    { "id": "582", "chance": 100 },
-                    { "id": "592", "chance": 50 },
-                    { "id": "586", "chance": 50 },
-                    { "id": "591", "chance": 50 }
+                    { "id": "727", "chance": 100 },
+                    { "id": "741", "chance": 100 },
+                    { "id": "725", "chance": 100 },
+                    { "id": "740", "chance": 100 },
+                    { "id": "742", "chance": 100 },
+                    { "id": "748", "chance": 50 }
                 ]
             } 
         }

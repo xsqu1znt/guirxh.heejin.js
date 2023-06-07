@@ -86,10 +86,10 @@ module.exports = {
                 );
 
                 // Add the last card's image if available
-                let lastCard = _receivedCards.slice(-1)[0];
-                if (lastCard) embed_shop.embed.setImage(lastCard.imageURL);
+                let _receivedCards_last = _receivedCards.slice(-1)[0];
+                if (_receivedCards_last) embed_shop.setImage(_receivedCards_last.imageURL);
 
-                embed_shop.embed.setFooter({ text: `${interaction.user.username} opened ${_itemPack.name}` });
+                embed_shop.setFooter({ text: `${interaction.user.username} opened ${_itemPack.name}` });
 
                 return await embed_shop.send({ description: _receivedCards_f.join("\n") });
             }
