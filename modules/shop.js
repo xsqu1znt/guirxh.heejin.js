@@ -116,11 +116,12 @@ async function itemPack_buy(userID, itemPackID) {
         return randomTools.choice(cardManager.cards_all.filter(card => card.setID === setID));
     });
 
-    // Subtract the card pack's price from the user's balance
-    await userManager.update(userID, { $inc: { balance: -itemPack.price } });
-
-    // Add the cards to the user's card_inventory
-    await userManager.cards.add(userID, cards);
+    await Promise.all([
+        // Subtract the card pack's price from the user's balance
+        userManager.update(userID, { $inc: { balance: -itemPack.price } }),
+        // Add the cards to the user's card_inventory
+        userManager.cards.add(userID, cards)
+    ]);
 
     // Return the cards the user received
     return cards;

@@ -236,10 +236,11 @@ function random_chance(percentage = 50) {
 
 /** Pick a random item from the given array.
  * @param {array} arr The array.
- * @returns {item} The chosen item from the array.
+ * @param {boolean} clone Deep clone the item.
  */
-function random_choice(arr) {
-    return arr[Math.floor(Math.random() * arr.length)];
+function random_choice(arr, clone = false) {
+    let item = arr[Math.floor(Math.random() * arr.length)];
+    return clone ? structuredClone(item) : item;
 }
 
 /** Pick a random item index from the given array.
@@ -253,10 +254,10 @@ function random_choiceIdx(arr) {
 /** Choose a random item from the given array based on the item's rarity.
  * 
  * Each item in the array must have a "rarity" property for it to be chosen.
- * @param {[{rarity: 50}]} arr The array of items.
- * @returns {item} The chosen item from the array.
+ * @param {Array<>} arr The array of items.
+ * @param {boolean} clone Deep clone the item
  */
-function random_weightedChoice(arr) {
+function random_weightedChoice(arr, clone = false) {
     // Creates an array with only the rarity property which are then summed together with the previous entry
     /* example:
         arr = [{ item: "yes", rarity: 4 }, { item: "no", rarity: 20 }]
@@ -271,7 +272,8 @@ function random_weightedChoice(arr) {
 
     // Returns the first item in the original array that has a rarity higher than or equal to (decider)
     // how this picks a random item from that rarity I still have no idea but at least it's less work for me, lol
-    return arr[weights.findIndex(w => w >= decider)];
+    let item = arr[weights.findIndex(w => w >= decider)];
+    return clone ? structuredClone(item) : item;
 }
 
 /** Return a random number.

@@ -26,23 +26,9 @@ Remember to report any issues in <#1014513978560499732>
 
 
 
-🔧 Changelog (23/06/04) - Heejin 2.0.8
+🔧 Changelog (23/06/07) - Heejin 2.0.81
 
 Remember to report any issues in <#1014513978560499732>
 
-`🛠️` **updated command** </inventory:1106915320763011144>
-> - Inventory is now sorted by both (Set ID -> Global ID) by default
-> - Added the ability to view another player's inventory
-> - Added filter by name
-> - "Default: Descending" now shows correctly as "Default: Ascending"
-
-`🎨` **design changes**
-> - All embeds now show your server nickname (if you have one) instead of your username
-
 `⚙️` **fixes**
-> - Removing a card from your team gave you a card not found error
-> - The text at the bottom of /drop saying what the reactions did was removed accidentally
-> - Detailed collection showed "uncm" instead of "uncn" for uncommon cards
-
-`➕` **added**
-> - *Heejin will now DM you when you recieve a gift, or when a player pays you*
+> - Buying an item pack gave you the cards, but did not send the embed showing what you got
