@@ -379,8 +379,9 @@ function userProfile_ES(guildMember, userData) {
         let uniqueUserCardTotal = arrayTools.unique(userData.card_inventory,
             (card, compareCard) => card.globalID === compareCard.globalID
         ).length;
-        let profile_info = "%BALANCE :: \`🃏 %CARD_TOTAL\` :: \`📈 LV. %LEVEL\`"
+        let profile_info = "%BALANCE :: %RIBBONS :: \`🃏 %CARD_TOTAL\` :: \`📈 LV. %LEVEL\`"
             .replace("%BALANCE", inline(botSettings.currencyIcon, userData.balance))
+            .replace("%RIBBONS", inline("🎀", userData.ribbons || 0))
             .replace("%CARD_TOTAL", `${uniqueUserCardTotal}/${cardManager.cardCount}`)
             .replace("%LEVEL", userData.level);
 
