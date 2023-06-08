@@ -152,7 +152,7 @@ async function SummonCard(client, interaction) {
 async function PayUser(client, interaction) {
     // Interaction options
     let recipientID = interaction.options.getString("userid") || null;
-    let amount = interaction.options.getNumber("carrots") || 0;
+    let amount = interaction.options.getNumber("amount") || 0;
 
     // Create a base embed
     let embed_payUser = new BetterEmbed({
