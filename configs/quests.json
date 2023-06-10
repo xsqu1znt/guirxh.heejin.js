@@ -1,18 +1,18 @@
 [
     {
-        "name": "",
-        "description": "",
+        "name": "Dev",
+        "description": "An example of every requirement",
         "date": {
             "start": "",
             "end": ""
         },
 
         "required": {
-            "balance": 0,
-            "ribbons": 0,
+            "balance": 1000,
+            "ribbons": 50,
 
             "cards": {
-                "inventoryTotal": 0,
+                "inventoryTotal": 100,
                 "requiredGlobalIDs": ["100", "101", "102"],
                 "setsCompleted": ["100", "101", "102"],
                 "duplicates": [
@@ -21,18 +21,18 @@
             },
 
             "level": {
-                "user": 0,
-                "stage": 0
+                "user": 5,
+                "idol": 15
             },
 
             "team": {
-                "ability": 0,
-                "reputation": 0
+                "ability": 300,
+                "reputation": 300
             }
         },
 
         "reward": {
-            "carrots": 0,
+            "carrots": 5000,
             "cardGlobalIDs": ["100", "101", "102"]
         }
     }
