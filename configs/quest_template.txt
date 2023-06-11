@@ -1,0 +1,40 @@
+[
+    {
+        "name": "Dev",
+        "description": "An example of every requirement",
+        "date": {
+            "start": "yyyy-mm-dd",
+            "end": "yyyy-mm-dd"
+        },
+
+        "required": {
+            "balance": 1000,
+            "ribbons": 50,
+
+            "cards": {
+                "inventoryTotal": 100,
+                "requiredGlobalIDs": ["100", "101", "102"],
+                "setsCompleted": ["100", "101", "102"],
+                "duplicates": [
+                    { "globalID": "100", "count": 0 }
+                ]
+            },
+
+            "level": {
+                "user": 5,
+                "idol": 15
+            },
+
+            "team": {
+                "ability": 300,
+                "reputation": 300
+            }
+        },
+
+        "reward": {
+            "carrots": 5000,
+            "ribbons": 5000,
+            "cardGlobalIDs": ["100", "101", "102"]
+        }
+    }
+]

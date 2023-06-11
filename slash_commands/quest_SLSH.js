@@ -21,6 +21,11 @@ module.exports = {
 
         let quests_f = questManager.toString();
 
-        return await embed_quest.send({ description: quests_f.join("\n") });
+        embed_quest.addFields(quests_f.map(quest => ({
+            name: quest.title, value: `${quest.progress}\n${quest.description}`,
+            inline: true
+        })));
+
+        return await embed_quest.send({ description: " " });
     }
 };

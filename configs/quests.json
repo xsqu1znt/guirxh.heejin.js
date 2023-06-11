@@ -1,39 +1,33 @@
 [
     {
-        "name": "Dev",
-        "description": "An example of every requirement",
+        "name": "Mom, I'm rich!",
+        "reward": "`🥕 15k` `🎀 50`",
+        "description": "User must earn a total of `🥕 15k`",
         "date": {
-            "start": "",
-            "end": ""
+            "start": "2023-06-11",
+            "end": "2023-06-25"
         },
-
-        "required": {
-            "balance": 1000,
-            "ribbons": 50,
-
-            "cards": {
-                "inventoryTotal": 100,
-                "requiredGlobalIDs": ["100", "101", "102"],
-                "setsCompleted": ["100", "101", "102"],
-                "duplicates": [
-                    { "globalID": "100", "count": 0 }
-                ]
-            },
-
-            "level": {
-                "user": 5,
-                "idol": 15
-            },
-
-            "team": {
-                "ability": 300,
-                "reputation": 300
-            }
+        "requirements": {
+            "balance": 15000
         },
-
-        "reward": {
+        "rewards": {
             "carrots": 5000,
-            "cardGlobalIDs": ["100", "101", "102"]
+            "ribbons": 50
+        }
+    },
+    {
+        "name": "I've got the power!",
+        "reward": "`🎀 1500`",
+        "description": "User stage idol must reach `LV. 15`",
+        "date": {
+            "start": "2023-06-11",
+            "end": "2023-06-25"
+        },
+        "requirements": {
+            "ribbons": 1500
+        },
+        "rewards": {
+            "ribbons": 1500
         }
     }
 ]
