@@ -1,5 +1,6 @@
 [
     {
+        "id": "q01",
         "name": "Mom, I'm rich!",
         "reward": "`🥕 15k` `🎀 50`",
         "description": "User must earn a total of `🥕 15k`",
@@ -11,13 +12,14 @@
             "balance": 15000
         },
         "rewards": {
-            "carrots": 5000,
+            "balance": 5000,
             "ribbons": 50
         }
     },
     {
+        "id": "q02",
         "name": "I've got the power!",
-        "reward": "`🎀 1500`",
+        "reward": "`🎀 1.5k`",
         "description": "User stage idol must reach `LV. 15`",
         "date": {
             "start": "2023-06-11",

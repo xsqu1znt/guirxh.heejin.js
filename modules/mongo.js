@@ -3,6 +3,7 @@
 const { userSettings } = require('../configs/heejinSettings.json');
 const { dateTools, randomTools, stringTools } = require('../modules/jsTools');
 const badgeManager = require('./badgeManager');
+const questManager = require('./questManager');
 const cardManager = require('./cardManager');
 const userParser = require('./userParser');
 const mongoose = require('mongoose');
@@ -350,10 +351,7 @@ async function userQuest_cache(userID) {
     return async () => {
         let userData_new = await user_fetch(userID, "full");
 
-        let _team_old = userParser.cards.getTeam(userData_old);
         let _team_new = userParser.cards.getTeam(userData_new);
-
-        let _idol_old = userParser.cards.getIdol(userData_old);
         let _idol_new = userParser.cards.getIdol(userData_new);
 
         let difference = {
@@ -363,19 +361,8 @@ async function userQuest_cache(userID) {
             inventory_count: ClampPositive((userData_new?.card_inventory.length - userData_old?.card_inventory.length || 0)),
 
             levels: {
-                user: ClampPositive((userData_new?.level - userData_old?.level || 0)),
-                idol: ClampPositive((_idol_new?.stats.level - _idol_old?.stats.level || 0))
+                user: ClampPositive((userData_new?.level - userData_old?.level || 0))
             },
-
-            team: {
-                ability: ClampPositive((_team_new.reduce((a, b) => a?.stats.ability + b?.stats.ability)
-                    - _team_old.reduce((a, b) => a?.stats.ability + b?.stats.ability))
-                    || 0),
-
-                reputation: ClampPositive((_team_new.reduce((a, b) => a?.stats.reputation + b?.stats.reputation)
-                    - _team_old.reduce((a, b) => a?.stats.reputation + b?.stats.reputation))
-                    || 0)
-            }
         };
 
         // Update the user's quest stats
@@ -385,14 +372,55 @@ async function userQuest_cache(userID) {
                 "quest_cache.ribbons": difference.ribbons,
                 "quest_cache.inventory_count": difference.inventory_count,
 
-                "quest_cache.levels.user": difference.levels.user,
-                "quest_cache.levels.idol": difference.levels.idol,
+                "quest_cache.levels.user": difference.levels.user
+            },
 
-                "quest_cache.team.ability": difference.team.ability,
-                "quest_cache.team.reputation": difference.team.reputation
+            quest_cache: {
+                levels: { idol: _idol_new?.stats.level || 0 },
+                team: {
+                    ability: _team_new.reduce((a, b) => a?.stats.ability + b?.stats.ability),
+                    reputation: _team_new.reduce((a, b) => a?.stats.reputation + b?.stats.reputation)
+                }
             }
         });
     };
+}
+
+async function userQuest_validate(userID, userData = null) {
+    userData ||= await user_fetch(userID, "full");
+
+    // Check if the user completed any quests
+    let completed = questManager.validate(userData);
+
+    // Add cards to the user's card_inventory
+    const rewardCards = async (quest) => {
+        if (!quest.reward?.cardGlobalIDs.length) return;
+
+        let _cards = quest.reward.cardGlobalIDs.map(gid => cardManager.get.byGlobalID(gid)).map(card => card);
+
+        return await userCard_add(userID, _cards);
+    }
+
+    // Iterate through each completed quest
+    for (let quest of completed.quests) if (!userData.quests_completed.find(q => q.id === quest.id)) {
+        // Update the user in Mongo
+        await Promise.all([
+            user_update(userID, {
+                // Add the quest ID to the user's completed quest array 
+                $push: { quests_completed: quest.id },
+                // Add basic rewards if any
+                $inc: {
+                    xp: quest.reward?.xp,
+                    balance: quest.reward?.balance,
+                    ribbons: quest.reward?.ribbons
+                }
+            }),
+            // Add rewarded cards to the user's card_inventory
+            rewardCards(quest)
+        ]);
+    }
+
+    return completed;
 }
 
 module.exports = {
