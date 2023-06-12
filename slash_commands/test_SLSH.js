@@ -11,8 +11,6 @@ module.exports = {
     builder: new SlashCommandBuilder().setName("test")
         .setDescription("A test command for dev stuff"),
 
-    helpIcon: "👨‍💻",
-
     /**
      * @param {Client} client
      * @param {CommandInteraction} interaction

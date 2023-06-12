@@ -90,25 +90,29 @@ module.exports = {
             let userQuestCache = await userManager.quests.cache(args.interaction.user.id);
 
             // Execute the command function
-            return await slashCommand.execute(client, args.interaction).then(async () => {
+            return await slashCommand.execute(client, args.interaction).then(async msg => {
                 // Check if the user can level up
                 let leveled = await userManager.xp.tryLevelUp(args.interaction.user.id);
 
                 // Send a level up message if the user leveled up successfully
                 if (leveled.leveled) {
                     // Gotta have a level up message to actually send
-                    let lvlMsg = `Congratulations, %USER! You are now level %CURRENT_LVL.`
+                    let lvlMsg = `Congratulations, %USER! You are now level %CURRENT_LVL`
                         .replace("%USER", args.interaction.user)
                         .replace("%CURRENT_LVL", stringTools.formatNumber(leveled.level_current));
 
                     // Send the level up message we created above
                     // not awaited because we don't need any information from the returned message
-                    await args.interaction.channel.send({ content: lvlMsg, allowedMentions: { repliedUser: false } });
+                    try {
+                        msg.edit({ content: `**${lvlMsg}**\n\n${msg.content}`, allowedMentions: { repliedUser: false } });
+                    } catch {
+                        await args.interaction.channel.send({ content: lvlMsg, allowedMentions: { repliedUser: false } });
+                    }
                 }
 
                 // Cache the user's new data after running the command (quests)
                 // then check if the user completed any quests
-                questManager.validate(client, await userQuestCache());
+                questManager.validate(await userQuestCache());
 
                 // Have a chance to send a random tip to the channel
                 if (randomTools.chance(chanceToShowTips)) return await new BetterEmbed({

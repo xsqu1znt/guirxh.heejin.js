@@ -30,8 +30,8 @@ const schema_user = Schema({
     quest_cache: {
         type: Object, default: {
             balance: 0, ribbons: 0, inventory_count: 0,
-            levels: { user: 0, idol: 0 },
-            team: { ability: 0, reputation: 0 },
+            levels_user: 0, levels_idol: 0,
+            team_ability: 0, team_reputation: 0
         }
     }
 }, { collection: "users" });

@@ -11,14 +11,10 @@
             "balance": 1000,
             "ribbons": 50,
 
-            "cards": {
-                "inventoryTotal": 100,
-                "requiredGlobalIDs": ["100", "101", "102"],
-                "setsCompleted": ["100", "101", "102"],
-                "duplicates": [
-                    { "globalID": "100", "count": 0 }
-                ]
-            },
+            "inventory_total": 0,
+            "card_gids": ["1234"],
+            "sets_completed": ["123"],
+            "duplicates": [{ "globalID": "1234", "count": 1 }],
 
             "level": {
                 "user": 5,

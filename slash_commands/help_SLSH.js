@@ -6,8 +6,6 @@ module.exports = {
     builder: new SlashCommandBuilder().setName("help")
         .setDescription("Get information about the commands"),
 
-    helpIcon: "🤝",
-
     /**
      * @param {Client} client
      * @param {CommandInteraction} interaction
@@ -17,7 +15,7 @@ module.exports = {
             interaction, author: { text: "%AUTHOR_NAME | help", user: interaction.member }
         });
 
-        let slashCommands = [...client.slashCommands.values()];
+        let slashCommands = [...client.slashCommands.values()].filter(slsh => slsh?.helpIcon);
 
         slashCommands.forEach((slsh, idx) => embed_help.addFields({
             name: `\`${slsh.helpIcon}\` ${slsh.builder.name}`,

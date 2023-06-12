@@ -3,10 +3,10 @@ const cardManager = require('./cardManager');
 
 function cards_get(userData, uids, keepArray = false) {
     if (!Array.isArray(uids)) uids = [uids];
-    let cardInventory = userData?.card_inventory || userData;
+    let card_inventory = userData?.card_inventory || userData;
 
     // Get the cards from the user's card_inventory
-    let cards = uids.map(uid => cardInventory.find(card => card.uid === uid.trim()) || null);
+    let cards = uids.map(uid => card_inventory.find(card => card.uid === uid.trim()) || null);
 
     // Parse the cards into full card objects
     cards = cards.map(card => card ? cardManager.parse.fromCardLike(card) : null);
@@ -23,8 +23,8 @@ function cards_getMultiple_DEPRECATED(cardArray, uids, filterInvalid = true) {
 }
 
 function cards_getDuplicates(userData, globalID) {
-    let cardInventory = userData?.card_inventory || userData;
-    let cards = cardInventory.filter(card => card.globalID === globalID);
+    let card_inventory = userData?.card_inventory || userData;
+    let cards = card_inventory.filter(card => card.globalID === globalID);
     cards = cards.map(cardLike => cardManager.parse.fromCardLike(cardLike));
 
     let primary = cards.shift();
@@ -38,8 +38,8 @@ function cards_getDuplicates(userData, globalID) {
 }
 
 function cards_getVault(userData) {
-    let cardInventory = userData?.card_inventory || userData;
-    let vault = cardInventory.filter(card => card.locked) || [];
+    let card_inventory = userData?.card_inventory || userData;
+    let vault = card_inventory.filter(card => card.locked) || [];
 
     return vault.map(cardLike => cardManager.parse.fromCardLike(cardLike));
 }
@@ -52,20 +52,9 @@ function cards_getIdol(userData) {
     return cards_get(userData, userData.card_selected_uid);
 }
 
-function cards_parseInventory(userData) {
-    let cardInventory = userData?.card_inventory || userData;
-
-    for (let i = 0; i < cardInventory.length; i++) {
-        let card = cardManager.parse.fromCardLike(cardInventory[i]);
-        cardInventory[i] = card || cardInventory[i];
-    }
-
-    return cardInventory;
-}
-
 function cards_getInventory(userData) {
     let cards = [];
-    let cards_primary = arrayTools.unique(userData.card_inventory, (a, b) => a.globalID === b.globalID);
+    let cards_primary = arrayTools.unique(userData?.card_inventory || userData, (a, b) => a.globalID === b.globalID);
 
     for (let card of cards_primary) {
         let { duplicateCount } = cards_getDuplicates(userData, card.globalID);
@@ -90,6 +79,24 @@ function cards_getInventory(userData) {
     }
 
     return cards;
+}
+
+function cards_parseInventory(userData) {
+    let card_inventory = userData?.card_inventory || userData;
+
+    for (let i = 0; i < card_inventory.length; i++) {
+        let card = cardManager.parse.fromCardLike(card_inventory[i]);
+        card_inventory[i] = card || card_inventory[i];
+    }
+
+    return card_inventory;
+}
+
+function cards_checkSetCompleted(userData, setID) {
+    let card_inventory = arrayTools.unique(userData?.card_inventory || userData, (a, b) => a.globalID === b.globalID);
+
+    return card_inventory.filter(card => card.setID === setID).length
+        >= cardManager.cards_all.filter(card => card.setID === setID).length;
 }
 
 /** Filter out duplicate cards from the user's card_inventory. */
@@ -131,6 +138,7 @@ module.exports = {
         getIdol: cards_getIdol,
 
         parseInventory: cards_parseInventory,
+        checkSetCompleted: cards_checkSetCompleted,
 
         primary: cards_primary,
         duplicates: cards_duplicates

@@ -341,6 +341,8 @@ async function userReminder_reset(userID, guildID, channelID, user, reminderType
 
 //! User -> Quests
 async function userQuest_cache(userID) {
+    if (!questManager.exists()) return async () => { };
+
     // Only allow positive numbers to increment the cache
     let ClampPositive = (num) => num < 0 ? 0 : num;
 
@@ -372,15 +374,14 @@ async function userQuest_cache(userID) {
                 "quest_cache.ribbons": difference.ribbons,
                 "quest_cache.inventory_count": difference.inventory_count,
 
-                "quest_cache.levels.user": difference.levels.user
+                "quest_cache.levels_user": difference.levels.user
             },
 
-            quest_cache: {
-                levels: { idol: _idol_new?.stats.level || 0 },
-                team: {
-                    ability: _team_new.reduce((a, b) => a?.stats.ability + b?.stats.ability),
-                    reputation: _team_new.reduce((a, b) => a?.stats.reputation + b?.stats.reputation)
-                }
+            $set: {
+                "quest_cache.levels_idol": _idol_new?.stats.level || 0,
+
+                "quest_cache.team_ability": _team_new.reduce((a, b) => a?.stats.ability + b?.stats.ability),
+                "quest_cache.team_reputation": _team_new.reduce((a, b) => a?.stats.reputation + b?.stats.reputation)
             }
         });
     };
