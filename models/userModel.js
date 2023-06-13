@@ -29,6 +29,7 @@ const schema_user = Schema({
     quests_completed: { type: Array, default: new Array() },
     quest_cache: {
         type: Object, default: {
+            reset_timestamp: 0,
             balance: 0, ribbons: 0, inventory_count: 0,
             levels_user: 0, levels_idol: 0,
             team_ability: 0, team_reputation: 0

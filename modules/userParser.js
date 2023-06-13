@@ -104,6 +104,8 @@ function cards_setsCompleted(userData, setIDs) {
     let completed = [];
 
     for (let setID of setIDs) {
+        if (!setID) continue;
+
         let user_set = card_inventory.filter(card => setIDs.includes(card.setID));
         completed.push(user_set.length >= cardManager.get.set(setID).length);
     }

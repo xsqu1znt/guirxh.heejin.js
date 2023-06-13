@@ -87,7 +87,7 @@ module.exports = {
             }
 
             // Cache the user's current data before running the command (quests)
-            let userQuestCache = await userManager.quests.cache(args.interaction.user.id);
+            let validateQuests = await userManager.quests.cache(args.interaction.user.id);
 
             // Execute the command function
             return await slashCommand.execute(client, args.interaction).then(async msg => {
@@ -112,7 +112,7 @@ module.exports = {
 
                 // Cache the user's new data after running the command (quests)
                 // then check if the user completed any quests
-                questManager.validate(await userQuestCache()).then(completedQuests => {
+                validateQuests().then(completedQuests => {
                     console.log(completedQuests);
                 });
 

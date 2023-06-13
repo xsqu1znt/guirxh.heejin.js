@@ -104,7 +104,7 @@ async function user_fetch(userID, type = "full", lean = true) {
 }
 
 async function user_update(userID, update) {
-    return await models.user.findByIdAndUpdate(userID, update);
+    return await models.user.findByIdAndUpdate(userID, update, { new: true });
 }
 
 async function user_new(userID, query = null) {
@@ -341,10 +341,17 @@ async function userReminder_reset(userID, guildID, channelID, user, reminderType
 
 //! User -> Quests
 async function userQuest_cache(userID) {
-    if (!questManager.exists()) return async () => { };
+    if (!questManager.exists()) return async () => { return [] };
 
     // Only allow positive numbers to increment the cache
     let ClampPositive = (num) => num < 0 ? 0 : num;
+
+    // Check if the user already completed the current quests
+    let userData_essential = await user_fetch(userID, "essential");
+    let userQuestsCompleted = userData_essential.quests_completed.filter(q => questManager.quests.map(_q => _q.id).includes(q.id));
+
+    if (userQuestsCompleted.length === questManager.quests.length)
+        return async () => { return [] };
 
     // Get the user's data
     let userData_old = await user_fetch(userID, "full");
@@ -368,7 +375,7 @@ async function userQuest_cache(userID) {
         };
 
         // Update the user's quest stats
-        return await user_update(userID, {
+        userData_new = await user_update(userID, {
             $inc: {
                 "quest_cache.balance": difference.balance,
                 "quest_cache.ribbons": difference.ribbons,
@@ -384,6 +391,9 @@ async function userQuest_cache(userID) {
                 "quest_cache.team_reputation": _team_new.reduce((a, b) => a?.stats.reputation + b?.stats.reputation)
             }
         });
+
+        // Check if the user completed any quests
+        return await userQuest_validate(userID, userData_new);
     };
 }
 
@@ -391,11 +401,11 @@ async function userQuest_validate(userID, userData = null) {
     userData ||= await user_fetch(userID, "full");
 
     // Check if the user completed any quests
-    let completed = questManager.validate(userData);
+    let questsCompleted = questManager.validate(userData);
 
     // Add cards to the user's card_inventory
     const rewardCards = async (quest) => {
-        if (!quest.reward?.cardGlobalIDs.length) return;
+        if (!quest.reward?.cardGlobalIDs?.length) return;
 
         let _cards = quest.reward.cardGlobalIDs.map(gid => cardManager.get.byGlobalID(gid)).map(card => card);
 
@@ -403,17 +413,25 @@ async function userQuest_validate(userID, userData = null) {
     }
 
     // Iterate through each completed quest
-    for (let quest of completed.quests) if (!userData.quests_completed.find(q => q.id === quest.id)) {
+    for (let quest of questsCompleted) {
         // Update the user in Mongo
         await Promise.all([
             user_update(userID, {
-                // Add the quest ID to the user's completed quest array 
-                $push: { quests_completed: quest.id },
+                // Add a copy of the quest to the user's quests_completed
+                $push: {
+                    quests_completed: {
+                        id: quest.id,
+                        name: quest.name,
+                        description: quest.description,
+                        rewards: quest.rewards,
+                        date: quest.date
+                    }
+                },
                 // Add basic rewards if any
                 $inc: {
-                    xp: quest.reward?.xp,
-                    balance: quest.reward?.balance,
-                    ribbons: quest.reward?.ribbons
+                    xp: quest.reward?.xp || 0,
+                    balance: quest.reward?.balance || 0,
+                    ribbons: quest.reward?.ribbons || 0
                 }
             }),
             // Add rewarded cards to the user's card_inventory
@@ -421,7 +439,7 @@ async function userQuest_validate(userID, userData = null) {
         ]);
     }
 
-    return completed;
+    return questsCompleted;
 }
 
 module.exports = {
@@ -488,7 +506,8 @@ module.exports = {
         },
 
         quests: {
-            cache: userQuest_cache
+            cache: userQuest_cache,
+            validate: userQuest_validate
         }
     }
 };

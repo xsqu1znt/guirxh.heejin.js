@@ -2,7 +2,7 @@
     {
         "id": "q01",
         "name": "Mom, I'm rich!",
-        "reward": "`🥕 15k` `🎀 50`",
+        "rewards": "`🥕 15k` `🎀 50`",
         "description": "User must earn a total of `🥕 15k`",
         "date": {
             "start": "2023-06-11",
@@ -11,7 +11,7 @@
         "requirements": {
             "balance": 15000
         },
-        "rewards": {
+        "reward": {
             "balance": 5000,
             "ribbons": 50
         }
@@ -19,7 +19,7 @@
     {
         "id": "q02",
         "name": "I've got the power!",
-        "reward": "`🎀 1.5k`",
+        "rewards": "`🎀 1.5k`",
         "description": "User stage idol must reach `LV. 15`",
         "date": {
             "start": "2023-06-11",
@@ -28,7 +28,7 @@
         "requirements": {
             "level_idol": 15
         },
-        "rewards": {
+        "reward": {
             "ribbons": 1500
         }
     }
