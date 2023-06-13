@@ -374,11 +374,11 @@ async function userQuest_cache(userID) {
                 "quest_cache.ribbons": difference.ribbons,
                 "quest_cache.inventory_count": difference.inventory_count,
 
-                "quest_cache.levels_user": difference.levels.user
+                "quest_cache.level_user": difference.levels.user
             },
 
             $set: {
-                "quest_cache.levels_idol": _idol_new?.stats.level || 0,
+                "quest_cache.level_idol": _idol_new?.stats.level || 0,
 
                 "quest_cache.team_ability": _team_new.reduce((a, b) => a?.stats.ability + b?.stats.ability),
                 "quest_cache.team_reputation": _team_new.reduce((a, b) => a?.stats.reputation + b?.stats.reputation)

@@ -112,7 +112,9 @@ module.exports = {
 
                 // Cache the user's new data after running the command (quests)
                 // then check if the user completed any quests
-                questManager.validate(await userQuestCache());
+                questManager.validate(await userQuestCache()).then(completedQuests => {
+                    console.log(completedQuests);
+                });
 
                 // Have a chance to send a random tip to the channel
                 if (randomTools.chance(chanceToShowTips)) return await new BetterEmbed({

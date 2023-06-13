@@ -81,10 +81,15 @@ function cards_getInventory(userData) {
     return cards;
 }
 
-function cards_parseInventory(userData) {
+const c_pI_options = { fromCardLike: true, unique: false };
+function cards_parseInventory(userData, options = c_pI_options) {
+    options = { ...c_pI_options, ...options };
+
     let card_inventory = userData?.card_inventory || userData;
 
-    for (let i = 0; i < card_inventory.length; i++) {
+    if (options.unique) card_inventory = arrayTools.unique(card_inventory, (a, b) => a.globalID === b.globalID);
+
+    if (options.fromCardLike) for (let i = 0; i < card_inventory.length; i++) {
         let card = cardManager.parse.fromCardLike(card_inventory[i]);
         card_inventory[i] = card || card_inventory[i];
     }
@@ -92,11 +97,25 @@ function cards_parseInventory(userData) {
     return card_inventory;
 }
 
-function cards_checkSetCompleted(userData, setID) {
-    let card_inventory = arrayTools.unique(userData?.card_inventory || userData, (a, b) => a.globalID === b.globalID);
+function cards_setsCompleted(userData, setIDs) {
+    if (!Array.isArray(setIDs)) setIDs = [setIDs];
+    let card_inventory = cards_parseInventory(userData, { unique: true });
 
-    return card_inventory.filter(card => card.setID === setID).length
-        >= cardManager.cards_all.filter(card => card.setID === setID).length;
+    let completed = [];
+
+    for (let setID of setIDs) {
+        let user_set = card_inventory.filter(card => setIDs.includes(card.setID));
+        completed.push(user_set.length >= cardManager.get.set(setID).length);
+    }
+
+    return completed.filter(b => b).length === setIDs.length;
+}
+
+function cards_has(userData, globalIDs) {
+    if (!Array.isArray(globalIDs)) globalIDs = [globalIDs];
+    let card_inventory = cards_parseInventory(userData, { fromCardLike: false, unique: true });
+
+    return card_inventory.filter(card => globalIDs.includes(card.globalID)).length === globalIDs;
 }
 
 /** Filter out duplicate cards from the user's card_inventory. */
@@ -138,7 +157,8 @@ module.exports = {
         getIdol: cards_getIdol,
 
         parseInventory: cards_parseInventory,
-        checkSetCompleted: cards_checkSetCompleted,
+        setsCompleted: cards_setsCompleted,
+        has: cards_has,
 
         primary: cards_primary,
         duplicates: cards_duplicates

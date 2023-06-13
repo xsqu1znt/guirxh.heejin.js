@@ -29,29 +29,33 @@ function toString() {
 
 async function validate(userData) {
     if (!userData) return null;
+    let completedQuests = [];
 
     for (let quest of quests) {
         let requirementCount = Object.entries(quest.requirements).length;
         let completedCount = 0;
 
-        completedCount += (quest.requirements?.balance <= userData.balance) ? 1 : 0;
-        completedCount += (quest.requirements?.ribbons <= userData.ribbons) ? 1 : 0;
+        completedCount += (quest.requirements?.balance <= userData.quest_cache.balance) ? 1 : 0;
+        completedCount += (quest.requirements?.ribbons <= userData.quest_cache.ribbons) ? 1 : 0;
 
         completedCount += (quest.requirements?.inventory_total <= userData.card_inventory.length) ? 1 : 0;
 
-        // TODO: userParser.cards.has(userID, globalIDs)
-        completedCount += (userData.card_inventory.filter(card => quest.requirements?.card_gids.includes(card.globalID)).length >= quest.requirements?.card_gids.length) ? 1 : 0;
+        completedCount += (userParser.cards.has(userData, quest.requirements?.card_gids)) ? 1 : 0;
+        completedCount += (userParser.cards.setsCompleted(userData, quest.requirements?.sets_completed)) ? 1 : 0;
+        // completedCount += (quest.requirements?.duplicates?.filter(gid => userParser.cards.getDuplicates(userData, gid).duplicateCount >= quest.requirements?.duplicates?.length)) ? 1 : 0;
 
-        completedCount += (quest.requirements?.sets_completed.filter(setID => userParser.cards.checkSetCompleted(userData, setID)).length >= quest.requirements?.sets_completed.length) ? 1 : 0;
-
-        completedCount += (quest.requirements?.duplicates.filter(gid => userParser.cards.getDuplicates(userData, gid).duplicateCount >= quest.requirements?.duplicates.length)) ? 1 : 0;
-
-        completedCount += (quest.requirements?.level_user <= userData.quest_cache.levels_user) ? 1 : 0;
-        completedCount += (quest.requirements?.level_idol <= userData.quest_cache.levels_idol) ? 1 : 0;
+        completedCount += (quest.requirements?.level_user <= userData.quest_cache.level_user) ? 1 : 0;
+        completedCount += (quest.requirements?.level_idol <= userData.quest_cache.level_idol) ? 1 : 0;
 
         completedCount += (quest.requirements?.team_ability <= userData.quest_cache.team_ability) ? 1 : 0;
         completedCount += (quest.requirements?.team_reputation <= userData.quest_cache.team_reputation) ? 1 : 0;
+
+        console.log(completedCount, requirementCount);
+
+        if (completedCount === requirementCount) completedQuests.push(quest);
     }
+
+    return completedQuests;
 }
 
 module.exports = {
