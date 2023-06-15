@@ -360,8 +360,8 @@ async function userQuest_cache(userID) {
     return async () => {
         let userData_new = await user_fetch(userID, "full");
 
-        let _team_new = userParser.cards.getTeam(userData_new);
-        let _idol_new = userParser.cards.getIdol(userData_new);
+        let _user_team = userParser.cards.getTeam(userData_new);
+        let _user_idol = userParser.cards.getIdol(userData_new);
 
         let difference = {
             balance: ClampPositive((userData_new?.balance - userData_old?.balance || 0)),
@@ -385,10 +385,10 @@ async function userQuest_cache(userID) {
             },
 
             $set: {
-                "quest_cache.level_idol": _idol_new?.stats.level || 0,
+                "quest_cache.level_idol": _user_idol?.stats.level || 0,
 
-                "quest_cache.team_ability": _team_new.reduce((a, b) => a?.stats.ability + b?.stats.ability),
-                "quest_cache.team_reputation": _team_new.reduce((a, b) => a?.stats.reputation + b?.stats.reputation)
+                "quest_cache.team_ability": _user_team.ability_total,
+                "quest_cache.team_reputation": _user_team.reputation_total
             }
         });
 

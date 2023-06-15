@@ -44,8 +44,18 @@ function cards_getVault(userData) {
     return vault.map(cardLike => cardManager.parse.fromCardLike(cardLike));
 }
 
-function cards_getTeam(userData) {
-    return cards_get(userData, userData.card_team_uids, true);
+function cards_getTeam(userData, keepNull = false) {
+    let cards_team = cards_get(userData, userData.card_team_uids, true);
+    if (!keepNull) cards_team = cards_team.filter(card => card);
+
+    let team_ability_total = cards_team.map(card => card?.stats?.ability || 0).reduce((a, b) => a + b);
+    let team_reputation_total = cards_team.map(card => card?.stats?.reputation || 0).reduce((a, b) => a + b);
+
+    return {
+        cards: cards_team,
+        ability_total: team_ability_total,
+        reputation_total: team_reputation_total
+    };
 }
 
 function cards_getIdol(userData) {
@@ -117,7 +127,7 @@ function cards_has(userData, globalIDs) {
     if (!Array.isArray(globalIDs)) globalIDs = [globalIDs];
     let card_inventory = cards_parseInventory(userData, { fromCardLike: false, unique: true });
 
-    return card_inventory.filter(card => globalIDs.includes(card.globalID)).length === globalIDs;
+    return card_inventory.filter(card => globalIDs.includes(card.globalID)).length === globalIDs.length;
 }
 
 /** Filter out duplicate cards from the user's card_inventory. */

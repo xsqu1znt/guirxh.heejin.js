@@ -17,7 +17,7 @@ function toString() {
         // let date_start = numberTools.milliToSeconds(Date.parse(quest.date.start));
         let date_end = numberTools.milliToSeconds(Date.parse(quest.date.end));
 
-        let quest_title = `\`📜\` **${quest.name}** ${quest.reward}`;
+        let quest_title = `\`📜\` **${quest.name}** ${quest.rewards}`;
         let quest_progress = `> *Progress* \`0/100\` :: ${time(date_end, TimestampStyles.RelativeTime)}`;
         let quest_description = `> ${quest.description}`;
 
@@ -39,32 +39,45 @@ function validate(userData) {
         let requirementCount = Object.entries(quest.requirements).length;
         let completedCount = 0;
 
-        // Test the quest's requirements against the user's data
+        /// Test the quest's requirements against the user's data
+        // Balance
         if (quest.requirements?.balance <= userData.quest_cache.balance)
             completedCount++;
+        // Ribbons
         if (quest.requirements?.ribbons <= userData.quest_cache.ribbons)
             completedCount++;
 
-        if (quest.requirements?.inventory_total <= userData.card_inventory.length)
-            completedCount++;
-
-        if (userParser.cards.has(userData, quest.requirements?.card_gids))
-            completedCount++;
-        if (userParser.cards.setsCompleted(userData, quest.requirements?.sets_completed))
-            completedCount++;
-        if (quest.requirements?.duplicates) {
-            let _completed = quest.require.duplicates.filter(gid => userParser.cards.getDuplicates(userData, gid).duplicateCount);
-
-            if (_completed.length) completedCount++;
-        }
-
+        // User level
         if (quest.requirements?.level_user <= userData.quest_cache.level_user)
             completedCount++;
+        // Idol level
         if (quest.requirements?.level_idol <= userData.quest_cache.level_idol)
             completedCount++;
 
+        // How many cards in user's card_inventory
+        if (quest.requirements?.inventory_total <= userData.card_inventory.length)
+            completedCount++;
+
+        // Has all the required cards
+        if (userParser.cards.has(userData, quest.requirements?.card_globalIDs))
+            completedCount++;
+        // Completed all the required card sets
+        if (userParser.cards.setsCompleted(userData, quest.requirements?.card_sets_completed))
+            completedCount++;
+        // Has an amount of duplicates of the required cards
+        if (quest.requirements?.card_duplicates) {
+            let _completed = quest.requirements.card_duplicates.filter(card_required =>
+                userParser.cards.getDuplicates(userData, card_required.globalID).duplicateCount
+                >= card_required.count
+            );
+
+            if (_completed.length === quest.requirements.card_duplicates.length) completedCount++;
+        }
+
+        // Team ability
         if (quest.requirements?.team_ability <= userData.quest_cache.team_ability)
             completedCount++;
+        // Team reputation
         if (quest.requirements?.team_reputation <= userData.quest_cache.team_reputation)
             completedCount++;
 

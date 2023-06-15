@@ -141,7 +141,8 @@ module.exports = {
 
                 case "team":
                     // Get the user's vault from their card_inventory
-                    let _cards_team = userParser.cards.getTeam(_userData); if (!_cards_team.length) return await baseEmbed.send({
+                    let _cards_team = userParser.cards.getTeam(_userData).cards;
+                    if (!_cards_team.length) return await baseEmbed.send({
                         description: "You don't have a team!\n> Use \`/set\` \`edit:👯 team\` to change"
                     });
 

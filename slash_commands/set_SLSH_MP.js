@@ -188,7 +188,7 @@ module.exports = {
                     // Fetch the user from Mongo
                     userData = await userManager.fetch(interaction.user.id, "full", true);
 
-                    let teamCards = userParser.cards.getTeam(userData);
+                    let teamCards = userParser.cards.getTeam(userData).cards;
                     let teamCards_valid = teamCards.filter(card => card);
 
                     // Check if the user's team is full

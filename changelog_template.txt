@@ -32,3 +32,6 @@ Remember to report any issues in <#1014513978560499732>
 
 `⚙️` **fixes**
 > - Buying an item pack gave you the cards, but did not send the embed showing what you got
+
+
+FIXED STAGE NOT GIVING USER XP

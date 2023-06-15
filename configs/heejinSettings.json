@@ -81,7 +81,7 @@
                 "maxLevel": 100,
                 "nextLevelXPMultiplier": 50,
                 "nextLevelStatReward": { "ability": 9, "reputation": 9 },
-                "stage": { "min": 5000, "max": 10000 }
+                "stage": { "min": 250, "max": 500 }
             }
         },
         "currency": {

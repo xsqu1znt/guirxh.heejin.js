@@ -3,33 +3,33 @@
         "id": "q01",
         "name": "Mom, I'm rich!",
         "rewards": "`🥕 15k` `🎀 50`",
-        "description": "User must earn a total of `🥕 15k`",
+        "description": "Complete every single requirement",
         "date": {
             "start": "2023-06-11",
             "end": "2023-06-25"
         },
         "requirements": {
-            "balance": 15000
+            "balance": 15000,
+            "ribbons": 50,
+            "inventory_total": 10,
+
+            "level_user": 3,
+            "level_idol": 10,
+
+            "card_globalIDs": ["2720"],
+            "card_sets_completed": ["218"],
+            
+            "card_duplicates": [
+                { "globalID": "2586", "count": 3 },
+                { "globalID": "2332", "count": 2 }
+            ],
+
+            "team_ability": 200,
+            "team_reputation": 200
         },
         "reward": {
             "balance": 5000,
             "ribbons": 50
-        }
-    },
-    {
-        "id": "q02",
-        "name": "I've got the power!",
-        "rewards": "`🎀 1.5k`",
-        "description": "User stage idol must reach `LV. 15`",
-        "date": {
-            "start": "2023-06-11",
-            "end": "2023-06-25"
-        },
-        "requirements": {
-            "level_idol": 15
-        },
-        "reward": {
-            "ribbons": 1500
         }
     }
 ]

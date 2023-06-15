@@ -5,7 +5,7 @@ const questManager = require('../modules/questManager');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("quest")
-        .setDescription("View your quests"),
+        .setDescription("View quests"),
 
     /**
      * @param {Client} client
@@ -21,8 +21,8 @@ module.exports = {
 
         let quests_f = questManager.toString();
 
-        embed_quest.addFields(quests_f.map(quest => ({
-            name: quest.title, value: `${quest.progress}\n${quest.description}`,
+        embed_quest.addFields(quests_f.map(quest_f => ({
+            name: quest_f.title, value: `${quest_f.progress}\n${quest_f.description}`,
             inline: true
         })));
 

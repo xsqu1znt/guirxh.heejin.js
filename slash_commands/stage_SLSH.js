@@ -1,9 +1,12 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
-const { botSettings } = require('../configs/heejinSettings.json');
+const {
+    botSettings,
+    userSettings: { xp: { commands: { stage: xp_stage } } }
+} = require('../configs/heejinSettings.json');
+const { randomTools, dateTools } = require('../modules/jsTools');
 const { BetterEmbed } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
-const { dateTools } = require('../modules/jsTools');
 const userParser = require('../modules/userParser');
 const Stage = require('../modules/stageLogic');
 
@@ -85,8 +88,12 @@ module.exports = {
         let winner = await stage.start();
 
         if (winner.user) {
-            // Update the winning user's card_inventory with the added XP/levels in Mongo
-            await userManager.cards.update(winner.user.id, winner.card);
+            await Promise.all([
+                // Update the winning user's card_inventory with the added XP/levels in Mongo
+                userManager.cards.update(winner.user.id, winner.card),
+                // Give the user XP
+                userManager.xp.add(winner.user.id, randomTools.number(xp_stage.min, xp_stage.max))
+            ]);
 
             // Edit the embed's footer with information regarding the winning card
             stage.embed.data.footer.text = "%USERNAME's idol gained %XPxp %LEVELS"
