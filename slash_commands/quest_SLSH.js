@@ -1,6 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 const { BetterEmbed } = require('../modules/discordTools');
+const { userManager } = require('../modules/mongo');
 const questManager = require('../modules/questManager');
 
 module.exports = {
@@ -19,11 +20,14 @@ module.exports = {
 
         if (!questManager.exists()) return await embed_quest.send();
 
-        let quests_f = questManager.toString();
+        // Fetch the user from Mongo
+        let userData = await userManager.fetch(interaction.user.id);
+
+        // Parse the current quests
+        let quests_f = questManager.toString(userData);
 
         embed_quest.addFields(quests_f.map(quest_f => ({
-            name: quest_f.title, value: `${quest_f.progress}\n${quest_f.description}`,
-            inline: true
+            name: quest_f.title, value: quest_f.description, inline: true
         })));
 
         return await embed_quest.send({ description: " " });

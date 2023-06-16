@@ -1,8 +1,8 @@
 [
     {
         "id": "q01",
-        "name": "Mom, I'm rich!",
-        "rewards": "`🥕 15k` `🎀 50`",
+        "name": "An impossible task",
+        "rewards": "`🥕 50k` `🎀 100`",
         "description": "Complete every single requirement",
         "date": {
             "start": "2023-06-11",
@@ -28,7 +28,25 @@
             "team_reputation": 200
         },
         "reward": {
+            "carrots": 50000,
+            "ribbons": 100
+        }
+    },
+    {
+        "id": "q02",
+        "name": "A possible task",
+        "rewards": "`🥕 15k` `🎀 50`",
+        "description": "Get `🥕 5k` and get to LV. 30 ",
+        "date": {
+            "start": "2023-06-11",
+            "end": "2023-06-25"
+        },
+        "requirements": {
             "balance": 5000,
+            "level_user": 30
+        },
+        "reward": {
+            "carrots": 15000,
             "ribbons": 50
         }
     }

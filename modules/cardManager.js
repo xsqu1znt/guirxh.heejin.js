@@ -155,15 +155,15 @@ function drop(dropType, count = 1) {
 
 //! Get
 function get_set(setID) {
-    return cards_all.filter(card => card.setID === setID);
+    return structuredClone(cards_all.filter(card => card.setID === setID));
 }
 
 function get_random(basicOnly = false) {
-    return randomTools.choice(basicOnly ? cards_general : cards_all);
+    return structuredClone(randomTools.choice(basicOnly ? cards_general : cards_all));
 }
 
 function get_byGlobalID(globalID) {
-    let card = cards_all.find(card => card.globalID === globalID);
+    let card = structuredClone(cards_all.find(card => card.globalID === globalID));
     return card || null;
 }
 
@@ -172,28 +172,28 @@ function get_randomDrop(dropCategory) {
     let card_choices = [];
 
     switch (dropCategory) {
-        case 'general':
+        case "general":
             let categories = Object.values(dropSettings.chances).map(c => ({ ...c, rarity: c.chance }));
             let category_picked = randomTools.weightedChoice(categories);
 
             card_choices = cards_general.filter(card => card.rarity === category_picked.cardRarityFilter);
             break;
-        case 'weekly':
+        case "weekly":
             card_choices = cards.shop.filter(card => shopSettings.stockSetIDs.filter(id => id !== "100").includes(card.setID));
             break;
-        case 'season':
+        case "season":
             card_choices = cards.seas.filter(card => eventSettings.season.cardRarityFilter.includes(card.rarity));
             break;
-        case 'event_1':
+        case "event_1":
             card_choices = cards.evnt.filter(card => eventSettings.event1.cardRarityFilter.includes(card.rarity));
             break;
-        case 'event_2':
+        case "event_2":
             card_choices = cards.evnt.filter(card => eventSettings.event2.cardRarityFilter.includes(card.rarity));
             break;
     }
 
     // Return a random card from the list
-    return randomTools.choice(card_choices) || null;
+    return structuredClone(randomTools.choice(card_choices) || null);
 }
 
 //! Parse

@@ -3,38 +3,36 @@ const { TimestampStyles, time } = require('discord.js');
 const quests = require('../configs/quests.json');
 const { botSettings: { currencyIcon } } = require('../configs/heejinSettings.json');
 const { numberTools } = require('./jsTools');
-const cardManager = require('./cardManager');
+// const cardManager = require('./cardManager');
 const userParser = require('./userParser');
 
 function exists() {
     return quests.length > 0;
 }
 
-function toString() {
-    let parsed = [];
-
-    for (let quest of quests) {
+function toString(userData) {
+    return validate(userData).map(quest => {
         // let date_start = numberTools.milliToSeconds(Date.parse(quest.date.start));
         let date_end = numberTools.milliToSeconds(Date.parse(quest.date.end));
 
-        let quest_title = `\`📜\` **${quest.name}** ${quest.rewards}`;
-        let quest_progress = `> *Progress* \`0/100\` :: ${time(date_end, TimestampStyles.RelativeTime)}`;
-        let quest_description = `> ${quest.description}`;
-
-        parsed.push({ title: quest_title, progress: quest_progress, description: quest_description });
-    }
-
-    return parsed;
+        // > `emoji completed/incomplete` `0/100%` Ending in 14 days
+        return {
+            title: `\`📜\` **${quest.name}** ${quest.rewards}`,
+            description: `> \`%COMPLETED %PROGRESS\` ending %TIMESTAMP_END\n> ${quest.description}`
+                .replace("%COMPLETED", quest.completed ? "✔️" : "🚫")
+                .replace("%PROGRESS", quest.progress_f)
+                .replace("%TIMESTAMP_END", time(date_end, TimestampStyles.RelativeTime))
+        };
+    });
 }
 
 function validate(userData) {
     if (!userData) return null;
-    let completedQuests = [];
 
     // Iterate through each quest
-    for (let quest of quests) {
+    return quests.map(quest => {
         // Skip if the user already completed the quest
-        if (userData?.quests_completed?.find(q => q.id === quest.id)) continue;
+        // if (userData?.quests_completed?.find(q => q.id === quest.id)) continue;
 
         let requirementCount = Object.entries(quest.requirements).length;
         let completedCount = 0;
@@ -81,11 +79,12 @@ function validate(userData) {
         if (quest.requirements?.team_reputation <= userData.quest_cache.team_reputation)
             completedCount++;
 
-        // Return the quest if it's determined that the user completed it
-        if (completedCount === requirementCount) completedQuests.push(quest);
-    }
+        // Add data to the quest object
+        quest.progress_f = `${completedCount}/${requirementCount}`;
+        quest.completed = (completedCount === requirementCount);
 
-    return completedQuests;
+        return quest;
+    });
 }
 
 module.exports = {

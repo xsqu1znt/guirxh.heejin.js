@@ -430,7 +430,7 @@ async function userQuest_validate(userID, userData = null) {
                 // Add basic rewards if any
                 $inc: {
                     xp: quest.reward?.xp || 0,
-                    balance: quest.reward?.balance || 0,
+                    balance: quest.reward?.carrots || 0,
                     ribbons: quest.reward?.ribbons || 0
                 }
             }),

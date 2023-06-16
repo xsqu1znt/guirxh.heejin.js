@@ -112,8 +112,10 @@ module.exports = {
 
                 // Cache the user's new data after running the command (quests)
                 // then check if the user completed any quests
-                validateQuests().then(completedQuests => {
-                    console.log(completedQuests);
+                validateQuests().then(quests => {
+                    for (let quest of quests) if (quest.completed) {
+                        // do something about it
+                    }
                 });
 
                 // Have a chance to send a random tip to the channel
