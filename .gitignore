@@ -1,26 +1,8 @@
-package-lock.json
 node_modules
+# .backup
+# .dev
+
+# TODO.txt
+
+package-lock.json
 .env
-
-commandTemplate_SLSH.js
-
-format_card_json.js
-format_cards.js
-
-
-changeCardData.js
-transferUsers.js
-parseOldData.js
-TODO.txt
-
-
-cards_23_05_05_formated.json
-cards_23_05_05.json
-cards_23_05_20.zip
-
-users_23_05_05.json
-users_23_05_07.json
-users_23_05_08.json
-users_23_05_19.json
-users_23_05_20.json
-user.json

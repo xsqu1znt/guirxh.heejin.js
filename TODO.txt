@@ -1,0 +1,22 @@
+IMPORTANT:
+>> Quests
+• change quest validation to use current user/idol level
+• have quest_cache save whether a requirement has been completed
+• send a message in the channel if the user completed a quest requirement
+
+>> Misc.
+• /collections | group filter shouldn't need the full name
+
+UN-IMPORTANT:
+>> Extra
+• show player's start date in /information
+
+FUTURE:
+>> Commands
+• /applycard | update global ids
+• remove card(s) from user
+• request customs through heejin (uses modals)
+
+UN-RELATED:
+>> discordTools.js
+• BetterEmbed.new() | returns a new BetterEmbed with the same configuration
