@@ -96,7 +96,7 @@ function tryLevelUp(card, session = null) {
 
 //! General
 function resetUID(card) {
-    card.uid = randomTools.numberString(6);
+    card.uid = randomTools.numberString(6); return card;
 }
 
 //! Drop

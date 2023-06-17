@@ -30,7 +30,7 @@ async function gift_cards(recipient, cards, cards_f = null) {
     try {
         return await recipient.send({ embeds: [embed_giftCards] });
     } catch (err) {
-        logger.error("Failed to DM user", `userID: ${recipient?.userID || "N/A"}`);
+        logger.error("Failed to DM user", `userID: ${recipient?.userID || "N/A"} | TYPE: gift_card`);
     }
 }
 
@@ -47,7 +47,7 @@ async function gift_currency(recipient, amount, currentBalance) {
     try {
         return await recipient.send({ embeds: [embed_giftCurrency] });
     } catch (err) {
-        logger.error("Failed to DM user", `userID: ${recipient?.userID || "N/A"}`, err);
+        logger.error("Failed to DM user", `userID: ${recipient?.userID || "N/A"} | TYPE: gift_currency`, err);
     }
 }
 

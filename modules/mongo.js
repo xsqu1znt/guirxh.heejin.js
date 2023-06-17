@@ -348,10 +348,14 @@ async function userQuest_cache(userID) {
 
     // Check if the user already completed the current quests
     let userData_essential = await user_fetch(userID, "essential");
-    let userQuestsCompleted = userData_essential.quests_completed.filter(q => questManager.quests.map(_q => _q.id).includes(q.id));
+    if (userData_essential?.quests_completed) {
+        let userQuestsCompleted = userData_essential?.quests_completed?.filter(q =>
+            questManager.quests.map(_q => _q.id).includes(q.id)
+        );
 
-    if (userQuestsCompleted.length === questManager.quests.length)
-        return async () => { return [] };
+        if (userQuestsCompleted.length === questManager.quests.length)
+            return async () => { return [] };
+    }
 
     // Get the user's data
     let userData_old = await user_fetch(userID, "full");
@@ -401,7 +405,7 @@ async function userQuest_validate(userID, userData = null) {
     userData ||= await user_fetch(userID, "full");
 
     // Check if the user completed any quests
-    let questsCompleted = questManager.validate(userData);
+    let questsCompleted = questManager.validate(userData).filter(quest => quest.completed);
 
     // Add cards to the user's card_inventory
     const rewardCards = async (quest) => {
