@@ -14,8 +14,12 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
+        //! Basic embed to test database
+        let embed_basic = new BetterEmbed({ interaction, title: { text: `beep` } });
+        return await embed_basic.send();
+
         //! Quest completion DM
-        let quest = questManager.quests[0];
+        /* let quest = questManager.quests[0];
         let cards_randon = [...Array(2)].map(() => cardManager.toString.basic(
             cardManager.resetUID(cardManager.get.random())
         ));
@@ -25,6 +29,6 @@ module.exports = {
             description: `Rewards:\n>>> ${quest.rewards}\n${cards_randon.join("\n")}`
         });
 
-        return await embed_quest.send();
+        return await embed_quest.send(); */
     }
 };

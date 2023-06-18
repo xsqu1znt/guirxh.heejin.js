@@ -88,7 +88,7 @@ async function user_fetch(userID, type = "full", lean = true) {
         case "full": filter = { __v: 0 }; break;
         case "essential": filter = { card_inventory: 0 }; break;
         case "reminders": filter = { daily_streak: 1, cooldowns: 1, reminders: 1 }; break;
-        case "quest": filter = { quests_completed, quest_cache: 1 }; break;
+        case "quest": filter = { quests_completed: 1, quest_cache: 1 }; break;
         case "cards": filter = { card_inventory: 1 }; break;
     }
 
@@ -367,7 +367,7 @@ async function userQuest_cache(userID) {
     return async () => {
         // Fetch the user's full data
         let userData_new = await user_fetch(userID, "full");
-        let quest_cache = userData_new?.quest_cache || {};
+        let quest_cache = { ...userData_new?.quest_cache } || {};
 
         // Get the user's selected (idol) card
         let card_idol = userParser.cards.getIdol(userData_new);
@@ -375,15 +375,21 @@ async function userQuest_cache(userID) {
         let card_team = userParser.cards.getTeam(userData_new, false);
 
         // Set the gained difference between the last userData to cache progress
-        quest_cache.balance += numberTools.clampPositive(userData_new.balance - userData.balance);
-        quest_cache.ribbons += numberTools.clampPositive((userData_new?.ribbons - userData?.ribbons) || 0);
-        quest_cache.inventory_count += numberTools.clampPositive(userData_new.card_inventory.length - userData.card_inventory.length);
+        quest_cache.balance ||= 0; quest_cache.balance += numberTools.clampPositive(
+            userData_new.balance - userData.balance
+        );
+        quest_cache.ribbons ||= 0; quest_cache.ribbons += numberTools.clampPositive(
+            userData_new?.ribbons - userData?.ribbons
+        );
+        quest_cache.inventory_count ||= 0; quest_cache.inventory_count += numberTools.clampPositive(
+            userData_new.card_inventory.length - userData.card_inventory.length
+        );
 
         // Set the constant values to cache progress
-        quest_cache.level_user = userData_new.level;
-        quest_cache.level_idol = card_idol?.stats?.level
-        quest_cache.team_ability = card_team?.ability_total;
-        quest_cache.team_reputation = card_team?.reputation_total;
+        quest_cache.level_user ||= 0; quest_cache.level_user = userData_new.level;
+        quest_cache.level_idol ||= 0; quest_cache.level_idol = card_idol?.stats?.level
+        quest_cache.team_ability ||= 0; quest_cache.team_ability = card_team?.ability_total;
+        quest_cache.team_reputation ||= 0; quest_cache.team_reputation = card_team?.reputation_total;
 
         // Replace userData_new's quest_cache so we can validate quest requirements before updating in Mongo
         userData_new.quest_cache = quest_cache;

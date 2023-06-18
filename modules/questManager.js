@@ -43,7 +43,7 @@ function validate(userData) {
 
         // User level
         if (requirements?.level_user <= userData?.quest_cache?.level_user)
-            requirements.ribbons = true; else requirements.ribbons = false;
+            requirements.level_user = true; else requirements.level_user = false;
         // Idol level
         if (requirements?.level_idol <= userData?.quest_cache?.level_idol)
             requirements.level_idol = true; else requirements.level_idol = false;

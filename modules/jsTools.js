@@ -131,6 +131,7 @@ function number_clamp(num, min, max) {
 /** Returns 0 if the number is negative
  * @param {number} num The number to clamp */
 function number_clampPositive(num) {
+    if (isNaN(num)) return 0;
     return num < 0 ? 0 : num;
 }
 
