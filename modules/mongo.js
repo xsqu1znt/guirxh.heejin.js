@@ -404,7 +404,7 @@ async function userQuest_cache(userID) {
             user_update(userID, {
                 $push: {
                     // Add completed quests if available
-                    "quests_completed": parsedQuestData.completed
+                    "quests_completed": parsedQuestData.completed || undefined
                 },
                 $set: {
                     // Update the user's quest_cache
