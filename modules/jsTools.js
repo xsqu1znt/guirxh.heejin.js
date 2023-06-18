@@ -128,6 +128,12 @@ function number_clamp(num, min, max) {
     return num < min ? min : num > max ? max : num;
 }
 
+/** Returns 0 if the number is negative
+ * @param {number} num The number to clamp */
+function number_clampPositive(num) {
+    return num < 0 ? 0 : num;
+}
+
 // ! Date
 /** Get the time between the given date and now in a human-readable format.
  * @param {number} unixInSeconds The UNIX date in seconds.
@@ -378,7 +384,8 @@ module.exports = {
         milliToSeconds: number_milliToSeconds,
         secondsToMilli: number_secondsToMilli,
         percentage: number_percentage,
-        clamp: number_clamp
+        clamp: number_clamp,
+        clampPositive: number_clampPositive
     },
 
     /** Functions useful for dealing with dates. */

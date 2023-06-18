@@ -1,7 +1,7 @@
 // Connects us to our Mongo database so we can save and retrieve data.
 
 const { userSettings } = require('../configs/heejinSettings.json');
-const { dateTools, randomTools, stringTools } = require('../modules/jsTools');
+const { stringTools, numberTools, randomTools, dateTools } = require('../modules/jsTools');
 const badgeManager = require('./badgeManager');
 const questManager = require('./questManager');
 const cardManager = require('./cardManager');
@@ -88,7 +88,7 @@ async function user_fetch(userID, type = "full", lean = true) {
         case "full": filter = { __v: 0 }; break;
         case "essential": filter = { card_inventory: 0 }; break;
         case "reminders": filter = { daily_streak: 1, cooldowns: 1, reminders: 1 }; break;
-        case "quest": filter = { quest_cache: 1 }; break;
+        case "quest": filter = { quests_completed, quest_cache: 1 }; break;
         case "cards": filter = { card_inventory: 1 }; break;
     }
 
@@ -103,8 +103,8 @@ async function user_fetch(userID, type = "full", lean = true) {
     return user || null;
 }
 
-async function user_update(userID, update) {
-    return await models.user.findByIdAndUpdate(userID, update, { new: true });
+async function user_update(userID, update, returnDoc = false) {
+    return await models.user.findByIdAndUpdate(userID, update, { new: returnDoc });
 }
 
 async function user_new(userID, query = null) {
@@ -341,6 +341,88 @@ async function userReminder_reset(userID, guildID, channelID, user, reminderType
 
 //! User -> Quests
 async function userQuest_cache(userID) {
+    if (!questManager.exists()) return;
+
+    // Fetch the user's quest data
+    let userData = await user_fetch(userID, "quest");
+
+    // Determine if we skip
+    if (userData?.quests_completed) {
+        // Filter only the current quests from the user's quest_completed array
+        let _currentOnly = userData.quests_completed.filter(quest => questManager.questIDs.includes(quest.id));
+
+        // Skip if the user already completed the current quests
+        if (_currentOnly.length === questManager.quests.length) return;
+    }
+
+    // Fetch the user's full data so we can cache their quest progress
+    userData = await user_fetch(userID, "full");
+
+    // Return a callback function to cache the user's new data
+    return async () => {
+        // Fetch the user's full data
+        let userData_new = await user_fetch(userID, "full");
+        let quest_cache = userData_new?.quest_cache || {};
+
+        // Get the user's selected (idol) card
+        let card_idol = userParser.cards.getIdol(userData_new);
+        // Get the user's team
+        let card_team = userParser.cards.getTeam(userData_new, false);
+
+        // Set the gained difference between the last userData to cache progress
+        quest_cache.balance += numberTools.clampPositive(userData_new.balance - userData.balance);
+        quest_cache.ribbons += numberTools.clampPositive((userData_new?.ribbons - userData?.ribbons) || 0);
+        quest_cache.inventory_count += numberTools.clampPositive(userData_new.card_inventory.length - userData.card_inventory.length);
+
+        // Set the constant values to cache progress
+        quest_cache.level_user = userData_new.level;
+        quest_cache.level_idol = card_idol?.stats?.level
+        quest_cache.team_abiliy = card_team?.ability_total;
+        quest_cache.team_reputation = card_team?.reputation_total;
+
+        // Replace userData_new's quest_cache so we can validate quest requirements before updating in Mongo
+        userData_new.quest_cache = quest_cache;
+
+        // Check if the user has any requirements completed
+        let quests_validated = questManager.validate(userData_new);
+
+        for (let _quest of quests_validated) {
+            // Cache the requirements (completed/uncompleted) for the current quest
+            await user_update(userID,
+                {
+                    $push: {
+                        "quest_cache.quest_requirements": _quest.requirements_validated
+                    }
+                }
+            );
+
+
+            /* Object.entries(_quest.requirements_completed).forEach(req => {
+                let a = quest_cache.quest_requirements.find(q => q.id === _quest.id) || {};
+                a[req[0]] = req[1];
+
+                quest_cache.quest_requirements = a;
+            }); */
+
+            // Add the quest to the user's quest_completed array if it's completed
+        }
+
+        // Clear the cached user's quest_requirements array
+        await user_update(userID, { $set: { "quest_cache.quest_requirements": [] } });
+        // Push the new quest_requirements cache
+        await user_update(userID, {})
+
+        // Update the user's quest_cache
+        userData_new = await user_update(userID, {
+            $push: {
+                "quest_cache.quest_requirements":
+                    { $each: { quests_validated } }
+            }
+        });
+    };
+}
+
+/* async function userQuest_cache(userID) {
     if (!questManager.exists()) return async () => { return [] };
 
     // Only allow positive numbers to increment the cache
@@ -444,7 +526,7 @@ async function userQuest_validate(userID, userData = null) {
     }
 
     return questsCompleted;
-}
+} */
 
 module.exports = {
     /** Connect to MongoDB. */

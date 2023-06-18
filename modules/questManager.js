@@ -86,7 +86,7 @@ function validate(userData) {
 }
 
 module.exports = {
-    quests,
+    quests, questIDs: quests.map(q => q.id),
     exists,
     toString,
     validate

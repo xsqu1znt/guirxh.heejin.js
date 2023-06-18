@@ -8,6 +8,8 @@ IMPORTANT:
 • /collections | group filter shouldn't need the full name
 
 UN-IMPORTANT:
+>> Commands
+• /leaderboard | a per server leaderboard
 >> Extra
 • show player's start date in /information
 
