@@ -351,8 +351,13 @@ async function userQuest_cache(userID) {
         // Filter only the current quests from the user's quest_completed array
         let _currentOnly = userData.quests_completed.filter(quest => questManager.questIDs.includes(quest.id));
 
-        // Skip if the user already completed the current quests
-        if (_currentOnly.length === questManager.quests.length) return;
+        if (_currentOnly.length === questManager.quests.length) {
+            // Reset the user's quest_cache
+            await user_update(userID, { quest_cache: [] });
+
+            // Skip since the user completed the current quests
+            return;
+        };
     }
 
     // Fetch the user's full data so we can cache their quest progress
@@ -377,7 +382,7 @@ async function userQuest_cache(userID) {
         // Set the constant values to cache progress
         quest_cache.level_user = userData_new.level;
         quest_cache.level_idol = card_idol?.stats?.level
-        quest_cache.team_abiliy = card_team?.ability_total;
+        quest_cache.team_ability = card_team?.ability_total;
         quest_cache.team_reputation = card_team?.reputation_total;
 
         // Replace userData_new's quest_cache so we can validate quest requirements before updating in Mongo
@@ -385,6 +390,7 @@ async function userQuest_cache(userID) {
 
         // Validate the user's quest cache against the current quests
         let parsedQuestData = questManager.validate(userData_new);
+        console.log(parsedQuestData);
 
         // Update the user's quest_cache
         await Promise.all([
@@ -395,6 +401,15 @@ async function userQuest_cache(userID) {
                     "quests_completed": parsedQuestData.completed
                 },
                 $set: {
+                    // Update the user's quest_cache
+                    "quest_cache.balance": quest_cache.balance,
+                    "quest_cache.ribbons": quest_cache.ribbons,
+                    "quest_cache.inventory_count": quest_cache.inventory_count,
+                    "quest_cache.level_user": quest_cache.level_user,
+                    "quest_cache.level_idol": quest_cache.level_idol,
+                    "quest_cache.team_ability": quest_cache.team_ability,
+                    "quest_cache.team_reputation": quest_cache.team_reputation,
+
                     // Update cached quest_requirements
                     "quest_cache.quest_requirements": parsedQuestData.requirements
                 },
@@ -477,8 +492,7 @@ module.exports = {
         },
 
         quests: {
-            cache: userQuest_cache,
-            validate: userQuest_validate
+            cache: userQuest_cache
         }
     }
 };

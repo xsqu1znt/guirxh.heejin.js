@@ -26,8 +26,7 @@ function toString(userData) {
 
 function validate(userData) {
     let parsedQuestData = {
-        completed: [],
-        requirements: [],
+        completed: [], progress: [], requirements: [],
         rewards: { xp: 0, carrots: 0, ribbons: 0, cards: [] }
     };
 
@@ -54,21 +53,56 @@ function validate(userData) {
             requirements.inventory_total = true; else requirements.inventory_total = false;
 
         // User owns a specific card
-        if (requirements?.inventory_total <= userData.card_inventory.length)
-            requirements.inventory_total = true; else requirements.inventory_total = false;
+        if (userParser.cards.has(userData, requirements?.card_global_ids))
+            requirements.card_global_ids = true; else requirements.card_global_ids = false;
+
         // User completed a specific set
-        if (requirements?.inventory_total <= userData.card_inventory.length)
-            requirements.inventory_total = true; else requirements.inventory_total = false;
+        if (userParser.cards.setsCompleted(userData, requirements?.card_sets_completed))
+            requirements.card_sets_completed = true; else requirements.card_sets_completed = false;
+
         // User owns duplicates of a specific card
-        if (requirements?.inventory_total <= userData.card_inventory.length)
-            requirements.inventory_total = true; else requirements.inventory_total = false;
+        if (requirements?.card_duplicates) {
+            let _completed = requirements.card_duplicates.filter(card =>
+                userParser.cards.getDuplicates(userData, card.globalID).duplicateCount
+                >= card.count
+            );
+
+            if (_completed.length === requirements.card_duplicates.length)
+                requirements.card_duplicates = true;
+        } else requirements.card_duplicates = false;
 
         // Team ability
-        if (requirements?.inventory_total <= userData.card_inventory.length)
-            requirements.inventory_total = true; else requirements.inventory_total = false;
+        if (requirements?.team_ability <= userData?.quest_cache?.team_ability)
+            requirements.team_ability = true; else requirements.team_ability = false;
         // Team reputation
-        if (requirements?.inventory_total <= userData.card_inventory.length)
-            requirements.inventory_total = true; else requirements.inventory_total = false;
+        if (requirements?.team_reputation <= userData?.quest_cache?.team_reputation)
+            requirements.team_reputation = true; else requirements.team_reputation = false;
+
+        // Process the result
+        let requirements_completed = Object.values(requirements).filter(req => req).length;
+        let requirements_needed = Object.keys(quest.requirements).length;
+
+        // Check if the user completed all requirements
+        if (requirements_completed === requirements_needed) {
+            // Add to the total rewards
+            parsedQuestData.rewards.xp += quest.reward?.xp || 0;
+            parsedQuestData.rewards.carrots += quest.reward?.carrots || 0;
+            parsedQuestData.rewards.ribbons += quest.reward?.ribbons || 0;
+            parsedQuestData.rewards.cards = [...parsedQuestData.rewards.cards, ...(quest.reward?.cards || [])];
+
+            // Push the simplified completed quest object
+            parsedQuestData.completed.push({
+                id: quest.id, name: quest.name, date: quest.date, rewards: quest.rewards
+            });
+        }
+
+        parsedQuestData.progress.push({
+            id: quest.id, completed: requirements_completed, needed: requirements_needed,
+            f: `${requirements_completed}/${requirements_needed}`
+        });
+
+        // Push the new parsed requirements object
+        parsedQuestData.requirements.push({ id: quest.id, requirements });
     }
 
     return parsedQuestData;
