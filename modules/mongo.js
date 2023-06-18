@@ -103,8 +103,8 @@ async function user_fetch(userID, type = "full", lean = true) {
     return user || null;
 }
 
-async function user_update(userID, update, returnDoc = false) {
-    return await models.user.findByIdAndUpdate(userID, update, { new: returnDoc });
+async function user_update(userID, update) {
+    return await models.user.findByIdAndUpdate(userID, update, { new: true });
 }
 
 async function user_new(userID, query = null) {
@@ -383,150 +383,35 @@ async function userQuest_cache(userID) {
         // Replace userData_new's quest_cache so we can validate quest requirements before updating in Mongo
         userData_new.quest_cache = quest_cache;
 
-        // Check if the user has any requirements completed
-        let quests_validated = questManager.validate(userData_new);
-
-        for (let _quest of quests_validated) {
-            // Cache the requirements (completed/uncompleted) for the current quest
-            await user_update(userID,
-                {
-                    $push: {
-                        "quest_cache.quest_requirements": _quest.requirements_validated
-                    }
-                }
-            );
-
-
-            /* Object.entries(_quest.requirements_completed).forEach(req => {
-                let a = quest_cache.quest_requirements.find(q => q.id === _quest.id) || {};
-                a[req[0]] = req[1];
-
-                quest_cache.quest_requirements = a;
-            }); */
-
-            // Add the quest to the user's quest_completed array if it's completed
-        }
-
-        // Clear the cached user's quest_requirements array
-        await user_update(userID, { $set: { "quest_cache.quest_requirements": [] } });
-        // Push the new quest_requirements cache
-        await user_update(userID, {})
+        // Validate the user's quest cache against the current quests
+        let parsedQuestData = questManager.validate(userData_new);
 
         // Update the user's quest_cache
-        userData_new = await user_update(userID, {
-            $push: {
-                "quest_cache.quest_requirements":
-                    { $each: { quests_validated } }
-            }
-        });
-    };
-}
-
-/* async function userQuest_cache(userID) {
-    if (!questManager.exists()) return async () => { return [] };
-
-    // Only allow positive numbers to increment the cache
-    let ClampPositive = (num) => num < 0 ? 0 : num;
-
-    // Check if the user already completed the current quests
-    let userData_essential = await user_fetch(userID, "essential");
-    if (userData_essential?.quests_completed) {
-        let userQuestsCompleted = userData_essential?.quests_completed?.filter(q =>
-            questManager.quests.map(_q => _q.id).includes(q.id)
-        );
-
-        if (userQuestsCompleted.length === questManager.quests.length)
-            return async () => { return [] };
-    }
-
-    // Get the user's data
-    let userData_old = await user_fetch(userID, "full");
-
-    // Return a function to be called again to compare the difference
-    return async () => {
-        let userData_new = await user_fetch(userID, "full");
-
-        let _user_team = userParser.cards.getTeam(userData_new);
-        let _user_idol = userParser.cards.getIdol(userData_new);
-
-        let difference = {
-            balance: ClampPositive((userData_new?.balance - userData_old?.balance || 0)),
-            ribbons: ClampPositive((userData_new?.ribbons - userData_old?.ribbons) || 0),
-
-            inventory_count: ClampPositive((userData_new?.card_inventory.length - userData_old?.card_inventory.length || 0)),
-
-            levels: {
-                user: ClampPositive((userData_new?.level - userData_old?.level || 0))
-            },
-        };
-
-        // Update the user's quest stats
-        userData_new = await user_update(userID, {
-            $inc: {
-                "quest_cache.balance": difference.balance,
-                "quest_cache.ribbons": difference.ribbons,
-                "quest_cache.inventory_count": difference.inventory_count,
-
-                "quest_cache.level_user": difference.levels.user
-            },
-
-            $set: {
-                "quest_cache.level_idol": _user_idol?.stats.level || 0,
-
-                "quest_cache.team_ability": _user_team.ability_total,
-                "quest_cache.team_reputation": _user_team.reputation_total
-            }
-        });
-
-        // Check if the user completed any quests
-        return await userQuest_validate(userID, userData_new);
-    };
-}
-
-async function userQuest_validate(userID, userData = null) {
-    userData ||= await user_fetch(userID, "full");
-
-    // Check if the user completed any quests
-    let questsCompleted = questManager.validate(userData).filter(quest => quest.completed);
-
-    // Add cards to the user's card_inventory
-    const rewardCards = async (quest) => {
-        if (!quest.reward?.cardGlobalIDs?.length) return;
-
-        let _cards = quest.reward.cardGlobalIDs.map(gid => cardManager.get.byGlobalID(gid)).map(card => card);
-
-        return await userCard_add(userID, _cards);
-    }
-
-    // Iterate through each completed quest
-    for (let quest of questsCompleted) {
-        // Update the user in Mongo
         await Promise.all([
+            // Update the user's quest_cache and apply quest rewards
             user_update(userID, {
-                // Add a copy of the quest to the user's quests_completed
                 $push: {
-                    quests_completed: {
-                        id: quest.id,
-                        name: quest.name,
-                        description: quest.description,
-                        rewards: quest.rewards,
-                        date: quest.date
-                    }
+                    // Add completed quests if available
+                    "quests_completed": parsedQuestData.completed
                 },
-                // Add basic rewards if any
+                $set: {
+                    // Update cached quest_requirements
+                    "quest_cache.quest_requirements": parsedQuestData.requirements
+                },
                 $inc: {
-                    xp: quest.reward?.xp || 0,
-                    balance: quest.reward?.carrots || 0,
-                    ribbons: quest.reward?.ribbons || 0
+                    // Apply some rewards
+                    xp: parsedQuestData.rewards.xp,
+                    balance: parsedQuestData.rewards.carrots,
+                    ribbons: parsedQuestData.rewards.ribbons
                 }
             }),
-            // Add rewarded cards to the user's card_inventory
-            rewardCards(quest)
+            // Reward the user with cards if available
+            userCard_add(userID, parsedQuestData.rewards.cards)
         ]);
-    }
 
-    return questsCompleted;
-} */
+        return parsedQuestData;
+    };
+}
 
 module.exports = {
     /** Connect to MongoDB. */

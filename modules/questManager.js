@@ -1,9 +1,9 @@
 const { TimestampStyles, time } = require('discord.js');
 
-const quests = require('../configs/quests.json');
-const { botSettings: { currencyIcon } } = require('../configs/heejinSettings.json');
 const { numberTools } = require('./jsTools');
 const userParser = require('./userParser');
+
+const quests = require('../configs/quests.json');
 
 function exists() {
     return quests.length > 0;
@@ -25,7 +25,55 @@ function toString(userData) {
 }
 
 function validate(userData) {
-    if (!userData) return null;
+    let parsedQuestData = {
+        completed: [],
+        requirements: [],
+        rewards: { xp: 0, carrots: 0, ribbons: 0, cards: [] }
+    };
+
+    for (let quest of quests) {
+        let requirements = structuredClone(quest.requirements);
+
+        /// Test the quest's requirements against the user's data
+        // Balance
+        if (requirements?.balance <= userData?.quest_cache?.balance)
+            requirements.balance = true; else requirements.balance = false;
+        // Ribbons
+        if (requirements?.ribbons <= userData?.quest_cache?.ribbons)
+            requirements.ribbons = true; else requirements.ribbons = false;
+
+        // User level
+        if (requirements?.level_user <= userData?.quest_cache?.level_user)
+            requirements.ribbons = true; else requirements.ribbons = false;
+        // Idol level
+        if (requirements?.level_idol <= userData?.quest_cache?.level_idol)
+            requirements.level_idol = true; else requirements.level_idol = false;
+
+        // Number of cards in the user's card_inventory
+        if (requirements?.inventory_total <= userData.card_inventory.length)
+            requirements.inventory_total = true; else requirements.inventory_total = false;
+
+        // User owns a specific card
+        if (requirements?.inventory_total <= userData.card_inventory.length)
+            requirements.inventory_total = true; else requirements.inventory_total = false;
+        // User completed a specific set
+        if (requirements?.inventory_total <= userData.card_inventory.length)
+            requirements.inventory_total = true; else requirements.inventory_total = false;
+        // User owns duplicates of a specific card
+        if (requirements?.inventory_total <= userData.card_inventory.length)
+            requirements.inventory_total = true; else requirements.inventory_total = false;
+
+        // Team ability
+        if (requirements?.inventory_total <= userData.card_inventory.length)
+            requirements.inventory_total = true; else requirements.inventory_total = false;
+        // Team reputation
+        if (requirements?.inventory_total <= userData.card_inventory.length)
+            requirements.inventory_total = true; else requirements.inventory_total = false;
+    }
+
+    return parsedQuestData;
+
+    /* if (!userData) return null;
 
     // Iterate through each quest
     return quests.map(quest => {
@@ -82,7 +130,7 @@ function validate(userData) {
         quest.completed = (completedCount === requirementCount);
 
         return quest;
-    });
+    }); */
 }
 
 module.exports = {

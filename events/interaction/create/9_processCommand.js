@@ -87,7 +87,7 @@ module.exports = {
             }
 
             // Cache the user's current data before running the command (quests)
-            let validateQuests = await userManager.quests.cache(args.interaction.user.id);
+            let cacheQuests = await userManager.quests.cache(args.interaction.user.id);
 
             // Execute the command function
             return await slashCommand.execute(client, args.interaction).then(async msg => {
@@ -112,10 +112,10 @@ module.exports = {
 
                 // Cache the user's new data after running the command (quests)
                 // then check if the user completed any quests
-                validateQuests().then(quests => {
-                    for (let quest of quests) if (quest.completed) {
+                cacheQuests().then(questData => {
+                    /* for (let quest of questData) if (quest.completed) {
                         // do something about it
-                    }
+                    } */
                 });
 
                 // Have a chance to send a random tip to the channel
