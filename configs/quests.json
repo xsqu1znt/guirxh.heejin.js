@@ -1,12 +1,12 @@
 [
     {
         "id": "q01",
-        "name": "An impossible task",
+        "name": "Dev Quest",
         "rewards": "`🥕 50k` `🎀 100`",
-        "description": "Complete every single requirement",
+        "description": "Used for testing",
         "date": {
-            "start": "2023-06-11",
-            "end": "2023-06-25"
+            "start": "2023-06-19",
+            "end": "2023-06-26"
         },
         "requirements": {
             "balance": 15000,
@@ -30,25 +30,8 @@
         "reward": {
             "xp": 1000,
             "carrots": 50000,
-            "ribbons": 100
-        }
-    },
-    {
-        "id": "q02",
-        "name": "A possible task",
-        "rewards": "`🥕 15k` `🎀 50`",
-        "description": "Get `🥕 5k` and get to LV. 30 ",
-        "date": {
-            "start": "2023-06-11",
-            "end": "2023-06-25"
-        },
-        "requirements": {
-            "balance": 5000,
-            "level_user": 30
-        },
-        "reward": {
-            "carrots": 15000,
-            "ribbons": 50
+            "ribbons": 100,
+            "card_global_ids": ["1001", "1002", "1003"]
         }
     }
 ]

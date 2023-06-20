@@ -88,7 +88,7 @@ function validate(userData) {
             parsedQuestData.rewards.xp += quest.reward?.xp || 0;
             parsedQuestData.rewards.carrots += quest.reward?.carrots || 0;
             parsedQuestData.rewards.ribbons += quest.reward?.ribbons || 0;
-            parsedQuestData.rewards.cards = [...parsedQuestData.rewards.cards, ...(quest.reward?.cards || [])];
+            parsedQuestData.rewards.cards = [...parsedQuestData.rewards.cards, ...(quest.reward?.card_global_ids || [])];
 
             // Push the simplified completed quest object
             parsedQuestData.completed.push({

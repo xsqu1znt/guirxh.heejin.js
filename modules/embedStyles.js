@@ -623,7 +623,7 @@ function userInventory_ES(guildMember, userData, filter) {
             author: { text: "%AUTHOR_NAME | inventory", user: guildMember },
             description: isFiltered
                 ? "No cards were found with that search filter"
-                : "You don't have anything in your inventory!\n> Use \`/drop\` to get cards"
+                : "You do not have anything in your inventory!\n> Use \`/drop\` to get cards"
         })
     ];
 
