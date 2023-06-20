@@ -1,6 +1,7 @@
 const { TimestampStyles, time } = require('discord.js');
 
 const { numberTools } = require('./jsTools');
+const cardManager = require('./cardManager');
 const userParser = require('./userParser');
 
 const quests = require('../configs/quests.json');
@@ -16,7 +17,7 @@ function toString(userData) {
 
         return {
             title: `\`📜\` **${questProgress.data.name}** ${questProgress.data.rewards}`,
-            description: `> \`%COMPLETED %PROGRESS\` ending %TIMESTAMP_END\n> ${questProgress.data.description}`
+            description: `>>> \`%COMPLETED %PROGRESS\` ending %TIMESTAMP_END\n${questProgress.data.description}`
                 .replace("%COMPLETED", questProgress.isComplete ? "✔️" : "🚫")
                 .replace("%PROGRESS", questProgress.f)
                 .replace("%TIMESTAMP_END", time(date_end, TimestampStyles.RelativeTime))
@@ -78,6 +79,11 @@ function validate(userData) {
         if (requirements?.team_reputation <= userData?.quest_cache?.team_reputation)
             requirements.team_reputation = true; else requirements.team_reputation = false;
 
+        // Delete requirements values not part of the quest
+        Object.keys(requirements).forEach(key => {
+            if (!quest.requirements[key]) delete requirements[key];
+        });
+
         // Process the result
         let requirements_completed = Object.values(requirements).filter(req => req).length;
         let requirements_needed = Object.keys(quest.requirements).length;
@@ -89,6 +95,11 @@ function validate(userData) {
             parsedQuestData.rewards.carrots += quest.reward?.carrots || 0;
             parsedQuestData.rewards.ribbons += quest.reward?.ribbons || 0;
             parsedQuestData.rewards.cards = [...parsedQuestData.rewards.cards, ...(quest.reward?.card_global_ids || [])];
+
+            // Get the cards from their global ID
+            parsedQuestData.rewards.cards = parsedQuestData.rewards.cards.map(globalID =>
+                cardManager.get.byGlobalID(globalID)
+            ).filter(card => card);
 
             // Push the simplified completed quest object
             parsedQuestData.completed.push({

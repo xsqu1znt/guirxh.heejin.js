@@ -24,17 +24,12 @@ const schema_user = Schema({
     cooldowns: { type: Array, default: new Array() },
     reminders: { type: Array, default: new Array() },
 
-    timestamp_started: { type: Number, require: true },
-
     quests_completed: { type: Array, default: new Array() },
     quest_cache: {
-        type: Object, default: {
-            quest_requirements: [],
-            balance: 0, ribbons: 0, inventory_count: 0,
-            levels_user: 0, levels_idol: 0,
-            team_ability: 0, team_reputation: 0
-        }
-    }
+        type: Object, default: {}
+    },
+
+    timestamp_started: { type: Number, require: true }
 }, { collection: "users" });
 
 module.exports = model("users", schema_user);

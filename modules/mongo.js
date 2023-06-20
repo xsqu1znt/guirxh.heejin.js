@@ -188,6 +188,7 @@ async function userXP_tryLevelUp(userID, userData = null) {
 async function userCard_add(userID, cards) {
     // Create an array if only a single card object was passed
     if (!Array.isArray(cards)) cards = [cards];
+    if (!cards.length) return;
 
     /// Get an array of all the card UIDs in the user's card_inventory to avoid duplicates
     // Fetch the user's card_inventory
@@ -200,6 +201,8 @@ async function userCard_add(userID, cards) {
     let cards_parsed = [];
 
     for (let i = 0; i < cards.length; i++) {
+        if (!cards[i]?.globalID) continue;
+
         if (!cards[i]?.uid) cardManager.resetUID(cards[i]);
 
         // Recursivly reset the card's UID if another card exists with the same UID
@@ -354,7 +357,7 @@ async function userQuest_cache(userID) {
 
         if (_currentOnly.length === questManager.quests.length) {
             // Reset the user's quest_cache
-            await user_update(userID, { quest_cache: [] });
+            // await user_update(userID, { quest_cache: {} });
 
             // Skip since the user completed the current quests
             return;
@@ -404,7 +407,7 @@ async function userQuest_cache(userID) {
             (async () => {
                 // Add completed quests if available
                 if (parsedQuestData.completed.length) return await user_update(userID, {
-                    $push: { "quests_completed": parsedQuestData.completed }
+                    $push: { "quests_completed": { $each: parsedQuestData.completed } }
                 });
             })(),
 

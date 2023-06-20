@@ -91,6 +91,18 @@ module.exports = {
 
             // Execute the command function
             return await slashCommand.execute(client, args.interaction).then(async msg => {
+                try {
+                    // Cache the user's new data after running the command (quests)
+                    // then check if the user completed any quests
+                    let parsedQuestData = await cacheQuests(); if (parsedQuestData) {
+                        console.log(parsedQuestData);
+
+                        /* for (let quest of parsedQuestData) if (quest.completed) {
+                            // do something about it
+                        }   */
+                    }
+                } catch { }
+
                 // Check if the user can level up
                 let leveled = await userManager.xp.tryLevelUp(args.interaction.user.id);
 
@@ -109,15 +121,6 @@ module.exports = {
                         await args.interaction.channel.send({ content: lvlMsg, allowedMentions: { repliedUser: false } });
                     }
                 }
-
-                // Cache the user's new data after running the command (quests)
-                // then check if the user completed any quests
-                if (cacheQuests) cacheQuests().then(parsedQuestData => {
-                    console.log(parsedQuestData);
-                    /* for (let quest of parsedQuestData) if (quest.completed) {
-                        // do something about it
-                    } */
-                });
 
                 // Have a chance to send a random tip to the channel
                 if (randomTools.chance(chanceToShowTips)) return await new BetterEmbed({
