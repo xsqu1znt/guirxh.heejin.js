@@ -79,7 +79,7 @@ function validate(userData) {
         if (requirements?.team_reputation <= userData?.quest_cache?.team_reputation)
             requirements.team_reputation = true; else requirements.team_reputation = false;
 
-        // Delete requirements values not part of the quest
+        // Delete requirement values not part of the quest
         Object.keys(requirements).forEach(key => {
             if (!quest.requirements[key]) delete requirements[key];
         });
