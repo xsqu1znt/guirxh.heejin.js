@@ -48,8 +48,13 @@ function cards_getTeam(userData, keepNull = false) {
     let cards_team = cards_get(userData, userData.card_team_uids, true);
     if (!keepNull) cards_team = cards_team.filter(card => card);
 
-    let team_ability_total = cards_team.map(card => card?.stats?.ability || 0).reduce((a, b) => a + b);
-    let team_reputation_total = cards_team.map(card => card?.stats?.reputation || 0).reduce((a, b) => a + b);
+    let team_ability_total = 0;
+    let team_reputation_total = 0;
+
+    if (cards_team.length) {
+        team_ability_total = cards_team.map(card => card?.stats?.ability || 0).reduce((a, b) => a + b);
+        team_reputation_total = cards_team.map(card => card?.stats?.reputation || 0).reduce((a, b) => a + b);
+    }
 
     return {
         cards: cards_team,

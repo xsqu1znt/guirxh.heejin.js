@@ -112,8 +112,9 @@ module.exports = {
 
                 // Cache the user's new data after running the command (quests)
                 // then check if the user completed any quests
-                cacheQuests().then(questData => {
-                    /* for (let quest of questData) if (quest.completed) {
+                if (cacheQuests) cacheQuests().then(parsedQuestData => {
+                    console.log(parsedQuestData);
+                    /* for (let quest of parsedQuestData) if (quest.completed) {
                         // do something about it
                     } */
                 });

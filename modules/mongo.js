@@ -342,11 +342,12 @@ async function userReminder_reset(userID, guildID, channelID, user, reminderType
 //! User -> Quests
 async function userQuest_cache(userID) {
     if (!questManager.exists()) return;
+    if (!await user_exists(userID)) return;
 
     // Fetch the user's quest data
     let userData = await user_fetch(userID, "quest");
 
-    // Determine if we skip
+    // Determine if we skip caching
     if (userData?.quests_completed) {
         // Filter only the current quests from the user's quest_completed array
         let _currentOnly = userData.quests_completed.filter(quest => questManager.questIDs.includes(quest.id));
@@ -396,16 +397,19 @@ async function userQuest_cache(userID) {
 
         // Validate the user's quest cache against the current quests
         let parsedQuestData = questManager.validate(userData_new);
-        console.log(parsedQuestData);
 
         // Update the user's quest_cache
         await Promise.all([
+            // Update the user's quests_completed cache
+            (async () => {
+                // Add completed quests if available
+                if (parsedQuestData.completed.length) return await user_update(userID, {
+                    $push: { "quests_completed": parsedQuestData.completed }
+                });
+            })(),
+
             // Update the user's quest_cache and apply quest rewards
             user_update(userID, {
-                $push: {
-                    // Add completed quests if available
-                    "quests_completed": parsedQuestData.completed || undefined
-                },
                 $set: {
                     // Update the user's quest_cache
                     "quest_cache.balance": quest_cache.balance,

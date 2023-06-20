@@ -10,15 +10,15 @@ function exists() {
 }
 
 function toString(userData) {
-    return validate(userData).map(quest => {
+    return validate(userData).progress.map(questProgress => {
         // let date_start = numberTools.milliToSeconds(Date.parse(quest.date.start));
-        let date_end = numberTools.milliToSeconds(Date.parse(quest.date.end));
+        let date_end = numberTools.milliToSeconds(Date.parse(questProgress.data.date.end));
 
         return {
-            title: `\`📜\` **${quest.name}** ${quest.rewards}`,
-            description: `> \`%COMPLETED %PROGRESS\` ending %TIMESTAMP_END\n> ${quest.description}`
-                .replace("%COMPLETED", quest.completed ? "✔️" : "🚫")
-                .replace("%PROGRESS", quest.progress_f)
+            title: `\`📜\` **${questProgress.data.name}** ${questProgress.data.rewards}`,
+            description: `> \`%COMPLETED %PROGRESS\` ending %TIMESTAMP_END\n> ${questProgress.data.description}`
+                .replace("%COMPLETED", questProgress.isComplete ? "✔️" : "🚫")
+                .replace("%PROGRESS", questProgress.f)
                 .replace("%TIMESTAMP_END", time(date_end, TimestampStyles.RelativeTime))
         };
     });
@@ -68,7 +68,7 @@ function validate(userData) {
             );
 
             if (_completed.length === requirements.card_duplicates.length)
-                requirements.card_duplicates = true;
+                requirements.card_duplicates = true; else requirements.card_duplicates = false;
         } else requirements.card_duplicates = false;
 
         // Team ability
@@ -97,7 +97,9 @@ function validate(userData) {
         }
 
         parsedQuestData.progress.push({
-            id: quest.id, completed: requirements_completed, needed: requirements_needed,
+            id: quest.id, data: quest,
+            isComplete: (requirements_completed === requirements_needed),
+            completed: requirements_completed, needed: requirements_needed,
             f: `${requirements_completed}/${requirements_needed}`
         });
 
