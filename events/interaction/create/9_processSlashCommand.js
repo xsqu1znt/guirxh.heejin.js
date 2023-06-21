@@ -91,12 +91,15 @@ module.exports = {
             slashCommand.execute(client, args.interaction).then(async message => {
                 // Handle post-execute quest caching 
                 cacheUserQuestData().then(async _parsedQuestData => {
-                    if (_parsedQuestData) {
-                        // TODO: send a message if a user completed a requirement (use pre-userData for reference)
+                    if (!_parsedQuestData) return;
 
-                        if (_parsedQuestData.completed.length) {
-                            // TODO: do something about it
-                        }
+                    // TODO: send a message if a user completed a requirement (use pre-userData for reference)
+                    for (let _requirement of _parsedQuestData.progress.newlyCompleted) {
+                        // TODO: add together the completed requirement names into a string and send it in 1 embed
+                    }
+
+                    if (_parsedQuestData.completed.length) {
+                        // TODO: do something about it
                     }
                 });
 
@@ -123,8 +126,12 @@ module.exports = {
             if (randomTools.chance(chanceToShowTips)) embed_tip.send({
                 description: randomTools.choice(heejinTips), method: "send"
             });
-        } catch {
-
+        } catch (err) {
+            logger.error(
+                "An error occurred: SLSH_CMD",
+                `cmd: /${args.interaction.commandName} | guildID: ${args.interaction.guild.id} | userID: ${args.interaction.user.id}`,
+                err
+            );
         }
     }
 };
