@@ -3,9 +3,13 @@
 const { Client, BaseInteraction, PermissionsBitField } = require('discord.js');
 
 const { ownerID, adminIDs, adminBypassIDs } = require('../../../configs/clientSettings.json');
-const { communityServer } = require('../../../configs/heejinSettings.json');
+const { communityServer, botSettings: { chanceToShowTips } } = require('../../../configs/heejinSettings.json');
+
+const heejinTips = require('../../../configs/heejinTips.json');
 
 const { BetterEmbed } = require('../../../modules/discordTools');
+const { randomTools } = require('../../../modules/jsTools');
+const { userManager } = require('../../../modules/mongo');
 const logger = require('../../../modules/logger');
 
 function userIsBotAdminOrBypass(interaction) {
@@ -31,15 +35,26 @@ module.exports = {
         // Filter out non-guild and non-command interactions
         if (!args.interaction.guild || !args.interaction.isCommand()) return;
 
-        // Create a base embed to send error messages
-        let embed_error = new BetterEmbed({ interaction: args.interaction });
+        /// Misc. embeds
+        let embed_error = new BetterEmbed({
+            interaction: args.interaction, title: { text: "\`⛔\` **Something is wrong**" }
+        });
+
+        let embed_tip = new BetterEmbed({
+            interaction: args.interaction, title: { text: "\`⚠️\` **Did You Know?**" },
+        });
+
+        let embed_userLevelUp = new BetterEmbed({
+            interaction: args.interaction, title: { text: `\`🎉\` Congratulations, ${args.interaction.user}!` },
+        });
 
         // Get the slash command function from the client if it exists
         let slashCommand = client.slashCommands.get(args.interaction.commandName) || null;
-        if (!slashCommand) return await embed_error.send({ description: "That is not a command" });
+        if (!slashCommand) return await embed_error.send({ description: `\`/${args.interaction.commandName}\` is not a command` });
 
         // Execute the command
         try {
+            // Parse slash command options
             if (slashCommand?.options) {
                 let _botAdminOnly = slashCommand.options?.botAdminOnly;
                 let _guildAdminOnly = slashCommand.options?.guildAdminOnly;
@@ -58,6 +73,56 @@ module.exports = {
                 if (_isCommunityServer && _isCommunityServerAdminChannel && (_botAdminOnly || _guildAdminOnly))
                     return await embed_error.send({ description: `You can only use that command in <#${communityServer.adminChannelID}>`, ephemeral: true });
             }
+
+            // Defer the interaction
+            if (!slashCommand?.options?.dontDefer) await args.interaction.deferReply();
+
+            /// Check if the user's in our Mongo database
+            let _userDataExists = await userManager.exists(args.interaction.user.id);
+            let _dontRequireUserData = slashCommand?.options?.dontRequireUserData || false;
+
+            if (!_userDataExists && !_dontRequireUserData)
+                return await embed_error.send({ description: "**You have not started yet!** Use \`/start\` first!", ephemeral: true });
+
+            // Cache the user's current UserData if available || REQUIRED FOR QUESTS ONLY
+            let cacheUserQuestData = await userManager.quests.cache(args.interaction.user.id);
+
+            // Execute the slash command's function
+            slashCommand.execute(client, args.interaction).then(async message => {
+                // Handle post-execute quest caching 
+                cacheUserQuestData().then(async _parsedQuestData => {
+                    if (_parsedQuestData) {
+                        // TODO: send a message if a user completed a requirement (use pre-userData for reference)
+
+                        if (_parsedQuestData.completed.length) {
+                            // TODO: do something about it
+                        }
+                    }
+                });
+
+                // Check if the user can level up
+                userManager.xp.tryLevelUp(args.interaction.user.id).then(async _userLevelUp => {
+                    if (_userLevelUp.leveled) {
+                        // Create the level up message
+                        let levelUpText = `\🎉 Congratulations, %USER! You are now \`LV. %CURRENT_LVL\``
+                            .replace("%USER", args.interaction.user)
+                            .replace("%CURRENT_LVL", _userLevelUp.level_current);
+
+                        // Edit the current message with the level up message
+                        // if the message can't be edited, send a separate message
+                        try {
+                            await message.edit({ content: `**${levelUpText}**\n\n${message.content}` });
+                        } catch {
+                            await embed_userLevelUp.send({ description: `You are now \`LV. ${_userLevelUp.level_current}\`` });
+                        }
+                    }
+                });
+            });
+
+            // Send a random Tips N' Tricks messeage to the channel
+            if (randomTools.chance(chanceToShowTips)) embed_tip.send({
+                description: randomTools.choice(heejinTips), method: "send"
+            });
         } catch {
 
         }
