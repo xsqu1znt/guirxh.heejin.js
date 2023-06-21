@@ -3,6 +3,8 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js'
 const subcommands = require('./setting_SUBCMDS');
 
 module.exports = {
+    options: { isOwnerCommand: true },
+
     builder: new SlashCommandBuilder().setName("setting")
         .setDescription("For admins of Heejin only")
 
@@ -31,8 +33,6 @@ module.exports = {
         .addNumberOption(options => options.setName("amount")
             .setDescription("Amount of carrots to give use negative number to withdraw")
         ),
-
-    isOwnerCommand: true,
 
     /**
      * @param {Client} client

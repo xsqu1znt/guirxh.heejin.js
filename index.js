@@ -27,8 +27,9 @@ const client = new Client({
 });
 
 // Collections that hold valuable information for the client
-client.slashCommands = new Collection();
+client.slashCommands_general = new Collection();
 client.slashCommands_admin = new Collection();
+client.slashCommands = new Collection();
 
 // Run importers
 let importers_dir = fs.readdirSync('./modules/importers').filter(fn => fn.startsWith('import_') && fn.endsWith('.js'));
