@@ -37,15 +37,13 @@ module.exports = {
 
         /// Misc. embeds
         let embed_error = new BetterEmbed({
-            interaction: args.interaction, title: { text: "\`⛔\` **Something is wrong**" }
+            interaction: args.interaction, author: { text: "⛔ **Something is wrong**" }
         });
-
         let embed_tip = new BetterEmbed({
-            interaction: args.interaction, title: { text: "\`⚠️\` **Did You Know?**" },
+            interaction: args.interaction, author: { text: "⚠️ **Did You Know?**" }
         });
-
         let embed_userLevelUp = new BetterEmbed({
-            interaction: args.interaction, title: { text: `\`🎉\` Congratulations, ${args.interaction.user}!` },
+            interaction: args.interaction, author: { text: `🎉 Congratulations, ${args.interaction.user}!` }
         });
 
         // Get the slash command function from the client if it exists
@@ -75,7 +73,7 @@ module.exports = {
             }
 
             // Defer the interaction
-            if (!slashCommand?.options?.dontDefer) await args.interaction.deferReply();
+            if (slashCommand?.options?.deferReply) await args.interaction.deferReply();
 
             /// Check if the user's in our Mongo database
             let _userDataExists = await userManager.exists(args.interaction.user.id);
@@ -89,43 +87,63 @@ module.exports = {
 
             // Execute the slash command's function
             slashCommand.execute(client, args.interaction).then(async message => {
-                // Handle post-execute quest caching 
-                cacheUserQuestData().then(async _parsedQuestData => {
-                    if (!_parsedQuestData) return;
+                try {
+                    // Handle post-execute quest caching 
+                    cacheUserQuestData().then(async _parsedQuestData => {
+                        if (!_parsedQuestData) return; /* console.log(_parsedQuestData); */
 
-                    // TODO: send a message if a user completed a requirement (use pre-userData for reference)
-                    for (let _requirement of _parsedQuestData.progress.newlyCompleted) {
-                        // TODO: add together the completed requirement names into a string and send it in 1 embed
-                    }
+                        // Iterate through quest progresses
+                        for (let _questProgress of _parsedQuestData.progress) {
+                            let _requirementsCompleted = _questProgress.requirementsCompleted;
 
-                    if (_parsedQuestData.completed.length) {
-                        // TODO: do something about it
-                    }
-                });
+                            /// Send an embed to alert the user they completed a quest requirement(s)
+                            if (_requirementsCompleted.length) {
+                                // Create the quest requirement(s) complete embed
+                                let embed_questRequirementComplete = new BetterEmbed({
+                                    interaction: args.interaction,
+                                    author: { text: `\`📜\` ${_questProgress.data.name} | Progress`, user: args.interaction.member },
+                                    description: `**You just completed these requirements**:\n>>> ${_requirementsCompleted.join("\n")}`
+                                });
 
-                // Check if the user can level up
-                userManager.xp.tryLevelUp(args.interaction.user.id).then(async _userLevelUp => {
-                    if (_userLevelUp.leveled) {
-                        // Create the level up message
-                        let levelUpText = `\🎉 Congratulations, %USER! You are now \`LV. %CURRENT_LVL\``
-                            .replace("%USER", args.interaction.user)
-                            .replace("%CURRENT_LVL", _userLevelUp.level_current);
+                                // Change the embed's title with the quest's name
+                                embed_questRequirementComplete.setTitle(`\`📜\` ${_questProgress.data.name} | Progress`);
 
-                        // Edit the current message with the level up message
-                        // if the message can't be edited, send a separate message
-                        try {
-                            await message.edit({ content: `**${levelUpText}**\n\n${message.content}` });
-                        } catch {
-                            await embed_userLevelUp.send({ description: `You are now \`LV. ${_userLevelUp.level_current}\`` });
+                                // Send the embed
+                                await embed_questRequirementComplete.send({ method: "followUp" });
+                            }
                         }
-                    }
-                });
+
+                        if (_parsedQuestData.completed.length) {
+                            // TODO: do something about it
+                        }
+                    });
+
+                    // Check if the user can level up
+                    userManager.xp.tryLevelUp(args.interaction.user.id).then(async _userLevelUp => {
+                        if (_userLevelUp.leveled) {
+                            // Create the level up message
+                            let levelUpText = `\🎉 Congratulations, %USER! You are now \`LV. %CURRENT_LVL\``
+                                .replace("%USER", args.interaction.user)
+                                .replace("%CURRENT_LVL", _userLevelUp.level_current);
+
+                            // Edit the current message with the level up message
+                            // if the message can't be edited, send a separate message
+                            try {
+                                await message.edit({ content: `**${levelUpText}**\n\n${message.content}` });
+                            } catch {
+                                await embed_userLevelUp.send({ description: `You are now \`LV. ${_userLevelUp.level_current}\`` });
+                            }
+                        }
+                    });
+                } catch (err) { console.error(err); }
             });
 
-            // Send a random Tips N' Tricks messeage to the channel
-            if (randomTools.chance(chanceToShowTips)) embed_tip.send({
-                description: randomTools.choice(heejinTips), method: "send"
-            });
+            try {
+                // Send a random Tips N' Tricks messeage to the channel
+                if (randomTools.chance(chanceToShowTips)) embed_tip.send({
+                    description: randomTools.choice(heejinTips), method: "send"
+                });
+            } catch { }
         } catch (err) {
             logger.error(
                 "An error occurred: SLSH_CMD",

@@ -1,0 +1,25 @@
+{
+    "currency": {
+        "STARTING_BALANCE": 250,
+
+        "commands": {
+            "daily": { "AMOUNT": 50, "MAX_STREAK_MULTIPLIER": 10 },
+            "random": { "MIN_AMOUNT": 10, "MAX_AMOUNT": 500 }
+        }
+    },
+
+    "loot_chances": {
+        "RANDOM": 40
+    },
+
+    "command_cooldowns": {
+        "DROP_GENERAL": "10s",
+        "DROP_WEEKLY": "10s",
+        "DROP_SEASON": null,
+        "DROP_EVENT_1": "10s",
+        "DROP_EVENT_2": "10s",
+        "DAILY": "5s",
+        "STAGE": "5s",
+        "RANDOM": "5s"
+    }
+}

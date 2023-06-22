@@ -15,8 +15,22 @@ module.exports = {
      */
     execute: async (client, interaction) => {
         //! Basic embed to test database
-        let embed_basic = new BetterEmbed({ interaction, title: { text: `beep` } });
-        return await embed_basic.send();
+        /* let embed_basic = new BetterEmbed({ interaction, title: { text: `beep` } });
+        return await embed_basic.send(); */
+
+        //! Quest requirement complete embed
+        let embed_questRequirementComplete = new BetterEmbed({
+            // interaction: interaction, author: { text: `📜 Dev Quest | Progress` },
+            interaction: interaction,
+            title: {
+                user: interaction.member, iconURL: null,
+                text: `Good job! ${interaction.member.displayName} has finished a quest objective!`
+            },
+            // title: {text: \`📜\` Dev Quest | Progress}`,
+            description: `> Dev Quest :: \`🥕 500\`\n\n\`📈 0/2\` :: ending \`time\``
+        });
+
+        return await embed_questRequirementComplete.send();
 
         //! Quest completion DM
         /* let quest = questManager.quests[0];

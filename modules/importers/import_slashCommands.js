@@ -32,13 +32,13 @@ module.exports = {
         let slash_commands_admin = importSlashCommands('../../slash_commands/admin');
         // let slash_commands_admin = importSlashCommands('./slash_commands/admin');
 
-        for (let slash_command_general of slash_commands)
+        for (let slash_command_general of slash_commands_general)
             client.slashCommands_general.set(slash_command_general.builder.name, slash_command_general);
 
         for (let slash_command_admin of slash_commands_admin)
             client.slashCommands_admin.set(slash_command_admin.builder.name, slash_command_admin);
 
         for (let slash_command of [...slash_commands_general, ...slash_commands_admin])
-            client.slashCommands.set(slash_command.guilder.name, slash_command);
+            client.slashCommands.set(slash_command.builder.name, slash_command);
     }
 };

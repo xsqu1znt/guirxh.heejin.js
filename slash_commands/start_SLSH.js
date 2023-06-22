@@ -5,6 +5,8 @@ const { BetterEmbed } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 
 module.exports = {
+    options: { dontRequireUserData: true },
+
     builder: new SlashCommandBuilder().setName("start")
         .setDescription("Start your journey"),
 

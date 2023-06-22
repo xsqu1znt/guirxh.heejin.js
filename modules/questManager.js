@@ -107,18 +107,20 @@ function validate(userData) {
             });
         }
 
-        let requirements_newlyCompleted = [];
+        let requirements_justCompleted = [];
         let _questReqs = userData?.quest_cache?.quest_requirements?.find(qr => qr.id === quest.id);
-        Object.entries(_questReqs.requirements).forEach(_req => {
-            if (requirements[_req[0]] !== _req[1] && requirements[_req[0]] === true)
-                // Add the name of the requirement to the completed list
-                requirements_newlyCompleted.push(_req[0]);
-        });
+        if (_questReqs) {
+            Object.entries(_questReqs.requirements).forEach(_req => {
+                if (requirements[_req[0]] !== _req[1] && requirements[_req[0]] === true)
+                    // Add the name of the requirement to the completed list
+                    requirements_justCompleted.push(_req[0]);
+            });
+        }
 
         parsedQuestData.progress.push({
             id: quest.id, data: quest,
+            requirementsCompleted: requirements_justCompleted,
             isComplete: (requirements_completed === requirements_needed),
-            newlyCompleted: requirements_newlyCompleted,
             completed: requirements_completed, needed: requirements_needed,
             f: `${requirements_completed}/${requirements_needed}`
         });

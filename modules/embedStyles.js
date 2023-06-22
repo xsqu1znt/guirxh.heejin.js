@@ -20,8 +20,10 @@ function generalCollections_ES(guildMember, options = { order: "decending", filt
     if (options.order === "ascending") cards_all = cards_all.reverse();
 
     // Apply command filters
-    if (options.filter.group) cards_all = cards_all.filter(card => card.group.toLowerCase() === options.filter.group);
-    if (options.filter.category) cards_all = cards_all.filter(card => card.category.toLowerCase() === options.filter.category);
+    // if (options.filter.group) cards_all = cards_all.filter(card => card.group.toLowerCase() === options.filter.group);
+    if (options.filter.group) cards_all = cards_all.filter(card => card.group.toLowerCase().includes(options.filter.group));
+    // if (options.filter.category) cards_all = cards_all.filter(card => card.category.toLowerCase() === options.filter.category);
+    if (options.filter.category) cards_all = cards_all.filter(card => card.category.toLowerCase().includes(options.filter.category));
 
     // Create an array the only contains unique cards
     let cards_unique = arrayTools.unique(cards_all, (card, card_compare) => card.setID === card_compare.setID);

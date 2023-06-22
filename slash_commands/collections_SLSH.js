@@ -29,12 +29,8 @@ module.exports = {
      */
     execute: async (client, interaction) => {
         // Get interaction options
-        let group = interaction.options.getString("group") || null;
-        if (group) group = group.toLowerCase();
-
-        let category = interaction.options.getString("category") || null;
-        if (category) category = category.toLowerCase();
-
+        let group = interaction.options.getString("group") || null; group &&= group.toLowerCase();
+        let category = interaction.options.getString("category") || null; category &&= category.toLowerCase();
         let order = interaction.options.getString("order") || null;
 
         // Build the set collection pages
