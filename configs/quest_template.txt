@@ -11,7 +11,7 @@
         "requirements": {
             "balance": 500,
             "ribbons": 50,
-            "inventory_total": 10,
+            "inventory_count": 10,
 
             "level_user": 3,
             "level_idol": 10,

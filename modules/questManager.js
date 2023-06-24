@@ -1,5 +1,6 @@
 const { TimestampStyles, time } = require('discord.js');
 
+const { botSettings: { currencyIcon } } = require('../configs/heejinSettings.json');
 const { numberTools } = require('./jsTools');
 const cardManager = require('./cardManager');
 const userParser = require('./userParser');
@@ -23,6 +24,30 @@ function toString(userData) {
                 .replace("%TIMESTAMP_END", time(date_end, TimestampStyles.RelativeTime))
         };
     });
+}
+
+/** @param {"balance" | "ribbons" | "inventory_count" | "level_user" | "level_idol" | "card_global_ids" | "card_sets_completed" | "card_duplicates" | "team_ability" | "team_reputation"} requirement  */
+function toString_requirement(questID, requirement) {
+    let quest = quests.find(q => q.id === questID);
+    if (!quest) return "quest not found";
+
+    let str = "";
+
+    switch (requirement) {
+        case "balance": str = `\`${currencyIcon} ${quest.requirements.balance}\``; break;
+        case "ribbons": str = `\`🎀 ${quest.requirements.ribbons}\``; break;
+        case "inventory_count": str = `\`INV. ${quest.requirements.inventory_count}\``; break;
+        case "level_user": str = `\`LVL. ${quest.requirements.level_user}\``; break;
+        case "level_idol": str = `\`🏃 LVL. ${quest.requirements.level_idol}\``; break;
+        case "card_global_ids": str = `\`🃏 Req. Cards ${quest.requirements.card_global_ids.join(", ")}\``; break;
+        case "card_sets_completed": str = `\`🃏 Req. Sets ${quest.requirements.card_sets_completed.join(", ")}\``; break;
+        case "card_duplicates": str = `\`🃏 Dupes ${quest.requirements.card_duplicates.map(d => d.globalID).join(", ")}\``; break;
+        case "team_ability": str = `\`👯‍♀️ ${quest.requirements.team_ability}\``; break;
+        case "team_reputation": str = `\`👯‍♀️ ${quest.requirements.team_reputation}\``; break;
+        default: str = "N/A"; break;
+    }
+
+    return str;
 }
 
 function validate(userData) {
@@ -50,8 +75,8 @@ function validate(userData) {
             requirements.level_idol = true; else requirements.level_idol = false;
 
         // Number of cards in the user's card_inventory
-        if (requirements?.inventory_total <= userData.card_inventory.length)
-            requirements.inventory_total = true; else requirements.inventory_total = false;
+        if (requirements?.inventory_count <= userData.card_inventory.length)
+            requirements.inventory_count = true; else requirements.inventory_count = false;
 
         // User owns a specific card
         if (userParser.cards.has(userData, requirements?.card_global_ids))
@@ -157,7 +182,7 @@ function validate(userData) {
             completedCount++;
 
         // How many cards in user's card_inventory
-        if (quest.requirements?.inventory_total <= userData?.card_inventory?.length)
+        if (quest.requirements?.inventory_count <= userData?.card_inventory?.length)
             completedCount++;
 
         // Has all the required cards
@@ -194,6 +219,6 @@ function validate(userData) {
 module.exports = {
     quests, questIDs: quests.map(q => q.id),
     exists,
-    toString,
+    toString, toString_requirement,
     validate
 };

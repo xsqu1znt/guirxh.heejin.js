@@ -7,6 +7,7 @@ const { communityServer, botSettings: { chanceToShowTips } } = require('../../..
 
 const heejinTips = require('../../../configs/heejinTips.json');
 
+const { generalQuestRequirementCompleted_ES } = require('../../../modules/embedStyles');
 const { BetterEmbed } = require('../../../modules/discordTools');
 const { randomTools } = require('../../../modules/jsTools');
 const { userManager } = require('../../../modules/mongo');
@@ -91,28 +92,24 @@ module.exports = {
                     // Handle post-execute quest caching 
                     cacheUserQuestData().then(async _parsedQuestData => {
                         if (!_parsedQuestData) return; /* console.log(_parsedQuestData); */
-
-                        // Iterate through quest progresses
-                        for (let _questProgress of _parsedQuestData.progress) {
+                        /// Iterate through quest progresses
+                        /* for (let _questProgress of _parsedQuestData.progress) {
                             let _requirementsCompleted = _questProgress.requirementsCompleted;
+                            console.log(_requirementsCompleted);
 
-                            /// Send an embed to alert the user they completed a quest requirement(s)
+                            // Send an embed to alert the user they completed a quest requirement(s)
                             if (_requirementsCompleted.length) {
                                 // Create the quest requirement(s) complete embed
-                                let embed_questRequirementComplete = new BetterEmbed({
-                                    interaction: args.interaction,
-                                    author: { text: `\`📜\` ${_questProgress.data.name} | Progress`, user: args.interaction.member },
-                                    description: `**You just completed these requirements**:\n>>> ${_requirementsCompleted.join("\n")}`
-                                });
-
-                                // Change the embed's title with the quest's name
-                                embed_questRequirementComplete.setTitle(`\`📜\` ${_questProgress.data.name} | Progress`);
+                                let embed_questRequirementComplete = generalQuestRequirementCompleted_ES(
+                                    args.interaction.member, _questProgress
+                                );
 
                                 // Send the embed
-                                await embed_questRequirementComplete.send({ method: "followUp" });
+                                await args.interaction.followUp({ embeds: [embed_questRequirementComplete] });
                             }
-                        }
+                        } */
 
+                        /// Other stuff
                         if (_parsedQuestData.completed.length) {
                             // TODO: do something about it
                         }

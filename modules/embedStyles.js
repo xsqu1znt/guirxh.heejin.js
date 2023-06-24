@@ -1,14 +1,29 @@
-const { EmbedBuilder, TimestampStyles } = require('discord.js');
+const { EmbedBuilder, TimestampStyles, time } = require('discord.js');
 
 const { markdown: { bold, inline, quote } } = require('./discordTools');
 
 const { communityServer, botSettings, userSettings } = require('../configs/heejinSettings.json');
 const { arrayTools, stringTools, numberTools, dateTools } = require('../modules/jsTools');
 const { BetterEmbed } = require('../modules/discordTools');
-const cardManager = require('../modules/cardManager');
 const badgeManager = require('../modules/badgeManager');
+const questManager = require('../modules/questManager');
+const cardManager = require('../modules/cardManager');
 const userParser = require('../modules/userParser');
 const shop = require('../modules/shop');
+
+// General -> Quest Requirement Completed
+function generalQuestRequirementCompleted_ES(guildMember, questProgress) {
+    let requirements_f = questProgress.requirementsCompleted.map(req => questManager.toString_requirement(questProgress.id, req));
+    let date_end = time(numberTools.milliToSeconds(Date.parse(questProgress.data.date.end)), TimestampStyles.RelativeTime);
+
+    let embed = new BetterEmbed({
+        author: { user: guildMember, iconURL: null },
+        title: { text: `Good job! %AUTHOR_NAME has finished a quest objective!` },
+        description: `> ${questProgress.data.name} :: ${requirements_f.join(" ")}\n\n\`📈 ${questProgress.f}\` :: \`ending\` ${date_end}`
+    });
+
+    return embed;
+}
 
 // Command -> General -> /COLLECTIONS
 /** @param {"ascending" | "decending"} order */
@@ -717,6 +732,9 @@ function userGift_ES(guildMember, recipient, cards) {
 }
 
 module.exports = {
+    // General Embeds
+    generalQuestRequirementCompleted_ES,
+
     // General Commands
     generalCollections_ES,
     generalShop_ES,

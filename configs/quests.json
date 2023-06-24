@@ -10,7 +10,10 @@
         },
         "requirements": {
             "balance": 500,
-            "inventory_total": 5
+            "ribbons": 50,
+
+            "inventory_count": 5,
+            "level_user": 1
         },
         "reward": {
             "xp": 1000,

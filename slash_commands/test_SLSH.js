@@ -15,11 +15,25 @@ module.exports = {
      */
     execute: async (client, interaction) => {
         //! Basic embed to test database
-        /* let embed_basic = new BetterEmbed({ interaction, title: { text: `beep` } });
+        /* let embed_basic = new BetterEmbed({ interaction, title: { text: "beep" } });
         return await embed_basic.send(); */
 
-        //! Quest requirement complete embed
+        //! Quest complete
         let embed_questRequirementComplete = new BetterEmbed({
+            // interaction: interaction, author: { text: `📜 Dev Quest | Progress` },
+            interaction: interaction,
+            title: {
+                user: interaction.member, iconURL: null,
+                text: `Good job! ${interaction.member.displayName} has completed 'Dev Quest'`
+            },
+            // title: {text: \`📜\` Dev Quest | Progress}`,
+            description: `You got:\n>>> \`🥕 1000k\` \`🎀 100\` \`XP 1k\` \`🃏 3\``
+        });
+
+        return await embed_questRequirementComplete.send();
+
+        //! Quest requirement complete
+        /* let embed_questRequirementComplete = new BetterEmbed({
             // interaction: interaction, author: { text: `📜 Dev Quest | Progress` },
             interaction: interaction,
             title: {
@@ -27,10 +41,10 @@ module.exports = {
                 text: `Good job! ${interaction.member.displayName} has finished a quest objective!`
             },
             // title: {text: \`📜\` Dev Quest | Progress}`,
-            description: `> Dev Quest :: \`🥕 500\`\n\n\`📈 0/2\` :: ending \`time\``
+            description: `> Dev Quest :: \`🥕 500\`\n\n\`📈 0/2\` :: \`ending\` \`time\``
         });
 
-        return await embed_questRequirementComplete.send();
+        return await embed_questRequirementComplete.send(); */
 
         //! Quest completion DM
         /* let quest = questManager.quests[0];
