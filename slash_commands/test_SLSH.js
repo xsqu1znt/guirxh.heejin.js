@@ -15,11 +15,11 @@ module.exports = {
      */
     execute: async (client, interaction) => {
         //! Basic embed to test database
-        /* let embed_basic = new BetterEmbed({ interaction, title: { text: "beep" } });
-        return await embed_basic.send(); */
+        let embed_basic = new BetterEmbed({ interaction, title: { text: "beep" } });
+        return await embed_basic.send();
 
         //! Quest complete
-        let embed_questRequirementComplete = new BetterEmbed({
+        /* let embed_questRequirementComplete = new BetterEmbed({
             // interaction: interaction, author: { text: `📜 Dev Quest | Progress` },
             interaction: interaction,
             title: {
@@ -30,7 +30,7 @@ module.exports = {
             description: `You got:\n>>> \`🥕 1000k\` \`🎀 100\` \`XP 1k\` \`🃏 3\``
         });
 
-        return await embed_questRequirementComplete.send();
+        return await embed_questRequirementComplete.send(); */
 
         //! Quest requirement complete
         /* let embed_questRequirementComplete = new BetterEmbed({

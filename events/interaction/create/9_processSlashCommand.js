@@ -7,7 +7,7 @@ const { communityServer, botSettings: { chanceToShowTips } } = require('../../..
 
 const heejinTips = require('../../../configs/heejinTips.json');
 
-const { generalQuestRequirementCompleted_ES } = require('../../../modules/embedStyles');
+const { generalQuestObjectiveComplete_ES } = require('../../../modules/embedStyles');
 const { BetterEmbed } = require('../../../modules/discordTools');
 const { randomTools } = require('../../../modules/jsTools');
 const { userManager } = require('../../../modules/mongo');
@@ -93,21 +93,21 @@ module.exports = {
                     cacheUserQuestData().then(async _parsedQuestData => {
                         if (!_parsedQuestData) return; /* console.log(_parsedQuestData); */
                         /// Iterate through quest progresses
-                        /* for (let _questProgress of _parsedQuestData.progress) {
+                        for (let _questProgress of _parsedQuestData.progress) {
                             let _requirementsCompleted = _questProgress.requirementsCompleted;
                             console.log(_requirementsCompleted);
 
                             // Send an embed to alert the user they completed a quest requirement(s)
                             if (_requirementsCompleted.length) {
                                 // Create the quest requirement(s) complete embed
-                                let embed_questRequirementComplete = generalQuestRequirementCompleted_ES(
+                                let embed_questObjectiveComplete = generalQuestObjectiveComplete_ES(
                                     args.interaction.member, _questProgress
                                 );
 
                                 // Send the embed
-                                await args.interaction.followUp({ embeds: [embed_questRequirementComplete] });
+                                await args.interaction.followUp({ embeds: [embed_questObjectiveComplete] });
                             }
-                        } */
+                        }
 
                         /// Other stuff
                         if (_parsedQuestData.completed.length) {
@@ -119,14 +119,14 @@ module.exports = {
                     userManager.xp.tryLevelUp(args.interaction.user.id).then(async _userLevelUp => {
                         if (_userLevelUp.leveled) {
                             // Create the level up message
-                            let levelUpText = `\🎉 Congratulations, %USER! You are now \`LV. %CURRENT_LVL\``
+                            let levelUpText = `\`🎉\` Congratulations, %USER! You are now \`LV. %CURRENT_LVL\``
                                 .replace("%USER", args.interaction.user)
                                 .replace("%CURRENT_LVL", _userLevelUp.level_current);
 
                             // Edit the current message with the level up message
                             // if the message can't be edited, send a separate message
                             try {
-                                await message.edit({ content: `**${levelUpText}**\n\n${message.content}` });
+                                await message.edit({ content: `**${levelUpText}**` });
                             } catch {
                                 await embed_userLevelUp.send({ description: `You are now \`LV. ${_userLevelUp.level_current}\`` });
                             }

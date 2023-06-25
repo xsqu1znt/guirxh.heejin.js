@@ -12,14 +12,14 @@ const userParser = require('../modules/userParser');
 const shop = require('../modules/shop');
 
 // General -> Quest Requirement Completed
-function generalQuestRequirementCompleted_ES(guildMember, questProgress) {
+function generalQuestObjectiveComplete_ES(guildMember, questProgress) {
     let requirements_f = questProgress.requirementsCompleted.map(req => questManager.toString_requirement(questProgress.id, req));
     let date_end = time(numberTools.milliToSeconds(Date.parse(questProgress.data.date.end)), TimestampStyles.RelativeTime);
 
     let embed = new BetterEmbed({
         author: { user: guildMember, iconURL: null },
-        title: { text: `Good job! %AUTHOR_NAME has finished a quest objective!` },
-        description: `> ${questProgress.data.name} :: ${requirements_f.join(" ")}\n\n\`📈 ${questProgress.f}\` :: \`ending\` ${date_end}`
+        title: { text: `Good job! %AUTHOR_NAME finished an objective!` },
+        description: `>>> ${questProgress.data.name} :: ${requirements_f.join(" ")}\n\`📈 ${questProgress.f}\` :: ending ${date_end}`
     });
 
     return embed;
@@ -733,7 +733,7 @@ function userGift_ES(guildMember, recipient, cards) {
 
 module.exports = {
     // General Embeds
-    generalQuestRequirementCompleted_ES,
+    generalQuestObjectiveComplete_ES,
 
     // General Commands
     generalCollections_ES,

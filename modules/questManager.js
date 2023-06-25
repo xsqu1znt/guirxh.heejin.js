@@ -37,8 +37,8 @@ function toString_requirement(questID, requirement) {
         case "balance": str = `\`${currencyIcon} ${quest.requirements.balance}\``; break;
         case "ribbons": str = `\`🎀 ${quest.requirements.ribbons}\``; break;
         case "inventory_count": str = `\`INV. ${quest.requirements.inventory_count}\``; break;
-        case "level_user": str = `\`LVL. ${quest.requirements.level_user}\``; break;
-        case "level_idol": str = `\`🏃 LVL. ${quest.requirements.level_idol}\``; break;
+        case "level_user": str = `\`LV. ${quest.requirements.level_user}\``; break;
+        case "level_idol": str = `\`🏃 LV. ${quest.requirements.level_idol}\``; break;
         case "card_global_ids": str = `\`🃏 Req. Cards ${quest.requirements.card_global_ids.join(", ")}\``; break;
         case "card_sets_completed": str = `\`🃏 Req. Sets ${quest.requirements.card_sets_completed.join(", ")}\``; break;
         case "card_duplicates": str = `\`🃏 Dupes ${quest.requirements.card_duplicates.map(d => d.globalID).join(", ")}\``; break;
