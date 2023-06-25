@@ -1,20 +1,18 @@
 {    
-    "commands": {
-        "cooldowns": {
-            "DROP_GENERAL": "5s",
-            "DROP_WEEKLY": "5s",
-            "DROP_SEASON": "5s",
-            "DROP_EVENT_1": "5s",
-            "DROP_EVENT_2": "5s",
-    
-            "DAILY": "1s",
-            "STAGE": "1s",
-            "RANDOM": "1s"
-        },
+    "cooldowns": {
+        "DROP_GENERAL": "5s",
+        "DROP_WEEKLY": "5s",
+        "DROP_SEASON": "5s",
+        "DROP_EVENT_1": "5s",
+        "DROP_EVENT_2": "5s",
 
-        "win_rate": {
-            "RANDOM": 40 
-        }
+        "DAILY": "1s",
+        "STAGE": "1s",
+        "RANDOM": "1s"
+    },
+
+    "win_rate": {
+        "RANDOM": 40 
     },
 
     "currency": {
@@ -41,11 +39,11 @@
                 "stage": { "MIN": 10, "MAX": 250 }
             }
         },
-    
+
         "card": {
             "LEVEL_MAX": 100,
             "LEVEL_XP_MULTIPLIER": 50,
-    
+
             "rewards": {
                 "level_up": { "ABILITY": 9, "REPUTATION": 9 },
 

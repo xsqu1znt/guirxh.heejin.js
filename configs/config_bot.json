@@ -1,5 +1,4 @@
 {
-    "CURRENCY_ICON": "🥕",
     "EMBED_COLOR": "#2B2D31",
     "TIP_CHANCE": 5,
 
@@ -22,6 +21,10 @@
     },
 
     "emojis": {
+        "CURRENCY_1": { "NAME": "🥕", "EMOJI": "🥕" },
+        "CURRENCY_2": { "NAME": "🎀", "EMOJI": "🎀" },
+        "CONFIRM_SELL": { "NAME": "✅", "EMOJI": "✅" },
+
         "numbers": [
             { "NAME": "one", "EMOJI": "<:one:1103208748924813333>" },
             { "NAME": "two", "EMOJI": "<:two:1103208760639504465>" },
@@ -36,8 +39,6 @@
             "jump": { "NAME": "📄", "EMOJI": "📄"},
             "next": { "NAME": "right1", "EMOJI": "<:right1:1110405469350146089>" },
             "to_last": { "NAME": "right2", "EMOJI": "<:right2:1110403345702735963>" }
-        },
-
-        "CONFIRM_SELL": { "NAME": "✅", "EMOJI": "✅" }
+        }
     }
 }
