@@ -2,7 +2,7 @@
     {
         "id": "q01",
         "name": "Dev Quest",
-        "rewards": "`🥕 1000k` `🎀 100` `XP 1k` `🃏 3`",
+        "rewards": "`🥕 10k` `🎀 100` `XP 1k` `🃏 3`",
         "description": "`🥕 500`, `🃏 5` | **used for testing**",
         "date": {
             "start": "2023-06-20",

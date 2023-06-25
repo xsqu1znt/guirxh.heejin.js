@@ -93,9 +93,9 @@ module.exports = {
                     cacheUserQuestData().then(async _parsedQuestData => {
                         if (!_parsedQuestData) return; /* console.log(_parsedQuestData); */
                         /// Iterate through quest progresses
-                        for (let _questProgress of _parsedQuestData.progress) {
+                        /* for (let _questProgress of _parsedQuestData.progress) {
                             let _requirementsCompleted = _questProgress.requirementsCompleted;
-                            console.log(_requirementsCompleted);
+                            // console.log(_requirementsCompleted);
 
                             // Send an embed to alert the user they completed a quest requirement(s)
                             if (_requirementsCompleted.length) {
@@ -107,7 +107,7 @@ module.exports = {
                                 // Send the embed
                                 await args.interaction.followUp({ embeds: [embed_questObjectiveComplete] });
                             }
-                        }
+                        } */
 
                         /// Other stuff
                         if (_parsedQuestData.completed.length) {
@@ -119,7 +119,7 @@ module.exports = {
                     userManager.xp.tryLevelUp(args.interaction.user.id).then(async _userLevelUp => {
                         if (_userLevelUp.leveled) {
                             // Create the level up message
-                            let levelUpText = `\`🎉\` Congratulations, %USER! You are now \`LV. %CURRENT_LVL\``
+                            let levelUpText = `\\🎉 Congratulations, %USER! You are now \`LV. %CURRENT_LVL\``
                                 .replace("%USER", args.interaction.user)
                                 .replace("%CURRENT_LVL", _userLevelUp.level_current);
 

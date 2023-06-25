@@ -14,7 +14,7 @@ const shop = require('../modules/shop');
 // General -> Quest Requirement Completed
 function generalQuestObjectiveComplete_ES(guildMember, questProgress) {
     let requirements_f = questProgress.requirementsCompleted.map(req => questManager.toString_requirement(questProgress.id, req));
-    let date_end = time(numberTools.milliToSeconds(Date.parse(questProgress.data.date.end)), TimestampStyles.RelativeTime);
+    let date_end = dateTools.eta(Date.parse(questProgress.data.date.end));
 
     let embed = new BetterEmbed({
         author: { user: guildMember, iconURL: null },
