@@ -45,7 +45,7 @@ client.login(TOKEN).then(async () => {
 
     // Push all commands including admin to a specific server (use this if Heejin is using local commands) (this is local)
     // await slashCommandManager.push(client, "1107285909365329922", false, true);
-    
+
     // Push only admin commands to a specific server (use this if Heejin is using global commands) (this is local)
     // await slashCommandManager.push(client, "1107285909365329922", false, true, true);
 
