@@ -1,7 +1,7 @@
 const { TimestampStyles, time } = require('discord.js');
 
 const { botSettings: { currencyIcon } } = require('../configs/heejinSettings.json');
-const { numberTools } = require('./jsTools');
+const { numberTools, dateTools } = require('./jsTools');
 const cardManager = require('./cardManager');
 const userParser = require('./userParser');
 
@@ -14,14 +14,14 @@ function exists() {
 function toString(userData) {
     return validate(userData).progress.map(questProgress => {
         // let date_start = numberTools.milliToSeconds(Date.parse(quest.date.start));
-        let date_end = numberTools.milliToSeconds(Date.parse(questProgress.data.date.end));
+        let date_end = dateTools.eta(Date.parse(questProgress.data.date.end));
 
         return {
             title: `\`📜\` **${questProgress.data.name}** ${questProgress.data.rewards}`,
-            description: `>>> \`%COMPLETED %PROGRESS\` ending %TIMESTAMP_END\n${questProgress.data.description}`
+            description: `> \`%COMPLETED %PROGRESS\` ending %TIMESTAMP_END\n\n${questProgress.data.description}`
                 .replace("%COMPLETED", questProgress.isComplete ? "✔️" : "🚫")
                 .replace("%PROGRESS", questProgress.f)
-                .replace("%TIMESTAMP_END", time(date_end, TimestampStyles.RelativeTime))
+                .replace("%TIMESTAMP_END", date_end)
         };
     });
 }

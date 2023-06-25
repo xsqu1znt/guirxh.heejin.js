@@ -202,28 +202,28 @@ class BetterEmbed extends EmbedBuilder {
                 case "reply": try {
                     return await this.interaction.reply({
                         content: options.messageContent, components: options.components,
-                        embeds: [this], ephemeral: options.ephemeral
+                        embeds: [this], ephemeral: options.ephemeral, fetchReply: true
                     });
                 } catch { // Fallback to "editReply"
                     return await this.interaction.editReply({
                         content: options.messageContent, components: options.components,
-                        embeds: [this]
+                        embeds: [this], fetchReply: true
                     });
                 }
 
                 case "editReply": return await this.interaction.editReply({
                     content: options.messageContent, components: options.components,
-                    embeds: [this]
+                    embeds: [this], fetchReply: true
                 });
 
                 case "followUp": return await this.interaction.followUp({
                     content: options.messageContent, components: options.components,
-                    embeds: [this], ephemeral: options.ephemeral
+                    embeds: [this], ephemeral: options.ephemeral, fetchReply: true
                 });
 
                 case "send": return await this.interaction.channel.send({
                     content: options.messageContent, components: options.components,
-                    embeds: [this]
+                    embeds: [this], fetchReply: true
                 });
 
                 default: logger.error("Failed to send embed", `invalid send method: \"${options.method}\"`); return null;

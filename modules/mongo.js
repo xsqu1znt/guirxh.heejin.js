@@ -404,12 +404,12 @@ async function userQuest_cache(userID) {
         // Update the user's quest_cache
         await Promise.all([
             // Update the user's quests_completed cache
-            /* (async () => {
+            (async () => {
                 // Add completed quests if available
                 if (parsedQuestData.completed.length) return await user_update(userID, {
                     $push: { "quests_completed": { $each: parsedQuestData.completed } }
                 });
-            })(), */
+            })(),
 
             // Update the user's quest_cache and apply quest rewards
             user_update(userID, {
@@ -424,7 +424,7 @@ async function userQuest_cache(userID) {
                     "quest_cache.team_reputation": quest_cache.team_reputation,
 
                     // Update cached quest_requirements
-                    // "quest_cache.quest_requirements": parsedQuestData.requirements
+                    "quest_cache.quest_requirements": parsedQuestData.requirements
                 },
                 $inc: {
                     // Apply some rewards

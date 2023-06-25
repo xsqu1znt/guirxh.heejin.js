@@ -1,24 +1,21 @@
 [
     {
         "id": "q01",
-        "name": "Dev Quest",
-        "rewards": "`🥕 10k` `🎀 100` `XP 1k` `🃏 3`",
-        "description": "`🥕 500`, `🃏 5` | **used for testing**",
+        "name": "Test",
+        "rewards": "`🥕 5k` `🎀 1000` `🃏 3`",
+        "description": "***requirements***:\n> `🥕 5000` `INV. 1` `LV. 2`\n> used for testing",
         "date": {
-            "start": "2023-06-20",
-            "end": "2023-06-27"
+            "start": "2023-06-25",
+            "end": "2023-07-02"
         },
         "requirements": {
-            "balance": 500,
-            "ribbons": 50,
-
-            "inventory_count": 5,
-            "level_user": 1
+            "balance": 5000,
+            "inventory_count": 1,
+            "level_user": 2
         },
         "reward": {
-            "xp": 1000,
-            "carrots": 10000,
-            "ribbons": 100,
+            "carrots": 5000,
+            "ribbons": 1000,
             "card_global_ids": ["1001", "1002", "1003"]
         }
     }

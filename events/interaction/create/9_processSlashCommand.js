@@ -38,10 +38,10 @@ module.exports = {
 
         /// Misc. embeds
         let embed_error = new BetterEmbed({
-            interaction: args.interaction, author: { text: "⛔ **Something is wrong**" }
+            interaction: args.interaction, author: { text: "⛔ Something is wrong" }
         });
         let embed_tip = new BetterEmbed({
-            interaction: args.interaction, author: { text: "⚠️ **Did You Know?**" }
+            interaction: args.interaction, author: { text: "⚠️ Did You Know?" }
         });
         let embed_userLevelUp = new BetterEmbed({
             interaction: args.interaction, author: { text: `🎉 Congratulations, ${args.interaction.user}!` }
@@ -93,7 +93,7 @@ module.exports = {
                     cacheUserQuestData().then(async _parsedQuestData => {
                         if (!_parsedQuestData) return; /* console.log(_parsedQuestData); */
                         /// Iterate through quest progresses
-                        /* for (let _questProgress of _parsedQuestData.progress) {
+                        for (let _questProgress of _parsedQuestData.progress) {
                             let _requirementsCompleted = _questProgress.requirementsCompleted;
                             // console.log(_requirementsCompleted);
 
@@ -107,7 +107,7 @@ module.exports = {
                                 // Send the embed
                                 await args.interaction.followUp({ embeds: [embed_questObjectiveComplete] });
                             }
-                        } */
+                        }
 
                         /// Other stuff
                         if (_parsedQuestData.completed.length) {
