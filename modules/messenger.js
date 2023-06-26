@@ -8,8 +8,8 @@ const embed_titles = {
     gift: "📬 You have a message!"
 }
 
-/** @param {User} recipient @param {Array<string>} cards_f */
-async function gift_cards(recipient, cards, cards_f = null) {
+/** @param {User} recipient @param {User} gifter @param {Array<string>} cards_f */
+async function gift_cards(recipient, gifter, cards, cards_f = null) {
     if (!Array.isArray(cards)) cards = [cards];
 
     // Get the last card in the array
@@ -21,7 +21,7 @@ async function gift_cards(recipient, cards, cards_f = null) {
     // Create the embed
     let embed_giftCards = new BetterEmbed({
         author: { text: embed_titles.gift },
-        description: `You got a gift from **${recipient.username}**\n>>> ${cards_f.join("\n")}`,
+        description: `You got a gift from **${gifter.username}**\n>>> ${cards_f.join("\n")}`,
         imageURL: cards_last.imageURL,
         showTimestamp: true
     });
@@ -34,12 +34,12 @@ async function gift_cards(recipient, cards, cards_f = null) {
     }
 }
 
-/** @param {User} recipient @param {number} amount  @param {number} currentBalance */
-async function gift_currency(recipient, amount, currentBalance) {
+/** @param {User} recipient @param {User} gifter @param {number} amount  @param {number} currentBalance */
+async function gift_currency(recipient, gifter, amount, currentBalance) {
     // Create the embed
     let embed_giftCurrency = new BetterEmbed({
         author: { text: embed_titles.gift },
-        description: `You got \`${currencyIcon} ${amount}\` from **${recipient.username}**\n> Balance currently: \`${currencyIcon} ${currentBalance}\``,
+        description: `You got \`${currencyIcon} ${amount}\` from **${gifter.username}**\n> Balance currently: \`${currencyIcon} ${currentBalance}\``,
         showTimestamp: true
     });
 
@@ -55,7 +55,7 @@ async function gift_currency(recipient, amount, currentBalance) {
 async function quest_complete(recipient, quest) {
     // Create the embed
     let embed_questComplete = new BetterEmbed({
-        author: { text: `📜 Good job! %AUTHOR_NAME completed \'${quest.name}\'`, user: recipient, iconURL: null },
+        author: { text: `📜 Good job! You completed \'${quest.name}\'`, user: recipient, iconURL: null },
         description: `You got:\n> ${quest.rewards}`,
         showTimestamp: true
     });
