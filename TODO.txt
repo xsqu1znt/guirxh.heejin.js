@@ -17,6 +17,9 @@ UN-IMPORTANT:
 >> Extra
 • show player's start date in /information
 
+>> Personal
+• add check to message_embed.send if interaction if null
+
 FUTURE:
 >> Commands
 • /applycard | update global ids

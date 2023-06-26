@@ -5,7 +5,7 @@ const cardManager = require("./cardManager");
 const logger = require('./logger');
 
 const embed_titles = {
-    gift: "\`📬\` You have a message!"
+    gift: "📬 You have a message!"
 }
 
 /** @param {User} recipient @param {Array<string>} cards_f */
@@ -20,7 +20,7 @@ async function gift_cards(recipient, cards, cards_f = null) {
 
     // Create the embed
     let embed_giftCards = new BetterEmbed({
-        title: { text: embed_titles.gift },
+        author: { text: embed_titles.gift },
         description: `You got a gift from **${recipient.username}**\n>>> ${cards_f.join("\n")}`,
         imageURL: cards_last.imageURL,
         showTimestamp: true
@@ -34,11 +34,11 @@ async function gift_cards(recipient, cards, cards_f = null) {
     }
 }
 
-/** @param {User} recipient @param {number} amount */
+/** @param {User} recipient @param {number} amount  @param {number} currentBalance */
 async function gift_currency(recipient, amount, currentBalance) {
     // Create the embed
     let embed_giftCurrency = new BetterEmbed({
-        title: { text: embed_titles.gift },
+        author: { text: embed_titles.gift },
         description: `You got \`${currencyIcon} ${amount}\` from **${recipient.username}**\n> Balance currently: \`${currencyIcon} ${currentBalance}\``,
         showTimestamp: true
     });
@@ -51,9 +51,30 @@ async function gift_currency(recipient, amount, currentBalance) {
     }
 }
 
+/** @param {User} recipient @param {{}} quest */
+async function quest_complete(recipient, quest) {
+    // Create the embed
+    let embed_questComplete = new BetterEmbed({
+        author: { text: `📜 Good job! %AUTHOR_NAME completed \'${quest.name}\'`, user: recipient, iconURL: null },
+        description: `You got:\n> ${quest.rewards}`,
+        showTimestamp: true
+    });
+
+    // Send the embed to the user
+    try {
+        return await recipient.send({ embeds: [embed_questComplete] });
+    } catch (err) {
+        logger.error("Failed to DM user", `userID: ${recipient?.userID || "N/A"} | TYPE: quest_complete`, err);
+    }
+}
+
 module.exports = {
     gift: {
         cards: gift_cards,
         currency: gift_currency
+    },
+
+    quest: {
+        complete: quest_complete
     }
 }

@@ -1,9 +1,11 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 const { botSettings: { currencyIcon, customEmojis } } = require('../configs/heejinSettings.json');
+const { quest_complete_ES } = require('../modules/embedStyles');
 const { BetterEmbed } = require('../modules/discordTools');
 const questManager = require('../modules/questManager');
 const cardManager = require('../modules/cardManager');
+const messenger = require('../modules/messenger');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("test")
@@ -16,21 +18,16 @@ module.exports = {
     execute: async (client, interaction) => {
         //! Basic embed to test database
         let embed_basic = new BetterEmbed({ interaction, title: { text: "beep" } });
+
+        await messenger.quest.complete(interaction.user, questManager.quests[0]);
+        await messenger.gift.currency(interaction.user, 500, 1500);
+
         return await embed_basic.send();
 
         //! Quest complete
-        /* let embed_questRequirementComplete = new BetterEmbed({
-            // interaction: interaction, author: { text: `📜 Dev Quest | Progress` },
-            interaction: interaction,
-            title: {
-                user: interaction.member, iconURL: null,
-                text: `Good job! ${interaction.member.displayName} has completed 'Dev Quest'`
-            },
-            // title: {text: \`📜\` Dev Quest | Progress}`,
-            description: `You got:\n>>> \`🥕 10k\` \`🎀 100\` \`XP 1k\` \`🃏 3\``
-        });
+        /* let embed_questComplete = quest_complete_ES(interaction.member, questManager.quests[0]);
 
-        return await embed_questRequirementComplete.send(); */
+        return await interaction.reply({ embeds: [embed_questComplete] }); */
 
         //! Quest requirement complete
         /* let embed_questRequirementComplete = new BetterEmbed({
