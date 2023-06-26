@@ -1,18 +1,11 @@
 const {
-    CommandInteraction,
-    EmbedBuilder,
-    StringSelectMenuBuilder,
-    StringSelectMenuOptionBuilder,
-    ActionRowBuilder,
-    ButtonBuilder,
-    ButtonStyle,
-    ComponentType,
-    GuildMember,
-    User,
-    Message
+    CommandInteraction, GuildMember, User, Message, ComponentType,
+    ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder,
+    EmbedBuilder, ButtonBuilder, ButtonStyle,
 } = require('discord.js');
 
-const { botSettings: { embed: embedSettings, customEmojis, timeout } } = require('../configs/heejinSettings.json');
+// const { botSettings: { embed: embedSettings, customEmojis, timeout } } = require('../configs/heejinSettings.json');
+const { EMBED_COLOR, emojis, timeouts } = require('../configs/config_bot.json');
 const { dateTools } = require('./jsTools');
 const logger = require('./logger');
 

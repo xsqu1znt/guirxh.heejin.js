@@ -2,10 +2,8 @@
 
 const { Client, BaseInteraction, PermissionsBitField } = require('discord.js');
 
-const { ownerID, adminIDs, adminBypassIDs } = require('../../../configs/clientSettings.json');
-const { communityServer, botSettings: { chanceToShowTips } } = require('../../../configs/heejinSettings.json');
-
-const heejinTips = require('../../../configs/heejinTips.json');
+const { OWNER_ID, ADMIN_IDS, admin_bypass_ids } = require('../../../configs/config_client.json');
+const { community_server, TIP_CHANCE } = require('../../../configs/config_bot.json');
 
 const { generalQuestObjectiveComplete_ES } = require('../../../modules/embedStyles');
 const { BetterEmbed } = require('../../../modules/discordTools');
@@ -13,8 +11,10 @@ const { randomTools } = require('../../../modules/jsTools');
 const { userManager } = require('../../../modules/mongo');
 const logger = require('../../../modules/logger');
 
+const tips = require('../../../configs/tips.json');
+
 function userIsBotAdminOrBypass(interaction) {
-    return [ownerID, ...adminIDs, ...adminBypassIDs[interaction.commandName]].includes(interaction.user.id);
+    return [OWNER_ID, ...ADMIN_IDS, ...admin_bypass_ids[interaction.commandName]].includes(interaction.user.id);
 }
 
 function userIsGuildAdminOrBypass(interaction) {
@@ -44,7 +44,7 @@ module.exports = {
             interaction: args.interaction, author: { text: "⚠️ Did You Know?" }
         });
         let embed_userLevelUp = new BetterEmbed({
-            interaction: args.interaction, author: { text: `🎉 Congratulations, ${args.interaction.user}!` }
+            interaction: args.interaction, author: { text: `🎉 Congratulations, %AUTHOR_NAME!` }
         });
 
         // Get the slash command function from the client if it exists
@@ -57,8 +57,8 @@ module.exports = {
             if (slashCommand?.options) {
                 let _botAdminOnly = slashCommand.options?.botAdminOnly;
                 let _guildAdminOnly = slashCommand.options?.guildAdminOnly;
-                let _isCommunityServer = args.interaction.guildId === communityServer.id;
-                let _isCommunityServerAdminChannel = args.interaction.channelId === communityServer.adminChannelID;
+                let _isCommunityServer = args.interaction.guildId === community_server.ID;
+                let _isCommunityServerAdminChannel = args.interaction.channelId === community_server.channel_ids.ADMIN;
 
                 // Check if the command requires the user to be an admin for the bot
                 if (_botAdminOnly && !userIsBotAdminOrBypass(args.interaction))
@@ -70,7 +70,7 @@ module.exports = {
 
                 // Check if the a botAdminOnly/guildAdminOnly command was ran in the community server
                 if (_isCommunityServer && _isCommunityServerAdminChannel && (_botAdminOnly || _guildAdminOnly))
-                    return await embed_error.send({ description: `You can only use that command in <#${communityServer.adminChannelID}>`, ephemeral: true });
+                    return await embed_error.send({ description: `You can only use that command in <#${community_server.channel_ids.ADMIN}>`, ephemeral: true });
             }
 
             // Defer the interaction
@@ -119,9 +119,7 @@ module.exports = {
                     userManager.xp.tryLevelUp(args.interaction.user.id).then(async _userLevelUp => {
                         if (_userLevelUp.leveled) {
                             // Create the level up message
-                            let levelUpText = `\\🎉 Congratulations, %USER! You are now \`LV. %CURRENT_LVL\``
-                                .replace("%USER", args.interaction.user)
-                                .replace("%CURRENT_LVL", _userLevelUp.level_current);
+                            let levelUpText = `\\🎉 Congratulations, %AUTHOR_NAME! You are now \`LV. ${_userLevelUp.level_current}\``;
 
                             // Edit the current message with the level up message
                             // if the message can't be edited, send a separate message
@@ -137,8 +135,8 @@ module.exports = {
 
             try {
                 // Send a random Tips N' Tricks messeage to the channel
-                if (randomTools.chance(chanceToShowTips)) embed_tip.send({
-                    description: randomTools.choice(heejinTips), method: "send"
+                if (randomTools.chance(TIP_CHANCE)) embed_tip.send({
+                    description: randomTools.choice(tips), method: "send"
                 });
             } catch { }
         } catch (err) {

@@ -3,9 +3,9 @@
     "MONGO_URI": "",
     "DEVMODE": false,
 
-    "ownerID": "797233513136390175",
-    "adminIDs": ["842555247145779211"],
-    "adminBypassIDs": {
+    "OWNER_ID": "797233513136390175",
+    "ADMIN_IDS": ["842555247145779211"],
+    "admin_bypass_ids": {
         "customizecard": [""]
     },
 
