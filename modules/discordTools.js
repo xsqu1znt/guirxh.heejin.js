@@ -4,27 +4,26 @@ const {
     EmbedBuilder, ButtonBuilder, ButtonStyle,
 } = require('discord.js');
 
-// const { botSettings: { embed: embedSettings, customEmojis, timeout } } = require('../configs/heejinSettings.json');
 const { EMBED_COLOR, emojis, timeouts } = require('../configs/config_bot.json');
 const { dateTools } = require('./jsTools');
 const logger = require('./logger');
 
 const embed_defaults = {
-    color: embedSettings.color
+    color: EMBED_COLOR
 };
 
 const timeouts = {
-    pagination: timeout.pagination,
-    confirmation: timeout.confirmation,
-    errorMessage: timeout.errorMessage
+    pagination: timeouts.PAGINATION,
+    confirmation: timeouts.CONFIRMATION,
+    errorMessage: timeouts.ERROR_MESSAGE,
 };
 
 const nav_emojis = {
-    toFirst: customEmojis.pagination.toFirst,
-    back: customEmojis.pagination.back,
-    jump: customEmojis.pagination.jump,
-    next: customEmojis.pagination.next,
-    toLast: customEmojis.pagination.toLast,
+    toFirst: emojis.pagination.to_first,
+    back: emojis.pagination.back,
+    jump: emojis.pagination.jump,
+    next: emojis.pagination.next,
+    toLast: emojis.pagination.to_last,
 };
 
 //! Life Betterment
@@ -331,11 +330,11 @@ class EmbedNavigator {
                 selectMenu: new StringSelectMenuBuilder().setCustomId("ssm_pageSelect").setPlaceholder("choose a page to view..."),
 
                 pagination: {
-                    toFirst: this.#createButton(nav_emojis.toFirst.emoji, null, "btn_toFirst"),
-                    back: this.#createButton(nav_emojis.back.emoji, null, "btn_back"),
-                    jump: this.#createButton(nav_emojis.jump.emoji, null, "btn_jump"),
-                    next: this.#createButton(nav_emojis.next.emoji, null, "btn_next"),
-                    toLast: this.#createButton(nav_emojis.toLast.emoji, null, "btn_toLast")
+                    toFirst: this.#createButton(nav_emojis.toFirst.EMOJI, null, "btn_toFirst"),
+                    back: this.#createButton(nav_emojis.back.EMOJI, null, "btn_back"),
+                    jump: this.#createButton(nav_emojis.jump.EMOJI, null, "btn_jump"),
+                    next: this.#createButton(nav_emojis.next.EMOJI, null, "btn_next"),
+                    toLast: this.#createButton(nav_emojis.toLast.EMOJI, null, "btn_toLast")
                 }
             }
         }
