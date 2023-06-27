@@ -66,6 +66,9 @@ const schema_questCache = new Schema({
 }, { collection: "quest_cache" });
 
 module.exports = {
-    schema: schema_questCache, model: model("quest_cache", schema_questCache),
-    QuestCache, QuestObjectiveTypes, QuestObjectiveProgress
+    QuestCache: new QuestCache,
+    QuestObjectiveTypes: new QuestObjectiveTypes,
+    QuestObjectiveProgress: new QuestObjectiveProgress,
+
+    schema: schema_questCache, model: model("quest_cache", schema_questCache)
 };

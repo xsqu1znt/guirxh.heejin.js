@@ -1,13 +1,28 @@
 const { TimestampStyles, time } = require('discord.js');
 
 const { botSettings: { currencyIcon } } = require('../configs/heejinSettings.json');
+const { QuestCache, model: questCacheModel } = require('../models/questCacheModel');
 const { numberTools, dateTools } = require('./jsTools');
 const cardManager = require('./cardManager');
 const userParser = require('./userParser');
 
 const quests = require('../configs/quests.json');
 
-const { model: questCacheModel } = require('../models/questCacheModel');
+const models = {
+    questCache: questCacheModel
+};
+
+async function mongo_exists(userID) {
+    let res = await models.questCache.exists({ _id: userID });
+    return res ? true : false;
+}
+
+async function mongo_fetch(userID, upsert = false) {
+    /** @type {QuestCache | null} */
+    let questCache = await models.questCache.findById(userID, null, { upsert, lean: true });
+
+    return questCache;
+}
 
 function exists() {
     return quests.length > 0;
