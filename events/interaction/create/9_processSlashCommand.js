@@ -7,11 +7,12 @@ const { communityServer, botSettings: { chanceToShowTips } } = require('../../..
 
 const heejinTips = require('../../../configs/heejinTips.json');
 
-const { generalQuestObjectiveComplete_ES } = require('../../../modules/embedStyles');
+const { quest_objectiveComplete_ES } = require('../../../modules/embedStyles');
 const { BetterEmbed } = require('../../../modules/discordTools');
 const { randomTools } = require('../../../modules/jsTools');
 const { userManager } = require('../../../modules/mongo');
 const logger = require('../../../modules/logger');
+const messenger = require('../../../modules/messenger');
 
 function userIsBotAdminOrBypass(interaction) {
     return [ownerID, ...adminIDs, ...adminBypassIDs[interaction.commandName]].includes(interaction.user.id);
@@ -92,26 +93,25 @@ module.exports = {
                     // Handle post-execute quest caching 
                     cacheUserQuestData().then(async _parsedQuestData => {
                         if (!_parsedQuestData) return; /* console.log(_parsedQuestData); */
+
                         /// Iterate through quest progresses
                         for (let _questProgress of _parsedQuestData.progress) {
                             let _requirementsCompleted = _questProgress.requirementsCompleted;
-                            // console.log(_requirementsCompleted);
-
                             // Send an embed to alert the user they completed a quest requirement(s)
                             if (_requirementsCompleted.length) {
                                 // Create the quest requirement(s) complete embed
-                                let embed_questObjectiveComplete = generalQuestObjectiveComplete_ES(
+                                let embed_objectiveComplete = quest_objectiveComplete_ES(
                                     args.interaction.member, _questProgress
                                 );
 
                                 // Send the embed
-                                await args.interaction.followUp({ embeds: [embed_questObjectiveComplete] });
+                                await args.interaction.followUp({ embeds: [embed_objectiveComplete] });
                             }
                         }
 
                         /// Other stuff
-                        if (_parsedQuestData.completed.length) {
-                            // TODO: do something about it
+                        if (_parsedQuestData.completed.length) for (let _quest of _parsedQuestData.completed) {
+                            messenger.quest.complete(args.interaction.user, _quest, _parsedQuestData.rewards);
                         }
                     });
 

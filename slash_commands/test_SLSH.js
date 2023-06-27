@@ -19,8 +19,8 @@ module.exports = {
         //! Basic embed to test database
         let embed_basic = new BetterEmbed({ interaction, title: { text: "beep" } });
 
-        await messenger.quest.complete(interaction.user, questManager.quests[0]);
-        await messenger.gift.currency(interaction.user, 500, 1500);
+        // await messenger.quest.complete(interaction.user, questManager.quests[0]);
+        // await messenger.gift.currency(interaction.user, interaction.guild.members.me.user, 500, 1500);
 
         return await embed_basic.send();
 

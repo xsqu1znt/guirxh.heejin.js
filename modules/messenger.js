@@ -52,11 +52,15 @@ async function gift_currency(recipient, gifter, amount, currentBalance) {
 }
 
 /** @param {User} recipient @param {{}} quest */
-async function quest_complete(recipient, quest) {
+async function quest_complete(recipient, quest, rewards) {
+    let reward_cards_f = [];
+    if (rewards?.cards) for (let card of rewards.cards)
+        reward_cards_f.push(cardManager.toString.basic(card));
+
     // Create the embed
     let embed_questComplete = new BetterEmbed({
         author: { text: `📜 Good job! You completed \'${quest.name}\'`, user: recipient, iconURL: null },
-        description: `You got:\n> ${quest.rewards}`,
+        description: `You got:\n> ${quest.rewards}\n\n${reward_cards_f.join("\n")}`,
         showTimestamp: true
     });
 
