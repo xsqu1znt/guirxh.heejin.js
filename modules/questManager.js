@@ -7,6 +7,8 @@ const userParser = require('./userParser');
 
 const quests = require('../configs/quests.json');
 
+const { model: questCacheModel } = require('../models/questCacheModel');
+
 function exists() {
     return quests.length > 0;
 }

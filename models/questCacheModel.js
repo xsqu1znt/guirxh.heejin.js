@@ -1,35 +1,71 @@
 const { Schema, model } = require('mongoose');
 
-const schema_user = Schema({
+class QuestObjectiveTypes {
+    constructor() {
+        this.balance = 0;
+        this.ribbons = 0;
+        this.inventory_count = 0;
+
+        this.level_user = 0;
+        this.level_idol = 0;
+
+        this.card_global_ids = [""];
+        this.card_sets_complete = [""];
+        this.card_duplicates = [{ globalID: "", count: 0 }];
+
+        this.team_ability = 0;
+        this.team_reputation = 0;
+    }
+}
+
+class QuestObjectiveProgress {
+    constructor() {
+        this.balance = false;
+        this.ribbons = false;
+        this.inventory_count = false;
+
+        this.level_user = false;
+        this.level_idol = false;
+
+        this.card_global_ids = false;
+        this.card_sets_complete = false;
+        this.card_duplicates = false;
+
+        this.team_ability = false;
+        this.team_reputation = false;
+    }
+}
+
+class QuestCache {
+    constructor() {
+        this._id = "";
+
+        this.balance = 0;
+        this.ribbons = 0;
+        this.inventory_count = 0;
+
+        this.level_user = 0;
+        this.level_idol = 0;
+
+        this.team_ability = 0;
+        this.team_reputation = 0;
+
+        this.progress = [{ questID: "", objectives: new QuestObjectiveProgress }];
+    }
+}
+
+const schema_questCache = new Schema({
     _id: { type: String, require: true },
 
-    daily_streak: { type: Number, default: 0 },
-    daily_streak_expires: { type: Number, default: 0 },
+    balance: Number, ribbons: Number, inventory_count: Number,
+    level_user: Number, level_idol: Number,
+    team_ability: Number, team_reputation: Number,
 
-    level: { type: Number, default: 1 },
-    xp: { type: Number, default: 0 },
-    xp_for_next_level: { type: Number, default: 50 },
+    objectives: Array
 
-    biography: { type: String, default: new String() },
-    balance: { type: Number, default: 0 },
-    ribbons: { type: Number, default: 0 },
+}, { collection: "quest_cache" });
 
-    badges: { type: Array, default: new Array() },
-
-    card_selected_uid: { type: String, default: new String() },
-    card_favorite_uid: { type: String, default: new String() },
-    card_team_uids: { type: Array, default: new Array() },
-    card_inventory: { type: Array, default: new Array() },
-
-    cooldowns: { type: Array, default: new Array() },
-    reminders: { type: Array, default: new Array() },
-
-    quests_completed: { type: Array, default: new Array() },
-    quest_cache: {
-        type: Object, default: {}
-    },
-
-    timestamp_started: { type: Number, require: true }
-}, { collection: "users" });
-
-module.exports = model("users", schema_user);
+module.exports = {
+    schema: schema_questCache, model: model("quest_cache", schema_questCache),
+    QuestCache, QuestObjectiveTypes, QuestObjectiveProgress
+};
