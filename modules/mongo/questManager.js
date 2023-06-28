@@ -10,6 +10,7 @@ const cardManager = require('../cardManager');
 const userParser = require('../userParser');
 
 const quests = require('../../configs/quests.json');
+const quest_ids = quests.map(quest => quest.id);
 
 const models = {
     questCache: questCacheModel
@@ -20,26 +21,58 @@ async function mongo_exists(userID) {
     return res ? true : false;
 }
 
-async function mongo_fetch(userID, upsert = false) {
+async function mongo_fetch(userID, upsert = true) {
     /** @type {QuestCache | null} */
     let questCache = await models.questCache.findById(userID, null, { upsert, lean: true });
 
     return questCache;
 }
 
-async function mongo_userComplete(userID) {
+async function mongo_isQuestComplete(userID, questID) {
+    if (!Array.isArray(questID)) questID = [questID];
 
+    // Fetch the user from Mongo
+    let userData = await userManager.fetch(userID, "quest");
+
+    // Filter quests based on the given quest ID
+    let quests_filtered = userData.quests_completed.filter(quest => questID.includes(quest.id));
+    return quests_filtered.length === questID.length ? true : false;
 }
 
 async function mongo_cache(userID) {
     if (!quests.length) return;
-    if (await !userManager.exists(userID)) return;
+    if (!await userManager.exists(userID)) return;
+
+    // Check whether the user completed the current quests
+    // TODO: RESET STARTING_CACHE
+    if (!await mongo_isQuestComplete(userID, quest_ids)) return;
 
     // Fetch the user from Mongo
     let userData = await userManager.fetch(userID, "full");
+    // Fetch the quest cache from Mongo
+    let questCache = await mongo_fetch(userID);
 
-    // Check whether the user completed the current quests
+    // Get the user's idol card, if available
+    let card_idol = userParser.cards.getIdol(userData);
 
+    /// Cache difference
+    questCache.balance = userData.balance - questCache.temp?.balance;
+    questCache.ribbons = userData.ribbons - questCache.temp?.ribbons;
+    questCache.inventory_count = userData.inventory_count - questCache.temp?.inventory_count;
+
+    /// Cache constant values
+    questCache.level_user = userData.level;
+    questCache.level_idol = card_idol?.stats?.level || 0;
+
+    questCache.team_ability = 0;
+    questCache.team_reputation = 0;
+
+    // Update temporary cache to be used next time mongo_cache() is called
+    questCache.temp = {
+        balance: userData.balance,
+        ribbons: userData.ribbons,
+        inventory_count: userData.card_inventory.length
+    };
 }
 
 

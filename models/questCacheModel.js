@@ -51,6 +51,7 @@ class QuestCache {
         this.team_reputation = 0;
 
         this.progress = [{ questID: "", objectives: new QuestObjectiveProgress }];
+        this.temp = {};
     }
 }
 
@@ -61,7 +62,7 @@ const schema_questCache = new Schema({
     level_user: Number, level_idol: Number,
     team_ability: Number, team_reputation: Number,
 
-    objectives: Array
+    progress: Array, temp: Object
 
 }, { collection: "quest_cache" });
 
