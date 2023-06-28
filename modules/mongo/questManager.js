@@ -1,12 +1,15 @@
 const { TimestampStyles, time } = require('discord.js');
 
-const { botSettings: { currencyIcon } } = require('../configs/heejinSettings.json');
-const { QuestCache, model: questCacheModel } = require('../models/questCacheModel');
-const { numberTools, dateTools } = require('./jsTools');
-const cardManager = require('./cardManager');
-const userParser = require('./userParser');
+const { botSettings: { currencyIcon } } = require('../../configs/heejinSettings.json');
 
-const quests = require('../configs/quests.json');
+const { QuestCache, model: questCacheModel } = require('../../models/questCacheModel');
+
+const { numberTools, dateTools } = require('../jsTools');
+const { userManager } = require('../mongo');
+const cardManager = require('../cardManager');
+const userParser = require('../userParser');
+
+const quests = require('../../configs/quests.json');
 
 const models = {
     questCache: questCacheModel
@@ -23,6 +26,22 @@ async function mongo_fetch(userID, upsert = false) {
 
     return questCache;
 }
+
+async function mongo_userComplete(userID) {
+
+}
+
+async function mongo_cache(userID) {
+    if (!quests.length) return;
+    if (await !userManager.exists(userID)) return;
+
+    // Fetch the user from Mongo
+    let userData = await userManager.fetch(userID, "full");
+
+    // Check whether the user completed the current quests
+
+}
+
 
 function exists() {
     return quests.length > 0;

@@ -2,8 +2,9 @@
 
 const { userSettings } = require('../configs/heejinSettings.json');
 const { stringTools, numberTools, randomTools, dateTools } = require('../modules/jsTools');
+const { model: userModel } = require('../models/userModel');
+const questManager = require('./mongo/questManager');
 const badgeManager = require('./badgeManager');
-const questManager = require('./questManager');
 const cardManager = require('./cardManager');
 const userParser = require('./userParser');
 const mongoose = require('mongoose');
@@ -14,7 +15,7 @@ const MONGO_URI = process.env.MONGO_URI || require('../configs/clientSettings.js
 // Models
 const models = {
     guild: require('../models/guildModel'),
-    user: require('../models/userModel')
+    user: userModel
 };
 
 /** @type {"drop_general" | "drop_weekly" | "drop_season" | "drop_event_1" | "drop_event_2" | "daily" | "stage" | "random"} */

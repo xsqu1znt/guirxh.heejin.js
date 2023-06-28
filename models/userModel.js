@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-const schema_user = Schema({
+const schema_user = new Schema({
     _id: { type: String, require: true },
 
     daily_streak: { type: Number, default: 0 },
@@ -32,4 +32,6 @@ const schema_user = Schema({
     timestamp_started: { type: Number, require: true }
 }, { collection: "users" });
 
-module.exports = model("users", schema_user);
+module.exports = {
+    schema: schema_user, model: model("users", schema_user)
+};
