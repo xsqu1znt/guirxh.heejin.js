@@ -28,6 +28,10 @@ async function mongo_fetch(userID, upsert = true) {
     return questCache;
 }
 
+async function mongo_update(userID, update) {
+    return await models.questCache.findByIdAndUpdate(userID, update, { lean: true });
+}
+
 async function mongo_isQuestComplete(userID, questID) {
     if (!Array.isArray(questID)) questID = [questID];
 
@@ -44,7 +48,7 @@ async function mongo_cache(userID) {
     if (!await userManager.exists(userID)) return;
 
     // Check whether the user completed the current quests
-    // TODO: RESET STARTING_CACHE
+    // TODO: RESET TEMP
     if (!await mongo_isQuestComplete(userID, quest_ids)) return;
 
     // Fetch the user from Mongo
@@ -55,6 +59,9 @@ async function mongo_cache(userID) {
     // Get the user's idol card, if available
     let card_idol = userParser.cards.getIdol(userData);
 
+    // Get the user's team, if available
+    let card_team = userParser.cards.getTeam(userData);
+
     /// Cache difference
     questCache.balance = userData.balance - questCache.temp?.balance;
     questCache.ribbons = userData.ribbons - questCache.temp?.ribbons;
@@ -64,8 +71,8 @@ async function mongo_cache(userID) {
     questCache.level_user = userData.level;
     questCache.level_idol = card_idol?.stats?.level || 0;
 
-    questCache.team_ability = 0;
-    questCache.team_reputation = 0;
+    questCache.team_ability = card_team.ability_total;
+    questCache.team_reputation = card_team.reputation_total;
 
     // Update temporary cache to be used next time mongo_cache() is called
     questCache.temp = {
@@ -73,6 +80,9 @@ async function mongo_cache(userID) {
         ribbons: userData.ribbons,
         inventory_count: userData.card_inventory.length
     };
+
+    // Push the update to Mongo
+    // await 
 }
 
 
