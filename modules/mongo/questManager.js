@@ -34,11 +34,11 @@ function quest_getProgress(questID, userData, questCache) {
             case "ribbons": objectives.ribbons = (quest.objectives?.ribbons <= questCache.ribbons); break;
             case "cards_in_inventory": objectives.cards_in_inventory = (quest.objectives?.cards_in_inventory <= questCache.cards_in_inventory); break;
 
-            case "level_user": objectives.ribbons = (quest.objectives?.level_user <= questCache.level_user); break;
-            case "level_idol": objectives.ribbons = (quest.objectives?.level_idol <= questCache.level_idol); break;
+            case "level_user": objectives.level_user = (quest.objectives?.level_user <= questCache.level_user); break;
+            case "level_idol": objectives.level_idol = (quest.objectives?.level_idol <= questCache.level_idol); break;
 
-            case "team_ability": objectives.ribbons = (quest.objectives?.team_ability <= questCache.team_ability); break;
-            case "team_reputation": objectives.ribbons = (quest.objectives?.team_reputation <= questCache.team_reputation); break;
+            case "team_ability": objectives.team_ability = (quest.objectives?.team_ability <= questCache.team_ability); break;
+            case "team_reputation": objectives.team_reputation = (quest.objectives?.team_reputation <= questCache.team_reputation); break;
 
             case "card_global_ids": objectives.card_global_ids = userParser.cards.has(userData, quest.objectives.card_global_ids); break;
             case "card_sets_complete": objectives.card_sets_complete = userParser.cards.setsCompleted(userData, quest.objectives.card_sets_completed); break;
@@ -50,9 +50,9 @@ function quest_getProgress(questID, userData, questCache) {
     // Get the size of the objectives object
     let objectives_size = Object.keys(objectives).length;
 
-    // Create an array of completed/required quest objectives
-    let objectives_complete = Object.entries(objectives).filter(obj => obj[1]);
-    let objectives_required = Object.entries(objectives).filter(obj => !obj[1]);
+    // Create an array of completed/required quest objective types
+    let objectives_complete = Object.entries(objectives).filter(obj => obj[1]).map(obj => obj[0]);
+    let objectives_required = Object.entries(objectives).filter(obj => !obj[1]).map(obj => obj[0]);
 
     return {
         questID, quest,
@@ -61,12 +61,12 @@ function quest_getProgress(questID, userData, questCache) {
         f: `${objectives_complete.length}/${objectives_size}`,
 
         objectives, objectives_complete, objectives_required,
-        objectives_just_completed: progress_current
+        objectives_just_complete: progress_current
             ? objectives_complete
                 // Filter out objectives the user already had marked as complete
-                .filter(obj => !Object.keys(progress_current.objectives).includes(obj[0]))
+                .filter(obj => !progress_current.objectives_complete.includes(obj))
                 // Only return an array of objective types (string)
-                .map(obj => obj[0])
+                .map(obj => obj)
             : [],
     };
 }
@@ -89,8 +89,15 @@ async function mongo_questCache_exists(userID) {
     return res ? true : false;
 }
 
+async function mongo_questCache_new(userID) {
+    return await (new models.questCache({ _id: userID })).save();
+}
+
 async function mongo_questCache_fetch(userID, upsert = false) {
-    return await models.questCache.findById(userID, null, { upsert, lean: true });
+    let questCache = await models.questCache.findById(userID, null, { lean: true });
+    if (upsert) questCache ||= mongo_questCache_new(userID);
+
+    return questCache;
 }
 
 async function mongo_questCache_update(userID, update) {
@@ -162,7 +169,7 @@ async function mongo_questCache_updateCache(userID) {
     questProgress = questProgress.filter(progress => progress);
 
     // Cache the progress in Mongo
-    questCache = await mongo_questCache_update(userID, { quests_in_progress: quests_inProgress, progress: questProgress });
+    questCache = await mongo_questCache_update(userID, { progress: questProgress });
 
     // Return cache, progress, and completed quests
     return {
@@ -394,6 +401,7 @@ module.exports = {
 
     cache: {
         exists: mongo_questCache_exists,
+        new: mongo_questCache_new,
         fetch: mongo_questCache_fetch,
         update: mongo_questCache_update,
         updateCache: mongo_questCache_updateCache,

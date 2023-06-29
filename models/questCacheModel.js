@@ -78,7 +78,7 @@ class QuestCache {
 const schema_questCache = new Schema({
     _id: { type: String, require: true },
 
-    balance: Number, ribbons: Number, inventory_count: Number,
+    balance: Number, ribbons: Number, cards_in_inventory: Number,
     level_user: Number, level_idol: Number,
     team_ability: Number, team_reputation: Number,
 

@@ -89,7 +89,7 @@ async function user_fetch(userID, type = "full", lean = true) {
         case "full": filter = { __v: 0 }; break;
         case "essential": filter = { card_inventory: 0 }; break;
         case "reminders": filter = { daily_streak: 1, cooldowns: 1, reminders: 1 }; break;
-        case "quest": filter = { quests_completed: 1, quest_cache: 1 }; break;
+        case "quest": filter = { quests_complete: 1 }; break;
         case "cards": filter = { card_inventory: 1 }; break;
     }
 
