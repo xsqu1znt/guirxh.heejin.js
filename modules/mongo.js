@@ -3,7 +3,7 @@
 const { userSettings } = require('../configs/heejinSettings.json');
 const { stringTools, numberTools, randomTools, dateTools } = require('../modules/jsTools');
 const { model: userModel } = require('../models/userModel');
-const questManager = require('./mongo/questManager');
+// const questManager = require('./mongo/questManager');
 const badgeManager = require('./badgeManager');
 const cardManager = require('./cardManager');
 const userParser = require('./userParser');
@@ -344,7 +344,7 @@ async function userReminder_reset(userID, guildID, channelID, user, reminderType
 }
 
 //! User -> Quests
-async function userQuest_cache(userID) {
+/* async function userQuest_cache(userID) {
     if (!questManager.exists()) return;
     if (!await user_exists(userID)) return;
 
@@ -440,7 +440,7 @@ async function userQuest_cache(userID) {
 
         return parsedQuestData;
     };
-}
+} */
 
 module.exports = {
     /** Connect to MongoDB. */
@@ -505,8 +505,8 @@ module.exports = {
             reset: userReminder_reset
         },
 
-        quests: {
+        /* quests: {
             cache: userQuest_cache
-        }
+        } */
     }
 };

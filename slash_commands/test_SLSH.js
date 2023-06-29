@@ -3,7 +3,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js'
 const { botSettings: { currencyIcon, customEmojis } } = require('../configs/heejinSettings.json');
 const { quest_complete_ES } = require('../modules/embedStyles');
 const { BetterEmbed } = require('../modules/discordTools');
-const questManager = require('../modules/questManager');
+// const questManager = require('../modules/questManager');
 const cardManager = require('../modules/cardManager');
 const messenger = require('../modules/messenger');
 

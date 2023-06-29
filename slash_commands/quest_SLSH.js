@@ -2,7 +2,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js'
 
 const { BetterEmbed } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
-const questManager = require('../modules/questManager');
+// const questManager = require('../modules/questManager');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("quest")
