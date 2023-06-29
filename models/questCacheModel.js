@@ -1,6 +1,25 @@
 const { Schema, model } = require('mongoose');
 
+/** @typedef ObjectiveTypes
+ * @type {Object}
+ * @property {string} id
+ * @property {number} num */
+
 class QuestObjectiveTypes {
+    static balance = "balance";
+    static ribbons = "ribbons";
+    static inventory_count = "inventory_count";
+
+    static level_user = "level_user";
+    static level_idol = "level_idol";
+
+    static card_global_ids = "card_global_ids";
+    static card_sets_complete = "card_sets_complete";
+    static card_duplicates = "card_duplicates";
+
+    static team_ability = "team_ability";
+    static team_reputation = "team_reputation";
+
     constructor() {
         this.balance = 0;
         this.ribbons = 0;
@@ -50,6 +69,7 @@ class QuestCache {
         this.team_ability = 0;
         this.team_reputation = 0;
 
+        this.active_quest_ids = [""];
         this.progress = [{ questID: "", objectives: new QuestObjectiveProgress }];
         this.temp = {};
     }
@@ -62,14 +82,14 @@ const schema_questCache = new Schema({
     level_user: Number, level_idol: Number,
     team_ability: Number, team_reputation: Number,
 
-    progress: Array, temp: Object
+    active_quest_ids: Array, progress: Array, temp: Object
 
 }, { collection: "quest_cache" });
 
 module.exports = {
-    QuestCache: new QuestCache,
-    QuestObjectiveTypes: new QuestObjectiveTypes,
-    QuestObjectiveProgress: new QuestObjectiveProgress,
+    QuestCache: QuestCache,
+    QuestObjectiveTypes: QuestObjectiveTypes,
+    QuestObjectiveProgress: QuestObjectiveProgress,
 
     schema: schema_questCache, model: model("quest_cache", schema_questCache)
 };

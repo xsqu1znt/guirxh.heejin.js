@@ -2,7 +2,7 @@ const { TimestampStyles, time } = require('discord.js');
 
 const { botSettings: { currencyIcon } } = require('../../configs/heejinSettings.json');
 
-const { QuestCache, model: questCacheModel } = require('../../models/questCacheModel');
+const { model: questCacheModel, QuestCache, QuestObjectiveProgress, QuestObjectiveTypes } = require('../../models/questCacheModel');
 
 const { numberTools, dateTools } = require('../jsTools');
 const { userManager } = require('../mongo');
@@ -21,15 +21,15 @@ async function mongo_exists(userID) {
     return res ? true : false;
 }
 
-async function mongo_fetch(userID, upsert = true) {
-    /** @type {QuestCache | null} */
+async function mongo_fetch(userID, upsert = false) {
+    // /** @type {QuestCache | null} */
     let questCache = await models.questCache.findById(userID, null, { upsert, lean: true });
 
     return questCache;
 }
 
 async function mongo_update(userID, update) {
-    return await models.questCache.findByIdAndUpdate(userID, update, { lean: true });
+    return await models.questCache.findByIdAndUpdate(userID, update, { new: true, lean: true });
 }
 
 async function mongo_isQuestComplete(userID, questID) {
@@ -54,7 +54,7 @@ async function mongo_cache(userID) {
     // Fetch the user from Mongo
     let userData = await userManager.fetch(userID, "full");
     // Fetch the quest cache from Mongo
-    let questCache = await mongo_fetch(userID);
+    let questCache = await mongo_fetch(userID, true);
 
     // Get the user's idol card, if available
     let card_idol = userParser.cards.getIdol(userData);
@@ -62,28 +62,70 @@ async function mongo_cache(userID) {
     // Get the user's team, if available
     let card_team = userParser.cards.getTeam(userData);
 
-    /// Cache difference
-    questCache.balance = userData.balance - questCache.temp?.balance;
-    questCache.ribbons = userData.ribbons - questCache.temp?.ribbons;
-    questCache.inventory_count = userData.inventory_count - questCache.temp?.inventory_count;
-
-    /// Cache constant values
-    questCache.level_user = userData.level;
-    questCache.level_idol = card_idol?.stats?.level || 0;
-
-    questCache.team_ability = card_team.ability_total;
-    questCache.team_reputation = card_team.reputation_total;
-
-    // Update temporary cache to be used next time mongo_cache() is called
-    questCache.temp = {
-        balance: userData.balance,
-        ribbons: userData.ribbons,
-        inventory_count: userData.card_inventory.length
-    };
-
     // Push the update to Mongo
-    // await 
+    questCache = await mongo_update(userID, {
+        // Increment values based on cache difference
+        $inc: {
+            balance: questCache.temp?.balance ? (userData.balance - questCache.temp.balance) : 0,
+            ribbons: questCache.temp?.ribbons ? (userData.ribbons - questCache.temp.ribbons) : 0,
+            inventory_count: questCache.temp?.inventory_count ? (userData.inventory_count - questCache.temp.inventory_count) : 0
+        },
+
+        // Cache constant values
+        $set: {
+            level_user: userData.level,
+            level_idol: card_idol?.stats?.level || 0,
+
+            team_ability: card_team.ability_total,
+            team_reputation: card_team.reputation_total,
+
+            // Update temporary cache to be used next time mongo_cache() is called
+            temp: {
+                balance: userData.balance,
+                ribbons: userData.ribbons,
+                inventory_count: userData.card_inventory.length
+            }
+        }
+    });
+
+    // TODO: let questProgress = quest_get_progress(questCache);
 }
+
+function quest_get(questID) {
+    return quests.find(quest => quest.id === questID) || null;
+}
+
+function quest_get_progress(questID, questCache) {
+    let quest = quest_get(questID); if (!quest) return null;
+
+    let questProgress = new QuestObjectiveProgress();
+
+    for (let obj of Object.keys(questCache))
+        switch (obj) {
+            case QuestObjectiveTypes.balance:
+                questProgress.balance = (quest.requirements?.balance <= questCache.balance);
+                break;
+
+            case QuestObjectiveTypes.ribbons:
+                questProgress.ribbons = (quest.requirements?.ribbons <= questCache.ribbons);
+                break;
+
+            case QuestObjectiveTypes.inventory_count:
+                questProgress.ribbons = (quest.requirements?.inventory_count <= questCache.inventory_count);
+                break;
+
+            case QuestObjectiveTypes.level_user: break;
+
+            case QuestObjectiveTypes.level_idol: break;
+
+            case QuestObjectiveTypes.team_ability: break;
+
+            case QuestObjectiveTypes.team_reputation: break;
+
+        }
+}
+
+
 
 
 function exists() {
