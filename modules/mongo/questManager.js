@@ -16,109 +16,12 @@ const models = {
     questCache: questCacheModel
 };
 
-async function mongo_exists(userID) {
-    let res = await models.questCache.exists({ _id: userID });
-    return res ? true : false;
-}
-
-async function mongo_fetch(userID, upsert = false) {
-    // /** @type {QuestCache | null} */
-    let questCache = await models.questCache.findById(userID, null, { upsert, lean: true });
-
-    return questCache;
-}
-
-async function mongo_update(userID, update) {
-    return await models.questCache.findByIdAndUpdate(userID, update, { new: true, lean: true });
-}
-
-async function mongo_isQuestComplete(userID, questID) {
-    if (!Array.isArray(questID)) questID = [questID];
-
-    // Fetch the user from Mongo
-    let userData = await userManager.fetch(userID, "quest");
-
-    // Filter quests based on the given quest ID
-    let quests_filtered = userData.quests_completed.filter(quest => questID.includes(quest.id));
-    return quests_filtered.length === questID.length ? true : false;
-}
-
-async function mongo_cache(userID) {
-    if (!quests.length) return; if (!await userManager.exists(userID)) return;
-
-    // Check whether the user completed the active quests
-    // TODO: RESET TEMP
-    if (await mongo_isQuestComplete(userID, quest_ids)) {
-        await mongo_update(userID, {})
-        return;
-    }
-
-    // Fetch the user from Mongo
-    let userData = await userManager.fetch(userID, "full");
-    // Fetch the quest cache from Mongo
-    let questCache = await mongo_fetch(userID, true);
-
-    // Determine which active quests the user hasn't complete yet
-    let quests_inProgress = quests.filter(quest => !userData.quests_complete.map(q => q.questID).includes(quest.id));
-
-    // Get the user's idol card, if available
-    let card_idol = userParser.cards.getIdol(userData);
-
-    // Get the user's team, if available
-    let card_team = userParser.cards.getTeam(userData);
-
-    // Push the update to Mongo
-    questCache = await mongo_update(userID, {
-        // Increment values based on cache difference
-        $inc: {
-            balance: questCache.temp?.balance ? (userData.balance - questCache.temp.balance) : 0,
-            ribbons: questCache.temp?.ribbons ? (userData.ribbons - questCache.temp.ribbons) : 0,
-            cards_in_inventory: questCache.temp?.cards_in_inventory
-                ? (userData.card_inventory.length - questCache.temp.cards_in_inventory)
-                : 0
-        },
-
-        // Cache constant values
-        // TODO: set active_quest_ids
-        $set: {
-            level_user: userData.level,
-            level_idol: card_idol?.stats?.level || 0,
-
-            team_ability: card_team.ability_total,
-            team_reputation: card_team.reputation_total,
-
-            // Save the questID of each quest the user hasn't complete
-            quests_in_progress: quests_inProgress.map(quest => quest.id),
-
-            // Update temporary cache to be used next time mongo_cache() is called
-            temp: {
-                balance: userData.balance,
-                ribbons: userData.ribbons,
-                cards_in_inventory: userData.card_inventory.length
-            }
-        }
-    });
-
-    // Get the user's progress for each active quest
-    let questProgress = quests_inProgress.map(({ id }) => quest_get_progress(id, userData, questCache));
-    // Filter out null returns
-    questProgress = questProgress.filter(progress => progress);
-
-    // Cache the progress in Mongo
-    questCache = await mongo_update(userID, { quests_in_progress: quests_inProgress, progress: questProgress });
-
-    // Return data
-    return {
-        questCache, questProgress,
-        quests_complete: questProgress.filter(progress => progress.complete).map(progress => progress.quest)
-    };
-}
-
+//! Quest parsing
 function quest_get(questID) {
     return quests.find(quest => quest.id === questID) || null;
 }
 
-function quest_get_progress(questID, userData, questCache) {
+function quest_getProgress(questID, userData, questCache) {
     let quest = quest_get(questID); if (!quest) return null;
 
     let progress_current = questCache.progress.find(progress => progress.questID === questID);
@@ -168,14 +71,111 @@ function quest_get_progress(questID, userData, questCache) {
     };
 }
 
+//! User parsing (Mongo)
+async function mongo_user_completedQuest(userID, questID) {
+    if (!Array.isArray(questID)) questID = [questID];
 
+    // Fetch the user from Mongo
+    let userData = await userManager.fetch(userID, "quest");
 
-
-function exists() {
-    return quests.length > 0;
+    // Filter quests based on the given quest ID
+    let quests_filtered = userData.quests_complete.filter(quest => questID.includes(quest.id));
+    return quests_filtered.length === questID.length ? true : false;
 }
 
-function toString(userData) {
+//! QuestCache parsing (Mongo)
+async function mongo_questCache_exists(userID) {
+    let res = await models.questCache.exists({ _id: userID });
+    return res ? true : false;
+}
+
+async function mongo_questCache_fetch(userID, upsert = false) {
+    return await models.questCache.findById(userID, null, { upsert, lean: true });
+}
+
+async function mongo_questCache_update(userID, update) {
+    return await models.questCache.findByIdAndUpdate(userID, update, { new: true, lean: true });
+}
+
+async function mongo_questCache_reset(userID) {
+    return await models.questCache.replaceOne({ _id: userID }, {});
+}
+
+async function mongo_questCache_updateCache(userID) {
+    if (!quests.length) return; if (!await userManager.exists(userID)) return;
+
+    // Check whether the user completed the active quests
+    if (await mongo_user_completedQuest(userID, quest_ids)) {
+        // Reset quest cache
+        await mongo_questCache_reset(userID); return;
+    }
+
+    // Fetch the user from Mongo
+    let userData = await userManager.fetch(userID, "full");
+    // Fetch the quest cache from Mongo
+    let questCache = await mongo_questCache_fetch(userID, true);
+
+    // Determine which active quests the user hasn't complete yet
+    let quests_inProgress = quests.filter(quest => !userData.quests_complete.map(q => q.questID).includes(quest.id));
+
+    // Get the user's idol card, if available
+    let card_idol = userParser.cards.getIdol(userData);
+
+    // Get the user's team, if available
+    let card_team = userParser.cards.getTeam(userData);
+
+    // Push the update to Mongo
+    questCache = await mongo_questCache_update(userID, {
+        // Increment values based on cache difference
+        $inc: {
+            balance: questCache.temp?.balance ? (userData.balance - questCache.temp.balance) : 0,
+            ribbons: questCache.temp?.ribbons ? (userData.ribbons - questCache.temp.ribbons) : 0,
+            cards_in_inventory: questCache.temp?.cards_in_inventory
+                ? (userData.card_inventory.length - questCache.temp.cards_in_inventory)
+                : 0
+        },
+
+        // Cache constant values
+        // TODO: set active_quest_ids
+        $set: {
+            level_user: userData.level,
+            level_idol: card_idol?.stats?.level || 0,
+
+            team_ability: card_team.ability_total,
+            team_reputation: card_team.reputation_total,
+
+            // Save the questID of each quest the user hasn't complete
+            quests_in_progress: quests_inProgress.map(quest => quest.id),
+
+            // Update temporary cache to be used next time mongo_cache() is called
+            temp: {
+                balance: userData.balance,
+                ribbons: userData.ribbons,
+                cards_in_inventory: userData.card_inventory.length
+            }
+        }
+    });
+
+    // Get the user's progress for each active quest
+    let questProgress = quests_inProgress.map(({ id }) => quest_getProgress(id, userData, questCache));
+    // Filter out null returns
+    questProgress = questProgress.filter(progress => progress);
+
+    // Cache the progress in Mongo
+    questCache = await mongo_questCache_update(userID, { quests_in_progress: quests_inProgress, progress: questProgress });
+
+    // Return cache, progress, and completed quests
+    return {
+        cache: questCache, progress: questProgress,
+        quests_complete: questProgress.filter(progress => progress.complete).map(progress => progress.quest)
+    };
+}
+
+
+
+
+
+/* function toString(userData) {
     return validate(userData).progress.map(questProgress => {
         // let date_start = numberTools.milliToSeconds(Date.parse(quest.date.start));
         let date_end = dateTools.eta(Date.parse(questProgress.data.date.end));
@@ -188,10 +188,10 @@ function toString(userData) {
                 .replace("%TIMESTAMP_END", date_end)
         };
     });
-}
+} */
 
 /** @param {"balance" | "ribbons" | "inventory_count" | "level_user" | "level_idol" | "card_global_ids" | "card_sets_completed" | "card_duplicates" | "team_ability" | "team_reputation"} requirement  */
-function toString_requirement(questID, requirement) {
+/* function toString_requirement(questID, requirement) {
     let quest = quests.find(q => q.id === questID);
     if (!quest) return "quest not found";
 
@@ -212,9 +212,9 @@ function toString_requirement(questID, requirement) {
     }
 
     return str;
-}
+} */
 
-function validate(userData) {
+/* function validate(userData) {
     let parsedQuestData = {
         completed: [], progress: [], requirements: [],
         rewards: { xp: 0, carrots: 0, ribbons: 0, cards: [] }
@@ -320,7 +320,7 @@ function validate(userData) {
 
     return parsedQuestData;
 
-    /* if (!userData) return null;
+    if (!userData) return null;
 
     // Iterate through each quest
     return quests.map(quest => {
@@ -377,12 +377,26 @@ function validate(userData) {
         quest.completed = (completedCount === requirementCount);
 
         return quest;
-    }); */
-}
+    });
+} */
 
 module.exports = {
-    quests, questIDs: quests.map(q => q.id),
-    exists,
-    toString, toString_requirement,
-    validate
+    quests, quest_ids,
+
+    /// Quest Parsing Funtions
+    get: quest_get,
+    getProgress: quest_getProgress,
+
+    /// Mongo Parsing Functions
+    user: {
+        completedQuest: mongo_user_completedQuest
+    },
+
+    cache: {
+        exists: mongo_questCache_exists,
+        fetch: mongo_questCache_fetch,
+        update: mongo_questCache_update,
+        updateCache: mongo_questCache_updateCache,
+        reset: mongo_questCache_reset
+    }
 };

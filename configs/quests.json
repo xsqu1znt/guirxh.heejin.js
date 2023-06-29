@@ -10,7 +10,7 @@
         },
         "objectives": {
             "balance": 5000,
-            "inventory_count": 1,
+            "cards_in_inventory": 1,
             "level_user": 2
         },
         "reward": {

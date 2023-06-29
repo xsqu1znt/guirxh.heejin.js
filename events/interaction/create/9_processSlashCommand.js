@@ -5,14 +5,16 @@ const { Client, BaseInteraction, PermissionsBitField } = require('discord.js');
 const { ownerID, adminIDs, adminBypassIDs } = require('../../../configs/clientSettings.json');
 const { communityServer, botSettings: { chanceToShowTips } } = require('../../../configs/heejinSettings.json');
 
-const heejinTips = require('../../../configs/heejinTips.json');
-
 const { quest_objectiveComplete_ES } = require('../../../modules/embedStyles');
+const { questManager } = require('../../../modules/mongo/index');
 const { BetterEmbed } = require('../../../modules/discordTools');
 const { randomTools } = require('../../../modules/jsTools');
 const { userManager } = require('../../../modules/mongo');
-const logger = require('../../../modules/logger');
+
 const messenger = require('../../../modules/messenger');
+const logger = require('../../../modules/logger');
+
+const tips = require('../../../configs/heejinTips.json');
 
 function userIsBotAdminOrBypass(interaction) {
     return [ownerID, ...adminIDs, ...adminBypassIDs[interaction.commandName]].includes(interaction.user.id);
@@ -85,14 +87,18 @@ module.exports = {
                 return await embed_error.send({ description: "**You have not started yet!** Use \`/start\` first!", ephemeral: true });
 
             // Cache the user's current UserData if available || REQUIRED FOR QUESTS ONLY
-            let cacheUserQuestData = await userManager.quests.cache(args.interaction.user.id);
+            // TODO: let cacheUserQuestData = await userManager.quests.cache(args.interaction.user.id);
 
             // Execute the slash command's function
             slashCommand.execute(client, args.interaction).then(async message => {
                 try {
-                    // Handle post-execute quest caching 
-                    cacheUserQuestData().then(async _parsedQuestData => {
-                        if (!_parsedQuestData) return; /* console.log(_parsedQuestData); */
+                    // Handle post-execute quest caching
+                    questManager.cache.updateCache(args.interaction.user.id).then(questCache => {
+                        console.log(questCache);
+                    });
+
+                    /* cacheUserQuestData().then(async _parsedQuestData => {
+                        if (!_parsedQuestData) return;
 
                         /// Iterate through quest progresses
                         for (let _questProgress of _parsedQuestData.progress) {
@@ -113,7 +119,7 @@ module.exports = {
                         if (_parsedQuestData.completed.length) for (let _quest of _parsedQuestData.completed) {
                             messenger.quest.complete(args.interaction.user, _quest, _parsedQuestData.rewards);
                         }
-                    });
+                    }); */
 
                     // Check if the user can level up
                     userManager.xp.tryLevelUp(args.interaction.user.id).then(async _userLevelUp => {
@@ -138,7 +144,7 @@ module.exports = {
             try {
                 // Send a random Tips N' Tricks messeage to the channel
                 if (randomTools.chance(chanceToShowTips)) embed_tip.send({
-                    description: randomTools.choice(heejinTips), method: "send"
+                    description: randomTools.choice(tips), method: "send"
                 });
             } catch { }
         } catch (err) {
