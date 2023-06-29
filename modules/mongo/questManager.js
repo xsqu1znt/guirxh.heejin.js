@@ -1,4 +1,4 @@
-const { TimestampStyles, time } = require('discord.js');
+const { TimestampStyles, time, SystemChannelFlagsBitField } = require('discord.js');
 
 const { botSettings: { currencyIcon } } = require('../../configs/heejinSettings.json');
 
@@ -44,17 +44,22 @@ async function mongo_isQuestComplete(userID, questID) {
 }
 
 async function mongo_cache(userID) {
-    if (!quests.length) return;
-    if (!await userManager.exists(userID)) return;
+    if (!quests.length) return; if (!await userManager.exists(userID)) return;
 
-    // Check whether the user completed the current quests
+    // Check whether the user completed the active quests
     // TODO: RESET TEMP
-    if (!await mongo_isQuestComplete(userID, quest_ids)) return;
+    if (await mongo_isQuestComplete(userID, quest_ids)) {
+        await mongo_update(userID, {})
+        return;
+    }
 
     // Fetch the user from Mongo
     let userData = await userManager.fetch(userID, "full");
     // Fetch the quest cache from Mongo
     let questCache = await mongo_fetch(userID, true);
+
+    // Determine which active quests the user hasn't complete yet
+    let quests_inProgress = quests.filter(quest => !userData.quests_complete.map(q => q.questID).includes(quest.id));
 
     // Get the user's idol card, if available
     let card_idol = userParser.cards.getIdol(userData);
@@ -68,10 +73,13 @@ async function mongo_cache(userID) {
         $inc: {
             balance: questCache.temp?.balance ? (userData.balance - questCache.temp.balance) : 0,
             ribbons: questCache.temp?.ribbons ? (userData.ribbons - questCache.temp.ribbons) : 0,
-            inventory_count: questCache.temp?.inventory_count ? (userData.inventory_count - questCache.temp.inventory_count) : 0
+            cards_in_inventory: questCache.temp?.cards_in_inventory
+                ? (userData.card_inventory.length - questCache.temp.cards_in_inventory)
+                : 0
         },
 
         // Cache constant values
+        // TODO: set active_quest_ids
         $set: {
             level_user: userData.level,
             level_idol: card_idol?.stats?.level || 0,
@@ -79,16 +87,31 @@ async function mongo_cache(userID) {
             team_ability: card_team.ability_total,
             team_reputation: card_team.reputation_total,
 
+            // Save the questID of each quest the user hasn't complete
+            quests_in_progress: quests_inProgress.map(quest => quest.id),
+
             // Update temporary cache to be used next time mongo_cache() is called
             temp: {
                 balance: userData.balance,
                 ribbons: userData.ribbons,
-                inventory_count: userData.card_inventory.length
+                cards_in_inventory: userData.card_inventory.length
             }
         }
     });
 
-    // TODO: let questProgress = quest_get_progress(questCache);
+    // Get the user's progress for each active quest
+    let questProgress = quests_inProgress.map(({ id }) => quest_get_progress(id, userData, questCache));
+    // Filter out null returns
+    questProgress = questProgress.filter(progress => progress);
+
+    // Cache the progress in Mongo
+    questCache = await mongo_update(userID, { quests_in_progress: quests_inProgress, progress: questProgress });
+
+    // Return data
+    return {
+        questCache, questProgress,
+        quests_complete: questProgress.filter(progress => progress.complete).map(progress => progress.quest)
+    };
 }
 
 function quest_get(questID) {
@@ -98,35 +121,51 @@ function quest_get(questID) {
 function quest_get_progress(questID, userData, questCache) {
     let quest = quest_get(questID); if (!quest) return null;
 
-    let questProgress = { ...new QuestObjectiveProgress() };
-    questProgress.forEach(val => val = null);
+    let progress_current = questCache.progress.find(progress => progress.questID === questID);
+    let objectives = {};
 
-    for (let obj of Object.keys(quest.requirements))
+    // Iterate through quest objectives and test if the user completed them
+    for (let obj of Object.keys(quest.objectives))
         switch (obj) {
-            case "balance": questProgress.balance = (quest.requirements?.balance <= questCache.balance); break;
-            case "ribbons": questProgress.ribbons = (quest.requirements?.ribbons <= questCache.ribbons); break;
-            case "inventory_count": questProgress.ribbons = (quest.requirements?.inventory_count <= questCache.inventory_count); break;
+            case "balance": objectives.balance = (quest.objectives?.balance <= questCache.balance); break;
+            case "ribbons": objectives.ribbons = (quest.objectives?.ribbons <= questCache.ribbons); break;
+            case "cards_in_inventory": objectives.cards_in_inventory = (quest.objectives?.cards_in_inventory <= questCache.cards_in_inventory); break;
 
-            case "level_user": questProgress.ribbons = (quest.requirements?.level_user <= questCache.level_user); break;
-            case "level_idol": questProgress.ribbons = (quest.requirements?.level_idol <= questCache.level_idol); break;
+            case "level_user": objectives.ribbons = (quest.objectives?.level_user <= questCache.level_user); break;
+            case "level_idol": objectives.ribbons = (quest.objectives?.level_idol <= questCache.level_idol); break;
 
-            case "team_ability": questProgress.ribbons = (quest.requirements?.team_ability <= questCache.team_ability); break;
-            case "team_reputation": questProgress.ribbons = (quest.requirements?.team_reputation <= questCache.team_reputation); break;
+            case "team_ability": objectives.ribbons = (quest.objectives?.team_ability <= questCache.team_ability); break;
+            case "team_reputation": objectives.ribbons = (quest.objectives?.team_reputation <= questCache.team_reputation); break;
 
-            case "card_global_ids":
-                questProgress.card_global_ids = userParser.cards.has(userData, quest.requirements.card_global_ids);
-                break;
-
-            case "card_sets_complete":
-                questProgress.card_sets_complete = userParser.cards.setsCompleted(userData, quest.requirements.card_sets_completed);
-                break;
-
-            case "card_duplicates":
-                questProgress.card_duplicates = quest.requirements.card_duplicates.map(globalID =>
-                    userParser.cards.hasDuplicates(userData, globalID)
-                ).filter(b => b).length === quest.requirements.card_duplicates.length;
-                break;
+            case "card_global_ids": objectives.card_global_ids = userParser.cards.has(userData, quest.objectives.card_global_ids); break;
+            case "card_sets_complete": objectives.card_sets_complete = userParser.cards.setsCompleted(userData, quest.objectives.card_sets_completed); break;
+            case "card_duplicates": objectives.card_duplicates = (quest.objectives.card_duplicates.map(globalID =>
+                userParser.cards.hasDuplicates(userData, globalID)
+            ).filter(b => b).length === quest.objectives.card_duplicates.length); break;
         }
+
+    // Get the size of the objectives object
+    let objectives_size = Object.keys(objectives).length;
+
+    // Create an array of completed/required quest objectives
+    let objectives_complete = Object.entries(objectives).filter(obj => obj[1]);
+    let objectives_required = Object.entries(objectives).filter(obj => !obj[1]);
+
+    return {
+        questID, quest,
+
+        complete: objectives_complete.length === objectives_size,
+        f: `${objectives_complete.length}/${objectives_size}`,
+
+        objectives, objectives_complete, objectives_required,
+        objectives_just_completed: progress_current
+            ? objectives_complete
+                // Filter out objectives the user already had marked as complete
+                .filter(obj => !Object.keys(progress_current.objectives).includes(obj[0]))
+                // Only return an array of objective types (string)
+                .map(obj => obj[0])
+            : [],
+    };
 }
 
 

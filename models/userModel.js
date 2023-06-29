@@ -24,11 +24,7 @@ const schema_user = new Schema({
     cooldowns: { type: Array, default: new Array() },
     reminders: { type: Array, default: new Array() },
 
-    quests_completed: { type: Array, default: new Array() },
-    quest_cache: {
-        type: Object, default: {}
-    },
-
+    quests_complete: { type: Array, default: new Array() },
     timestamp_started: { type: Number, require: true }
 }, { collection: "users" });
 

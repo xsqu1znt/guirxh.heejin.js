@@ -8,10 +8,10 @@
             "start": "2023-06-19",
             "end": "2023-06-26"
         },
-        "requirements": {
+        "objectives": {
             "balance": 500,
             "ribbons": 50,
-            "inventory_count": 10,
+            "cards_in_inventory": 10,
 
             "level_user": 3,
             "level_idol": 10,

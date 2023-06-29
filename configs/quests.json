@@ -8,7 +8,7 @@
             "start": "2023-06-25",
             "end": "2023-07-02"
         },
-        "requirements": {
+        "objectives": {
             "balance": 5000,
             "inventory_count": 1,
             "level_user": 2

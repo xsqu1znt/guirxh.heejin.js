@@ -82,7 +82,7 @@ const schema_questCache = new Schema({
     level_user: Number, level_idol: Number,
     team_ability: Number, team_reputation: Number,
 
-    active_quest_ids: Array, progress: Array, temp: Object
+    quests_in_progress: Array, progress: Array, temp: Object
 
 }, { collection: "quest_cache" });
 
