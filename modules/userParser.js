@@ -128,6 +128,12 @@ function cards_setsCompleted(userData, setIDs) {
     return completed.filter(b => b).length === setIDs.length;
 }
 
+function cards_hasDuplicates(userData, globalID, requiredCount = 0) {
+    let { duplicateCount } = cards_getDuplicates(userData, globalID);
+
+    return requiredCount ? (duplicateCount >= requiredCount ? true : false) : (duplicateCount > 0 ? true : false);
+}
+
 function cards_has(userData, globalIDs) {
     if (!Array.isArray(globalIDs)) globalIDs = [globalIDs];
     let card_inventory = cards_parseInventory(userData, { fromCardLike: false, unique: true });
@@ -175,6 +181,7 @@ module.exports = {
 
         parseInventory: cards_parseInventory,
         setsCompleted: cards_setsCompleted,
+        hasDuplicates: cards_hasDuplicates,
         has: cards_has,
 
         primary: cards_primary,

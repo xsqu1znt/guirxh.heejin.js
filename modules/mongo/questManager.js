@@ -95,33 +95,37 @@ function quest_get(questID) {
     return quests.find(quest => quest.id === questID) || null;
 }
 
-function quest_get_progress(questID, questCache) {
+function quest_get_progress(questID, userData, questCache) {
     let quest = quest_get(questID); if (!quest) return null;
 
-    let questProgress = new QuestObjectiveProgress();
+    let questProgress = { ...new QuestObjectiveProgress() };
+    questProgress.forEach(val => val = null);
 
-    for (let obj of Object.keys(questCache))
+    for (let obj of Object.keys(quest.requirements))
         switch (obj) {
-            case QuestObjectiveTypes.balance:
-                questProgress.balance = (quest.requirements?.balance <= questCache.balance);
+            case "balance": questProgress.balance = (quest.requirements?.balance <= questCache.balance); break;
+            case "ribbons": questProgress.ribbons = (quest.requirements?.ribbons <= questCache.ribbons); break;
+            case "inventory_count": questProgress.ribbons = (quest.requirements?.inventory_count <= questCache.inventory_count); break;
+
+            case "level_user": questProgress.ribbons = (quest.requirements?.level_user <= questCache.level_user); break;
+            case "level_idol": questProgress.ribbons = (quest.requirements?.level_idol <= questCache.level_idol); break;
+
+            case "team_ability": questProgress.ribbons = (quest.requirements?.team_ability <= questCache.team_ability); break;
+            case "team_reputation": questProgress.ribbons = (quest.requirements?.team_reputation <= questCache.team_reputation); break;
+
+            case "card_global_ids":
+                questProgress.card_global_ids = userParser.cards.has(userData, quest.requirements.card_global_ids);
                 break;
 
-            case QuestObjectiveTypes.ribbons:
-                questProgress.ribbons = (quest.requirements?.ribbons <= questCache.ribbons);
+            case "card_sets_complete":
+                questProgress.card_sets_complete = userParser.cards.setsCompleted(userData, quest.requirements.card_sets_completed);
                 break;
 
-            case QuestObjectiveTypes.inventory_count:
-                questProgress.ribbons = (quest.requirements?.inventory_count <= questCache.inventory_count);
+            case "card_duplicates":
+                questProgress.card_duplicates = quest.requirements.card_duplicates.map(globalID =>
+                    userParser.cards.hasDuplicates(userData, globalID)
+                ).filter(b => b).length === quest.requirements.card_duplicates.length;
                 break;
-
-            case QuestObjectiveTypes.level_user: break;
-
-            case QuestObjectiveTypes.level_idol: break;
-
-            case QuestObjectiveTypes.team_ability: break;
-
-            case QuestObjectiveTypes.team_reputation: break;
-
         }
 }
 
