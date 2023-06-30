@@ -188,8 +188,7 @@ async function userXP_tryLevelUp(userID, userData = null) {
 //! User -> Card Inventory
 async function userCard_add(userID, cards) {
     // Create an array if only a single card object was passed
-    if (!Array.isArray(cards)) cards = [cards];
-    if (!cards.length) return;
+    if (!Array.isArray(cards)) cards = [cards]; if (!cards.length) return;
 
     /// Get an array of all the card UIDs in the user's card_inventory to avoid duplicates
     // Fetch the user's card_inventory

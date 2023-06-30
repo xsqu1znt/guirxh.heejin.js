@@ -72,7 +72,7 @@ function quest_getProgress(questID, userData, questCache) {
 }
 
 //! User parsing (Mongo)
-async function mongo_user_completedQuest(userID, questID) {
+async function mongo_user_isQuestComplete(userID, questID) {
     if (!Array.isArray(questID)) questID = [questID];
 
     // Fetch the user from Mongo
@@ -81,6 +81,39 @@ async function mongo_user_completedQuest(userID, questID) {
     // Filter quests based on the given quest ID
     let quests_filtered = userData.quests_complete.filter(quest => questID.includes(quest.id));
     return quests_filtered.length === questID.length ? true : false;
+}
+
+async function mongo_user_markQuestComplete(userID, questID) {
+    let quest = quests.find(q => q.id === questID); if (!quest) return false;
+
+    // Get the rewarded cards, if available
+    let cards_reward = quest.rewards?.card_global_ids?.map(globalID => cardManager.get.byGlobalID(globalID)) || [];
+    // Fillter out nulls
+    cards_reward = cards_reward.filter(card => card);
+
+    try {
+        // Push the update and rewards to Mongo
+        await Promise.all([
+            userManager.update(userID, {
+                // Push a basic version of the quest currently complete
+                $push: {
+                    quests_complete: {
+                        id: quest.id, name: quest.name, description: quest.description,
+                        date: { start: quest.date.start, end: quest.date.end, completed: Date.now() }
+                    }
+                },
+                // Increment carrots/ribbons
+                $inc: {
+                    carrots: quest.rewards?.carrots,
+                    ribbons: quest.rewards?.ribbons
+                }
+            }),
+            // Add the rewarded cards to the user's card_inventory
+            userManager.cards.add(userID, cards_reward)
+        ]);
+
+        return true;
+    } catch { return false; }
 }
 
 //! QuestCache parsing (Mongo)
@@ -112,7 +145,7 @@ async function mongo_questCache_updateCache(userID) {
     if (!quests.length) return; if (!await userManager.exists(userID)) return;
 
     // Check whether the user completed the active quests
-    if (await mongo_user_completedQuest(userID, quest_ids)) {
+    if (await mongo_user_isQuestComplete(userID, quest_ids)) {
         // Reset quest cache
         await mongo_questCache_reset(userID); return;
     }
@@ -396,7 +429,8 @@ module.exports = {
 
     /// Mongo Parsing Functions
     user: {
-        completedQuest: mongo_user_completedQuest
+        isComplete: mongo_user_isQuestComplete,
+        markComplete: mongo_user_markQuestComplete
     },
 
     cache: {

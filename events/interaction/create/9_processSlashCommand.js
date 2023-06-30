@@ -93,8 +93,20 @@ module.exports = {
             slashCommand.execute(client, args.interaction).then(async message => {
                 try {
                     // Handle post-execute quest caching
-                    questManager.cache.updateCache(args.interaction.user.id).then(questCache => {
+                    await questManager.cache.updateCache(args.interaction.user.id).then(async questCache => {
+                        if (!questCache) return;
                         console.log(questCache);
+
+                        // Iterate through complete quests
+                        for (let quest_complete of questCache.quests_complete) {
+                            // Mark the quest as complete for the user and give the rewards
+                            questManager.user.markComplete(args.interaction.user.id, quest_complete.id).then(async marked => {
+                                if (!marked) return;
+
+                                // Send the user a DM congratulating them on completing the quest
+                                await messenger.quest.complete(args.interaction.user, quest_complete);
+                            });
+                        }
                     });
 
                     /* cacheUserQuestData().then(async _parsedQuestData => {
