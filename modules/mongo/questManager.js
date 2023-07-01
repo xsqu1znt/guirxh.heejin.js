@@ -97,10 +97,10 @@ async function mongo_user_markQuestComplete(userID, questID) {
             userManager.update(userID, {
                 // Push a basic version of the quest currently complete
                 $push: {
-                    quests_complete: {
+                    /* quests_complete: {
                         id: quest.id, name: quest.name, description: quest.description,
                         date: { start: quest.date.start, end: quest.date.end, completed: Date.now() }
-                    }
+                    } */
                 },
                 // Increment carrots/ribbons
                 $inc: {

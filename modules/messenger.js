@@ -61,13 +61,13 @@ async function quest_complete(recipient, quest, rewards) {
 
     // Cards
     let rewards_cards_f = quest.rewards?.card_global_ids
-        ? `\`🃏 ${quest.rewards.card_global_ids.length}\` ${quest.card_global_ids.map(card => carddManager.toString.basic(card))}`
+        ? `\`🃏 ${quest.rewards.card_global_ids.length}\`: ${quest.card_global_ids.map(card => cardManager.toString.basic(card)).join("\n")}`
         : "";
 
     // Create the embed
     let embed_questComplete = new BetterEmbed({
         author: { text: `📜 Good job! You completed \'${quest.name}\'`, user: recipient, iconURL: null },
-        description: `You got:\n> ${rewards_general_f}\n\n${rewards_cards_f}`,
+        description: `You got:\n> ${rewards_general_f}\n${rewards_cards_f}`,
         showTimestamp: true
     });
 
