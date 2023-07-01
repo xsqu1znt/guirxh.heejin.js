@@ -92,64 +92,6 @@ module.exports = {
             // Execute the slash command's function
             slashCommand.execute(client, args.interaction).then(async message => {
                 try {
-                    // Handle post-execute quest caching
-                    await questManager.cache.updateCache(args.interaction.user.id).then(async questCache => {
-                        if (!questCache) return; console.log(questCache);
-
-                        // Iterate through quest progress
-                        for (let quest_progress of questCache.progress) {
-                            // Let the user know if they completed an objective(s)
-                            if (quest_progress.objectives_just_complete.length) {
-                                // Create the object complete embed
-                                let _embed_questObjectiveComplete = quest_objectiveComplete_ES(
-                                    args.interaction.member, quest_progress
-                                );
-
-                                // Send the embed
-                                try {
-                                    args.interaction.followUp({ embeds: [_embed_questObjectiveComplete] });
-                                } catch {
-                                    args.interaction.channel.send({ embeds: [_embed_questObjectiveComplete] });
-                                }
-                            }
-                        }
-
-                        // Iterate through complete quests
-                        for (let quest_complete of questCache.quests_complete) {
-                            // Mark the quest as complete for the user and give the rewards
-                            questManager.user.markComplete(args.interaction.user.id, quest_complete.id).then(async marked => {
-                                if (!marked) return;
-
-                                // Send the user a DM congratulating them on completing the quest
-                                await messenger.quest.complete(args.interaction.user, quest_complete);
-                            });
-                        }
-                    });
-
-                    /* cacheUserQuestData().then(async _parsedQuestData => {
-                        if (!_parsedQuestData) return;
-
-                        /// Iterate through quest progresses
-                        for (let _questProgress of _parsedQuestData.progress) {
-                            let _requirementsCompleted = _questProgress.requirementsCompleted;
-                            // Send an embed to alert the user they completed a quest requirement(s)
-                            if (_requirementsCompleted.length) {
-                                // Create the quest requirement(s) complete embed
-                                let embed_objectiveComplete = quest_objectiveComplete_ES(
-                                    args.interaction.member, _questProgress
-                                );
-
-                                // Send the embed
-                                await args.interaction.followUp({ embeds: [embed_objectiveComplete] });
-                            }
-                        }
-
-                        /// Other stuff
-                        if (_parsedQuestData.completed.length) for (let _quest of _parsedQuestData.completed) {
-                            messenger.quest.complete(args.interaction.user, _quest, _parsedQuestData.rewards);
-                        }
-                    }); */
-
                     // Check if the user can level up
                     userManager.xp.tryLevelUp(args.interaction.user.id).then(async _userLevelUp => {
                         if (_userLevelUp.leveled) {
@@ -165,6 +107,37 @@ module.exports = {
                             } catch {
                                 await embed_userLevelUp.send({ description: `You are now \`LV. ${_userLevelUp.level_current}\`` });
                             }
+                        }
+                    });
+
+                    // Handle post-execute quest caching
+                    await questManager.cache.updateCache(args.interaction.user.id).then(async questCache => {
+                        if (!questCache) return; console.log(questCache);
+
+                        // Iterate through quest progress
+                        for (let quest_progress of questCache.progress) {
+                            // Let the user know if they completed an objective(s)
+                            if (quest_progress.objectives_just_complete.length) {
+                                // Create the object complete embed
+                                let _embed_questObjectiveComplete = quest_objectiveComplete_ES(
+                                    args.interaction.member, quest_progress
+                                );
+
+                                // Send the embed
+                                try { args.interaction.followUp({ embeds: [_embed_questObjectiveComplete] }); }
+                                catch { args.interaction.channel.send({ embeds: [_embed_questObjectiveComplete] }); }
+                            }
+                        }
+
+                        // Iterate through complete quests
+                        for (let quest_complete of questCache.quests_complete) {
+                            // Mark the quest as complete for the user and give the rewards
+                            questManager.user.markComplete(args.interaction.user.id, quest_complete.id).then(async marked => {
+                                if (!marked) return;
+
+                                // Send the user a DM congratulating them on completing the quest
+                                await messenger.quest.complete(args.interaction.user, quest_complete);
+                            });
                         }
                     });
                 } catch (err) { console.error(err); }

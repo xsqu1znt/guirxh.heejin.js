@@ -14,7 +14,7 @@ const shop = require('../modules/shop');
 // General -> Quest Requirement Completed
 function quest_objectiveComplete_ES(guildMember, questProgress) {
     let objectives_f = questProgress.objectives_just_complete.map(obj =>
-        `\`${questManager.toString.objective(questProgress.id, obj)}\``
+        `\`${questManager.toString.objective(questProgress.questID, obj)}\``
     );
 
     let date_end = dateTools.eta(Date.parse(questProgress.quest.date.end));

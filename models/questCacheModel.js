@@ -81,9 +81,9 @@ const schema_questCache = new Schema({
     team_ability: Number, team_reputation: Number,
 
     quests_in_progress: Array, progress: Array, temp: Object
-
 }, { collection: "quest_cache" });
 
 module.exports = {
-    schema: schema_questCache, model: model("quest_cache", schema_questCache)
+    schema: schema_questCache,
+    model: model("quest_cache", schema_questCache)
 };

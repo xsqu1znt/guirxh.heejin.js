@@ -124,10 +124,10 @@ async function mongo_user_markQuestComplete(userID, questID) {
             userManager.update(userID, {
                 // Push a basic version of the quest currently complete
                 $push: {
-                    /* quests_complete: {
+                    quests_complete: {
                         id: quest.id, name: quest.name, description: quest.description,
                         date: { start: quest.date.start, end: quest.date.end, completed: Date.now() }
-                    } */
+                    }
                 },
                 // Increment carrots/ribbons
                 $inc: {
@@ -192,14 +192,18 @@ async function mongo_questCache_updateCache(userID) {
     let card_team = userParser.cards.getTeam(userData);
 
     // Push the update to Mongo
+    let clampPos = (num) => num < 0 ? 0 : num;
     questCache = await mongo_questCache_update(userID, {
         // Increment values based on cache difference
         $inc: {
-            balance: questCache.temp?.balance ? (userData.balance - questCache.temp.balance) : 0,
-            ribbons: questCache.temp?.ribbons ? (userData.ribbons - questCache.temp.ribbons) : 0,
-            cards_in_inventory: questCache.temp?.cards_in_inventory
-                ? (userData.card_inventory.length - questCache.temp.cards_in_inventory)
-                : 0
+            balance: questCache.temp?.balance || questCache.temp?.balance === 0
+                ? clampPos(userData.balance - questCache.temp.balance) : 0,
+
+            ribbons: questCache.temp?.ribbons || questCache.temp?.ribbons === 0
+                ? clampPos(userData.ribbons - questCache.temp.ribbons) : 0,
+
+            cards_in_inventory: questCache.temp?.cards_in_inventory || questCache.temp?.cards_in_inventory === 0
+                ? clampPos(userData.card_inventory.length - questCache.temp.cards_in_inventory) : 0
         },
 
         // Cache constant values
