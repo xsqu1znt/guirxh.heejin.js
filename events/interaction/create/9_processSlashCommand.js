@@ -94,8 +94,25 @@ module.exports = {
                 try {
                     // Handle post-execute quest caching
                     await questManager.cache.updateCache(args.interaction.user.id).then(async questCache => {
-                        if (!questCache) return;
-                        console.log(questCache);
+                        if (!questCache) return; console.log(questCache);
+
+                        // Iterate through quest progress
+                        for (let quest_progress of questCache.progress) {
+                            // Let the user know if they completed an objective(s)
+                            if (quest_progress.objectives_just_complete.length) {
+                                // Create the object complete embed
+                                let _embed_questObjectiveComplete = quest_objectiveComplete_ES(
+                                    args.interaction.member, quest_progress
+                                );
+
+                                // Send the embed
+                                try {
+                                    args.interaction.followUp({ embeds: [_embed_questObjectiveComplete] });
+                                } catch {
+                                    args.interaction.channel.send({ embeds: [_embed_questObjectiveComplete] });
+                                }
+                            }
+                        }
 
                         // Iterate through complete quests
                         for (let quest_complete of questCache.quests_complete) {

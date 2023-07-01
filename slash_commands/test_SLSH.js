@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 const { botSettings: { currencyIcon, customEmojis } } = require('../configs/heejinSettings.json');
-const { quest_complete_ES } = require('../modules/embedStyles');
+const { quest_objectiveComplete_ES } = require('../modules/embedStyles');
 const { BetterEmbed } = require('../modules/discordTools');
 // const questManager = require('../modules/questManager');
 const cardManager = require('../modules/cardManager');
@@ -30,18 +30,11 @@ module.exports = {
         return await interaction.reply({ embeds: [embed_questComplete] }); */
 
         //! Quest requirement complete
-        /* let embed_questRequirementComplete = new BetterEmbed({
-            // interaction: interaction, author: { text: `📜 Dev Quest | Progress` },
-            interaction: interaction,
-            title: {
-                user: interaction.member, iconURL: null,
-                text: `Good job! ${interaction.member.displayName} has finished a quest objective!`
-            },
-            // title: {text: \`📜\` Dev Quest | Progress}`,
-            description: `> Dev Quest :: \`🥕 500\`\n\n\`📈 0/2\` :: \`ending\` \`time\``
+        /* let embed_objectiveComplete = quest_objectiveComplete_ES(interaction.member, {
+            id: "q01", f: "1/3", objectives_just_complete: ["balance", "cards_in_inventory"], quest: { name: "Test", date: { end: "2023-07-02" } }
         });
 
-        return await embed_questRequirementComplete.send(); */
+        return await interaction.reply({ embeds: [embed_objectiveComplete] }); */
 
         //! Quest completion DM
         /* let quest = questManager.quests[0];

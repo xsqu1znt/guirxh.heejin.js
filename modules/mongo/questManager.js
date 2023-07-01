@@ -1,3 +1,7 @@
+/** @typedef ObjectiveTypes
+ * @type {"balance"|"ribbons"|"cards_in_inventory"|"level_user"|"level_idol"|"team_ability"|"team_reputation"|"card_global_ids"|"card_sets_complete"|"card_duplicates"}
+*/
+
 const { TimestampStyles, time, SystemChannelFlagsBitField } = require('discord.js');
 
 const { botSettings: { currencyIcon } } = require('../../configs/heejinSettings.json');
@@ -69,6 +73,26 @@ function quest_getProgress(questID, userData, questCache) {
                 .map(obj => obj)
             : [],
     };
+}
+
+/** @param {ObjectiveTypes} objectiveType */
+function quest_toString_objective(questID, objectiveType) {
+    let quest = quest_get(questID); if (!quest) return "invalid quest ID";
+
+    switch (objectiveType) {
+        case "balance": return `🥕 ${quest.objectives?.balance || "n/a"}`;
+        case "ribbons": return `🎀 ${quest.objectives?.ribbons || "n/a"}`;
+        case "cards_in_inventory": return `🃏 INV. ${quest.objectives?.cards_in_inventory || "n/a"}`;
+        case "level_user": return `🃏 LVL. ${quest.objectives?.level_user || "n/a"}`;
+        case "level_idol": return `🃏 Idol LVL. ${quest.objectives?.level_idol || "n/a"}`;
+        case "team_ability": return `👯‍♀️ ABI. ${quest.objectives?.team_ability || "n/a"}`;
+        case "team_reputation": return `👯‍♀️ REP. ${quest.objectives?.team_reputation || "n/a"}`;
+        case "card_global_ids": return `🃏 Req. Card`;
+        case "card_sets_complete": return `🗣️ Set Complete`;
+        case "card_duplicates": return `🃏 Dupes of Card`;
+
+        default: return "invalid objective type";
+    }
 }
 
 //! User parsing (Mongo)
@@ -429,6 +453,10 @@ module.exports = {
     /// Quest Parsing Funtions
     get: quest_get,
     getProgress: quest_getProgress,
+
+    toString: {
+        objective: quest_toString_objective
+    },
 
     /// Mongo Parsing Functions
     user: {

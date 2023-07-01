@@ -6,19 +6,22 @@ const { communityServer, botSettings, userSettings } = require('../configs/heeji
 const { arrayTools, stringTools, numberTools, dateTools } = require('../modules/jsTools');
 const { BetterEmbed } = require('../modules/discordTools');
 const badgeManager = require('../modules/badgeManager');
-// const questManager = require('../modules/questManager');
+const { questManager } = require('../modules/mongo/index');
 const cardManager = require('../modules/cardManager');
 const userParser = require('../modules/userParser');
 const shop = require('../modules/shop');
 
 // General -> Quest Requirement Completed
 function quest_objectiveComplete_ES(guildMember, questProgress) {
-    let requirements_f = questProgress.requirementsCompleted.map(req => questManager.toString_requirement(questProgress.id, req));
-    let date_end = dateTools.eta(Date.parse(questProgress.data.date.end));
+    let objectives_f = questProgress.objectives_just_complete.map(obj =>
+        `\`${questManager.toString.objective(questProgress.id, obj)}\``
+    );
+
+    let date_end = dateTools.eta(Date.parse(questProgress.quest.date.end));
 
     let embed = new BetterEmbed({
-        author: { text: `Good job! %AUTHOR_NAME finished an objective!`, user: guildMember },
-        description: `>>> ${questProgress.data.name} :: ${requirements_f.join(" ")}\n\`📈 ${questProgress.f}\` :: ending ${date_end}`
+        author: { text: `📜 Good job! %AUTHOR_NAME finished an objective!`, iconURL: null, user: guildMember },
+        description: `>>> **${questProgress.quest.name}** :: ${objectives_f.join(" ")}\n\`📈 ${questProgress.f}\` :: ending ${date_end}`
     });
 
     return embed;

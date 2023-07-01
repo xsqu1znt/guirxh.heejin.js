@@ -1,11 +1,9 @@
 const { Schema, model } = require('mongoose');
 
 /** @typedef ObjectiveTypes
- * @type {Object}
- * @property {string} id
- * @property {number} num */
+ * @type {"balance"|"ribbons"|"cards_in_inventory"|"level_user"|"level_idol"|"team_ability"|"team_reputation"|"card_global_ids"|"card_sets_complete"|"card_duplicates"} */
 
-class QuestObjectiveTypes {
+/* class QuestObjectiveTypes {
     static balance = "balance";
     static ribbons = "ribbons";
     static inventory_count = "inventory_count";
@@ -73,7 +71,7 @@ class QuestCache {
         this.progress = [{ questID: "", objectives: new QuestObjectiveProgress }];
         this.temp = {};
     }
-}
+} */
 
 const schema_questCache = new Schema({
     _id: { type: String, require: true },
@@ -87,9 +85,5 @@ const schema_questCache = new Schema({
 }, { collection: "quest_cache" });
 
 module.exports = {
-    QuestCache: QuestCache,
-    QuestObjectiveTypes: QuestObjectiveTypes,
-    QuestObjectiveProgress: QuestObjectiveProgress,
-
     schema: schema_questCache, model: model("quest_cache", schema_questCache)
 };
