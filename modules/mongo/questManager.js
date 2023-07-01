@@ -91,6 +91,9 @@ async function mongo_user_markQuestComplete(userID, questID) {
     // Fillter out nulls
     cards_reward = cards_reward.filter(card => card);
 
+    // Replace the original card_global_ids array with the cards
+    if (cards_reward.length) quest.rewards.card_global_ids = cards_reward;
+
     try {
         // Push the update and rewards to Mongo
         await Promise.all([
@@ -104,8 +107,8 @@ async function mongo_user_markQuestComplete(userID, questID) {
                 },
                 // Increment carrots/ribbons
                 $inc: {
-                    carrots: quest.rewards?.carrots,
-                    ribbons: quest.rewards?.ribbons
+                    carrots: quest.rewards?.carrots || 0,
+                    ribbons: quest.rewards?.ribbons || 0
                 }
             }),
             // Add the rewarded cards to the user's card_inventory
@@ -113,7 +116,7 @@ async function mongo_user_markQuestComplete(userID, questID) {
         ]);
 
         return true;
-    } catch { return false; }
+    } catch (err) { console.error(err); return false; }
 }
 
 //! QuestCache parsing (Mongo)

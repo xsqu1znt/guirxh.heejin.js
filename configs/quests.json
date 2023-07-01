@@ -2,7 +2,7 @@
     {
         "id": "q01",
         "name": "Test",
-        "rewards": "`🥕 5k` `🎀 1000` `🃏 3`",
+        "reward": "`🥕 5k` `🎀 1000` `🃏 3`",
         "description": "***requirements***:\n> `🥕 5000` `INV. 1` `LV. 2`\n> used for testing",
         "date": {
             "start": "2023-06-25",
@@ -13,7 +13,7 @@
             "cards_in_inventory": 1,
             "level_user": 2
         },
-        "reward": {
+        "rewards": {
             "carrots": 5000,
             "ribbons": 1000,
             "card_global_ids": ["1001", "1002", "1003"]

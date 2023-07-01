@@ -52,22 +52,30 @@ async function gift_currency(recipient, gifter, amount, currentBalance) {
 }
 
 /** @param {User} recipient @param {{}} quest */
-async function quest_complete(recipient, quest, rewards) {
+async function quest_complete(recipient, quest) {
     /// Format rewards into a string
-    // General
-    let rewards_general_f = "";
-    if (quest.rewards?.carrots) rewards_general_f += `\`🥕 ${quest.rewards.carrots}\``;
-    if (quest.rewards?.ribbons) rewards_general_f += `\n\`🎀 ${quest.rewards.ribbons}\``;
+    // General rewards
+    let rewards_f = [];
+    if (quest.rewards?.carrots) rewards_f.push(`\`🥕 ${quest.rewards.carrots}\``);
+    if (quest.rewards?.ribbons) rewards_f.push(`\`🎀 ${quest.rewards.ribbons}\``);
 
-    // Cards
-    let rewards_cards_f = quest.rewards?.card_global_ids
-        ? `\`🃏 ${quest.rewards.card_global_ids.length}\`: ${quest.card_global_ids.map(card => cardManager.toString.basic(card)).join("\n")}`
-        : "";
+    // Join general rewards together in a single string
+    rewards_f = [rewards_f.join(" ")];
+
+    // Card rewards
+    if (quest.rewards?.card_global_ids?.length) {
+        rewards_f.push(`\`🃏 ${quest.rewards.card_global_ids.length}\``);
+        // Join the cards recieved icon with the other reward line
+        rewards_f = [rewards_f.join(" ")];
+
+        // Push each individual card_f to the reward array
+        rewards_f.push(...quest.rewards.card_global_ids.map(card => cardManager.toString.basic(card)));
+    }
 
     // Create the embed
     let embed_questComplete = new BetterEmbed({
         author: { text: `📜 Good job! You completed \'${quest.name}\'`, user: recipient, iconURL: null },
-        description: `You got:\n> ${rewards_general_f}\n${rewards_cards_f}`,
+        description: `**You got**: ${rewards_f.shift()}\n>>> ${rewards_f.join('\n')}`,
         showTimestamp: true
     });
 
