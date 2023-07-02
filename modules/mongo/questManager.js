@@ -83,8 +83,8 @@ function quest_toString_objective(questID, objectiveType) {
         case "balance": return `🥕 ${quest.objectives?.balance || "n/a"}`;
         case "ribbons": return `🎀 ${quest.objectives?.ribbons || "n/a"}`;
         case "cards_in_inventory": return `🃏 INV. ${quest.objectives?.cards_in_inventory || "n/a"}`;
-        case "level_user": return `🃏 LVL. ${quest.objectives?.level_user || "n/a"}`;
-        case "level_idol": return `🃏 Idol LVL. ${quest.objectives?.level_idol || "n/a"}`;
+        case "level_user": return `📈 Player LVL. ${quest.objectives?.level_user || "n/a"}`;
+        case "level_idol": return `📈 Idol LVL. ${quest.objectives?.level_idol || "n/a"}`;
         case "team_ability": return `👯‍♀️ ABI. ${quest.objectives?.team_ability || "n/a"}`;
         case "team_reputation": return `👯‍♀️ REP. ${quest.objectives?.team_reputation || "n/a"}`;
         case "card_global_ids": return `🃏 Req. Card`;

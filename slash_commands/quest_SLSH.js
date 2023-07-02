@@ -1,8 +1,9 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
 const { BetterEmbed } = require('../modules/discordTools');
+const { userQuest_ES } = require('../modules/embedStyles');
+const { questManager } = require('../modules/mongo/index');
 const { userManager } = require('../modules/mongo');
-// const questManager = require('../modules/questManager');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("quest")
@@ -13,23 +14,22 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
-        let embed_quest = new BetterEmbed({
-            interaction, author: { text: "%AUTHOR_NAME | quest", user: interaction.member },
+        let embed_error = new BetterEmbed({ interaction, author: { text: "%AUTHOR_NAME | quest", user: interaction.member } });
+
+        if (!questManager.quests.length) return await embed_error.send({
             description: "There are no quests right now"
         });
 
-        if (!questManager.exists()) return await embed_quest.send();
+        // Fetch the user's QuestCache from Mongo
+        let questCache = await questManager.cache.fetch(interaction.user.id, true);
 
-        // Fetch the user from Mongo
-        let userData = await userManager.fetch(interaction.user.id);
+        if (!questCache) return await embed_error.send({
+            description: "Quest info not available, try again"
+        });
 
-        // Parse the current quests
-        let quests_f = questManager.toString(userData);
+        // Create the embed
+        let embed_quests = userQuest_ES(interaction.member, questCache);
 
-        embed_quest.addFields(quests_f.map(quest_f => ({
-            name: quest_f.title, value: quest_f.description, inline: true
-        })));
-
-        return await embed_quest.send({ description: " " });
+        return await interaction.editReply({ embeds: [embed_quests] });
     }
 };

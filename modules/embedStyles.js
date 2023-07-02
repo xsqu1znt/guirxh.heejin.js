@@ -4,14 +4,14 @@ const { markdown: { bold, inline, quote } } = require('./discordTools');
 
 const { communityServer, botSettings, userSettings } = require('../configs/heejinSettings.json');
 const { arrayTools, stringTools, numberTools, dateTools } = require('../modules/jsTools');
+const { questManager } = require('../modules/mongo/index');
 const { BetterEmbed } = require('../modules/discordTools');
 const badgeManager = require('../modules/badgeManager');
-const { questManager } = require('../modules/mongo/index');
 const cardManager = require('../modules/cardManager');
 const userParser = require('../modules/userParser');
 const shop = require('../modules/shop');
 
-// General -> Quest Requirement Completed
+// General -> Quest Objective Completed
 function quest_objectiveComplete_ES(guildMember, questProgress) {
     let objectives_f = questProgress.objectives_just_complete.map(obj =>
         `\`${questManager.toString.objective(questProgress.questID, obj)}\``
@@ -733,6 +733,31 @@ function userGift_ES(guildMember, recipient, cards) {
     return { embed_gift, embed_dm };
 }
 
+// Command -> User -> /QUEST
+function userQuest_ES(guildMember, questCache) {
+    let questProgress_f = [];
+
+    for (let questProgress of questCache.progress) questProgress_f.push(
+        `\`📜\` **%QUEST_NAME** %REWARD_OVERVIEW\n> \`%IS_COMPLETE 📈 %PROGRESS\` ending %QUEST_ENDING\n\n***objecives:***\n>>> %OBJECTIVES\n%DESCRIPTION`
+            .replace("%QUEST_NAME", questProgress.quest.name)
+            .replace("%REWARD_OVERVIEW", questProgress.quest.reward_overview)
+
+            .replace("%IS_COMPLETE", questProgress.complete ? "✔️" : "🚫")
+            .replace("%PROGRESS", questProgress.f)
+            .replace("%QUEST_ENDING", dateTools.eta(Date.parse(questProgress.quest.date.end)))
+
+            .replace("%OBJECTIVES", Object.keys(questProgress.quest.objectives).map(obj => questManager.toString.objective(questProgress.id, obj)).join(" "))
+            .replace("%DESCRIPTION", questProgress.quest.description)
+    );
+
+    let embed = new BetterEmbed({
+        author: { text: "%AUTHOR_NAME | quest", user: guildMember },
+        description: questManager.quests.length ? questProgress_f.join("\n\n") : "Quest info not available, try again"
+    });
+
+    return embed;
+}
+
 module.exports = {
     // General Embeds
     quest_objectiveComplete_ES,
@@ -750,5 +775,6 @@ module.exports = {
     userInventory_ES,
     userInventory_dupes_ES,
 
-    userGift_ES
+    userGift_ES,
+    userQuest_ES
 };
