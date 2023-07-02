@@ -106,8 +106,7 @@ function quest_toString_objectiveDescription(questID, objectiveType) {
         case "team_ability_reputation": return `👯‍♀️ Abi Rep - reach ${quest.objectives?.team_ability_reputation || "n/a"} ABI. REP. stats`;
         case "card_global_ids": return `🃏 GID - own ${quest.objectives?.card_global_ids.length === 1 ? "card" : "cards"} with ${quest.objectives?.card_global_ids.map(gid => `\`${gid}\``).join(" ")} gid`;
         case "card_sets_complete": return `🗣️ Set - complete ${quest.objectives?.card_sets_complete.length === 1 ? "set" : "sets"} ${quest.objectives?.card_sets_complete.map(gid => `\`${gid}\``).join(" ")}`;
-        case "card_duplicates": return `🃏 Dupes of Card`;
-
+        case "card_duplicates": return `🃏 Dupes - have ${quest.objectives?.card_duplicates.length === 1 ? "card" : "cards"} ${quest.objectives?.card_duplicates.map(d => `\`${d.globalID} x${d.count}\``).join(" ")}`;
         default: return "invalid objective type";
     }
 }
