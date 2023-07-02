@@ -10,6 +10,7 @@
         },
         "objectives": {
             "balance": 5000,
+            "ribbons": 9999,
             "cards_in_inventory": 1,
             "level_user": 2,
             "level_idol": 10,

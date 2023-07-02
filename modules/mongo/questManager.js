@@ -98,15 +98,16 @@ function quest_toString_objectiveDescription(questID, objectiveType) {
     let quest = quest_get(questID); if (!quest) return "invalid quest id";
 
     switch (objectiveType) {
-        case "balance": return `🥕 Balance - get ${quest.objectives?.balance || "n/a"}`;
-        case "ribbons": return `🎀 Ribbons - get ${quest.objectives?.ribbons || "n/a"}`;
-        case "cards_in_inventory": return `🃏 Inventory - have ${quest.objectives?.cards_in_inventory || "n/a"} cards`;
-        case "level_user": return `📈 User LV. - reach ${quest.objectives?.level_user || "n/a"} LV.`;
-        case "level_idol": return `📈 Stage LV. - reach ${quest.objectives?.level_idol || "n/a"} LV.`;
-        case "team_ability_reputation": return `👯‍♀️ Abi Rep - reach ${quest.objectives?.team_ability_reputation || "n/a"} ABI. REP. stats`;
-        case "card_global_ids": return `🃏 GID - own ${quest.objectives?.card_global_ids.length === 1 ? "card" : "cards"} with ${quest.objectives?.card_global_ids.map(gid => `\`${gid}\``).join(" ")} gid`;
-        case "card_sets_complete": return `🗣️ Set - complete ${quest.objectives?.card_sets_complete.length === 1 ? "set" : "sets"} ${quest.objectives?.card_sets_complete.map(gid => `\`${gid}\``).join(" ")}`;
-        case "card_duplicates": return `🃏 Dupes - have ${quest.objectives?.card_duplicates.length === 1 ? "card" : "cards"} ${quest.objectives?.card_duplicates.map(d => `\`${d.globalID} x${d.count}\``).join(" ")}`;
+        case "balance": return `\`🥕 Balance\` - \`get ${quest.objectives?.balance || "n/a"} ${quest.objectives?.balance === 1 ? "carrot" : "carrots"}\``;
+        case "ribbons": return `\`🎀 Ribbons\` - \`get ${quest.objectives?.ribbons || "n/a"} ${quest.objectives?.ribbons === 1 ? "ribbon" : "ribbons"}\``;
+        case "cards_in_inventory": return `\`🃏 Inventory\` - \`have ${quest.objectives?.cards_in_inventory || "n/a"} ${quest.objectives?.cards_in_inventory === 1 ? "card" : "cards"} in total\``;
+        case "level_user": return `\`📈 User LV.\` - \`reach LV. ${quest.objectives?.level_user || "n/a"}\``;
+        case "level_idol": return `\`📈 Idol LV.\` - \`reach LV. ${quest.objectives?.level_idol || "n/a"}\``;
+        case "team_ability_reputation": return `\`👯‍♀️ ABI REP\` - \`reach ${quest.objectives?.team_ability_reputation || "n/a"} in ABI. REP. stats\``;
+        case "card_global_ids": return `\`🃏 GID\` - \`own ${quest.objectives?.card_global_ids.length === 1 ? "a card" : "cards"} with ${quest.objectives?.card_global_ids.map(gid => `gid ${gid}`).join(", ")}\``;
+        case "card_sets_complete": return `\`🗣️ Set\` - \`complete ${quest.objectives?.card_sets_complete.length === 1 ? "set" : "sets"} ${quest.objectives?.card_sets_complete.join(", ")}\``;
+        case "card_duplicates": return `\`🃏 Dupes\` - \`own ${quest.objectives?.card_duplicates.map(d => `${d.count} dupes of gid ${d.globalID}`).join(", ")}\``;
+
         default: return "invalid objective type";
     }
 }
@@ -475,7 +476,8 @@ module.exports = {
     getProgress: quest_getProgress,
 
     toString: {
-        objective: quest_toString_objective
+        objective: quest_toString_objective,
+        objectiveDescription: quest_toString_objectiveDescription
     },
 
     /// Mongo Parsing Functions
