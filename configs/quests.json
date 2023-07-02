@@ -11,7 +11,18 @@
         "objectives": {
             "balance": 5000,
             "cards_in_inventory": 1,
-            "level_user": 2
+            "level_user": 2,
+            "level_idol": 10,
+
+            "team_ability_reputation": 200,
+
+            "card_global_ids": ["2720"],
+            "card_sets_complete": ["218"],
+            
+            "card_duplicates": [
+                { "globalID": "2586", "count": 3 },
+                { "globalID": "2332", "count": 2 }
+            ]
         },
         "rewards": {
             "carrots": 5000,

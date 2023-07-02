@@ -41,8 +41,7 @@ function quest_getProgress(questID, userData, questCache) {
             case "level_user": objectives.level_user = (quest.objectives?.level_user <= questCache.level_user); break;
             case "level_idol": objectives.level_idol = (quest.objectives?.level_idol <= questCache.level_idol); break;
 
-            case "team_ability": objectives.team_ability = (quest.objectives?.team_ability <= questCache.team_ability); break;
-            case "team_reputation": objectives.team_reputation = (quest.objectives?.team_reputation <= questCache.team_reputation); break;
+            case "team_ability_reputation": objectives.team_ability = (quest.objectives?.team_ability <= questCache.team_ability && quest.objectives?.team_reputation <= questCache.team_reputation); break;
 
             case "card_global_ids": objectives.card_global_ids = userParser.cards.has(userData, quest.objectives.card_global_ids); break;
             case "card_sets_complete": objectives.card_sets_complete = userParser.cards.setsCompleted(userData, quest.objectives.card_sets_completed); break;
@@ -77,18 +76,36 @@ function quest_getProgress(questID, userData, questCache) {
 
 /** @param {ObjectiveTypes} objectiveType */
 function quest_toString_objective(questID, objectiveType) {
-    let quest = quest_get(questID); if (!quest) return "invalid quest ID";
+    let quest = quest_get(questID); if (!quest) return "invalid quest id";
 
     switch (objectiveType) {
         case "balance": return `🥕 ${quest.objectives?.balance || "n/a"}`;
         case "ribbons": return `🎀 ${quest.objectives?.ribbons || "n/a"}`;
         case "cards_in_inventory": return `🃏 INV. ${quest.objectives?.cards_in_inventory || "n/a"}`;
-        case "level_user": return `📈 Player LVL. ${quest.objectives?.level_user || "n/a"}`;
+        case "level_user": return `📈 LVL. ${quest.objectives?.level_user || "n/a"}`;
         case "level_idol": return `📈 Idol LVL. ${quest.objectives?.level_idol || "n/a"}`;
-        case "team_ability": return `👯‍♀️ ABI. ${quest.objectives?.team_ability || "n/a"}`;
-        case "team_reputation": return `👯‍♀️ REP. ${quest.objectives?.team_reputation || "n/a"}`;
+        case "team_ability_reputation": return `👯‍♀️ Team ${quest.objectives?.team_ability_reputation || "n/a"}`;
         case "card_global_ids": return `🃏 Req. Card`;
         case "card_sets_complete": return `🗣️ Set Complete`;
+        case "card_duplicates": return `🃏 Dupes of Card`;
+
+        default: return "invalid objective type";
+    }
+}
+
+/** @param {ObjectiveTypes} objectiveType */
+function quest_toString_objectiveDescription(questID, objectiveType) {
+    let quest = quest_get(questID); if (!quest) return "invalid quest id";
+
+    switch (objectiveType) {
+        case "balance": return `🥕 Balance - get ${quest.objectives?.balance || "n/a"}`;
+        case "ribbons": return `🎀 Ribbons - get ${quest.objectives?.ribbons || "n/a"}`;
+        case "cards_in_inventory": return `🃏 Inventory - have ${quest.objectives?.cards_in_inventory || "n/a"} cards`;
+        case "level_user": return `📈 User LV. - reach ${quest.objectives?.level_user || "n/a"} LV.`;
+        case "level_idol": return `📈 Stage LV. - reach ${quest.objectives?.level_idol || "n/a"} LV.`;
+        case "team_ability_reputation": return `👯‍♀️ Abi Rep - reach ${quest.objectives?.team_ability_reputation || "n/a"} ABI. REP. stats`;
+        case "card_global_ids": return `🃏 GID - own ${quest.objectives?.card_global_ids.length === 1 ? "card" : "cards"} with ${quest.objectives?.card_global_ids.map(gid => `\`${gid}\``).join(" ")} gid`;
+        case "card_sets_complete": return `🗣️ Set - complete ${quest.objectives?.card_sets_complete.length === 1 ? "set" : "sets"} ${quest.objectives?.card_sets_complete.map(gid => `\`${gid}\``).join(" ")}`;
         case "card_duplicates": return `🃏 Dupes of Card`;
 
         default: return "invalid objective type";

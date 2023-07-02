@@ -738,15 +738,18 @@ function userQuest_ES(guildMember, questCache) {
     let questProgress_f = [];
 
     for (let questProgress of questCache.progress) questProgress_f.push(
-        `\`📜\` **%QUEST_NAME** %REWARD_OVERVIEW\n> \`%IS_COMPLETE 📈 %PROGRESS\` ending %QUEST_ENDING\n\n***objecives:***\n>>> %OBJECTIVES\n%DESCRIPTION`
+        `\`📜\` **%QUEST_NAME** %REWARD_OVERVIEW\n> \`%IS_COMPLETE\` \`📈 %PROGRESS\` ending %QUEST_ENDING\n\n***objectives:***\n>>> %OBJECTIVES\n%DESCRIPTION`
             .replace("%QUEST_NAME", questProgress.quest.name)
             .replace("%REWARD_OVERVIEW", questProgress.quest.reward_overview)
 
-            .replace("%IS_COMPLETE", questProgress.complete ? "✔️" : "🚫")
+            .replace("%IS_COMPLETE", questProgress.complete ? "✔️ complete" : "🚫 incomplete")
             .replace("%PROGRESS", questProgress.f)
             .replace("%QUEST_ENDING", dateTools.eta(Date.parse(questProgress.quest.date.end)))
 
-            .replace("%OBJECTIVES", Object.keys(questProgress.quest.objectives).map(obj => questManager.toString.objective(questProgress.id, obj)).join(" "))
+            .replace("%OBJECTIVES", Object.keys(questProgress.quest.objectives)
+                .map(obj => `\`${questManager.toString.objective(questProgress.questID, obj)}\``)
+                .join(" "))
+
             .replace("%DESCRIPTION", questProgress.quest.description)
     );
 
