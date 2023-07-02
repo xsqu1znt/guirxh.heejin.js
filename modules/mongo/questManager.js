@@ -45,8 +45,8 @@ function quest_getProgress(questID, userData, questCache) {
 
             case "card_global_ids": objectives.card_global_ids = userParser.cards.has(userData, quest.objectives.card_global_ids); break;
             case "card_sets_complete": objectives.card_sets_complete = userParser.cards.setsCompleted(userData, quest.objectives.card_sets_complete); break;
-            case "card_duplicates": objectives.card_duplicates = (quest.objectives.card_duplicates.map(globalID =>
-                userParser.cards.hasDuplicates(userData, globalID)
+            case "card_duplicates": objectives.card_duplicates = (quest.objectives.card_duplicates.map(d =>
+                userParser.cards.hasDuplicates(userData, d.globalID, d.count)
             ).filter(b => b).length === quest.objectives.card_duplicates.length); break;
         }
 
@@ -75,19 +75,17 @@ function quest_getProgress(questID, userData, questCache) {
 }
 
 /** @param {ObjectiveTypes} objectiveType */
-function quest_toString_objective(questID, objectiveType) {
-    let quest = quest_get(questID); if (!quest) return "invalid quest id";
-
+function quest_toString_objective(objectiveType) {
     switch (objectiveType) {
-        case "balance": return `🥕 ${quest.objectives?.balance || "n/a"}`;
-        case "ribbons": return `🎀 ${quest.objectives?.ribbons || "n/a"}`;
-        case "cards_in_inventory": return `🃏 INV. ${quest.objectives?.cards_in_inventory || "n/a"}`;
-        case "level_user": return `📈 LVL. ${quest.objectives?.level_user || "n/a"}`;
-        case "level_idol": return `📈 Idol LVL. ${quest.objectives?.level_idol || "n/a"}`;
-        case "team_ability_reputation": return `👯‍♀️ ABI REP ${quest.objectives?.team_ability_reputation || "n/a"}`;
-        case "card_global_ids": return `🃏 Req. Card`;
-        case "card_sets_complete": return `🗣️ Set Complete`;
-        case "card_duplicates": return `🃏 Dupes of Card`;
+        case "balance": return `🥕 Balance`;
+        case "ribbons": return `🎀 Ribbons`;
+        case "cards_in_inventory": return `🃏 Inventory`;
+        case "level_user": return `📈 User LV.`;
+        case "level_idol": return `📈 Idol LV.`;
+        case "team_ability_reputation": return `👯‍♀️ ABI REP`;
+        case "card_global_ids": return `🃏 GID`;
+        case "card_sets_complete": return `🗣️ Set`;
+        case "card_duplicates": return `🃏 Dupes`;
 
         default: return "invalid objective type";
     }
@@ -148,6 +146,7 @@ async function mongo_user_markQuestComplete(userID, questID) {
                 },
                 // Increment carrots/ribbons
                 $inc: {
+                    xp: quest.rewards?.xp || 0,
                     carrots: quest.rewards?.carrots || 0,
                     ribbons: quest.rewards?.ribbons || 0
                 }
