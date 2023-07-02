@@ -17,19 +17,19 @@
 
         "customEmojis": {
             "numbers": [
-                {"name": "one", "emoji": "<:one:1103208748924813333>"},
-                {"name": "two", "emoji": "<:two:1103208760639504465>"},
-                {"name": "three", "emoji": "<:three:1103208757992902696>"},
-                {"name": "four", "emoji": "<:four:1103208746362093659>"},
-                {"name": "five", "emoji": "<:five:1103208750489280542>"}
+                {"name": "1️⃣", "emoji": "1️⃣"},
+                {"name": "2️⃣", "emoji": "2️⃣"},
+                {"name": "3️⃣", "emoji": "3️⃣"},
+                {"name": "4️⃣", "emoji": "4️⃣"},
+                {"name": "5️⃣", "emoji": "5️⃣"}
             ],
 
             "pagination": {
-                "toFirst": {"name": "left2", "emoji": "<:left2:1110403342611513344>"},
-                "back": {"name": "left1", "emoji": "<:left1:1110405467370434670>"},
+                "toFirst": {"name": "⏮️", "emoji": "⏮️"},
+                "back": {"name": "◀", "emoji": "◀"},
                 "jump": {"name": "📄", "emoji": "📄"},
-                "next": {"name": "right1", "emoji": "<:right1:1110405469350146089>"},
-                "toLast": {"name": "right2", "emoji": "<:right2:1110403345702735963>"}
+                "next": {"name": "▶", "emoji": "▶"},
+                "toLast": {"name": "⏭️", "emoji": "⏭️"}
             },
 
             "confirmSell": {"name": "✅", "emoji": "✅"}
@@ -101,11 +101,11 @@
             "winRandom": 100
         },
         "cooldowns": {
-            "drop_general": "10s",
-            "drop_weekly": "10s",
+            "drop_general": "3",
+            "drop_weekly": "3",
             "drop_season": null,
-            "drop_event_1": "10s",
-            "drop_event_2": "10s",
+            "drop_event_1": "3",
+            "drop_event_2": "3",
             "daily": "5s",
             "stage": "5s",
             "random": "5s"

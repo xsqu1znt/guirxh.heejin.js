@@ -112,7 +112,7 @@ module.exports = {
 
                     // Handle post-execute quest caching
                     await questManager.cache.updateCache(args.interaction.user.id).then(async questCache => {
-                        if (!questCache) return; console.log(questCache);
+                        if (!questCache) return; /* console.log(questCache); */
 
                         // Iterate through quest progress
                         for (let quest_progress of questCache.progress) {

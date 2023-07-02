@@ -543,25 +543,25 @@ class EmbedNavigator {
                 case "reply": try {
                     this.data.message = await this.data.interaction.reply({
                         embeds: [this.data.page_current], ephemeral: options.ephemeral,
-                        components: this.data.messageComponents
+                        components: this.data.messageComponents, fetchReply: true
                     }); break;
                 } catch { // Fallback to "editReply"
                     this.data.message = await this.data.interaction.editReply({
-                        embeds: [this.data.page_current], components: this.data.messageComponents
+                        embeds: [this.data.page_current], components: this.data.messageComponents, fetchReply: true
                     }); break;
                 }
 
                 case "editReply": this.data.message = await this.data.interaction.editReply({
-                    embeds: [this.data.page_current], components: this.data.messageComponents
+                    embeds: [this.data.page_current], components: this.data.messageComponents, fetchReply: true
                 }); break;
 
                 case "followUp": this.data.message = await this.data.interaction.followUp({
                     embeds: [this.data.page_current], ephemeral: options.ephemeral,
-                    components: this.data.messageComponents
+                    components: this.data.messageComponents, fetchReply: true
                 }); break;
 
                 case "send": this.data.message = await this.data.interaction.channel.send({
-                    embeds: [this.data.page_current], components: this.data.messageComponents
+                    embeds: [this.data.page_current], components: this.data.messageComponents, fetchReply: true
                 }); break;
 
                 default: logger.error("Failed to send embed", `invalid send method: \"${options.method}\"`); return null;

@@ -3,9 +3,10 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js'
 const { botSettings: { currencyIcon, customEmojis } } = require('../configs/heejinSettings.json');
 const { quest_objectiveComplete_ES } = require('../modules/embedStyles');
 const { BetterEmbed } = require('../modules/discordTools');
-// const questManager = require('../modules/questManager');
 const cardManager = require('../modules/cardManager');
 const messenger = require('../modules/messenger');
+const userParser = require('../modules/userParser');
+const { userManager } = require('../modules/mongo');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("test")
@@ -18,6 +19,9 @@ module.exports = {
     execute: async (client, interaction) => {
         //! Basic embed to test database
         let embed_basic = new BetterEmbed({ interaction, title: { text: "beep" } });
+
+        // let userData = await userManager.fetch(interaction.user.id);
+        // console.log(userParser.cards.setsCompleted(userData, ["220"]));
 
         // await messenger.quest.complete(interaction.user, questManager.quests[0]);
         // await messenger.gift.currency(interaction.user, interaction.guild.members.me.user, 500, 1500);
