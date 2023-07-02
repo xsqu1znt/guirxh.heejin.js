@@ -3,11 +3,12 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js'
 const { BetterEmbed } = require('../modules/discordTools');
 const { userQuest_ES } = require('../modules/embedStyles');
 const { questManager } = require('../modules/mongo/index');
-const { userManager } = require('../modules/mongo');
 
 module.exports = {
     builder: new SlashCommandBuilder().setName("quest")
         .setDescription("View quests"),
+
+    options: { deferReply: true },
 
     /**
      * @param {Client} client
