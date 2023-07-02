@@ -56,6 +56,7 @@ async function quest_complete(recipient, quest) {
     /// Format rewards into a string
     // General rewards
     let rewards_f = [];
+    if (quest.rewards?.xp) rewards_f.push(`\`☝️ ${quest.rewards.xp}XP\``);
     if (quest.rewards?.carrots) rewards_f.push(`\`🥕 ${quest.rewards.carrots}\``);
     if (quest.rewards?.ribbons) rewards_f.push(`\`🎀 ${quest.rewards.ribbons}\``);
 

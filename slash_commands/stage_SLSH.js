@@ -17,6 +17,8 @@ module.exports = {
         .addUserOption(option => option.setName("player")
             .setDescription("Challenge a player to a duel")),
 
+    options: { deferReply: true },
+
     helpIcon: "🎤",
 
     /**

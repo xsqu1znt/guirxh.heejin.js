@@ -1,5 +1,5 @@
 /** @typedef ObjectiveTypes
- * @type {"balance"|"ribbons"|"cards_in_inventory"|"level_user"|"level_idol"|"team_ability"|"team_reputation"|"card_global_ids"|"card_sets_complete"|"card_duplicates"}
+ * @type {"balance"|"ribbons"|"cards_in_inventory"|"level_user"|"level_idol"|"team_ability_reputation"|"card_global_ids"|"card_sets_complete"|"card_duplicates"}
 */
 
 const { TimestampStyles, time, SystemChannelFlagsBitField } = require('discord.js');
@@ -41,7 +41,7 @@ function quest_getProgress(questID, userData, questCache) {
             case "level_user": objectives.level_user = (quest.objectives?.level_user <= questCache.level_user); break;
             case "level_idol": objectives.level_idol = (quest.objectives?.level_idol <= questCache.level_idol); break;
 
-            case "team_ability_reputation": objectives.team_ability = (quest.objectives?.team_ability <= questCache.team_ability && quest.objectives?.team_reputation <= questCache.team_reputation); break;
+            case "team_ability_reputation": objectives.team_ability_reputation = (quest.objectives?.team_ability_reputation <= (questCache.team_ability && questCache.team_reputation)); break;
 
             case "card_global_ids": objectives.card_global_ids = userParser.cards.has(userData, quest.objectives.card_global_ids); break;
             case "card_sets_complete": objectives.card_sets_complete = userParser.cards.setsCompleted(userData, quest.objectives.card_sets_complete); break;
@@ -84,7 +84,7 @@ function quest_toString_objective(questID, objectiveType) {
         case "cards_in_inventory": return `🃏 INV. ${quest.objectives?.cards_in_inventory || "n/a"}`;
         case "level_user": return `📈 LVL. ${quest.objectives?.level_user || "n/a"}`;
         case "level_idol": return `📈 Idol LVL. ${quest.objectives?.level_idol || "n/a"}`;
-        case "team_ability_reputation": return `👯‍♀️ Team ${quest.objectives?.team_ability_reputation || "n/a"}`;
+        case "team_ability_reputation": return `👯‍♀️ ABI REP ${quest.objectives?.team_ability_reputation || "n/a"}`;
         case "card_global_ids": return `🃏 Req. Card`;
         case "card_sets_complete": return `🗣️ Set Complete`;
         case "card_duplicates": return `🃏 Dupes of Card`;
