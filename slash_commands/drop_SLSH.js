@@ -253,5 +253,8 @@ module.exports = {
 
         // Remove all reactions when the reaction collector times out or ends
         rc_collector.on("end", async () => await removeReactions());
+
+        // Return the reply message
+        return message;
     }
 };

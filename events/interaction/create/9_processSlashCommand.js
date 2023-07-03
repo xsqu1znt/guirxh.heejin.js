@@ -105,7 +105,9 @@ module.exports = {
                             try {
                                 await message.edit({ content: `**${levelUpText}**` });
                             } catch {
-                                await embed_userLevelUp.send({ description: `You are now \`LV. ${_userLevelUp.level_current}\`` });
+                                await embed_userLevelUp.send({
+                                    method: "send", description: `You are now \`LV. ${_userLevelUp.level_current}\``
+                                });
                             }
                         }
                     });
@@ -140,7 +142,7 @@ module.exports = {
                             });
                         }
                     });
-                } catch (err) { console.error(err); }
+                } catch (err) { /* console.error(err); */ }
             });
 
             try {

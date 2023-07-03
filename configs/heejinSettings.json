@@ -72,7 +72,7 @@
             "maxLevel": 100,
             "nextLevelXPMultiplier": 50,
             "commands": {
-                "drop": { "min": 10, "max": 30 },
+                "drop": { "min": 1000, "max": 3000 },
                 "random": { "min": 100, "max": 500 },
                 "stage": { "min": 10, "max": 250 }
             },
