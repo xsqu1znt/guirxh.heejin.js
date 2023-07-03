@@ -747,10 +747,11 @@ async function userQuest_ES(guildMember) {
         let isComplete = questProgress?.complete !== undefined
             ? questProgress.complete : questManager.user.isComplete(guildMember.id, quest.id);
 
-        // Parse quest objectives into an array
+        /// Parse quest objectives into an array
         let quest_objectives = Object.keys(quest.objectives);
-        let quest_objectiveProgress = Object.values(questProgress?.objectives)
-            || [...Array(quest_objectives.length)].fill(isComplete);
+
+        let quest_objectiveProgress = questProgress?.objectives
+            ? Object.values(questProgress.objectives) : [...Array(quest_objectives.length)].fill(isComplete);
 
         // Parse quest/quest progress data into a readable string
         questProgress_f.push(
@@ -763,7 +764,7 @@ async function userQuest_ES(guildMember) {
                 .replace("%QUEST_ENDING", dateTools.eta(Date.parse(quest.date.end)))
 
                 .replace("%OBJECTIVES", quest_objectives
-                    .map((obj, idx) => `> \`${quest_objectiveProgress[idx] ? "✔️" : "🚫"}\` ${questManager.toString.objectiveDescription(questProgress.questID, obj)}`)
+                    .map((obj, idx) => `> \`${quest_objectiveProgress[idx] ? "✔️" : "🚫"}\` ${questManager.toString.objectiveDescription(quest.id, obj)}`)
                     .join("\n"))
 
                 .replace("%DESCRIPTION", quest.description ? `> ${quest.description}` : "")

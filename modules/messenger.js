@@ -76,7 +76,7 @@ async function quest_complete(recipient, quest) {
     // Create the embed
     let embed_questComplete = new BetterEmbed({
         author: { text: `📜 Good job! You completed \'${quest.name}\'`, user: recipient, iconURL: null },
-        description: `**You got**: ${rewards_f.shift()}\n>>> ${rewards_f.join('\n')}`,
+        description: `**You got**: ${rewards_f.shift()}\n${rewards_f.length ? rewards_f.join("\n") : ""}`,
         showTimestamp: true
     });
 

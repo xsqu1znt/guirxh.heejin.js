@@ -23,7 +23,7 @@ module.exports = {
         });
 
         // Create the embed
-        let embed_quests = await userQuest_ES(interaction.member, questCache);
+        let embed_quests = await userQuest_ES(interaction.member);
 
         // Send the embed
         return await interaction.editReply({ embeds: [embed_quests] });
