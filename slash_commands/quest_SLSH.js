@@ -17,20 +17,15 @@ module.exports = {
     execute: async (client, interaction) => {
         let embed_error = new BetterEmbed({ interaction, author: { text: "%AUTHOR_NAME | quest", user: interaction.member } });
 
+        // Check if there are active quests
         if (!questManager.quests.length) return await embed_error.send({
             description: "There are no quests right now"
         });
 
-        // Fetch the user's QuestCache from Mongo
-        let questCache = await questManager.cache.fetch(interaction.user.id, true);
-
-        if (!questCache) return await embed_error.send({
-            description: "Quest info not available, try again"
-        });
-
         // Create the embed
-        let embed_quests = userQuest_ES(interaction.member, questCache);
+        let embed_quests = await userQuest_ES(interaction.member, questCache);
 
+        // Send the embed
         return await interaction.editReply({ embeds: [embed_quests] });
     }
 };

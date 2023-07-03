@@ -734,10 +734,50 @@ function userGift_ES(guildMember, recipient, cards) {
 }
 
 // Command -> User -> /QUEST
-function userQuest_ES(guildMember, questCache) {
+async function userQuest_ES(guildMember) {
+    // Fetch the user's QuestCache
+    let questCache = await questManager.cache.fetch(guildMember.id);
     let questProgress_f = [];
 
-    for (let questProgress of questCache.progress) questProgress_f.push(
+    for (let quest of questManager.quests) {
+        // Get the user's quest progress if available
+        let questProgress = questCache.progress.find(q => q.questID === quest.id);
+
+        // Check if the quest is complete
+        let isComplete = questProgress?.complete !== undefined
+            ? questProgress.complete : questManager.user.isComplete(guildMember.id, quest.id);
+
+        // Parse quest objectives into an array
+        let quest_objectives = Object.keys(quest.objectives);
+        let quest_objectiveProgress = Object.values(questProgress?.objectives)
+            || [...Array(quest_objectives.length)].fill(isComplete);
+
+        // Parse quest/quest progress data into a readable string
+        questProgress_f.push(
+            `\`📜\` **%QUEST_NAME** :: %QUEST_ENDING\n> \`%IS_COMPLETE\` \`📈 %PROGRESS objectives\`\n> *Rewards* :: %REWARD_OVERVIEW\n\n***objectives:***\n%OBJECTIVES\n%DESCRIPTION`
+                .replace("%QUEST_NAME", quest.name)
+                .replace("%REWARD_OVERVIEW", quest.reward_overview)
+
+                .replace("%IS_COMPLETE", isComplete ? "✔️ complete" : "🚫 incomplete")
+                .replace("%PROGRESS", questProgress?.f || (isComplete ? `${quest_objectives.length}/${quest_objectives.length}` : "n\a"))
+                .replace("%QUEST_ENDING", dateTools.eta(Date.parse(quest.date.end)))
+
+                .replace("%OBJECTIVES", quest_objectives
+                    .map((obj, idx) => `> \`${quest_objectiveProgress[idx] ? "✔️" : "🚫"}\` ${questManager.toString.objectiveDescription(questProgress.questID, obj)}`)
+                    .join("\n"))
+
+                .replace("%DESCRIPTION", quest.description ? `> ${quest.description}` : "")
+        );
+    }
+
+    let embed = new BetterEmbed({
+        author: { text: "%AUTHOR_NAME | quest", user: guildMember },
+        description: questProgress_f.join("\n\n") || "There are no quests right now"
+    });
+
+    return embed;
+
+    /* for (let questProgress of questCache.progress) questProgress_f.push(
         `\`📜\` **%QUEST_NAME** :: %QUEST_ENDING\n> \`%IS_COMPLETE\` \`📈 %PROGRESS objectives\`\n> *Rewards* :: %REWARD_OVERVIEW\n\n***objectives:***\n%OBJECTIVES\n%DESCRIPTION`
             .replace("%QUEST_NAME", questProgress.quest.name)
             .replace("%REWARD_OVERVIEW", questProgress.quest.reward_overview)
@@ -751,14 +791,7 @@ function userQuest_ES(guildMember, questCache) {
                 .join("\n"))
 
             .replace("%DESCRIPTION", questProgress.quest.description ? `> ${questProgress.quest.description}` : "")
-    );
-
-    let embed = new BetterEmbed({
-        author: { text: "%AUTHOR_NAME | quest", user: guildMember },
-        description: questManager.quests.length ? questProgress_f.join("\n\n") : "Quest info not available, try again"
-    });
-
-    return embed;
+    ); */
 }
 
 module.exports = {
