@@ -2,33 +2,40 @@
     {
         "id": "q01",
         "name": "Dev Quest",
-        "reward_overview": "`☝️ 100000XP` `🥕 5k` `🎀 1000` `🃏 3`",
-        "description": "used for testing",
+        "reward_overview": "`☝️ 100XP` `🥕 5k` `🎀 1000` `🃏 3`",
+        "description": "",
         "date": {
             "start": "2023-07-01",
             "end": "2023-07-07"
         },
         "objectives": {
-            "balance": 500,
             "cards_in_inventory": 20,
             "level_user": 13,
-            "level_idol": 5,
-
-            "team_ability_reputation": 200,
-
-            "card_global_ids": ["2322"],
-            "card_sets_complete": ["220"],
-
-            "card_duplicates": [
-                { "globalID": "2321", "count": 3 },
-                { "globalID": "2323", "count": 2 }
-            ]
+            "level_idol": 5
         },
         "rewards": {
-            "xp": 100000,
+            "xp": 100,
             "carrots": 5000,
             "ribbons": 1000,
             "card_global_ids": ["1001", "1002", "1003"]
+        }
+    },
+
+    {
+        "id": "q02",
+        "name": "Dev Quest 2",
+        "reward_overview": "`☝️ 420XP` `🥕 5k`",
+        "description": "",
+        "date": {
+            "start": "2023-07-01",
+            "end": "2023-07-07"
+        },
+        "objectives": {
+            "balance": 420069
+        },
+        "rewards": {
+            "xp": 420,
+            "carrots": 5000
         }
     }
 ]

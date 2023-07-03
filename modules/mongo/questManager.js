@@ -102,9 +102,9 @@ function quest_toString_objectiveDescription(questID, objectiveType) {
         case "level_user": return `\`📈 User LV.\` - \`reach LV. ${quest.objectives?.level_user || "n/a"}\``;
         case "level_idol": return `\`📈 Idol LV.\` - \`reach LV. ${quest.objectives?.level_idol || "n/a"}\``;
         case "team_ability_reputation": return `\`👯‍♀️ ABI REP\` - \`reach ${quest.objectives?.team_ability_reputation || "n/a"} in ABI. REP. stats\``;
-        case "card_global_ids": return `\`🃏 GID\` - \`own ${quest.objectives?.card_global_ids.length === 1 ? "a card" : "cards"} with ${quest.objectives?.card_global_ids.map(gid => `gid ${gid}`).join(", ")}\``;
-        case "card_sets_complete": return `\`🗣️ Set\` - \`complete ${quest.objectives?.card_sets_complete.length === 1 ? "set" : "sets"} ${quest.objectives?.card_sets_complete.join(", ")}\``;
-        case "card_duplicates": return `\`🃏 Dupes\` - \`own ${quest.objectives?.card_duplicates.map(d => `${d.count} dupes of gid ${d.globalID}`).join(", ")}\``;
+        case "card_global_ids": return `\`🃏 GID\` - \`own ${quest.objectives?.card_global_ids?.length === 1 ? "a card" : "cards"} with ${quest.objectives?.card_global_ids?.map(gid => `gid ${gid}`).join(", ")}\``;
+        case "card_sets_complete": return `\`🗣️ Set\` - \`complete ${quest.objectives?.card_sets_complete?.length === 1 ? "set" : "sets"} ${quest.objectives?.card_sets_complete?.join(", ")}\``;
+        case "card_duplicates": return `\`🃏 Dupes\` - \`own ${quest.objectives?.card_duplicates?.map(d => `${d.count} dupes of gid ${d.globalID}`).join(", ")}\``;
 
         default: return "invalid objective type";
     }
