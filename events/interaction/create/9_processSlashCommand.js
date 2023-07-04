@@ -17,7 +17,7 @@ const logger = require('../../../modules/logger');
 const tips = require('../../../configs/heejinTips.json');
 
 function userIsBotAdminOrBypass(interaction) {
-    return [ownerID, ...adminIDs, ...adminBypassIDs[interaction.commandName]].includes(interaction.user.id);
+    return [ownerID, ...adminIDs, ...(adminBypassIDs[interaction.commandName] || [])].includes(interaction.user.id);
 }
 
 function userIsGuildAdminOrBypass(interaction) {
