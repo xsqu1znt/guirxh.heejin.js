@@ -3,6 +3,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js'
 const { botSettings: { currencyIcon } } = require('../configs/heejinSettings.json');
 const { BetterEmbed } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
+const messenger = require('../modules/messenger');
 
 module.exports = {
     options: { icon: "🥕", deferReply: true },
@@ -71,17 +72,11 @@ module.exports = {
         let balance_user_f = `\`${currencyIcon} ${userData.balance - amount}\``;
         let balance_recipient_f = `\`${currencyIcon} ${recipientData.balance + amount}\``;
 
-        let embed_dm = new BetterEmbed({
-            title: { text: "\`📬\` You have a message!" },
-            description: `You got ${amount_f} from **${interaction.user.username}**\n> Balance currently: ${balance_recipient_f}`,
-            showTimestamp: true
-        });
-
         return await Promise.all([
             // Let the user know the result
             embed_pay.send({ description: `You gave ${amount_f} to **${recipient}**\n> Balance currently: ${balance_user_f}` }),
             // Send a DM to the recipient
-            recipient.send({ embeds: [embed_dm] })
+            messenger.gift.currency(recipient, interaction.user, amount, balance_recipient_f)
         ]);
     }
 };

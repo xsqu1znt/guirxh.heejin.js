@@ -145,7 +145,7 @@ async function SummonCard(client, interaction) {
             imageURL: card_last.imageURL
         }),
         // Send a DM to the recipient
-        messenger.gift.cards(recipient, cards, cards_f)
+        messenger.gift.cards(recipient, interaction.user, cards, cards_f)
     ]);
 }
 
@@ -185,7 +185,7 @@ async function PayUser(client, interaction) {
             description: `You ${amount > 0 ? `gave \`${currencyIcon} ${amount}\` to` : `withdrew \`${currencyIcon} ${amount}\` from`} **${recipient.username}**\n> Their balance: \`${currencyIcon} ${recipientData.balance}\``
         }),
         // Send a DM to the recipient if they were given currency
-        (async () => { if (amount > 0) return await messenger.gift.currency(recipient, amount, recipientData.balance); })()
+        (async () => { if (amount > 0) return await messenger.gift.currency(recipient, interaction.user, amount, recipientData.balance); })()
     ]);
 }
 

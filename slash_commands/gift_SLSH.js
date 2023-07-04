@@ -4,6 +4,7 @@ const { userManager } = require('../modules/mongo');
 const { userGift_ES } = require('../modules/embedStyles');
 const { BetterEmbed } = require('../modules/discordTools');
 const userParser = require('../modules/userParser');
+const messenger = require('../modules/messenger');
 
 module.exports = {
     options: { icon: "🎁", deferReply: true },
@@ -80,7 +81,7 @@ module.exports = {
             // Let the user know the result
             interaction.editReply({ embeds: [embed_gift] }),
             // Send a DM to the recipient
-            recipient.send({ embeds: [embed_dm] })
+            messenger.gift.cards(recipient, interaction.user, cards)
         ]);
     }
 };
