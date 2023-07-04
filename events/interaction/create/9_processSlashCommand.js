@@ -76,15 +76,15 @@ module.exports = {
                     return await embed_error.send({ description: `You can only use that command in <#${communityServer.adminChannelID}>`, ephemeral: true });
             }
 
-            // Defer the interaction
-            if (slashCommand?.options?.deferReply) await args.interaction.deferReply();
-
             /// Check if the user's in our Mongo database
             let _userDataExists = await userManager.exists(args.interaction.user.id);
             let _dontRequireUserData = slashCommand?.options?.dontRequireUserData || false;
 
             if (!_userDataExists && !_dontRequireUserData)
                 return await embed_error.send({ description: "**You have not started yet!** Use \`/start\` first!", ephemeral: true });
+
+            // Defer the interaction
+            if (slashCommand?.options?.deferReply) await args.interaction.deferReply();
 
             // Cache the user's current UserData if available || REQUIRED FOR QUESTS ONLY
             // TODO: let cacheUserQuestData = await userManager.quests.cache(args.interaction.user.id);

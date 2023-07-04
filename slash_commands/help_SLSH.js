@@ -17,15 +17,12 @@ module.exports = {
             interaction, author: { text: "%AUTHOR_NAME | help", user: interaction.member }
         });
 
-        let slashCommands = [...client.slashCommands.values()].filter(slsh => slsh?.helpIcon);
+        let slashCommands = [...client.slashCommands.values()].filter(slsh => slsh?.options?.icon);
 
-        slashCommands.forEach(slsh => {
-            if (slsh?.options?.icon) embed_help.addFields({
-                name: `\`${slsh.options.icon}\` ${slsh.builder.name}`,
-                value: `> ${slsh.builder.description}`, inline: true
-            });
+        for (let slsh of slashCommands) embed_help.addFields({
+            name: `\`${slsh.options.icon}\` ${slsh.builder.name}`,
+            value: `> ${slsh.builder.description}`, inline: true
         });
-
 
         return await embed_help.send();
     }

@@ -19,7 +19,7 @@ module.exports = {
         if (await userManager.exists(interaction.user.id)) return await new BetterEmbed({
             interaction, author: { text: "%AUTHOR_NAME | start", user: interaction.member },
             description: "You already started"
-        }).send();
+        }).send({ ephemeral: true });
 
         // Defer the reply
         await interaction.deferReply();
