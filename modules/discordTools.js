@@ -24,7 +24,7 @@ const nav_emojis = {
     back: customEmojis.pagination.back,
     jump: customEmojis.pagination.jump,
     next: customEmojis.pagination.next,
-    toLast: customEmojis.pagination.toLast,
+    toLast: customEmojis.pagination.toLast
 };
 
 //! Life Betterment
