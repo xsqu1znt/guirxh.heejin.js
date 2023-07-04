@@ -1,3 +1,35 @@
 [
-
+    {
+        "id": "q01",
+        "name": "Quest 1",
+        "reward_overview": "`☝️ 100XP` `🥕 100` `🎀 100` `🃏 1`",
+        "description": "",
+        "date": {
+            "start": "yyyy-mm-dd",
+            "end": "yyyy-mm-dd"
+        },
+        "objectives": {
+            "balance": 500,
+            "ribbons": 100,
+            "cards_in_inventory": 10,
+    
+            "level_user": 10,
+            "level_idol": 10,
+    
+            "team_ability_reputation": 100,
+    
+            "card_global_ids": ["101"],
+            "card_sets_complete": ["100"],
+            
+            "card_duplicates": [
+                { "globalID": "101", "count": 2 }
+            ]
+        },
+        "rewards": {
+            "xp": 100,
+            "carrots": 100,
+            "ribbons": 100,
+            "card_global_ids": ["globalID"]
+        }
+    }
 ]

@@ -88,9 +88,9 @@ function quest_toString_objectiveDescription(questID, objectiveType) {
     let quest = quest_get(questID); if (!quest) return "invalid quest id";
 
     switch (objectiveType) {
-        case "balance": return `\`🥕 Balance\` - \`get ${quest.objectives?.balance || "n/a"} ${quest.objectives?.balance === 1 ? "carrot" : "carrots"}\``;
-        case "ribbons": return `\`🎀 Ribbons\` - \`get ${quest.objectives?.ribbons || "n/a"} ${quest.objectives?.ribbons === 1 ? "ribbon" : "ribbons"}\``;
-        case "cards_in_inventory": return `\`🃏 Inventory\` - \`have ${quest.objectives?.cards_in_inventory || "n/a"} ${quest.objectives?.cards_in_inventory === 1 ? "card" : "cards"} in total\``;
+        case "balance": return `\`🥕 Balance\` - \`get ${quest.objectives?.balance || "n/a"} new ${quest.objectives?.balance === 1 ? "carrot" : "carrots"}\``;
+        case "ribbons": return `\`🎀 Ribbons\` - \`get ${quest.objectives?.ribbons || "n/a"} new ${quest.objectives?.ribbons === 1 ? "ribbon" : "ribbons"}\``;
+        case "cards_in_inventory": return `\`🃏 Inventory\` - \`drop ${quest.objectives?.cards_in_inventory || "n/a"} new ${quest.objectives?.cards_in_inventory === 1 ? "card" : "cards"}\``;
         case "level_user": return `\`📈 User LV.\` - \`reach LV. ${quest.objectives?.level_user || "n/a"}\``;
         case "level_idol": return `\`📈 Idol LV.\` - \`reach LV. ${quest.objectives?.level_idol || "n/a"}\``;
         case "team_ability_reputation": return `\`👯‍♀️ ABI REP\` - \`reach ${quest.objectives?.team_ability_reputation || "n/a"} in ABI. REP. stats\``;

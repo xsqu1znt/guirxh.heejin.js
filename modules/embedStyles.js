@@ -95,16 +95,6 @@ function generalShop_ES(guildMember) {
     let embed_list = () => {
         let cards_f = cards_shop_unique.map((card, idx) => cardManager.toString.setEntry(card, card_sets[idx].length, true));
 
-        // Badges
-        let uniqueSet_badges = arrayTools.unique(shop.badges.all.sort((a, b) => a.setID - b.setID),
-            (badge, badgeCompare) => badgeCompare.setID === badge.setID
-        );
-
-        let sets_badges = uniqueSet_badges.map(badge => shop.badges.all.filter(b => b.setID === badge.setID));
-        let badges_f = uniqueSet_badges.map((badge, idx) =>
-            shop.badges.toString.setEntry(badge, sets_badges[idx].length)
-        );
-
         // Item packs
         let uniqueSet_itemPacks = arrayTools.unique(shop.itemPacks.all.sort((a, b) => a.setID - b.setID),
             (pack, packCompare) => packCompare.setID === pack.setID
@@ -115,14 +105,24 @@ function generalShop_ES(guildMember) {
             shop.itemPacks.toString.setEntry(pack, sets_itemPacks[idx].length)
         );
 
+        // Badges
+        let uniqueSet_badges = arrayTools.unique(shop.badges.all.sort((a, b) => a.setID - b.setID),
+            (badge, badgeCompare) => badgeCompare.setID === badge.setID
+        );
+
+        let sets_badges = uniqueSet_badges.map(badge => shop.badges.all.filter(b => b.setID === badge.setID));
+        let badges_f = uniqueSet_badges.map((badge, idx) =>
+            shop.badges.toString.setEntry(badge, sets_badges[idx].length)
+        );
+
         let shop_f = "";
         shop_f += cards_f.length ? `\`🃏\` **Cards**\n${cards_f.map(card_f => `> ${card_f}`).join("\n")}` : "";
-        shop_f += badges_f.length ? `\n\n\`📛\` **Badges**\n${badges_f.map(badge_f => `> ${badge_f}`).join("\n")}` : "";
         shop_f += itemPacks_f.length ? `\n\n\`📦\` **Items**\n${itemPacks_f.map(pack_f => `> ${pack_f}`).join("\n")}` : "";
+        shop_f += badges_f.length ? `\n\n\`📛\` **Badges**\n${badges_f.map(badge_f => `> ${badge_f}`).join("\n")}` : "";
 
         // Create the embed
         let embed = embed_template()
-            .setDescription(shop_f || "Shop is empty!");
+            .setDescription(shop_f || "There is nothing in the shop right now");
 
         // Return the embed
         return embed;
@@ -193,6 +193,19 @@ function generalShop_ES(guildMember) {
         return embeds;
     };
 
+    let embed_rewards = () => {
+        let rewards_f = shop.rewards.all.map(reward => shop.rewards.toString.shop(reward));
+        rewards_f = arrayTools.chunk(rewards_f, 10);
+
+        let embeds = [];
+
+        for (let i = 0; i < rewards_f.length; i++) {
+
+        }
+
+        return embeds;
+    };
+
     let embed_itemPacks = () => {
         let itemPacks_f = shop.itemPacks.all.map(cardPack => shop.itemPacks.toString.shop(cardPack));
         itemPacks_f = arrayTools.chunk(itemPacks_f, 10);
@@ -235,7 +248,7 @@ function generalShop_ES(guildMember) {
         embed_all(),
         ...embed_cardSets(),
         embed_itemPacks(),
-        embed_badges()
+        embed_badges(),
     ];
 }
 
@@ -741,7 +754,7 @@ async function userQuest_ES(guildMember) {
 
     for (let quest of questManager.quests) {
         // Get the user's quest progress if available
-        let questProgress = questCache.progress.find(q => q.questID === quest.id);
+        let questProgress = questCache?.progress?.find(q => q.questID === quest.id);
 
         // Check if the quest is complete
         let isComplete = questProgress?.complete !== undefined
