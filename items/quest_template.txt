@@ -1,0 +1,33 @@
+{
+    "id": "unique quest id (can be anything that hasn't been used for quests before)",
+    "name": "name of the quest",
+    "reward_overview": "`☝️ 100XP` `🥕 100` `🎀 100` `🃏 1`",
+    "description": "this is shown under objectives",
+    "date": {
+        "start": "yyyy-mm-dd",
+        "end": "yyyy-mm-dd"
+    },
+    "objectives": {
+        "balance": 0,
+        "ribbons": 0,
+        "cards_in_inventory": 0,
+
+        "level_user": 0,
+        "level_idol": 0,
+
+        "team_ability_reputation": 0,
+
+        "card_global_ids": ["globalID"],
+        "card_sets_complete": ["setID"],
+        
+        "card_duplicates": [
+            { "globalID": "globalID", "count": 1 }
+        ]
+    },
+    "rewards": {
+        "xp": 100,
+        "carrots": 100,
+        "ribbons": 100,
+        "card_global_ids": ["globalID"]
+    }
+}

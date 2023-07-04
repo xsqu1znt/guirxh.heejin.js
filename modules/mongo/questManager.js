@@ -2,23 +2,15 @@
  * @type {"balance"|"ribbons"|"cards_in_inventory"|"level_user"|"level_idol"|"team_ability_reputation"|"card_global_ids"|"card_sets_complete"|"card_duplicates"}
 */
 
-const { TimestampStyles, time, SystemChannelFlagsBitField } = require('discord.js');
-
-const { botSettings: { currencyIcon } } = require('../../configs/heejinSettings.json');
-
-const { model: questCacheModel, QuestCache, QuestObjectiveProgress, QuestObjectiveTypes } = require('../../models/questCacheModel');
-
-const { numberTools, dateTools } = require('../jsTools');
 const { userManager } = require('../mongo');
 const cardManager = require('../cardManager');
 const userParser = require('../userParser');
 
-const quests = require('../../configs/quests.json');
+const quests = require('../../items/quests.json');
 const quest_ids = quests.map(quest => quest.id);
 
-const models = {
-    questCache: questCacheModel
-};
+const { model: questCacheModel } = require('../../models/questCacheModel');
+const models = { questCache: questCacheModel };
 
 //! Quest parsing
 function quest_get(questID) {
