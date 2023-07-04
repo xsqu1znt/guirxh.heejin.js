@@ -3,12 +3,10 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js'
 const { BetterEmbed, EmbedNavigation } = require('../../modules/discordTools');
 
 module.exports = {
+    options: { icon: "🥕", deferReply: true, botAdminOnly: true },
+
     builder: new SlashCommandBuilder().setName("template")
         .setDescription("Template command"),
-
-    isOwnerCommand: true,
-
-    helpIcon: "🥕",
 
     /**
      * @param {Client} client
