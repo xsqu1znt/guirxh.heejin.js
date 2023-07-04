@@ -5,7 +5,7 @@ const { BetterEmbed } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 
 module.exports = {
-    options: { icon: "🏎️", deferReply: true, dontRequireUserData: true },
+    options: { icon: "🏎️", deferReply: false, dontRequireUserData: true },
 
     builder: new SlashCommandBuilder().setName("start")
         .setDescription("Start your journey"),
@@ -20,6 +20,9 @@ module.exports = {
             interaction, author: { text: "%AUTHOR_NAME | start", user: interaction.member },
             description: "You already started"
         }).send();
+
+        // Defer the reply
+        await interaction.deferReply();
 
         // Add the user to the Mongo database
         await userManager.new(interaction.user.id);

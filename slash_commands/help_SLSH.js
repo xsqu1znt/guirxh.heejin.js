@@ -3,7 +3,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js'
 const { BetterEmbed } = require('../modules/discordTools');
 
 module.exports = {
-    options: { deferReply: false },
+    options: { deferReply: false, dontRequireUserData: true },
 
     builder: new SlashCommandBuilder().setName("help")
         .setDescription("Get information about the commands"),
