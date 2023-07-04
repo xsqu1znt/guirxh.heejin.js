@@ -5,6 +5,8 @@ const { userProfile_ES } = require('../modules/embedStyles');
 const { BetterEmbed, EmbedNavigator } = require('../modules/discordTools');
 
 module.exports = {
+    options: { icon: "📈", deferReply: true },
+
     builder: new SlashCommandBuilder().setName("profile")
         .setDescription("View your profile")
 
@@ -14,8 +16,6 @@ module.exports = {
         .addStringOption(option => option.setName("bio")
             .setDescription("Change your bio | use \"reset\" to remove")
         ),
-
-    helpIcon: "📈",
 
     /**
      * @param {Client} client

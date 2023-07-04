@@ -6,6 +6,8 @@ const { BetterEmbed } = require('../modules/discordTools');
 const userParser = require('../modules/userParser');
 
 module.exports = {
+    options: { icon: "🎁", deferReply: true },
+
     builder: new SlashCommandBuilder().setName("gift")
         .setDescription("Give a card to another player")
 
@@ -16,8 +18,6 @@ module.exports = {
         .addUserOption(option => option.setName("player")
             .setDescription("The player you want to gift to")
             .setRequired(true)),
-
-    helpIcon: "🎁",
 
     /**
      * @param {Client} client

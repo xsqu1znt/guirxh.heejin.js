@@ -7,14 +7,14 @@ const userParser = require('../modules/userParser');
 const cardManager = require('../modules/cardManager');
 
 module.exports = {
+    options: { icon: "💰", deferReply: true },
+
     builder: new SlashCommandBuilder().setName("sell")
         .setDescription("Sell a card in your inventory")
 
         .addStringOption(option => option.setName("uid")
             .setDescription("Use UID separate by comma")
             .setRequired(true)),
-
-    helpIcon: "💰",
 
     /**
      * @param {Client} client

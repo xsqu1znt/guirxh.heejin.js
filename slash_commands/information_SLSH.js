@@ -7,10 +7,10 @@ const { userManager } = require('../modules/mongo');
 const cardManager = require('../modules/cardManager');
 
 module.exports = {
+    options: { icon: "📚", deferReply: true },
+
     builder: new SlashCommandBuilder().setName("information")
         .setDescription("View useful information"),
-
-    helpIcon: "📚",
 
     /**
      * @param {Client} client

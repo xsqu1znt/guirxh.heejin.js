@@ -12,6 +12,8 @@ const stringChoices = cooldownValues.map(value => ({
 }));
 
 module.exports = {
+    options: { icon: "⏰", deferReply: true },
+
     builder: new SlashCommandBuilder().setName("reminder")
         .setDescription("Toggle reminders for a command cooldown")
 
@@ -21,8 +23,6 @@ module.exports = {
 
             .addChoices(...stringChoices)
         ),
-
-    helpIcon: "⏰",
 
     /**
      * @param {Client} client

@@ -6,10 +6,10 @@ const { userManager } = require('../modules/mongo');
 const { dateTools } = require('../modules/jsTools');
 
 module.exports = {
+    options: { icon: "💖", deferReply: true },
+
     builder: new SlashCommandBuilder().setName("daily")
         .setDescription("Claim your daily reward"),
-
-    helpIcon: "💖",
 
     /**
      * @param {Client} client

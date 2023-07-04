@@ -8,7 +8,7 @@ module.exports = {
     builder: new SlashCommandBuilder().setName("quest")
         .setDescription("View quests"),
 
-    options: { deferReply: true },
+    options: { icon: "📜", deferReply: true },
 
     /**
      * @param {Client} client

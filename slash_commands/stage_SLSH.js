@@ -11,15 +11,13 @@ const userParser = require('../modules/userParser');
 const Stage = require('../modules/stageLogic');
 
 module.exports = {
+    options: { icon: "🎤", deferReply: true },
+
     builder: new SlashCommandBuilder().setName("stage")
         .setDescription("LV. your idol by challenging a rival to a duel")
 
         .addUserOption(option => option.setName("player")
             .setDescription("Challenge a player to a duel")),
-
-    options: { deferReply: true },
-
-    helpIcon: "🎤",
 
     /**
      * @param {Client} client

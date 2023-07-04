@@ -1,20 +1,18 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
-const { botSettings } = require('../configs/heejinSettings.json');
 const { userMissing_ES } = require('../modules/embedStyles');
 const { EmbedNavigator } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
-const { dateTools } = require('../modules/jsTools');
 
 module.exports = {
+    options: { icon: "❌", deferReply: true },
+
     builder: new SlashCommandBuilder().setName("missing")
         .setDescription("See which cards you're missing in a set")
 
         .addStringOption(option => option.setName("setid")
             .setDescription("The ID of the set")
             .setRequired(true)),
-
-    helpIcon: "❌",
 
     /**
      * @param {Client} client

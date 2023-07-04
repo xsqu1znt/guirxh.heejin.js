@@ -9,13 +9,13 @@ const shop = require('../modules/shop');
 const userParser = require('../modules/userParser');
 
 module.exports = {
+    options: { icon: "🛍️", deferReply: true },
+
     builder: new SlashCommandBuilder().setName("shop")
         .setDescription("View the shop")
 
         .addStringOption(option => option.setName("buy")
             .setDescription("Buy anything using their ID")),
-
-    helpIcon: "🛍️",
 
     /**
      * @param {Client} client

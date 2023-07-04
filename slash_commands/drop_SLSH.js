@@ -12,6 +12,8 @@ const cardManager = require('../modules/cardManager');
 const userParser = require('../modules/userParser');
 
 module.exports = {
+    options: { icon: "💧", deferReply: true },
+
     builder: new SlashCommandBuilder().setName("drop")
         .setDescription("Drop a random card")
 
@@ -27,8 +29,6 @@ module.exports = {
             )
             .setRequired(true)
         ),
-
-    helpIcon: "💧",
 
     /**
      * @param {Client} client

@@ -6,10 +6,10 @@ const { BetterEmbed } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 
 module.exports = {
+    options: { icon: "🎱", deferReply: true },
+
     builder: new SlashCommandBuilder().setName("random")
         .setDescription("Get a random amount of carrots"),
-
-    helpIcon: "🎱",
 
     /**
      * @param {Client} client

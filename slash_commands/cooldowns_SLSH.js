@@ -4,10 +4,10 @@ const { userCooldowns_ES } = require('../modules/embedStyles');
 const { userManager } = require('../modules/mongo');
 
 module.exports = {
+    options: { icon: "⏲️", deferReply: true },
+
     builder: new SlashCommandBuilder().setName("cooldowns")
         .setDescription("Check your cooldowns"),
-
-    helpIcon: "⏲️",
 
     /**
      * @param {Client} client

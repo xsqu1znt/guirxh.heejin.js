@@ -5,6 +5,8 @@ const { BetterEmbed, EmbedNavigator } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 
 module.exports = {
+    options: { icon: "📖", deferReply: true },
+
     builder: new SlashCommandBuilder().setName("inventory")
         .setDescription("View your card inventory")
 
@@ -39,8 +41,6 @@ module.exports = {
                 { name: "Descending", value: "descending" }
             )
         ),
-
-    helpIcon: "📖",
 
     /**
      * @param {Client} client

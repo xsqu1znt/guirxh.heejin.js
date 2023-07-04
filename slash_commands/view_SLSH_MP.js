@@ -7,6 +7,8 @@ const userParser = require('../modules/userParser');
 const cardManager = require('../modules/cardManager');
 
 module.exports = {
+    options: { icon: "👀", deferReply: true },
+
     builder: new SlashCommandBuilder().setName("view")
         .setDescription("View information about a card")
 
@@ -32,8 +34,6 @@ module.exports = {
                 { name: "👯 team", value: "team" }
             )
         ),
-
-    helpIcon: "👀",
 
     /**
      * @param {Client} client

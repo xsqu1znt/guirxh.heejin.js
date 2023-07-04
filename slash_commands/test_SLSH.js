@@ -9,6 +9,8 @@ const userParser = require('../modules/userParser');
 const { userManager } = require('../modules/mongo');
 
 module.exports = {
+    options: { deferReply: false },
+
     builder: new SlashCommandBuilder().setName("test")
         .setDescription("A test command for dev stuff"),
 

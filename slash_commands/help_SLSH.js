@@ -3,6 +3,8 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js'
 const { BetterEmbed } = require('../modules/discordTools');
 
 module.exports = {
+    options: { deferReply: false },
+
     builder: new SlashCommandBuilder().setName("help")
         .setDescription("Get information about the commands"),
 
@@ -17,11 +19,12 @@ module.exports = {
 
         let slashCommands = [...client.slashCommands.values()].filter(slsh => slsh?.helpIcon);
 
-        slashCommands.forEach((slsh, idx) => embed_help.addFields({
-            name: `\`${slsh.helpIcon}\` ${slsh.builder.name}`,
-            value: `> ${slsh.builder.description}`,
-            inline: true
-        }));
+        slashCommands.forEach(slsh => {
+            if (slsh?.options?.icon) embed_help.addFields({
+                name: `\`${slsh.options.icon}\` ${slsh.builder.name}`,
+                value: `> ${slsh.builder.description}`, inline: true
+            });
+        });
 
 
         return await embed_help.send();

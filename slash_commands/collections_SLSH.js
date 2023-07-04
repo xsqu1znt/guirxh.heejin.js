@@ -4,6 +4,8 @@ const { generalCollections_ES } = require('../modules/embedStyles');
 const { EmbedNavigator } = require('../modules/discordTools');
 
 module.exports = {
+    options: { icon: "📁", deferReply: false },
+
     builder: new SlashCommandBuilder().setName("collections")
         .setDescription("View a list of every set in the game")
 
@@ -20,8 +22,6 @@ module.exports = {
                 { name: "Descending", value: "descending" }
             )
         ),
-
-    helpIcon: "📁",
 
     /**
      * @param {Client} client
@@ -42,6 +42,6 @@ module.exports = {
             paginationType: "longJump", dynamicPagination: false
         });
 
-        await embedNav.send();
+        return await embedNav.send();
     }
 };

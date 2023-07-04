@@ -7,6 +7,8 @@ const {
 const { communityServer, botSettings } = require('../configs/heejinSettings.json');
 
 module.exports = {
+    options: { deferReply: false, guildAdminOnly: true },
+
     builder: new SlashCommandBuilder().setName("createembed")
         .setDescription("Create a custom embed")
         .addStringOption(option => option.setName("template")
@@ -17,8 +19,6 @@ module.exports = {
                 { name: "Update", value: "template_update" }
             )
         ),
-
-    requireGuildAdmin: true,
 
     /**
      * @param {Client} client

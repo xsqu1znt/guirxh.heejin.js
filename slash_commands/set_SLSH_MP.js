@@ -6,6 +6,8 @@ const cardManager = require('../modules/cardManager');
 const userParser = require('../modules/userParser');
 
 module.exports = {
+    options: { icon: "🏃", deferReply: true },
+
     builder: new SlashCommandBuilder().setName("set")
         .setDescription("Add/remove a card from something")
 
@@ -27,8 +29,6 @@ module.exports = {
         .addStringOption(option => option.setName("remove")
             .setDescription("Remove a card using UID")
         ),
-
-    helpIcon: "🏃",
 
     /**
      * @param {Client} client

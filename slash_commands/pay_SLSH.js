@@ -5,6 +5,8 @@ const { BetterEmbed } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 
 module.exports = {
+    options: { icon: "🥕", deferReply: true },
+
     builder: new SlashCommandBuilder().setName("pay")
         .setDescription("Give a player carrots")
 
@@ -15,8 +17,6 @@ module.exports = {
         .addUserOption(option => option.setName("player")
             .setDescription("The player you want to give to")
             .setRequired(true)),
-
-    helpIcon: "🥕",
 
     /**
      * @param {Client} client

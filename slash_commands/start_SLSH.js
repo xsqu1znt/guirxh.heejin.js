@@ -5,12 +5,10 @@ const { BetterEmbed } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo');
 
 module.exports = {
-    options: { dontRequireUserData: true },
+    options: { icon: "🏎️", deferReply: true, dontRequireUserData: true },
 
     builder: new SlashCommandBuilder().setName("start")
         .setDescription("Start your journey"),
-
-    helpIcon: "🏎️",
 
     /**
      * @param {Client} client
