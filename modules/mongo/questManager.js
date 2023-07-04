@@ -109,9 +109,12 @@ async function mongo_user_isQuestComplete(userID, questID) {
     // Fetch the user from Mongo
     let userData = await userManager.fetch(userID, "quest");
 
+    // Add the new quests_complete property to the user in Mongo
+    if (!userData?.quests_complete) await userManager.update(userID, { quests_complete: [] });
+
     // Filter quests based on the given quest ID
-    let quests_filtered = userData.quests_complete.filter(quest => questID.includes(quest.id));
-    return quests_filtered.length === questID.length ? true : false;
+    let quests_filtered = userData?.quests_complete?.filter(quest => questID.includes(quest.id));
+    return quests_filtered?.length === questID.length ? true : false;
 }
 
 async function mongo_user_markQuestComplete(userID, questID) {

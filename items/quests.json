@@ -2,34 +2,39 @@
     {
         "id": "q01",
         "name": "Quest 1",
-        "reward_overview": "`☝️ 100XP` `🥕 100` `🎀 100` `🃏 1`",
+        "reward_overview": "`☝️ 1000XP` `🥕 1000` `🎀 500`",
         "description": "",
         "date": {
-            "start": "yyyy-mm-dd",
-            "end": "yyyy-mm-dd"
+            "start": "2023-07-03",
+            "end": "2023-07-14"
         },
         "objectives": {
-            "balance": 500,
-            "ribbons": 100,
-            "cards_in_inventory": 10,
-    
-            "level_user": 10,
-            "level_idol": 10,
-    
-            "team_ability_reputation": 100,
-    
-            "card_global_ids": ["101"],
-            "card_sets_complete": ["100"],
-            
-            "card_duplicates": [
-                { "globalID": "101", "count": 2 }
-            ]
+            "balance": 2000,
+            "level_idol": 20
         },
         "rewards": {
-            "xp": 100,
-            "carrots": 100,
-            "ribbons": 100,
-            "card_global_ids": ["globalID"]
+            "xp": 1000,
+            "carrots": 1000,
+            "ribbons": 500
+        }
+    },
+    {
+        "id": "q02",
+        "name": "Quest 2",
+        "reward_overview": "`☝️ 1000XP` `🥕 1000` `🎀 500`",
+        "description": "",
+        "date": {
+            "start": "2023-07-03",
+            "end": "2023-07-14"
+        },
+        "objectives": {
+            "cards_in_inventory": 50,
+            "level_user": 10
+        },
+        "rewards": {
+            "xp": 1000,
+            "carrots": 1000,
+            "ribbons": 500
         }
     }
 ]
