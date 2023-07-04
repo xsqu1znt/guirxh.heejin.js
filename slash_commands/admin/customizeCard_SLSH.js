@@ -10,6 +10,8 @@ const userParser = require('../../modules/userParser');
 const cardManager = require('../../modules/cardManager');
 
 module.exports = {
+    options: { deferReply: true, botAdminOnly: true },
+
     builder: new SlashCommandBuilder().setName("customizecard")
         .setDescription("Customize a card in a user's inventory")
 

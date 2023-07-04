@@ -3,7 +3,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js'
 const subcommands = require('./setting_SUBCMDS');
 
 module.exports = {
-    options: { isOwnerCommand: true },
+    options: { deferReply: true, botAdminOnly: true },
 
     builder: new SlashCommandBuilder().setName("setting")
         .setDescription("For admins of Heejin only")
