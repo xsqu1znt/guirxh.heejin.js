@@ -7,7 +7,7 @@ const {
 const { communityServer, botSettings } = require('../configs/heejinSettings.json');
 
 module.exports = {
-    options: { deferReply: false, guildAdminOnly: true },
+    options: { deferReply: true, guildAdminOnly: true },
 
     builder: new SlashCommandBuilder().setName("createembed")
         .setDescription("Create a custom embed")

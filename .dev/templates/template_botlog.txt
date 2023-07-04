@@ -26,13 +26,20 @@ Remember to report any issues in <#1014513978560499732>
 
 
 
-🔧 Changelog (23/06/07) - Heejin 2.0.81
+🔧 Changelog (23/07/03) - Heejin 2.0.9
 
 Remember to report any issues in <#1014513978560499732>
 
+`🛠️` **new command** </quest:1125659412141461625>
+> - Quests have finally been added! They will be updated every 2 weeks, 2 quests at a time
+> - Use this command to view your quest progress
+
+`🎨` **design changes**
+> - Did you know?, some errors, and /start warning embeds have been changed slightly
+> - Page navigation buttons are now gray, use custom emojis for the arrows, and are sometimes limited in size to better fit the embed
+
 `⚙️` **fixes**
-> - Buying an item pack gave you the cards, but did not send the embed showing what you got
-
-
-FIXED STAGE NOT GIVING USER XP
-FIXED GETTING CARDS GIVING DUPE IDS USING DEEP CLONE
+> - *After winning a `/stage` duel, the player was not given any XP*
+> - *When `/drop`-ing a card, there was a chance to get multiple of same cards, with the same UID*
+> - *When `/gift`-ing, or `/pay`-ing a player, the DM that user recieved might not have shown the username of who gave it to them*
+> - *Various other bug fixes to smoothen out your experience*

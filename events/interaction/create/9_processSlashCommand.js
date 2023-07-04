@@ -68,11 +68,11 @@ module.exports = {
                     return await embed_error.send({ description: "Only Heejin staff can use this command", ephemeral: true });
 
                 // Check if the command requires the user to have admin in the current guild
-                if (_guildAdminOnly && !userIsGuildAdminOrBypass())
+                if (_guildAdminOnly && !userIsGuildAdminOrBypass(args.interaction))
                     return await embed_error.send({ description: "You need admin to use this command", ephemeral: true });
 
                 // Check if the a botAdminOnly/guildAdminOnly command was ran in the community server
-                if (_isCommunityServer && _isCommunityServerAdminChannel && (_botAdminOnly || _guildAdminOnly))
+                if (_isCommunityServer && !_isCommunityServerAdminChannel && (_botAdminOnly || _guildAdminOnly))
                     return await embed_error.send({ description: `You can only use that command in <#${communityServer.adminChannelID}>`, ephemeral: true });
             }
 
