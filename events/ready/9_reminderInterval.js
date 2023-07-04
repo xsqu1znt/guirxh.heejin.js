@@ -50,7 +50,7 @@ module.exports = {
                         // Remove the reminder from Mongo
                         return await guildManager.reminders.remove(guild._id, reminder.id);
                     }
-                } catch (err) { console.error(err); }
+                } catch (err) { /* console.error(err); */ }
             }
         }, 5000);
     }

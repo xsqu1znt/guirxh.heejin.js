@@ -248,7 +248,7 @@ function generalShop_ES(guildMember) {
         embed_all(),
         ...embed_cardSets(),
         embed_itemPacks(),
-        embed_badges(),
+        embed_badges()
     ];
 }
 
@@ -515,7 +515,7 @@ function userProfile_ES(guildMember, userData) {
 
         _embed.addFields(
             { name: "\`🌕\` Normal Sets", value: inventoryStats_f.slice(0, 5).join("\n"), inline: true },
-            { name: "\`🌗\` Special Sets 1", value: inventoryStats_f.slice(5).join("\n"), inline: true }
+            { name: "\`🌗\` Special Sets", value: inventoryStats_f.slice(5).join("\n"), inline: true }
         );
 
         // Return the embed
@@ -655,7 +655,7 @@ function userInventory_ES(guildMember, userData, filter) {
             author: { text: "%AUTHOR_NAME | inventory", user: guildMember },
             description: isFiltered
                 ? "No cards were found with that search filter"
-                : "You do not have anything in your inventory!\n> Use \`/drop\` to get cards"
+                : "You do not have anything in your inventory\n> Use \`/drop\` to get cards"
         })
     ];
 

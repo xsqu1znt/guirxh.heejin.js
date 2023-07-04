@@ -18,7 +18,7 @@ module.exports = {
                 create: importEvents('../../events/interaction/create')
                 // create: importEvents('./events/interaction/create')
             }
-        }
+        };
 
         // Bind the functions
         // * Ready

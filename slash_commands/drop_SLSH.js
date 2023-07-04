@@ -23,7 +23,7 @@ module.exports = {
             .addChoices(
                 { name: "🃏 general", value: "general" },
                 { name: "📅 weekly", value: "weekly" },
-                { name: "🍃 season", value: "season" },
+                { name: "☀️ season", value: "season" },
                 { name: "🎆 event 1", value: "event1" },
                 { name: "🎆 event 2", value: "event2" }
             )
