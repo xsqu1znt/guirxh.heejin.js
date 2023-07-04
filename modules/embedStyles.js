@@ -754,45 +754,35 @@ async function userQuest_ES(guildMember) {
             ? Object.values(questProgress.objectives) : [...Array(quest_objectives.length)].fill(isComplete);
 
         // Parse quest/quest progress data into a readable string
-        questProgress_f.push(
-            `\`📜\` **%QUEST_NAME** :: %QUEST_ENDING\n> \`%IS_COMPLETE\` \`📈 %PROGRESS objectives\`\n> *Rewards* :: %REWARD_OVERVIEW\n\n***objectives:***\n%OBJECTIVES\n%DESCRIPTION`
+        questProgress_f.push({
+            name: "\`📜\` **%QUEST_NAME** :: %QUEST_ENDING"
                 .replace("%QUEST_NAME", quest.name)
-                .replace("%REWARD_OVERVIEW", quest.reward_overview)
+                .replace("%QUEST_ENDING", dateTools.eta(Date.parse(quest.date.end))),
 
+            value: "\`%IS_COMPLETE\` \`📈 %PROGRESS objectives\`\n> *Rewards* :: %REWARD_OVERVIEW\n\n***objectives:***\n%OBJECTIVES\n%DESCRIPTION"
                 .replace("%IS_COMPLETE", isComplete ? "✔️ complete" : "🚫 incomplete")
                 .replace("%PROGRESS", questProgress?.f || (isComplete ? `${quest_objectives.length}/${quest_objectives.length}` : "n\a"))
-                .replace("%QUEST_ENDING", dateTools.eta(Date.parse(quest.date.end)))
+
+                .replace("%REWARD_OVERVIEW", quest.reward_overview)
 
                 .replace("%OBJECTIVES", quest_objectives
                     .map((obj, idx) => `> \`${quest_objectiveProgress[idx] ? "✔️" : "🚫"}\` ${questManager.toString.objectiveDescription(quest.id, obj)}`)
                     .join("\n"))
 
-                .replace("%DESCRIPTION", quest.description ? `> ${quest.description}` : "")
-        );
+                .replace("%DESCRIPTION", quest.description ? `> ${quest.description}` : ""),
+
+            inline: true
+        });
     }
 
     let embed = new BetterEmbed({
         author: { text: "%AUTHOR_NAME | quest", user: guildMember },
-        description: questProgress_f.join("\n\n") || "There are no quests right now"
+        description: questProgress_f.length ? "" : "There are no quests right now"
     });
 
+    embed.addFields(questProgress_f);
+
     return embed;
-
-    /* for (let questProgress of questCache.progress) questProgress_f.push(
-        `\`📜\` **%QUEST_NAME** :: %QUEST_ENDING\n> \`%IS_COMPLETE\` \`📈 %PROGRESS objectives\`\n> *Rewards* :: %REWARD_OVERVIEW\n\n***objectives:***\n%OBJECTIVES\n%DESCRIPTION`
-            .replace("%QUEST_NAME", questProgress.quest.name)
-            .replace("%REWARD_OVERVIEW", questProgress.quest.reward_overview)
-
-            .replace("%IS_COMPLETE", questProgress.complete ? "✔️ complete" : "🚫 incomplete")
-            .replace("%PROGRESS", questProgress.f)
-            .replace("%QUEST_ENDING", dateTools.eta(Date.parse(questProgress.quest.date.end)))
-
-            .replace("%OBJECTIVES", Object.keys(questProgress.quest.objectives)
-                .map((obj, idx) => `> \`${Object.values(questProgress.objectives)[idx] ? "✔️" : "🚫"}\` ${questManager.toString.objectiveDescription(questProgress.questID, obj)}`)
-                .join("\n"))
-
-            .replace("%DESCRIPTION", questProgress.quest.description ? `> ${questProgress.quest.description}` : "")
-    ); */
 }
 
 module.exports = {

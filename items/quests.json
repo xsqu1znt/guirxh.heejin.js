@@ -1,2 +1,34 @@
 [
+    {
+        "id": "q01",
+        "name": "Quest 1",
+        "reward_overview": "`🥕 100`",
+        "description": "",
+        "date": {
+            "start": "2023-07-03",
+            "end": "2023-07-10"
+        },
+        "objectives": {
+            "balance": 500
+        },
+        "rewards": {
+            "carrots": 100
+        }
+    },
+    {
+        "id": "q02",
+        "name": "Quest 2",
+        "reward_overview": "`🥕 100`",
+        "description": "",
+        "date": {
+            "start": "2023-07-03",
+            "end": "2023-07-10"
+        },
+        "objectives": {
+            "balance": 500
+        },
+        "rewards": {
+            "carrots": 100
+        }
+    }
 ]
