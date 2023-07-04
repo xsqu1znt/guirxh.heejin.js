@@ -36,10 +36,10 @@ Remember to report any issues in <#1014513978560499732>
 
 `🎨` **design changes**
 > - Did you know?, some errors, and /start warning embeds have been changed slightly
-> - Page navigation buttons are now gray, use custom emojis for the arrows, and are sometimes limited in size to better fit the embed
+> - Various other small changes to match the overall design
 
 `⚙️` **fixes**
 > - *After winning a `/stage` duel, the player was not given any XP*
-> - *When `/drop`-ing a card, there was a chance to get multiple of same cards, with the same UID*
+> - *When `/drop`-ing a card, there was a chance to get multiple of the same cards, with the same UID*
 > - *When `/gift`-ing, or `/pay`-ing a player, the DM that user recieved might not have shown the username of who gave it to them*
 > - *Various other bug fixes to smoothen out your experience*

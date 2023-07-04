@@ -768,7 +768,7 @@ async function userQuest_ES(guildMember) {
 
         // Parse quest/quest progress data into a readable string
         questProgress_f.push({
-            name: "\`📜\` **%QUEST_NAME** :: %QUEST_ENDING"
+            name: "\`📜\` **%QUEST_NAME** :: ending %QUEST_ENDING"
                 .replace("%QUEST_NAME", quest.name)
                 .replace("%QUEST_ENDING", dateTools.eta(Date.parse(quest.date.end))),
 
