@@ -9,7 +9,12 @@ class QueueManager {
 
     async startJob(jobID) {
         let doNextJob = async () => {
-            if (!this.queue[jobID].length || !this.canWork) return;
+            console.clear();
+            console.log("queue:", this.queue);
+            console.log("ongoing:", this.queue_ongoing);
+            console.log("canWork:", this.queue_canWork);
+
+            if (!this.queue[jobID].length || !this.queue_canWork[jobID]) return;
 
             this.queue_ongoing[jobID] = true;
 
@@ -17,15 +22,15 @@ class QueueManager {
 
             job.resolve(await this.model.findByIdAndUpdate(job.id, job.query, { new: true }));
 
-            if (this.queue[jobID].length) return await doNextJob(jobID);
+            if (this.queue[jobID].length) return await doNextJob();
 
             delete this.queue_ongoing[jobID];
             delete this.queue[jobID];
         };
 
-        this.canWork[jobID] = true;
+        this.queue_canWork[jobID] = true;
 
-        await Promise.all(Object.keys(this.queue).map(queueID => doNextJob(queueID)));
+        return await doNextJob();
     }
 
     stop(jobID) {
