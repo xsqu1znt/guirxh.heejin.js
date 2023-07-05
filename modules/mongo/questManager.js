@@ -9,6 +9,7 @@ const userParser = require('../userParser');
 const quests = require('../../items/quests.json');
 const quest_ids = quests.map(quest => quest.id);
 
+// Models
 const { model: questCacheModel } = require('../../models/questCacheModel');
 const models = { questCache: questCacheModel };
 

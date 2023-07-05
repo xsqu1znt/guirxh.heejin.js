@@ -6172,5 +6172,467 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114530977012793364/shalala_taeyong3.png"
+},
+ {
+    "name": "Hwi",
+    "group": "TNX",
+    "single": "Kick It 4 Now",
+    "category": "comn",
+    "description": "TNX -  Kick It 4 Now",
+    "emoji": "🚶‍♂️",
+    "globalID": "8795",
+    "setID": "900",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1117174777245880414/Hwi.png"
+},
+ {
+    "name": "Hyunsoo",
+    "group": "TNX",
+    "single": "Kick It 4 Now",
+    "category": "comn",
+    "description": "TNX -  Kick It 4 Now",
+    "emoji": "🚶‍♂️",
+    "globalID": "8796",
+    "setID": "900",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1117174777589809193/Hyunsoo.png"
+},
+ {
+    "name": "Junhyeok",
+    "group": "TNX",
+    "single": "Kick It 4 Now",
+    "category": "comn",
+    "description": "TNX -  Kick It 4 Now",
+    "emoji": "🚶‍♂️",
+    "globalID": "8797",
+    "setID": "900",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1117174777891790859/Junhyeok.png"
+},
+ {
+    "name": "Kyungjun",
+    "group": "TNX",
+    "single": "Kick It 4 Now",
+    "category": "comn",
+    "description": "TNX -  Kick It 4 Now",
+    "emoji": "🚶‍♂️",
+    "globalID": "8798",
+    "setID": "900",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1117174778143461406/Kyungjun.png"
+},
+ {
+    "name": "Sungjun",
+    "group": "TNX",
+    "single": "Kick It 4 Now",
+    "category": "comn",
+    "description": "TNX -  Kick It 4 Now",
+    "emoji": "🚶‍♂️",
+    "globalID": "8799",
+    "setID": "900",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1117174778453835806/Sungjun.png"
+},
+{
+    "name": "Taehun",
+    "group": "TNX",
+    "single": "Kick It 4 Now",
+    "category": "comn",
+    "description": "TNX -  Kick It 4 Now",
+    "emoji": "🚶‍♂️",
+    "globalID": "8800",
+    "setID": "900",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1117174778764218368/Taehun.png"
+},
+{
+    "name": "Giselle",
+    "group": "aespa",
+    "single": "Next Level",
+    "category": "comn",
+    "description": "aespa - Next Level",
+    "emoji": "⏭️",
+    "globalID": "8801",
+    "setID": "901",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1119660129839747152/nextlevel_giselle.png"
+},
+{
+    "name": "Karina",
+    "group": "aespa",
+    "single": "Next Level",
+    "category": "comn",
+    "description": "aespa - Next Level",
+    "emoji": "⏭️",
+    "globalID": "8802",
+    "setID": "901",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1119660130187882536/nextlevel_karina.png"
+},
+{
+    "name": "Ningning",
+    "group": "aespa",
+    "single": "Next Level",
+    "category": "comn",
+    "description": "aespa - Next Level",
+    "emoji": "⏭️",
+    "globalID": "8803",
+    "setID": "901",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1119660130590527528/nextlevel_ningning.png"
+},
+{
+    "name": "Winter",
+    "group": "aespa",
+    "single": "Next Level",
+    "category": "comn",
+    "description": "aespa - Next Level",
+    "emoji": "⏭️",
+    "globalID": "8804",
+    "setID": "901",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1119660130909302976/nextlevel_winter.png"
+},
+{
+    "name": "Kang Daniel¹",
+    "group": "Kang Daniel",
+    "single": "SOS",
+    "category": "comn",
+    "description": "Kang Daniel - SOS",
+    "emoji": "🆘",
+    "globalID": "8805",
+    "setID": "902",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1119660224421302362/sos_kangdaniel1.png"
+},
+{
+    "name": "Kang Daniel²",
+    "group": "Kang Daniel",
+    "single": "SOS",
+    "category": "comn",
+    "description": "Kang Daniel - SOS",
+    "emoji": "🆘",
+    "globalID": "8806",
+    "setID": "902",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1119660224761057331/sos_kangdaniel2.png"
+},
+{
+    "name": "Kang Daniel³",
+    "group": "Kang Daniel",
+    "single": "SOS",
+    "category": "comn",
+    "description": "Kang Daniel - SOS",
+    "emoji": "🆘",
+    "globalID": "8807",
+    "setID": "902",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1119660225151119400/sos_kangdaniel3.png"
+},
+{
+    "name": "Yena¹",
+    "group": "Yena",
+    "single": "Hate Rodrigo",
+    "category": "comn",
+    "description": "Yena - Hate Rodrigo",
+    "emoji": "👽",
+    "globalID": "8808",
+    "setID": "903",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1124763149191614567/HateRodrigo_Yena.png"
+},
+{
+    "name": "Yena²",
+    "group": "Yena",
+    "single": "Hate Rodrigo",
+    "category": "comn",
+    "description": "Yena - Hate Rodrigo",
+    "emoji": "👽",
+    "globalID": "8809",
+    "setID": "903",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1124763149455872000/HateRodrigo_Yena2.png"
+},
+{
+    "name": "Yena³",
+    "group": "Yena",
+    "single": "Hate Rodrigo",
+    "category": "comn",
+    "description": "Yena - Hate Rodrigo",
+    "emoji": "👽",
+    "globalID": "8810",
+    "setID": "903",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1124763149720092753/HateRodrigo_Yena3.png"
+},
+{
+    "name": "MJ",
+    "group": "ASTRO",
+    "single": "All Night",
+    "category": "comn",
+    "description": "ASTRO - All Night",
+    "emoji": "🎑",
+    "globalID": "8811",
+    "setID": "904",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1124762410180419745/MJ.png"
+},
+{
+    "name": "JinJin",
+    "group": "ASTRO",
+    "single": "All Night",
+    "category": "comn",
+    "description": "ASTRO - All Night",
+    "emoji": "🎑",
+    "globalID": "8812",
+    "setID": "904",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1124762409853255782/Jinjin.png"
+},
+{
+    "name": "Eunwoo",
+    "group": "ASTRO",
+    "single": "All Night",
+    "category": "comn",
+    "description": "ASTRO - All Night",
+    "emoji": "🎑",
+    "globalID": "8813",
+    "setID": "904",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1124762409572249740/Eunwoo.png"
+},
+{
+    "name": "Moonbin",
+    "group": "ASTRO",
+    "single": "All Night",
+    "category": "comn",
+    "description": "ASTRO - All Night",
+    "emoji": "🎑",
+    "globalID": "8814",
+    "setID": "904",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1124762410465636362/Moonbin.png"
+},
+{
+    "name": "Rocky",
+    "group": "ASTRO",
+    "single": "All Night",
+    "category": "comn",
+    "description": "ASTRO - All Night",
+    "emoji": "🎑",
+    "globalID": "8815",
+    "setID": "904",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1124762410767614002/Rocky.png"
+},
+{
+    "name": "Sanha",
+    "group": "ASTRO",
+    "single": "All Night",
+    "category": "comn",
+    "description": "ASTRO - All Night",
+    "emoji": "🎑",
+    "globalID": "8816",
+    "setID": "904",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1124762411161886771/Sanha.png"
 }
 ]

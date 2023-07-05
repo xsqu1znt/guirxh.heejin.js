@@ -5731,5 +5731,425 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114528677800181841/Lee_Know.png"
+  },
+{
+    "name": "Amber",
+    "group": "f(x)",
+    "single": "4 Walls",
+    "category": "mint",
+    "description": "f(x) - 4 Walls",
+    "emoji": "🫖",
+    "globalID": "2775",
+    "setID": "300",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1117172738361139351/4walls_amber.png"
+  },
+{
+    "name": "Krystal",
+    "group": "f(x)",
+    "single": "4 Walls",
+    "category": "mint",
+    "description": "f(x) - 4 Walls",
+    "emoji": "🫖",
+    "globalID": "2776",
+    "setID": "300",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1117172738696679576/4walls_krystal.png"
+  },
+{
+    "name": "Luna",
+    "group": "f(x)",
+    "single": "4 Walls",
+    "category": "mint",
+    "description": "f(x) - 4 Walls",
+    "emoji": "🫖",
+    "globalID": "2777",
+    "setID": "300",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1117172739044810824/4walls_luna.png"
+  },
+{
+    "name": "Victoria",
+    "group": "f(x)",
+    "single": "4 Walls",
+    "category": "mint",
+    "description": "f(x) - 4 Walls",
+    "emoji": "🫖",
+    "globalID": "2778",
+    "setID": "300",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1117172739325825064/4walls_victoria.png"
+  },
+{
+    "name": "Gaeul",
+    "group": "IVE",
+    "single": "ELEVEN",
+    "category": "mint",
+    "description": "IVE - ELEVEN",
+    "emoji": "🥨",
+    "globalID": "2779",
+    "setID": "301",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1119660870016974908/Eleven_Gaeul.png"
+  },
+{
+    "name": "Leeseo",
+    "group": "IVE",
+    "single": "ELEVEN",
+    "category": "mint",
+    "description": "IVE - ELEVEN",
+    "emoji": "🥨",
+    "globalID": "2780",
+    "setID": "301",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1119660870323150859/Eleven_Leeseo.png"
+  },
+{
+    "name": "Liz",
+    "group": "IVE",
+    "single": "ELEVEN",
+    "category": "mint",
+    "description": "IVE - ELEVEN",
+    "emoji": "🥨",
+    "globalID": "2781",
+    "setID": "301",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1119660870583189604/Eleven_Liz.png"
+  },
+{
+    "name": "Rei",
+    "group": "IVE",
+    "single": "ELEVEN",
+    "category": "mint",
+    "description": "IVE - ELEVEN",
+    "emoji": "🥨",
+    "globalID": "2782",
+    "setID": "301",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1119660871065550920/Eleven_Rei.png"
+  },
+{
+    "name": "Wonyoung",
+    "group": "IVE",
+    "single": "ELEVEN",
+    "category": "mint",
+    "description": "IVE - ELEVEN",
+    "emoji": "🥨",
+    "globalID": "2783",
+    "setID": "301",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1119660871455613048/Eleven_Wonyoung.png"
+  },
+{
+    "name": "Yujin",
+    "group": "IVE",
+    "single": "ELEVEN",
+    "category": "mint",
+    "description": "IVE - ELEVEN",
+    "emoji": "🥨",
+    "globalID": "2784",
+    "setID": "301",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1119660871698874559/Eleven_Yujin.png"
+  },
+{
+    "name": "Ren¹",
+    "group": "Ren",
+    "single": "Ready To Move",
+    "category": "mint",
+    "description": "Ren - Ready To Move",
+    "emoji": "🚗",
+    "globalID": "2785",
+    "setID": "302",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1119660182272741406/readytomove_ren1.png"
+  },
+{
+    "name": "Ren²",
+    "group": "Ren",
+    "single": "Ready To Move",
+    "category": "mint",
+    "description": "Ren - Ready To Move",
+    "emoji": "🚗",
+    "globalID": "2786",
+    "setID": "302",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1119660182650245180/readytomove_ren2.png"
+  },
+{
+    "name": "Ren³",
+    "group": "Ren",
+    "single": "Ready To Move",
+    "category": "mint",
+    "description": "Ren - Ready To Move",
+    "emoji": "🚗",
+    "globalID": "2787",
+    "setID": "302",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1119660183002550303/readytomove_ren3.png"
+  },
+{
+    "name": "Soeun",
+    "group": "Weeekly",
+    "single": "After School",
+    "category": "mint",
+    "description": "Weeekly - After School",
+    "emoji": "🛹",
+    "globalID": "2788",
+    "setID": "303",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1124763046691213363/AfterSchool_Soeun.png"
+  },
+{
+    "name": "Jaehee",
+    "group": "Weeekly",
+    "single": "After School",
+    "category": "mint",
+    "description": "Weeekly - After School",
+    "emoji": "🛹",
+    "globalID": "2789",
+    "setID": "303",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1124763047068713030/AfterSchool_Jaehee.png"
+  },
+{
+    "name": "Jihan",
+    "group": "Weeekly",
+    "single": "After School",
+    "category": "mint",
+    "description": "Weeekly - After School",
+    "emoji": "🛹",
+    "globalID": "2790",
+    "setID": "303",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1124763047408447538/AfterSchool_Jihan.png"
+  },
+{
+    "name": "Jiyoon",
+    "group": "Weeekly",
+    "single": "After School",
+    "category": "mint",
+    "description": "Weeekly - After School",
+    "emoji": "🛹",
+    "globalID": "2791",
+    "setID": "303",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1124763047693652108/AfterSchool_Jiyoon.png"
+  },
+{
+    "name": "Monday",
+    "group": "Weeekly",
+    "single": "After School",
+    "category": "mint",
+    "description": "Weeekly - After School",
+    "emoji": "🛹",
+    "globalID": "2792",
+    "setID": "303",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1124763048008237176/AfterSchool_Monday.png"
+  },
+{
+    "name": "Soojin",
+    "group": "Weeekly",
+    "single": "After School",
+    "category": "mint",
+    "description": "Weeekly - After School",
+    "emoji": "🛹",
+    "globalID": "2793",
+    "setID": "303",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1124763048327000104/AfterSchool_Soojin.png"
+  },
+{
+    "name": "Zoa",
+    "group": "Weeekly",
+    "single": "After School",
+    "category": "mint",
+    "description": "Weeekly - After School",
+    "emoji": "🛹",
+    "globalID": "2794",
+    "setID": "303",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1124763048616398989/AfterSchool_Zoa.png"
   }
 ]

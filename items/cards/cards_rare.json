@@ -6193,5 +6193,488 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1114529045019902022/smekme_yonghee.png"
+  },
+{
+    "name": "Intak",
+    "group": "P1Harmony",
+    "single": "Jump",
+    "category": "rare",
+    "description": "P1Harmony - Jump",
+    "emoji": "🥳",
+    "globalID": "5796",
+    "setID": "600",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1117174598933422242/Intak.png"
+  },
+{
+    "name": "Jiung",
+    "group": "P1Harmony",
+    "single": "Jump",
+    "category": "rare",
+    "description": "P1Harmony - Jump",
+    "emoji": "🥳",
+    "globalID": "5797",
+    "setID": "600",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1117174599193477231/Jiung.png"
+  },
+{
+    "name": "Jongseob",
+    "group": "P1Harmony",
+    "single": "Jump",
+    "category": "rare",
+    "description": "P1Harmony - Jump",
+    "emoji": "🥳",
+    "globalID": "5798",
+    "setID": "600",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+ "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1117174599470305400/Jongseob.png"
+  },
+{
+    "name": "Keeho",
+    "group": "P1Harmony",
+    "single": "Jump",
+    "category": "rare",
+    "description": "P1Harmony - Jump",
+    "emoji": "🥳",
+    "globalID": "5799",
+    "setID": "600",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1117174599856177334/Keeho.png"
+  },
+{
+    "name": "Soul",
+    "group": "P1Harmony",
+    "single": "Jump",
+    "category": "rare",
+    "description": "P1Harmony - Jump",
+    "emoji": "🥳",
+    "globalID": "5800",
+    "setID": "600",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1117174600539852890/Soul.png"
+  },
+{
+    "name": "Theo",
+    "group": "P1Harmony",
+    "single": "Jump",
+    "category": "rare",
+    "description": "P1Harmony - Jump",
+    "emoji": "🥳",
+    "globalID": "5801",
+    "setID": "600",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1117174601017991319/Theo.png"
+  },
+{
+    "name": "Danielle",
+    "group": "NewJeans",
+    "single": "Ditto",
+    "category": "rare",
+    "description": "NewJeans - Ditto",
+    "emoji": "🎒",
+    "globalID": "5802",
+    "setID": "601",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1119699293851357275/Danielle.png"
+  },
+{
+    "name": "Haerin",
+    "group": "NewJeans",
+    "single": "Ditto",
+    "category": "rare",
+    "description": "NewJeans - Ditto",
+    "emoji": "🎒",
+    "globalID": "5803",
+    "setID": "601",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1119699294212075610/Haerin.png"
+  },
+{
+    "name": "Hanni",
+    "group": "NewJeans",
+    "single": "Ditto",
+    "category": "rare",
+    "description": "NewJeans - Ditto",
+    "emoji": "🎒",
+    "globalID": "5804",
+    "setID": "601",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1119699294539223101/Hanni.png"
+  },
+{
+    "name": "Hyein",
+    "group": "NewJeans",
+    "single": "Ditto",
+    "category": "rare",
+    "description": "NewJeans - Ditto",
+    "emoji": "🎒",
+    "globalID": "5805",
+    "setID": "601",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1119699294954467518/Hyein.png"
+  },
+{
+    "name": "Minji",
+    "group": "NewJeans",
+    "single": "Ditto",
+    "category": "rare",
+    "description": "NewJeans - Ditto",
+    "emoji": "🎒",
+    "globalID": "5806",
+    "setID": "601",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1119699295495524422/Minji.png"
+  },
+{
+    "name": "IU¹",
+    "group": "IU",
+    "single": "Good Day",
+    "category": "rare",
+    "description": "IU - Good Day",
+    "emoji": "🦜",
+    "globalID": "5807",
+    "setID": "602",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1119699413607120968/IU_1.png"
+  },
+{
+    "name": "IU²",
+    "group": "IU",
+    "single": "Good Day",
+    "category": "rare",
+    "description": "IU - Good Day",
+    "emoji": "🦜",
+    "globalID": "5808",
+    "setID": "602",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1119699413980426402/IU_2.png"
+  },
+{
+    "name": "IU³",
+    "group": "IU",
+    "single": "Good Day",
+    "category": "rare",
+    "description": "IU - Good Day",
+    "emoji": "🦜",
+    "globalID": "5809",
+    "setID": "602",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1119699413271593020/IU_3.png"
+  },
+{
+    "name": "Dahyun",
+    "group": "Rocket Punch",
+    "single": "BOUNCY",
+    "category": "rare",
+    "description": "Rocket Punch - BOUNCY",
+    "emoji": "🍌",
+    "globalID": "5810",
+    "setID": "603",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1124762785771962388/Dahyun.png"
+  },
+{
+    "name": "Yunkyoung",
+    "group": "Rocket Punch",
+    "single": "BOUNCY",
+    "category": "rare",
+    "description": "Rocket Punch - BOUNCY",
+    "emoji": "🍌",
+    "globalID": "5811",
+    "setID": "603",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1124762786128461865/Yunkyoung.png"
+  },
+{
+    "name": "Juri",
+    "group": "Rocket Punch",
+    "single": "BOUNCY",
+    "category": "rare",
+    "description": "Rocket Punch - BOUNCY",
+    "emoji": "🍌",
+    "globalID": "5812",
+    "setID": "603",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1124762786388521071/Juri.png"
+  },
+{
+    "name": "Sohee",
+    "group": "Rocket Punch",
+    "single": "BOUNCY",
+    "category": "rare",
+    "description": "Rocket Punch - BOUNCY",
+    "emoji": "🍌",
+    "globalID": "5813",
+    "setID": "603",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1124762786694709358/Sohee.png"
+  },
+{
+    "name": "Suyun",
+    "group": "Rocket Punch",
+    "single": "BOUNCY",
+    "category": "rare",
+    "description": "Rocket Punch - BOUNCY",
+    "emoji": "🍌",
+    "globalID": "5814",
+    "setID": "603",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1124762787072180304/Suyun_1.png"
+  },
+{
+    "name": "Yeonhee",
+    "group": "Rocket Punch",
+    "single": "BOUNCY",
+    "category": "rare",
+    "description": "Rocket Punch - BOUNCY",
+    "emoji": "🍌",
+    "globalID": "5815",
+    "setID": "603",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1124762787374182450/Yeonhee.png"
+  },
+{
+    "name": "I.M¹",
+    "group": "I.M",
+    "single": "OVERDRIVE",
+    "category": "rare",
+    "description": "I.M - OVERDRIVE",
+    "emoji": "🚛",
+    "globalID": "5816",
+    "setID": "604",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1124762895893418055/I.M_1.png"
+  },
+{
+    "name": "I.M²",
+    "group": "I.M",
+    "single": "OVERDRIVE",
+    "category": "rare",
+    "description": "I.M - OVERDRIVE",
+    "emoji": "🚛",
+    "globalID": "5817",
+    "setID": "604",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1124762896279277648/I.M_2.png"
+  },
+{
+    "name": "I.M³",
+    "group": "I.M",
+    "single": "OVERDRIVE",
+    "category": "rare",
+    "description": "I.M - OVERDRIVE",
+    "emoji": "🚛",
+    "globalID": "5818",
+    "setID": "604",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1124762896598048868/I.M_3.png"
   }
 ]
