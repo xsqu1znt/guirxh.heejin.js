@@ -4,7 +4,7 @@ const { BetterEmbed } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo/index');
 
 module.exports = {
-    options: { deferReply: false },
+    options: { deferReply: true },
 
     builder: new SlashCommandBuilder().setName("test")
         .setDescription("A test command for dev stuff"),
@@ -16,11 +16,14 @@ module.exports = {
     execute: async (client, interaction) => {
         //! Basic embed to test database
 
-        let userData = userManager.userData.update(interaction.user.id, { $inc: { balance: 100 } });
+        await Promise.all([...Array(10)].map(async () => {
+            return userManager.userData.update(interaction.user.id, { $inc: { balance: 100 } });
+        }));
 
-        // let userData = await userManager.userData.fetch(interaction.user.id, { type: "essential" });
+        let userData = await userManager.userData.fetch(interaction.user.id, { type: "essential" });
 
         let embed_basic = new BetterEmbed({ interaction, description: `balance: \`🥕 ${userData.balance}\`` });
+
         return await embed_basic.send();
     }
 };

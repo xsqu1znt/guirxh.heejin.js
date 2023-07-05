@@ -109,10 +109,10 @@ async function userData_fetch(userID, options = {}) {
     /** @type {UserData | UserData[]} */
     let userData;
 
-    if (userID) lean
+    if (userID) options.lean
         ? userData = await models.user.findById(userID, fetchFilter).lean()
         : userData = await models.user.findById(userID, fetchFilter);
-    else lean
+    else options.lean
         ? userData = await models.user.find({}, fetchFilter).lean()
         : userData = await models.user.find({}, fetchFilter);
 

@@ -2,51 +2,48 @@ class QueueManager {
     constructor(mongooseModel) {
         this.model = mongooseModel;
 
-        this.queue = new Map();
-        this.ongoing = false;
-        this.canWork = true;
+        this.queue = {};
+        this.queue_ongoing = {};
+        this.queue_canWork = {};
     }
 
-    async start() {
-        this.canWork = true;
+    async startJob(jobID) {
+        let doNextJob = async () => {
+            if (!this.queue[jobID].length || !this.canWork) return;
 
-        let doNextJob = async (queue) => {
-            if (!this.queue.length || !this.canWork) return;
+            this.queue_ongoing[jobID] = true;
 
-            this.ongoing = true;
+            let job = this.queue[jobID].shift(); if (!job) return;
 
-            let job = queue.shift(); if (job) {
-                job.resolve(await this.model.findByIdAndUpdate(job.id, job.query, { new: true }));
-            }
+            job.resolve(await this.model.findByIdAndUpdate(job.id, job.query, { new: true }));
 
-            if (queue.length) return await doNextJob();
+            if (this.queue[jobID].length) return await doNextJob(jobID);
 
-            this.ongoing = false;
+            delete this.queue_ongoing[jobID];
+            delete this.queue[jobID];
         };
 
-        await Promise.all(this.queue.values().map(queue => doNextJob(queue)));
+        this.canWork[jobID] = true;
 
-        this.queue.clear();
+        await Promise.all(Object.keys(this.queue).map(queueID => doNextJob(queueID)));
     }
 
-    stop() {
-        this.canWork = false;
+    stop(jobID) {
+        this.queue_canWork = [];
     }
 
     async push(id, query) {
         return await new Promise(resolve => {
-            let jobQueue = this.queue.get(id) || [];
+            this.queue[id] ||= [];
 
-            jobQueue.push({ id, query, resolve });
+            this.queue[id].push({ id, query, resolve });
 
-            this.queue.set(id, jobQueue);
-
-            if (!this.ongoing) start();
+            if (!this.queue_ongoing[id]) this.startJob(id);
         });
     }
 
     clear() {
-        this.queue = [];
+        this.queue = {};
     }
 }
 
