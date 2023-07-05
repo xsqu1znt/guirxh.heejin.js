@@ -30,7 +30,6 @@ const client = new Client({
 client.slashCommands_general = new Collection();
 client.slashCommands_admin = new Collection();
 client.slashCommands = new Collection();
-client.mongoUpdateQueue = new Collection();
 
 // Run importers
 let importers_dir = fs.readdirSync('./modules/importers').filter(fn => fn.startsWith('import_') && fn.endsWith('.js'));
