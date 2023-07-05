@@ -1,5 +1,9 @@
+const queueManager = require("./queueManager");
+
 const questManager = require("./questManager");
+const userManager = require("./userManager");
 
 module.exports = {
-    questManager
+    queueManager,
+    questManager, userManager
 };

@@ -37,19 +37,20 @@ const playerConfig = require('../../configs/config_player.json');
 
 // const { stringTools, numberTools, randomTools, dateTools } = require('../modules/jsTools');
 
-const badgeManager = require('./badgeManager');
+/* const badgeManager = require('./badgeManager');
 const cardManager = require('./cardManager');
 const userParser = require('./userParser');
-const logger = require('./logger');
+const logger = require('./logger'); */
 
 // Models
 const { model: userModel } = require('../../models/userModel');
 const models = { user: userModel };
 
 // Queues
+const QueueManager = require('./queueManager');
 const queues = {
-    userData: { update: new Map() }
-}
+    userData: { update: new QueueManager(models.user) }
+};
 
 //! UserData
 async function userData_count() {
@@ -120,5 +121,15 @@ async function userData_fetch(userID, options = {}) {
 
 /** @param {string} userID @param {{}} query */
 async function userData_update(userID, query) {
+    return await queues.userData.update.push(userID, query);
+}
 
+module.exports = {
+    userData: {
+        count: userData_count,
+        exists: userData_exists,
+        insertNew: userData_insertNew,
+        fetch: userData_fetch,
+        update: userData_update
+    }
 }
