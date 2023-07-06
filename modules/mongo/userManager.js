@@ -47,9 +47,9 @@ const { model: userModel } = require('../../models/userModel');
 const models = { user: userModel };
 
 // Queues
-const QueueManager = require('./queueManager');
+const MongoQueueManager = require('./queueManager');
 const queues = {
-    userData: { update: new QueueManager(models.user) }
+    userData: { update: new MongoQueueManager(models.user) }
 };
 
 //! UserData
@@ -121,7 +121,8 @@ async function userData_fetch(userID, options = {}) {
 
 /** @param {string} userID @param {{}} query */
 async function userData_update(userID, query) {
-    return await queues.userData.update.push(userID, query);
+    // return await queues.userData.update.push(userID, query);
+    return await queues.userData.update.findByIdAndUpdate(userID, query);
 }
 
 module.exports = {

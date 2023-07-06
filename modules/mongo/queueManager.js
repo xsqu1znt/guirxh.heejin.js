@@ -19,6 +19,8 @@ class MongoQueueManager {
         };
     }
 
+    /// Job management
+
     async doNextJobInQueue(jobQueue) {
         if (!jobQueue.length || !this.job_canWork[jobQueue.jobType]) return;
 
@@ -52,13 +54,14 @@ class MongoQueueManager {
         await this.doNextJobInQueue(jobQueue);
 
         // Emit the onQueueCleared event
-        this.events.on.findByIdAndUpdate.queueCleared.forEach(exe => exe(true));
+        this.events.on[jobType].queueCleared[jobID]?.forEach(exe => exe(true));
 
         // CLEANUP
         delete this.jobs[jobType][jobID];
         delete this.jobs_ongoing[jobType][jobID];
     }
 
+    /// Queue management
     async findByIdAndUpdate(userID, query) {
         return await new Promise(resolve => {
             // Define the job's ID for the JobQueue array
@@ -77,6 +80,16 @@ class MongoQueueManager {
             });
 
             if (!this.jobs_ongoing.findByIdAndUpdate[id]) this.startJob(jobID, jobType, this.jobs.findByIdAndUpdate[jobID]);
+        });
+    }
+
+    /// Await events
+    async on_findByIdAndUpdate_queueCleared(userID) {
+        return new Promise(resolve => {
+            if (this.jobs_ongoing.findByIdAndUpdate[userID]) {
+                this.events.on.findByIdAndUpdate.queueCleared[userID] ||= [];
+                this.events.on.findByIdAndUpdate.queueCleared[userID].push(resolve);
+            } else resolve(true);
         });
     }
 
