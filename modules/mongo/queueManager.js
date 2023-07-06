@@ -92,53 +92,6 @@ class MongoQueueManager {
             } else resolve(true);
         });
     }
-
-    async startJob_DEPRECATED(jobID) {
-        let doNextJob = async () => {
-            console.clear();
-            console.log("queue:", this.jobs);
-            console.log("ongoing:", this.jobs_ongoing);
-            console.log("canWork:", this.queue_canWork);
-
-            if (!this.jobs[jobID].length || !this.queue_canWork[jobID]) return;
-
-            this.jobs_ongoing[jobID] = true;
-
-            let job = this.jobs[jobID].shift(); if (!job) return;
-
-            job.resolve(await this.model.findByIdAndUpdate(job.id, job.query, { new: true }));
-
-            if (this.jobs[jobID].length) return await doNextJob();
-
-            delete this.jobs[jobID];
-        };
-
-        this.queue_canWork[jobID] = true;
-
-        await doNextJob();
-
-        this.job_ongoing_events[jobID].forEach(resolve => resolve(true));
-
-        // Cleanup
-        delete this.job_ongoing_events[jobID];
-        delete this.jobs_ongoing[jobID];
-    }
-
-    stop_DEPRECATED(jobID) {
-        delete this.queue_canWork[jobID];
-    }
-
-    async awaitOngoing_DEPRECATED(jobID) {
-        return new Promise(resolve => {
-            this.job_ongoing_events[jobID] ||= [];
-
-            this.job_ongoing_events[jobID].push(resolve);
-        });
-    }
-
-    clear_DEPRECATED() {
-        this.jobs = {};
-    }
 }
 
 module.exports = MongoQueueManager;
