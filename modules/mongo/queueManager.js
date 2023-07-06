@@ -1,5 +1,5 @@
 const mongoJobType = {
-    findByIdAndUpdate: Symbol("findByIdAndUpdate")
+    findByIdAndUpdate: "findByIdAndUpdate"
 };
 
 class MongoQueueManager {
@@ -20,12 +20,11 @@ class MongoQueueManager {
     }
 
     /// Job management
-
     async doNextJobInQueue(jobQueue) {
-        if (!jobQueue.length || !this.job_canWork[jobQueue.jobType]) return;
+        if (!jobQueue.length) return;
 
         // Get the job from the current queue while removing it from the array
-        let _job = jobQueue.shift(); if (!_job) return;
+        let _job = jobQueue.shift(); if (!_job || !this.job_canWork[_job.jobType][_job.jobID]) return;
 
         // Set this JobQueue to ongoing
         this.jobs_ongoing[_job.jobType][jobQueue.jobID] = true;
@@ -36,7 +35,7 @@ class MongoQueueManager {
                 _job.resolve(await this.model.findByIdAndUpdate(_job.userID, _job.query));
 
                 // Emit the onResolve event
-                this.events.on.findByIdAndUpdate.resolve.forEach(exe => exe(true));
+                _job.events.on.resolve?.forEach(exe => exe(true));
                 break;
         }
 
@@ -54,7 +53,8 @@ class MongoQueueManager {
         await this.doNextJobInQueue(jobQueue);
 
         // Emit the onQueueCleared event
-        this.events.on[jobType].queueCleared[jobID]?.forEach(exe => exe(true));
+        let on_queueCleared = this.events.on[jobType].queueCleared[jobID];
+        if (Array.isArray(on_queueCleared)) on_queueCleared.forEach(exe => exe(true));
 
         // CLEANUP
         delete this.jobs[jobType][jobID];
@@ -75,11 +75,11 @@ class MongoQueueManager {
 
             // Push a new job to the findByIdAndUpdate queue
             this.jobs.findByIdAndUpdate[jobID].push({
-                jobID, jobType,
+                jobID, jobType, events: { on: { resolve: null } },
                 userID, query, resolve
             });
 
-            if (!this.jobs_ongoing.findByIdAndUpdate[id]) this.startJob(jobID, jobType, this.jobs.findByIdAndUpdate[jobID]);
+            if (!this.jobs_ongoing.findByIdAndUpdate[jobID]) this.startJob(jobID, jobType, this.jobs.findByIdAndUpdate[jobID]);
         });
     }
 
