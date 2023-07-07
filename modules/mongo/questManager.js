@@ -114,10 +114,10 @@ async function mongo_user_isQuestComplete(userID, questID) {
     if (!Array.isArray(questID)) questID = [questID];
 
     // Fetch the user from Mongo
-    let userData = await userManager.userData.fetch(userID, "quest");
+    let userData = await userManager.fetch(userID, "quest");
 
     // Add the new quests_complete property to the user in Mongo
-    if (!userData?.quests_complete) await userManager.userData.update(userID, { quests_complete: [] });
+    if (!userData?.quests_complete) await userManager.update(userID, { quests_complete: [] });
 
     // Filter quests based on the given quest ID
     let quests_filtered = userData?.quests_complete?.filter(quest => questID.includes(quest.id));
@@ -138,7 +138,7 @@ async function mongo_user_markQuestComplete(userID, questID) {
     try {
         // Push the update and rewards to Mongo
         await Promise.all([
-            userManager.userData.update(userID, {
+            userManager.update(userID, {
                 // Push a basic version of the quest currently complete
                 $push: {
                     quests_complete: {
@@ -183,14 +183,14 @@ async function mongo_questCache_fetch(userID, upsert = false) {
 async function mongo_questCache_update(userID, query) {
     return await queues.questCache.update.findByIdAndUpdate(userID, query);
     // return await models.questCache.findByIdAndUpdate(userID, update, { new: true, lean: true });
-} ``
+}
 
 async function mongo_questCache_reset(userID) {
     return await models.questCache.replaceOne({ _id: userID }, {});
 }
 
 async function mongo_questCache_updateCache(userID) {
-    if (!quests.length) return; if (!await userManager.userData.exists(userID)) return;
+    if (!quests.length) return; if (!await userManager.exists(userID)) return;
 
     // Check whether the user completed the active quests
     if (await mongo_user_isQuestComplete(userID, quest_ids)) {
@@ -199,7 +199,7 @@ async function mongo_questCache_updateCache(userID) {
     }
 
     // Fetch the user from Mongo
-    let userData = await userManager.userData.fetch(userID);
+    let userData = await userManager.fetch(userID);
     // Fetch the quest cache from Mongo
     let questCache = await mongo_questCache_fetch(userID, true);
 

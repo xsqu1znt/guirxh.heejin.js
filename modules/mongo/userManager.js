@@ -264,13 +264,11 @@ async function inventory_sell(userID, cards) {
 }
 
 module.exports = {
-    userData: {
-        count: userData_count,
-        exists: userData_exists,
-        insertNew: userData_insertNew,
-        fetch: userData_fetch,
-        update: userData_update
-    },
+    count: userData_count,
+    exists: userData_exists,
+    insertNew: userData_insertNew,
+    fetch: userData_fetch,
+    update: userData_update,
 
     xp: {
         increment: xp_increment,

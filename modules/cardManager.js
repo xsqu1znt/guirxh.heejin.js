@@ -110,14 +110,14 @@ function drop(dropType, count = 1) {
                 let pickedCategory = randomTools.weightedChoice(categories_general);
                 let pickedCategory_cards = cards_general.filter(card => card.rarity === pickedCategory.cardRarityFilter);
 
-                cards_dropped.push(randomTools.choice(pickedCategory_cards));
+                cards_dropped.push(structuredClone(randomTools.choice(pickedCategory_cards)));
             } break;
 
         case "weekly":
             let _cards_weekly = cards.shop.filter(card => shopSetsInStock.filter(id => id !== "100").includes(card.setID));
 
             for (let i = 0; i < count; i++)
-                cards_dropped.push(randomTools.choice(_cards_weekly));
+                cards_dropped.push(structuredClone(randomTools.choice(_cards_weekly)));
 
             break;
 
@@ -125,7 +125,7 @@ function drop(dropType, count = 1) {
             let _cards_season = cards.seas.filter(card => eventSettings.season.cardRarityFilter.includes(card.rarity));
 
             for (let i = 0; i < count; i++)
-                cards_dropped.push(randomTools.choice(_cards_season));
+                cards_dropped.push(structuredClone(randomTools.choice(_cards_season)));
 
             break;
 
@@ -133,7 +133,7 @@ function drop(dropType, count = 1) {
             let _cards_event1 = cards.evnt.filter(card => eventSettings.event1.cardRarityFilter.includes(card.rarity));
 
             for (let i = 0; i < count; i++)
-                cards_dropped.push(randomTools.choice(_cards_event1));
+                cards_dropped.push(structuredClone(randomTools.choice(_cards_event1)));
 
             break;
 
@@ -141,7 +141,7 @@ function drop(dropType, count = 1) {
             let _cards_event2 = cards.evnt.filter(card => eventSettings.event2.cardRarityFilter.includes(card.rarity));
 
             for (let i = 0; i < count; i++)
-                cards_dropped.push(randomTools.choice(_cards_event2));
+                cards_dropped.push(structuredClone(randomTools.choice(_cards_event2)));
 
             break;
     }

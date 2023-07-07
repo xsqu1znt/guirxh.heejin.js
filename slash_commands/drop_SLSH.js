@@ -5,9 +5,10 @@ const {
     eventSettings: { event1, event2, season },
     userSettings: { xp: { commands: { drop: xp_drop } } }
 } = require('../configs/heejinSettings.json');
+
 const { BetterEmbed, awaitConfirmation, deleteMesssageAfter } = require('../modules/discordTools');
-const { userManager } = require('../modules/mongo');
 const { randomTools, dateTools } = require('../modules/jsTools');
+const { userManager } = require('../modules/mongo/index');
 const cardManager = require('../modules/cardManager');
 const userParser = require('../modules/userParser');
 
@@ -90,16 +91,16 @@ module.exports = {
 
         await Promise.all([
             // Add the cards to the user's card_inventory (can cause UIDs to be reset)
-            userManager.cards.add(interaction.user.id, cards_dropped),
+            userManager.inventory.add(interaction.user.id, cards_dropped),
             // Give the user XP
-            userManager.xp.add(interaction.user.id, randomTools.number(xp_drop.min, xp_drop.max)),
+            userManager.xp.increment(interaction.user.id, randomTools.number(xp_drop.min, xp_drop.max)),
             // Reset the user's cooldown
-            userManager.cooldowns.reset(interaction.user.id, dropCooldownType),
+            /* userManager.cooldowns.reset(interaction.user.id, dropCooldownType), */
             // Reset the user's reminder
-            userManager.reminders.reset(
+            /* userManager.reminders.reset(
                 interaction.user.id, interaction.guild.id, interaction.channel.id,
                 interaction.user, dropCooldownType
-            )
+            ) */
         ]);
 
         //! Add details to embed_drop
@@ -228,7 +229,7 @@ module.exports = {
             }
 
             // Remove the cards from the user's card_inventory and give them currency
-            if (!await userManager.cards.sell(interaction.user.id, cards_toSell))
+            if (!await userManager.inventory.sell(interaction.user.id, cards_toSell))
                 return await embed_failedToSell.send();
 
             // Let the user know the result

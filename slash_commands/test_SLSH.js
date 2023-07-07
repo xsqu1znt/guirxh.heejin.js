@@ -14,9 +14,12 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     execute: async (client, interaction) => {
-        //! Basic embed to test database
+        let embed_basic = new BetterEmbed({ interaction, description: "boop" });
 
-        await Promise.all([...Array(10)].map(async () => {
+        return await embed_basic.send();
+
+        //! Basic embed to test database
+        /* await Promise.all([...Array(10)].map(async () => {
             return userManager.userData.update(interaction.user.id, { $inc: { balance: 100 } });
         }));
 
@@ -24,6 +27,6 @@ module.exports = {
 
         let embed_basic = new BetterEmbed({ interaction, description: `balance: \`🥕 ${userData.balance}\`` });
 
-        return await embed_basic.send();
+        return await embed_basic.send(); */
     }
 };
