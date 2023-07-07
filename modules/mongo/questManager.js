@@ -2,8 +2,8 @@
  * @type {"balance"|"ribbons"|"cards_in_inventory"|"level_user"|"level_idol"|"team_ability_reputation"|"card_global_ids"|"card_sets_complete"|"card_duplicates"}
 */
 
-const { userManager, MongoQueueManager } = require('./index');
 const cardManager = require('../cardManager');
+const userManager = require('./userManager');
 const userParser = require('../userParser');
 
 const quests = require('../../items/quests.json');
@@ -14,6 +14,7 @@ const { model: questCacheModel } = require('../../models/questCacheModel');
 const models = { questCache: questCacheModel };
 
 // Queues
+const MongoQueueManager = require('./queueManager');
 const queues = {
     questCache: { update: new MongoQueueManager(models.questCache) }
 };
@@ -182,7 +183,7 @@ async function mongo_questCache_fetch(userID, upsert = false) {
 async function mongo_questCache_update(userID, query) {
     return await queues.questCache.update.findByIdAndUpdate(userID, query);
     // return await models.questCache.findByIdAndUpdate(userID, update, { new: true, lean: true });
-}
+} ``
 
 async function mongo_questCache_reset(userID) {
     return await models.questCache.replaceOne({ _id: userID }, {});

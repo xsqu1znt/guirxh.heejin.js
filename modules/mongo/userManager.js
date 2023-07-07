@@ -48,7 +48,7 @@ const { model: userModel } = require('../../models/userModel');
 const models = { user: userModel };
 
 // Queues
-const { MongoQueueManager } = require('./index');
+const MongoQueueManager = require('./queueManager');
 const queues = {
     userData: { update: new MongoQueueManager(models.user) }
 };
