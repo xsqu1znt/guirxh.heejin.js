@@ -90,7 +90,9 @@ function string_formatNumberToPlace(num) {
 }
 
 // ! Number
-/** Get the sum of a given array. */
+/** Get the sum of a given array
+ * @param {Array} arr the array to sum
+ * @param {str} prop name of property to sum inside of array */
 function number_sum(arr, prop = "") {
     return prop
         ? arr.reduce((a, b) => a + b[prop])
