@@ -4,7 +4,7 @@ const { BetterEmbed } = require('../modules/discordTools');
 const { userManager } = require('../modules/mongo/index');
 
 module.exports = {
-    options: { deferReply: true },
+    options: { deferReply: false },
 
     builder: new SlashCommandBuilder().setName("test")
         .setDescription("A test command for dev stuff"),
@@ -15,7 +15,6 @@ module.exports = {
      */
     execute: async (client, interaction) => {
         let embed_basic = new BetterEmbed({ interaction, description: "boop" });
-
         return await embed_basic.send();
 
         //! Basic embed to test database

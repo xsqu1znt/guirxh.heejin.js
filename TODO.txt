@@ -1,14 +1,7 @@
 IMPORTANT:
->> Quests
-• [✓] change quest validation to use current user/idol level
-• [✓] have quest_cache save whether a requirement has been completed
-• [...] send a message in the channel if the user completed a quest requirement
 
 >> Clean-up
 • Clean up heejinSettings.js and split into multiple files
-
->> Misc.
-• [✓] /collections | group filter shouldn't need the full name
 
 UN-IMPORTANT:
 >> Commands
