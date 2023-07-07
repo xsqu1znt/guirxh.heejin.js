@@ -26,7 +26,7 @@
  * @property {number} timestamp_started */
 
 /** @typedef UserDataType
- * @type {"id"|"full"|"inventory"|"noInventory"|"essential"|"reminder"|"quest"} */
+ * @type {"id"|"full"|"inventory"|"noInventory"|"essential"|"xp"|"reminder"|"quest"} */
 
 /** @typedef UserDataFetchOptions
  * @property {UserDataType} type
@@ -37,10 +37,10 @@ const playerConfig = require('../../configs/config_player.json');
 
 // const { stringTools, numberTools, randomTools, dateTools } = require('../modules/jsTools');
 
-/* const badgeManager = require('./badgeManager');
-const cardManager = require('./cardManager');
-const userParser = require('./userParser');
-const logger = require('./logger'); */
+// const badgeManager = require('./badgeManager');
+const cardManager = require('../cardManager');
+// const userParser = require('./userParser');
+// const logger = require('./logger');
 
 // Models
 const { model: userModel } = require('../../models/userModel');
@@ -92,16 +92,19 @@ async function userData_fetch(userID, options = {}) {
     switch (options.type) {
         case "id": fetchFilter = { _id: 1 }; break;
         case "full": fetchFilter = { __v: 0 }; break;
-        case "inventory": fetchFilter = { card_selected_uid: 1, card_favorite_uid: 1, card_team_uids: 1, card_inventory: 1 }; break;
+        case "inventory": fetchFilter = {
+            _id: 1, card_selected_uid: 1, card_favorite_uid: 1, card_team_uids: 1, card_inventory: 1
+        }; break;
         case "noInventory": fetchFilter = { card_inventory: 0 }; break;
         case "essential": fetchFilter = {
             _id: 1, timestamp_started: 1,
             daily_streak: 1, daily_streak_reminder: 1,
             level: 1, xp: 1, xp_for_next_level: 1,
-            biography: 1, balance: 1, ribbons: 1,
+            biography: 1, balance: 1, ribbons: 1
         }; break;
-        case "reminder": fetchFilter = { daily_streak: 1, daily_streak_expires: 1, cooldowns: 1, reminders: 1 }; break;
-        case "quest": fetchFilter = { quests_complete: 1 }; break;
+        case "xp": fetchFilter = { level: 1, xp: 1, xp_for_next_level: 1 }; break;
+        case "reminder": fetchFilter = { _id: 1, daily_streak: 1, daily_streak_expires: 1, cooldowns: 1, reminders: 1 }; break;
+        case "quest": fetchFilter = { _id: 1, quests_complete: 1 }; break;
         default: fetchFilter = { __v: 0 }; break;
     }
 
@@ -119,10 +122,100 @@ async function userData_fetch(userID, options = {}) {
     return userData;
 }
 
-/** @param {string} userID @param {{}} query */
-async function userData_update(userID, query) {
-    // return await queues.userData.update.push(userID, query);
-    return await queues.userData.update.findByIdAndUpdate(userID, query);
+/** @param {string} userID @param {{}} query @param {{addToQueue:boolean}} options  */
+async function userData_update(userID, query, options = {}) {
+    options = { addToQueue: false, ...options };
+
+    return options.addToQueue
+        ? await queues.userData.update.findByIdAndUpdate(userID, query)
+        : await models.user.findByIdAndUpdate(userID, query);
+}
+
+//! UserData -> XP
+/** @param {string} userID @param {number} amount use a negative number to subtract */
+async function xp_increment(userID, amount) {
+    await userData_update(userID, { $inc: { xp: amount } }); return;
+}
+
+/** @param {string} userID */
+async function xp_levelUp(userID) {
+    // Fetch the user from Mongo
+    let userData = await userData_fetch(userID, { type: "xp", awaitQueueCleared: true });
+
+    // Used to keep track of what happened
+    let session = {
+        leveled: false, levels_gained: 0,
+
+        /** @type {number} */
+        level_current: userData.level
+    };
+
+    const levelUp = () => {
+        if (userData.level >= playerConfig.xp.user.LEVEL_MAX) return;
+
+        if (userData.xp >= userData.xp_for_next_level) {
+            // Subtract the required XP to level up from the user
+            userData.xp = (userData.xp - userData.xp_for_next_level) || 0;
+
+            // Increase the user's level
+            userData.level++;
+
+            // Calculate the XP required for the next level
+            userData.xp_for_next_level = Math.floor(userData.level * playerConfig.xp.user.LEVEL_XP_MULTIPLIER);
+
+            // Update session data
+            session.levels_gained++; session.leveled = true;
+        }
+    };
+
+    // Level up the user until they can't anymore
+    while (userData.xp >= userData.xp_for_next_level) levelUp();
+
+    // Push the update to Mongo
+    if (session.leveled) await userData_update(userID, {
+        level: userData.level, xp: userData.xp, xp_for_next_level: userData.xp_for_next
+    });
+
+    return session;
+}
+
+//! UserData -> Cards
+/** @param {string} userID */
+async function card_add(userID, cards) {
+    // Create an array if only a single card object was passed
+    // filtering out invalid cards in the process
+    if (!cards) return; if (!Array.isArray(cards)) cards = [cards].filter(card => card?.globalID);
+
+    // Fetch the user's card_inventory
+    let { card_inventory } = await userData_fetch(userID, { type: "inventory" });
+
+    // Parse the user's CardLikes into an array of uids to compare
+    let uidList = card_inventory.map(card => card?.uid).filter(uid => uid);
+
+    // Parse the given cards
+    let cards_parsed = structuredClone(cards);
+
+    for (let card of cards_parsed) {
+        // Reset the card's UID if necessary
+        while (!card?.uid || uidList.includes(card?.uid)) cardManager.resetUID(card);
+
+        // Add the new UID to the list
+        uidList.push(card.uid);
+
+        // Convert the card into a slimmer CardLike object (ignores custom cards)
+        card = cardManager.parse.toCardLike(card);
+    }
+
+    // Push the new cards to the user's card_inventory
+    await userData_update(userID, { $push: { card_inventory: { $each: cards_parsed } } });
+
+    // Add the new cards' UIDs to the given card array
+    cards.forEach((card, idx) => card.uid = `${cards_parsed[idx].uid}`); return;
+}
+
+/** @param {string} userID @param {string | string[]} uids */
+async function card_remove(userID, uids) {
+    
 }
 
 module.exports = {

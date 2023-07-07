@@ -198,7 +198,7 @@ function get_randomDrop(dropCategory) {
 
 //! Parse
 function parse_toCardLike(card) {
-    return {
+    return ["100"].includes(card.rarity) ? card : {
         uid: card.uid,
         globalID: card.globalID,
         locked: card?.locked || false,
