@@ -135,8 +135,8 @@ async function userData_update(filter, query, options = {}) {
         : await models.user.updateOne(filter, query);
 
     else return options.addToQueue
-        ? await queues.userData.update.findByIdAndUpdate(userID, query)
-        : await models.user.findByIdAndUpdate(userID, query);
+        ? await queues.userData.update.findByIdAndUpdate(filter, query)
+        : await models.user.findByIdAndUpdate(filter, query);
 }
 
 //! UserData -> XP

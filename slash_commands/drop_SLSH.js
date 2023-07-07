@@ -86,8 +86,8 @@ module.exports = {
         }
 
         // Check if the user has an active cooldown
-        let userCooldownETA = await userManager.cooldowns.check(interaction.user.id, dropCooldownType);
-        if (userCooldownETA) return await embed_drop.send({ description: `Your next drop is available **${userCooldownETA}**` });
+        // let userCooldownETA = await userManager.cooldowns.check(interaction.user.id, dropCooldownType);
+        // if (userCooldownETA) return await embed_drop.send({ description: `Your next drop is available **${userCooldownETA}**` });
 
         await Promise.all([
             // Add the cards to the user's card_inventory (can cause UIDs to be reset)
