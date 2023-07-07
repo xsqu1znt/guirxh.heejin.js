@@ -31,7 +31,8 @@
 /** @typedef UserDataFetchOptions
  * @property {UserDataType} type
  * @property {boolean} lean
- * @property {boolean} upsert */
+ * @property {boolean} upsert
+ * @property {boolean} awaitQueueCleared */
 
 const playerConfig = require('../../configs/config_player.json');
 
@@ -82,10 +83,13 @@ async function userData_insertNew(userID, query = {}) {
 
 /** @param {string} userID @param {UserDataFetchOptions} options */
 async function userData_fetch(userID, options = {}) {
-    options = { type: "full", lean: true, upsert: false, ...options };
+    options = { type: "full", lean: true, upsert: false, awaitQueueCleared: false, ...options };
 
     // Insert a new UserData document if it doesn't exist
     if (options.upsert) await userData_exists(userID, true);
+
+    // Wait for the Mongo update queue to be clear
+    if (options.awaitQueueCleared) await queues.userData.update.on_findByIdAndUpdate_queueCleared(userID);
 
     // Determine filter type
     let fetchFilter = {};
@@ -243,7 +247,7 @@ async function inventory_update(userID, card) {
     ); return;
 }
 
-/** @param {string} userID @param {{}[]} cards */
+/** @param {string} userID */
 async function inventory_sell(userID, cards) {
     // Create an array if only a single card was passed
     if (!cards) return; if (!Array.isArray(cards)) cards = [cards];

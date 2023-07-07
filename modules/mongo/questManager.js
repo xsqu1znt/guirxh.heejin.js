@@ -13,6 +13,12 @@ const quest_ids = quests.map(quest => quest.id);
 const { model: questCacheModel } = require('../../models/questCacheModel');
 const models = { questCache: questCacheModel };
 
+// Queues
+const MongoQueueManager = require('./queueManager');
+const queues = {
+    questCache: { update: new MongoQueueManager(models.questCache) }
+};
+
 //! Quest parsing
 function quest_get(questID) {
     return quests.find(quest => quest.id === questID) || null;
@@ -166,14 +172,17 @@ async function mongo_questCache_new(userID) {
 }
 
 async function mongo_questCache_fetch(userID, upsert = false) {
+    await queues.questCache.update.on_findByIdAndUpdate_queueCleared(userID);
+
     let questCache = await models.questCache.findById(userID, null, { lean: true });
     if (upsert) questCache ||= mongo_questCache_new(userID);
 
     return questCache;
 }
 
-async function mongo_questCache_update(userID, update) {
-    return await models.questCache.findByIdAndUpdate(userID, update, { new: true, lean: true });
+async function mongo_questCache_update(userID, query) {
+    return await queues.questCache.update.findByIdAndUpdate(userID, query);
+    // return await models.questCache.findByIdAndUpdate(userID, update, { new: true, lean: true });
 }
 
 async function mongo_questCache_reset(userID) {
