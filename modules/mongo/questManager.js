@@ -2,7 +2,7 @@
  * @type {"balance"|"ribbons"|"cards_in_inventory"|"level_user"|"level_idol"|"team_ability_reputation"|"card_global_ids"|"card_sets_complete"|"card_duplicates"}
 */
 
-const { userManager } = require('../mongo');
+const { userManager, MongoQueueManager } = require('./index');
 const cardManager = require('../cardManager');
 const userParser = require('../userParser');
 
@@ -14,7 +14,6 @@ const { model: questCacheModel } = require('../../models/questCacheModel');
 const models = { questCache: questCacheModel };
 
 // Queues
-const MongoQueueManager = require('./queueManager');
 const queues = {
     questCache: { update: new MongoQueueManager(models.questCache) }
 };
@@ -114,10 +113,10 @@ async function mongo_user_isQuestComplete(userID, questID) {
     if (!Array.isArray(questID)) questID = [questID];
 
     // Fetch the user from Mongo
-    let userData = await userManager.fetch(userID, "quest");
+    let userData = await userManager.userData.fetch(userID, "quest");
 
     // Add the new quests_complete property to the user in Mongo
-    if (!userData?.quests_complete) await userManager.update(userID, { quests_complete: [] });
+    if (!userData?.quests_complete) await userManager.userData.update(userID, { quests_complete: [] });
 
     // Filter quests based on the given quest ID
     let quests_filtered = userData?.quests_complete?.filter(quest => questID.includes(quest.id));
@@ -138,7 +137,7 @@ async function mongo_user_markQuestComplete(userID, questID) {
     try {
         // Push the update and rewards to Mongo
         await Promise.all([
-            userManager.update(userID, {
+            userManager.userData.update(userID, {
                 // Push a basic version of the quest currently complete
                 $push: {
                     quests_complete: {
@@ -154,7 +153,7 @@ async function mongo_user_markQuestComplete(userID, questID) {
                 }
             }),
             // Add the rewarded cards to the user's card_inventory
-            userManager.cards.add(userID, cards_reward)
+            userManager.inventory.add(userID, cards_reward)
         ]);
 
         return true;
@@ -190,7 +189,7 @@ async function mongo_questCache_reset(userID) {
 }
 
 async function mongo_questCache_updateCache(userID) {
-    if (!quests.length) return; if (!await userManager.exists(userID)) return;
+    if (!quests.length) return; if (!await userManager.userData.exists(userID)) return;
 
     // Check whether the user completed the active quests
     if (await mongo_user_isQuestComplete(userID, quest_ids)) {
@@ -199,7 +198,7 @@ async function mongo_questCache_updateCache(userID) {
     }
 
     // Fetch the user from Mongo
-    let userData = await userManager.fetch(userID, "full");
+    let userData = await userManager.userData.fetch(userID);
     // Fetch the quest cache from Mongo
     let questCache = await mongo_questCache_fetch(userID, true);
 
