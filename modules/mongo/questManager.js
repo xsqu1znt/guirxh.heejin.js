@@ -114,7 +114,7 @@ async function mongo_user_isQuestComplete(userID, questID) {
     if (!Array.isArray(questID)) questID = [questID];
 
     // Fetch the user from Mongo
-    let userData = await userManager.fetch(userID, "quest");
+    let userData = await userManager.fetch(userID, { type: "quest" });
 
     // Add the new quests_complete property to the user in Mongo
     if (!userData?.quests_complete) await userManager.update(userID, { quests_complete: [] });
@@ -203,9 +203,6 @@ async function mongo_questCache_updateCache(userID) {
     // Fetch the quest cache from Mongo
     let questCache = await mongo_questCache_fetch(userID, true);
 
-    // Determine which active quests the user hasn't complete yet
-    let quests_inProgress = quests.filter(quest => !userData.quests_complete.map(q => q.questID).includes(quest.id));
-
     // Get the user's idol card, if available
     let card_idol = userParser.cards.getIdol(userData);
 
@@ -236,9 +233,6 @@ async function mongo_questCache_updateCache(userID) {
             team_ability: card_team.ability_total,
             team_reputation: card_team.reputation_total,
 
-            // Save the questID of each quest the user hasn't complete
-            quests_in_progress: quests_inProgress.map(quest => quest.id),
-
             // Update temporary cache to be used next time mongo_cache() is called
             temp: {
                 balance: userData.balance,
@@ -248,8 +242,12 @@ async function mongo_questCache_updateCache(userID) {
         }
     });
 
+    // Determine which active quests the user hasn't complete yet
+    let userActiveQuests = quests.filter(quest => !userData.quests_complete.map(({ id }) => id).includes(quest.id));
+
     // Get the user's progress for each active quest
-    let questProgress = quests_inProgress.map(({ id }) => quest_getProgress(id, userData, questCache));
+    let questProgress = userActiveQuests.map(({ id }) => quest_getProgress(id, userData, questCache));
+
     // Filter out null returns
     questProgress = questProgress.filter(progress => progress);
 
