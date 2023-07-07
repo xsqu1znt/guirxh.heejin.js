@@ -35,7 +35,7 @@
 
 const playerConfig = require('../../configs/config_player.json');
 
-// const { stringTools, numberTools, randomTools, dateTools } = require('../modules/jsTools');
+const { numberTools } = require('../jsTools');
 
 // const badgeManager = require('./badgeManager');
 const cardManager = require('../cardManager');
@@ -122,11 +122,15 @@ async function userData_fetch(userID, options = {}) {
     return userData;
 }
 
-/** @param {string} userID @param {{}} query @param {{addToQueue:boolean}} options  */
-async function userData_update(userID, query, options = {}) {
+/** @param {string | {_id: string}} filter userID or filter @param {{}} query @param {{addToQueue:boolean}} options  */
+async function userData_update(filter, query, options = {}) {
     options = { addToQueue: false, ...options };
 
-    return options.addToQueue
+    if (typeof filter === "object") return options.addToQueue
+        ? await queues.userData.update.updateOne(filter, query)
+        : await models.user.updateOne(filter, query);
+
+    else return options.addToQueue
         ? await queues.userData.update.findByIdAndUpdate(userID, query)
         : await models.user.findByIdAndUpdate(userID, query);
 }
@@ -180,8 +184,17 @@ async function xp_levelUp(userID) {
 }
 
 //! UserData -> Cards
+/** @param {string} userID @param {string | string[]} uids */
+async function inventory_exists(userID, uids) {
+    // Create an array if only a single card UID was passed
+    if (!uids) return false; if (!Array.isArray(uids)) uids = [uids];
+
+    let exists = await models.user.exists({ _id: userID, "card_inventory.uid": { $and: uids } });
+    return exists ? true : false;
+}
+
 /** @param {string} userID */
-async function card_add(userID, cards) {
+async function inventory_add(userID, cards) {
     // Create an array if only a single card object was passed
     // filtering out invalid cards in the process
     if (!cards) return; if (!Array.isArray(cards)) cards = [cards].filter(card => card?.globalID);
@@ -214,8 +227,36 @@ async function card_add(userID, cards) {
 }
 
 /** @param {string} userID @param {string | string[]} uids */
-async function card_remove(userID, uids) {
-    
+async function inventory_remove(userID, uids) {
+    // Create an array if only a single card UID was passed
+    if (!uids) return; if (!Array.isArray(uids)) uids = [uids];
+
+    // Send a pull request to Mongo
+    await userData_update(userID, { $pull: { card_inventory: { uid: { $in: uids } } } }); return;
+}
+
+/** @param {string} userID */
+async function inventory_update(userID, card) {
+    await userData_update(
+        { _id: userID, "card_inventory.uid": card.uid },
+        { $set: { "card_inventory.$": card } }
+    ); return;
+}
+
+/** @param {string} userID @param {{}[]} cards */
+async function inventory_sell(userID, cards) {
+    // Create an array if only a single card was passed
+    if (!cards) return; if (!Array.isArray(cards)) cards = [cards];
+
+    // Check if the user still has the cards in their card_inventory
+    if (!card_exists(userID, cards.map(card => card.uid))) return false;
+
+    await Promise.all([
+        // Update the user's balance
+        userData_update(userID, { $inc: { balance: numberTools.sum(cards, "sellPrice") } }),
+        // Remove the cards from the user's card_inventory
+        card_remove(userID, cards.map(card => card.uid))
+    ]); return true;
 }
 
 module.exports = {
@@ -225,5 +266,18 @@ module.exports = {
         insertNew: userData_insertNew,
         fetch: userData_fetch,
         update: userData_update
+    },
+
+    xp: {
+        increment: xp_increment,
+        levelUp: xp_levelUp
+    },
+
+    inventory: {
+        exists: inventory_exists,
+        add: inventory_add,
+        remove: inventory_remove,
+        update: inventory_update,
+        sell: inventory_sell
     }
 }

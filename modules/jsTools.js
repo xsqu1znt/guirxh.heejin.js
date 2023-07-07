@@ -90,6 +90,13 @@ function string_formatNumberToPlace(num) {
 }
 
 // ! Number
+/** Get the sum of a given array. */
+function number_sum(arr, prop = "") {
+    return prop
+        ? arr.reduce((a, b) => a + b[prop])
+        : arr.reduce((a, b) => a + b);
+}
+
 /** Convert the given milliseconds into seconds by dividing the number by 1,000 .
  * @param {number} num A value of milliseconds.
  */
@@ -382,6 +389,7 @@ module.exports = {
 
     /** Functions useful for dealing with numbers. */
     numberTools: {
+        sum: number_sum,
         milliToSeconds: number_milliToSeconds,
         secondsToMilli: number_secondsToMilli,
         percentage: number_percentage,
