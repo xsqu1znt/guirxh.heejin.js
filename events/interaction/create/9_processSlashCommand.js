@@ -84,10 +84,7 @@ module.exports = {
                 return await embed_error.send({ description: "**You have not started yet!** Use \`/start\` first!", ephemeral: true });
 
             // Defer the interaction
-            if (slashCommand?.options?.deferReply) await args.interaction.deferReply();
-
-            // Cache the user's current UserData if available || REQUIRED FOR QUESTS ONLY
-            // TODO: let cacheUserQuestData = await userManager.quests.cache(args.interaction.user.id);
+            if (slashCommand?.options?.deferReply) try { await args.interaction.deferReply(); } catch { }
 
             // Execute the slash command's function
             slashCommand.execute(client, args.interaction).then(async message => {
@@ -96,7 +93,7 @@ module.exports = {
                     userManager.xp.tryLevelUp(args.interaction.user.id).then(async _userLevelUp => {
                         if (_userLevelUp.leveled) {
                             // Create the level up message
-                            let levelUpText = `\\🎉 Congratulations, %USER! You are now \`LV. %CURRENT_LVL\``
+                            let levelUpText = `\`🎉\` Congratulations, %USER! You are now \`LV. %CURRENT_LVL\``
                                 .replace("%USER", args.interaction.user)
                                 .replace("%CURRENT_LVL", _userLevelUp.level_current);
 
