@@ -23,8 +23,8 @@ async function card_buy(userID, globalID) {
     return card;
 }
 
-//! Rewards | CURRENCY_2
-async function reward_buy_card(userID, globalID) {
+//! Special (quest ribbons) | CURRENCY_2
+async function special_buy_card(userID, globalID) {
     let card = cardManager.get.fromShop(globalID); if (!card) return null;
 
     await Promise.all([

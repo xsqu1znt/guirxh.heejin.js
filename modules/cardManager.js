@@ -1,5 +1,7 @@
 const { botSettings, userSettings, dropSettings, eventSettings, shopSettings } = require('../configs/heejinSettings.json');
 const { shopSettings: { setsInStock: shopSetsInStock } } = require('../configs/heejinSettings.json');
+const shopConfig = require('../configs/config_shop.json');
+
 const { markdown: { bold, italic, inline, quote, link, space } } = require('./discordTools');
 const { randomTools } = require('./jsTools');
 const logger = require('./logger');
@@ -159,7 +161,8 @@ function get_globalID(globalID) {
 }
 
 function get_fromShop(globalID) {
-    let _cards = cards_all.filter(card => shopSettings.setsInStock.includes(card.setID));
+    let _card_shop_set_ids = [...shopConfig.stock.card_set_ids.GENERAL, ...shopConfig.stock.card_set_ids.SPECIAL];
+    let _cards = cards_all.filter(card => _card_shop_set_ids.includes(card.setID));
     return structuredClone(_cards.find(card => card.globalID === globalID)) || null;
 }
 
@@ -318,9 +321,11 @@ function toString_inventory(card, options = { duplicateCount: 0, favorited: fals
 }
 
 module.exports = {
-    cards, cards_all, cards_general,
-    cards_shop: cards_all.filter(card => shopSettings.setsInStock.includes(card.setID)),
-    cardCount: cards_all.length,
+    cards, cards_all, cards_general, cardCount: cards_all.length,
+    cards_shop: {
+        general: cards_all.filter(card => shopConfig.stock.card_set_ids.GENERAL.includes(card.setID)),
+        special: cards_all.filter(card => shopConfig.stock.card_set_ids.SPECIAL.includes(card.setID))
+    },
 
     createUID,
     resetUID,
