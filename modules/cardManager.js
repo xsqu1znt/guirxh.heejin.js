@@ -25,7 +25,7 @@ const cards = {
     shop: require('../items/cards/cards_shop.json')
 };
 
-let cards_all = [].concat(...Object.values(cards));
+const cards_all = [].concat(...Object.values(cards));
 const cards_general = [...cards.comn, ...cards.uncn, ...cards.rare, ...cards.epic, ...cards.mint];
 
 const categories_general = Object.values(dropSettings.chances).map(c => ({ ...c, rarity: c.chance }));
@@ -154,17 +154,21 @@ function drop(dropType, count = 1) {
 }
 
 //! Get
+function get_globalID(globalID) {
+    return structuredClone(cards_all.find(card => card.globalID === globalID)) || null;
+}
+
+function get_fromShop(globalID) {
+    let _cards = cards_all.filter(card => shopSettings.setsInStock.includes(card.setID));
+    return structuredClone(_cards.find(card => card.globalID === globalID)) || null;
+}
+
 function get_set(setID) {
-    return structuredClone(cards_all.filter(card => card.setID === setID));
+    return structuredClone(cards_all.filter(card => card.setID === setID)) || [];
 }
 
 function get_random(basicOnly = false) {
     return structuredClone(randomTools.choice(basicOnly ? cards_general : cards_all));
-}
-
-function get_byGlobalID(globalID) {
-    let card = structuredClone(cards_all.find(card => card.globalID === globalID));
-    return card || null;
 }
 
 /** @param {"general" | "weekly" | "season" | "event_1" | "event_2"} dropCategory */
@@ -326,9 +330,10 @@ module.exports = {
     drop,
 
     get: {
+        globalID: get_globalID,
+        fromShop: get_fromShop,
         set: get_set,
         random: get_random,
-        byGlobalID: get_byGlobalID,
         drop: get_randomDrop
     },
 

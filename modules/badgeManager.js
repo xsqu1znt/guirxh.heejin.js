@@ -1,10 +1,10 @@
-const badges = require('../items/badges.json');
-
 const { botSettings } = require('../configs/heejinSettings.json');
 const { markdown: { bold, italic, inline, link } } = require('./discordTools');
 
-function getBadgeByID(id) {
-    return badges.find(badge => badge.id.toLowerCase() === id) || null;
+const badges = require('../items/badges.json');
+
+function get_badgeID(id) {
+    return structuredClone(badges.find(badge => badge.id.toLowerCase() === id)) || null;
 }
 
 function parse_toBadgeLike(badge) {
@@ -50,7 +50,9 @@ function toString_shop(badge) {
 module.exports = {
     badges,
 
-    get: getBadgeByID,
+    get: {
+        badgeID: get_badgeID
+    },
 
     parse: {
         toBadgeLike: parse_toBadgeLike,
