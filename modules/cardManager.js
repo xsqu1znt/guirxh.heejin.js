@@ -1,5 +1,7 @@
 const { botSettings, userSettings, dropSettings, eventSettings, shopSettings } = require('../configs/heejinSettings.json');
 const { shopSettings: { setsInStock: shopSetsInStock } } = require('../configs/heejinSettings.json');
+
+const botConfig = require('../configs/config_bot.json');
 const shopConfig = require('../configs/config_shop.json');
 
 const { markdown: { bold, italic, inline, quote, link, space } } = require('./discordTools');
@@ -257,7 +259,15 @@ function toString_missingEntry(card, missing = false) {
         .replace("%MISSING", inline(missing ? "🚫 missing" : "✔️ owned"));
 }
 
-function toString_shopEntry(card) {
+/** @param {"carrot"|"ribbon"} currencyType  */
+function toString_shopEntry(card, currencyType = "carrot") {
+    let _currencyIcon = "";
+
+    switch (currencyType) {
+        case "carrot": _currencyIcon = botConfig.emojis.CURRENCY_1.EMOJI; break;
+        case "ribbon": _currencyIcon = botConfig.emojis.CURRENCY_2.EMOJI; break;
+    }
+
     return "%GLOBAL_ID %EMOJI %GROUP :: %SINGLE : %NAME %SET_ID %PRICE"
         .replace("%GLOBAL_ID", inline(card.globalID))
         .replace("%EMOJI", inline(card.emoji))
@@ -265,7 +275,7 @@ function toString_shopEntry(card) {
         .replace("%SINGLE", card.single)
         .replace("%NAME", link(card.name, card.imageURL))
         .replace("%SET_ID", inline("🗣️", card.setID))
-        .replace("%PRICE", inline(botSettings.currencyIcon, card.price));
+        .replace("%PRICE", inline(_currencyIcon, card.price));
 }
 
 function toString_inventory(card, options = { duplicateCount: 0, favorited: false, selected: false, team: false, isDuplicate: false, simplify: false, }) {

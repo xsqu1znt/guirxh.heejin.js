@@ -24,6 +24,8 @@ module.exports = {
         // Create the shop pages
         let embed_shop = generalShop_ES(interaction.member);
 
-        return await interaction.reply({ embeds: embed_shop.embeds });
+        // console.log(embed_shop);
+
+        return await interaction.reply({ /* content: "boop", */ embeds: embed_shop.embed_test });
     }
 };

@@ -143,7 +143,7 @@ function generalShop_ES(guildMember) {
 
     let embed_allCards = () => {
         // Format cards into strings
-        let sets_card_general_f = sets_card_general.map(set => set.map(card => cardManager.toString.shopEntry(card, 1)));
+        let sets_card_general_f = sets_card_general.map(set => set.map(card => cardManager.toString.shopEntry(card, "carrot")));
 
         /// Split up large card sets into chunks of 10
         let pages_cardsGeneral_f = [];
@@ -178,7 +178,7 @@ function generalShop_ES(guildMember) {
 
     let embed_individualCardSets = () => {
         // Format cards into strings
-        let sets_card_general_f = sets_card_general.map(set => set.map(card => cardManager.toString.shopEntry(card, 1)));
+        let sets_card_general_f = sets_card_general.map(set => set.map(card => cardManager.toString.shopEntry(card, "carrot")));
 
         // Split up large card sets into chunks of 10
         // let pages_cardsGeneral_f = sets_card_general_f.map(f => arrayTools.chunk(f, 10));
@@ -214,14 +214,39 @@ function generalShop_ES(guildMember) {
         return embeds;
     };
 
-    console.log(embed_individualCardSets());
+    let embed_allCards_special = () => {
+        // Format cards into strings
+        let sets_card_special_f = sets_card_special.map(set => set.map(card => cardManager.toString.shopEntry(card, "ribbon")));
+
+        /// Split up large card sets into chunks of 10
+        let pages_cardsSpecial_f = [];
+
+        for (let i = 0; i < sets_card_special_f.length; i++) if (sets_card_special_f[i].length > 10)
+            // Chunk the array into groups of 10 and push each one to the final array
+            arrayTools.chunk(sets_card_special_f[i], 10).forEach(chunk => pages_cardsSpecial_f.push(chunk));
+        else
+            // Push the group to the final array
+            pages_cardsSpecial_f.push(sets_card_special_f[i]);
+
+        /// Create the shop embeds
+        let embeds = [];
+
+        for (let i = 0; i < pages_cardsSpecial_f.length; i++) {
+            // Create the shop page
+            let embed = embed_shop_template()
+                .setDescription(pages_cardsSpecial_f[i].join("\n") || "This page is empty")
+                .setFooter({ text: `Page ${i + 1}/${pages_cardsSpecial_f.length || 1}` })
+
+            // Push the page embed to the embed array
+            embeds.push(embed);
+        }
+
+        return embeds;
+    };
 
     return {
-        embeds: [
-            embed_shopSets(),
-            ...embed_allCards()/* ,
-            ...embed_individualCardSets() */
-        ]
+        embeds: [embed_shopSets(), embed_allCards(), ...embed_individualCardSets()],
+        embed_test: embed_allCards_special()
     };
 
     // Create an array of only unique shop cards for sorting purposes
