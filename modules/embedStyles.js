@@ -77,22 +77,30 @@ function generalCollections_ES(guildMember, options = { order: "decending", filt
 
 // Command -> General -> /SHOP
 function generalShop_ES(guildMember) {
-    let { cards_shop } = cardManager;
-
     // Sort by global ID (decending order)
-    cards_shop = cards_shop.sort((a, b) => a.globalID - b.globalID);
+    let cards_shop_general = cardManager.cards_shop.general.sort((a, b) => a.globalID - b.globalID);
+    let cards_shop_special = cardManager.cards_shop.special.sort((a, b) => a.globalID - b.globalID);
+
+    /// Iterate through each card and categorize them by setID
+    let card_sets_general = cardManager.cards_shop.set_ids_general.map(setID =>
+        cards_shop_general.filter(card => card.setID === setID)
+    );
+
+    let card_sets_special = cardManager.cards_shop.set_ids_special.map(setID =>
+        cards_shop_special.filter(card => card.setID === setID)
+    );
 
     // Create an array of only unique shop cards for sorting purposes
-    let cards_shop_unique = arrayTools.unique(cards_shop, (card, cardCompare) => card.setID === cardCompare.setID);
+    // let cards_shop_unique = arrayTools.unique(cards_shop_general, (a, b) => a === b.setID);
     // The amount of cards in each set
-    let card_sets = cards_shop_unique.map(card => cards_shop.filter(c => c.setID === card.setID));
+    // let card_sets = cards_shop_unique.map(card => cards_shop.filter(c => c.setID === card.setID));
 
     // Embed creation
-    let embed_template = () => new BetterEmbed({
+    /* let embed_template = () => new BetterEmbed({
         author: { text: "%AUTHOR_NAME | shop", user: guildMember }
-    });
+    }); */
 
-    let embed_list = () => {
+    /* let embed_list = () => {
         let cards_f = cards_shop_unique.map((card, idx) => cardManager.toString.setEntry(card, card_sets[idx].length, true));
 
         // Item packs
@@ -240,16 +248,18 @@ function generalShop_ES(guildMember) {
         }
 
         return embeds;
-    };
+    }; */
 
     // Return the different embed views
-    return [
+    /* return [
         embed_list(),
         embed_all(),
         ...embed_cardSets(),
         embed_itemPacks(),
         embed_badges()
-    ];
+    ]; */
+
+    // return embed_shopSets();
 }
 
 // Command -> User -> /VIEW

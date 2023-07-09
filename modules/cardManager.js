@@ -324,7 +324,9 @@ module.exports = {
     cards, cards_all, cards_general, cardCount: cards_all.length,
     cards_shop: {
         general: cards_all.filter(card => shopConfig.stock.card_set_ids.GENERAL.includes(card.setID)),
-        special: cards_all.filter(card => shopConfig.stock.card_set_ids.SPECIAL.includes(card.setID))
+        special: cards_all.filter(card => shopConfig.stock.card_set_ids.SPECIAL.includes(card.setID)),
+        set_ids_general: shopConfig.stock.card_set_ids.GENERAL,
+        set_ids_special: shopConfig.stock.card_set_ids.SPECIAL
     },
 
     createUID,

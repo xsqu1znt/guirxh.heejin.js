@@ -15,20 +15,12 @@ function array_chunk(arr, size) {
     return arr_new;
 }
 
-/** Return an array with only unique items based on the given filter.
- * @param {Array} arr The array to filter.
- * @param {(itemCurrent, itemToCompare) => void} filter The method to filter.
+/** Return an array with only unique items based on the given filter
+ * @param {Array} arr array to filter
+ * @param {string} prop [optional] an object property within the array to filter by
  */
-function array_unique(arr, filter) {
-    let arr_new = [];
-
-    arr.forEach(itemCurrent => {
-        // let existsInArray = arr_new.findIndex(e => filter(e, )) >= 0;
-        let existsInArray = arr_new.findIndex(itemToCompare => filter(itemCurrent, itemToCompare)) >= 0;
-        if (!existsInArray) arr_new.push(itemCurrent);
-    });
-
-    return arr_new;
+function array_unique(arr, prop = "") {
+    return [...new Map(arr.map(item => [(prop ? item[prop] : item), item])).values()];
 }
 
 // ! String
