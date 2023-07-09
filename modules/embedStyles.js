@@ -10,6 +10,7 @@ const badgeManager = require('../modules/badgeManager');
 const cardManager = require('../modules/cardManager');
 const userParser = require('../modules/userParser');
 const shop = require('../modules/shop');
+const itemPackManager = require('./itemPackManager');
 
 // General -> Quest Objective Completed
 function quest_objectiveComplete_ES(guildMember, questProgress) {
@@ -77,18 +78,48 @@ function generalCollections_ES(guildMember, options = { order: "decending", filt
 
 // Command -> General -> /SHOP
 function generalShop_ES(guildMember) {
-    // Sort by global ID (decending order)
-    let cards_shop_general = cardManager.cards_shop.general.sort((a, b) => a.globalID - b.globalID);
-    let cards_shop_special = cardManager.cards_shop.special.sort((a, b) => a.globalID - b.globalID);
+    /// Parse cards
+    /// Sort by global ID (ascending order)
+    let _cards_shop_general = cardManager.cards_shop.general.sort((a, b) => a.globalID - b.globalID);
+    let _cards_shop_special = cardManager.cards_shop.special.sort((a, b) => a.globalID - b.globalID);
 
     /// Iterate through each card and categorize them by setID
-    let card_sets_general = cardManager.cards_shop.set_ids_general.map(setID =>
-        cards_shop_general.filter(card => card.setID === setID)
+    let sets_card_general = cardManager.cards_shop.setIDs_general.map(setID =>
+        _cards_shop_general.filter(card => card.setID === setID)
     );
 
-    let card_sets_special = cardManager.cards_shop.set_ids_special.map(setID =>
-        cards_shop_special.filter(card => card.setID === setID)
+    let sets_cards_special = cardManager.cards_shop.setIDs_special.map(setID =>
+        _cards_shop_special.filter(card => card.setID === setID)
     );
+
+    /// Parse item packs
+    // Sort by setID (ascending order)
+    let _itemPacks = itemPackManager.itemPacks.sort((a, b) => a.setID - b.setID);
+
+    // Iterate through each item pack and categorize them by setID
+    let sets_itemPacks = itemPackManager.setIDs.map(setID => _itemPacks.filter(pack => pack.setID === setID));
+
+    // Shop embed template
+    let embed_shop_template = () => new BetterEmbed({
+        author: { text: "%AUTHOR_NAME | shop", user: guildMember }
+    });
+
+    let embed_shopSets = () => {
+        /// Format card sets into strings
+        let _cards_general_f = sets_card_general.map(cards => cardManager.toString.setEntry(cards[0], cards.length, true));
+        let _cards_special_f = sets_cards_special.map(cards => cardManager.toString.setEntry(cards[0], cards.length, true));
+
+        // Format item pack sets into strings
+        let _itemPacks_f = sets_itemPacks.map(pack => itemPackManager.toString.setEntry(pack[0].setID))
+
+        // Format badge sets into strings
+    };
+
+    return {
+        embeds: [
+            embed_shopSets()
+        ]
+    };
 
     // Create an array of only unique shop cards for sorting purposes
     // let cards_shop_unique = arrayTools.unique(cards_shop_general, (a, b) => a === b.setID);

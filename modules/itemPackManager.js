@@ -1,3 +1,5 @@
+const { arrayTools } = require('./jsTools');
+
 const itemPacks = require('../items/item_packs.json');
 
 function get_packID(packID) {
@@ -41,7 +43,7 @@ function toString_setEntry(setID) {
 }
 
 module.exports = {
-    itemPacks,
+    itemPacks, setIDs: arrayTools.unique(itemPacks.map(pack => pack.setID)),
 
     get: {
         packID: get_packID,
