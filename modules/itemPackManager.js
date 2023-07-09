@@ -27,15 +27,15 @@ function toString_shop(packID) {
 }
 
 function toString_setEntry(setID) {
-    let set_itemPack = get_setID(setID); if (!set_itemPack.length) return "n/a"; if (!_itemPack) return "n/a";
+    let set_itemPack = get_setID(setID); if (!set_itemPack.length) return "n/a";
     let set_itemPack_first = set_itemPack.slice(-1)[0];
 
-    let count = set_itemPack.length < 10 ? set_itemPack.length : `0${set_itemPack.length}`;
+    let count = set_itemPack.length >= 10 ? set_itemPack.length : `0${set_itemPack.length}`;
 
     return "%SET_ID %ITEMPACK_COUNT %CATEGORY %EMOJI %SET"
-        .replace("%SET_ID", `\`🗣️ set_itemPack_first.setID\``)
+        .replace("%SET_ID", `\`🗣️ ${set_itemPack_first.setID}\``)
 
-        .replace("%ITEMPACK_COUNT", `\`📁 ${count || "01"}\``)
+        .replace("%ITEMPACK_COUNT", `\`📁 ${count}\``)
 
         .replace("%CATEGORY", `\`${set_itemPack_first.category}\``)
         .replace("%EMOJI", `\`${set_itemPack_first.emoji}\``)

@@ -99,6 +99,13 @@ function generalShop_ES(guildMember) {
     // Iterate through each item pack and categorize them by setID
     let sets_itemPacks = itemPackManager.setIDs.map(setID => _itemPacks.filter(pack => pack.setID === setID));
 
+    /// Parse badges
+    // Sort by setID (ascending order)
+    let _badges = badgeManager.badges.sort((a, b) => a.setID - b.setID);
+
+    // Iterate through each item pack and categorize them by setID
+    let sets_badges = badgeManager.setIDs.map(setID => _badges.filter(badge => badge.setID === setID));
+
     // Shop embed template
     let embed_shop_template = () => new BetterEmbed({
         author: { text: "%AUTHOR_NAME | shop", user: guildMember }
@@ -110,9 +117,26 @@ function generalShop_ES(guildMember) {
         let _cards_special_f = sets_cards_special.map(cards => cardManager.toString.setEntry(cards[0], cards.length, true));
 
         // Format item pack sets into strings
-        let _itemPacks_f = sets_itemPacks.map(pack => itemPackManager.toString.setEntry(pack[0].setID))
+        let _itemPacks_f = sets_itemPacks.map(pack => itemPackManager.toString.setEntry(pack[0].setID));
 
         // Format badge sets into strings
+        let _badges_f = sets_badges.map(badges => badgeManager.toString.setEntry(badges[0].setID));
+
+        /// Dynamically create a string array with each available shop category  
+        let shopSets_f = [];
+
+        if (_cards_general_f.length) shopSets_f.push({ name: "\`🃏\` Cards", value: _cards_general_f.map(f => `> ${f}`).join("\n") });
+        if (_cards_special_f.length) shopSets_f.push({ name: "\`🎀\` Rewards", value: _cards_special_f.map(f => `> ${f}`).join("\n") });
+
+        if (_itemPacks_f.length) shopSets_f.push({ name: "\`📦\` Items", value: _itemPacks_f.map(f => `> ${f}`).join("\n") });
+
+        if (_badges_f.length) shopSets_f.push({ name: "\`📛\` Badges", value: _itemPacks_f.map(f => `> ${f}`).join("\n") });
+
+        /// Create the shop embed
+        let embed = embed_shop_template();
+        shopSets_f.length ? embed.addFields(...shopSets_f) : embed.setDescription("The shop is empty right now");
+
+        return embed;
     };
 
     return {
