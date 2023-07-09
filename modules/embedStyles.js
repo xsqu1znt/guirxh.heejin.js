@@ -1,9 +1,11 @@
 const { EmbedBuilder, TimestampStyles, time } = require('discord.js');
 
-const { markdown: { bold, inline, quote } } = require('./discordTools');
 
 const { communityServer, botSettings, userSettings } = require('../configs/heejinSettings.json');
+const botConfig = require('../configs/config_bot.json');
+
 const { arrayTools, stringTools, numberTools, dateTools } = require('../modules/jsTools');
+const { markdown: { bold, inline, quote, link } } = require('./discordTools');
 const { questManager } = require('../modules/mongo/index');
 const { BetterEmbed } = require('../modules/discordTools');
 const badgeManager = require('../modules/badgeManager');
@@ -88,7 +90,7 @@ function generalShop_ES(guildMember) {
         _cards_shop_general.filter(card => card.setID === setID)
     );
 
-    let sets_cards_special = cardManager.cards_shop.setIDs_special.map(setID =>
+    let sets_card_special = cardManager.cards_shop.setIDs_special.map(setID =>
         _cards_shop_special.filter(card => card.setID === setID)
     );
 
@@ -113,8 +115,8 @@ function generalShop_ES(guildMember) {
 
     let embed_shopSets = () => {
         /// Format card sets into strings
-        let _cards_general_f = sets_card_general.map(cards => cardManager.toString.setEntry(cards[0], cards.length, true));
-        let _cards_special_f = sets_cards_special.map(cards => cardManager.toString.setEntry(cards[0], cards.length, true));
+        let sets_card_general_f = sets_card_general.map(set => cardManager.toString.setEntry(set[0], set.length, true));
+        let sets_card_special_f = sets_card_special.map(set => cardManager.toString.setEntry(set[0], set.length, true));
 
         // Format item pack sets into strings
         let _itemPacks_f = sets_itemPacks.map(pack => itemPackManager.toString.setEntry(pack[0].setID));
@@ -125,8 +127,8 @@ function generalShop_ES(guildMember) {
         /// Dynamically create a string array with each available shop category  
         let shopSets_f = [];
 
-        if (_cards_general_f.length) shopSets_f.push({ name: "\`🃏\` Cards", value: _cards_general_f.map(f => `> ${f}`).join("\n") });
-        if (_cards_special_f.length) shopSets_f.push({ name: "\`🎀\` Rewards", value: _cards_special_f.map(f => `> ${f}`).join("\n") });
+        if (sets_card_general_f.length) shopSets_f.push({ name: "\`🃏\` Cards", value: sets_card_general_f.map(f => `> ${f}`).join("\n") });
+        if (sets_card_special_f.length) shopSets_f.push({ name: "\`🎀\` Rewards", value: sets_card_special_f.map(f => `> ${f}`).join("\n") });
 
         if (_itemPacks_f.length) shopSets_f.push({ name: "\`📦\` Items", value: _itemPacks_f.map(f => `> ${f}`).join("\n") });
 
@@ -140,12 +142,85 @@ function generalShop_ES(guildMember) {
     };
 
     let embed_allCards = () => {
-        let 
+        // Format cards into strings
+        let sets_card_general_f = sets_card_general.map(set => set.map(card => cardManager.toString.shopEntry(card, 1)));
+
+        /// Split up large card sets into chunks of 10
+        let pages_cardsGeneral_f = [];
+
+        for (let i = 0; i < sets_card_general_f.length; i++) if (sets_card_general_f[i].length > 10)
+            // Chunk the array into groups of 10 and push each one to the final array
+            arrayTools.chunk(sets_card_general_f[i], 10).forEach(chunk => pages_cardsGeneral_f.push(chunk));
+        else
+            // Push the group to the final array
+            pages_cardsGeneral_f.push(sets_card_general_f[i]);
+
+        /// Create the shop embeds
+        let embeds = [];
+
+        for (let i = 0; i < pages_cardsGeneral_f.length; i++) {
+            // Create the shop page
+            let embed = embed_shop_template()
+                .setDescription(pages_cardsGeneral_f[i].join("\n") || "This page is empty")
+                .setFooter({ text: `Page ${i + 1}/${pages_cardsGeneral_f.length || 1}` })
+
+            // Check if this page includes custom cards
+            if (embed.data.description.includes("cust")) embed.setDescription(
+                `${link("*join our community to request a custom*", botConfig.community_server.INVITE_URL)}\n\n${embed.data.description}`
+            );
+
+            // Push the page embed to the embed array
+            embeds.push(embed);
+        }
+
+        return embeds;
     };
+
+    let embed_individualCardSets = () => {
+        // Format cards into strings
+        let sets_card_general_f = sets_card_general.map(set => set.map(card => cardManager.toString.shopEntry(card, 1)));
+
+        // Split up large card sets into chunks of 10
+        // let pages_cardsGeneral_f = sets_card_general_f.map(f => arrayTools.chunk(f, 10));
+
+        /// Create the shop embed
+        let embeds = [];
+
+        for (let set_f of sets_card_general_f) {
+            // Split up large card sets into chunks of 10
+            let set_chunks_f = arrayTools.chunk(set_f, 10);
+
+            /// Create the shop pages
+            let _embeds = [];
+
+            for (let i = 0; i < set_chunks_f.length; i++) {
+                // Create the shop page
+                let embed = embed_shop_template()
+                    .setDescription(set_chunks_f[i].join("\n") || "This page is empty")
+                    .setFooter({ text: `Page ${i + 1}/${set_chunks_f.length || 1}` })
+
+                // Check if this page includes custom cards
+                if (embed.data.description.includes("cust")) embed.setDescription(
+                    `${link("*join our community to request a custom*", botConfig.community_server.INVITE_URL)}\n\n${embed.data.description}`
+                );
+
+                // Push the page embed to the embed array
+                _embeds.push(embed);
+            }
+
+            embeds.push(_embeds);
+        }
+
+        return embeds;
+    };
+
+    console.log(embed_individualCardSets());
 
     return {
         embeds: [
-            embed_shopSets()
+            embed_shopSets(),
+            ...embed_allCards()/* ,
+            ...embed_individualCardSets() */
         ]
     };
 
