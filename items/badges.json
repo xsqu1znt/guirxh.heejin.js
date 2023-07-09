@@ -6,7 +6,7 @@
         "description": "I am but a cephalopod",
         "category": "bdge",
         "set": "CEPH",
-        "emoji": "<:realsquid:1085169097114910760>",
+        "customEmoji": "<:realsquid:1085169097114910760>",
         "emojiURL": "https://cdn.discordapp.com/emojis/1085169097114910760.webp?size=56&quality=lossless",
         "rarity": 1,
         "price": 500

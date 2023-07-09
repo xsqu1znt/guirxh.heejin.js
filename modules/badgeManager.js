@@ -64,7 +64,7 @@ function toString_setEntry(setID) {
         .replace("%BADGE_COUNT", `\`📁 ${count}\``)
 
         .replace("%CATEGORY", `\`${set_badges_first.category}\``)
-        .replace("%EMOJI", `\`${set_badges_first.emoji}\``)
+        .replace("%EMOJI", set_badges_first?.customEmoji || `\`${set_badges_first.emoji}\``)
         .replace("%SET", `**${set_badges_first.set}**`);
 }
 

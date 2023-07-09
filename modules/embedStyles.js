@@ -130,13 +130,17 @@ function generalShop_ES(guildMember) {
 
         if (_itemPacks_f.length) shopSets_f.push({ name: "\`📦\` Items", value: _itemPacks_f.map(f => `> ${f}`).join("\n") });
 
-        if (_badges_f.length) shopSets_f.push({ name: "\`📛\` Badges", value: _itemPacks_f.map(f => `> ${f}`).join("\n") });
+        if (_badges_f.length) shopSets_f.push({ name: "\`📛\` Badges", value: _badges_f.map(f => `> ${f}`).join("\n") });
 
         /// Create the shop embed
         let embed = embed_shop_template();
         shopSets_f.length ? embed.addFields(...shopSets_f) : embed.setDescription("The shop is empty right now");
 
         return embed;
+    };
+
+    let embed_allCards = () => {
+        let 
     };
 
     return {
