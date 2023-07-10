@@ -24,8 +24,37 @@ module.exports = {
         // Create the shop pages
         let embed_shop = generalShop_ES(interaction.member);
 
-        // console.log(embed_shop);
+        // Create the embed navigation
+        let embed_withNav = new EmbedNavigator({
+            interaction, embeds: embed_shop.embeds_all, useReactionsForPagination: false,
+            paginationType: "shortJump", dynamicPagination: false, selectMenu: true
+        });
 
-        return await interaction.reply({ /* content: "boop", */ embeds: embed_shop.embed_test });
+        /// Add select menu options
+        if (embed_shop.embeds?.shopSets)
+            embed_withNav.addToSelectMenu({
+                emoji: "🛍️", label: "Shop Sets", description: "View a list of every set available", isDefault: true
+            });
+
+        if (embed_shop.embeds?.allCards?.length)
+            embed_withNav.addToSelectMenu({ emoji: "📁", label: "All Cards", description: "View all cards available" });
+
+        if (embed_shop.embeds?.individualCardSets?.length) embed_shop.cardSets.forEach(set =>
+            embed_withNav.addToSelectMenu({ emoji: set.emoji, label: set.name, description: `View ${set.description}` })
+        );
+
+        if (embed_shop.embeds?.allCards_special?.length)
+            embed_withNav.addToSelectMenu({ emoji: "🎀", label: "Rewards", description: "Buy a special card" });
+
+        if (embed_shop.embeds?.itemPacks?.length)
+            embed_withNav.addToSelectMenu({ emoji: "✨", label: "Item Packs", description: "Buy a boost/card pack" });
+
+        if (embed_shop?.embeds.badges?.length)
+            embed_withNav.addToSelectMenu({ emoji: "📛", label: "Badges", description: "Buy a badge for your profile" });
+
+        // Send the embeds with navigation
+        // console.log(embed_shop.embeds);
+        // console.log(embed_shop.embeds_all);
+        return await embed_withNav.send();
     }
 };

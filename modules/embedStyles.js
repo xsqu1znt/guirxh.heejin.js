@@ -287,14 +287,20 @@ function generalShop_ES(guildMember) {
         return embeds;
     };
 
+    let shopPages = {
+        shopSets: embed_shopSets(),
+        allCards: embed_allCards(),
+        individualCardSets: [...embed_individualCardSets()],
+        allCards_special: embed_allCards_special(),
+        itemPacks: embed_itemPacks(),
+        badges: embed_badges()
+    };
+
+    let embeds_all = Object.values(shopPages);
+
     return {
-        embeds: [
-            embed_shopSets(),
-            embed_allCards(),
-            ...embed_individualCardSets(),
-            embed_itemPacks(),
-            embed_badges()
-        ]
+        embeds: shopPages, embeds_all,
+        cardSets: sets_card_general.map(set => ({ emoji: set[0].emoji, name: set[0].group, description: set[0].description }))
     };
 
     // Create an array of only unique shop cards for sorting purposes
