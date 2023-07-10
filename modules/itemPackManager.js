@@ -1,3 +1,5 @@
+const botConfig = require('../configs/config_bot.json');
+
 const { arrayTools } = require('./jsTools');
 
 const itemPacks = require('../items/item_packs.json');
@@ -8,22 +10,6 @@ function get_packID(packID) {
 
 function get_setID(setID) {
     return structuredClone(itemPacks.filter(pack => pack.setID === setID)) || [];
-}
-
-function toString_shop(packID) {
-    let _itemPack = get_packID(packID); if (!_itemPack) return "n/a";
-
-    return "%ID %SET :: %NAME %PRICE\n> %SET_ID %RARITY %CATEGORY\n> %DESCRIPTION"
-        .replace("%ID", `\`${_itemPack.id}\``)
-        .replace("%SET", `**${_itemPack.set}*`)
-        .replace("%NAME", `*${_itemPack.name}*`)
-        .replace("%PRICE", `\`currencyIcon, _itemPack.price\``)
-
-        .replace("%SET_ID", `\`"🗣️", _itemPack.setID\``)
-        .replace("%RARITY", `\`RB${_itemPack.rarity}\``)
-        .replace("%CATEGORY", `\`_itemPack.category\``)
-
-        .replace("%DESCRIPTION", `*${_itemPack.description}*`);
 }
 
 function toString_setEntry(setID) {
@@ -42,6 +28,22 @@ function toString_setEntry(setID) {
         .replace("%SET", `**${set_itemPack_first.set}**`);
 }
 
+function toString_shopEntry(packID) {
+    let _itemPack = get_packID(packID); if (!_itemPack) return "n/a";
+
+    return "\`%ID\` **%SET** :: *%NAME* \`%PRICE\`\n> \`%SET_ID\` \`%RARITY\` \`%CATEGORY\`\n> *%DESCRIPTION*"
+        .replace("%ID", _itemPack.id)
+        .replace("%SET", _itemPack.set)
+        .replace("%NAME", _itemPack.name)
+        .replace("%PRICE", `${botConfig.emojis.CURRENCY_1.EMOJI} ${_itemPack.price}`)
+
+        .replace("%SET_ID", `🗣️ ${_itemPack.setID}`)
+        .replace("%RARITY", `RB${_itemPack.rarity}`)
+        .replace("%CATEGORY", _itemPack.category)
+
+        .replace("%DESCRIPTION", _itemPack.description);
+}
+
 module.exports = {
     itemPacks, setIDs: arrayTools.unique(itemPacks.map(pack => pack.setID)),
 
@@ -51,7 +53,7 @@ module.exports = {
     },
 
     toString: {
-        shop: toString_shop,
-        setEntry: toString_setEntry
+        setEntry: toString_setEntry,
+        shopEntry: toString_shopEntry
     }
 };

@@ -1,8 +1,10 @@
 const { botSettings } = require('../configs/heejinSettings.json');
+const botConfig = require('../configs/config_bot.json');
+
+const { arrayTools } = require('./jsTools');
 const { markdown: { bold, italic, inline, link } } = require('./discordTools');
 
 const badges = require('../items/badges.json');
-const { arrayTools } = require('./jsTools');
 
 function get_badgeID(id) {
     return structuredClone(badges.find(badge => badge.id.toLowerCase() === id)) || null;
@@ -37,21 +39,6 @@ function toString_profile(badge) {
         .replace("%NAME", badge.name);
 }
 
-function toString_shop(badge) {
-    return "%ID %EMOJI %SET :: %NAME %PRICE\n> %SET_ID %RARITY %CATEGORY\n> %DESCRIPTION"
-        .replace("%ID", inline(true, badge.id))
-        .replace("%EMOJI", badge.emoji)
-        .replace("%NAME", italic(true, link(badge.name, badge.emojiURL, badge.description)))
-        .replace("%PRICE", inline(true, botSettings.currencyIcon, badge.price))
-
-        .replace("%SET_ID", inline(true, "🗣️", badge.setID))
-        .replace("%SET", bold(true, badge.set))
-        .replace("%RARITY", inline(false, "RB", badge.rarity))
-        .replace("%CATEGORY", inline(true, badge.category))
-
-        .replace("%DESCRIPTION", italic(true, badge.description));
-}
-
 function toString_setEntry(setID) {
     let set_badges = get_setID(setID); if (!set_badges.length) return "n/a";
     let set_badges_first = set_badges.slice(-1)[0];
@@ -66,6 +53,21 @@ function toString_setEntry(setID) {
         .replace("%CATEGORY", `\`${set_badges_first.category}\``)
         .replace("%EMOJI", set_badges_first?.customEmoji || `\`${set_badges_first.emoji}\``)
         .replace("%SET", `**${set_badges_first.set}**`);
+}
+
+function toString_shopEntry(badge) {
+    return "%ID %EMOJI %SET :: %NAME %PRICE\n> %SET_ID %RARITY %CATEGORY\n> %DESCRIPTION"
+        .replace("%ID", `\`${badge.id}\``)
+        .replace("%EMOJI", badge.customEmoji || `\`${badge.emoji}\``)
+        .replace("%NAME", link(badge.name, badge.emojiURL, badge.description))
+        .replace("%PRICE", `\`${botConfig.emojis.CURRENCY_1.EMOJI} ${badge.price}\``)
+
+        .replace("%SET_ID", `\`🗣️ ${badge.setID}\``)
+        .replace("%SET", `**${badge.set}**`)
+        .replace("%RARITY", `\`RB${badge.rarity}\``)
+        .replace("%CATEGORY", `\`${badge.category}\``)
+
+        .replace("%DESCRIPTION", `*${badge.description}*`);
 }
 
 module.exports = {
@@ -83,7 +85,7 @@ module.exports = {
     toString: {
         basic: toString_basic,
         profile: toString_profile,
-        shop: toString_shop,
-        setEntry: toString_setEntry
+        setEntry: toString_setEntry,
+        shopEntry: toString_shopEntry
     }
 };

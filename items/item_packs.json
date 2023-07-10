@@ -3,18 +3,19 @@
         "id": "P1",
         "setID": "P01",
         "name": "You get 03 cards",
-        "description": "Content: VERNON - Black Eye :: MONSTA X - Trespass",
+        "description": "Content: LOONA :: Paint The Town\n> ASTRO :: All Night\n> NewJeans :: Ditto",
         "category": "pack",
         "set": "Pack 01",
         "emoji": "📦",
         "rarity": 1,
-        "price": 500,
+        "price": 300,
         "items": {
             "cards": {
                 "count": 3,
                 "fromSet": [
-                    { "id": "727", "chance": 100 },
-                    { "id": "741", "chance": 50 }
+                    { "id": "454", "chance": 100 },
+                    { "id": "601", "chance": 100 },
+                    { "id": "904", "chance": 100 }
                 ]
             }
         }
@@ -23,20 +24,22 @@
         "id": "P2",
         "setID": "P01",
         "name": "You get 06 cards",
-        "description": "Content: ANY PACK 01\n> NCT DREAM - Candy :: TWICE - CAN'T STOP ME",
+        "description": "Content: ANY PACK 01\n> aespa :: Next Level\n> ATEEZ :: BOUNCY\n> IVE :: ELEVEN",
         "category": "pack",
         "set": "Pack 02",
         "emoji": "📦",
         "rarity": 1,
-        "price": 1000,
+        "price": 600,
         "items": {
             "cards": {
                 "count": 6,
                 "fromSet": [
-                    { "id": "727", "chance": 100 },
-                    { "id": "741", "chance": 100 },
-                    { "id": "725", "chance": 100 },
-                    { "id": "740", "chance": 50 }
+                    { "id": "454", "chance": 100 },
+                    { "id": "601", "chance": 100 },
+                    { "id": "904", "chance": 100 },
+                    { "id": "901", "chance": 100 },
+                    { "id": "752", "chance": 100 },
+                    { "id": "301", "chance": 100 }
                 ]
             }
         }
@@ -45,22 +48,26 @@
         "id": "P3",
         "setID": "P01",
         "name": "You get 09 cards",
-        "description": "Content: ANY PACK 01 AND 02\n> Taeyeon - What Do I Call You :: SEVENTEEN Fck My Life",
+        "description": "Content: ANY PACK 01 AND 02\n> HOLO :: Shop\n> SHINee :: HARD\n> Stray Kids :: S-Class\n> LE SSERAFIM :: FEARLESS",
         "category": "pack",
         "set": "Pack 03",
         "emoji": "📦",
         "rarity": 1,
-        "price": 1500,
+        "price": 900,
         "items": {
             "cards": {
                 "count": 9,
                 "fromSet": [
-                    { "id": "727", "chance": 100 },
-                    { "id": "741", "chance": 100 },
-                    { "id": "725", "chance": 100 },
-                    { "id": "740", "chance": 100 },
-                    { "id": "742", "chance": 100 },
-                    { "id": "748", "chance": 50 }
+                    { "id": "454", "chance": 100 },
+                    { "id": "601", "chance": 100 },
+                    { "id": "904", "chance": 100 },
+                    { "id": "901", "chance": 100 },
+                    { "id": "752", "chance": 100 },
+                    { "id": "301", "chance": 100 },
+                    { "id": "451", "chance": 100 },
+                    { "id": "453", "chance": 100 },
+                    { "id": "299", "chance": 100 },
+                    { "id": "101", "chance": 50 }
                 ]
             } 
         }

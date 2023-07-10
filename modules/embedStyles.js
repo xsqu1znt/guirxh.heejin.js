@@ -180,9 +180,6 @@ function generalShop_ES(guildMember) {
         // Format cards into strings
         let sets_card_general_f = sets_card_general.map(set => set.map(card => cardManager.toString.shopEntry(card, "carrot")));
 
-        // Split up large card sets into chunks of 10
-        // let pages_cardsGeneral_f = sets_card_general_f.map(f => arrayTools.chunk(f, 10));
-
         /// Create the shop embed
         let embeds = [];
 
@@ -244,9 +241,60 @@ function generalShop_ES(guildMember) {
         return embeds;
     };
 
+    let embed_itemPacks = () => {
+        // Format item packs into strings
+        let sets_itemPacks_f = _itemPacks.map(item => itemPackManager.toString.shopEntry(item.id));
+
+        // Split up large item pack sets into chunks of 10
+        let pages_itemPacks_f = arrayTools.chunk(sets_itemPacks_f, 10);
+
+        /// Create the shop embeds
+        let embeds = [];
+
+        for (let i = 0; i < pages_itemPacks_f.length; i++) {
+            // Create the shop page
+            let embed = embed_shop_template()
+                .setDescription(pages_itemPacks_f[i].join("\n") || "This page is empty")
+                .setFooter({ text: `Page ${i + 1}/${pages_itemPacks_f.length || 1}` })
+
+            // Push the page embed to the embed array
+            embeds.push(embed);
+        }
+
+        return embeds;
+    };
+
+    let embed_badges = () => {
+        // Format cards into strings
+        let sets_badges_f = _badges.map(badge => badgeManager.toString.shopEntry(badge));
+
+        // Split up large card sets into chunks of 10
+        let pages_badges_f = arrayTools.chunk(sets_badges_f, 10);
+
+        /// Create the shop embeds
+        let embeds = [];
+
+        for (let i = 0; i < pages_badges_f.length; i++) {
+            // Create the shop page
+            let embed = embed_shop_template()
+                .setDescription(pages_badges_f[i].join("\n") || "This page is empty")
+                .setFooter({ text: `Page ${i + 1}/${pages_badges_f.length || 1}` })
+
+            // Push the page embed to the embed array
+            embeds.push(embed);
+        }
+
+        return embeds;
+    };
+
     return {
-        embeds: [embed_shopSets(), embed_allCards(), ...embed_individualCardSets()],
-        embed_test: embed_allCards_special()
+        embeds: [
+            embed_shopSets(),
+            embed_allCards(),
+            ...embed_individualCardSets(),
+            embed_itemPacks(),
+            embed_badges()
+        ]
     };
 
     // Create an array of only unique shop cards for sorting purposes
