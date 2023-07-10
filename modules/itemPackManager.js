@@ -48,7 +48,6 @@ function toString_shopEntry(packID) {
         packContent_f.push(packContent_cardSets_f.join("\n"));
     }
 
-
     return "%ID %SET :: %NAME %SET_ID %CONTENT_OVERVIEW %PRICE\n%CONTENT"
         .replace("%ID", `\`${_itemPack.id}\``)
         .replace("%SET", `**${_itemPack.set}**`)
@@ -59,12 +58,6 @@ function toString_shopEntry(packID) {
         .replace("%PRICE", `\`${botConfig.emojis.CURRENCY_1.EMOJI} ${_itemPack.price}\``)
 
         .replace("%CONTENT", packContent_f.join("\n"))
-
-    /* .replace("%SET_ID", `\`🗣️ ${_itemPack.setID}\``)
-    .replace("%RARITY", `\`RB${_itemPack.rarity}\``)
-    .replace("%CATEGORY", `\`${_itemPack.category}\``)
-
-    .replace("%DESCRIPTION", `${_itemPack.description}`); */
 }
 
 module.exports = {

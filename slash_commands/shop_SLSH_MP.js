@@ -26,12 +26,12 @@ module.exports = {
 
         // Create the embed navigation
         let embed_withNav = new EmbedNavigator({
-            interaction, embeds: embed_shop.embeds.itemPacks/* , useReactionsForPagination: false,
-            paginationType: "shortJump", dynamicPagination: false, selectMenu: true */
+            interaction, embeds: embed_shop.embeds_all, useReactionsForPagination: false,
+            paginationType: "shortJump", dynamicPagination: false, selectMenu: true
         });
 
         /// Add select menu options
-        /* if (embed_shop.embeds?.shopSets)
+        if (embed_shop.embeds?.shopSets)
             embed_withNav.addToSelectMenu({
                 emoji: "🛍️", label: "Shop Sets", description: "View a list of every set available", isDefault: true
             });
@@ -50,11 +50,9 @@ module.exports = {
             embed_withNav.addToSelectMenu({ emoji: "✨", label: "Item Packs", description: "Buy a boost/card pack" });
 
         if (embed_shop?.embeds.badges?.length)
-            embed_withNav.addToSelectMenu({ emoji: "📛", label: "Badges", description: "Buy a badge for your profile" }); */
+            embed_withNav.addToSelectMenu({ emoji: "📛", label: "Badges", description: "Buy a badge for your profile" });
 
         // Send the embeds with navigation
-        // console.log(embed_shop.embeds);
-        // console.log(embed_shop.embeds_all);
         return await embed_withNav.send();
     }
 };

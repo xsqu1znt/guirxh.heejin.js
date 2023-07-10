@@ -18,26 +18,27 @@ const cards = {
     cards_uncommon: require('../../items/cards/cards_uncommon.json')
 };
 
-let card_entries = Object.entries(cards);
+let card_keys = Object.keys(cards);
+let card_values = Object.values(cards);
 
-for (let entry of card_entries) {
-    let _cards = cards[entry[0]];
+for (let i = 0; i < card_values.length; i++) {
 
-    for (let i = 0; i < _cards.length; i++) {
-        let card = _cards[i];
+    card_values[i].forEach((_card, idx) => {
+        let _description = _card.description;
+        let _description_split = _description.split(/\-|:{2}/);
 
-        if (["229", "249"].includes(card.setID)) cards[entry[0]][i].category = "holi";
-    }
+        card_values[i][idx].description = `**${_description_split[0].trim()}** :: ${_description_split[1].trim()}`;
+    });
 
     // Parse the object into a string
     logger.log("converting into JSON...");
-    let jsonData = JSON.stringify(entry[1], null, 2);
+    let jsonData = JSON.stringify(card_values[i], null, 2);
 
     // Save the file
     logger.log("writing file...");
-    fs.writeFile(`./items/cards/${entry[0]}.json`, jsonData, (err) =>
-        err ? logger.error(`Failed to save ${fn}`, "could not write", err) : null
+    fs.writeFile(`./items/cards/${card_keys[i]}.json`, jsonData, (err) =>
+        err ? logger.error(`Failed to save ${card_keys[i]}.json`, "could not write", err) : null
     );
 
-    logger.success(`file saved: \`${entry[0]}.json\``);
+    logger.success(`file saved: \`${card_keys[i]}.json\``);
 }

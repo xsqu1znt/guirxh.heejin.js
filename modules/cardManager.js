@@ -301,7 +301,7 @@ function toString_itemPackSetEntry(setID, chance) {
     let _card = get_set(setID)[0]; if (!_card) return "n/a";
 
     return "%SET_ID %EMOJI %GROUP :: %SINGLE %CHANCE"
-        .replace("%SET_ID", `\`🗣️ ${_card.setID}\``)
+        .replace("%SET_ID", `\`${_card.setID}\``)
         .replace("%EMOJI", `\`${_card.emoji}\``)
         .replace("%GROUP", `**${_card.group}**`)
         .replace("%SINGLE", _card.single)
