@@ -2,17 +2,16 @@
     {
         "id": "P1",
         "setID": "P01",
-        "name": "You get 03 cards",
-        "description": "Content: LOONA :: Paint The Town\n> ASTRO :: All Night\n> NewJeans :: Ditto",
+        "name": "Pack Name",
         "category": "pack",
-        "set": "Pack 01",
+        "set": "Pack Set",
         "emoji": "📦",
         "rarity": 1,
-        "price": 300,
-        "items": {
+        "price": 500,
+        "content": {
             "cards": {
-                "count": 3,
-                "fromSet": [
+                "count": 5,
+                "sets": [
                     { "id": "454", "chance": 100 },
                     { "id": "601", "chance": 100 },
                     { "id": "904", "chance": 100 }
@@ -22,54 +21,23 @@
     },
     {
         "id": "P2",
-        "setID": "P01",
-        "name": "You get 06 cards",
-        "description": "Content: ANY PACK 01\n> aespa :: Next Level\n> ATEEZ :: BOUNCY\n> IVE :: ELEVEN",
+        "setID": "P02",
+        "name": "Pack Name",
         "category": "pack",
-        "set": "Pack 02",
+        "set": "Pack Set",
         "emoji": "📦",
         "rarity": 1,
-        "price": 600,
-        "items": {
+        "price": 1000,
+        "content": {
             "cards": {
-                "count": 6,
-                "fromSet": [
-                    { "id": "454", "chance": 100 },
-                    { "id": "601", "chance": 100 },
-                    { "id": "904", "chance": 100 },
+                "count": 5,
+                "sets": [
+                    { "id": "101", "chance": 10 },
+                    { "id": "301", "chance": 100 },
                     { "id": "901", "chance": 100 },
-                    { "id": "752", "chance": 100 },
-                    { "id": "301", "chance": 100 }
+                    { "id": "299", "chance": 100 }
                 ]
             }
-        }
-    },
-    {
-        "id": "P3",
-        "setID": "P01",
-        "name": "You get 09 cards",
-        "description": "Content: ANY PACK 01 AND 02\n> HOLO :: Shop\n> SHINee :: HARD\n> Stray Kids :: S-Class\n> LE SSERAFIM :: FEARLESS",
-        "category": "pack",
-        "set": "Pack 03",
-        "emoji": "📦",
-        "rarity": 1,
-        "price": 900,
-        "items": {
-            "cards": {
-                "count": 9,
-                "fromSet": [
-                    { "id": "454", "chance": 100 },
-                    { "id": "601", "chance": 100 },
-                    { "id": "904", "chance": 100 },
-                    { "id": "901", "chance": 100 },
-                    { "id": "752", "chance": 100 },
-                    { "id": "301", "chance": 100 },
-                    { "id": "451", "chance": 100 },
-                    { "id": "453", "chance": 100 },
-                    { "id": "299", "chance": 100 },
-                    { "id": "101", "chance": 50 }
-                ]
-            } 
         }
     }
 ]

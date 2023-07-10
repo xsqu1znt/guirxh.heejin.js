@@ -3,6 +3,7 @@ const botConfig = require('../configs/config_bot.json');
 const { arrayTools } = require('./jsTools');
 
 const itemPacks = require('../items/item_packs.json');
+const cardManager = require('./cardManager');
 
 function get_packID(packID) {
     return structuredClone(itemPacks.find(pack => pack.id === packID)) || null;
@@ -31,17 +32,39 @@ function toString_setEntry(setID) {
 function toString_shopEntry(packID) {
     let _itemPack = get_packID(packID); if (!_itemPack) return "n/a";
 
-    return "\`%ID\` **%SET** :: *%NAME* \`%PRICE\`\n> \`%SET_ID\` \`%RARITY\` \`%CATEGORY\`\n> *%DESCRIPTION*"
-        .replace("%ID", _itemPack.id)
-        .replace("%SET", _itemPack.set)
-        .replace("%NAME", _itemPack.name)
-        .replace("%PRICE", `${botConfig.emojis.CURRENCY_1.EMOJI} ${_itemPack.price}`)
+    let packContent_cardSets_f = _itemPack.content?.cards
+        ? _itemPack.content.cards.sets.map(packSet =>
+            `> ${cardManager.toString.itemPackSetEntry(packSet.id, packSet.chance)}`
+        ) : [];
 
-        .replace("%SET_ID", `🗣️ ${_itemPack.setID}`)
-        .replace("%RARITY", `RB${_itemPack.rarity}`)
-        .replace("%CATEGORY", _itemPack.category)
+    let packContent_f = [];
+    let packContentOverview_f = [];
 
-        .replace("%DESCRIPTION", _itemPack.description);
+    if (packContent_cardSets_f.length) {
+        // Content overview
+        packContentOverview_f.push(`\`🃏 ${_itemPack.content.cards.count} ${_itemPack.content.cards.count == 1 ? "card" : "cards"}\``);
+
+        // Item pack content
+        packContent_f.push(packContent_cardSets_f.join("\n"));
+    }
+
+
+    return "%ID %SET :: %NAME %SET_ID %CONTENT_OVERVIEW %PRICE\n%CONTENT"
+        .replace("%ID", `\`${_itemPack.id}\``)
+        .replace("%SET", `**${_itemPack.set}**`)
+
+        .replace("%NAME", `*${_itemPack.name}*`)
+        .replace("%SET_ID", `\`🗣️ ${_itemPack.setID}\``)
+        .replace("%CONTENT_OVERVIEW", packContentOverview_f.join(" "))
+        .replace("%PRICE", `\`${botConfig.emojis.CURRENCY_1.EMOJI} ${_itemPack.price}\``)
+
+        .replace("%CONTENT", packContent_f.join("\n"))
+
+    /* .replace("%SET_ID", `\`🗣️ ${_itemPack.setID}\``)
+    .replace("%RARITY", `\`RB${_itemPack.rarity}\``)
+    .replace("%CATEGORY", `\`${_itemPack.category}\``)
+
+    .replace("%DESCRIPTION", `${_itemPack.description}`); */
 }
 
 module.exports = {

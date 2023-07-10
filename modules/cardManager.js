@@ -230,54 +230,6 @@ function toString_basic(card) {
         .replace("%SELL_PRICE", inline("💰", card.sellPrice));
 }
 
-function toString_setEntry(card, count = 1, simplify = false) {
-    if (count < 10) count = `0${count}`;
-
-    return "%SET_ID %CARD_COUNT %CATEGORY %EMOJI %GROUP%SINGLE"
-        .replace("%SET_ID", inline("🗣️", card.setID))
-
-        .replace("%CARD_COUNT", inline("📁", count || 1))
-
-        .replace("%CATEGORY", inline(card.category))
-        .replace("%EMOJI", inline(card.emoji))
-        .replace("%GROUP", bold(card.group))
-        .replace("%SINGLE", simplify ? "" : space("left", `:: ${card.single}`));
-}
-
-function toString_missingEntry(card, missing = false) {
-    return "%GLOBAL_ID %EMOJI %GROUP :: %SINGLE - %NAME\n> %SET_ID %RARITY %CATEGORY %MISSING"
-        .replace("%GLOBAL_ID", inline(card.globalID))
-        .replace("%EMOJI", inline(card.emoji))
-        .replace("%GROUP", bold(card.group))
-        .replace("%SINGLE", card.single)
-        .replace("%NAME", link(card.name, card.imageURL))
-
-        .replace("%SET_ID", inline("🗣️", card.setID))
-        .replace("%RARITY", inline(`R${card.rarity}`))
-        .replace("%CATEGORY", inline(card.category))
-
-        .replace("%MISSING", inline(missing ? "🚫 missing" : "✔️ owned"));
-}
-
-/** @param {"carrot"|"ribbon"} currencyType  */
-function toString_shopEntry(card, currencyType = "carrot") {
-    let _currencyIcon = "";
-
-    switch (currencyType) {
-        case "carrot": _currencyIcon = botConfig.emojis.CURRENCY_1.EMOJI; break;
-        case "ribbon": _currencyIcon = botConfig.emojis.CURRENCY_2.EMOJI; break;
-    }
-
-    return "%GLOBAL_ID %EMOJI %GROUP :: %SINGLE : %NAME %SET_ID %PRICE"
-        .replace("%GLOBAL_ID", inline(card.globalID))
-        .replace("%EMOJI", inline(card.emoji))
-        .replace("%GROUP", bold(card.group))
-        .replace("%SINGLE", card.single)
-        .replace("%NAME", link(card.name, card.imageURL))
-        .replace("%SET_ID", inline("🗣️", card.setID))
-        .replace("%PRICE", inline(_currencyIcon, card.price));
-}
-
 function toString_inventory(card, options = { duplicateCount: 0, favorited: false, selected: false, team: false, isDuplicate: false, simplify: false, }) {
     options = { duplicateCount: 0, favorited: false, selected: false, team: false, isDuplicate: false, simplify: false, ...options };
 
@@ -330,6 +282,66 @@ function toString_inventory(card, options = { duplicateCount: 0, favorited: fals
     return formated;
 }
 
+function toString_missingEntry(card, missing = false) {
+    return "%GLOBAL_ID %EMOJI %GROUP :: %SINGLE - %NAME\n> %SET_ID %RARITY %CATEGORY %MISSING"
+        .replace("%GLOBAL_ID", inline(card.globalID))
+        .replace("%EMOJI", inline(card.emoji))
+        .replace("%GROUP", bold(card.group))
+        .replace("%SINGLE", card.single)
+        .replace("%NAME", link(card.name, card.imageURL))
+
+        .replace("%SET_ID", inline("🗣️", card.setID))
+        .replace("%RARITY", inline(`R${card.rarity}`))
+        .replace("%CATEGORY", inline(card.category))
+
+        .replace("%MISSING", inline(missing ? "🚫 missing" : "✔️ owned"));
+}
+
+function toString_itemPackSetEntry(setID, chance) {
+    let _card = get_set(setID)[0]; if (!_card) return "n/a";
+
+    return "%SET_ID %EMOJI %GROUP :: %SINGLE %CHANCE"
+        .replace("%SET_ID", `\`🗣️ ${_card.setID}\``)
+        .replace("%EMOJI", `\`${_card.emoji}\``)
+        .replace("%GROUP", `**${_card.group}**`)
+        .replace("%SINGLE", _card.single)
+        .replace("%CHANCE", `\`%${chance}\``);
+}
+
+/** @param {"carrot"|"ribbon"} currencyType  */
+function toString_shopEntry(card, currencyType = "carrot") {
+    let _currencyIcon = "";
+
+    switch (currencyType) {
+        case "carrot": _currencyIcon = botConfig.emojis.CURRENCY_1.EMOJI; break;
+        case "ribbon": _currencyIcon = botConfig.emojis.CURRENCY_2.EMOJI; break;
+    }
+
+    return "%GLOBAL_ID %EMOJI %GROUP :: %SINGLE : %NAME %SET_ID %PRICE"
+        .replace("%GLOBAL_ID", inline(card.globalID))
+        .replace("%EMOJI", inline(card.emoji))
+        .replace("%GROUP", bold(card.group))
+        .replace("%SINGLE", card.single)
+        .replace("%NAME", link(card.name, card.imageURL))
+        .replace("%SET_ID", inline("🗣️", card.setID))
+        .replace("%PRICE", inline(_currencyIcon, card.price));
+}
+
+function toString_setEntry(card, count = 1, simplify = false) {
+    if (count < 10) count = `0${count}`;
+
+    return "%SET_ID %CARD_COUNT %CATEGORY %EMOJI %DESCRIPTION%SINGLE"
+        .replace("%SET_ID", inline("🗣️", card.setID))
+
+        .replace("%CARD_COUNT", inline("📁", count || 1))
+
+        .replace("%CATEGORY", inline(card.category))
+        .replace("%EMOJI", inline(card.emoji))
+        .replace("%GROUP", bold(card.group))
+        .replace("%DESCRIPTION", `**${card.description}**`)
+        .replace("%SINGLE", simplify ? "" : space("left", `:: ${card.single}`));
+}
+
 module.exports = {
     cards, cards_all, cards_general, cardCount: cards_all.length,
     cards_shop: {
@@ -361,9 +373,10 @@ module.exports = {
 
     toString: {
         basic: toString_basic,
-        setEntry: toString_setEntry,
+        inventory: toString_inventory,
         missingEntry: toString_missingEntry,
+        itemPackSetEntry: toString_itemPackSetEntry,
         shopEntry: toString_shopEntry,
-        inventory: toString_inventory
+        setEntry: toString_setEntry
     }
 };

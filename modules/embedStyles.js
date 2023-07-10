@@ -11,7 +11,7 @@ const { BetterEmbed } = require('../modules/discordTools');
 const badgeManager = require('../modules/badgeManager');
 const cardManager = require('../modules/cardManager');
 const userParser = require('../modules/userParser');
-const shop = require('../modules/shop');
+// const shop = require('../modules/shop');
 const itemPackManager = require('./itemPackManager');
 
 // General -> Quest Objective Completed
@@ -254,7 +254,7 @@ function generalShop_ES(guildMember) {
         for (let i = 0; i < pages_itemPacks_f.length; i++) {
             // Create the shop page
             let embed = embed_shop_template()
-                .setDescription(pages_itemPacks_f[i].join("\n") || "This page is empty")
+                .setDescription(pages_itemPacks_f[i].join("\n\n") || "This page is empty")
                 .setFooter({ text: `Page ${i + 1}/${pages_itemPacks_f.length || 1}` });
 
             // Push the page embed to the embed array
