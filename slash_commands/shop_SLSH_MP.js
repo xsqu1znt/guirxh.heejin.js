@@ -30,6 +30,8 @@ module.exports = {
             paginationType: "shortJump", dynamicPagination: false, selectMenu: true
         });
 
+        console.log(embed_shop.embeds);
+
         /// Add select menu options
         if (embed_shop.embeds?.shopSets)
             embed_withNav.addToSelectMenu({

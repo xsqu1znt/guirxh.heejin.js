@@ -162,7 +162,7 @@ function generalShop_ES(guildMember) {
             // Create the shop page
             let embed = embed_shop_template()
                 .setDescription(pages_cardsGeneral_f[i].join("\n") || "This page is empty")
-                .setFooter({ text: `Page ${i + 1}/${pages_cardsGeneral_f.length || 1}` })
+                .setFooter({ text: `Page ${i + 1}/${pages_cardsGeneral_f.length || 1}` });
 
             // Check if this page includes custom cards
             if (embed.data.description.includes("cust")) embed.setDescription(
@@ -194,7 +194,7 @@ function generalShop_ES(guildMember) {
                 // Create the shop page
                 let embed = embed_shop_template()
                     .setDescription(set_chunks_f[i].join("\n") || "This page is empty")
-                    .setFooter({ text: `Page ${i + 1}/${set_chunks_f.length || 1}` })
+                    .setFooter({ text: `Page ${i + 1}/${set_chunks_f.length || 1}` });
 
                 // Check if this page includes custom cards
                 if (embed.data.description.includes("cust")) embed.setDescription(
@@ -232,7 +232,7 @@ function generalShop_ES(guildMember) {
             // Create the shop page
             let embed = embed_shop_template()
                 .setDescription(pages_cardsSpecial_f[i].join("\n") || "This page is empty")
-                .setFooter({ text: `Page ${i + 1}/${pages_cardsSpecial_f.length || 1}` })
+                .setFooter({ text: `Page ${i + 1}/${pages_cardsSpecial_f.length || 1}` });
 
             // Push the page embed to the embed array
             embeds.push(embed);
@@ -255,7 +255,7 @@ function generalShop_ES(guildMember) {
             // Create the shop page
             let embed = embed_shop_template()
                 .setDescription(pages_itemPacks_f[i].join("\n") || "This page is empty")
-                .setFooter({ text: `Page ${i + 1}/${pages_itemPacks_f.length || 1}` })
+                .setFooter({ text: `Page ${i + 1}/${pages_itemPacks_f.length || 1}` });
 
             // Push the page embed to the embed array
             embeds.push(embed);
@@ -278,7 +278,7 @@ function generalShop_ES(guildMember) {
             // Create the shop page
             let embed = embed_shop_template()
                 .setDescription(pages_badges_f[i].join("\n") || "This page is empty")
-                .setFooter({ text: `Page ${i + 1}/${pages_badges_f.length || 1}` })
+                .setFooter({ text: `Page ${i + 1}/${pages_badges_f.length || 1}` });
 
             // Push the page embed to the embed array
             embeds.push(embed);
@@ -290,189 +290,25 @@ function generalShop_ES(guildMember) {
     let shopPages = {
         shopSets: embed_shopSets(),
         allCards: embed_allCards(),
-        individualCardSets: [...embed_individualCardSets()],
+        individualCardSets: embed_individualCardSets(),
         allCards_special: embed_allCards_special(),
         itemPacks: embed_itemPacks(),
         badges: embed_badges()
     };
 
-    let embeds_all = Object.values(shopPages);
+    let embeds_all = [
+        shopPages.shopSets,
+        shopPages.allCards,
+        ...shopPages.individualCardSets,
+        shopPages.allCards_special,
+        shopPages.itemPacks,
+        shopPages.badges
+    ].filter(arr => arr?.length || arr);
 
     return {
         embeds: shopPages, embeds_all,
         cardSets: sets_card_general.map(set => ({ emoji: set[0].emoji, name: set[0].group, description: set[0].description }))
     };
-
-    // Create an array of only unique shop cards for sorting purposes
-    // let cards_shop_unique = arrayTools.unique(cards_shop_general, (a, b) => a === b.setID);
-    // The amount of cards in each set
-    // let card_sets = cards_shop_unique.map(card => cards_shop.filter(c => c.setID === card.setID));
-
-    // Embed creation
-    /* let embed_template = () => new BetterEmbed({
-        author: { text: "%AUTHOR_NAME | shop", user: guildMember }
-    }); */
-
-    /* let embed_list = () => {
-        let cards_f = cards_shop_unique.map((card, idx) => cardManager.toString.setEntry(card, card_sets[idx].length, true));
-
-        // Item packs
-        let uniqueSet_itemPacks = arrayTools.unique(shop.itemPacks.all.sort((a, b) => a.setID - b.setID),
-            (pack, packCompare) => packCompare.setID === pack.setID
-        );
-
-        let sets_itemPacks = uniqueSet_itemPacks.map(pack => shop.itemPacks.all.filter(p => p.setID === pack.setID));
-        let itemPacks_f = uniqueSet_itemPacks.map((pack, idx) =>
-            shop.itemPacks.toString.setEntry(pack, sets_itemPacks[idx].length)
-        );
-
-        // Badges
-        let uniqueSet_badges = arrayTools.unique(shop.badges.all.sort((a, b) => a.setID - b.setID),
-            (badge, badgeCompare) => badgeCompare.setID === badge.setID
-        );
-
-        let sets_badges = uniqueSet_badges.map(badge => shop.badges.all.filter(b => b.setID === badge.setID));
-        let badges_f = uniqueSet_badges.map((badge, idx) =>
-            shop.badges.toString.setEntry(badge, sets_badges[idx].length)
-        );
-
-        let shop_f = "";
-        shop_f += cards_f.length ? `\`🃏\` **Cards**\n${cards_f.map(card_f => `> ${card_f}`).join("\n")}` : "";
-        shop_f += itemPacks_f.length ? `\n\n\`📦\` **Items**\n${itemPacks_f.map(pack_f => `> ${pack_f}`).join("\n")}` : "";
-        shop_f += badges_f.length ? `\n\n\`📛\` **Badges**\n${badges_f.map(badge_f => `> ${badge_f}`).join("\n")}` : "";
-
-        // Create the embed
-        let embed = embed_template()
-            .setDescription(shop_f || "There is nothing in the shop right now");
-
-        // Return the embed
-        return embed;
-    };
-
-    let embed_all = () => {
-        let cardSets_f = card_sets.map(set => set.map(card => cardManager.toString.shopEntry(card)));
-
-        // Break up sets into multiple pages to retain there being a max of 10 sets per page
-        cardSets_f = (() => {
-            let newArr = [];
-
-            for (let set of cardSets_f) {
-                if (set.length > 10) newArr = [...newArr, ...arrayTools.chunk(set, 10)];
-                else newArr = [...newArr, set];
-            };
-
-            return newArr;
-        })();
-
-        let embeds = [];
-
-        for (let i = 0; i < cardSets_f.length; i++) {
-            let cardEntries = cardSets_f[i].join("\n");
-
-            // Create the embed page
-            let embed = embed_template()
-                .setDescription(cardEntries)
-                .setFooter({ text: `Page ${i + 1}/${cardSets_f.length || 1}` });
-
-            // Let the user know how to request customs
-            if (cardEntries.includes("cust"))
-                embed.setDescription(`[join our server to request your custom](${communityServer.url})\n\n${cardEntries}`);
-
-            embeds.push(embed);
-        }
-
-        return embeds;
-    };
-
-    let embed_cardSets = () => {
-        let embeds = [];
-
-        for (let card of cards_shop_unique) {
-            let cardSet = cards_shop.filter(c => c.setID === card.setID);
-            let cardSet_f = cardSet.map(c => cardManager.toString.shopEntry(c));
-
-            cardSet_f = arrayTools.chunk(cardSet_f, 10);
-
-            let _embeds = [];
-            for (let i = 0; i < cardSet_f.length; i++) {
-                let cardEntries = cardSet_f[i].join("\n");
-
-                let embed = embed_template()
-                    .setDescription(cardEntries)
-                    .setFooter({ text: `Page ${i + 1}/${cardSet_f.length || 1}` });
-
-                // Let the user know how to request customs
-                if (cardEntries.includes("cust"))
-                    embed.setDescription(`[join our server to request your custom](${communityServer.url})\n\n${cardEntries}`);
-
-                _embeds.push(embed);
-            }
-
-            embeds.push(_embeds);
-        }
-
-        return embeds;
-    };
-
-    let embed_rewards = () => {
-        let rewards_f = shop.rewards.all.map(reward => shop.rewards.toString.shop(reward));
-        rewards_f = arrayTools.chunk(rewards_f, 10);
-
-        let embeds = [];
-
-        for (let i = 0; i < rewards_f.length; i++) {
-
-        }
-
-        return embeds;
-    };
-
-    let embed_itemPacks = () => {
-        let itemPacks_f = shop.itemPacks.all.map(cardPack => shop.itemPacks.toString.shop(cardPack));
-        itemPacks_f = arrayTools.chunk(itemPacks_f, 10);
-
-        let embeds = [];
-
-        for (let i = 0; i < itemPacks_f.length; i++) {
-            let embed = embed_template()
-                .setDescription(itemPacks_f[i].length > 0 ? itemPacks_f[i].join("\n") : "There are no item packs available");
-
-            if (itemPacks_f[i].length > 0) embed.setFooter({ text: `Page ${i + 1}/${itemPacks_f.length || 1}` });
-
-            embeds.push(embed);
-        }
-
-        return embeds;
-    };
-
-    let embed_badges = () => {
-        let badges_f = badgeManager.badges.map(badge => shop.badges.toString.shop(badge));
-        badges_f = arrayTools.chunk(badges_f, 10);
-
-        let embeds = [];
-
-        for (let i = 0; i < badges_f.length; i++) {
-            let embed = embed_template()
-                .setDescription(badges_f[i].length > 0 ? badges_f[i].join("\n") : "There are no badges available");
-
-            if (badges_f[i].length > 0) embed.setFooter({ text: `Page ${i + 1}/${badges_f.length || 1}` });
-
-            embeds.push(embed);
-        }
-
-        return embeds;
-    }; */
-
-    // Return the different embed views
-    /* return [
-        embed_list(),
-        embed_all(),
-        ...embed_cardSets(),
-        embed_itemPacks(),
-        embed_badges()
-    ]; */
-
-    // return embed_shopSets();
 }
 
 // Command -> User -> /VIEW
