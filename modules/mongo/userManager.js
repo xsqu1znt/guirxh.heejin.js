@@ -26,7 +26,7 @@
  * @property {number} timestamp_started */
 
 /** @typedef UserDataType
- * @type {"id"|"full"|"inventory"|"noInventory"|"essential"|"xp"|"reminder"|"quest"} */
+ * @type {"id"|"full"|"inventory"|"noInventory"|"essential"|"balance"|"xp"|"reminder"|"quest"} */
 
 /** @typedef UserDataFetchOptions
  * @property {UserDataType} type
@@ -106,7 +106,8 @@ async function userData_fetch(userID, options = {}) {
             level: 1, xp: 1, xp_for_next_level: 1,
             biography: 1, balance: 1, ribbons: 1
         }; break;
-        case "xp": fetchFilter = { level: 1, xp: 1, xp_for_next_level: 1 }; break;
+        case "balance": fetchFilter = { _id: 1, balance: 1, ribbons: 1 }; break;
+        case "xp": fetchFilter = { _id: 1, level: 1, xp: 1, xp_for_next_level: 1 }; break;
         case "reminder": fetchFilter = { _id: 1, daily_streak: 1, daily_streak_expires: 1, cooldowns: 1, reminders: 1 }; break;
         case "quest": fetchFilter = { _id: 1, quests_complete: 1 }; break;
         default: fetchFilter = { __v: 0 }; break;

@@ -14,6 +14,20 @@ const userParser = require('../modules/userParser');
 // const shop = require('../modules/shop');
 const itemPackManager = require('./itemPackManager');
 
+// Gerald -> Error
+/** @param {"itemNotFound"|"purchaseFailed"} errorType  */
+async function generalError_ES(interaction, errorType, err = "") {
+    let embed = new BetterEmbed({ interaction, description: err });
+
+    switch (errorType) {
+        case "itemNotFound": embed.setAuthor({ name: "⛔ Item not found" }); break;
+        case "purchaseFailed": embed.setAuthor({ name: "⛔ Purchase failed" }); break;
+        default: embed.setAuthor({ name: "⛔ An unknown error occured" }); break;
+    }
+
+    return await embed.send();
+}
+
 // General -> Quest Objective Completed
 function quest_objectiveComplete_ES(guildMember, questProgress) {
     let objectives_f = questProgress.objectives_just_complete.map(obj =>
@@ -859,6 +873,7 @@ async function userQuest_ES(guildMember) {
 
 module.exports = {
     // General Embeds
+    generalError_ES,
     quest_objectiveComplete_ES,
 
     // General Commands

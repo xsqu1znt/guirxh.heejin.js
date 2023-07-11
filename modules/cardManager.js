@@ -162,8 +162,11 @@ function get_globalID(globalID) {
     return structuredClone(cards_all.find(card => card.globalID === globalID)) || null;
 }
 
-function get_fromShop(globalID) {
-    let _card_shop_set_ids = [...shopConfig.stock.card_set_ids.GENERAL, ...shopConfig.stock.card_set_ids.SPECIAL];
+function get_fromShop(globalID, special = false) {
+    let _card_shop_set_ids = special
+        ? shopConfig.stock.card_set_ids.SPECIAL
+        : shopConfig.stock.card_set_ids.GENERAL;
+
     let _cards = cards_all.filter(card => _card_shop_set_ids.includes(card.setID));
     return structuredClone(_cards.find(card => card.globalID === globalID)) || null;
 }
@@ -338,7 +341,7 @@ function toString_setEntry(card, count = 1, simplify = false) {
         .replace("%CATEGORY", inline(card.category))
         .replace("%EMOJI", inline(card.emoji))
         .replace("%GROUP", bold(card.group))
-        .replace("%DESCRIPTION", `**${card.description}**`)
+        .replace("%DESCRIPTION", card.description)
         .replace("%SINGLE", simplify ? "" : space("left", `:: ${card.single}`));
 }
 

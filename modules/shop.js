@@ -11,6 +11,9 @@ const cardManager = require('./cardManager');
 async function card_buy(userID, globalID) {
     let card = cardManager.get.fromShop(globalID); if (!card) return null;
 
+    let userData = await userManager.fetch(userID, { type: "balance" });
+    if (userData.balance < card.price) return null;
+
     await Promise.all([
         // Subtract the card's price from the user's balance
         userManager.update(userID, { $inc: { balance: -card.price } }),
@@ -24,8 +27,11 @@ async function card_buy(userID, globalID) {
 }
 
 //! Special (quest ribbons) | CURRENCY_2
-async function special_buy_card(userID, globalID) {
-    let card = cardManager.get.fromShop(globalID); if (!card) return null;
+async function card_buy_special(userID, globalID) {
+    let card = cardManager.get.fromShop(globalID, true); if (!card) return null;
+
+    let userData = await userManager.fetch(userID, { type: "balance" });
+    if (userData.ribbons < card.price) return null;
 
     await Promise.all([
         // Subtract the card's price from the user's balance
@@ -43,6 +49,9 @@ async function special_buy_card(userID, globalID) {
 // TODO: itemPack_buy | card packs
 async function itemPack_buy(userID, packID) {
     let itemPack = itemPackManager.get.packID(packID); if (!itemPack) return [];
+
+    let userData = await userManager.fetch(userID, { type: "balance" });
+    if (userData.balance < itemPack.price) return null;
 
     let cards = [...new Array(itemPack.items.cards.count)].map(() => {
         // Reformat to work with randomTools.weightedChoice()
@@ -65,8 +74,10 @@ async function itemPack_buy(userID, packID) {
 
 //! Badges | CURRENCY_1
 async function badge_buy(userID, badgeID) {
-    let badge = badge_get(badgeID);
-    if (!badge) return null;
+    let badge = badge_get(badgeID); if (!badge) return null;
+
+    let userData = await userManager.fetch(userID, { type: "balance" });
+    if (userData.balance < badge.price) return null;
 
     await Promise.all([
         // Subtract the badge's price from the user's balance
@@ -80,11 +91,28 @@ async function badge_buy(userID, badgeID) {
     return badge;
 }
 
+//! General
+function getItem(itemID) {
+    let possibleItems = {
+        card_general: cardManager.get.fromShop(itemID),
+        card_special: cardManager.get.fromShop(itemID, true),
+
+        item_pack: itemPackManager.get.packID(itemID),
+        badge: badgeManager.get.badgeID(itemID)
+    };
+
+    let item = Object.entries(possibleItems).filter(item => item[1])[0];
+
+    return { item: item ? item[1] : null, type: item ? item[0] : null };
+}
+
 module.exports = {
+    getItem,
+
     cards: {
         all: cardManager.cards_shop,
         get: cardManager.get.fromShop,
-        buy: card_buy
+        buy: card_buy, buy_special: card_buy_special
     },
 
     badges: {
