@@ -22,21 +22,21 @@ function parse_toBadgeLike(badge) {
 }
 
 function parse_fromBadgeLike(badgeLike) {
-    return { ...getBadgeByID(badgeLike.id.toLowerCase()), ...badgeLike };
+    return { ...get_badgeID(badgeLike.id.toLowerCase()), ...badgeLike };
 }
 
 function toString_basic(badge) {
     return "%EMOJI %SET :: %NAME"
-        .replace("%EMOJI", badge.emoji)
-        .replace("%SET", bold(true, badge.set))
-        .replace("%NAME", italic(true, link(badge.name, badge.emojiURL, badge.description)));
+        .replace("%EMOJI", badge.customEmoji || `\`${badge.emoji}\``)
+        .replace("%SET", `**${badge.set}**`)
+        .replace("%NAME", `*${link(badge.name, badge.emojiURL, badge.description)}*`);
 }
 
 function toString_profile(badge) {
-    return inline(true, "%EMOJI %SET %NAME")
-        .replace("%EMOJI", badge.emoji)
-        .replace("%SET", badge.set)
-        .replace("%NAME", badge.name);
+    return "%EMOJI %SET %NAME"
+        .replace("%EMOJI", badge.customEmoji || `\`${badge.emoji}\``)
+        .replace("%SET", `**${badge.set}**`)
+        .replace("%NAME", `*${link(badge.name, badge.emojiURL, badge.description)}*`);
 }
 
 function toString_setEntry(setID) {

@@ -264,6 +264,17 @@ async function inventory_sell(userID, cards) {
     ]); return true;
 }
 
+//! UserData -> Badges
+/** @param {string} userID */
+async function badges_add(userID, badges) {
+    // Create an array if only a single badge object was passed
+    // filtering out invalid badges in the process
+    if (!badges) return; if (!Array.isArray(badges)) badges = [badges].filter(badges => badges?.id);
+
+    // Push the new badges to the user's badge array
+    return await userData_update(userID, { $push: { badges: { $each: badges } } });
+}
+
 module.exports = {
     count: userData_count,
     exists: userData_exists,
@@ -282,5 +293,9 @@ module.exports = {
         remove: inventory_remove,
         update: inventory_update,
         sell: inventory_sell
+    },
+
+    badges: {
+        add: badges_add
     }
 }

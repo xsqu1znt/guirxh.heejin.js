@@ -507,7 +507,7 @@ function userProfile_ES(guildMember, userData) {
         badges_f = arrayTools.chunk(badges_f, 3);
 
         // Format the chunks into an array of strings
-        badges_f = badges_f.map(chunk_badges => quote(chunk_badges.join(" ")));
+        badges_f = badges_f.map(chunk_badges => quote(chunk_badges.join(" :: ")));
 
         // Add the badges to the embed
         // embed.addFields([{ name: "\`📛\` Badges", value: badges_f.join("\n") }]);
