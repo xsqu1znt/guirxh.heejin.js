@@ -171,7 +171,7 @@ function get_fromShop(globalID, special = false) {
     return structuredClone(_cards.find(card => card.globalID === globalID)) || null;
 }
 
-function get_set(setID) {
+function get_setID(setID) {
     return structuredClone(cards_all.filter(card => card.setID === setID)) || [];
 }
 
@@ -363,8 +363,8 @@ module.exports = {
 
     get: {
         globalID: get_globalID,
+        setID: get_setID,
         fromShop: get_fromShop,
-        set: get_set,
         random: get_random,
         drop: get_randomDrop
     },

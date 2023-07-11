@@ -1,94 +1,142 @@
 const { emojis: { CURRENCY_1, CURRENCY_2 } } = require('../configs/config_bot.json');
 
+const { BetterEmbed } = require('./discordTools');
 const { userManager } = require('./mongo/index');
 const { randomTools } = require('./jsTools');
 
 const itemPackManager = require('./itemPackManager');
 const badgeManager = require('./badgeManager');
 const cardManager = require('./cardManager');
+const userParser = require('./userParser');
 
 //! Cards | CURRENCY_1
-async function card_buy(userID, globalID) {
-    let card = cardManager.get.fromShop(globalID); if (!card) return null;
+async function card_buy(guildMember, globalID) {
+    let _card = cardManager.get.fromShop(globalID); if (!_card) return null;
 
-    let userData = await userManager.fetch(userID, { type: "balance" });
-    if (userData.balance < card.price) return null;
+    let userData = await userManager.fetch(guildMember.id, { type: "balance" });
+    if (userData.balance < _card.price) return null;
 
     await Promise.all([
         // Subtract the card's price from the user's balance
-        userManager.update(userID, { $inc: { balance: -card.price } }),
+        userManager.update(guildMember.id, { $inc: { balance: -_card.price } }),
 
         // Add the card to the user's card_inventory
-        userManager.inventory.add(userID, card)
+        userManager.inventory.add(guildMember.id, _card)
     ]);
 
-    // Return the card
-    return card;
+    // Create the embed
+    let embed = new BetterEmbed({
+        author: { text: "%AUTHOR_NAME | buy", user: guildMember },
+        description: `You bought:\n> ${cardManager.toString.basic(_card)}`
+    });
+
+    // Return the card and embed
+    return { card: _card, embed };
 }
 
 //! Special (quest ribbons) | CURRENCY_2
-async function card_buy_special(userID, globalID) {
-    let card = cardManager.get.fromShop(globalID, true); if (!card) return null;
+async function card_buy_special(guildMember, globalID) {
+    let _card = cardManager.get.fromShop(globalID, true); if (!_card) return null;
 
-    let userData = await userManager.fetch(userID, { type: "balance" });
-    if (userData.ribbons < card.price) return null;
+    let userData = await userManager.fetch(guildMember.id, { type: "balance" });
+    if (userData.ribbons < _card.price) return null;
 
     await Promise.all([
         // Subtract the card's price from the user's balance
-        userManager.update(userID, { $inc: { ribbons: -card.price } }),
+        userManager.update(guildMember.id, { $inc: { ribbons: -_card.price } }),
 
         // Add the card to the user's card_inventory
-        userManager.inventory.add(userID, card)
+        userManager.inventory.add(guildMember.id, _card)
     ]);
 
-    // Return the card
-    return card;
+    // Create the embed
+    let embed = new BetterEmbed({
+        author: { text: "%AUTHOR_NAME | buy", user: guildMember },
+        description: `You bought:\n> ${cardManager.toString.basic(_card)}`
+    });
+
+    // Return the card and embed
+    return { card: _card, embed };
 }
 
 //! Card Packs | CURRENCY_1
 // TODO: itemPack_buy | card packs
-async function itemPack_buy(userID, packID) {
-    let itemPack = itemPackManager.get.packID(packID); if (!itemPack) return [];
+async function itemPack_buy(guildMember, packID) {
+    let _itemPack = itemPackManager.get.packID(packID); if (!_itemPack) return [];
 
-    let userData = await userManager.fetch(userID, { type: "balance" });
-    if (userData.balance < itemPack.price) return null;
+    let userData = await userManager.fetch(guildMember.id, { type: "balance" });
+    if (userData.balance < _itemPack.price) return null;
 
-    let cards = [...new Array(itemPack.items.cards.count)].map(() => {
+    let _cards = [...new Array(_itemPack.items.cards.count)].map(() => {
         // Reformat to work with randomTools.weightedChoice()
-        let sets = itemPack.items.cards.fromSet.map(set => ({ id: set.id, rarity: set.chance }));
+        let sets = _itemPack.items.cards.fromSet.map(set => ({ id: set.id, rarity: set.chance }));
 
         let { id: setID } = randomTools.weightedChoice(sets);
-        return randomTools.choice(cardManager.cards_all.filter(card => card.setID === setID));
+        return randomTools.choice(cardManager.get.setID(setID));
     });
 
     await Promise.all([
         // Subtract the card pack's price from the user's balance
-        userManager.update(userID, { $inc: { balance: -itemPack.price } }),
+        userManager.update(guildMember.id, { $inc: { balance: -_itemPack.price } }),
         // Add the cards to the user's card_inventory
-        userManager.cards.add(userID, cards)
+        userManager.cards.add(guildMember.id, _cards)
     ]);
 
-    // Return the cards the user received
-    return cards;
+    /// Create the embed
+    let embed = new BetterEmbed({
+        author: { text: "%AUTHOR_NAME | buy", user: guildMember },
+        description: `You bought:\n> ${cardManager.toString.basic(_card)}`
+    });
+
+    /// For when the item pack contains cards
+    if (_cards) {
+        // Fetch the user's card_inventory
+        userData = await userManager.fetch(guildMember.id, { type: "inventory" })
+
+        // Check which cards the user already has
+        let _cards_isDuplicate = _cards.map(card =>
+            userParser.cards.getDuplicates(userData, card.globalID).duplicateCount >= 1
+        );
+
+        // Format _cards into strings
+        let _cards_f = _cards.map((card, idx) =>
+            cardManager.toString.inventory(card, { simplify: true, isDuplicate: _cards_isDuplicate[idx] })
+        );
+
+        // Set the embed's image to be the last card in the array
+        embed.setImage(_cards.slice(-1)[0]?.imageURL);
+
+        // Set the embed's footer
+        embed.setFooter({ text: `${guildMember.displayName} opened **${_itemPack.name}**` });
+    }
+
+    // Return the item pack content and the embed
+    return { content: { cards: _cards }, embed };
 }
 
 //! Badges | CURRENCY_1
-async function badge_buy(userID, badgeID) {
-    let badge = badge_get(badgeID); if (!badge) return null;
+async function badge_buy(guildMember, badgeID) {
+    let _badge = badge_get(badgeID); if (!_badge) return null;
 
-    let userData = await userManager.fetch(userID, { type: "balance" });
-    if (userData.balance < badge.price) return null;
+    let userData = await userManager.fetch(guildMember.id, { type: "balance" });
+    if (userData.balance < _badge.price) return null;
 
     await Promise.all([
         // Subtract the badge's price from the user's balance
-        userManager.update(userID, { $inc: { balance: -badge.price } }),
+        userManager.update(guildMember.id, { $inc: { balance: -_badge.price } }),
 
         // Add the badge to the user's profile
-        userManager.badges.add(userID, badge)
+        userManager.badges.add(guildMember.id, _badge)
     ]);
 
-    // Return the badge
-    return badge;
+    // Create the embed
+    let embed = new BetterEmbed({
+        author: { text: "%AUTHOR_NAME | buy", user: guildMember },
+        description: `You bought:\n> ${badgeManager.toString.basic(_badge)}`
+    });
+
+    // Return the badge and embed
+    return { badge: _badge, embed };
 }
 
 //! General
