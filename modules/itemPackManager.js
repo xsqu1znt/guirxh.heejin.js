@@ -6,7 +6,7 @@ const itemPacks = require('../items/item_packs.json');
 const cardManager = require('./cardManager');
 
 function get_packID(packID) {
-    return structuredClone(itemPacks.find(pack => pack.id === packID)) || null;
+    return structuredClone(itemPacks.find(pack => pack.id.toLowerCase() === packID)) || null;
 }
 
 function get_setID(setID) {

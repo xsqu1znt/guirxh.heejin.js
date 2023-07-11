@@ -509,11 +509,11 @@ class EmbedNavigator {
                 let _number = +_content;
 
                 // Check whether it's a valid number
-                if (isNaN(_number) || (_number > this.data.page_nestedLength && _number < 0))
+                if (isNaN(_number) || (_number > this.data.page_nestedLength || _number <= 0))
                     // Send a self destructing error message
-                    await message_deleteAfter(await this.data.interaction.followUp({
+                    return await deleteMesssageAfter(await this.data.interaction.followUp({
                         content: `${this.data.interaction.user.toString()} \`${_content}\` is an invalid page number`
-                    }), dateTools.parseStr(timeouts.errorMessage));
+                    }), timeouts.errorMessage);
 
                 // Set the nested page index
                 this.data.page_idx.nested = _number - 1;

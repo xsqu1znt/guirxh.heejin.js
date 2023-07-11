@@ -69,7 +69,7 @@ function cards_getIdol(userData) {
 
 function cards_getInventory(userData) {
     let cards = [];
-    let cards_primary = arrayTools.unique(userData?.card_inventory || userData, (a, b) => a.globalID === b.globalID);
+    let cards_primary = arrayTools.unique(userData?.card_inventory || userData, "globalID");
 
     for (let card of cards_primary) {
         let { duplicateCount } = cards_getDuplicates(userData, card.globalID);
@@ -102,7 +102,7 @@ function cards_parseInventory(userData, options = c_pI_options) {
 
     let card_inventory = userData?.card_inventory || userData;
 
-    if (options.unique) card_inventory = arrayTools.unique(card_inventory, (a, b) => a.globalID === b.globalID);
+    if (options.unique) card_inventory = arrayTools.unique(card_inventory, "globalID");
 
     if (options.fromCardLike) for (let i = 0; i < card_inventory.length; i++) {
         let card = cardManager.parse.fromCardLike(card_inventory[i]);
@@ -143,7 +143,7 @@ function cards_has(userData, globalIDs) {
 
 /** Filter out duplicate cards from the user's card_inventory. */
 function cards_primary(cardArray) {
-    return arrayTools.unique(cardArray, (card, compareCard) => card.globalID === compareCard.globalID);
+    return arrayTools.unique(cardArray, "globalID");
 }
 
 /** Return all duplicates of the given card found using the filter.

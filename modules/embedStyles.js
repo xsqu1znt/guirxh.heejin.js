@@ -60,7 +60,7 @@ function generalCollections_ES(guildMember, options = { order: "decending", filt
     if (options.filter.category) cards_all = cards_all.filter(card => card.category.toLowerCase().includes(options.filter.category));
 
     // Create an array the only contains unique cards
-    let cards_unique = arrayTools.unique(cards_all, (card, card_compare) => card.setID === card_compare.setID);
+    let cards_unique = arrayTools.unique(cards_all, "setID");
 
     // Get the number of cards in a set by using each unique card's set ID
     let card_totals = cards_unique.map(card => cards_all.filter(c => c.setID === card.setID).length);
@@ -321,7 +321,9 @@ function generalShop_ES(guildMember) {
 
     return {
         embeds: shopPages, embeds_all,
-        cardSets: sets_card_general.map(set => ({ emoji: set[0].emoji, name: set[0].group, description: set[0].description }))
+        selectMenu_cardSets_f: sets_card_general.map(set => ({
+            emoji: set[0].emoji, name: stringTools.toTitleCase(set[0].group), description: stringTools.toTitleCase(set[0].group)
+        }))
     };
 }
 
@@ -481,9 +483,7 @@ function userProfile_ES(guildMember, userData) {
         if (userData.biography) _embed.addFields({ name: "\`👤\` Biography", value: userData.biography });
 
         // Add the user's basic information
-        let uniqueUserCardTotal = arrayTools.unique(userData.card_inventory,
-            (card, compareCard) => card.globalID === compareCard.globalID
-        ).length;
+        let uniqueUserCardTotal = arrayTools.unique(userData.card_inventory, "globalID").length;
         let profile_info = "%BALANCE :: %RIBBONS :: \`🃏 %CARD_TOTAL\` :: \`📈 LV. %LEVEL\`"
             .replace("%BALANCE", inline(botSettings.currencyIcon, userData.balance))
             .replace("%RIBBONS", inline("🎀", userData.ribbons || 0))
@@ -562,16 +562,14 @@ function userProfile_ES(guildMember, userData) {
         // Create an array of the user's cards sorted by category
         let userCards = allCards.map(category => {
             // Get each unique card rarity from the current category
-            let rarities = arrayTools.unique(category, (card, cardCompare) => card.rarity === cardCompare.rarity)
-                .map(card => card.rarity);
+            let rarities = arrayTools.unique(category, "rarity").map(card => card.rarity);
 
             // Create an array of every card that matches that category
             let userCards_categoryGroup = userData.card_inventory.filter(card => rarities.includes(card.rarity));
 
             // Filter out non-unique cards
-            if (userCards_categoryGroup.length > 0) userCards_categoryGroup = arrayTools.unique(userCards_categoryGroup,
-                (card, cardCompare) => card.globalID === cardCompare.globalID
-            );
+            if (userCards_categoryGroup.length > 0)
+                userCards_categoryGroup = arrayTools.unique(userCards_categoryGroup, "globalID");
 
             // Return an array of unique user cards that match the category
             return userCards_categoryGroup;

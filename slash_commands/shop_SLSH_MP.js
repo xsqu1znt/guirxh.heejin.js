@@ -35,7 +35,7 @@ module.exports = {
 
             // Create the embed navigation
             let embed_withNav = new EmbedNavigator({
-                interaction, embeds: embed_shop.embeds_all, useReactionsForPagination: false,
+                interaction, embeds: embed_shop.embeds_all, useReactionsForPagination: true,
                 paginationType: "shortJump", dynamicPagination: false, selectMenu: true
             });
 
@@ -48,8 +48,8 @@ module.exports = {
             if (embed_shop.embeds?.allCards?.length)
                 embed_withNav.addToSelectMenu({ emoji: "📁", label: "All Cards", description: "View all cards available" });
 
-            if (embed_shop.embeds?.individualCardSets?.length) embed_shop.cardSets.forEach(set =>
-                embed_withNav.addToSelectMenu({ emoji: set.emoji, label: set.name, description: `View ${set.description}` })
+            if (embed_shop.embeds?.individualCardSets?.length) embed_shop.selectMenu_cardSets_f.forEach(set =>
+                embed_withNav.addToSelectMenu({ emoji: set.emoji, label: set.name, description: `View all ${set.description} cards` })
             );
 
             if (embed_shop.embeds?.allCards_special?.length)
@@ -82,7 +82,7 @@ module.exports = {
                 return await interaction.editReply({ embeds: [buy_card_general.embed] });
 
             case "card_special":
-                let buy_card_special = await shop.cards.buy_special(interaction.user.id, itemID);
+                let buy_card_special = await shop.cards.buy_special(interaction.member, itemID);
                 if (!buy_card_special) return await generalError_ES(interaction, "purchaseFailed",
                     `You do not have enough \`${CURRENCY_2.EMOJI}\` to buy this item`
                 );
@@ -90,7 +90,7 @@ module.exports = {
                 return await interaction.editReply({ embeds: [buy_card_special.embed] });
 
             case "item_pack":
-                let buy_itemPack = await shop.itemPacks.buy(interaction.user.id, itemID);
+                let buy_itemPack = await shop.itemPacks.buy(interaction.member, itemID);
                 if (!buy_itemPack) return await generalError_ES(interaction, "purchaseFailed",
                     `You do not have enough \`${CURRENCY_1.EMOJI}\` to buy this item`
                 );
@@ -98,14 +98,16 @@ module.exports = {
                 return await interaction.editReply({ embeds: [buy_itemPack.embed] });
 
             case "badge":
-                let buy_badge = await shop.badges.buy(interaction.user.id, itemID);
+                let buy_badge = await shop.badges.buy(interaction.member, itemID);
                 if (!buy_badge) return await generalError_ES(interaction, "purchaseFailed",
                     `You do not have enough \`${CURRENCY_1.EMOJI}\` to buy this item`
                 );
 
                 return await interaction.editReply({ embeds: [buy_badge.embed] });
 
-            default: return await embed_error_InF.send({ description: `\`${itemID}\` is not an item in the shop` });
+            default: return await generalError_ES(interaction, "itemNotFound",
+                `\`${itemID}\` is not an item in the shop`
+            );
         }
     }
 };

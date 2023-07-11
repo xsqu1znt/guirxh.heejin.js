@@ -41,7 +41,7 @@ function createUID() {
 }
 
 function recalculateStats(card) {
-    let card_base = get_byGlobalID(card.globalID !== "100" ? card.globalID : "101");
+    let card_base = get_globalID(card.globalID !== "100" ? card.globalID : "101");
     if (!card_base) {
         logger.error("CardManager -> recalculateStats", "base card could not be found");
         return card;
@@ -134,7 +134,9 @@ function drop(dropType, count = 1) {
             break;
 
         case "event1":
-            let _cards_event1 = cards.evnt.filter(card => eventSettings.event1.cardRarityFilter.includes(card.rarity));
+            let _cards_event1 = [...cards.evnt, ...cards.bday, ...cards.holi].filter(card =>
+                eventSettings.event1.cardRarityFilter.includes(card.rarity)
+            );
 
             for (let i = 0; i < count; i++)
                 cards_dropped.push(structuredClone(randomTools.choice(_cards_event1)));
@@ -142,7 +144,9 @@ function drop(dropType, count = 1) {
             break;
 
         case "event2":
-            let _cards_event2 = cards.evnt.filter(card => eventSettings.event2.cardRarityFilter.includes(card.rarity));
+            let _cards_event2 = [...cards.evnt, ...cards.bday, ...cards.holi].filter(card =>
+                eventSettings.event2.cardRarityFilter.includes(card.rarity)
+            );
 
             for (let i = 0; i < count; i++)
                 cards_dropped.push(structuredClone(randomTools.choice(_cards_event2)));
@@ -219,7 +223,7 @@ function parse_toCardLike(card) {
 }
 
 function parse_fromCardLike(cardLike) {
-    return { ...get_byGlobalID(cardLike.globalID), ...cardLike };
+    return { ...get_globalID(cardLike.globalID), ...cardLike };
 }
 
 //! To String
@@ -301,7 +305,7 @@ function toString_missingEntry(card, missing = false) {
 }
 
 function toString_itemPackSetEntry(setID, chance) {
-    let _card = get_set(setID)[0]; if (!_card) return "n/a";
+    let _card = get_setID(setID)[0]; if (!_card) return "n/a";
 
     return "%SET_ID %EMOJI %GROUP :: %SINGLE %CHANCE"
         .replace("%SET_ID", `\`${_card.setID}\``)

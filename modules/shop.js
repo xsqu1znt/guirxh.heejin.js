@@ -116,7 +116,7 @@ async function itemPack_buy(guildMember, packID) {
 
 //! Badges | CURRENCY_1
 async function badge_buy(guildMember, badgeID) {
-    let _badge = badge_get(badgeID); if (!_badge) return null;
+    let _badge = badgeManager.get.badgeID(badgeID); if (!_badge) return null;
 
     let userData = await userManager.fetch(guildMember.id, { type: "balance" });
     if (userData.balance < _badge.price) return null;
