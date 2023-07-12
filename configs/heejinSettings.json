@@ -101,11 +101,11 @@
             "winRandom": 100
         },
         "cooldowns": {
-            "drop_general": "3",
-            "drop_weekly": "3",
+            "drop_general": "10s",
+            "drop_weekly": "10s",
             "drop_season": null,
-            "drop_event_1": "3",
-            "drop_event_2": "3",
+            "drop_event_1": "10s",
+            "drop_event_2": null,
             "daily": "5s",
             "stage": "5s",
             "random": "5s"
