@@ -497,24 +497,32 @@ function userProfile_ES(guildMember, userData) {
     };
 
     let embed_badges = () => {
-        let _embed = embed_template();
+        let embed = embed_template();
 
         // Convert the BadgeLike objects to full badges
-        let badges = userData.badges.map(badge => badgeManager.parse.fromBadgeLike(badge));
-        let badges_f = badges.map(badge => badgeManager.toString.profile(badge));
+        let _badges = userData.badges.map(badge => badgeManager.parse.fromBadgeLike(badge));
+        // let _badges_f = badges.map(badge => badgeManager.toString.profile(badge));
+
+        let sets_badges = arrayTools.unique(_badges.map(badge => badge.setID))
+            .map(setID => _badges.filter(badge => badge.setID === setID))
+        
+        let sets_badges_f = sets_badges.map(set => ({
+            name: set[0].set, f: set.map(badge => `> ${badgeManager.toString.profile(badge.id)}`)
+        }));
 
         // Have a max of 3 badges per line
-        badges_f = arrayTools.chunk(badges_f, 3);
+        // _badges_f = arrayTools.chunk(_badges_f, 3);
 
         // Format the chunks into an array of strings
-        badges_f = badges_f.map(chunk_badges => quote(chunk_badges.join(" :: ")));
+        // _badges_f = _badges_f.map(chunk_badges => chunk_badges.join("\n"));
 
         // Add the badges to the embed
         // embed.addFields([{ name: "\`📛\` Badges", value: badges_f.join("\n") }]);
-        _embed.setDescription(badges_f.join("\n"))
+        // _embed.setDescription(sets_badges_f.map(set => `***\"${set.name}\" set:***\n${set.join("\n")}`).join("\n\n"))
+        embed.addFields(sets_badges_f.map(set => ({ name: `***\"${set.name}\" set:***`, value: set.f.join("\n") })));
 
         // Return the embed
-        return _embed;
+        return embed;
     };
 
     let embed_card = (card) => {

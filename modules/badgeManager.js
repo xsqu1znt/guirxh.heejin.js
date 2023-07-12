@@ -7,7 +7,7 @@ const { markdown: { bold, italic, inline, link } } = require('./discordTools');
 const badges = require('../items/badges.json');
 
 function get_badgeID(id) {
-    return structuredClone(badges.find(badge => badge.id.toLowerCase() === id)) || null;
+    return structuredClone(badges.find(badge => badge.id.toLowerCase() === id.toLowerCase())) || null;
 }
 
 function get_setID(setID) {
@@ -32,11 +32,13 @@ function toString_basic(badge) {
         .replace("%NAME", `*${link(badge.name, badge.emojiURL, badge.description)}*`);
 }
 
-function toString_profile(badge) {
+function toString_profile(badgeID) {
+    let _badge = get_badgeID(badgeID); if (!_badge) return "n/a";
+
     return "%EMOJI %SET %NAME"
-        .replace("%EMOJI", badge.customEmoji || `\`${badge.emoji}\``)
-        .replace("%SET", `**${badge.set}**`)
-        .replace("%NAME", `*${link(badge.name, badge.emojiURL, badge.description)}*`);
+        .replace("%EMOJI", _badge.customEmoji || `\`${_badge.emoji}\``)
+        .replace("%SET", `\`${_badge.set}\``)
+        .replace("%NAME", `*${link(_badge.name, _badge.emojiURL, _badge.description)}*`);
 }
 
 function toString_setEntry(setID) {
