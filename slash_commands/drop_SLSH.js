@@ -7,6 +7,7 @@ const {
 } = require('../configs/heejinSettings.json');
 
 const { BetterEmbed, awaitConfirmation, deleteMesssageAfter } = require('../modules/discordTools');
+const { userManager: userManager_OLD } = require('../modules/mongo');
 const { randomTools, dateTools } = require('../modules/jsTools');
 const { userManager } = require('../modules/mongo/index');
 const cardManager = require('../modules/cardManager');
@@ -86,7 +87,7 @@ module.exports = {
         }
 
         // Check if the user has an active cooldown
-        let userCooldownETA = await userManager.cooldowns.check(interaction.user.id, dropCooldownType);
+        let userCooldownETA = await userManager_OLD.cooldowns.check(interaction.user.id, dropCooldownType);
         if (userCooldownETA) return await embed_drop.send({ description: `Your next drop is available **${userCooldownETA}**` });
 
         await Promise.all([
@@ -95,9 +96,9 @@ module.exports = {
             // Give the user XP
             userManager.xp.increment(interaction.user.id, randomTools.number(xp_drop.min, xp_drop.max)),
             // Reset the user's cooldown
-            userManager.cooldowns.reset(interaction.user.id, dropCooldownType),
+            userManager_OLD.cooldowns.reset(interaction.user.id, dropCooldownType),
             // Reset the user's reminder
-            userManager.reminders.reset(
+            userManager_OLD.reminders.reset(
                 interaction.user.id, interaction.guild.id, interaction.channel.id,
                 interaction.user, dropCooldownType
             )
