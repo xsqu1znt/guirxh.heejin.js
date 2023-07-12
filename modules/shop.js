@@ -27,7 +27,8 @@ async function card_buy(guildMember, globalID) {
     // Create the embed
     let embed = new BetterEmbed({
         author: { text: "%AUTHOR_NAME | buy", user: guildMember },
-        description: `You bought:\n> ${cardManager.toString.basic(_card)}`
+        description: `You bought **\`🃏 ${_card.single} - ${_card.name}\`**:\n> ${cardManager.toString.basic(_card)}`,
+        footer: { text: `balance remaining: ${CURRENCY_1.EMOJI} ${userData.balance - _card.price}` }
     });
 
     // Return the card and embed
@@ -52,7 +53,8 @@ async function card_buy_special(guildMember, globalID) {
     // Create the embed
     let embed = new BetterEmbed({
         author: { text: "%AUTHOR_NAME | buy", user: guildMember },
-        description: `You bought:\n> ${cardManager.toString.basic(_card)}`
+        description: `You bought **\`🎀 ${_card.single} - ${_card.name}\`**:\n> ${cardManager.toString.basic(_card)}`,
+        footer: { text: `ribbons remaining: ${CURRENCY_2.EMOJI} ${userData.ribbons - _card.price}` }
     });
 
     // Return the card and embed
@@ -67,9 +69,9 @@ async function itemPack_buy(guildMember, packID) {
     let userData = await userManager.fetch(guildMember.id, { type: "balance" });
     if (userData.balance < _itemPack.price) return null;
 
-    let _cards = [...new Array(_itemPack.items.cards.count)].map(() => {
+    let _cards = [...new Array(_itemPack.content.cards.count)].map(() => {
         // Reformat to work with randomTools.weightedChoice()
-        let sets = _itemPack.items.cards.fromSet.map(set => ({ id: set.id, rarity: set.chance }));
+        let sets = _itemPack.content.cards.sets.map(set => ({ id: set.id, rarity: set.chance }));
 
         let { id: setID } = randomTools.weightedChoice(sets);
         return randomTools.choice(cardManager.get.setID(setID));
@@ -79,13 +81,13 @@ async function itemPack_buy(guildMember, packID) {
         // Subtract the card pack's price from the user's balance
         userManager.update(guildMember.id, { $inc: { balance: -_itemPack.price } }),
         // Add the cards to the user's card_inventory
-        userManager.cards.add(guildMember.id, _cards)
+        userManager.inventory.add(guildMember.id, _cards)
     ]);
 
     /// Create the embed
     let embed = new BetterEmbed({
         author: { text: "%AUTHOR_NAME | buy", user: guildMember },
-        description: `You bought:\n> ${cardManager.toString.basic(_card)}`
+        footer: { text: `balance remaining: ${CURRENCY_1.EMOJI} ${userData.balance - _itemPack.price}` }
     });
 
     /// For when the item pack contains cards
@@ -100,14 +102,14 @@ async function itemPack_buy(guildMember, packID) {
 
         // Format _cards into strings
         let _cards_f = _cards.map((card, idx) =>
-            cardManager.toString.inventory(card, { simplify: true, isDuplicate: _cards_isDuplicate[idx] })
+            `> ${cardManager.toString.inventory(card, { simplify: true, isDuplicate: _cards_isDuplicate[idx] })}`
         );
+
+        // Set the embed's description
+        embed.setDescription(`You bought **\`📦 ${_itemPack.name}\`** and got:\n${_cards_f.join("\n")}`);
 
         // Set the embed's image to be the last card in the array
         embed.setImage(_cards.slice(-1)[0]?.imageURL);
-
-        // Set the embed's footer
-        embed.setFooter({ text: `${guildMember.displayName} opened **${_itemPack.name}**` });
     }
 
     // Return the item pack content and the embed
@@ -132,7 +134,8 @@ async function badge_buy(guildMember, badgeID) {
     // Create the embed
     let embed = new BetterEmbed({
         author: { text: "%AUTHOR_NAME | buy", user: guildMember },
-        description: `You bought:\n> ${badgeManager.toString.basic(_badge)}`
+        description: `You bought **\`📛 ${_badge.name}\`**:\n> ${badgeManager.toString.basic(_badge)}`,
+        footer: { text: `balance remaining: ${CURRENCY_1.EMOJI} ${userData.balance - _badge.price}` }
     });
 
     // Return the badge and embed

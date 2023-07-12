@@ -505,7 +505,7 @@ function userProfile_ES(guildMember, userData) {
 
         let sets_badges = arrayTools.unique(_badges.map(badge => badge.setID))
             .map(setID => _badges.filter(badge => badge.setID === setID))
-        
+
         let sets_badges_f = sets_badges.map(set => ({
             name: set[0].set, f: set.map(badge => `> ${badgeManager.toString.profile(badge.id)}`)
         }));

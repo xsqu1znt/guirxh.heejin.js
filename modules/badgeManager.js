@@ -29,7 +29,7 @@ function toString_basic(badge) {
     return "%EMOJI %SET :: %NAME"
         .replace("%EMOJI", badge.customEmoji || `\`${badge.emoji}\``)
         .replace("%SET", `**${badge.set}**`)
-        .replace("%NAME", `*${link(badge.name, badge.emojiURL, badge.description)}*`);
+        .replace("%NAME", `${link(badge.name, badge.emojiURL, badge.description)}`);
 }
 
 function toString_profile(badgeID) {

@@ -2,9 +2,9 @@
     {
         "id": "P1",
         "setID": "P01",
-        "name": "Pack Name",
+        "name": "Card Pack",
         "category": "pack",
-        "set": "Pack Set",
+        "set": "Cards",
         "emoji": "📦",
         "rarity": 1,
         "price": 500,
@@ -22,9 +22,9 @@
     {
         "id": "P2",
         "setID": "P02",
-        "name": "Pack Name",
+        "name": "Holo Pack",
         "category": "pack",
-        "set": "Pack Set",
+        "set": "Cards",
         "emoji": "📦",
         "rarity": 1,
         "price": 1000,
