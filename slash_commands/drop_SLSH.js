@@ -86,8 +86,8 @@ module.exports = {
         }
 
         // Check if the user has an active cooldown
-        // let userCooldownETA = await userManager.cooldowns.check(interaction.user.id, dropCooldownType);
-        // if (userCooldownETA) return await embed_drop.send({ description: `Your next drop is available **${userCooldownETA}**` });
+        let userCooldownETA = await userManager.cooldowns.check(interaction.user.id, dropCooldownType);
+        if (userCooldownETA) return await embed_drop.send({ description: `Your next drop is available **${userCooldownETA}**` });
 
         await Promise.all([
             // Add the cards to the user's card_inventory (can cause UIDs to be reset)
@@ -95,12 +95,12 @@ module.exports = {
             // Give the user XP
             userManager.xp.increment(interaction.user.id, randomTools.number(xp_drop.min, xp_drop.max)),
             // Reset the user's cooldown
-            /* userManager.cooldowns.reset(interaction.user.id, dropCooldownType), */
+            userManager.cooldowns.reset(interaction.user.id, dropCooldownType),
             // Reset the user's reminder
-            /* userManager.reminders.reset(
+            userManager.reminders.reset(
                 interaction.user.id, interaction.guild.id, interaction.channel.id,
                 interaction.user, dropCooldownType
-            ) */
+            )
         ]);
 
         //! Add details to embed_drop
