@@ -21,7 +21,7 @@
     },
     {
         "id": "P2",
-        "setID": "P02",
+        "setID": "P01",
         "name": "Tier 2",
         "category": "pack",
         "set": "Cards",
@@ -44,7 +44,7 @@
     },
     {
         "id": "P3",
-        "setID": "P03",
+        "setID": "P01",
         "name": "Tier 3 Holo",
         "category": "pack",
         "set": "Cards",

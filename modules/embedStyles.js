@@ -142,15 +142,20 @@ function generalShop_ES(guildMember) {
         let shopSets_f = [];
 
         if (sets_card_general_f.length) shopSets_f.push({ name: "\`🃏\` Cards", value: sets_card_general_f.map(f => `> ${f}`).join("\n") });
+        // if (sets_card_general_f.length) shopSets_f.push(`**\`🃏\` Cards**\n${sets_card_general_f.map(f => `> ${f}`).join("\n")}`);
         if (sets_card_special_f.length) shopSets_f.push({ name: "\`🎀\` Rewards", value: sets_card_special_f.map(f => `> ${f}`).join("\n") });
+        // if (sets_card_special_f.length) shopSets_f.push(`**\`🎀\` Rewards**\n${sets_card_special_f.map(f => `> ${f}`).join("\n")}`);
 
         if (_itemPacks_f.length) shopSets_f.push({ name: "\`📦\` Items", value: _itemPacks_f.map(f => `> ${f}`).join("\n") });
+        // if (_itemPacks_f.length) shopSets_f.push(`**\`📦\` Items**\n${_itemPacks_f.map(f => `> ${f}`).join("\n")}`);
 
         if (_badges_f.length) shopSets_f.push({ name: "\`📛\` Badges", value: _badges_f.map(f => `> ${f}`).join("\n") });
+        // if (_badges_f.length) shopSets_f.push(`**\`📛\` Badges**\n${_badges_f.map(f => `> ${f}`).join("\n")}`);
 
         /// Create the shop embed
         let embed = embed_shop_template();
-        shopSets_f.length ? embed.addFields(...shopSets_f) : embed.setDescription("The shop is empty right now");
+        shopSets_f.length ? embed.addFields(shopSets_f) : embed.setDescription("The shop is empty right now");
+        // shopSets_f.length ? embed.setDescription(shopSets_f.join("\n\n")) : embed.setDescription("The shop is empty right now");
 
         return embed;
     };

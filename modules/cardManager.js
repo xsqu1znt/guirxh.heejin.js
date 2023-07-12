@@ -339,7 +339,8 @@ function toString_shopEntry(card, currencyType = "carrot") {
 function toString_setEntry(card, count = 1, simplify = false) {
     if (count < 10) count = `0${count}`;
 
-    return "%SET_ID %CARD_COUNT %CATEGORY %EMOJI %DESCRIPTION%SINGLE"
+    // return "%SET_ID %CARD_COUNT %CATEGORY %EMOJI %DESCRIPTION%SINGLE"
+    return "%SET_ID %CARD_COUNT %CATEGORY %EMOJI %DESCRIPTION"
         .replace("%SET_ID", inline("🗣️", card.setID))
 
         .replace("%CARD_COUNT", inline("📁", count || 1))
@@ -348,7 +349,6 @@ function toString_setEntry(card, count = 1, simplify = false) {
         .replace("%EMOJI", inline(card.emoji))
         .replace("%GROUP", bold(card.group))
         .replace("%DESCRIPTION", card.description)
-        .replace("%SINGLE", simplify ? "" : space("left", `:: ${card.single}`));
 }
 
 module.exports = {
