@@ -307,11 +307,13 @@ function toString_missingEntry(card, missing = false) {
 function toString_itemPackSetEntry(setID, chance) {
     let _card = get_setID(setID)[0]; if (!_card) return "n/a";
 
-    return "%SET_ID %EMOJI %GROUP :: %SINGLE %CHANCE"
+    // return "%SET_ID %EMOJI %GROUP :: %SINGLE %CHANCE"
+    return "%SET_ID %EMOJI %DESCRIPTION %CHANCE"
         .replace("%SET_ID", `\`${_card.setID}\``)
         .replace("%EMOJI", `\`${_card.emoji}\``)
         .replace("%GROUP", `**${_card.group}**`)
         .replace("%SINGLE", _card.single)
+        .replace("%DESCRIPTION", _card.description)
         .replace("%CHANCE", `\`%${chance}\``);
 }
 
