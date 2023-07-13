@@ -79,7 +79,7 @@ module.exports = {
             return await interaction.editReply({ embeds: [_embed_view] });
         } else if (setID) {
             // Get the card from our global collection
-            let _cards = cardManager.get.set(setID); if (!_cards.length) return await baseEmbed.send({
+            let _cards = cardManager.get.setID(setID); if (!_cards.length) return await baseEmbed.send({
                 description: "You need to give a valid set ID"
             });
 
