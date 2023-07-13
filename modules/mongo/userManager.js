@@ -194,7 +194,7 @@ async function inventory_exists(userID, uids) {
     // Create an array if only a single card UID was passed
     if (!uids) return false; if (!Array.isArray(uids)) uids = [uids];
 
-    let exists = await models.user.exists({ _id: userID, "card_inventory.uid": { $and: uids } });
+    let exists = await models.user.exists({ _id: userID, "card_inventory.uid": { $all: uids } });
     return exists ? true : false;
 }
 

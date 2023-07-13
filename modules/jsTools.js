@@ -87,8 +87,8 @@ function string_formatNumberToPlace(num) {
  * @param {str} prop name of property to sum inside of array */
 function number_sum(arr, prop = "") {
     return prop
-        ? arr.reduce((a, b) => a + b[prop])
-        : arr.reduce((a, b) => a + b);
+        ? arr.reduce((a, b) => a + b[prop], 0)
+        : arr.reduce((a, b) => a + b, 0);
 }
 
 /** Convert the given milliseconds into seconds by dividing the number by 1,000 .
