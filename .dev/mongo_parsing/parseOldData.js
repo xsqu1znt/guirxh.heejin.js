@@ -87,7 +87,7 @@ async function backupUsers() {
     // Save the file
     logger.log("writing file...");
 
-    let fn = `users_${new Date().toLocaleDateString().replace(/\//g, "_")}_edwded.json`;
+    let fn = `users_${new Date().toLocaleDateString().replace(/\//g, "_")}.json`;
     fs.writeFile(fn, jsonData, (err) =>
         err ? logger.error(`Failed to save ${fn}`, "could not write", err) : null
     );
@@ -127,13 +127,25 @@ async function resetUIDs() {
     logger.log("fixing card_inventory");
     await Promise.all(users_current.map(async _user => {
         for (i = 0; i < _user.card_inventory.length; i++) {
-            cardManager.resetUID(_user.card_inventory[i]);
+            _user.card_inventory[i].uid = _user.card_inventory[i].uid.toUpperCase();
         }
+
+        _user.card_selected_uid = _user.card_selected_uid.toUpperCase();
+        _user.card_favorite_uid = _user.card_favorite_uid.toUpperCase();
+
+        for (t = 0; t < _user.card_team_uids.length; t++)
+            _user.card_team_uids[i] &&= _user.card_team_uids[i].toUpperCase();
 
         // Save the UserData to Mongo
         logger.log(`saving fixed card_inventory for user: ${_user._id}`);
-        return await userManager.update(_user._id, { card_inventory: _user.card_inventory });
+        return await userManager.update(_user._id, {
+            card_selected_uid: _user.card_selected_uid,
+            card_favorite_uid: _user.card_favorite_uid,
+            card_team_uids: _user.card_team_uids,
+
+            card_inventory: _user.card_inventory
+        });
     }));
 
     logger.log("done");
-} // return resetUIDs();
+} return resetUIDs();
