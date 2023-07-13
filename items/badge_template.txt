@@ -1,13 +1,13 @@
 [
     {
-        "id": "IL01",
+        "id": "RS01",
         "setID": "B01",
-        "name": "Boost",
-        "description": "To love or not to love...",
+        "name": "Cephalopod",
+        "description": "I am but a cephalopod",
         "category": "bdge",
-        "set": "ILOVE",
-        "emoji": "🎙️",
-        "emojiURL": "https://discord.com/assets/59bdcc534c0d1adc1fb7575a1a4785a6.svg",
+        "set": "CEPH",
+        "customEmoji": "<:realsquid:1085169097114910760>",
+        "emojiURL": "https://cdn.discordapp.com/emojis/1085169097114910760.webp?quality=lossless",
         "rarity": 1,
         "price": 500
     }

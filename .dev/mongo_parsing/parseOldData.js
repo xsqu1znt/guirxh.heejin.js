@@ -3,10 +3,12 @@
 require('dotenv').config();
 const fs = require('fs');
 
-const { userSettings } = require('./configs/heejinSettings.json');
-const cardManager = require('./modules/cardManager');
-const logger = require('./modules/logger');
-const mongo = require('./modules/mongo');
+const { userSettings } = require('../../configs/heejinSettings.json');
+
+const { userManager } = require('../../modules/mongo/index');
+const cardManager = require('../../modules/cardManager');
+const logger = require('../../modules/logger');
+const mongo = require('../../modules/mongo');
 
 // let users = require('./users_5_5_2023.json'); /* users = users.slice(0, 1); */
 // let cards = require('./cards_5_5_2023.json');
@@ -72,11 +74,11 @@ function parseCard(card, uid = "") {
 }
 
 async function backupUsers() {
-    await mongo.connect(process.env.MONGO_URI_OLD);
+    await mongo.connect(process.env.MONGO_URI_PROD);
 
     logger.log("getting users...");
 
-    let users_current = await mongo.userManager.fetch(null, "full");
+    let users_current = await userManager.fetch(null, { type: "full" });
 
     // Parse the object into a string
     logger.log("converting into JSON...");
@@ -85,129 +87,16 @@ async function backupUsers() {
     // Save the file
     logger.log("writing file...");
 
-    let fn = `users_${new Date().toLocaleDateString().replace(/\//g, "_")}.json`;
+    let fn = `users_${new Date().toLocaleDateString().replace(/\//g, "_")}_edwded.json`;
     fs.writeFile(fn, jsonData, (err) =>
         err ? logger.error(`Failed to save ${fn}`, "could not write", err) : null
     );
 
     logger.success(`file saved: \`${fn}\``);
-}
-
-// return backupUsers();
-
-async function fixCardInventory() {
-    await mongo.connect(process.env.MONGO_URI_OLD);
-
-    console.log("getting users...");
-
-    let users_current = await mongo.userManager.fetch(null, "full");
-
-    console.log("fixing inventories...");
-
-    users_current.forEach(user => {
-        console.log(`working on user: (${user._id})`);
-
-        let _userCards = user.card_inventory;
-
-        for (let i = 0; i < _userCards.length; i++) {
-            let _cardFull = cardManager.parse.fromCardLike(_userCards[i]);
-
-            if (_cardFull && _cardFull.setID !== "100") {
-                user.card_inventory[i] = cardManager.parse.toCardLike(_cardFull);
-            }
-        }
-    });
-
-    console.log("awaiting mongo...");
-
-    await Promise.all(users_current.map(user =>
-        mongo.userManager.update(user._id, { card_inventory: user.card_inventory }))
-    );
-
-    console.log("done");
-}
-
-// return fixCardInventory();
-
-async function removeCustoms() {
-    await mongo.connect(process.env.MONGO_URI_OLD);
-
-    console.log("getting users...");
-
-    let users_current = await mongo.userManager.fetch(null, "full");
-
-    console.log("fixing inventories...");
-
-    users_current.forEach(user => {
-        console.log(`working on user: (${user._id})`);
-
-        user.card_inventory = user.card_inventory.filter(card => !["100", "101", "102", "103"].includes(card.globalID));
-        // .map(card => [100, 101, 102, 103].includes(card.rarity) ? card : cardManager.parse.toCardLike(card));
-    });
-
-    console.log("awaiting mongo...");
-
-    await Promise.all(users_current.map(user =>
-        mongo.userManager.update(user._id, { card_inventory: user.card_inventory }))
-    );
-
-    console.log("done");
-}
-
-// return removeCustoms();
-
-async function reAddCustoms() {
-    await mongo.connect(process.env.MONGO_URI_OLD);
-
-    console.log("adding cards...");
-
-    await Promise.all(users.map(user => {
-        user = parseUser(user);
-        let customs = user.card_inventory.filter(card => card.setID === "100");
-
-        return mongo.userManager.cards.add(user._id, customs);
-    }));
-
-    console.log("done");
-}
-
-// return reAddCustoms();
-
-async function restoreVault() {
-    await mongo.connect(process.env.MONGO_URI_OLD);
-
-    console.log("getting users...");
-
-    let users_current = await mongo.userManager.fetch(null, "full");
-
-    console.log("fixing inventories...");
-
-    users_current.forEach(user => {
-        console.log(`working on user: (${user._id})`);
-
-        let user_backup = users.find(u => u.UserID === user._id);
-        if (!user_backup) return;
-
-        for (let card of user.card_inventory) {
-            let card_backup = user_backup.CardsV2[card.uid];
-
-            if (card_backup && card_backup.Locked) card.locked = true;
-        }
-    });
-
-    console.log("awaiting mongo...");
-
-    await Promise.all(users_current.map(user =>
-        mongo.userManager.update(user._id, { card_inventory: user.card_inventory }))
-    );
-
-    console.log("done");
-}
-
-// restoreVault();
+} // return backupUsers();
 
 async function exportUser(userID, fn) {
-    await mongo.connect(process.env.MONGO_URI_OLD);
+    await mongo.connect(process.env.MONGO_URI_PROD);
 
     logger.log("fetching user...");
 
@@ -225,6 +114,26 @@ async function exportUser(userID, fn) {
     );
 
     logger.success(`file saved: \`${fn}\``);
-}
+} // return exportUser("607643855323660310", "user.json");
 
-// return exportUser("607643855323660310", "user.json");
+//! Functions
+async function resetUIDs() {
+    await mongo.connect(process.env.MONGO_URI_PROD);
+
+    logger.log("getting users...");
+
+    let users_current = await userManager.fetch(null, { type: "full" });
+
+    logger.log("fixing card_inventory");
+    await Promise.all(users_current.map(async _user => {
+        for (i = 0; i < _user.card_inventory.length; i++) {
+            cardManager.resetUID(_user.card_inventory[i]);
+        }
+
+        // Save the UserData to Mongo
+        logger.log(`saving fixed card_inventory for user: ${_user._id}`);
+        return await userManager.update(_user._id, { card_inventory: _user.card_inventory });
+    }));
+
+    logger.log("done");
+} // return resetUIDs();

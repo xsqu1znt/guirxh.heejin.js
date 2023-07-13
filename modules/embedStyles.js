@@ -143,11 +143,11 @@ function generalShop_ES(guildMember) {
 
         if (sets_card_general_f.length) shopSets_f.push(`**\`🃏\` Cards**\n${sets_card_general_f.map(f => `> ${f}`).join("\n")}`);
         if (sets_card_special_f.length) shopSets_f.push(`**\`🎀\` Rewards**\n${sets_card_special_f.map(f => `> ${f}`).join("\n")}`);
-        
+
         if (_itemPacks_f.length) shopSets_f.push(`**\`📦\` Items**\n${_itemPacks_f.map(f => `> ${f}`).join("\n")}`);
-        
+
         if (_badges_f.length) shopSets_f.push(`**\`📛\` Badges**\n${_badges_f.map(f => `> ${f}`).join("\n")}`);
-        
+
         /// Create the shop embed
         // if (sets_card_general_f.length) shopSets_f.push({ name: "\`🃏\` Cards", value: sets_card_general_f.map(f => `> ${f}`).join("\n") });
         // if (sets_card_special_f.length) shopSets_f.push({ name: "\`🎀\` Rewards", value: sets_card_special_f.map(f => `> ${f}`).join("\n") });
@@ -162,6 +162,8 @@ function generalShop_ES(guildMember) {
     };
 
     let embed_allCards = () => {
+        if (!sets_card_general.length) return [];
+        
         // Format cards into strings
         let sets_card_general_f = sets_card_general.map(set => set.map(card => cardManager.toString.shopEntry(card, "carrot")));
 
@@ -197,6 +199,8 @@ function generalShop_ES(guildMember) {
     };
 
     let embed_individualCardSets = () => {
+        if (!sets_card_general.length) return [];
+
         // Format cards into strings
         let sets_card_general_f = sets_card_general.map(set => set.map(card => cardManager.toString.shopEntry(card, "carrot")));
 
@@ -232,6 +236,8 @@ function generalShop_ES(guildMember) {
     };
 
     let embed_allCards_special = () => {
+        if (!sets_card_special.length) return [];
+
         // Format cards into strings
         let sets_card_special_f = sets_card_special.map(set => set.map(card => cardManager.toString.shopEntry(card, "ribbon")));
 
@@ -262,6 +268,8 @@ function generalShop_ES(guildMember) {
     };
 
     let embed_itemPacks = () => {
+        if (!_itemPacks.length) return [];
+
         // Format item packs into strings
         let sets_itemPacks_f = _itemPacks.map(item => itemPackManager.toString.shopEntry(item.id));
 
@@ -285,6 +293,8 @@ function generalShop_ES(guildMember) {
     };
 
     let embed_badges = () => {
+        if (!_badges.length) return [];
+
         // Format cards into strings
         let sets_badges_f = _badges.map(badge => badgeManager.toString.shopEntry(badge));
 
@@ -323,7 +333,7 @@ function generalShop_ES(guildMember) {
         shopPages.allCards_special,
         shopPages.itemPacks,
         shopPages.badges
-    ].filter(arr => arr?.length || arr);
+    ].filter(page => (Array.isArray(page) && page?.length) || (!Array.isArray(page) && page) ? true : false);
 
     return {
         embeds: shopPages, embeds_all,
