@@ -42,7 +42,7 @@ class Stage {
                 this.card_away.stats.level = rivalLevel;
 
             this.card_away = cardManager.recalculateStats(this.card_away);
-            this.card_away.uid = cardManager.createUID();
+            this.card_away.uid = cardManager.resetUID();
         }
         this.card_away_startingHP = this.card_away.stats.reputation;
 
