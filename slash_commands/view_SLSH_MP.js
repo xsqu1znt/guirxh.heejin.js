@@ -68,7 +68,7 @@ module.exports = {
             return await interaction.editReply({ embeds: [_embed_view] });
         } else if (globalID) {
             // Get the card from our global collection
-            let _card = cardManager.get.byGlobalID(globalID); if (!_card) return await baseEmbed.send({
+            let _card = cardManager.get.globalID(globalID); if (!_card) return await baseEmbed.send({
                 description: "You need to give a valid GID"
             });
 
