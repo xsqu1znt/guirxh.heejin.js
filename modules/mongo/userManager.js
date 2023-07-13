@@ -254,13 +254,13 @@ async function inventory_sell(userID, cards) {
     if (!cards) return; if (!Array.isArray(cards)) cards = [cards];
 
     // Check if the user still has the cards in their card_inventory
-    if (!card_exists(userID, cards.map(card => card.uid))) return false;
+    if (!inventory_exists(userID, cards.map(card => card.uid))) return false;
 
     await Promise.all([
         // Update the user's balance
         userData_update(userID, { $inc: { balance: numberTools.sum(cards, "sellPrice") } }),
         // Remove the cards from the user's card_inventory
-        card_remove(userID, cards.map(card => card.uid))
+        inventory_remove(userID, cards.map(card => card.uid))
     ]); return true;
 }
 
@@ -298,4 +298,4 @@ module.exports = {
     badges: {
         add: badges_add
     }
-}
+};

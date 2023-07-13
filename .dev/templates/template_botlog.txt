@@ -1,7 +1,5 @@
 🔧 Changelog (23/05/25) - Heejin 2.0.73
 
-https://cdn.discordapp.com/avatars/957160832339423242/8ac4bfc48d4323d89e3779c70807cb12.webp
-
 Hey everyone! Here's a small update to fix a few issues. Good luck!
 Remember to report any issues in <#1014513978560499732>
 
@@ -26,20 +24,25 @@ Remember to report any issues in <#1014513978560499732>
 
 
 
-🔧 Changelog (23/07/03) - Heejin 2.0.9
+🔧 Changelog (23/07/12) - Heejin 2.0.95
 
 Remember to report any issues in <#1014513978560499732>
 
-`🛠️` **new command** </quest:1125659412141461625>
-> - Quests have finally been added! They will be updated every 2 weeks, 2 quests at a time
-> - Use this command to view your quest progress
+`🛠️` **updates**
+> - *A new area for the shop has been added! Everyone welcome the ribbon shop, aka. Rewards shop*
+> - *Unique IDs (uid) has been changed to include letters as well as numbers*
+> - *You now no longer have to `/start` before being able to use `/help`, and `/collections`*
 
 `🎨` **design changes**
-> - Did you know?, some errors, and /start warning embeds have been changed slightly
-> - Various other small changes to match the overall design
+> - *`/collections` and `/shop` now display cards using their proper card info (i.e `HOLO :: Blackpink` vs. `Special :: Holo`)*
+> - *Shop*
+>  - *Removed the extra spacing between sets on the Shop Sets page*
+>  - *Reorganized item packs and gave them names*
+>  - *You can now see each set's drop % chance*
+>  - *Redesigned the /shop buy message*
 
 `⚙️` **fixes**
-> - *After winning a `/stage` duel, the player was not given any XP*
-> - *When `/drop`-ing a card, there was a chance to get multiple of the same cards, with the same UID*
-> - *When `/gift`-ing, or `/pay`-ing a player, the DM that user recieved might not have shown the username of who gave it to them*
-> - *Various other bug fixes to smoothen out your experience*
+> - *Getting multiples of the same card from 1 drop or item pack caused them to share the same UID*
+> - *All card UIDs have been reset to fix duplicate uids (you will have to re-set your idol, and team using their new uids)*
+> - *Player badges did not show properly in your profile, nor shop, if they used custom emojis*
+> - *Various other minor bug fixes and overall changes to how fast commands respond*

@@ -4,7 +4,7 @@ const { generalCollections_ES } = require('../modules/embedStyles');
 const { EmbedNavigator } = require('../modules/discordTools');
 
 module.exports = {
-    options: { icon: "📁", deferReply: false },
+    options: { icon: "📁", deferReply: false, dontRequireUserData: true },
 
     builder: new SlashCommandBuilder().setName("collections")
         .setDescription("View a list of every set in the game")
