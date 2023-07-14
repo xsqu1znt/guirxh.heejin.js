@@ -1,38 +1,38 @@
 [
-    {
-        "id": "q01",
-        "name": "Quest 1",
-        "reward_overview": "`☝️ 1000XP` `🥕 1000` `🎀 500`",
-        "description": "",
-        "date": {
-            "start": "2023-07-03",
-            "end": "2023-07-14"
-        },
-        "objectives": {
-            "level_user": 5
-        },
-        "rewards": {
-            "xp": 1000,
-            "carrots": 1000,
-            "ribbons": 500
-        }
-    },
-    {
-        "id": "q02",
-        "name": "Quest 2",
-        "reward_overview": "`☝️ 2000XP` `🥕 1000` `🎀 500`",
-        "description": "",
-        "date": {
-            "start": "2023-07-03",
-            "end": "2023-07-14"
-        },
-        "objectives": {
-            "cards_in_inventory": 10
-        },
-        "rewards": {
-            "xp": 2000,
-            "carrots": 1000,
-            "ribbons": 500
-        }
-    }
+	{
+		"id": "q03",
+		"name": "Town with Spicy Paint",
+		"reward_overview": "`☝️ 1000XP` `🥕 1000` `🎀 500`",
+		"description": "",
+		"date": {
+			"start": "2023-07-15",
+			"end": "2023-07-28"
+		},
+		"objectives": {
+			"card_sets_complete": ["454", "293"]
+		},
+		"rewards": {
+			"xp": 1000,
+			"carrots": 1000,
+			"ribbons": 500
+		}
+	},
+	{
+		"id": "q04",
+		"name": "The Unforgiven Butterfly",
+		"reward_overview": "`☝️ 1000XP` `🥕 1000` `🎀 500`",
+		"description": "",
+		"date": {
+			"start": "2023-07-15",
+			"end": "2023-07-28"
+		},
+		"objectives": {
+			"card_sets_complete": ["270", "294"]
+		},
+		"rewards": {
+			"xp": 1000,
+			"carrots": 1000,
+			"ribbons": 500
+		}
+	}
 ]

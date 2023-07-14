@@ -93,7 +93,7 @@ async function backupUsers() {
     );
 
     logger.success(`file saved: \`${fn}\``);
-} // return backupUsers();
+} return backupUsers();
 
 async function exportUser(userID, fn) {
     await mongo.connect(process.env.MONGO_URI_PROD);
@@ -148,4 +148,4 @@ async function resetUIDs() {
     }));
 
     logger.log("done");
-} return resetUIDs();
+} // return resetUIDs();
