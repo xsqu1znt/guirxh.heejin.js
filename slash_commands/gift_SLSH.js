@@ -1,6 +1,6 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
-const { userManager } = require('../modules/mongo');
+const { userManager } = require('../modules/mongo/index');
 const { userGift_ES } = require('../modules/embedStyles');
 const { BetterEmbed } = require('../modules/discordTools');
 const userParser = require('../modules/userParser');
@@ -69,10 +69,13 @@ module.exports = {
         // Update the users' card_inventory in Mongo
         await Promise.all([
             // Add the card to the recipient player's card_inventory
-            userManager.cards.add(recipient.id, cards),
+            userManager.inventory.add(recipient.id, cards),
             // Remove the card from the gifting player's card_inventory
-            userManager.cards.remove(interaction.user.id, cards.map(card => card.uid))
-        ]);
+            userManager.inventory.remove(interaction.user.id, cards.map(card => card.uid))
+        ]).catch(err => {
+            console.error(err);
+            console.log(cards);
+        });
 
         // Create the embeds
         let { embed_gift, embed_dm } = userGift_ES(interaction.member, recipient, cards);
