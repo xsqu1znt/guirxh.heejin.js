@@ -60,7 +60,7 @@ module.exports = {
         });
 
         // Filter out locked and favorited cards
-        cards = cards.filter(card => card.uid !== userData.card_favorite_uid && !card?.locked);
+        cards = cards.filter(card => card?.uid !== userData.card_favorite_uid && !card?.locked);
         if (!cards.length) return await embed_error.send({
             description: "\`%UIDS\` cannot be gifted, it is either:\n\`🔒 vault\` \`🧑🏾‍🤝‍🧑 team\` \`🏃 idol\` \`⭐ favorite\`"
                 .replace("%UIDS", uids.join(" ").trim())
