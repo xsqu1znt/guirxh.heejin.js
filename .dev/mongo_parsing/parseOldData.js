@@ -11,7 +11,7 @@ const userParser = require('../../modules/userParser');
 const logger = require('../../modules/logger');
 const mongo = require('../../modules/mongo');
 
-// let backup_users = require('../../.backup/users/users_23_07_15.json');
+let backup_users = require('../../.backup/users/users_23_07_15_1.json');
 // let backup_cards = require('./cards_5_5_2023.json');
 
 function parseUser(user) {
@@ -115,7 +115,7 @@ async function exportUser(userID, fn) {
     );
 
     logger.success(`file saved: \`${fn}\``);
-} // return exportUser("776318919266664499", "user.json");
+} // return exportUser("814633059793371147", "user.json");
 
 //! Functions
 async function resetUIDs() {
@@ -182,15 +182,15 @@ async function readdCustoms() {
     logger.log("fixing card_inventory");
     await Promise.all(users_current.map(async _user => {
         // Parse card_inventory to get card's rarity
-        userParser.cards.parseInventory(_user, { fromCardLike: true, unique: false });
+        // userParser.cards.parseInventory(_user, { fromCardLike: true, unique: false });
 
         // Remove customs
-        _user.card_inventory = _user.card_inventory.filter(card => card.rarity !== 100);
+        // _user.card_inventory = _user.card_inventory.filter(card => card.rarity !== 100);
 
         // Convert card_inventory back into cardLikes
-        for (let i = 0; i < _user.card_inventory.length; i++) {
+        /* for (let i = 0; i < _user.card_inventory.length; i++) {
             _user.card_inventory[i] = cardManager.parse.toCardLike(_user.card_inventory[i]);
-        }
+        } */
 
         /// Get customs from backup user
         let _backup_user = backup_users.find(uD => uD._id === _user._id);
@@ -208,3 +208,23 @@ async function readdCustoms() {
 
     logger.log("done");
 } // return readdCustoms();
+
+async function removeInvalidCustoms() {
+    await mongo.connect(process.env.MONGO_URI_PROD);
+
+    logger.log("getting users...");
+
+    let users_current = await userManager.fetch(null, { type: "full" });
+
+    logger.log("fixing card_inventory");
+    await Promise.all(users_current.map(async _user => {
+        // Remove customs
+        _user.card_inventory = _user.card_inventory.filter(card => !["100", "101", "102", "103"].includes(card.globalID) && !card?.name);
+
+        // Save the UserData to Mongo
+        logger.log(`saving fixed card_inventory for user: ${_user._id}`);
+        return await userManager.update(_user._id, { card_inventory: _user.card_inventory });
+    }));
+
+    logger.log("done");
+} // return removeInvalidCustoms();
