@@ -7,11 +7,12 @@ const { userSettings } = require('../../configs/heejinSettings.json');
 
 const { userManager } = require('../../modules/mongo/index');
 const cardManager = require('../../modules/cardManager');
+const userParser = require('../../modules/userParser');
 const logger = require('../../modules/logger');
 const mongo = require('../../modules/mongo');
 
-// let users = require('./users_5_5_2023.json'); /* users = users.slice(0, 1); */
-// let cards = require('./cards_5_5_2023.json');
+// let backup_users = require('../../.backup/users/users_23_07_15.json');
+// let backup_cards = require('./cards_5_5_2023.json');
 
 function parseUser(user) {
     return {
@@ -114,7 +115,7 @@ async function exportUser(userID, fn) {
     );
 
     logger.success(`file saved: \`${fn}\``);
-} // return exportUser("797233513136390175", "user.json");
+} // return exportUser("776318919266664499", "user.json");
 
 //! Functions
 async function resetUIDs() {
@@ -170,3 +171,40 @@ async function formatCardLikes() {
 
     logger.log("done");
 } // return formatCardLikes();
+
+async function readdCustoms() {
+    await mongo.connect(process.env.MONGO_URI_PROD);
+
+    logger.log("getting users...");
+
+    let users_current = await userManager.fetch(null, { type: "full" });
+
+    logger.log("fixing card_inventory");
+    await Promise.all(users_current.map(async _user => {
+        // Parse card_inventory to get card's rarity
+        userParser.cards.parseInventory(_user, { fromCardLike: true, unique: false });
+
+        // Remove customs
+        _user.card_inventory = _user.card_inventory.filter(card => card.rarity !== 100);
+
+        // Convert card_inventory back into cardLikes
+        for (let i = 0; i < _user.card_inventory.length; i++) {
+            _user.card_inventory[i] = cardManager.parse.toCardLike(_user.card_inventory[i]);
+        }
+
+        /// Get customs from backup user
+        let _backup_user = backup_users.find(uD => uD._id === _user._id);
+        if (!_backup_user) return console.error(`user not found with user id: ${_user._id}`)
+
+        let _backup_customs = _backup_user.card_inventory.filter(c => c?.rarity === 100);
+
+        // Add customs from backup
+        _user.card_inventory.push(..._backup_customs);
+
+        // Save the UserData to Mongo
+        logger.log(`saving fixed card_inventory for user: ${_user._id}`);
+        return await userManager.update(_user._id, { card_inventory: _user.card_inventory });
+    }));
+
+    logger.log("done");
+} // return readdCustoms();
