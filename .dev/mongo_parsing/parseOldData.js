@@ -149,3 +149,24 @@ async function resetUIDs() {
 
     logger.log("done");
 } // return resetUIDs();
+
+async function formatCardLikes() {
+    await mongo.connect(process.env.MONGO_URI_PROD);
+
+    logger.log("getting users...");
+
+    let users_current = await userManager.fetch(null, { type: "full" });
+
+    logger.log("fixing card_inventory");
+    await Promise.all(users_current.map(async _user => {
+        for (i = 0; i < _user.card_inventory.length; i++) {
+            _user.card_inventory[i] = cardManager.parse.toCardLike(_user.card_inventory[i]);
+        }
+
+        // Save the UserData to Mongo
+        logger.log(`saving fixed card_inventory for user: ${_user._id}`);
+        return await userManager.update(_user._id, { card_inventory: _user.card_inventory });
+    }));
+
+    logger.log("done");
+} // return formatCardLikes();
