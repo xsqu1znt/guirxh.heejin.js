@@ -213,15 +213,15 @@ async function inventory_add(userID, cards) {
     // Parse the given cards
     let cards_parsed = structuredClone(cards);
 
-    for (let card of cards_parsed) {
+    for (let i = 0; i < cards_parsed.length; i++) {
         // Reset the card's UID if necessary
-        while (!card?.uid || uidList.includes(card?.uid)) cardManager.resetUID(card);
+        while (!cards_parsed[i]?.uid || uidList.includes(cards_parsed[i]?.uid)) cardManager.resetUID(cards_parsed[i]);
 
         // Add the new UID to the list
-        uidList.push(card.uid);
+        uidList.push(cards_parsed[i].uid);
 
         // Convert the card into a slimmer CardLike object (ignores custom cards)
-        card = cardManager.parse.toCardLike(card);
+        cards_parsed[i] = cardManager.parse.toCardLike(cards_parsed[i]);
     }
 
     // Push the new cards to the user's card_inventory
