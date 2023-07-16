@@ -163,7 +163,7 @@ function generalShop_ES(guildMember) {
 
     let embed_allCards = () => {
         if (!sets_card_general.length) return [];
-        
+
         // Format cards into strings
         let sets_card_general_f = sets_card_general.map(set => set.map(card => cardManager.toString.shopEntry(card, "carrot")));
 
@@ -653,7 +653,8 @@ function userMissing_ES(guildMember, userData, setID) {
     });
 
     // Get every card in the set
-    let cards_set = cardManager.cards_all.filter(card => card.setID === setID);
+    // let cards_set = cardManager.cards_all.filter(card => card.setID === setID);
+    let cards_set = cardManager.get.setID(setID);
     if (cards_set.length === 0) return [embed_template()];
 
     // Sort by set ID (decending order)

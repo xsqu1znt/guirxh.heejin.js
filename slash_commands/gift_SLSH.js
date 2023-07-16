@@ -66,16 +66,12 @@ module.exports = {
                 .replace("%UIDS", uids.join(" ").trim())
         });
 
-        // Update the users' card_inventory in Mongo
         await Promise.all([
             // Add the card to the recipient player's card_inventory
             userManager.inventory.add(recipient.id, cards),
             // Remove the card from the gifting player's card_inventory
             userManager.inventory.remove(interaction.user.id, cards.map(card => card.uid))
-        ]).catch(err => {
-            console.error(err);
-            console.log(cards);
-        });
+        ]);
 
         // Create the embeds
         let { embed_gift, embed_dm } = userGift_ES(interaction.member, recipient, cards);

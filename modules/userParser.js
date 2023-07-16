@@ -6,13 +6,16 @@ function cards_get(userData, uids, keepArray = false) {
     let card_inventory = userData?.card_inventory || userData;
 
     // Get the cards from the user's card_inventory
-    let cards = uids.map(uid => card_inventory.find(card => card.uid === uid.trim()) || null);
+    let cards = uids.map(uid => card_inventory.find(card => card.uid.toLowerCase() === uid.trim().toLowerCase()) || null);
 
     // Parse the cards into full card objects
     cards = cards.map(card => card ? cardManager.parse.fromCardLike(card) : null);
 
+    // Remove null cards
+    cards = cards.filter(card => card);
+
     // Return a single card, or an array of cards
-    return (cards.length === 1 && !keepArray) ? cards[0] : cards;
+    return (cards.length <= 1 && !keepArray) ? cards[0] : cards;
 }
 
 function cards_getMultiple_DEPRECATED(cardArray, uids, filterInvalid = true) {

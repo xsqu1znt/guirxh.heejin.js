@@ -115,7 +115,7 @@ async function exportUser(userID, fn) {
     );
 
     logger.success(`file saved: \`${fn}\``);
-} // return exportUser("814633059793371147", "user.json");
+} // return exportUser("660576955275411464", "user.json");
 
 //! Functions
 async function resetUIDs() {
