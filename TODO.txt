@@ -25,3 +25,12 @@ FUTURE:
 UN-RELATED:
 >> discordTools.js
 • BetterEmbed.new() | returns a new BetterEmbed with the same configuration
+
+
+FIXES:
+added custom cards back
+
+fixed /gift not properly checking if the card's in your inventory
+fixed case sensitivity for gifting cards
+
+fixed double xiyeon
