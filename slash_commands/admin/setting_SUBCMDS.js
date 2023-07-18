@@ -124,7 +124,7 @@ async function SummonCard(client, interaction) {
     });
 
     // Fetch the cards from our collection
-    let cards = globalIDs.map(globalID => cardManager.get.byGlobalID(globalID)).filter(card => card);
+    let cards = globalIDs.map(globalID => cardManager.get.globalID(globalID)).filter(card => card);
     if (!cards.length) return await embed_summon.send({
         description: "You need to give a valid card ID"
     });
