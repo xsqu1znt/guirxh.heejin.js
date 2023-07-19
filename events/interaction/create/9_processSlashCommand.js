@@ -17,7 +17,7 @@ const { userManager } = require("../../../modules/mongo");
 const messenger = require("../../../modules/messenger");
 const logger = require("../../../modules/logger");
 
-const tips = require("../../../configs/heejinTips.json");
+const tips = require("../../../configs/tips.json");
 
 function userIsBotAdminOrBypass(interaction) {
 	return [ownerID, ...adminIDs, ...(adminBypassIDs[interaction.commandName] || [])].includes(

@@ -1,16 +1,16 @@
 {
     "event_1": {
-        "NAME": "#edgyvibes 1",
-        "CARD_RARITY_FILTER": [98]
+        "NAME": "Wonn & Riz BDAY23",
+        "CARD_RARITY_FILTER": [96]
     },
 
     "event_2": {
-        "NAME": "#edgyvibes 2",
-        "CARD_RARITY_FILTER": [97]
+        "NAME": "RESONANCE PT. 1",
+        "CARD_RARITY_FILTER": [95]
     },
     
     "season": {
-        "NAME": "SUMMER23",
-        "CARD_RARITY_FILTER": [99]
+        "NAME": "",
+        "CARD_RARITY_FILTER": []
     }
 }

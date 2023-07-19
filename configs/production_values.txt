@@ -1,0 +1,29 @@
+"customEmojis": {
+    "numbers": [
+        { "name": "1one", "emoji": "<:1one:919372432735879218>" },
+        { "name": "2two", "emoji": "<:2two:919372433184686140>" },
+        { "name": "3three", "emoji": "<:3three:919372433109164043>" },
+        { "name": "4four", "emoji": "<:4four:919372432677175406>" },
+        { "name": "5five", "emoji": "<:5five:919372432886870117>" }
+    ],
+
+    "pagination": {
+        "toFirst": { "name": "left2", "emoji": "<:left2:1110403342611513344>" },
+        "back": { "name": "left1", "emoji": "<:left1:1110405467370434670>" },
+        "jump": { "name": "📄", "emoji": "📄" },
+        "next": { "name": "right1", "emoji": "<:right1:1110405469350146089>" },
+        "toLast": { "name": "right2", "emoji": "<:right2:1110403345702735963>" }
+    },
+
+    "confirmSell": { "name": "✅", "emoji": "✅" }
+}
+
+"timeout": {
+    "stage_start": "3s",
+    "stage_turn": "500ms",
+
+    "pagination": "60s",
+    "reactionSell": "30s",
+    "confirmation": "15s",
+    "errorMessage": "5s"
+}

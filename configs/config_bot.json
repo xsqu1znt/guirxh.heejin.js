@@ -1,44 +1,44 @@
 {
-    "EMBED_COLOR": "#2B2D31",
-    "TIP_CHANCE": 5,
+	"EMBED_COLOR": "#2B2D31",
+	"TIP_CHANCE": 5,
 
-    "community_server": {
-        "ID": "802930323095814144",
-        "INVITE_URL": "https://discord.gg/G4YHSMNZQp",
-        "channel_ids": {
-            "ADMIN": "831265262309212200"
-        }
-    },
+	"community_server": {
+		"ID": "802930323095814144",
+		"INVITE_URL": "https://discord.gg/G4YHSMNZQp",
+		"channel_ids": {
+			"ADMIN": "831265262309212200"
+		}
+	},
 
-    "timeouts": {
-        "STAGE_START": "3s",
-        "STAGE_TURN": "500ms",
+	"timeouts": {
+		"STAGE_START": "3s",
+		"STAGE_TURN": "500ms",
 
-        "PAGINATION": "60s",
-        "DROP_REACTION_SELL": "30s",
-        "CONFIRMATION": "15s",
-        "ERROR_MESSAGE": "5s"
-    },
+		"PAGINATION": "1m",
+		"DROP_SELL_REACTION": "30s",
+		"CONFIRMATION": "15s",
+		"ERROR_MESSAGE": "5s"
+	},
 
-    "emojis": {
-        "CURRENCY_1": { "NAME": "🥕", "EMOJI": "🥕" },
-        "CURRENCY_2": { "NAME": "🎀", "EMOJI": "🎀" },
-        "CONFIRM_SELL": { "NAME": "✅", "EMOJI": "✅" },
+	"emojis": {
+		"CURRENCY_1": { "NAME": "🥕", "EMOJI": "🥕" },
+		"CURRENCY_2": { "NAME": "🎀", "EMOJI": "🎀" },
+		"CONFIRM_SELL": { "NAME": "✅", "EMOJI": "✅" },
 
-        "numbers": [
-            { "NAME": "one", "EMOJI": "<:one:1103208748924813333>" },
-            { "NAME": "two", "EMOJI": "<:two:1103208760639504465>" },
-            { "NAME": "three", "EMOJI": "<:three:1103208757992902696>" },
-            { "NAME": "four", "EMOJI": "<:four:1103208746362093659>" },
-            { "NAME": "five", "EMOJI": "<:five:1103208750489280542>" }
-        ],
+		"numbers": [
+			{ "NAME": "one", "EMOJI": "<:one:1103208748924813333>" },
+			{ "NAME": "two", "EMOJI": "<:two:1103208760639504465>" },
+			{ "NAME": "three", "EMOJI": "<:three:1103208757992902696>" },
+			{ "NAME": "four", "EMOJI": "<:four:1103208746362093659>" },
+			{ "NAME": "five", "EMOJI": "<:five:1103208750489280542>" }
+		],
 
-        "pagination": {
-            "to_first": { "NAME": "left2", "EMOJI": "<:left2:1110403342611513344>" },
-            "back": { "NAME": "left1", "EMOJI": "<:left1:1110405467370434670>" },
-            "jump": { "NAME": "📄", "EMOJI": "📄"},
-            "next": { "NAME": "right1", "EMOJI": "<:right1:1110405469350146089>" },
-            "to_last": { "NAME": "right2", "EMOJI": "<:right2:1110403345702735963>" }
-        }
-    }
+		"pagination": {
+			"to_first": { "NAME": "left2", "EMOJI": "<:left2:1110403342611513344>" },
+			"back": { "NAME": "left1", "EMOJI": "<:left1:1110405467370434670>" },
+			"jump": { "NAME": "📄", "EMOJI": "📄" },
+			"next": { "NAME": "right1", "EMOJI": "<:right1:1110405469350146089>" },
+			"to_last": { "NAME": "right2", "EMOJI": "<:right2:1110403345702735963>" }
+		}
+	}
 }

@@ -1,52 +1,52 @@
-{
-	"cooldowns": {
-		"DROP_GENERAL": "5s",
-		"DROP_WEEKLY": "5s",
-		"DROP_SEASON": "5s",
-		"DROP_EVENT_1": "5s",
-		"DROP_EVENT_2": "5s",
+{    
+    "cooldowns": {
+        "DROP_GENERAL": "30m",
+        "DROP_WEEKLY": "7d",
+        "DROP_SEASON": null,
+        "DROP_EVENT_1": "3h",
+        "DROP_EVENT_2": "3h",
 
-		"DAILY": "1s",
-		"STAGE": "1s",
-		"RANDOM": "1s"
-	},
+        "DAILY": "1d",
+        "STAGE": "1h",
+        "RANDOM": "4h"
+    },
 
-	"win_rate": {
-		"RANDOM": 40
-	},
+    "win_rate": {
+        "RANDOM": 40 
+    },
 
-	"currency": {
-		"STARTING_BALANCE": 250,
+    "currency": {
+        "STARTING_BALANCE": 250,
 
-		"rewards": {
-			"daily": { "AMOUNT": 50, "MAX_STREAK_MULTIPLIER": 10 },
-			"random": { "MIN_AMOUNT": 10, "MAX_AMOUNT": 500 }
-		}
-	},
+        "rewards": {
+            "daily": { "AMOUNT": 50, "MAX_STREAK_MULTIPLIER": 10 },
+            "random": { "MIN_AMOUNT": 10, "MAX_AMOUNT": 500 }
+        }
+    },
 
-	"xp": {
-		"user": {
-			"LEVEL_MAX": 100,
-			"LEVEL_XP_MULTIPLIER": 50,
+    "xp": {
+        "user": {
+            "LEVEL_MAX": 100,
+            "LEVEL_XP_MULTIPLIER": 50,
+    
+            "rewards": {
+                "level_up": {},
 
-			"rewards": {
-				"level_up": {},
+                "drop": { "MIN": 10, "MAX": 30 },
+                "random": { "MIN": 10, "MAX": 250 },
+                "stage": { "MIN": 10, "MAX": 250 }
+            }
+        },
 
-				"drop": { "MIN": 10, "MAX": 30 },
-				"random": { "MIN": 10, "MAX": 250 },
-				"stage": { "MIN": 10, "MAX": 250 }
-			}
-		},
+        "card": {
+            "LEVEL_MAX": 100,
+            "LEVEL_XP_MULTIPLIER": 50,
 
-		"card": {
-			"LEVEL_MAX": 100,
-			"LEVEL_XP_MULTIPLIER": 50,
+            "rewards": {
+                "level_up": { "ABILITY": 9, "REPUTATION": 9 },
 
-			"rewards": {
-				"level_up": { "ABILITY": 9, "REPUTATION": 9 },
-
-				"stage": { "MIN": 250, "MAX": 500 }
-			}
-		}
-	}
+                "stage": { "MIN": 150, "MAX": 500 }
+            }   
+        }
+    }
 }

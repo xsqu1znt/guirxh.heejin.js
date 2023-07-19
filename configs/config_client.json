@@ -5,9 +5,7 @@
 
     "OWNER_ID": "797233513136390175",
     "ADMIN_IDS": ["842555247145779211"],
-    "admin_bypass_ids": {
-        "customizecard": [""]
-    },
+    "admin_bypass_ids": {},
 
     "clientPresence": {
         "default": {
