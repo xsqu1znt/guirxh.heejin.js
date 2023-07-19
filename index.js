@@ -6,7 +6,7 @@ const fs = require('fs');
 const { Client, GatewayIntentBits, Partials, Collection } = require('discord.js');
 const slashCommandManager = require('./modules/slashCommandManager');
 const logger = require('./modules/logger');
-const mongo = require('./modules/mongo');
+// const mongo = require('./modules/mongo');
 
 const TOKEN = process.env.TOKEN || require('./configs/config_client.json').TOKEN;
 
@@ -41,7 +41,7 @@ importers_dir.forEach(fn => {
 // Connect the client to discord
 logger.log("connecting to Discord...");
 client.login(TOKEN).then(async () => {
-    await mongo.connect();
+    // await mongo.connect();
 
     // Push all commands including admin to a specific server (use this if Heejin is using local commands) (this is local)
     // await slashCommandManager.push(client, "1107285909365329922", false, true);
