@@ -1,6 +1,6 @@
 // Connects us to our Mongo database so we can save and retrieve data.
 
-const { userSettings } = require('../configs/heejinSettings.json');
+const { userSettings } = require('../configs/config_bot.json');
 const { stringTools, numberTools, randomTools, dateTools } = require('../modules/jsTools');
 const { model: userModel } = require('../models/userModel');
 // const questManager = require('./mongo/questManager');
@@ -10,7 +10,7 @@ const userParser = require('./userParser');
 const mongoose = require('mongoose');
 const logger = require('./logger');
 
-const MONGO_URI = process.env.MONGO_URI || require('../configs/clientSettings.json').MONGO_URI;
+const MONGO_URI = process.env.MONGO_URI || require('../configs/config_client.json').MONGO_URI;
 
 // Models
 const models = {
