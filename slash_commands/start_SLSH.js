@@ -32,7 +32,7 @@ module.exports = {
 		// Create the start embed and send it
 		return await new BetterEmbed({
 			interaction,
-			author: { text: "Welcome, %AUTHOR_NAME!", user: interaction.member },
+			author: { text: "Welcome, $USERNAME!", user: interaction.member },
 			description: `Welcome to **Heejin 2.0**\nThank you for showing interest in playing our bot \`❤️\`\n\n> \`01.\` You can start your journey by using any of our \`/drop\` commands. \n> \`02.\` You can view \`/inventory\` to see all cards you own and \`/profile\` to view all your basic information.\n> \`03.\` There is a bunch of commands out there waiting for you to use.\n> Example: Use \`/set\` to add all your faves to all these places: \n> \`🔒 vault\` \`👯 team\` \`🏃 idol\` \`⭐ favorite\`\n\n*There's so much more waiting for you!*\nHope you enjoy playing! You can join our server by [**clicking here**](${config_bot.community_server.INVITE_URL})\n\n> **You got**: \`${config_bot.emojis.CURRENCY_1.EMOJI} ${config_player.currency.STARTING_BALANCE}\``
 		}).send();
 	}

@@ -5,17 +5,14 @@
 		"body": [
 			"// An example of an event function.\n",
 
-			"const { Client, Guild } = require('discord.js');",
-			"const logger = require('../../../modules/logger');\n",
+			"const { Client, Guild } = require(\"discord.js\");",
+			"const logger = require(\"../../../modules/logger\");\n",
 
 			"module.exports = {",
 			"    name: \"${1:EXAMPLE}\",",
 			"    event: \"${2:guild_create}\",\n",
 
-			"    /**",
-			"     * @param {Client} client",
-			"     * @param {{ guild: Guild }} args",
-			"     */",
+			"    /** @param {Client} client @param {{ guild: Guild }} args */",
 			"    execute: async (client, args) => {",
 			"        return logger.log(`joined a guild named \"${args.guild.name}\"`);$0",
 			"    }",
@@ -29,17 +26,14 @@
 		"body": [
 			"// An example of an event function.\n",
 
-			"const { Client, Guild } = require('discord.js');",
-			"const logger = require('../../../modules/logger');\n",
+			"const { Client, Guild } = require(\"discord.js\");",
+			"const logger = require(\"../../../modules/logger\");\n",
 
 			"module.exports = {",
 			"    name: \"${1:EXAMPLE}\",",
 			"    event: \"${2:guild_delete}\",\n",
 
-			"    /**",
-			"     * @param {Client} client",
-			"     * @param {{ guild: Guild }} args",
-			"     */",
+			"    /** @param {Client} client @param {{ guild: Guild }} args */",
 			"    execute: async (client, args) => {",
 			"        return logger.log(`left a guild named \"${args.guild.name}\"`);$0",
 			"    }",
@@ -53,17 +47,14 @@
 		"body": [
 			"// An example of an event function.\n",
 
-			"const { Client, Message } = require('discord.js');",
-			"const logger = require('../../../modules/logger');\n",
+			"const { Client, Message } = require(\"discord.js\");",
+			"const logger = require(\"../../../modules/logger\");\n",
 
 			"module.exports = {",
 			"    name: \"${1:EXAMPLE}\",",
 			"    event: \"${2:message_create}\",\n",
 
-			"    /**",
-			"     * @param {Client} client",
-			"     * @param {{ message: Message }} args",
-			"     */",
+			"    /** @param {Client} client @param {{ message: Message }} args */",
 			"    execute: async (client, args) => {",
 			"        return logger.log(`${args.message.author.username} sent a message`);$0",
 			"    }",
@@ -77,17 +68,14 @@
 		"body": [
 			"// An example of an event function.\n",
 
-			"const { Client, Message } = require('discord.js');",
-			"const logger = require('../../../modules/logger');\n",
+			"const { Client, Message } = require(\"discord.js\");",
+			"const logger = require(\"../../../modules/logger\");\n",
 
 			"module.exports = {",
 			"    name: \"${1:EXAMPLE}\",",
 			"    event: \"${2:message_delete}\",\n",
 
-			"    /**",
-			"     * @param {Client} client",
-			"     * @param {{ message: Message }} args",
-			"     */",
+			"    /** @param {Client} client @param {{ message: Message }} args */",
 			"    execute: async (client, args) => {",
 			"        return logger.log(`${args.message.author.username} deleted a message`);$0",
 			"    }",
@@ -101,17 +89,14 @@
 		"body": [
 			"// An example of an event function.\n",
 
-			"const { Client, Message } = require('discord.js');",
-			"const logger = require('../../../modules/logger');\n",
+			"const { Client, Message } = require(\"discord.js\");",
+			"const logger = require(\"../../../modules/logger\");\n",
 
 			"module.exports = {",
 			"    name: \"${1:EXAMPLE}\",",
 			"    event: \"${2:message_update}\",\n",
 
-			"    /**",
-			"     * @param {Client} client",
-			"     * @param {{ message: { before: Message, after: Message } }} args",
-			"     */",
+			"    /** @param {Client} client @param {{ message: { before: Message, after: Message } }} args */",
 			"    execute: async (client, args) => {",
 			"        return logger.log(`${args.message.after.author.username} updated a message`);$0",
 			"    }",
@@ -125,17 +110,14 @@
 		"body": [
 			"// An example of an event function.\n",
 
-			"const { Client, BaseInteraction } = require('discord.js');",
-			"const logger = require('../../../modules/logger');\n",
+			"const { Client, BaseInteraction } = require(\"discord.js\");",
+			"const logger = require(\"../../../modules/logger\");\n",
 
 			"module.exports = {",
 			"    name: \"${1:EXAMPLE}\",",
 			"    event: \"${2:interaction_create}\",\n",
 
-			"    /**",
-			"     * @param {Client} client",
-			"     * @param {{ interaction: BaseInteraction }} args",
-			"     */",
+			"    /** @param {Client} client @param {{ interaction: BaseInteraction }} args */",
 			"    execute: async (client, args) => {",
 			"        logger.log(`${args.interaction.user.username} triggered an interaction`);$0",
 			"    }",
