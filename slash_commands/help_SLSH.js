@@ -1,6 +1,6 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { BetterEmbed } = require(`../modules/discordTools/_dsT`);
+const { BetterEmbed } = require("../modules/discordTools/_dsT");
 
 module.exports = {
 	options: { deferReply: false, dontRequireUserData: true },
@@ -18,7 +18,6 @@ module.exports = {
 
 		// Create an array out of the slash commands that have icons
 		let slashCommands = [...client.slashCommands.values()].filter(slsh => slsh?.options?.icon);
-
 
 		// prettier-ignore
 		// Iterate through each slash command and add it to the embed
