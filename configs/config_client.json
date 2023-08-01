@@ -1,29 +1,29 @@
 {
-    "TOKEN": "",
-    "MONGO_URI": "",
-    "DEVMODE": false,
+	"TOKEN": "",
+	"MONGO_URI": "",
+	"DEV_MODE": false,
 
-    "OWNER_ID": "797233513136390175",
-    "ADMIN_IDS": ["842555247145779211"],
-    "admin_bypass_ids": {},
+	"OWNER_ID": "797233513136390175",
+	"ADMIN_IDS": ["842555247145779211"],
+	"admin_bypass_ids": {},
 
-    "clientPresence": {
-        "default": {
-            "STATUS": "online",
-            "activity": {
-                "TYPE": "PLAYING",
-                "NAME": "with rabbits 🐰",
-                "STREAM_URL": ""
-            }
-        },
+	"client_presence": {
+		"default": {
+			"STATUS": "online",
+			"activity": {
+				"TYPE": "PLAYING",
+				"NAME": "with rabbits 🐰",
+				"STREAM_URL": ""
+			}
+		},
 
-        "dev": {
-            "STATUS": "dnd",
-            "activity": {
-                "TYPE": "PLAYING",
-                "NAME": "hide and seek 🐰",
-                "STREAM_URL": ""
-            }
-        }
-    }
+		"dev": {
+			"STATUS": "dnd",
+			"activity": {
+				"TYPE": "PLAYING",
+				"NAME": "hide and seek 🐰",
+				"STREAM_URL": ""
+			}
+		}
+	}
 }

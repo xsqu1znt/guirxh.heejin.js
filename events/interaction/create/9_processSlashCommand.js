@@ -3,13 +3,14 @@
 const { Client, BaseInteraction, PermissionsBitField } = require("discord.js");
 
 const { BetterEmbed } = require("../../../modules/discordTools/_dsT");
-const _jsT = require("../../../modules/jsTools/_jsT");
+// const _jsT = require("../../../modules/jsTools/_jsT");
 const logger = require("../../../modules/logger");
 
-const { OWNER_ID, ADMIN_IDS, admin_bypass_ids } = require("../../../configs/config_client.json");
-const { community_server } = require("../../../configs/config_bot.json");
+const config_client = require("../../../configs/config_client.json");
+const config_bot = require("../../../configs/config_bot.json");
 
 function userIsBotAdminOrBypass(interaction) {
+	let { OWNER_ID, ADMIN_IDS, admin_bypass_ids } = config_client;
 	return [OWNER_ID, ...ADMIN_IDS, ...(admin_bypass_ids[interaction.commandName] || [])].includes(interaction.user.id);
 }
 
@@ -54,6 +55,8 @@ module.exports = {
 		try {
 			// Parse slash command options
 			if (slashCommand?.options) {
+				let { community_server } = config_bot;
+
 				let _botAdminOnly = slashCommand.options?.botAdminOnly;
 				let _guildAdminOnly = slashCommand.options?.guildAdminOnly;
 				let _isCommunityServer = args.interaction.guildId === community_server.ID;

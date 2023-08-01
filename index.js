@@ -6,7 +6,7 @@ const fs = require(`fs`);
 const { Client, Collection, GatewayIntentBits, Partials } = require(`discord.js`);
 const slashCommandManager = require(`./modules/slashCommandManager`);
 const logger = require(`./modules/logger`);
-const mongo = require(`./modules/mongo`);
+// const mongo = require(`./modules/mongo`);
 
 const TOKEN = process.env.TOKEN || require(`./configs/config_client.json`).TOKEN;
 
@@ -49,7 +49,7 @@ client.login(TOKEN).then(async () => {
 	// await mongo.connect();
 
 	// Register slash commands to a specific server :: { LOCAL }
-	// await slashCommandManager.push(client, { ids: "1107285909365329922" });
+	await slashCommandManager.push(client, { ids: "1107285909365329922" });
 
 	// Register slash commands :: { GLOBAL }
 	// await slashCommandManager.push(client, { global: true });
