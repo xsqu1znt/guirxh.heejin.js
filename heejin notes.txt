@@ -1,0 +1,4 @@
+show x/y complete in the footer of /missing
+show current carrot/ribbon balance in footer of /shop
+/sell filter duplicate uids
+fix embed size issue with /gift and /sell

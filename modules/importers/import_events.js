@@ -6,9 +6,7 @@ const { Client } = require('discord.js');
 const logger = require('../logger');
 
 module.exports = {
-    /**
-     * @param {Client} client 
-     */
+    /** @param {Client} client */
     init: (client) => {
         let events = {
             ready: importEvents('../../events/ready'),

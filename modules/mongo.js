@@ -1,7 +1,7 @@
 // Connects us to our Mongo database so we can save and retrieve data.
 
 const { userSettings } = require('../configs/config_bot.json');
-const { stringTools, numberTools, randomTools, dateTools } = require('../modules/jsTools');
+const { stringTools, numberTools, randomTools, dateTools } = require('./jsTools');
 const { model: userModel } = require('../models/userModel');
 // const questManager = require('./mongo/questManager');
 const badgeManager = require('./badgeManager');

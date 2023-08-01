@@ -23,9 +23,7 @@ function importSlashCommands(dir) {
 }
 
 module.exports = {
-    /**
-     * @param {Client} client 
-     */
+    /** @param {Client} client */
     init: (client) => {
         let slash_commands_general = importSlashCommands('../../slash_commands');
         // let slash_commands_general = importSlashCommands('./slash_commands');

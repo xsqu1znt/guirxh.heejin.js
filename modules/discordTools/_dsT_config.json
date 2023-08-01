@@ -1,0 +1,20 @@
+{
+	"EMBED_COLOR": ["#2B2D31"],
+	"CONFIRMATION_TITLE": { "text": "Please confirm this action", "useAuthor": true },
+
+	"timeouts": {
+		"PAGINATION": "30s",
+		"CONFIRMATION": "15s",
+		"ERROR_MESSAGE": "5s"
+	},
+
+	"navigator": {
+		"buttons": {
+			"to_first": { "TEXT": "◀◀", "emoji": { "NAME": "◀◀", "ID": "◀◀" } },
+			"back": { "TEXT": "◀", "emoji": { "NAME": "◀", "ID": "◀" } },
+			"jump": { "TEXT": "📄", "emoji": { "NAME": "📄", "ID": "📄" } },
+			"next": { "TEXT": "▶", "emoji": { "NAME": "▶", "ID": "▶" } },
+			"to_last": { "TEXT": "▶▶", "emoji": { "NAME": "▶▶", "ID": "▶▶" } }
+		}
+	}
+}
