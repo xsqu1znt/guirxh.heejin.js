@@ -1,136 +1,215 @@
-// Executes commands requested by a command interaction.
+// An example of an event function.
 
-const { Client, BaseInteraction, PermissionsBitField } = require('discord.js');
+const { Client, BaseInteraction, PermissionsBitField } = require("discord.js");
 
-const heejinTips = require('../../../configs/heejinTips.json');
-const { ownerID, adminIDs, adminBypassIDs } = require('../../../configs/clientSettings.json');
-const { communityServer, botSettings: { chanceToShowTips } } = require('../../../configs/heejinSettings.json');
-const { randomTools, stringTools } = require('../../../modules/jsTools');
-const { BetterEmbed } = require('../../../modules/discordTools');
-const { userManager } = require('../../../modules/mongo');
-const questManager = require('../../../modules/questManager');
-const logger = require('../../../modules/logger');
+const { ownerID, adminIDs, adminBypassIDs } = require("../../../configs/clientSettings.json");
+const {
+	communityServer,
+	botSettings: { chanceToShowTips }
+} = require("../../../configs/heejinSettings.json");
+
+const { quest_objectiveComplete_ES } = require("../../../modules/embedStyles");
+const { questManager } = require("../../../modules/mongo/index");
+const { BetterEmbed } = require("../../../modules/discordTools");
+const { randomTools } = require("../../../modules/jsTools");
+const { userManager } = require("../../../modules/mongo");
+
+const messenger = require("../../../modules/messenger");
+const logger = require("../../../modules/logger");
+
+const tips = require("../../../configs/tips.json");
+
+function userIsBotAdminOrBypass(interaction) {
+	return [ownerID, ...adminIDs, ...(adminBypassIDs[interaction.commandName] || [])].includes(
+		interaction.user.id
+	);
+}
+
+function userIsGuildAdminOrBypass(interaction) {
+	let isAdmin = interaction.member.permissions.has(PermissionsBitField.Flags.Administrator);
+	let canBypass = userIsBotAdminOrBypass(interaction);
+
+	return isAdmin || canBypass;
+}
 
 module.exports = {
-    name: "process_slashCommand",
-    event: "interaction_create",
+	name: "processSlashCommand",
+	event: "interaction_create",
 
-    /**
-     * @param {Client} client 
-     * @param {{ interaction: BaseInteraction }} args
-     */
-    execute: async (client, args) => {
-        let embed_error = new BetterEmbed({ interaction: args.interaction });
+	/**
+	 * @param {Client} client
+	 * @param {{ interaction: BaseInteraction }} args
+	 */
+	execute: async (client, args) => {
+		// Filter out non-guild and non-command interactions
+		if (!args.interaction.guild || !args.interaction.isCommand()) return;
 
-        // Filter out non-guild and non-command interactions
-        if (!args.interaction.guild || !args.interaction.isCommand()) return;
+		/// Misc. embeds
+		let embed_error = new BetterEmbed({
+			interaction: args.interaction,
+			author: { text: "⛔ Something is wrong" }
+		});
+		let embed_tip = new BetterEmbed({
+			interaction: args.interaction,
+			author: { text: "⚠️ Did You Know?" }
+		});
+		let embed_userLevelUp = new BetterEmbed({
+			interaction: args.interaction,
+			author: { text: `🎉 Congratulations, ${args.interaction.user}!` }
+		});
 
-        // Get the slash command function from the client if it exists
-        let slashCommand = client.slashCommands.get(args.interaction.commandName)
-            || client.slashCommands_admin.get(args.interaction.commandName)
-            || null;
+		// Get the slash command function from the client if it exists
+		let slashCommand = client.slashCommands.get(args.interaction.commandName) || null;
+		if (!slashCommand)
+			return await embed_error.send({
+				description: `\`/${args.interaction.commandName}\` is not a command`
+			});
 
-        // Try to execute the slash command function
-        if (slashCommand) try {
-            // Check if the command requires the user to be an admin for the bot
-            if (slashCommand?.isOwnerCommand
-                && ![ownerID, ...adminIDs].includes(args.interaction.user.id)
-                // Special command bypass
-                && !adminBypassIDs[args.interaction.commandName].includes(args.interaction.user.id)
-            ) return await args.interaction.reply({
-                content: "You do not have permission to use this command, silly!", ephemeral: true
-            });
+		// Execute the command
+		try {
+			// Parse slash command options
+			if (slashCommand?.options) {
+				let _botAdminOnly = slashCommand.options?.botAdminOnly;
+				let _guildAdminOnly = slashCommand.options?.guildAdminOnly;
+				let _isCommunityServer = args.interaction.guildId === communityServer.id;
+				let _isCommunityServerAdminChannel =
+					args.interaction.channelId === communityServer.adminChannelID;
 
-            // Check if the command requires the user to have admin in the guild
-            if (slashCommand?.requireGuildAdmin) {
-                let userHasAdmin = args.interaction.member.permissions.has(PermissionsBitField.Flags.Administrator);
+				// Check if the command requires the user to be an admin for the bot
+				if (_botAdminOnly && !userIsBotAdminOrBypass(args.interaction))
+					return await embed_error.send({
+						description: "Only Heejin staff can use this command",
+						ephemeral: true
+					});
 
-                if (![ownerID, ...adminIDs].includes(args.interaction.user.id) && !userHasAdmin)
-                    return await args.interaction.reply({
-                        content: "You need admin to use this command, silly!", ephemeral: true
-                    });
-            }
+				// Check if the command requires the user to have admin in the current guild
+				if (_guildAdminOnly && !userIsGuildAdminOrBypass(args.interaction))
+					return await embed_error.send({
+						description: "You need admin to use this command",
+						ephemeral: true
+					});
 
-            // Only allow admin commands to be used in the admin channel in the community server
-            if (slashCommand?.isOwnerCommand || slashCommand?.requireGuildAdmin) {
-                let _isInCommunityServer = (args.interaction.guildId === communityServer.id);
-                let _isInCommunityAdminChannel = (args.interaction.channelId === communityServer.adminChannelID);
+				// Check if the a botAdminOnly/guildAdminOnly command was ran in the community server
+				if (
+					_isCommunityServer &&
+					!_isCommunityServerAdminChannel &&
+					(_botAdminOnly || _guildAdminOnly)
+				)
+					return await embed_error.send({
+						description: `You can only use that command in <#${communityServer.adminChannelID}>`,
+						ephemeral: true
+					});
+			}
 
-                if (_isInCommunityServer && !_isInCommunityAdminChannel) {
-                    let embed_wrongAdminChannel = new BetterEmbed({
-                        interaction: args.interaction, description: "You cannot use that command here, silly!"
-                    });
+			/// Check if the user's in our Mongo database
+			let _userDataExists = await userManager.exists(args.interaction.user.id);
+			let _dontRequireUserData = slashCommand?.options?.dontRequireUserData || false;
 
-                    return await embed_wrongAdminChannel.send({ ephemeral: true });
-                }
-            }
+			if (!_userDataExists && !_dontRequireUserData)
+				return await embed_error.send({
+					description: "**You have not started yet!** Use `/start` first!",
+					ephemeral: true
+				});
 
-            await args.interaction.deferReply();
+			// Defer the interaction
+			if (slashCommand?.options?.deferReply)
+				try {
+					await args.interaction.deferReply();
 
-            // Check if the user's in the database
-            if (!await userManager.exists(args.interaction.user.id) && args.interaction.commandName !== "start") {
-                // Get the /start command ID
-                try {
-                    let guildCommands = await args.interaction.guild.commands.fetch();
-                    let startCommandID = guildCommands.find(slash_commands => slash_commands.name === "start").id;
+					// Update user quest cache post-command
+                    let questsChanged = await questManager.user.questsChanged(args.interaction.user.id);
+					if (questsChanged) await questManager.cache.updateCache(args.interaction.user.id);
+				} catch {}
 
-                    // Send an error embed
-                    return await embed_error.send({
-                        description: `**You haven't started yet!** Use </start:${startCommandID}> first!`
-                    });
-                } catch {
-                    // Send an error embed
-                    return await embed_error.send({
-                        description: `**You haven't started yet!** Use \`/start\` first!`
-                    });
-                }
-            }
+			// Execute the slash command's function
+			slashCommand.execute(client, args.interaction).then(async message => {
+				try {
+					// Check if the user can level up
+					userManager.xp.tryLevelUp(args.interaction.user.id).then(async _userLevelUp => {
+						if (_userLevelUp.leveled) {
+							// Create the level up message
+							let levelUpText =
+								`\`🎉\` Congratulations, %USER! You are now \`LV. %CURRENT_LVL\``
+									.replace("%USER", args.interaction.user)
+									.replace("%CURRENT_LVL", _userLevelUp.level_current);
 
-            // Cache the user's current data before running the command (quests)
-            let cacheQuests = await userManager.quests.cache(args.interaction.user.id);
+							// Edit the current message with the level up message
+							// if the message can't be edited, send a separate message
+							try {
+								await message.edit({ content: `**${levelUpText}**` });
+							} catch {
+								await embed_userLevelUp.send({
+									method: "send",
+									description: `You are now \`LV. ${_userLevelUp.level_current}\``
+								});
+							}
+						}
+					});
 
-            // Execute the command function
-            return await slashCommand.execute(client, args.interaction).then(async msg => {
-                try {
-                    // Cache the user's new data after running the command (quests)
-                    // then check if the user completed any quests
-                    let parsedQuestData = await cacheQuests(); if (parsedQuestData) {
-                        console.log(parsedQuestData);
+					// Handle post-execute quest caching
+					await questManager.cache
+						.updateCache(args.interaction.user.id)
+						.then(async questCache => {
+							if (!questCache) return; /* console.log(questCache); */
 
-                        /* for (let quest of parsedQuestData) if (quest.completed) {
-                            // do something about it
-                        }   */
-                    }
-                } catch { }
+							// Iterate through quest progress
+							for (let quest_progress of questCache.progress) {
+								// Let the user know if they completed an objective(s)
+								if (quest_progress.objectives_just_complete.length) {
+									// Create the object complete embed
+									let _embed_questObjectiveComplete = quest_objectiveComplete_ES(
+										args.interaction.member,
+										quest_progress
+									);
 
-                // Check if the user can level up
-                let leveled = await userManager.xp.tryLevelUp(args.interaction.user.id);
+									// Send the embed
+									try {
+										args.interaction.followUp({
+											embeds: [_embed_questObjectiveComplete]
+										});
+									} catch {
+										args.interaction.channel.send({
+											embeds: [_embed_questObjectiveComplete]
+										});
+									}
+								}
+							}
 
-                // Send a level up message if the user leveled up successfully
-                if (leveled.leveled) {
-                    // Gotta have a level up message to actually send
-                    let lvlMsg = `Congratulations, %USER! You are now level %CURRENT_LVL`
-                        .replace("%USER", args.interaction.user)
-                        .replace("%CURRENT_LVL", stringTools.formatNumber(leveled.level_current));
+							// Iterate through complete quests
+							for (let quest_complete of questCache.quests_complete) {
+								// Mark the quest as complete for the user and give the rewards
+								questManager.user
+									.markComplete(args.interaction.user.id, quest_complete.id)
+									.then(async marked => {
+										if (!marked) return;
 
-                    // Send the level up message we created above
-                    // not awaited because we don't need any information from the returned message
-                    try {
-                        msg.edit({ content: `**${lvlMsg}**\n\n${msg.content}`, allowedMentions: { repliedUser: false } });
-                    } catch {
-                        await args.interaction.channel.send({ content: lvlMsg, allowedMentions: { repliedUser: false } });
-                    }
-                }
+										// Send the user a DM congratulating them on completing the quest
+										await messenger.quest.complete(
+											args.interaction.user,
+											quest_complete
+										);
+									});
+							}
+						});
+				} catch (err) {
+					/* console.error(err); */
+				}
+			});
 
-                // Have a chance to send a random tip to the channel
-                if (randomTools.chance(chanceToShowTips)) return await new BetterEmbed({
-                    interaction: args.interaction, title: { text: "\`⚠️\` **Did You Know?**" },
-                    description: randomTools.choice(heejinTips)
-                }).send({ method: "send" });
-            });
-        } catch (err) {
-            // Log the error
-            return logger.error("Failed to execute slash command", `\"${args.interaction.commandName}\"`, err);
-        }
-    }
+			try {
+				// Send a random Tips N' Tricks messeage to the channel
+				if (randomTools.chance(chanceToShowTips))
+					embed_tip.send({
+						description: randomTools.choice(tips),
+						method: "send"
+					});
+			} catch {}
+		} catch (err) {
+			logger.error(
+				"An error occurred: SLSH_CMD",
+				`cmd: /${args.interaction.commandName} | guildID: ${args.interaction.guild.id} | userID: ${args.interaction.user.id}`,
+				err
+			);
+		}
+	}
 };
