@@ -3,6 +3,7 @@
 const { Client, BaseInteraction, PermissionsBitField } = require("discord.js");
 
 const { BetterEmbed } = require("../../../modules/discordTools/_dsT");
+const { userManager } = require("../../../modules/mongo/index");
 // const _jsT = require("../../../modules/jsTools/_jsT");
 const logger = require("../../../modules/logger");
 
@@ -31,17 +32,17 @@ module.exports = {
 		if (!args.interaction.guild || !args.interaction.isCommand()) return;
 
 		/// Misc. embeds
+		// prettier-ignore
 		let embed_error = new BetterEmbed({
-			interaction: args.interaction,
-			author: { text: "⛔ Something is wrong" }
+			interaction: args.interaction, author: { text: "⛔ Something is wrong" }
 		});
+		// prettier-ignore
 		let embed_tip = new BetterEmbed({
-			interaction: args.interaction,
-			author: { text: "⚠️ Did You Know?" }
+			interaction: args.interaction, author: { text: "⚠️ Did You Know?" }
 		});
+		// prettier-ignore
 		let embed_userLevelUp = new BetterEmbed({
-			interaction: args.interaction,
-			author: { text: `🎉 Congratulations, ${args.interaction.user}!` }
+			interaction: args.interaction, author: { text: `🎉 Congratulations, ${args.interaction.user}!` }
 		});
 
 		// Get the slash command function from the client if it exists
@@ -88,6 +89,15 @@ module.exports = {
 				err
 			);
 		}
+
+		/// Check if the user's in our Mongo database
+		let _userDataExists = await userManager.exists(args.interaction.user.id);
+		let _dontRequireUserData = slashCommand?.options?.dontRequireUserData || false;
+
+		// prettier-ignore
+		if (!_userDataExists && !_dontRequireUserData) return await embed_error.send({
+			description: "**You have not started yet!** Use \`/start\` first!", ephemeral: true
+		});
 
 		// prettier-ignore
 		if (slashCommand?.options?.deferReply)
