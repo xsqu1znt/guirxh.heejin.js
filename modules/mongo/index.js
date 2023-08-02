@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const MONGO_URI = process.env.MONGO_URI || require("../../configs/config_client.json").MONGO_URI;
 
 /// Custom Mongo modules
-const questManager = require("./questManager");
+// const questManager = require("./questManager");
 const userManager = require("./userManager");
 
 module.exports = {
@@ -27,6 +27,6 @@ module.exports = {
 		logger.error("Failed to connect to MongoDB", null, connection);
 	},
 
-	questManager,
+	// questManager,
 	userManager
 };

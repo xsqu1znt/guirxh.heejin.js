@@ -34,10 +34,10 @@
  * @property {boolean} upsert
  * @property {boolean} awaitQueueCleared */
 
-const { numberTools } = require("../jsTools");
 // const badgeManager = require('./badgeManager');
 const cardManager = require("../cardManager");
 const userParser = require('./userParser');
+const _jsT = require("../jsTools/_jsT");
 const logger = require('./logger');
 
 const playerConfig = require("../../configs/config_player.json");
@@ -308,7 +308,7 @@ async function inventory_sell(userID, cards) {
 
 	await Promise.all([
 		// Update the user's balance
-		userData_update(userID, { $inc: { balance: numberTools.sum(cards, "sellPrice") } }),
+		userData_update(userID, { $inc: { balance: _jsT.sum(cards, "sellPrice") } }),
 		// Remove the cards from the user's card_inventory
 		inventory_remove(
 			userID,
