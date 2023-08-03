@@ -116,7 +116,7 @@ function cards_parseInventory(userData, options = c_pI_options) {
 			card_inventory[i] = card || card_inventory[i];
 		}
 
-	return card_inventory;
+	return userData?.card_inventory ? { ...userData, card_inventory } : card_inventory;
 }
 
 function cards_setsCompleted(userData, setIDs) {

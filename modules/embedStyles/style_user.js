@@ -25,11 +25,16 @@ function inventory(userData, options) {
     };
 
 	/// Parse options
-	options.setID = options.setID.split(",").map(str => str.trim().toLowerCase());
-	options.dupes = options.dupes.split(",").map(str => str.trim().toLowerCase());
-	options.group = options.group.split(",").map(str => str.trim().toLowerCase());
-	options.single = options.single.split(",").map(str => str.trim().toLowerCase());
-	options.name = options.name.split(",").map(str => str.trim().toLowerCase());
+	// prettier-ignore
+	options.setID = options.setID.split(",").filter(str => str).map(str => str.trim().toLowerCase());
+	// prettier-ignore
+	options.dupes = options.dupes.split(",").filter(str => str).map(str => str.trim().toLowerCase());
+	// prettier-ignore
+	options.group = options.group.split(",").filter(str => str).map(str => str.trim().toLowerCase());
+	// prettier-ignore
+	options.single = options.single.split(",").filter(str => str).map(str => str.trim().toLowerCase());
+	// prettier-ignore
+	options.name = options.name.split(",").filter(str => str).map(str => str.trim().toLowerCase());
 
 	if (options.dupes[0] === "all") options.dupes = ["all"];
 
@@ -50,9 +55,9 @@ function inventory(userData, options) {
 	// prettier-ignore
 	// Apply duplicate filter
 	if (options.dupes.length) if (options.dupes[0] === "all")
-        cards = cards.filter(c => c.duplicateCount);
+        cards = cards.filter(c => c.duplicate_count);
     else
-        cards = cards.filter(c => options.dupes.includes(c.card.globalID) && c.duplicateCount);
+        cards = cards.filter(c => options.dupes.includes(c.card.globalID) && c.duplicate_count);
 
 	// prettier-ignore
 	// Sort the user's cards
@@ -70,12 +75,12 @@ function inventory(userData, options) {
         author: { text: "$USERNAME | inventory", user: options.target },
         description: filtered
             ? "No cards were found with that search filter"
-            : "You do not have any cards in your inventory"
+            : "There are no cards in your inventory"
     });
 
 	// prettier-ignore
 	// Format the user's cards into list entries, with a max of 10 per page
-	let cards_f = _jsT.chunk(cards.map(c => c.card_f), 10);
+    let cards_f = _jsT.chunk(cards.map(c => c.card_f), 10);
 
 	/// Create the embeds :: { INVENTORY }
 	let embeds_inventory = [];

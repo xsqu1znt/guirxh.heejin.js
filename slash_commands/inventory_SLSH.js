@@ -50,7 +50,7 @@ module.exports = {
 		// Fetch the targetUser from Mongo
 		let userData = await userManager.fetch(options_inventory.target.id, { type: "inventory" });
         if (!userData) return await embed_error.send({ description: "That user has not started yet" });
-
+        
 		// Parse the user's card_inventory
 		userData = userParser.cards.parseInventory(userData);
 
