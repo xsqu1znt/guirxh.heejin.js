@@ -36,7 +36,13 @@ const cards = {
 const cards_all = [].concat(...Object.values(cards));
 const cards_general = [...cards.comn, ...cards.uncn, ...cards.rare, ...cards.epic, ...cards.mint];
 
-const categories_general = Object.values(dropSettings.chances).map(c => ({ ...c, rarity: c.chance }));
+const categories_general = Object.values(config_drop.chance).map(c => ({ ...c, rarity: c.CHANCE }));
+
+// Special charactors
+const superscript = {
+	numbers: ["⁰", "¹", "²", "³", "⁴", "⁵", "⁶", "⁷", "⁸", "⁹"],
+	dupe: "ᴰ ᵁ ᴾ ᴱ"
+};
 
 function recalculateStats(card) {
 	let card_base = get_globalID(card.globalID);
@@ -234,7 +240,19 @@ function toString_basic(card) {
 		.replace("%SELL_PRICE", inline("💰", card.sellPrice));
 }
 
-function toString_inventory(
+/** @typedef options_toStr_inventory
+ * @property {number} duplicateCount
+ * @property {boolean} favorite
+ * @property {boolean} selected
+ * @property {boolean} team
+ * @property {boolean} duplicate */
+
+/** @param {Card} card  @param {options_toStr_inventory} options  */
+function toString_inventory(card, options) {
+	options = { duplicateCount: 0, favorited: false, selected: false, team: false, isDuplicate: false, ...options };
+}
+
+function toString_inventory_DEPRECATED(
 	card,
 	options = { duplicateCount: 0, favorited: false, selected: false, team: false, isDuplicate: false, simplify: false }
 ) {

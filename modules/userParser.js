@@ -92,7 +92,7 @@ function cards_getInventory(userData) {
 
         cards.push({
             card, card_f: _card_f,
-            isFavorite: _isFavorite, isSelected: _isSelected, isOnTeam: _isOnTeam,
+            duplicateCount, isFavorite: _isFavorite, isSelected: _isSelected, isOnTeam: _isOnTeam,
         });
     }
 

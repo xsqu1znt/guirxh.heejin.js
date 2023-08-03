@@ -36,9 +36,9 @@
 
 // const badgeManager = require('./badgeManager');
 const cardManager = require("../cardManager");
-const userParser = require('./userParser');
+const userParser = require('../userParser');
 const _jsT = require("../jsTools/_jsT");
-const logger = require('./logger');
+const logger = require('../logger');
 
 const playerConfig = require("../../configs/config_player.json");
 
@@ -47,10 +47,10 @@ const { model: userModel } = require("../../models/userModel");
 const models = { user: userModel };
 
 // Queues
-const MongoQueueManager = require("./queueManager");
+/* const MongoQueueManager = require("../queueManager");
 const queues = {
 	userData: { update: new MongoQueueManager(models.user) }
-};
+}; */
 
 //! UserData
 async function userData_count() {
