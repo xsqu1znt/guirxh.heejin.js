@@ -71,9 +71,17 @@ function cards_getIdol(userData) {
 	return cards_get(userData, userData.card_selected_uid);
 }
 
-function cards_getInventory(userData) {
+/** @typedef options_cards_getInventory
+ * @property {boolean} dupeTag
+ * @property {boolean} unique */
+
+/** @param {options_cards_getInventory} options  */
+function cards_getInventory(userData, options = {}) {
+	options = { dupeTag: true, unique: true, ...options };
+
 	let cards = [];
-	let cards_primary = _jsT.unique(userData?.card_inventory || userData, "globalID");
+	let cards_primary = userData?.card_inventory || userData;
+	if (options.unique) cards_primary = _jsT.unique(cards_primary, "globalID");
 
 	for (let card of cards_primary) {
 		let { duplicateCount } = cards_getDuplicates(userData, card.globalID);
@@ -89,7 +97,7 @@ function cards_getInventory(userData) {
 
 		// prettier-ignore
 		let _card_f = cardManager.toString.inventory(card, {
-            duplicate: duplicateCount, favorite: _isFavorite, selected: _isSelected, team: _isOnTeam
+            duplicate: options.dupeTag ? duplicateCount : false, favorite: _isFavorite, selected: _isSelected, team: _isOnTeam
         });
 
 		// prettier-ignore

@@ -254,13 +254,12 @@ function toString_inventory(card, options = {}) {
 	options = { favorited: false, selected: false, team: false, duplicate: false, ...options };
 
 	// prettier-ignore
-	let f = "$UID $EMOJI $GROUP : $SINGLE - $NAME $DUPE\n> $SET_ID $GLOBAL_ID $RARITY $CATEGORY $SELL_PRICE $LOCKED\n$STATS $FAVORITE $SELECTED $TEAM"
-		.replace("$UID ", `${card?.uid} ` || "")
+	let f = "$UID $EMOJI $GROUP : $SINGLE - $NAME $DUPE\n> $SET_ID $GLOBAL_ID $RARITY $CATEGORY $SELL_PRICE $LOCKED\n> $LEVEL $STATS $FAVORITE $SELECTED $TEAM"
+		.replace("$UID ", `\`${card?.uid}\` ` || "")
 		.replace("$EMOJI", `\`${card.emoji}\``)
 		.replace("$GROUP", `**${card.group}**`)
 		.replace("$SINGLE", card.single)
 		.replace("$NAME", markdown.link(card.name, card.imageURL))
-		// .replace("$DUPE", null)
 
 		.replace("$SET_ID", `\`🗣️ ${card.setID}\``)
 		.replace("$GLOBAL_ID", `\`${card.globalID}\``)
@@ -269,6 +268,7 @@ function toString_inventory(card, options = {}) {
 		.replace("$SELL_PRICE", `\`💰 ${card.sellPrice}\``)
 		.replace(" $LOCKED", card.locked ? " \`🔒\`" : "")
 
+		.replace("$LEVEL", `\`LV.${card.stats.level}\``)
 		.replace("$STATS", `\`🎤 ${card.stats.ability} : 💖 ${card.stats.reputation}\``)
 		.replace(" $FAVORITE", options.favorite ? " \`⭐\`" : "")
 		.replace(" $SELECTED", options.selected ? " \`🏃\`" : "")
@@ -277,11 +277,11 @@ function toString_inventory(card, options = {}) {
 	// prettier-ignore
 	// Format duplicate option
 	if (options.duplicate === true)
-		f.replace(" $DUPE", ` *${superscript.dupe}*`);
+		f = f.replace(" $DUPE", ` *${superscript.dupe}*`);
 	else if (!isNaN(options.duplicate) && options.duplicate > 0)
-		f.replace(" $DUPE", ` **-- ${String(options.duplicate).split("").map(n => superscript.numbers[+n].join(""))}**`);
+		f = f.replace(" $DUPE", ` **-- ${String(options.duplicate).split("").map(n => superscript.numbers[+n]).join("")}**`);
 	else
-		f.replace(" $DUPE", "");
+		f = f.replace(" $DUPE", "");
 
 	return f;
 }

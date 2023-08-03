@@ -39,8 +39,13 @@ function inventory(userData, options) {
 	if (options.dupes[0] === "all") options.dupes = ["all"];
 
 	/// Parse user's card_inventory
-	let cards = userParser.cards.getInventory(userData);
-	let filtered = false;
+	let cards = userParser.cards.getInventory(userData, {
+		dupeTag: options.dupes.length && options.dupes[0] !== "all" ? false : true,
+		unique: options.dupes.length && options.dupes[0] !== "all" ? false : true
+	});
+
+	// prettier-ignore
+	let filtered = false, dupeCheck = false;
 
 	/// Apply inventory filters
 	// prettier-ignore
@@ -54,10 +59,13 @@ function inventory(userData, options) {
 
 	// prettier-ignore
 	// Apply duplicate filter
-	if (options.dupes.length) if (options.dupes[0] === "all")
+	if (options.dupes.length) if (options.dupes[0] === "all") {
         cards = cards.filter(c => c.duplicate_count);
-    else
+        filtered = true;
+    } else {
         cards = cards.filter(c => options.dupes.includes(c.card.globalID) && c.duplicate_count);
+        filtered = true; dupeCheck = true;
+    }
 
 	// prettier-ignore
 	// Sort the user's cards
@@ -72,24 +80,26 @@ function inventory(userData, options) {
 	// prettier-ignore
 	// Return an embed :: { ERROR }
 	if (!cards.length) return new BetterEmbed({
-        author: { text: "$USERNAME | inventory", user: options.target },
-        description: filtered
-            ? "No cards were found with that search filter"
-            : "There are no cards in your inventory"
-    });
+		author: { text: "$USERNAME | inventory", user: options.target },
+		description: filtered ? dupeCheck
+				? `You do not have any dupes of ${options.dupes.length === 1 ? "that card" : "those cards"}`
+				: "No cards were found with that search filter"
+			: "There are no cards in your inventory"
+	});
 
 	// prettier-ignore
 	// Format the user's cards into list entries, with a max of 10 per page
-    let cards_f = _jsT.chunk(cards.map(c => c.card_f), 10);
+	let cards_f = _jsT.chunk(cards.map(c => c.card_f), 10);
 
 	/// Create the embeds :: { INVENTORY }
 	let embeds_inventory = [];
 
 	// prettier-ignore
-	for (let i = 0, _chunk = cards_f[i]; i < _chunk.length; i++) embeds_inventory.push(
+	for (let i = 0; i < cards_f.length; i++) embeds_inventory.push(
 		new BetterEmbed({
-			author: { text: "$USERNAME | inventory", user: options.target },
-			description: _chunk.join("\n"),
+            author: { text: dupeCheck ? "$USERNAME | dupes" : "$USERNAME | inventory", user: options.target },
+            thumbnailURL: dupeCheck ? cards[0].card.imageURL : null,
+			description: cards_f[i].join("\n"),
 			footer: { text: `Page ${i + 1}/${cards_f.length || 1} | Total: ${cards.length}` }
 		})
     );
@@ -98,50 +108,3 @@ function inventory(userData, options) {
 }
 
 module.exports = { inventory };
-
-/* function userInventory_ES(guildMember, userData, filter) {
-    filter = { ...new uinv_filter(), ...filter }; userParser.cards.parseInventory(userData);
-
-    // Apply card filters
-    let cards = userParser.cards.getInventory(userData);
-    let isFiltered = false;
-
-    if (filter.setID) { cards = cards.filter(c => c.card.setID === filter.setID); isFiltered = true; }
-    if (filter.group) { cards = cards.filter(c => c.card.group.toLowerCase().includes(filter.group)); isFiltered = true; }
-    if (filter.name) { cards = cards.filter(c => c.card.name.toLowerCase().includes(filter.name)); isFiltered = true; }
-
-    // Sort the cards
-    switch (filter.sorting) {
-        case "set": cards.sort((a, b) => a.card.setID - b.card.setID || a.card.globalID - b.card.globalID); break;
-
-        case "global": cards.sort((a, b) => a.card.globalID - b.card.globalID); break;
-    }
-
-    if (filter.order === "descending") cards.reverse();
-
-    /// Create the the inventory pages
-    if (!cards.length) return [
-        new BetterEmbed({
-            author: { text: "%AUTHOR_NAME | inventory", user: guildMember },
-            description: isFiltered
-                ? "No cards were found with that search filter"
-                : "You do not have anything in your inventory\n> Use \`/drop\` to get cards"
-        })
-    ];
-
-    let cards_f = arrayTools.chunk(cards.map(card => card.card_f), 10);
-
-    // Create the embeds
-    let embeds = [];
-
-    for (let i = 0; i < cards_f.length; i++) {
-        let _embed = new BetterEmbed({
-            author: { text: "%AUTHOR_NAME | inventory", user: guildMember },
-            description: cards_f[i].join("\n"),
-            footer: { text: `Page ${i + 1}/${cards_f.length || 1} | Total: ${cards.length}` }
-        }); embeds.push(_embed);
-    }
-
-    // Return the embed array
-    return embeds;
-} */
