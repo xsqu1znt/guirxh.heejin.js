@@ -15,7 +15,7 @@ const userParser = require("../userParser");
 const _jsT = require("../jsTools/_jsT");
 
 /** @param {options_inventory} options  */
-function inventory_ES(userData, options) {
+function inventory(userData, options) {
 	// prettier-ignore
 	options = {
         target: null,
@@ -92,7 +92,7 @@ function inventory_ES(userData, options) {
 	return embeds_inventory;
 }
 
-module.exports = { inventory_ES };
+module.exports = { inventory };
 
 /* function userInventory_ES(guildMember, userData, filter) {
     filter = { ...new uinv_filter(), ...filter }; userParser.cards.parseInventory(userData);

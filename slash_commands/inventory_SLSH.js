@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
 const { EmbedNavigator, BetterEmbed } = require("../modules/discordTools/_dsT");
-const { userInventory_ES } = require("../modules/embedStyles");
+const { user_ES } = require("../modules/embedStyles/index");
 const { userManager } = require("../modules/mongo/index");
 const userParser = require("../modules/userParser");
 // const _jsT = require("../modules/jsTools/_jsT");
@@ -55,7 +55,7 @@ module.exports = {
 		userData = userParser.cards.parseInventory(userData);
 
 		// Create the embed :: { USER INVENTORY }
-		let embeds_inventory = userInventory_ES(userData, options_inventory);
+		let embeds_inventory = user_ES.inventory(userData, options_inventory);
 
 		// prettier-ignore
 		// Set up page navigation
