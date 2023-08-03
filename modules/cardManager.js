@@ -9,6 +9,7 @@ const config_shop = require("../configs/config_shop.json");
 const config_drop = require("../configs/config_drop.json");
 const config_bot = require("../configs/config_bot.json");
 
+const { markdown } = require("./discordTools/_dsT");
 const _jsT = require("./jsTools/_jsT");
 const logger = require("./logger");
 
@@ -241,15 +242,48 @@ function toString_basic(card) {
 }
 
 /** @typedef options_toStr_inventory
- * @property {number} duplicateCount
  * @property {boolean} favorite
  * @property {boolean} selected
  * @property {boolean} team
- * @property {boolean} duplicate */
+ * @property {boolean|number} duplicate */
 
-/** @param {Card} card  @param {options_toStr_inventory} options  */
-function toString_inventory(card, options) {
-	options = { duplicateCount: 0, favorited: false, selected: false, team: false, isDuplicate: false, ...options };
+/** @param {options_toStr_inventory} options  */
+function toString_inventory(card, options = {}) {
+	if (!card) return "n/a";
+
+	options = { favorited: false, selected: false, team: false, duplicate: false, ...options };
+
+	// prettier-ignore
+	let f = "$UID $EMOJI $GROUP : $SINGLE - $NAME $DUPE\n> $SET_ID $GLOBAL_ID $RARITY $CATEGORY $SELL_PRICE $LOCKED\n$STATS $FAVORITE $SELECTED $TEAM"
+		.replace("$UID ", `${card?.uid} ` || "")
+		.replace("$EMOJI", `\`${card.emoji}\``)
+		.replace("$GROUP", `**${card.group}**`)
+		.replace("$SINGLE", card.single)
+		.replace("$NAME", markdown.link(card.name, card.imageURL))
+		// .replace("$DUPE", null)
+
+		.replace("$SET_ID", `\`🗣️ ${card.setID}\``)
+		.replace("$GLOBAL_ID", `\`${card.globalID}\``)
+		.replace("$RARITY", `\`R${card.rarity}\``)
+		.replace("$CATEGORY", `\`${card.category}\``)
+		.replace("$SELL_PRICE", `\`💰 ${card.sellPrice}\``)
+		.replace(" $LOCKED", card.locked ? " \`🔒\`" : "")
+
+		.replace("$STATS", `\`🎤 ${card.stats.ability} : 💖 ${card.stats.reputation}\``)
+		.replace(" $FAVORITE", options.favorite ? " \`⭐\`" : "")
+		.replace(" $SELECTED", options.selected ? " \`🏃\`" : "")
+		.replace(" $TEAM", options.team ? "  \`👯\`" : "");
+
+	// prettier-ignore
+	// Format duplicate option
+	if (options.duplicate === true)
+		f.replace(" $DUPE", ` *${superscript.dupe}*`);
+	else if (!isNaN(options.duplicate) && options.duplicate > 0)
+		f.replace(" $DUPE", ` **-- ${String(options.duplicate).split("").map(n => superscript.numbers[+n].join(""))}**`);
+	else
+		f.replace(" $DUPE", "");
+
+	return f;
 }
 
 function toString_inventory_DEPRECATED(
