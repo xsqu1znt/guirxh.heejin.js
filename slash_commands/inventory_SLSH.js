@@ -32,14 +32,14 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-		/// Sorting options
+		// Sorting options
 		let options_inventory = {
 			target: interaction.options.getUser("player") || interaction.member,
-			setID: interaction.options.getString("setid"),
-			dupes: interaction.options.getString("dupes"),
-			group: interaction.options.getString("group"),
-			single: interaction.options.getString("single"),
-			name: interaction.options.getString("name"),
+			setID: interaction.options.getString("setid") || "",
+			dupes: interaction.options.getString("dupes") || "",
+			group: interaction.options.getString("group") || "",
+			single: interaction.options.getString("single") || "",
+			name: interaction.options.getString("name") || "",
 			sorting: interaction.options.getString("sorting") || "setID",
 			order: interaction.options.getString("order") || "ascending"
 		};
@@ -48,8 +48,8 @@ module.exports = {
 		let embed_error = new BetterEmbed({ interaction, author: { text: "$USERNAME", user: interaction.member } });
 
 		// Fetch the targetUser from Mongo
-		let userData = await userManager.fetch(targetPlayer.id, { type: "inventory" });
-		if (!userData) return await embed_error.send({ description: "That user has not started yet" });
+		let userData = await userManager.fetch(options_inventory.target.id, { type: "inventory" });
+        if (!userData) return await embed_error.send({ description: "That user has not started yet" });
 
 		// Parse the user's card_inventory
 		userData = userParser.cards.parseInventory(userData);
