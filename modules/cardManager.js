@@ -3,15 +3,15 @@
 	shopSettings: { setsInStock: shopSetsInStock }
 } = require("../configs/heejinSettings.json"); */
 
+const { markdown } = require("./discordTools/_dsT");
+const _jsT = require("./jsTools/_jsT");
+const logger = require("./logger");
+
 const config_player = require("../configs/config_player.json");
 const config_event = require("../configs/config_event.json");
 const config_shop = require("../configs/config_shop.json");
 const config_drop = require("../configs/config_drop.json");
 const config_bot = require("../configs/config_bot.json");
-
-const { markdown } = require("./discordTools/_dsT");
-const _jsT = require("./jsTools/_jsT");
-const logger = require("./logger");
 
 const cards = {
 	comn: require("../items/cards/cards_common.json"),
@@ -109,7 +109,7 @@ function resetUID(card) {
 }
 
 //! Drop
-/** @param {"general" | "weekly" | "season" | "event1" | "event2"} dropType */
+/** @param {"general" | "weekly" | "season" | "event_1" | "event_2"} dropType */
 function drop(dropType, count = 1) {
 	let cards_dropped = [];
 
@@ -137,7 +137,7 @@ function drop(dropType, count = 1) {
 
 			break;
 
-		case "event1":
+		case "event_1":
 			let _cards_event1 = [...cards.evnt, ...cards.bday, ...cards.holi].filter(card =>
 				eventSettings.event1.cardRarityFilter.includes(card.rarity)
 			);
@@ -146,7 +146,7 @@ function drop(dropType, count = 1) {
 
 			break;
 
-		case "event2":
+		case "event_2":
 			let _cards_event2 = [...cards.evnt, ...cards.bday, ...cards.holi].filter(card =>
 				eventSettings.event2.cardRarityFilter.includes(card.rarity)
 			);
@@ -189,29 +189,36 @@ function get_randomDrop(dropCategory) {
 
 	switch (dropCategory) {
 		case "general":
-			let categories = Object.values(dropSettings.chances).map(c => ({ ...c, rarity: c.chance }));
+			let categories = Object.values(config_drop.chance).map(c => ({ ...c, rarity: c.CHANCE }));
 			let category_picked = _jsT.choiceWeighted(categories);
 
-			card_choices = cards_general.filter(card => card.rarity === category_picked.cardRarityFilter);
-			break;
+			card_choices = cards_general.filter(card => card.rarity === category_picked.CARD_RARITY_FILTER);
+
+			// Return 5 random cards from the list
+			return [...new Array(5)].map(() => _jsT.choice(card_choices, true)) || null;
+
 		case "weekly":
 			card_choices = cards.shop.filter(card =>
-				shopSettings.stockSetIDs.filter(id => id !== "100").includes(card.setID)
+				config_shop.stock.card_set_ids.GENERAL.filter(id => id !== "100").includes(card.setID)
 			);
-			break;
-		case "season":
-			card_choices = cards.seas.filter(card => eventSettings.season.cardRarityFilter.includes(card.rarity));
-			break;
-		case "event_1":
-			card_choices = cards.evnt.filter(card => eventSettings.event1.cardRarityFilter.includes(card.rarity));
-			break;
-		case "event_2":
-			card_choices = cards.evnt.filter(card => eventSettings.event2.cardRarityFilter.includes(card.rarity));
-			break;
-	}
+			// Return a random card from the list
+			return [_jsT.choice(card_choices, true)] || null;
 
-	// Return a random card from the list
-	return structuredClone(_jsT.choice(card_choices) || null);
+		case "season":
+			card_choices = cards.seas.filter(card => config_event.season.CARD_RARITY_FILTER.includes(card.rarity));
+			// Return a random card from the list
+			return [_jsT.choice(card_choices, true)] || null;
+
+		case "event_1":
+			card_choices = cards.evnt.filter(card => config_event.event_1.CARD_RARITY_FILTER.includes(card.rarity));
+			// Return a random card from the list
+			return [_jsT.choice(card_choices, true)] || null;
+
+		case "event_2":
+			card_choices = cards.evnt.filter(card => config_event.event_2.CARD_RARITY_FILTER.includes(card.rarity));
+			// Return a random card from the list
+			return [_jsT.choice(card_choices, true)] || null;
+	}
 }
 
 //! Parse
@@ -256,7 +263,7 @@ function toString_inventory(card, options = {}) {
 
 	// prettier-ignore
 	let f = "$UID $EMOJI $GROUP : $SINGLE - $NAME $DUPE\n> $SET_ID $GLOBAL_ID $RARITY $CATEGORY $SELL_PRICE $LOCKED\n> $LEVEL $STATS $FAVORITE $SELECTED $TEAM"
-		.replace("$UID ", `\`${card?.uid}\` ` || "")
+		.replace("$UID ", card?.uid ? `\`${card?.uid}\` ` : "")
 		.replace("$EMOJI", `\`${card.emoji}\``)
 		.replace("$GROUP", `**${card.group}**`)
 		.replace("$SINGLE", card.single)
@@ -267,10 +274,11 @@ function toString_inventory(card, options = {}) {
 		.replace("$RARITY", `\`R${card.rarity}\``)
 		.replace("$CATEGORY", `\`${card.category}\``)
 		.replace("$SELL_PRICE", `\`💰 ${card.sellPrice}\``)
+		
+		.replace(" $LOCKED\n> $LEVEL $STATS $FAVORITE $SELECTED $TEAM", options.simplify ? "" : " $LOCKED\n> $LEVEL $STATS $FAVORITE $SELECTED $TEAM")
+		
 		.replace(" $LOCKED", card.locked ? " \`🔒\`" : "")
-
-		.replace("\n> $LEVEL $STATS $FAVORITE $SELECTED $TEAM", options.simplify ? "" : "\n> $LEVEL $STATS $FAVORITE $SELECTED $TEAM")
-
+		
 		.replace("$LEVEL", `\`LV.${card.stats.level}\``)
 		.replace("$STATS", `\`🎤 ${card.stats.ability} : 💖 ${card.stats.reputation}\``)
 		.replace(" $FAVORITE", options.favorite ? " \`⭐\`" : "")

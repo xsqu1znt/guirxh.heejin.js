@@ -172,17 +172,6 @@ class BetterEmbed extends EmbedBuilder {
 		this.#_configure();
 	}
 
-	/** @param {bE_authorData} options  */
-	setAuthor(options) {
-		this.options.author = { ...this.options.author, ...options };
-		this.#_configure();
-	}
-
-	setDescription(description) {
-		this.options.description = this.#_formatMarkdown(description);
-		this.#_configure();
-	}
-
 	/** Send the embed using the interaction or channel
 	 *
 	 * - **`$USER`** :: *author's mention*

@@ -16,9 +16,9 @@ module.exports = {
 	// prettier-ignore
 	builder: new SlashCommandBuilder().setName("drop")
         .setDescription("Drop a random card")
-        .setRequired(true)
-    
+        
         .addStringOption(option => option.setName("card").setDescription("Pick a type of drop")
+            .setRequired(true)
             .addChoices(
                 { name: "🃏 general", value: "general" },
                 { name: "📅 weekly", value: "weekly" },
@@ -39,36 +39,36 @@ module.exports = {
 		// prettier-ignore
 		switch (interaction.options.getString("card")) {
 			case "general":
-				embed_drop.setAuthor({ text: "$USERNAME | drop" });
+                embed_drop.options.author.text = "$USERNAME | drop";
 				cards = cardManager.get.drop("general"); dropType = "drop_general";
 				break;
 
 			case "weekly":
-				embed_drop.setAuthor({ text: "$USERNAME | weekly" });
+				embed_drop.options.author.text = "$USERNAME | weekly";
 				cards = cardManager.get.drop("weekly"); dropType = "drop_weekly";
 				break;
 
 			case "season":
-				if (config_event.season === ("none" || ""))
+				if (!config_event.season.NAME)
 					return await embed_drop.send({ description: "There is no `season` right now" });
 
-				embed_drop.setAuthor({ text: "$USERNAME | season" });
+				embed_drop.options.author.text = "$USERNAME | season";
 				cards = cardManager.get.drop("season"); dropType = "drop_season";
 				break;
 
 			case "event_1":
-				if (config_event.season === ("none" || ""))
+				if (!config_event.event_1.NAME)
 					return await embed_drop.send({ description: "There is no `event 1` right now" });
 
-				embed_drop.setAuthor({ text: "$USERNAME | event 1" });
+				embed_drop.options.author.text = "$USERNAME | event 1";
 				cards = cardManager.get.drop("event_1"); dropType = "drop_event_1";
 				break;
 
 			case "event_2":
-				if (config_event.season === ("none" || ""))
+				if (!config_event.event_2.NAME)
 					return await embed_drop.send({ description: "There is no `event 2` right now" });
 
-				embed_drop.setAuthor({ text: "$USERNAME | event 2" });
+				embed_drop.options.author.text = "$USERNAME | event 2";
 				cards = cardManager.get.drop("event_2"); dropType = "drop_event_2";
 				break;
         }
@@ -102,12 +102,25 @@ module.exports = {
 		let cards_f = cards.map(c =>
 			cardManager.toString.inventory(c, {
 				duplicate: userParser.cards.hasDuplicates(userData, c.globalID),
-				simplified: true
+				simplify: true
 			})
 		);
 
 		// Add the index for each card in the list
-		if (cards_f.length > 1) cards_f = cards_f.map((str, idx) => `${config_bot.emojis.numbers[idx]} ${str}`);
+		if (cards_f.length > 1) cards_f = cards_f.map((str, idx) => `${config_bot.emojis.numbers[idx].EMOJI} ${str}`);
+
+		// Get the last card in the array
+		let cards_last = cards.slice(-1)[0];
+
+		embed_drop.options.description = cards_f.join("\n");
+		embed_drop.setImage(cards_last.imageURL);
+		// prettier-ignore
+		embed_drop.setFooter({
+            text: cards.length > 1
+                ? "React with any number and confirm to sell"
+                : "React to sell this card",
+            iconURL: "https://cdn.discordapp.com/attachments/1014199645750186044/1104414979798618243/carrot.png"
+        });
 
 		return await embed_drop.send();
 	}
