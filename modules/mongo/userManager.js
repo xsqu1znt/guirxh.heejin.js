@@ -25,8 +25,7 @@
  * @property {UserQuestPartial[]} quests_complete
  * @property {number} timestamp_started */
 
-/** @typedef UserDataType
- * @type {"id"|"full"|"inventory"|"noInventory"|"essential"|"balance"|"xp"|"reminder"|"quest"} */
+/** @typedef {"id"|"full"|"inventory"|"noInventory"|"essential"|"balance"|"xp"|"reminder"|"quest"} UserDataType */
 
 /** @typedef UserDataFetchOptions
  * @property {UserDataType} type
@@ -34,11 +33,13 @@
  * @property {boolean} upsert
  * @property {boolean} awaitQueueCleared */
 
+/** @typedef {"drop_general"|"drop_weekly"|"drop_season"|"drop_event_1"|"drop_event_2"} CooldownType */
+
 // const badgeManager = require('./badgeManager');
 const cardManager = require("../cardManager");
-const userParser = require('../userParser');
+const userParser = require("../userParser");
 const _jsT = require("../jsTools/_jsT");
-const logger = require('../logger');
+const logger = require("../logger");
 
 const playerConfig = require("../../configs/config_player.json");
 
@@ -328,6 +329,20 @@ async function badges_add(userID, badges) {
 
 	// Push the new badges to the user's badge array
 	return await userData_update(userID, { $push: { badges: { $each: badges } } });
+}
+
+//! UserData -> Quest
+/** @param {string} userID @param {number} amount */
+async function quest_progress_increment_inventory(userID, amount) {}
+
+//! UserData -> Cooldowns
+/** @param {string} userID @param {CooldownType} cooldownType */
+async function cooldowns_set(userID, cooldownType) {}
+
+//! UserData -> Reminders
+/** @param {string} userID @param {CooldownType} reminderType */
+async function reminders_set(userID, reminderType) {
+
 }
 
 module.exports = {

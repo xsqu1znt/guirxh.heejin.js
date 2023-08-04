@@ -85,9 +85,9 @@ module.exports = {
 				_jsT.randomNumber(config_player.xp.user.rewards.drop.MIN, config_player.xp.user.rewards.drop.MAX)
 			),
 			// Update the user's quest progress
-			userManager.quest.progress.incrementInventory(interaction.user.id, cards.length),
+			userManager.quest.progress.increment.inventory(interaction.user.id, cards.length),
 			// Reset the user's cooldown :: { DROP }
-			userManager.cooldowns.reset(interaction.user.id, dropType),
+			userManager.cooldowns.set(interaction.user.id, dropType),
 			// Set the user's next reminder :: { DROP }
 			userManager.reminders.set(interaction.user.id, dropType)
 		]);
