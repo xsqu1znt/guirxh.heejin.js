@@ -1,7 +1,9 @@
+/** @typedef {{user:GuildMember|User, text:string, iconURL:string, linkURL: string}} bE_authorData */
+
 /** @typedef bE_options
  * @property {CommandInteraction} interaction
  * @property {TextChannel} channel
- * @property {{user:GuildMember|User, text:string, iconURL:string, linkURL: string}} author
+ * @property {bE_authorData} author
  * @property {string|{text:string, linkURL:string}} title
  * @property {string|{text:string, iconURL:string}} footer
  * @property {string} description
@@ -14,7 +16,7 @@
  * @property {CommandInteraction} interaction
  * @property {TextChannel} channel
  * @property {string} messageContent
- * @property {{user:GuildMember|User, text:string, iconURL:string, linkURL: string}} author
+ * @property {bE_authorData} author
  * @property {string|{text:string, linkURL:string}} title
  * @property {string|{text:string, iconURL:string}} footer
  * @property {string} description
@@ -40,6 +42,7 @@ class BetterEmbed extends EmbedBuilder {
 			.replace(/\$USERNAME\b/g, this.options.author?.user?.displayName || this.options.author?.user?.username);
 	}
 
+	/** @param {bE_options} options */
 	#_configure(options = {}) {
 		let _options = { ...this.options, ...options };
 
@@ -166,6 +169,17 @@ class BetterEmbed extends EmbedBuilder {
 			showTimestamp: false, ...options
 		};
 
+		this.#_configure();
+	}
+
+	/** @param {bE_authorData} options  */
+	setAuthor(options) {
+		this.options.author = { ...this.options.author, ...options };
+		this.#_configure();
+	}
+
+	setDescription(description) {
+		this.options.description = this.#_formatMarkdown(description);
 		this.#_configure();
 	}
 

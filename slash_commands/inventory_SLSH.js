@@ -4,7 +4,6 @@ const { EmbedNavigator, BetterEmbed } = require("../modules/discordTools/_dsT");
 const { user_ES } = require("../modules/embedStyles/index");
 const { userManager } = require("../modules/mongo/index");
 const userParser = require("../modules/userParser");
-// const _jsT = require("../modules/jsTools/_jsT");
 
 module.exports = {
 	// prettier-ignore
@@ -49,8 +48,8 @@ module.exports = {
 
 		// Fetch the targetUser from Mongo
 		let userData = await userManager.fetch(options_inventory.target.id, { type: "inventory" });
-        if (!userData) return await embed_error.send({ description: "That user has not started yet" });
-        
+		if (!userData) return await embed_error.send({ description: "That user has not started yet" });
+
 		// Parse the user's card_inventory
 		userData = userParser.cards.parseInventory(userData);
 
@@ -61,7 +60,7 @@ module.exports = {
 		// Set up page navigation
 		let embedNav = new EmbedNavigator({
 			interaction, embeds: [embeds_inventory],
-			pagination: { type: "longJump", useReactions: false }
+			pagination: { type: "longJump", useReactions: true }
         });
 
 		return await embedNav.send();
