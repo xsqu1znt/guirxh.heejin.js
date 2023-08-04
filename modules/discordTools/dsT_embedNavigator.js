@@ -228,7 +228,7 @@ class EmbedNavigator {
 				if (!_number || _number > this.data.pages.nested_length) {
 					/// Send a self destructing error message
 					let _message_error = await this.data.message.reply({
-						content: `${user} \`${_number}\` is not a valid page number`
+						content: `${user} \`${_message_user.content}\` is not a valid page number`
 					});
 
 					deleteMesssageAfter(_message_error, _timeouts.error);
@@ -268,7 +268,7 @@ class EmbedNavigator {
 		return new Promise(resolve => {
 			// Collector :: { COLLECT }
 			collector.on("collect", async (_reaction, _user) => {
-				collector.resetTimer();
+				collector.resetTimer(); console.log()
 
 				// Remove the reaction unless it's from the bot itself
 				if (_user.id !== _reaction.message.guild.members.me.id) await _reaction.users.remove(_user.id);
@@ -291,7 +291,7 @@ class EmbedNavigator {
 							this.#_updatePage(); return await this.refresh();
 	
 						case config.navigator.buttons.jump.emoji.NAME:
-							return await this.#_askPageNumber(_reaction.user).then(async idx => {
+							return await this.#_askPageNumber(_user).then(async idx => {
 								if (isNaN(idx)) return;
 
 								this.data.pages.idx.nested = _jumpIdx;
@@ -511,7 +511,8 @@ class EmbedNavigator {
 	addSelectMenuOptions(...options) {
 		for (let _data of options) {
 			/// Error handling
-			if (Array.isArray(_data)) throw new TypeError("You can't pass an array as an argument for `eN_selectMenuOptionData`");
+			if (Array.isArray(_data))
+				throw new TypeError("You can't pass an array as an argument for `eN_selectMenuOptionData`");
 			if (!_data.emoji && !_data.label) throw new Error("You must provide either an emoji or label");
 
 			let idx_current = this.data.selectMenu.optionValues.length;
@@ -555,7 +556,7 @@ class EmbedNavigator {
 	/** @param {eN_paginationType} type */
 	// prettier-ignore
 	async setPaginationType(type) {
-		this.options.paginationType = type;
+		this.options.pagination.type = type;
 		await this.refresh(); return;
 	}
 

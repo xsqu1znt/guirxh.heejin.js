@@ -26,15 +26,15 @@ function inventory(userData, options) {
 
 	/// Parse options
 	// prettier-ignore
-	options.setID = options.setID.split(",").filter(str => str).map(str => str.trim().toLowerCase());
+	options.setID = options.setID.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
 	// prettier-ignore
-	options.dupes = options.dupes.split(",").filter(str => str).map(str => str.trim().toLowerCase());
+	options.dupes = options.dupes.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
 	// prettier-ignore
-	options.group = options.group.split(",").filter(str => str).map(str => str.trim().toLowerCase());
+	options.group = options.group.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
 	// prettier-ignore
-	options.single = options.single.split(",").filter(str => str).map(str => str.trim().toLowerCase());
+	options.single = options.single.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
 	// prettier-ignore
-	options.name = options.name.split(",").filter(str => str).map(str => str.trim().toLowerCase());
+	options.name = options.name.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
 
 	if (options.dupes[0] === "all") options.dupes = ["all"];
 
@@ -49,13 +49,29 @@ function inventory(userData, options) {
 
 	/// Apply inventory filters
 	// prettier-ignore
-	if (options.setID.length) { cards = cards.filter(c => options.setID.includes(c.card.setID)); filtered = true; }
+	if (options.setID.length) {
+		let _cards = [];
+		for (let _setID of options.setID)_cards.push(...cards.filter(c => c.card.setID.toLowerCase().includes(_setID)));
+		cards = _cards; filtered = true;
+	}
 	// prettier-ignore
-	if (options.group.length) { cards = cards.filter(c => options.group.includes(c.card.group)); filtered = true; }
+	if (options.group.length) {
+		let _cards = [];
+		for (let _group of options.group)_cards.push(...cards.filter(c => c.card.group.toLowerCase().includes(_group)));
+		cards = _cards; filtered = true;
+	}
 	// prettier-ignore
-	if (options.single.length) { cards = cards.filter(c => options.single.includes(c.card.single)); filtered = true; }
+	if (options.single.length) {
+		let _cards = [];
+		for (let _single of options.single)_cards.push(...cards.filter(c => c.card.single.toLowerCase().includes(_single)));
+		cards = _cards; filtered = true;
+	}
 	// prettier-ignore
-	if (options.name.length) { cards = cards.filter(c => options.name.includes(c.card.name)); filtered = true; }
+	if (options.name.length) {
+		let _cards = [];
+		for (let name of options.name) _cards.push(...cards.filter(c => c.card.name.toLowerCase().includes(name)));
+		cards = _cards; filtered = true;
+	}
 
 	// prettier-ignore
 	// Apply duplicate filter
@@ -98,7 +114,7 @@ function inventory(userData, options) {
 	for (let i = 0; i < cards_f.length; i++) embeds_inventory.push(
 		new BetterEmbed({
             author: { text: dupeCheck ? "$USERNAME | dupes" : "$USERNAME | inventory", user: options.target },
-            thumbnailURL: dupeCheck ? cards[0].card.imageURL : null,
+            thumbnailURL: dupeCheck ? cards.slice(-1)[0].card.imageURL : null,
 			description: cards_f[i].join("\n"),
 			footer: { text: `Page ${i + 1}/${cards_f.length || 1} | Total: ${cards.length}` }
 		})
