@@ -341,9 +341,7 @@ async function cooldowns_set(userID, cooldownType) {}
 
 //! UserData -> Reminders
 /** @param {string} userID @param {CooldownType} reminderType */
-async function reminders_set(userID, reminderType) {
-
-}
+async function reminders_set(userID, reminderType) {}
 
 module.exports = {
 	count: userData_count,

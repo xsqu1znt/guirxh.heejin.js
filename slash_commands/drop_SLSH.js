@@ -3,10 +3,12 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js"
 const { BetterEmbed } = require("../modules/discordTools/_dsT");
 const { userManager } = require("../modules/mongo/index");
 const cardManager = require("../modules/cardManager");
+const userParser = require("../modules/userParser");
 const _jsT = require("../modules/jsTools/_jsT");
 
 const config_player = require("../configs/config_player.json");
 const config_event = require("../configs/config_event.json");
+const config_bot = require("../configs/config_bot.json");
 
 module.exports = {
 	options: { icon: "💧", deferReply: true },
@@ -91,5 +93,22 @@ module.exports = {
 			// Set the user's next reminder :: { DROP }
 			userManager.reminders.set(interaction.user.id, dropType)
 		]);
+
+		/// Update drop embed
+		// Fetch the user's card_inventory from Mongo
+		let userData = await userManager.fetch(interaction.user.id, { type: "inventory" });
+
+		// Format the cards into list entries
+		let cards_f = cards.map(c =>
+			cardManager.toString.inventory(c, {
+				duplicate: userParser.cards.hasDuplicates(userData, c.globalID),
+				simplified: true
+			})
+		);
+
+		// Add the index for each card in the list
+		if (cards_f.length > 1) cards_f = cards_f.map((str, idx) => `${config_bot.emojis.numbers[idx]} ${str}`);
+
+		return await embed_drop.send();
 	}
 };

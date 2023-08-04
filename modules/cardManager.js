@@ -245,13 +245,14 @@ function toString_basic(card) {
  * @property {boolean} favorite
  * @property {boolean} selected
  * @property {boolean} team
+ * @property {boolean} simplify
  * @property {boolean|number} duplicate */
 
 /** @param {options_toStr_inventory} options  */
 function toString_inventory(card, options = {}) {
 	if (!card) return "n/a";
 
-	options = { favorited: false, selected: false, team: false, duplicate: false, ...options };
+	options = { favorited: false, selected: false, team: false, simplify: false, duplicate: false, ...options };
 
 	// prettier-ignore
 	let f = "$UID $EMOJI $GROUP : $SINGLE - $NAME $DUPE\n> $SET_ID $GLOBAL_ID $RARITY $CATEGORY $SELL_PRICE $LOCKED\n> $LEVEL $STATS $FAVORITE $SELECTED $TEAM"
@@ -267,6 +268,8 @@ function toString_inventory(card, options = {}) {
 		.replace("$CATEGORY", `\`${card.category}\``)
 		.replace("$SELL_PRICE", `\`💰 ${card.sellPrice}\``)
 		.replace(" $LOCKED", card.locked ? " \`🔒\`" : "")
+
+		.replace("\n> $LEVEL $STATS $FAVORITE $SELECTED $TEAM", options.simplify ? "" : "\n> $LEVEL $STATS $FAVORITE $SELECTED $TEAM")
 
 		.replace("$LEVEL", `\`LV.${card.stats.level}\``)
 		.replace("$STATS", `\`🎤 ${card.stats.ability} : 💖 ${card.stats.reputation}\``)
