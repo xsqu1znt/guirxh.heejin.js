@@ -1,7 +1,8 @@
 /** @typedef options_inventory
  * @property {GuildMember|User} target
- * @property {string} dupes
  * @property {string} setID
+ * @property {string} dupes
+ * @property {string} category
  * @property {string} group
  * @property {string} single
  * @property {string} name
@@ -44,7 +45,7 @@ function inventory(userData, options) {
 	options = {
         target: null,
         setID: "", dupes: "",
-        group: "", single: "", name: "",
+        category: "", group: "", single: "", name: "",
         sorting: "setID", order: "ascending", ...options
     };
 
@@ -53,6 +54,8 @@ function inventory(userData, options) {
 	options.setID = options.setID.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
 	// prettier-ignore
 	options.dupes = options.dupes.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
+	// prettier-ignore
+	options.category = options.category.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
 	// prettier-ignore
 	options.group = options.group.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
 	// prettier-ignore
@@ -76,6 +79,12 @@ function inventory(userData, options) {
 	if (options.setID.length) {
 		let _cards = [];
 		for (let _setID of options.setID)_cards.push(...cards.filter(c => c.card.setID.toLowerCase().includes(_setID)));
+		cards = _cards; filtered = true;
+	}
+	// prettier-ignore
+	if (options.category.length) {
+		let _cards = [];
+		for (let _category of options.category)_cards.push(...cards.filter(c => c.card.category.toLowerCase().includes(_category)));
 		cards = _cards; filtered = true;
 	}
 	// prettier-ignore

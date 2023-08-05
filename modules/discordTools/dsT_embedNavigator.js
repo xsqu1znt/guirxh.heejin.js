@@ -3,7 +3,7 @@
 /** @typedef eN_paginationOptions
  * @property {eN_paginationType} type
  * @property {boolean} useReactions
- * @property {boolean} enableDynamic */
+ * @property {boolean} dynamic */
 
 /** @typedef eN_options
  * @property {CommandInteraction} interaction
@@ -105,21 +105,21 @@ class EmbedNavigator {
 		if (this.data.pagination.required) switch (this.options.pagination.type) {
 			case "short": _buttonStringArray = ["back", "next"]; break;
 
-			case "shortJump": _buttonStringArray = this.options.pagination.enableDynamic
+			case "shortJump": _buttonStringArray = this.options.pagination.dynamic
 				? this.data.pagination.canJump
 					? ["back", "jump", "next"]													// Default state :: { DYNAMIC }
 					: ["back", "next"]															// Short state :: { DYNAMIC }
 				: ["back", "jump", "next"];														// Default state
 				break;
 
-			case "long": _buttonStringArray = this.options.pagination.enableDynamic
+			case "long": _buttonStringArray = this.options.pagination.dynamic
 				? this.data.pagination.requiresLong
 					? ["to_first", "back", "next", "to_last"]									// Default state :: { DYNAMIC }
 					: ["back", "next"]															// Short state :: { DYNAMIC }
 				: ["to_first", "back", "next", "to_last"];										// Default state
 				break;
 
-			case "longJump": _buttonStringArray = this.options.pagination.enableDynamic
+			case "longJump": _buttonStringArray = this.options.pagination.dynamic
 				? this.data.pagination.requiresLong
 					? this.data.canJumpToPage
 						? ["to_first", "back", "jump", "next", "to_last"]						// Default state :: { DYNAMIC }
@@ -447,7 +447,7 @@ class EmbedNavigator {
 		this.options = {
 			interaction: null, channel: null, users: null, embeds: null,
 			selectMenuEnabled: false,
-			pagination: { type: null, useReactions: false, enableDynamic: false },
+			pagination: { type: null, useReactions: false, dynamic: false },
 			timeout: config.timeouts.PAGINATION, ...options
 		};
 

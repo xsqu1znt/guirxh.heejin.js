@@ -352,18 +352,18 @@ function toString_shopEntry(card, currencyType = "carrot") {
 		.replace("%PRICE", inline(_currencyIcon, card.price));
 }
 
-function toString_setEntry(card, count = 1, simplify = false) {
+function toString_setEntry(card, count = 1) {
 	if (count < 10) count = `0${count}`;
 
 	// return "%SET_ID %CARD_COUNT %CATEGORY %EMOJI %DESCRIPTION%SINGLE"
 	return "%SET_ID %CARD_COUNT %CATEGORY %EMOJI %DESCRIPTION"
-		.replace("%SET_ID", inline("🗣️", card.setID))
+		.replace("%SET_ID", `\`🗣️${card.setID}\``)
 
-		.replace("%CARD_COUNT", inline("📁", count || 1))
+		.replace("%CARD_COUNT", `\`📁 ${count || 1}\``)
 
-		.replace("%CATEGORY", inline(card.category))
-		.replace("%EMOJI", inline(card.emoji))
-		.replace("%GROUP", bold(card.group))
+		.replace("%CATEGORY", `\`${card.category}\``)
+		.replace("%EMOJI", `\`${card.emoji}\``)
+		.replace("%GROUP", `**${card.group}**`)
 		.replace("%DESCRIPTION", card.description);
 }
 
