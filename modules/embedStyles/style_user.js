@@ -19,9 +19,10 @@ function missing(user, userData, cards) {
 	// Sort the cards by set ID then global ID :: { DESCENDING }
 	cards.sort((a, b) => a.setID - b.setID || a.globalID - b.globalID);
 
+	/// Format the user's cards into list entries, with a max of 10 per page
+	let cards_have = cards.map(c => userParser.cards.has(userData, c.globalID));
 	// prettier-ignore
-	// Format the user's cards into list entries, with a max of 10 per page
-	let cards_f = _jsT.chunk(cards.map(c => cardManager.toString.missingEntry(c, userParser.cards.has(userData, c.globalID))), 10);
+	let cards_f = _jsT.chunk(cards.map((c, idx) => cardManager.toString.missingEntry(c, cards_have[idx])), 10);
 
 	// Create the embeds :: { MISSING }
 	let embeds_missing = [];
@@ -30,7 +31,7 @@ function missing(user, userData, cards) {
 	for (let i = 0; i < cards_f.length; i++) embeds_missing.push(
 		new BetterEmbed({
             author: { text: "$USERNAME | missing", user }, description: cards_f[i].join("\n"),
-			footer: { text: `Page ${i + 1}/${cards_f.length || 1} | Total: ${cards.length}` }
+			footer: { text: `Page ${i + 1}/${cards_f.length || 1} | Owned: ${cards_have.filter(b => b).length}/${cards.length}` }
 		})
 	);
 
