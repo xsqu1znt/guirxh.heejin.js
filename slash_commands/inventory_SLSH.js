@@ -60,7 +60,7 @@ module.exports = {
 		// Set up page navigation
 		let embedNav = new EmbedNavigator({
 			interaction, embeds: [embeds_inventory],
-			pagination: { type: "longJump", useReactions: true }
+			pagination: { type: "longJump", useReactions: false }
         });
 
 		return await embedNav.send();

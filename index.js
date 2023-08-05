@@ -49,7 +49,7 @@ client.login(TOKEN).then(async () => {
 	await mongo.connect();
 
 	// Register slash commands to a specific server :: { LOCAL }
-	// await slashCommandManager.push(client, { ids: "1107285909365329922" });
+	await slashCommandManager.push(client, { ids: "1107285909365329922" });
 
 	// Register slash commands :: { GLOBAL }
 	// await slashCommandManager.push(client, { global: true });
