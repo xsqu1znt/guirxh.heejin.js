@@ -53,7 +53,7 @@ module.exports = {
 		// Parse the user's card_inventory
 		userData = userParser.cards.parseInventory(userData);
 
-		// Create the embed :: { USER INVENTORY }
+		// Create the embeds :: { USER INVENTORY }
 		let embeds_inventory = user_ES.inventory(userData, options_inventory);
 
 		// prettier-ignore

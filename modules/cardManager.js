@@ -300,10 +300,10 @@ function toString_inventory(card, options = {}) {
 	return f;
 }
 
-function toString_missingEntry(card, missing = false) {
+function toString_missingEntry(card, has = false) {
 	return "%GLOBAL_ID %EMOJI %GROUP :: %SINGLE - %NAME\n> %SET_ID %RARITY %CATEGORY %MISSING"
 		.replace("%GLOBAL_ID", `\`${card.globalID}\``)
-		.replace("%EMOJI", inline(card.emoji)`\`${card.globalID}\``)
+		.replace("%EMOJI", `\`${card.emoji}\``)
 		.replace("%GROUP", `**${card.group}**`)
 		.replace("%SINGLE", card.single)
 		.replace("%NAME", markdown.link(card.name, card.imageURL))
@@ -312,7 +312,7 @@ function toString_missingEntry(card, missing = false) {
 		.replace("%RARITY", `\`R${card.rarity}\``)
 		.replace("%CATEGORY", `\`${card.category}\``)
 
-		.replace("%MISSING", missing ? "`🚫 missing`" : "`✔️ owned`");
+		.replace("%MISSING", has ? "`✔️ owned`" : "`🚫 missing`");
 }
 
 function toString_itemPackSetEntry(setID, chance) {

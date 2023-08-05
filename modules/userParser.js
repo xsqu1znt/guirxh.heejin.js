@@ -150,8 +150,8 @@ function cards_hasDuplicates(userData, globalID, requiredCount = 0) {
 }
 
 function cards_has(userData, globalIDs) {
+	let card_inventory = userData?.card_inventory || userData
 	if (!Array.isArray(globalIDs)) globalIDs = [globalIDs];
-	let card_inventory = cards_parseInventory(userData, { fromCardLike: false, unique: true });
 
 	return card_inventory.filter(card => globalIDs.includes(card.globalID)).length === globalIDs.length;
 }

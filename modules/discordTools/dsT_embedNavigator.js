@@ -268,7 +268,7 @@ class EmbedNavigator {
 		return new Promise(resolve => {
 			// Collector :: { COLLECT }
 			collector.on("collect", async (_reaction, _user) => {
-				collector.resetTimer(); console.log()
+				collector.resetTimer();
 
 				// Remove the reaction unless it's from the bot itself
 				if (_user.id !== _reaction.message.guild.members.me.id) await _reaction.users.remove(_user.id);
