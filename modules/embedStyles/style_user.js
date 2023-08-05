@@ -11,8 +11,75 @@
 const { GuildMember, User } = require("discord.js");
 
 const BetterEmbed = require("../discordTools/dsT_betterEmbed");
+const cardManager = require("../cardManager");
 const userParser = require("../userParser");
 const _jsT = require("../jsTools/_jsT");
+
+function missing(user, userData, setID) {
+	// Get the card set
+	let cards = cardManager.get.setID(setID);
+	// prettier-ignore
+	// Return an embed :: { ERROR }
+	if (!cards.length) return new BetterEmbed({
+		author: { text: "$USERNAME | missing", user },
+		description: "You must provide a valid set ID"
+	});
+
+	// Sort the cards by set ID then global ID :: { DESCENDING }
+	cards.sort((a, b) => a.card.setID - b.card.setID || a.card.globalID - b.card.globalID);
+
+	// Format the user's cards into list entries, with a max of 10 per page
+	let cards_f = _jsT.chunk(
+		cards.map(c => cardManager.toString.missingEntry(c, userParser.cards.has(userData, c.globalID))),
+		10
+	);
+
+	// Create the embeds :: { MISSING }
+	let embeds_missing = [];
+
+	// prettier-ignore
+	for (let i = 0; i < cards_f.length; i++) embeds_missing.push(
+		new BetterEmbed({
+            author: { text: "$USERNAME | missing", user }, description: cards_f[i].join("\n"),
+			footer: { text: `Page ${i + 1}/${cards_f.length || 1} | Total: ${cards.length}` }
+		})
+    );
+}
+
+/* function userMissing_ES(guildMember, userData, setID) {
+    // Create a base embed
+    let embed_template = (description = "", footer_text = "") => new BetterEmbed({
+        author: { text: "%AUTHOR_NAME | missing", user: guildMember },
+        description: description || `\`${setID}\` is either empty or an invalid set.`,
+        footer: { text: footer_text || null }
+    });
+
+    // Get every card in the set
+    // let cards_set = cardManager.cards_all.filter(card => card.setID === setID);
+    let cards_set = cardManager.get.setID(setID);
+    if (cards_set.length === 0) return [embed_template()];
+
+    // Sort by set ID (decending order)
+    cards_set = cards_set.sort((a, b) => a.globalID - b.globalID);
+
+    // Parse cards_set into an array of human readable strings
+    let cards_set_f = cards_set.map(card => {
+        let isMissing = userData.card_inventory.find(c => c.globalID === card.globalID) ? false : true;
+        return cardManager.toString.missingEntry(card, isMissing);
+    });
+
+    // Break up cards into multiple pages to retain there being a max of 10 cards per page
+    cards_set_f = arrayTools.chunk(cards_set_f, 10);
+
+    // Create the embeds
+    let embeds = [];
+    for (let i = 0; i < cards_set_f.length; i++) {
+        // Create the embed page
+        embeds.push(embed_template(cards_set_f[i].join("\n"), `Page ${i + 1}/${cards_set_f.length || 1}`));
+    }
+
+    return embeds;
+} */
 
 /** @param {options_inventory} options  */
 function inventory(userData, options) {
@@ -123,4 +190,4 @@ function inventory(userData, options) {
 	return embeds_inventory;
 }
 
-module.exports = { inventory };
+module.exports = { missing, inventory };
