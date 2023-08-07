@@ -1,7 +1,8 @@
 /** @typedef options_inventory
  * @property {GuildMember|User} target
+ * @property {string} rarity
  * @property {string} setID
- * @property {string} dupes
+ * @property {string} globalID
  * @property {string} category
  * @property {string} group
  * @property {string} single
@@ -44,16 +45,18 @@ function inventory(userData, options) {
 	// prettier-ignore
 	options = {
         target: null,
-        setID: "", dupes: "",
+        rarity: "", setID: "", globalID: "",
         category: "", group: "", single: "", name: "",
         sorting: "setID", order: "ascending", ...options
     };
 
 	/// Parse options
 	// prettier-ignore
+	options.rarity = options.rarity.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
+	// prettier-ignore
 	options.setID = options.setID.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
 	// prettier-ignore
-	options.dupes = options.dupes.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
+	options.globalID = options.globalID.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
 	// prettier-ignore
 	options.category = options.category.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
 	// prettier-ignore
@@ -63,18 +66,22 @@ function inventory(userData, options) {
 	// prettier-ignore
 	options.name = options.name.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
 
-	if (options.dupes[0] === "all") options.dupes = ["all"];
-
 	/// Parse user's card_inventory
 	let cards = userParser.cards.getInventory(userData, {
-		dupeTag: options.dupes.length && options.dupes[0] !== "all" ? false : true,
-		unique: options.dupes.length && options.dupes[0] !== "all" ? false : true
+		dupeTag: options.globalID.length && options.globalID[0] !== "all" ? false : true,
+		unique: options.globalID.length && options.globalID[0] !== "all" ? false : true
 	});
 
 	// prettier-ignore
 	let filtered = false, dupeCheck = false;
 
 	/// Apply inventory filters
+	// prettier-ignore
+	if (options.rarity.length) {
+		let _cards = [];
+		for (let _rarity of options.rarity)_cards.push(...cards.filter(c => String(c.card.rarity).toLowerCase().includes(_rarity)));
+		cards = _cards; filtered = true;
+	}
 	// prettier-ignore
 	if (options.setID.length) {
 		let _cards = [];
@@ -108,11 +115,11 @@ function inventory(userData, options) {
 
 	// prettier-ignore
 	// Apply duplicate filter
-	if (options.dupes.length) if (options.dupes[0] === "all") {
+	if (options.globalID.length) if (options.globalID[0] === "all") {
         cards = cards.filter(c => c.duplicate_count);
         filtered = true;
     } else {
-        cards = cards.filter(c => options.dupes.includes(c.card.globalID) && c.duplicate_count);
+        cards = cards.filter(c => options.globalID.includes(c.card.globalID) && c.duplicate_count);
         filtered = true; dupeCheck = true;
     }
 
@@ -131,7 +138,7 @@ function inventory(userData, options) {
 	if (!cards.length) return new BetterEmbed({
 		author: { text: "$USERNAME | inventory", user: options.target },
 		description: filtered ? dupeCheck
-				? `You do not have any dupes of ${options.dupes.length === 1 ? "that card" : "those cards"}`
+				? `You do not have any dupes of ${options.globalID.length === 1 ? "that card" : "those cards"}`
 				: "No cards were found with that search filter"
 			: "There are no cards in your inventory"
 	});

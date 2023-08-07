@@ -15,6 +15,7 @@ module.exports = {
 
 		.addUserOption(option => option.setName("player").setDescription("View another player's inventory"))
 
+		.addStringOption(option => option.setName("rarity").setDescription("Filter by RARITY"))
 		.addStringOption(option => option.setName("setid").setDescription("Filter by SETID"))
 		.addStringOption(option => option.setName("dupes").setDescription("Filter by DUPES"))
 		.addStringOption(option => option.setName("category").setDescription("Filter by CATEGORY"))
@@ -35,8 +36,9 @@ module.exports = {
 		// Sorting options
 		let options_inventory = {
 			target: interaction.options.getUser("player") || interaction.member,
+			rarity: interaction.options.getString("rarity") || "",
 			setID: interaction.options.getString("setid") || "",
-			dupes: interaction.options.getString("dupes") || "",
+			globalID: interaction.options.getString("dupes") || "",
 			category: interaction.options.getString("category") || "",
 			group: interaction.options.getString("group") || "",
 			single: interaction.options.getString("single") || "",

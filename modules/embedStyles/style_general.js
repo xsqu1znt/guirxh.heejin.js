@@ -1,5 +1,6 @@
 /** @typedef options_collectons
  * @property {GuildMember|User} target
+ * @property {string} rarity
  * @property {string} setID
  * @property {string} category
  * @property {string} group
@@ -15,12 +16,14 @@ const _jsT = require("../jsTools/_jsT");
 function collections(user, options) {
 	// prettier-ignore
 	options = {
-        target: null, setID: "",
+        target: null, rarity: null, setID: "",
         category: "", group: "",
         order: "ascending", ...options
     };
 
 	/// Parse options
+	// prettier-ignore
+	options.rarity = options.rarity.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
 	// prettier-ignore
 	options.setID = options.setID.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
 	// prettier-ignore
@@ -36,11 +39,17 @@ function collections(user, options) {
 
 	/// Apply collection filters
 	// prettier-ignore
+	if (options.rarity.length) {
+		let _cards = [];
+		for (let _rarity of options.rarity)_cards.push(...cards.filter(c => String(c.rarity).toLowerCase().includes(_rarity)));
+		cards = _cards; filtered = true;
+	}
+	// prettier-ignore
 	if (options.setID.length) {
 		let _cards = [];
 		for (let _setID of options.setID)_cards.push(...cards.filter(c => c.setID.toLowerCase().includes(_setID)));
 		cards = _cards; filtered = true;
-    }
+	}
 	// prettier-ignore
 	if (options.category.length) {
 		let _cards = [];
