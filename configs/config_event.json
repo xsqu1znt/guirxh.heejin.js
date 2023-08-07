@@ -1,16 +1,16 @@
 {
-    "event_1": {
-        "NAME": "",
-        "CARD_RARITY_FILTER": [96]
-    },
+	"event_1": {
+		"NAME": "LOONA Special",
+		"CARD_RARITY_FILTER": [93]
+	},
 
-    "event_2": {
-        "NAME": "RESONANCE PT. 1",
-        "CARD_RARITY_FILTER": [95]
-    },
-    
-    "season": {
-        "NAME": "",
-        "CARD_RARITY_FILTER": []
-    }
+	"event_2": {
+		"NAME": "K-Actors & K-Actresses",
+		"CARD_RARITY_FILTER": [94]
+	},
+
+	"season": {
+		"NAME": "",
+		"CARD_RARITY_FILTER": []
+	}
 }

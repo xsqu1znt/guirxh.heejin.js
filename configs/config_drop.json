@@ -1,9 +1,9 @@
 {
-    "chance": {
-        "common": { "CHANCE": 100, "CARD_RARITY_FILTER": 70 },
-        "uncommon": { "CHANCE": 25, "CARD_RARITY_FILTER": 60 },
-        "rare": { "CHANCE": 15, "CARD_RARITY_FILTER": 50 },
-        "epic": { "CHANCE": 10, "CARD_RARITY_FILTER": 40 },
-        "mint": { "CHANCE": 5, "CARD_RARITY_FILTER": 30 }
-    }
+	"chance": {
+		"common": { "CHANCE": 100, "CARD_RARITY_FILTER": 70 },
+		"uncommon": { "CHANCE": 25, "CARD_RARITY_FILTER": 60 },
+		"rare": { "CHANCE": 15, "CARD_RARITY_FILTER": 50 },
+		"epic": { "CHANCE": 10, "CARD_RARITY_FILTER": 40 },
+		"mint": { "CHANCE": 5, "CARD_RARITY_FILTER": 30 }
+	}
 }
