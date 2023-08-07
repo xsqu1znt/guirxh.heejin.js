@@ -10,12 +10,14 @@
  * @property {"setID"|"gid"} sorting
  * @property {"ascending"|"descending"} order */
 
-const { GuildMember, User } = require("discord.js");
+const { GuildMember, User, time, TimestampStyles } = require("discord.js");
 
 const BetterEmbed = require("../discordTools/dsT_betterEmbed");
 const cardManager = require("../cardManager");
 const userParser = require("../userParser");
 const _jsT = require("../jsTools/_jsT");
+
+const config_player = require("../../configs/config_player.json");
 
 function missing(user, userData, cards) {
 	// Sort the cards by set ID then global ID :: { DESCENDING }
@@ -163,4 +165,65 @@ function inventory(userData, options) {
 	return embeds_inventory;
 }
 
-module.exports = { missing, inventory };
+function cooldowns(user, userData) {
+	// Get the active cooldowns from the config
+	let cooldown_types = Object.entries(config_player.cooldowns)
+		.filter(([type, time]) => time)
+		.map(([type, time]) => type);
+
+	// prettier-ignore
+	// Get the user's cooldown timestamps from their UserData
+	let cooldowns = cooldown_types.map(type => ({
+		type, timestamp: userData.cooldowns.find(c => c.type === type)?.timestamp || 0
+	}));
+
+	// Format the user's cooldowns into list entries
+	let cooldowns_f = cooldowns.map(cd => {
+		let _eta = _jsT.eta({ then: cd.timestamp, ignorePast: true });
+
+		return "`$AVAILABILITY $TYPE:` **$TIME**"
+			.replace("$AVAILABILITY", _eta ? "❌" : "✔️")
+			.replace("$TYPE", _jsT.toTitleCase(cd.type.replace(/_/g, " ")))
+			.replace("$TIME", _eta ? time(_jsT.msToSec(cd.timestamp), TimestampStyles.RelativeTime) : "Available");
+	});
+
+	// Create the embed : { COOLDOWNS }
+	let embed_cooldowns = new BetterEmbed({
+		author: { text: "$USERNAME | cooldowns", user },
+		description: cooldowns_f.join("\n")
+	});
+
+	return embed_cooldowns;
+}
+
+/* function userCooldowns_ES(guildMember, userData) {
+    let cooldownTypes = Object.entries(userSettings.cooldowns).filter(([type, time]) => time !== null);
+    let cooldowns = cooldownTypes.map(([type, time]) => ({ type, timestamp: 0 }));
+
+    let cooldowns_user = userData.cooldowns;
+
+    cooldowns_user.forEach(cooldown => {
+        let spliceIndex = cooldowns.findIndex(c => c.type === cooldown.type);
+        if (spliceIndex >= 0) cooldowns.splice(spliceIndex, 1, cooldown);
+    });
+
+    let cooldowns_f = cooldowns.map(cooldown => {
+        let cooldownETA = dateTools.eta(cooldown.timestamp, true);
+
+        return "\`%VISUAL %NAME:\` %AVAILABILITY"
+            .replace("%VISUAL", cooldownETA ? "❌" : "✔️")
+            .replace("%NAME", stringTools.toTitleCase(cooldown.type.replace(/_/g, " ")))
+            .replace("%AVAILABILITY", bold(cooldownETA
+                ? `<t:${numberTools.milliToSeconds(cooldown.timestamp)}:${TimestampStyles.RelativeTime}>`
+                : "Available"));
+    });
+
+    let embed_cooldowns = new BetterEmbed({
+        author: { text: "%AUTHOR_NAME | cooldowns", user: guildMember },
+        description: cooldowns_f.join("\n")
+    });
+
+    return embed_cooldowns;
+} */
+
+module.exports = { missing, inventory, cooldowns };
