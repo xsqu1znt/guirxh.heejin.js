@@ -1,6 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
 const { BetterEmbed } = require("../modules/discordTools/_dsT");
+const { cooldown_ES } = require("../modules/embedStyles/index");
 const { userManager } = require("../modules/mongo/index");
 const cardManager = require("../modules/cardManager");
 const userParser = require("../modules/userParser");
@@ -30,6 +31,14 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
+		/// Check if the user has an active cooldown :: { DROP }
+		let cooldown_drop = await userManager.cooldowns.check(interaction.user.id, dropType);
+		// prettier-ignore
+		if (cooldown_drop) return await cooldown_ES.send({
+			interaction, ephemeral: true,
+			description: `Your next drop will be available **${cooldown_drop}**`
+		});
+
 		// Create the embed :: { DROP }
 		let embed_drop = new BetterEmbed({ interaction, author: { text: "$USERNAME | drop", user: interaction.member } });
 
@@ -72,11 +81,6 @@ module.exports = {
 				cards = cardManager.get.drop("event_2"); dropType = "drop_event_2";
 				break;
         }
-
-		// Check if the user has an active cooldown :: { DROP }
-		let cooldown_drop = await userManager.cooldowns.check(interaction.user.id, dropType);
-		// prettier-ignore
-		if (cooldown_drop) return await embed_drop.send({ description: `Your next drop will be available **${userCooldownETA}**` });
 
 		await Promise.all([
 			// Add the cards to the user's card_inventory

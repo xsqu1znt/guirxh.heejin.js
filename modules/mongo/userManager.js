@@ -33,7 +33,9 @@
  * @property {boolean} upsert
  * @property {boolean} awaitQueueCleared */
 
-/** @typedef {"drop_general"|"drop_weekly"|"drop_season"|"drop_event_1"|"drop_event_2"} CooldownType */
+/** @typedef {"drop_general"|"drop_weekly"|"drop_season"|"drop_event_1"|"drop_event_2"|"random"} CooldownType */
+
+/** @typedef {"drop"|"random"} StatisticType */
 
 // const badgeManager = require('./badgeManager');
 const cardManager = require("../cardManager");
@@ -161,7 +163,7 @@ async function userData_fetch(userID, options = {}) {
 	return userData;
 }
 
-/** @param {string | {_id: string}} filter userID or filter @param {{}} query @param {{addToQueue:boolean}} options  */
+/** @param {string | {_id: string}} filter userID or filter @param {{}} query @param {{addToQueue:boolean}} options */
 async function userData_update(filter, query, options = {}) {
 	options = { addToQueue: false, ...options };
 
@@ -176,10 +178,34 @@ async function userData_update(filter, query, options = {}) {
 }
 
 //! UserData -> XP
-/** @param {string} userID @param {number} amount use a negative number to subtract */
-async function xp_increment(userID, amount) {
+/** @param {string} userID @param {number} amount use a negative number to subtract @param {StatisticType} statType */
+async function xp_increment(userID, amount, statType = null) {
 	await userData_update(userID, { $inc: { xp: amount } });
-	return;
+
+	// prettier-ignore
+	switch (statType) {
+		case "drop": await statistics_update(userID, { $inc: { "xp.drop": amount } }); break;
+		case "random": await statistics_update(userID, { $inc: { "xp.random": amount } }); break;
+		default: break;
+	}
+}
+
+//! UserData -> Currency
+/** @param {string} userID @param {number} amount use a negative number to subtract @param {StatisticType} statType */
+async function currency_increment(userID, amount, currencyType, statType = null) {
+	// prettier-ignore
+	switch (currencyType) {
+		case "carrots": await userData_update(userID, { $inc: { currency: amount } }); break;
+		case "ribbons": await userData_update(userID, { $inc: { ribbons: amount } }); break;
+		default: return;
+	}
+
+	// prettier-ignore
+	switch (currencyType) {
+		case "carrots": await statistics_increment_carrots(userID, amount); break;
+		case "ribbons": await statistics_increment_ribbons(userID, amount); break;
+		default: return;
+	}
 }
 
 /** @param {string} userID */
@@ -346,6 +372,18 @@ async function cooldowns_set(userID, cooldownType) {}
 /** @param {string} userID @param {CooldownType} reminderType */
 async function reminders_set(userID, reminderType) {}
 
+//! UserData -> Statistics
+/** @param {string | {_id: string}} filter userID or filter @param {{}} query */
+async function statistics_update(filter, query) {}
+
+/** @param {string} userID @param {number} amount */
+async function statistics_increment_commandsUsed(userID, amount) {}
+
+/** @param {string} userID @param {number} amount */
+async function statistics_increment_carrots(userID, amount) {}
+/** @param {string} userID @param {number} amount */
+async function statistics_increment_ribbons(userID, amount) {}
+
 module.exports = {
 	count: userData_count,
 	exists: userData_exists,
@@ -356,6 +394,10 @@ module.exports = {
 	xp: {
 		increment: xp_increment,
 		levelUp: xp_levelUp
+	},
+
+	currency: {
+		increment: currency_increment
 	},
 
 	inventory: {
@@ -385,5 +427,12 @@ module.exports = {
 
 	reminders: {
 		set: reminders_set
+	},
+
+	statistics: {
+		update: statistics_update,
+		increment: {
+			commandsUsed: statistics_increment_commandsUsed
+		}
 	}
 };

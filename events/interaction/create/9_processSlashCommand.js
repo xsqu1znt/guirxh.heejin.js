@@ -106,6 +106,12 @@ module.exports = {
 		// Execute the slash command's function
 		return await slashCommand.execute(client, args.interaction).then(async message => {
 			// TODO: run code here after the command is finished
+
+			/// Update the user's statistics
+			await Promise.all([
+				// Commands used
+				userManager.statistics.increment.commandsUsed(args.interaction.user.id, 1)
+			]);
 		});
 	}
 };
