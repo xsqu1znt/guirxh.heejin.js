@@ -38,10 +38,10 @@ module.exports = {
 				// Set the user's cooldown
 				userManager.cooldowns.set(interaction.user.id, "random"),
 				// Update the user's statistics
-				userManager.statistics.update(interaction.user.id, {
+				/* userManager.statistics.update(interaction.user.id, {
 					$push: { "random.win_rate": { won: false, timestamp: Date.now() } },
 					$inc: { commands_used: 1 }
-				}),
+				}), */
 				// Send the embed
 				embed_random.send()
 			]);
