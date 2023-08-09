@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-//// const { BetterEmbed } = require("../modules/discordTools/_dsT");
-const { BetterEmbed } = require("../modules/discordTools");
+const { BetterEmbed } = require("../modules/discordTools/_dsT");
+//// const { BetterEmbed } = require("../modules/discordTools");
 
 module.exports = {
 	options: { deferReply: false },
@@ -12,8 +12,8 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-		//// let embed = new BetterEmbed({ interaction, author: { text: "$USERNAME | inventory", user: interaction.member } });
-		let embed = new BetterEmbed({ interaction, author: { text: "%AUTHOR_NAME | inventory", user: interaction.member } });
+		let embed = new BetterEmbed({ interaction, author: { text: "$USERNAME | inventory", user: interaction.member } });
+		//// let embed = new BetterEmbed({ interaction, author: { text: "%AUTHOR_NAME | inventory", user: interaction.member } });
 
 		// https://cdn.discordapp.com/attachments/1014199645750186044/1023271880968384592/Heeseung.png
 		// > **`5ZM83A`** `5673` `🗣️856`  `comn`\n> `🏫` **Future Perfect** :: `ENHYPEN` Heeseung\n> `LV. 1` `🎤 100` : `💖 100` `💰 30`

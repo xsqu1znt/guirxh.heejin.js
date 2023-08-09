@@ -28,14 +28,14 @@ module.exports = {
 		let userData = await userManager.fetch(interaction.user.id, { type: "essential" });
 
 		// The resulting embed description
-		let embed_description = `Streak increased to ${userData.daily_streak + 1}\nYou got $CURRENCY`;
+		let embed_description = `Streak increased to \`${userData.daily_streak + 1}\`\nYou got \`$CURRENCY\``;
 
 		/// Check if the user broke their streak
 		let streak_reset = false;
 
 		if (userData.daily_streak_expires && userData.daily_streak_expires < Date.now()) {
 			// Change the resulting embed description
-			embed_description = `You lost your streak of ${userData.daily_streak}\nYou got $CURRENCY`;
+			embed_description = `You lost your streak of \`${userData.daily_streak}\`\nYou got \`$CURRENCY\``;
 			// Reset the user's daily streak
 			userData.daily_streak = 0;
 			streak_reset = true;
@@ -76,14 +76,17 @@ module.exports = {
             description: embed_description
         });
 
-		// prettier-ignore
-		let streak_clamped = _jsT.clamp(userData.daily_streak, { max: config_player.currency.rewards.daily.MAX_STREAK_MULTIPLIER });
+		let streak_clamped = _jsT.clamp(userData.daily_streak + 1, {
+			max: config_player.currency.rewards.daily.MAX_STREAK_MULTIPLIER
+		});
 		let streak_progress = [...Array(config_player.currency.rewards.daily.MAX_STREAK_MULTIPLIER)].fill("□");
-		streak_progress.splice(0, userData.daily_streak, ...Array(streak_clamped).fill("■")).join("");
+		streak_progress.splice(0, streak_clamped, ...Array(streak_clamped).fill("■"));
 
 		embed_daily.addFields({
 			name: "***Streak multiplier***",
-			value: `\`${streak_progress}\``
+			value: `${streak_progress.join("")}`
 		});
+
+		return await embed_daily.send();
 	}
 };

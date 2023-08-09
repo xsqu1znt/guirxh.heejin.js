@@ -361,6 +361,9 @@ async function badges_add(userID, badges) {
 /** @param {string} userID @param {number} amount */
 async function quest_progress_increment_inventory(userID, amount) {}
 
+/** @param {string} userID @param {number} amount */
+async function quest_progress_increment_balance(userID, amount) {}
+
 //! UserData -> Cooldowns
 /** @param {string} userID @param {CooldownType} cooldownType */
 async function cooldowns_check(userID, cooldownType) {}
@@ -415,7 +418,8 @@ module.exports = {
 	quest: {
 		progress: {
 			increment: {
-				inventory: quest_progress_increment_inventory
+				inventory: quest_progress_increment_inventory,
+				balance: quest_progress_increment_balance
 			}
 		}
 	},
