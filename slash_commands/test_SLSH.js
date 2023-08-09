@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { BetterEmbed } = require("../modules/discordTools/_dsT");
-// const _jsT = require("../modules/jsTools/_jsT");
+//// const { BetterEmbed } = require("../modules/discordTools/_dsT");
+const { BetterEmbed } = require("../modules/discordTools");
 
 module.exports = {
 	options: { deferReply: false },
@@ -12,31 +12,24 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-		let embed = new BetterEmbed({ interaction, author: { text: "$USERNAME | inventory", user: interaction.member } });
+		//// let embed = new BetterEmbed({ interaction, author: { text: "$USERNAME | inventory", user: interaction.member } });
+		let embed = new BetterEmbed({ interaction, author: { text: "%AUTHOR_NAME | inventory", user: interaction.member } });
 
-		/* **`5ZM83A`** `5673` `🗣️856`  `comn`
-        `🏫` *`ENHYPEN`* **Future Perfect** :: [Heeseung](https://cdn.discordapp.com/attachments/1014199645750186044/1023271880968384592/Heeseung.png) 
-        `LV. 1` `🎤 100` : `💖 100` `💰 30`
-
-        **`VVRN33`** `5673` `🗣️856`  `comn`
-        `🫵` *`iKON`* **U** :: [Bobby](https://cdn.discordapp.com/attachments/1014199645750186044/1023271880968384592/Heeseung.png) 
-        `LV. 1` `🎤 250` : `💖 250` `💰 45`
-
-        **`8582GT`** `5673` `🗣️856`  `comn`
-        `🍭` *`Kyary Pamyu Pamyu`* **PONPONPON** :: [Kyary Pamyu Pamyu](https://cdn.discordapp.com/attachments/1014199645750186044/1023271880968384592/Heeseung.png) 
-        `LV. 1` `🎤 456` : `💖 456` `💰 70`
-
-        **`PTT192`** `5673` `🗣️856`  `comn`
-        `🖌️` *`LOONA`* **Paint The Town** :: [Olivia Hye](https://cdn.discordapp.com/attachments/1014199645750186044/1023271880968384592/Heeseung.png) 
-        `LV. 1` `🎤 456` : `💖 456` `💰 70` */
-
+		// https://cdn.discordapp.com/attachments/1014199645750186044/1023271880968384592/Heeseung.png
 		// > **`5ZM83A`** `5673` `🗣️856`  `comn`\n> `🏫` **Future Perfect** :: `ENHYPEN` Heeseung\n> `LV. 1` `🎤 100` : `💖 100` `💰 30`
+
+		// https://cdn.discordapp.com/attachments/1014199645750186044/1023271880968384592/Heeseung.png
 		// > **`VVRN33`** `5673` `🗣️856`  `comn`\n> `🏫` **iKON** :: `U` Bobby\n> `LV. 1` `🎤 250` : `💖 250` `💰 45`
+
+		// https://cdn.discordapp.com/attachments/1014199645750186044/1023271880968384592/Heeseung.png
 		// > **`8582GT`** `5673` `🗣️856`  `comn`\n> `🏫` **Kyary Pamyu Pamyu** :: `PONPONPON` Kyary Pamyu Pamyu\n> `LV. 1` `🎤 100` : `💖 456` `💰 70`
+
+		// https://cdn.discordapp.com/attachments/1014199645750186044/1023271880968384592/Heeseung.png
 		// > **`PTT192`** `5673` `🗣️856`  `comn`\n> `🏫` **LOONA** :: `Paint The Town` Olivia Hye\n> `LV. 1` `🎤 100` : `💖 100` `💰 70`
 
-		// \u200b
+		// \u200b - invisible character
 
+		/* 2 COLUMN */
 		/* embed.addFields(
 			{
 				name: "```field text 1```",
@@ -63,6 +56,7 @@ module.exports = {
 			}
 		); */
 
+		/* 2 COLUMN */
 		embed.addFields(
 			{
 				name: "\u200b",
