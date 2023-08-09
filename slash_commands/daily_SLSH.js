@@ -52,18 +52,18 @@ module.exports = {
 
 		await Promise.all([
 			// Update the user's balance in Mongo
-			// userManager.currency.increment(interaction.user.id, reward_carrots, "carrots", "daily"),
+			userManager.currency.increment(interaction.user.id, reward_carrots, "carrots", "daily"),
 			// Update the user's daily streak in Mongo
-			/* userManager.update(interaction.user.id, {
+			userManager.update(interaction.user.id, {
 				$inc: { daily_streak: streak_reset ? -userData.daily_streak : 1 },
-				$push: { daily_streak_expires: userData.daily_streak_expires }
-			}), */
+				$set: { daily_streak_expires: userData.daily_streak_expires }
+			}),
 			// Update the user's quest progress
-			// userManager.quest.progress.increment.balance(interaction.user.id, reward_carrots),
+			userManager.quest.progress.increment.balance(interaction.user.id, reward_carrots),
 			// Set the user's cooldown
-			// userManager.cooldowns.set(interaction.user.id, "daily"),
+			userManager.cooldowns.set(interaction.user.id, "daily"),
 			// Set the user's reminder
-			// userManager.reminders.set(interaction.user.id, "daily")
+			userManager.reminders.set(interaction.user.id, "daily")
 		]);
 
 		/// Create the embed :: { DAILY }

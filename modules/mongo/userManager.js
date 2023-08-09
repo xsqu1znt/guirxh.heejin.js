@@ -195,7 +195,7 @@ async function xp_increment(userID, amount, statType = null) {
 async function currency_increment(userID, amount, currencyType, statType = null) {
 	// prettier-ignore
 	switch (currencyType) {
-		case "carrots": await userData_update(userID, { $inc: { currency: amount } }); break;
+		case "carrots": await userData_update(userID, { $inc: { balance: amount } }); break;
 		case "ribbons": await userData_update(userID, { $inc: { ribbons: amount } }); break;
 		default: return;
 	}
