@@ -50,15 +50,7 @@ module.exports = {
 		let reward_xp = _jsT.randomNumber(config_player.xp.user.rewards.random.MIN, config_player.xp.user.rewards.random.MAX);
 
 		// Fetch the user's balance from Mongo
-		let userData = await userManager.fetch(interaction.client.id, { type: "balance" });
-
-		// prettier-ignore
-		// Edit the embed's description :: { RANDOM }
-		embed_random.setDescription("You tried your luck and won:\n> $REWARD_CARROTS\n> $REWARD_XP\nBalance: $BALANCE"
-			.replace("$REWARD_CARROTS", `\`${config_bot.emojis.CURRENCY_1.EMOJI} ${reward_carrots}\``)
-			.replace("$REWARD_CARROTS", `\`☝️ ${reward_xp}XP\``)
-			.replace("$BALANCE", `\`${config_bot.emojis.CURRENCY_1.EMOJI} ${userData.balance + reward_carrots}\``)
-		);
+		let userData = await userManager.fetch(interaction.user.id, { type: "balance" });
 
 		return await Promise.all([
 			// Update the user's balance in Mongo
@@ -73,7 +65,13 @@ module.exports = {
 			// Set the user's reminder
 			userManager.reminders.set(interaction.user.id, "random"),
 			// Send the embed
-			embed_random.send()
+			embed_random.send({
+				description: "You tried your luck and won `$REWARD_CARROTS` `$REWARD_XP`"
+					.replace("$REWARD_CARROTS", `${config_bot.emojis.CURRENCY_1.EMOJI} ${reward_carrots}`)
+					.replace("$REWARD_XP", `☝️ ${reward_xp}XP`)
+					/* .replace("$BALANCE", `${config_bot.emojis.CURRENCY_1.EMOJI} ${userData.balance + reward_carrots}`) */,
+				footer: `balance: ${config_bot.emojis.CURRENCY_1.EMOJI} ${userData.balance + reward_carrots}`
+			})
 		]);
 	}
 };

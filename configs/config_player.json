@@ -12,7 +12,7 @@
 	},
 
 	"win_rate": {
-		"RANDOM": 40
+		"RANDOM": 100
 	},
 
 	"currency": {
@@ -20,7 +20,7 @@
 
 		"rewards": {
 			"daily": { "AMOUNT": 50, "MAX_STREAK_MULTIPLIER": 10 },
-			"random": { "MIN": 10, "MAX": 500 }
+			"random": { "MIN": 500, "MAX": 5000 }
 		}
 	},
 
