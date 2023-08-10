@@ -381,13 +381,6 @@ async function badges_add(userID, badges) {
 	return await userData_update(userID, { $push: { badges: { $each: badges } } });
 }
 
-//! UserData -> Quest
-/** @param {string} userID @param {number} amount */
-async function quest_progress_increment_inventory(userID, amount) {}
-
-/** @param {string} userID @param {number} amount */
-async function quest_progress_increment_balance(userID, amount) {}
-
 //! UserData -> Cooldowns
 /** @param {string} userID @param {CooldownType} cooldownType */
 async function cooldowns_check(userID, cooldownType) {}
@@ -398,6 +391,16 @@ async function cooldowns_set(userID, cooldownType) {}
 //! UserData -> Reminders
 /** @param {string} userID @param {CooldownType} reminderType */
 async function reminders_set(userID, reminderType) {}
+
+//! UserData -> Quest
+/** @param {string} userID @param {number} amount */
+async function quest_progress_increment_inventory(userID, amount) {}
+
+/** @param {string} userID @param {number} amount */
+async function quest_progress_increment_balance(userID, amount) {}
+
+/** @param {string} userID @param {number} amount */
+async function quest_progress_increment_xp(userID, amount) {}
 
 //! UserData -> Statistics
 /** @param {string | {_id: string}} filter userID or filter @param {{}} query */
@@ -440,15 +443,6 @@ module.exports = {
 		add: badges_add
 	},
 
-	quest: {
-		progress: {
-			increment: {
-				inventory: quest_progress_increment_inventory,
-				balance: quest_progress_increment_balance
-			}
-		}
-	},
-
 	cooldowns: {
 		check: cooldowns_check,
 		set: cooldowns_set
@@ -456,6 +450,16 @@ module.exports = {
 
 	reminders: {
 		set: reminders_set
+	},
+
+	quest: {
+		progress: {
+			increment: {
+				inventory: quest_progress_increment_inventory,
+				balance: quest_progress_increment_balance,
+				xp: quest_progress_increment_xp
+			}
+		}
 	},
 
 	statistics: {

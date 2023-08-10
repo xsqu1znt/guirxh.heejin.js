@@ -20,7 +20,7 @@
 
 		"rewards": {
 			"daily": { "AMOUNT": 50, "MAX_STREAK_MULTIPLIER": 10 },
-			"random": { "MIN_AMOUNT": 10, "MAX_AMOUNT": 500 }
+			"random": { "MIN": 10, "MAX": 500 }
 		}
 	},
 

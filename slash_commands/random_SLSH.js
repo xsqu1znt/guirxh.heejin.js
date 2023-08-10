@@ -32,24 +32,48 @@ module.exports = {
 			description: "You tried your luck and did not win anything"
 		});
 
-		// Check if the user won
-		if (!_jsT.chance(config_player.win_rate.RANDOM)) {
-			return await Promise.all([
-				// Set the user's cooldown
-				userManager.cooldowns.set(interaction.user.id, "random"),
-				// Update the user's statistics
-				/* userManager.statistics.update(interaction.user.id, {
-					$push: { "random.win_rate": { won: false, timestamp: Date.now() } },
-					$inc: { commands_used: 1 }
-				}), */
-				// Send the embed
-				embed_random.send()
-			]);
-		}
-
-		// Fetch the user from Mongo
-		let userData = await userManager.fetch(interaction.client.id, { type: "balance" });
+		// prettier-ignore
+		// Determine if the user lost
+		if (!_jsT.chance(config_player.win_rate.RANDOM)) return await Promise.all([
+			// Set the user's cooldown
+			userManager.cooldowns.set(interaction.user.id, "random"),
+			// Set the user's reminder
+			userManager.reminders.set(interaction.user.id, "random"),
+			// Send the embed
+			embed_random.send()
+		]);
 
 		/// Calculate the user's reward
+		// prettier-ignore
+		let reward_carrots = _jsT.randomNumber(config_player.currency.rewards.random.MIN, config_player.currency.rewards.random.MAX);
+		// prettier-ignore
+		let reward_xp = _jsT.randomNumber(config_player.xp.user.rewards.random.MIN, config_player.xp.user.rewards.random.MAX);
+
+		// Fetch the user's balance from Mongo
+		let userData = await userManager.fetch(interaction.client.id, { type: "balance" });
+
+		// prettier-ignore
+		// Edit the embed's description :: { RANDOM }
+		embed_random.setDescription("You tried your luck and won:\n> $REWARD_CARROTS\n> $REWARD_XP\nBalance: $BALANCE"
+			.replace("$REWARD_CARROTS", `\`${config_bot.emojis.CURRENCY_1.EMOJI} ${reward_carrots}\``)
+			.replace("$REWARD_CARROTS", `\`☝️ ${reward_xp}XP\``)
+			.replace("$BALANCE", `\`${config_bot.emojis.CURRENCY_1.EMOJI} ${userData.balance + reward_carrots}\``)
+		);
+
+		return await Promise.all([
+			// Update the user's balance in Mongo
+			userManager.currency.increment(interaction.user.id, reward_carrots, "carrots", "random"),
+			// Update the user's XP in Mongo
+			userManager.xp.increment(interaction.user.id, reward_xp, "random"),
+			/// Update the user's quest progress
+			userManager.quest.progress.increment.balance(interaction.user.id, reward_carrots),
+			userManager.quest.progress.increment.xp(interaction.user.id, reward_xp),
+			// Set the user's cooldown
+			userManager.cooldowns.set(interaction.user.id, "random"),
+			// Set the user's reminder
+			userManager.reminders.set(interaction.user.id, "random"),
+			// Send the embed
+			embed_random.send()
+		]);
 	}
 };
