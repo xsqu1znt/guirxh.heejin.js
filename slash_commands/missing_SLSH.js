@@ -30,11 +30,12 @@ module.exports = {
 		// Defer the reply
 		await interaction.deferReply();
 
-		// Fetch the user from Mongo
-		let userData = await userManager.fetch(interaction.user.id, { type: "inventory" });
+		// prettier-ignore
+		// Check if the user has the cards in the given set using Mongo
+		let cards_have = await userManager.inventory.has(interaction.user.id, card_set.map(c => c.globalID));
 
 		// Create the embeds :: { USER MISSING }
-		let embeds_missing = user_ES.missing(interaction.member, userData, card_set);
+		let embeds_missing = user_ES.missing(interaction.member, card_set, cards_have);
 
 		// prettier-ignore
 		// Set up page navigation

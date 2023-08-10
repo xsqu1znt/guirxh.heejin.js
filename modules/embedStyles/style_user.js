@@ -19,13 +19,12 @@ const _jsT = require("../jsTools/_jsT");
 
 const config_player = require("../../configs/config_player.json");
 
-function missing(user, userData, cards) {
+function missing(user, cards, cards_have) {
 	// Sort the cards by set ID then global ID :: { DESCENDING }
 	cards.sort((a, b) => a.setID - b.setID || a.globalID - b.globalID);
 
-	/// Format the user's cards into list entries, with a max of 10 per page
-	let cards_have = cards.map(c => userParser.cards.has(userData, c.globalID));
 	// prettier-ignore
+	// Format the user's cards into list entries, with a max of 10 per page
 	let cards_f = _jsT.chunk(cards.map((c, idx) => cardManager.toString.missingEntry(c, cards_have[idx])), 10);
 
 	// Create the embeds :: { MISSING }

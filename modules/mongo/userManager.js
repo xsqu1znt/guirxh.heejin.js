@@ -266,6 +266,30 @@ async function inventory_exists(userID, uids) {
 	return exists ? true : false;
 }
 
+/** @param {string} userID @param {string | string[]} globalIDs */
+async function inventory_has(userID, globalIDs) {
+	// Create an array if only a single card UID was passed
+	if (!globalIDs) return null;
+	if (!Array.isArray(globalIDs)) globalIDs = [globalIDs];
+
+	let arr = [...Array(globalIDs.length)].fill(false);
+
+	/// Check the user's card_inventory for the specified global IDs
+	let pipeline = [
+		{ $unwind: "$card_inventory" },
+		{ $match: { _id: userID, "card_inventory.globalID": { $in: globalIDs } } },
+		{ $group: { _id: "$_id", card_inventory: { $push: "$card_inventory" } } }
+	];
+
+	let userData = (await models.user.aggregate(pipeline))[0];
+	if (!userData) return arr;
+
+	for (let i = 0; i < globalIDs.length; i++)
+		if (userData.card_inventory.find(c => c.globalID === globalIDs[i])) arr[i] = true;
+
+	return arr.length > 1 ? arr : arr[0];
+}
+
 /** @param {string} userID */
 async function inventory_add(userID, cards) {
 	// Create an array if only a single card object was passed
@@ -405,6 +429,7 @@ module.exports = {
 
 	inventory: {
 		exists: inventory_exists,
+		has: inventory_has,
 		add: inventory_add,
 		remove: inventory_remove,
 		update: inventory_update,
