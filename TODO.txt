@@ -3,6 +3,13 @@ IMPORTANT:
 • Don't allow selling the same UID multiple times in a row
 
 >> Clean-up
+fix page jump
+add player target to /missing
+change targetPlayer to user in /inventory
+
+
+
+
 • ✅ Clean up heejinSettings.js and split into multiple files
 • Cardmanager.toString.setEntry use card global ID instead of card object
 

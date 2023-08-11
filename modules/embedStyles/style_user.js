@@ -19,6 +19,10 @@ const _jsT = require("../jsTools/_jsT");
 
 const config_player = require("../../configs/config_player.json");
 
+function profile(user, userData) {
+	let 
+}
+
 function missing(user, cards, cards_have) {
 	// Sort the cards by set ID then global ID :: { DESCENDING }
 	cards.sort((a, b) => a.setID - b.setID || a.globalID - b.globalID);
