@@ -253,10 +253,10 @@
   },
   {
     "name": "j-hope³",
-    "group": "jhope",
+    "group": "j-hope",
     "single": "on the street",
     "category": "epic",
-    "description": "**j** :: hope",
+    "description": "**j-hope** :: on the street",
     "emoji": "🛣️",
     "globalID": "4208",
     "setID": "436",
@@ -270,14 +270,14 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494348512661554/On_The_Street_Jhope2.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494348512661554/On_The_Street_j-hope2.png"
   },
   {
     "name": "j-hope¹",
-    "group": "jhope",
+    "group": "j-hope",
     "single": "on the street",
     "category": "epic",
-    "description": "**j** :: hope",
+    "description": "**j-hope** :: on the street",
     "emoji": "🛣️",
     "globalID": "4206",
     "setID": "436",
@@ -291,14 +291,14 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494348177113189/On_The_Street_Jhope.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494348177113189/On_The_Street_j-hope.png"
   },
   {
     "name": "j-hope²",
-    "group": "jhope",
+    "group": "j-hope",
     "single": "on the street",
     "category": "epic",
-    "description": "**j** :: hope",
+    "description": "**j-hope** :: on the street",
     "emoji": "🛣️",
     "globalID": "4207",
     "setID": "436",
@@ -312,7 +312,7 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494348844007494/On_The_Street_Jhope3.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494348844007494/On_The_Street_j-hope3.png"
   },
   {
     "name": "Bae",

@@ -2545,7 +2545,7 @@
     "group": "DPR IAN",
     "single": "Ribbon",
     "category": "comn",
-    "description": "**BLACKPINK** :: Lovesick Girls",
+    "description": "**Ribbon** :: DPR IAN",
     "emoji": "💉",
     "globalID": "8622",
     "setID": "870",
@@ -2566,7 +2566,7 @@
     "group": "DPR IAN",
     "single": "Ribbon",
     "category": "comn",
-    "description": "**BLACKPINK** :: Lovesick Girls",
+    "description": "**Ribbon** :: DPR IAN",
     "emoji": "💉",
     "globalID": "8624",
     "setID": "870",
@@ -2587,7 +2587,7 @@
     "group": "DPR IAN",
     "single": "Ribbon",
     "category": "comn",
-    "description": "**BLACKPINK** :: Lovesick Girls",
+    "description": "**Ribbon** :: DPR IAN",
     "emoji": "💉",
     "globalID": "8623",
     "setID": "870",
@@ -5314,7 +5314,7 @@
   },
   {
     "name": "HA:TFELT¹",
-    "group": "HATFELT",
+    "group": "HA:TFELT",
     "single": "La Luna",
     "category": "comn",
     "description": "**HA:TFELT** :: La Luna",
@@ -5331,11 +5331,11 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1102235450170675290/laluna_hatfelt1.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1102235450170675290/laluna_HA:TFELT1.png"
   },
   {
     "name": "HA:TFELT²",
-    "group": "HATFELT",
+    "group": "HA:TFELT",
     "single": "La Luna",
     "category": "comn",
     "description": "**HA:TFELT** :: La Luna",
@@ -5352,11 +5352,11 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1102235450577530980/laluna_hatfelt2.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1102235450577530980/laluna_HA:TFELT2.png"
   },
   {
     "name": "HA:TFELT³",
-    "group": "HATFELT",
+    "group": "HA:TFELT",
     "single": "La Luna",
     "category": "comn",
     "description": "**HA:TFELT** :: La Luna",
@@ -5373,7 +5373,7 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1102235450963394620/laluna_hatfelt3.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1102235450963394620/laluna_HA:TFELT3.png"
   },
   {
     "name": "Changsub",
