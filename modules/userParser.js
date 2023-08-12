@@ -97,7 +97,7 @@ function cards_getInventory(userData, options = {}) {
 
 		// prettier-ignore
 		let _card_f = cardManager.toString.inventory(card, {
-            duplicate: options.dupeTag ? duplicateCount : false, favorite: _isFavorite, selected: _isSelected, team: _isOnTeam
+            duplicate: options.dupeTag ? duplicateCount : false, favorite: _isFavorite, selected: _isSelected, onTeam: _isOnTeam
         });
 
 		// prettier-ignore

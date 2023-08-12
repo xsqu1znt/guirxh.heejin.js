@@ -14,6 +14,7 @@ const { GuildMember, User, time, TimestampStyles } = require("discord.js");
 
 const BetterEmbed = require("../discordTools/dsT_betterEmbed");
 const { userManager } = require("../mongo/index");
+const badgeManager = require("../badgeManager");
 const cardManager = require("../cardManager");
 const userParser = require("../userParser");
 const _jsT = require("../jsTools/_jsT");
@@ -23,8 +24,8 @@ const config_bot = require("../../configs/config_bot.json");
 
 async function profile(user, userData) {
 	// prettier-ignore
-	let [card_selected, card_favorite] = await userManager.inventory.get(user.id,
-		[userData.card_selected_uid, userData.card_favorite_uid]
+	let [card_favorite, card_selected] = await userManager.inventory.get(user.id,
+		[userData.card_favorite_uid, userData.card_selected_uid]
 	);
 
 	let inventory_count = await userManager.inventory.count(user.id, true);
@@ -32,7 +33,6 @@ async function profile(user, userData) {
 	const embed_main = () => {
 		let _embed = new BetterEmbed({
 			author: { text: "$USERNAME | profile", user },
-			// Add the user's selected card (idol) to the embed's thumbnail
 			thumbnailURL: card_selected?.imageURL
 		});
 
@@ -58,6 +58,36 @@ async function profile(user, userData) {
 		return _embed;
 	};
 
+	const embed_badges = () => {
+		let _embed = new BetterEmbed({ author: { text: "$USERNAME | profile", user } });
+
+		// let _badge_sets = _jsT.unique(badgeManager.badges, "set");
+
+		// Convert the BadgeLike objects to full badges
+		let _badges_f = userData.badges.map(b => badgeManager.toString.profile(b.id));
+		// Add the badges to the embed
+		_embed.addFields([{ name: "`📛` Badges", value: _badges_f.join("\n") }]);
+
+		return _embed;
+	};
+
+	const embed_card = card => {
+		let selected = card.uid === card_selected;
+		let favorited = card.uid === card_favorite;
+		let onTeam = userData.card_team_uids.includes(card.uid);
+
+		// Parse the card into a string
+		let card_f = cardManager.toString.inventory(card, { selected, favorited, onTeam });
+
+		let _embed = new BetterEmbed({
+			author: { text: "$USERNAME | profile", user },
+			imageURL: card?.imageURL,
+			description: card_f
+		});
+
+		return _embed;
+	};
+
 	const embed_inventory_stats = async () => {
 		let _embed = new BetterEmbed({ author: { text: "$USERNAME | profile", user } });
 
@@ -76,10 +106,25 @@ async function profile(user, userData) {
 			return { category, has: _count, outOf: _globalIDs.length };
 		}));
 
+		// Format the categories into a string
+		let cards_user_count_f = cards_user_count.map(c => `> 🃏 **${c.category}**: \`${c.has}/${c.outOf}\``);
+
+		// Add fields to the embed
+		_embed.addFields(
+			{ name: "`🌕` Normal Sets", value: cards_user_count_f.slice(0, 5).join("\n"), inline: true },
+			{ name: "`🌗` Special Sets", value: cards_user_count_f.slice(5).join("\n"), inline: true }
+		);
+
 		return _embed;
 	};
 
-	return await embed_inventory_stats();
+	return {
+		main: embed_main(),
+		badges: userData.badges?.length ? embed_badges() : null,
+		favorited: card_favorite ? embed_card(card_favorite) : null,
+		selected: card_selected ? embed_card(card_selected) : null,
+		stats: await embed_inventory_stats()
+	};
 }
 
 function missing(user, cards, cards_have) {

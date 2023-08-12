@@ -6,7 +6,7 @@
 /** @typedef options_toStr_inventory
  * @property {boolean} favorite
  * @property {boolean} selected
- * @property {boolean} team
+ * @property {boolean} onTeam
  * @property {boolean} simplify
  * @property {boolean|number} duplicate */
 
@@ -259,7 +259,7 @@ function toString_basic(card) {
 function toString_inventory(card, options = {}) {
 	if (!card) return "n/a";
 
-	options = { favorited: false, selected: false, team: false, simplify: false, duplicate: false, ...options };
+	options = { favorited: false, selected: false, onTeam: false, simplify: false, duplicate: false, ...options };
 
 	// prettier-ignore
 	let f = "$UID $EMOJI $GROUP : $SINGLE - $NAME $DUPE\n> $SET_ID $GLOBAL_ID $RARITY $CATEGORY $SELL_PRICE $LOCKED\n> $LEVEL $STATS $FAVORITE $SELECTED $TEAM"
@@ -286,7 +286,7 @@ function toString_inventory(card, options = {}) {
 		.replace("$STATS", `\`🎤 ${card.stats.ability} : 💖 ${card.stats.reputation}\``)
 		.replace(" $FAVORITE", options.favorite ? " \`⭐\`" : "")
 		.replace(" $SELECTED", options.selected ? " \`🏃\`" : "")
-		.replace(" $TEAM", options.team ? "  \`👯\`" : "");
+		.replace(" $TEAM", options.onTeam ? "  \`👯\`" : "");
 
 	// prettier-ignore
 	// Format duplicate option

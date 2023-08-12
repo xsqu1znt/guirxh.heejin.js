@@ -39,7 +39,7 @@ module.exports = {
 		}
 
 		// Fetch the user from Mongo
-		let userData = await userManager.fetch(user.id, { type: "essential" });
+		let userData = await userManager.fetch(user.id, { type: "noInventory" });
 		if (!userData) return await error_ES.send({ description: "That user has not started yet", ephemeral: true });
 
 		/// Create the embed :: { PROFILE }
@@ -56,6 +56,6 @@ module.exports = {
 
 		let embed_profile = await user_ES.profile(user, userData);
 
-		return await embed_profile.send({ interaction });
+		// return await embed_profile.send({ interaction });
 	}
 };
