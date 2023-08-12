@@ -44,18 +44,18 @@ module.exports = {
 
 		/// Create the embed :: { PROFILE }
 		// prettier-ignore
-		let cards_user = [selected, favorite] = await userManager.inventory.get(interaction.user.id, [
-			userData.card_selected_uid, userData.card_favorite_uid
-		]);
+		let [card_selected, card_favorite] = await userManager.inventory.get(interaction.user.id,
+			[userData.card_selected_uid, userData.card_favorite_uid]
+		);
 
 		// prettier-ignore
 		let inventory = {
-			selected: cards_user[0], favorite: cards_user[1],
+			selected: card_selected, favorite: card_favorite,
 			count: await userManager.inventory.count(interaction.user.id, true)
 		};
 
-		let embed_profile = user_ES.profile(user, userData, inventory);
+		let embed_profile = await user_ES.profile(user, userData);
 
-		return await embed_profile.send();
+		return await embed_profile.send({ interaction });
 	}
 };

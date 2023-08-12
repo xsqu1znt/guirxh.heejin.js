@@ -127,7 +127,10 @@ async function userData_fetch(userID, options = {}) {
 				xp_for_next_level: 1,
 				biography: 1,
 				balance: 1,
-				ribbons: 1
+				ribbons: 1,
+				card_selected_uid: 1,
+				card_favorite_uid: 1,
+				card_team_uids: 1
 			};
 			break;
 		case "balance":
@@ -317,9 +320,13 @@ async function inventory_get(userID, uids) {
 	];
 
 	let userData = (await models.user.aggregate(pipeline))[0];
-	if (!userData) return null;
+	if (!userData) return uids.length > 1 ? uids.fill(null) : null;
 
-	let cards = userData.card_inventory;
+	let cards = [...Array(uids.length)];
+	// prettier-ignore
+	for (let i = 0; i < userData.card_inventory.length; i++)
+		cards[i] = userData.card_inventory[i];
+
 	return cards.length > 1 ? cards : cards[0];
 }
 

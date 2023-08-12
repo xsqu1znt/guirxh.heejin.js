@@ -13,6 +13,7 @@
 const { GuildMember, User, time, TimestampStyles } = require("discord.js");
 
 const BetterEmbed = require("../discordTools/dsT_betterEmbed");
+const { userManager } = require("../mongo/index");
 const cardManager = require("../cardManager");
 const userParser = require("../userParser");
 const _jsT = require("../jsTools/_jsT");
@@ -20,12 +21,19 @@ const _jsT = require("../jsTools/_jsT");
 const config_player = require("../../configs/config_player.json");
 const config_bot = require("../../configs/config_bot.json");
 
-function profile(user, userData, cards) {
+async function profile(user, userData) {
+	// prettier-ignore
+	let [card_selected, card_favorite] = await userManager.inventory.get(user.id,
+		[userData.card_selected_uid, userData.card_favorite_uid]
+	);
+
+	let inventory_count = await userManager.inventory.count(user.id, true);
+
 	const embed_main = () => {
 		let _embed = new BetterEmbed({
-			author: { text: "$USERNAME | profile" },
+			author: { text: "$USERNAME | profile", user },
 			// Add the user's selected card (idol) to the embed's thumbnail
-			thumbnailURL: cards.selected?.imageURL || user.avatarURL({ dynamic: true })
+			thumbnailURL: card_selected?.imageURL
 		});
 
 		// Add the user's biography if they have one
@@ -34,11 +42,11 @@ function profile(user, userData, cards) {
 		// Add the user's information
 		_embed.addFields({
 			name: "`📄` Information",
-			value: "> `$CARROTS` :: `$RIBBONS` :: `🃏 %INVENTORY_COUNT/$CARD_COUNT` :: `📈 LV. %LEVEL` :: `☝️ $XP/$XP_NEEDED`"
+			value: "> `$CARROTS` :: `$RIBBONS` :: `🃏 $INVENTORY_COUNT/$CARD_COUNT` :: `📈 LV. $LEVEL ☝️ $XPXP/$XP_NEEDEDXP`"
 				.replace("$CARROTS", `${config_bot.emojis.CURRENCY_1.EMOJI} ${userData.balance || 0}`)
 				.replace("$RIBBONS", `${config_bot.emojis.CURRENCY_2.EMOJI} ${userData.ribbons || 0}`)
 
-				.replace("$INVENTORY_COUNT", cards.count || 0)
+				.replace("$INVENTORY_COUNT", inventory_count || 0)
 				.replace("$CARD_COUNT", cardManager.cardCount || 0)
 
 				.replace("$LEVEL", userData.level || 0)
@@ -50,7 +58,28 @@ function profile(user, userData, cards) {
 		return _embed;
 	};
 
-	return embed_main();
+	const embed_inventory_stats = async () => {
+		let _embed = new BetterEmbed({ author: { text: "$USERNAME | profile", user } });
+
+		// Get the name of each card category
+		let categories = Object.keys(cardManager.cards);
+
+		/// Count how many cards the user has out of each category
+		// prettier-ignore
+		let cards_user_count = await Promise.all(categories.map(async category => {
+			// Get the global IDs for every card in the category
+			let _globalIDs = cardManager.cards[category].map(c => c.globalID);
+
+			// Check how many cards the user has out of the global ID array
+			let _count = (await userManager.inventory.has(user.id, _globalIDs)).filter(b => b).length;
+
+			return { category, has: _count, outOf: _globalIDs.length };
+		}));
+
+		return _embed;
+	};
+
+	return await embed_inventory_stats();
 }
 
 function missing(user, cards, cards_have) {
