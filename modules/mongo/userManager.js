@@ -256,6 +256,19 @@ async function xp_levelUp(userID) {
 }
 
 //! UserData -> Cards
+async function inventory_count(userID, uniqueOnly = false) {
+	// Create an aggregation pipeline
+	let pipeline = [
+		{ $match: { _id: userID } },
+		uniqueOnly
+			? { $project: { card_inventory: { $size: { $setDifference: ["$card_inventory.globalID", []] } } } }
+			: { $project: { card_inventory: { $size: "$card_inventory" } } }
+	];
+
+	let userData = (await models.user.aggregate(pipeline))[0];
+	return userData ? userData.card_inventory : null;
+}
+
 /** @param {string} userID @param {string | string[]} uids */
 async function inventory_exists(userID, uids) {
 	// Create an array if only a single card UID was passed
@@ -288,6 +301,26 @@ async function inventory_has(userID, globalIDs) {
 		if (userData.card_inventory.find(c => c.globalID === globalIDs[i])) arr[i] = true;
 
 	return arr.length > 1 ? arr : arr[0];
+}
+
+/** @param {string} userID @param {string | string[]} uids */
+async function inventory_get(userID, uids) {
+	// Create an array if only a single card UID was passed
+	if (!uids) return false;
+	if (!Array.isArray(uids)) uids = [uids];
+
+	// Create an aggregation pipeline
+	let pipeline = [
+		{ $unwind: "$card_inventory" },
+		{ $match: { _id: userID, "card_inventory.uid": { $in: uids } } },
+		{ $group: { _id: "$_id", card_inventory: { $push: "$card_inventory" } } }
+	];
+
+	let userData = (await models.user.aggregate(pipeline))[0];
+	if (!userData) return null;
+
+	let cards = userData.card_inventory;
+	return cards.length > 1 ? cards : cards[0];
 }
 
 /** @param {string} userID */
@@ -431,8 +464,10 @@ module.exports = {
 	},
 
 	inventory: {
+		count: inventory_count,
 		exists: inventory_exists,
 		has: inventory_has,
+		get: inventory_get,
 		add: inventory_add,
 		remove: inventory_remove,
 		update: inventory_update,

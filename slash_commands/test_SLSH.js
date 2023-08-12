@@ -12,9 +12,10 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-		let card_has = await userManager.inventory.has(interaction.user.id, ["4200", "5525"]);
-
-		let embed_beep = new BetterEmbed({ interaction, description: "beep" });
+		let embed_beep = new BetterEmbed({
+			interaction,
+			description: `inventory count: ${await userManager.inventory.count(interaction.user.id)}`
+		});
 		return await embed_beep.send();
 	}
 };

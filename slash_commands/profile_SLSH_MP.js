@@ -43,11 +43,19 @@ module.exports = {
 		if (!userData) return await error_ES.send({ description: "That user has not started yet", ephemeral: true });
 
 		/// Create the embed :: { PROFILE }
-		let cards_user = {
-			selected: null,
-			favorite: null
+		// prettier-ignore
+		let cards_user = [selected, favorite] = await userManager.inventory.get(interaction.user.id, [
+			userData.card_selected_uid, userData.card_favorite_uid
+		]);
+
+		// prettier-ignore
+		let inventory = {
+			selected: cards_user[0], favorite: cards_user[1],
+			count: await userManager.inventory.count(interaction.user.id, true)
 		};
 
-		let embed_profile = user_ES.profile(user, userData);
+		let embed_profile = user_ES.profile(user, userData, inventory);
+
+		return await embed_profile.send();
 	}
 };

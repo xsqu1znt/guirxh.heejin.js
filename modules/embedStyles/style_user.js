@@ -18,9 +18,39 @@ const userParser = require("../userParser");
 const _jsT = require("../jsTools/_jsT");
 
 const config_player = require("../../configs/config_player.json");
+const config_bot = require("../../configs/config_bot.json");
 
-function profile(user, userData) {
-	let 
+function profile(user, userData, cards) {
+	const embed_main = () => {
+		let _embed = new BetterEmbed({
+			author: { text: "$USERNAME | profile" },
+			// Add the user's selected card (idol) to the embed's thumbnail
+			thumbnailURL: cards.selected?.imageURL || user.avatarURL({ dynamic: true })
+		});
+
+		// Add the user's biography if they have one
+		if (userData.biography) _embed.addFields({ name: "`👤` Biography", value: userData.biography });
+
+		// Add the user's information
+		_embed.addFields({
+			name: "`📄` Information",
+			value: "> `$CARROTS` :: `$RIBBONS` :: `🃏 %INVENTORY_COUNT/$CARD_COUNT` :: `📈 LV. %LEVEL` :: `☝️ $XP/$XP_NEEDED`"
+				.replace("$CARROTS", `${config_bot.emojis.CURRENCY_1.EMOJI} ${userData.balance || 0}`)
+				.replace("$RIBBONS", `${config_bot.emojis.CURRENCY_2.EMOJI} ${userData.ribbons || 0}`)
+
+				.replace("$INVENTORY_COUNT", cards.count || 0)
+				.replace("$CARD_COUNT", cardManager.cardCount || 0)
+
+				.replace("$LEVEL", userData.level || 0)
+
+				.replace("$XP", userData.xp || 0)
+				.replace("$XP_NEEDED", userData.xp_for_next_level || 0)
+		});
+
+		return _embed;
+	};
+
+	return embed_main();
 }
 
 function missing(user, cards, cards_have) {
@@ -199,4 +229,4 @@ function cooldowns(user, userData) {
 	return embed_cooldowns;
 }
 
-module.exports = { missing, inventory, cooldowns };
+module.exports = { profile, missing, inventory, cooldowns };
