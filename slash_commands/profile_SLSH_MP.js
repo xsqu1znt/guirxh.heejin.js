@@ -48,14 +48,27 @@ module.exports = {
 			[userData.card_selected_uid, userData.card_favorite_uid]
 		);
 
+		let embeds_profile = await user_ES.profile(user, userData);
+
 		// prettier-ignore
-		let inventory = {
-			selected: card_selected, favorite: card_favorite,
-			count: await userManager.inventory.count(interaction.user.id, true)
-		};
+		// Create embed navigation
+		let embedNav = new EmbedNavigator({
+			interaction, embeds: Object.values(embeds_profile).filter(e => e),
+			selectMenuEnabled: true
+		});
 
-		let embed_profile = await user_ES.profile(user, userData);
+		/// Add select menu options
+		embedNav.addSelectMenuOptions({ label: "📄 Basic Information", description: "View your basic information" });
 
-		// return await embed_profile.send({ interaction });
+		// prettier-ignore
+		if (embeds_profile.badges) embedNav.addSelectMenuOptions({ label: "📛 User Badges", description: "View your badges" });
+		// prettier-ignore
+		if (embeds_profile.favorited) embedNav.addSelectMenuOptions({ label: "⭐ Favorite Card", description: "View your favorite" });
+		// prettier-ignore
+		if (embeds_profile.selected) embedNav.addSelectMenuOptions({ label: "🏃 Stage Idol", description: "View your stage idol" });
+
+		embedNav.addSelectMenuOptions({ label: "🃏 Detailed Collection", description: "View your detailed collection" });
+
+		return await embedNav.send();
 	}
 };

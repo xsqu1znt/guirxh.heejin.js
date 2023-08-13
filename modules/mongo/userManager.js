@@ -311,6 +311,7 @@ async function inventory_get(userID, uids) {
 	// Create an array if only a single card UID was passed
 	if (!uids) return false;
 	if (!Array.isArray(uids)) uids = [uids];
+	uids = uids.map(uid => uid.toUpperCase());
 
 	// Create an aggregation pipeline
 	let pipeline = [
