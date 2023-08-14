@@ -42,6 +42,7 @@ class BetterEmbed extends EmbedBuilder {
 			.replace(/\$USERNAME\b/g, this.options.author?.user?.displayName || this.options.author?.user?.username);
 	}
 
+	// TODO: ONLY UPDATE OPTIONS THAT WERE PREVIDED, REGARDLESS IF BLANK
 	/** @param {bE_options} options */
 	#_configure(options = {}) {
 		let _options = { ...this.options, ...options };
