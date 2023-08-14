@@ -247,12 +247,12 @@ function parse_fromCardLike(cardLike) {
 //! To String
 function toString_basic(card) {
 	return "%UID %EMOJI %GROUP :: %SINGLE - %NAME %SELL_PRICE"
-		.replace("%UID", inline(card.uid))
-		.replace("%EMOJI", inline(card.emoji))
-		.replace("%GROUP", bold(card.group))
+		.replace("%UID", `\`${card.uid}\``)
+		.replace("%EMOJI", `\`${card.emoji}\``)
+		.replace("%GROUP", `**${card.group}**`)
 		.replace("%SINGLE", card.single)
-		.replace("%NAME", link(card.name, card.imageURL))
-		.replace("%SELL_PRICE", inline("💰", card.sellPrice));
+		.replace("%NAME", markdown.link(card.name, card.imageURL))
+		.replace("%SELL_PRICE", `\`💰 ${card.sellPrice}\``);
 }
 
 /** @param {options_toStr_inventory} options  */

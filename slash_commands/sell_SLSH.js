@@ -12,8 +12,8 @@ module.exports = {
 	options: { icon: "💰", deferReply: true },
 
 	// prettier-ignore
-	builder: new SlashCommandBuilder().setName("cookie")
-        .setDescription("Get a cookie, or a glass of milk")
+	builder: new SlashCommandBuilder().setName("sell")
+        .setDescription("Sell cards in your inventory")
     
         .addStringOption(option => option.setName("uid").setDescription("Use UID separate by comma")
             .setRequired(true)
@@ -31,7 +31,8 @@ module.exports = {
 		let userData = await userManager.fetch(interaction.user.id, { type: "essential" });
 
 		/// Fetch the cards from the user's card_inventory
-		let cards = (await userManager.inventory.get(interaction.user.id, uids)).map(c => cardManager.parse.fromCardLike(c));
+		// prettier-ignore
+		let cards = (await userManager.inventory.get(interaction.user.id, uids, true)).map(c => cardManager.parse.fromCardLike(c));
 		if (!cards.length) return await error_ES.send({ description: "You need to give a valid card UID" });
 
 		// prettier-ignore
@@ -49,7 +50,7 @@ module.exports = {
 		let cards_f = cards.length <= 10 ? cards.map(c => cardManager.toString.basic(c)) : "";
 
 		// Calculate how many carrots the user will get
-		let sell_total = _jsT.sum(cards, "sellPrice");
+		let sell_total = _jsT.sum(cards.map(c => c.sellPrice));
 
 		// prettier-ignore
 		// Wait for the user to confirm
@@ -67,10 +68,11 @@ module.exports = {
                 interaction, description: "Cannot sell cards that are not in your inventory", sendMethod: "channel", ephemeral: true
             });
 
-			// prettier-ignore
-			return await embed_sell.send({ description: cards_f
-				? `You sold:\n>>> ${cards_f.join("\n")}`
-				: `You sold \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"}`
+			return await embed_sell.send({
+				description: cards_f
+					? `You sold:\n>>> ${cards_f.join("\n")}`
+					: `You sold \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"}`,
+				footer: `you got ${config_bot.emojis.CURRENCY_1.EMOJI} ${sell_total}`
 			});
 		}
 	}

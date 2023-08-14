@@ -307,7 +307,7 @@ async function inventory_has(userID, globalIDs) {
 }
 
 /** @param {string} userID @param {string | string[]} uids */
-async function inventory_get(userID, uids) {
+async function inventory_get(userID, uids, returnArray = false) {
 	// Create an array if only a single card UID was passed
 	if (!uids) return false;
 	if (!Array.isArray(uids)) uids = [uids];
@@ -328,7 +328,7 @@ async function inventory_get(userID, uids) {
 	for (let i = 0; i < userData.card_inventory.length; i++)
 		cards[i] = userData.card_inventory[i];
 
-	return cards.length > 1 ? cards : cards[0];
+	return returnArray ? cards : cards.length > 1 ? cards : cards[0];
 }
 
 /** @param {string} userID */
@@ -400,7 +400,7 @@ async function inventory_sell(userID, cards) {
 
 	await Promise.all([
 		// Update the user's balance
-		userData_update(userID, { $inc: { balance: _jsT.sum(cards, "sellPrice") } }),
+		userData_update(userID, { $inc: { balance: _jsT.sum(cards.map(c => c.sellPrice)) } }),
 		// Remove the cards from the user's card_inventory
 		inventory_remove(
 			userID,
