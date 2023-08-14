@@ -103,7 +103,7 @@ function cards_getInventory(userData, options = {}) {
 		// prettier-ignore
 		cards.push({
             card, card_f: _card_f,
-            duplicate_count: duplicateCount, isFavorite: _isFavorite, isSelected: _isSelected, isOnTeam: _isOnTeam,
+            duplicate_count: duplicateCount, favorited: _isFavorite, selected: _isSelected, onTeam: _isOnTeam,
         });
 	}
 

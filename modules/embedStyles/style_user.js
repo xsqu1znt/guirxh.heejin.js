@@ -180,7 +180,6 @@ function inventory(userData, options) {
 		dupeTag: options.globalID.length && options.globalID[0] !== "all" ? false : true,
 		unique: options.globalID.length && options.globalID[0] !== "all" ? false : true
 	});
-
 	// prettier-ignore
 	let filtered = false, dupeCheck = false;
 
@@ -253,21 +252,25 @@ function inventory(userData, options) {
 	});
 
 	// prettier-ignore
-	// Format the user's cards into list entries, with a max of 10 per page
-	let cards_f = _jsT.chunk(cards.map(c => c.card_f), 10);
+	// Format the user's cards into list entries, with a max of 9 per page
+	let cards_f = _jsT.chunk(cards.map(c => c.card_f), 9);
 
 	/// Create the embeds :: { INVENTORY }
 	let embeds_inventory = [];
 
-	// prettier-ignore
-	for (let i = 0; i < cards_f.length; i++) embeds_inventory.push(
-		new BetterEmbed({
-            author: { text: dupeCheck ? "$USERNAME | dupes" : "$USERNAME | inventory", user: options.target },
-            thumbnailURL: dupeCheck ? cards.slice(-1)[0].card.imageURL : null,
-			description: cards_f[i].join("\n"),
+	for (let i = 0; i < cards_f.length; i++) {
+		let _embed = new BetterEmbed({
+			author: { text: dupeCheck ? "$USERNAME | dupes" : "$USERNAME | inventory", user: options.target },
+			thumbnailURL: dupeCheck ? cards.slice(-1)[0].card.imageURL : null,
+			// description: cards_f[i].join("\n"),
+			description: `\`\`\`Inventory Page ${i + 1}\`\`\``,
 			footer: { text: `Page ${i + 1}/${cards_f.length || 1} | Total: ${cards.length}` }
-		})
-    );
+		});
+
+		_embed.addFields(...cards_f[i].map(c_f => ({ name: "\u200b", value: c_f, inline: true })));
+
+		embeds_inventory.push(_embed);
+	}
 
 	return embeds_inventory;
 }

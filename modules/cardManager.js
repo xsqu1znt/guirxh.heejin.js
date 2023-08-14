@@ -255,8 +255,7 @@ function toString_basic(card) {
 		.replace("%SELL_PRICE", `\`💰 ${card.sellPrice}\``);
 }
 
-/** @param {options_toStr_inventory} options  */
-function toString_inventory(card, options = {}) {
+/* function toString_inventory(card, options = {}) {
 	if (!card) return "n/a";
 
 	options = { favorited: false, selected: false, onTeam: false, simplify: false, duplicate: false, ...options };
@@ -287,6 +286,62 @@ function toString_inventory(card, options = {}) {
 		.replace(" $FAVORITE", options.favorite ? " \`⭐\`" : "")
 		.replace(" $SELECTED", options.selected ? " \`🏃\`" : "")
 		.replace(" $TEAM", options.onTeam ? "  \`👯\`" : "");
+
+	// prettier-ignore
+	// Format duplicate option
+	if (options.duplicate === true)
+		f = f.replace(" $DUPE", ` *${superscript.dupe}*`);
+	else if (!isNaN(options.duplicate) && options.duplicate > 0)
+		f = f.replace(" $DUPE", ` **-- ${String(options.duplicate).split("").map(n => superscript.numbers[+n]).join("")}**`);
+	else
+		f = f.replace(" $DUPE", "");
+
+	return f;
+} */
+
+/** @param {options_toStr_inventory} options  */
+function toString_inventory(card, options = {}) {
+	if (!card) return "n/a";
+
+	options = { favorited: false, selected: false, onTeam: false, simplify: false, duplicate: false, ...options };
+
+	// prettier-ignore
+	// let f = "$UID $EMOJI $GROUP : $SINGLE - $NAME $DUPE\n> $SET_ID $GLOBAL_ID $RARITY $CATEGORY $SELL_PRICE $LOCKED\n> $LEVEL $STATS $FAVORITE $SELECTED $TEAM"
+	let f = ">>> **`$UID`** `$GID` `🗣️ $SET`\n`$EMOJI` **$SINGLE** `$GROUP` :: $NAME\n`LV. $LVL` `$CATEGORY` `💰 $SELL`\n`🎤 $ABI` : `💖 $REP`"
+		.replace("$UID", card?.uid || "")
+		.replace("$GID", card.globalID)
+		.replace("$SET", card.setID)
+
+		.replace("$EMOJI", card.emoji)
+		.replace("$SINGLE", card.single)
+		.replace("$GROUP", card.group)
+		.replace("$NAME", card.name)
+		// .replace("$NAME", markdown.link(card.name, card.imageURL))
+
+		.replace("$LVL", card.stats.level)
+		.replace("$CATEGORY", card.category)
+		.replace("$SELL", card.sellPrice)
+
+
+		.replace("$ABI", card.stats.ability)
+		.replace("$REP", card.stats.reputation);
+
+	// .replace("$RARITY", `\`R${card.rarity}\``)
+	// .replace("$CATEGORY", `\`${card.category}\``)
+	// .replace("$SELL_PRICE", `\`💰 ${card.sellPrice}\``)
+
+	/* .replace(
+			" $LOCKED\n> $LEVEL $STATS $FAVORITE $SELECTED $TEAM",
+			options.simplify ? "" : " $LOCKED\n> $LEVEL $STATS $FAVORITE $SELECTED $TEAM"
+		) */
+
+	// .replace(" $LOCKED", card.locked ? " \`🔒\`" : "")
+
+	// .replace("$LEVEL", `\`LV.${card.stats.level}\``)
+	// .replace("$STATS", `\`🎤 ${card.stats.ability} : 💖 ${card.stats.reputation}\``)
+	// .replace(" $FAVORITE", options.favorite ? " \`⭐\`" : "")
+	// .replace(" $SELECTED", options.selected ? " \`🏃\`" : "")
+	// .replace(" $TEAM", options.onTeam ? "  \`👯\`" : "");
 
 	// prettier-ignore
 	// Format duplicate option
