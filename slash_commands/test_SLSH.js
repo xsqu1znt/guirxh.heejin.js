@@ -14,7 +14,9 @@ module.exports = {
 	execute: async (client, interaction) => {
 		let embed_beep = new BetterEmbed({
 			interaction,
-			description: `inventory count: ${await userManager.inventory.count(interaction.user.id)}`
+			title: "```title codeblock``` | `title inline codeblock`",
+			author: { text: "```author codeblock``` | `author inline codeblock`" },
+			description: "```description codeblock```\n`description inline codeblock`"
 		});
 		return await embed_beep.send();
 	}

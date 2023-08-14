@@ -1,6 +1,6 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { BetterEmbed, awaitConfirmation } = require("../modules/discordTools/_dsT");
+const { BetterEmbed, awaitConfirmation, deleteMessageAfter } = require("../modules/discordTools/_dsT");
 const { error_ES } = require("../modules/embedStyles/index");
 const { userManager } = require("../modules/mongo/index");
 const cardManager = require("../modules/cardManager");
@@ -32,8 +32,11 @@ module.exports = {
 
 		/// Fetch the cards from the user's card_inventory
 		// prettier-ignore
-		let cards = (await userManager.inventory.get(interaction.user.id, uids, true)).map(c => cardManager.parse.fromCardLike(c));
-		if (!cards.length) return await error_ES.send({ description: "You need to give a valid card UID" });
+		let cards = _jsT
+			.isArray(await userManager.inventory.get(interaction.user.id, uids))
+			.filter(c => c).map(c => cardManager.parse.fromCardLike(c));
+
+		if (!cards.length) return await error_ES.send({ interaction, description: "You need to give a valid card UID" });
 
 		// prettier-ignore
 		cards = cards.filter(c =>
@@ -74,6 +77,13 @@ module.exports = {
 					: `You sold \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"}`,
 				footer: `you got ${config_bot.emojis.CURRENCY_1.EMOJI} ${sell_total}`
 			});
+		} else {
+			return await deleteMessageAfter(
+				await embed_sell.send({
+					author: {},
+					description: `You cancelled selling \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"}`
+				})
+			);
 		}
 	}
 };

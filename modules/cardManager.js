@@ -307,7 +307,7 @@ function toString_inventory(card, options = {}) {
 
 	// prettier-ignore
 	// let f = "$UID $EMOJI $GROUP : $SINGLE - $NAME $DUPE\n> $SET_ID $GLOBAL_ID $RARITY $CATEGORY $SELL_PRICE $LOCKED\n> $LEVEL $STATS $FAVORITE $SELECTED $TEAM"
-	let f = ">>> **`$UID`** `$GID` `🗣️ $SET`\n`$EMOJI` **$SINGLE** `$GROUP` :: $NAME\n`LV. $LVL` `$CATEGORY` `💰 $SELL`\n`🎤 $ABI` : `💖 $REP`"
+	let f = ">>> **`$UID`** `$GID` `🗣️ $SET`\n`$EMOJI` **$SINGLE** `$GROUP` $NAME $DUPE\n`LV. $LVL` `$CATEGORY` `💰 $SELL` `🎤 $ABI` : `💖 $REP`\n`🔒 ⭐ 🏃 👯`"
 		.replace("$UID", card?.uid || "")
 		.replace("$GID", card.globalID)
 		.replace("$SET", card.setID)
@@ -315,8 +315,8 @@ function toString_inventory(card, options = {}) {
 		.replace("$EMOJI", card.emoji)
 		.replace("$SINGLE", card.single)
 		.replace("$GROUP", card.group)
-		.replace("$NAME", card.name)
-		// .replace("$NAME", markdown.link(card.name, card.imageURL))
+		// .replace("$NAME", card.name)
+		.replace("$NAME", markdown.link(card.name, card.imageURL))
 
 		.replace("$LVL", card.stats.level)
 		.replace("$CATEGORY", card.category)

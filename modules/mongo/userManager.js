@@ -307,7 +307,7 @@ async function inventory_has(userID, globalIDs) {
 }
 
 /** @param {string} userID @param {string | string[]} uids */
-async function inventory_get(userID, uids, returnArray = false) {
+async function inventory_get(userID, uids) {
 	// Create an array if only a single card UID was passed
 	if (!uids) return false;
 	if (!Array.isArray(uids)) uids = [uids];
@@ -328,7 +328,7 @@ async function inventory_get(userID, uids, returnArray = false) {
 	for (let i = 0; i < userData.card_inventory.length; i++)
 		cards[i] = userData.card_inventory[i];
 
-	return returnArray ? cards : cards.length > 1 ? cards : cards[0];
+	return cards.length > 1 ? cards : cards[0];
 }
 
 /** @param {string} userID */
