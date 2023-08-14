@@ -173,6 +173,8 @@ class BetterEmbed extends EmbedBuilder {
 	}
 
 	setFooter(options) {
+		// TODO: #_CONFIGURE CALL STACK
+		// TODO: REPLACE DEFAULT EMBED FUNCTIONS WITH CUSTOM
 		// this.options.footer = options;
 		// this.#_configure({ footer: options });
 	}
