@@ -141,10 +141,10 @@ class BetterEmbed extends EmbedBuilder {
 	#_setFooter(update, type) {
 		// prettier-ignore
 		switch (type) {
-			case "text": return this.setFooter({ text: update, iconURL: this.data.footer?.icon_url });
+			case "text": return super.setFooter({ text: update, iconURL: this.data.footer?.icon_url });
 
 			case "iconURL":
-				try { return this.setFooter({ text: this.data.footer?.text, iconURL: update }); }
+				try { return super.setFooter({ text: this.data.footer?.text, iconURL: update }); }
 				catch { logger.error("Could not configure embed", "invalid: footer_iconURL", `\`${update}\``); }
 
 			default: throw new TypeError(`\`${type}\` is not a valid SetFooterType`);
@@ -175,8 +175,8 @@ class BetterEmbed extends EmbedBuilder {
 	setFooter(options) {
 		// TODO: #_CONFIGURE CALL STACK
 		// TODO: REPLACE DEFAULT EMBED FUNCTIONS WITH CUSTOM
-		// this.options.footer = options;
-		// this.#_configure({ footer: options });
+		this.options.footer = options;
+		this.#_configure({ footer: options });
 	}
 
 	setDescription(description) {
