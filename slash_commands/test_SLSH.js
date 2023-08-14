@@ -12,12 +12,30 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-		let embed_beep = new BetterEmbed({
-			interaction,
-			title: "```title codeblock``` | `title inline codeblock`",
-			author: { text: "```author codeblock``` | `author inline codeblock`" },
-			description: "```description codeblock```\n`description inline codeblock`"
-		});
+		let embed_beep = new BetterEmbed({ interaction });
+
+		let stuff = [
+			"> `🗣️ 101` `📁 04` `cust` `📝` **Custom** :: CUST01",
+			"> `🗣️ 102` `📁 04` `cust` `📝` **Custom** :: CUST02",
+			"> `🗣️ 103` `📁 06` `cust` `📝` **Custom** :: CUST03",
+			"> `🗣️ 101` `📁 04` `cust` `📝` **Custom** :: CUST01",
+			"> `🗣️ 102` `📁 04` `cust` `📝` **Custom** :: CUST02",
+			"> `🗣️ 103` `📁 06` `cust` `📝` **Custom** :: CUST03",
+			"> `🗣️ 101` `📁 04` `cust` `📝` **Custom** :: CUST01",
+			"> `🗣️ 102` `📁 04` `cust` `📝` **Custom** :: CUST02",
+			"> `🗣️ 103` `📁 06` `cust` `📝` **Custom** :: CUST03",
+			"> `🗣️ 101` `📁 04` `cust` `📝` **Custom** :: CUST01"
+		];
+
+		embed_beep.addFields(
+			{ name: "`🟣` ***Mint***", value: stuff.join("\n"), inline: true },
+			// { name: "`🟣` ***Mint***", value: stuff.slice(0, 4).join("\n"), inline: true },
+			// { name: "`🔵` ***Epic***", value: stuff.join("\n"), inline: true },
+			// { name: "`🔵` ***Epic***", value: stuff.join("\n"), inline: true },
+			// { name: "`🟢` ***Rare***", value: stuff.join("\n"), inline: true },
+			// { name: "`🟢` ***Rare***", value: stuff.join("\n"), inline: true }
+		);
+
 		return await embed_beep.send();
 	}
 };

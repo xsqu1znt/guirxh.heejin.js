@@ -407,7 +407,8 @@ function toString_shopEntry(card, currencyType = "carrot") {
 		.replace("%PRICE", inline(_currencyIcon, card.price));
 }
 
-function toString_setEntry(card, count = 1) {
+function toString_setEntry(card) {
+	let count = get_setID(card.setID).length || 1;
 	if (count < 10) count = `0${count}`;
 
 	// return "%SET_ID %CARD_COUNT %CATEGORY %EMOJI %DESCRIPTION%SINGLE"
