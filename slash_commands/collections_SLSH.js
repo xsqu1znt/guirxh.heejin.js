@@ -27,12 +27,12 @@ module.exports = {
 			category: interaction.options.getString("category") || "",
 			group: interaction.options.getString("group") || "",
 			order: interaction.options.getString("order") || "ascending"
-        };
+		};
 
-        // Create the embeds :: { GENERAL COLLECTION }
+		// Create the embeds :: { GENERAL COLLECTION }
 		let embeds_collections = general_ES.collections(interaction.member, options_collections);
 
-        // prettier-ignore
+		// prettier-ignore
 		// Set up page navigation
 		let embedNav = new EmbedNavigator({
 			interaction, embeds: [embeds_collections],

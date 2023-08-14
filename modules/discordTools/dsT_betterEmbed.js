@@ -172,6 +172,16 @@ class BetterEmbed extends EmbedBuilder {
 		this.#_configure();
 	}
 
+	setFooter(options) {
+		// this.options.footer = options;
+		// this.#_configure({ footer: options });
+	}
+
+	setDescription(description) {
+		this.options.description = description;
+		// this.#_configure();
+	}
+
 	/** Send the embed using the interaction or channel
 	 *
 	 * - **`$USER`** :: *author's mention*

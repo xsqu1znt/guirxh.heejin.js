@@ -138,13 +138,10 @@ function collections(user, options) {
 	}
 
 	// Add page numbering to the embed's footer
-	for (let i = 0; i < embeds_collections.length; i++) {
-		console.log("before: ", embeds_collections[i].options.footer);
-		embeds_collections[i].options.footer = {
+	for (let i = 0; i < embeds_collections.length; i++)
+		embeds_collections[i].setFooter({
 			text: `Page ${i + 1}/${embeds_collections.length || 1} | Total: ${cards.length}`
-		};
-		console.log("after: ", embeds_collections[i].options.footer);
-	}
+		});
 
 	// let cards_stage_2 =
 	// let cards_f = cards.map(c => cardManager.toString.setEntry(c, cards_setSize[i]));
