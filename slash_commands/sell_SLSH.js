@@ -9,32 +9,78 @@ const config_bot = require("../configs/config_bot.json");
 const _jsT = require("../modules/jsTools/_jsT");
 
 module.exports = {
-	options: { icon: "💰", deferReply: true },
+	options: { icon: "💰", deferReply: false },
 
 	// prettier-ignore
 	builder: new SlashCommandBuilder().setName("sell")
         .setDescription("Sell cards in your inventory")
     
-        .addStringOption(option => option.setName("uid").setDescription("Use UID separate by comma")
-            .setRequired(true)
-        ),
+        .addStringOption(option => option.setName("uid").setDescription("Use UID separate by comma"))
+		.addStringOption(option => option.setName("category").setDescription("Use UID separate by comma")),
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-		let uids = interaction.options.getString("uid").replace(/ /g, "").split(",");
-		if (!Array.isArray(uids)) uids = [uids];
+		/// Get interaction options
+		let uids = interaction.options.getString("uid");
+		uids &&= _jsT.isArray(uids.toLowerCase().replace(/ /g, "").split(","));
+		let categories = interaction.options.getString("category");
+		categories &&= _jsT.isArray(categories.toLowerCase().replace(/ /g, "").split(","));
 
-		// Create the embed :: { SELL }
-		let embed_sell = new BetterEmbed({ interaction, author: { text: "$USERNAME | sell", user: interaction.member } });
+		// prettier-ignore
+		// Check if the user provided a uid/category
+		if (!uids.length && !categories.length) return await error_ES.send({
+			interaction, description: "You need to give either a uid or category", ephemeral: true
+		});
+
+		// Defer the interaction reply
+		await interaction.deferReply();
 
 		// Fetch the user from Mongo
 		let userData = await userManager.fetch(interaction.user.id, { type: "essential" });
 
+		/// Create an array of cards chosen by the user
+		let cards = [];
+
+		if (uids.length) {
+			// prettier-ignore
+			let _cards = _jsT
+				.isArray(await userManager.inventory.get(interaction.user.id, uids))
+				.filter(c => c).map(c => cardManager.parse.fromCardLike(c));
+
+			// prettier-ignore
+			// Let the user know no cards were found using those UIDs
+			if (!_cards.length) return await error_ES.send({
+				interaction, description: `No cards were found with ${uids.length === 1 ? "that UID" : "those UIDs"}`
+			});
+
+			// prettier-ignore
+			// Filter out locked/favorited/selected/team cards
+			_cards = cards.filter(c =>
+            	!c.locked && ![userData.card_favorite_uid, userData.card_selected_uid, ...userData.card_team_uids].includes(c.uid)
+			);
+
+			// prettier-ignore
+			// Let the user know they tried to sell locked/favorited/selected/team cards
+			if (!_cards.length) return await error_ES.send({
+				interaction, description: `${uids.length === 1 ? "That card" : "Those cards"} cannot be sold, it is either:\n\`🔒 vault\` \`🧑🏾‍🤝‍🧑 team\` \`🏃 idol\` \`⭐ favorite\``
+			});
+
+			cards.push(..._cards);
+		}
+
+		if (categories.length) {
+			let _cards = _jsT
+				.isArray(await userManager.inventory.get())
+		}
+
+		// Create the embed :: { SELL }
+		let embed_sell = new BetterEmbed({ interaction, author: { text: "$USERNAME | sell", user: interaction.member } });
+
 		/// Fetch the cards from the user's card_inventory
 		// prettier-ignore
-		let cards = _jsT
-			.isArray(await userManager.inventory.get(interaction.user.id, uids))
-			.filter(c => c).map(c => cardManager.parse.fromCardLike(c));
+		// let cards = _jsT
+		// .isArray(await userManager.inventory.get(interaction.user.id, uids))
+		// .filter(c => c).map(c => cardManager.parse.fromCardLike(c));
 
 		if (!cards.length) return await error_ES.send({ interaction, description: "You need to give a valid card UID" });
 
@@ -81,7 +127,8 @@ module.exports = {
 			return await deleteMessageAfter(
 				await embed_sell.send({
 					author: {},
-					description: `You cancelled selling \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"}`
+					components: [],
+					description: `> You cancelled selling \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"}`
 				})
 			);
 		}

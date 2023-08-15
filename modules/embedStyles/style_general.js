@@ -101,8 +101,9 @@ function collections(user, options) {
 		for (let _chunk_10_group of _chunk_2) {
 			let _embed = new BetterEmbed({ author: { text: "$USERNAME | collections", user } });
 
+			// prettier-ignore
 			for (let _chunk_10_f of _chunk_10_group)
-				_embed.addFields({ name: `***${category_names[i]}***`, value: _chunk_10_f.join("\n"), inline: true });
+				_embed.addFields({ name: `***${category_names[i]}***`, value: `>>> ${_chunk_10_f.join("\n")}`, inline: true });
 
 			embeds_collections.push(_embed);
 		}

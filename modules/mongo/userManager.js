@@ -306,17 +306,27 @@ async function inventory_has(userID, globalIDs) {
 	return arr.length > 1 ? arr : arr[0];
 }
 
-/** @param {string} userID @param {string | string[]} uids */
-async function inventory_get(userID, uids) {
-	// Create an array if only a single card UID was passed
-	if (!uids) return false;
-	if (!Array.isArray(uids)) uids = [uids];
-	uids = uids.map(uid => uid.toUpperCase());
+/** @param {string} userID @param {string | string[]} options */
+async function inventory_get(userID, options) {
+	options = { uids: [], gids: [], ...options };
+	options.uids = _jsT.isArray(options.uids).map(uid => new RegExp(`^${uid.toUpperCase()}$`, "i"));
+	options.gids = _jsT.isArray(options.gids);
 
+	// Create an array if only a single card UID was passed
+	if (!uids.length && !gids.length) return null;
+
+	// prettier-ignore
 	// Create an aggregation pipeline
 	let pipeline = [
 		{ $unwind: "$card_inventory" },
-		{ $match: { _id: userID, "card_inventory.uid": { $in: uids } } },
+		{
+			$match: {
+				_id: userID, $or: [
+					{ "card_inventory.uid": { $in: options.uids } },
+					{ "card_inventory.globalID": { $in: options.gids } }
+				]
+			}
+		},
 		{ $group: { _id: "$_id", card_inventory: { $push: "$card_inventory" } } }
 	];
 
