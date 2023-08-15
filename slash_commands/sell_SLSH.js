@@ -32,6 +32,16 @@ module.exports = {
 			interaction, description: "You need to give either a uid or category", ephemeral: true
 		});
 
+		// Check if the categories the user gave exist
+		let _categories_invalid = categories.filter(cat => !cardManager.category_names_all.includes(cat));
+		// prettier-ignore
+		if (_categories_invalid.length) return await error_ES.send({
+			interaction, ephemeral: true,
+			description: _categories_invalid.length === 1
+				? `\`${_categories_invalid.join(", ")}\` are not valid categories`
+				: `\`${_categories_invalid[0]}\` is not a valid category`
+		});
+
 		// Defer the interaction reply
 		await interaction.deferReply();
 
@@ -44,7 +54,7 @@ module.exports = {
 		if (uids.length) {
 			// prettier-ignore
 			let _cards = _jsT
-				.isArray(await userManager.inventory.get(interaction.user.id, uids))
+				.isArray(await userManager.inventory.get(interaction.user.id, { uids }))
 				.filter(c => c).map(c => cardManager.parse.fromCardLike(c));
 
 			// prettier-ignore
@@ -69,8 +79,37 @@ module.exports = {
 		}
 
 		if (categories.length) {
-			let _cards = _jsT
-				.isArray(await userManager.inventory.get())
+			let _cards = [];
+			let _cards_promise = [];
+
+			// prettier-ignore
+			for (let cat of categories) _cards_promise.push(_jsT.isArray(
+				userManager.inventory.get(interaction.user.id, { gids: cardManager.category_gids_all.get(cat) })
+			));
+
+			await Promise.all(_cards_promise);
+
+			_cards_promise.forEach(c_arr => _cards.push(...c_arr));
+
+			// prettier-ignore
+			// Let the user know no cards were found in those categories
+			if (!_cards.length) return await error_ES.send({
+				interaction, description: `No cards were found in ${categories.length === 1 ? "that category" : "those categories"}`
+			});
+
+			// prettier-ignore
+			// Filter out locked/favorited/selected/team cards
+			_cards = cards.filter(c =>
+            	!c.locked && ![userData.card_favorite_uid, userData.card_selected_uid, ...userData.card_team_uids].includes(c.uid)
+			);
+
+			// prettier-ignore
+			// Let the user know they tried to sell locked/favorited/selected/team cards
+			if (!_cards.length) return await error_ES.send({
+				interaction, description: `${uids.length === 1 ? "That card" : "Those cards"} cannot be sold, it is either:\n\`🔒 vault\` \`🧑🏾‍🤝‍🧑 team\` \`🏃 idol\` \`⭐ favorite\``
+			});
+
+			cards.push(..._cards);
 		}
 
 		// Create the embed :: { SELL }

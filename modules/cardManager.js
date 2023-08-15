@@ -47,10 +47,9 @@ const cards_general = [...cards.comn, ...cards.uncn, ...cards.rare, ...cards.epi
 const categories_general = Object.values(config_drop.chance).map(c => ({ ...c, rarity: c.CHANCE }));
 
 const category_names_all = _jsT.unique(cards_all.map(c => c.category));
+const category_gids_all = new Map();
 // prettier-ignore
-const category_gids_all = category_names_all.map(cat => ({
-	category: cat, globalIDs: cards_all.filter(c => c.category === cat)
-}));
+category_names_all.forEach(cat => category_gids_all.set(cat, cards_all.filter(c => c.category === cat)));
 
 // Special charactors
 const superscript = {
@@ -431,7 +430,8 @@ function toString_setEntry(card) {
 
 // prettier-ignore
 module.exports = {
-	cards, cards_all, cards_general, category_names_all,
+	cards, cards_all, cards_general,
+	category_names_all, category_gids_all,
 	cardCount: cards_all.length,
 	cards_shop: {
 		general: cards_all.filter(card => config_shop.stock.card_set_ids.GENERAL.includes(card.setID)),

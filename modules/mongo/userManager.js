@@ -37,6 +37,8 @@
 
 /** @typedef {"drop"|"random"} StatisticType */
 
+/** @typedef {{uids: string|string[], gids:string|string[]}} options_inventory_get */
+
 // const badgeManager = require('./badgeManager');
 const cardManager = require("../cardManager");
 const userParser = require("../userParser");
@@ -306,7 +308,7 @@ async function inventory_has(userID, globalIDs) {
 	return arr.length > 1 ? arr : arr[0];
 }
 
-/** @param {string} userID @param {string | string[]} options */
+/** @param {string} userID @param {options_inventory_get} options */
 async function inventory_get(userID, options) {
 	options = { uids: [], gids: [], ...options };
 	options.uids = _jsT.isArray(options.uids).map(uid => new RegExp(`^${uid.toUpperCase()}$`, "i"));
