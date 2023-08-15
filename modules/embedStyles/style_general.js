@@ -91,7 +91,6 @@ function collections(user, options) {
 
 	// group by 2, per page
 	let cards_stage_3 = cards_stage_2.map(c_f_arr_10 => _jsT.chunk(c_f_arr_10, 2));
-	// console.log(cards_stage_3[0]);
 
 	/// Create the embeds :: { INVENTORY }
 	let embeds_collections = [];
@@ -100,41 +99,13 @@ function collections(user, options) {
 		let _chunk_2 = cards_stage_3[i];
 
 		for (let _chunk_10_group of _chunk_2) {
-			let _embed = new BetterEmbed({
-				author: { text: "$USERNAME | collections", user },
-				// footer: { text: `Page ${i + 1}/${cards_stage_2.length || 1} | Total: ${cards.length}` }
-			});
-
+			let _embed = new BetterEmbed({ author: { text: "$USERNAME | collections", user } });
 
 			for (let _chunk_10_f of _chunk_10_group)
-				_embed.addFields({ name: `***${category_names[i]}***`, value: _chunk_10_f.join("\n"), inline: true});
-			
+				_embed.addFields({ name: `***${category_names[i]}***`, value: _chunk_10_f.join("\n"), inline: true });
+
 			embeds_collections.push(_embed);
 		}
-
-		/* for (let f_chunk of _chunk) {
-			// console.log(f_chunk);
-
-			let cat_f = f_chunk.map(c => cardManager.toString.setEntry(c, cards_setSize[i]));
-
-			_embed.addFields({
-				name: `***${card_categories[i]}***`,
-				value: cat_f.join("\n"),
-				inline: true
-			});
-		} */
-
-		// if (cards_f[i]) _embed.addFields({ name: "`🟣` ***Mint***", value: ">>> " + cards_f[i].join("\n"), inline: true });
-		// prettier-ignore
-		// if (cards_f[i + 1]) _embed.addFields({ name: "`🟣` ***Mint***", value: ">>> " + cards_f[i + 1].join("\n"), inline: true })
-
-		/* embeds_collections.push(
-			new BetterEmbed({
-				author: { text: "$USERNAME | collections", user },
-				description: cards_f[i].join("\n"),
-				footer: { text: `Page ${i + 1}/${cards_f.length || 1} | Total: ${cards.length}` }
-			})
-		); */
 	}
 
 	// Add page numbering to the embed's footer
@@ -142,20 +113,6 @@ function collections(user, options) {
 		embeds_collections[i].setFooter({
 			text: `Page ${i + 1}/${embeds_collections.length || 1} | Total: ${cards.length}`
 		});
-
-	// let cards_stage_2 =
-	// let cards_f = cards.map(c => cardManager.toString.setEntry(c, cards_setSize[i]));
-
-	// let cards_category = card_categories.map(cat => _jsT.chunk(cards.filter(c => c.category === cat), 10));
-	// let cards_category_chunk = _jsT.chunk(cards_category, 2);
-
-	// console.log(cards_category_chunk[0]);
-
-	/// Format the user's cards into list entries
-	// Get the size of each card set
-	// let cards_setSize = cards.map(c => cardManager.get.setID(c.setID).length);
-	// prettier-ignore
-	// let cards_f = _jsT.chunk(cards.map((c, idx) => cardManager.toString.setEntry(c, cards_setSize[idx])), 10);
 
 	return embeds_collections;
 }
