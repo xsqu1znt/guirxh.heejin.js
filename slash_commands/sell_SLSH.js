@@ -110,18 +110,14 @@ module.exports = {
 			});
 
 			cards.push(..._cards);
+
+			// TODO: Filter only certain dupes
 		}
 
 		// Create the embed :: { SELL }
 		let embed_sell = new BetterEmbed({ interaction, author: { text: "$USERNAME | sell", user: interaction.member } });
 
-		/// Fetch the cards from the user's card_inventory
-		// prettier-ignore
-		// let cards = _jsT
-		// .isArray(await userManager.inventory.get(interaction.user.id, uids))
-		// .filter(c => c).map(c => cardManager.parse.fromCardLike(c));
-
-		if (!cards.length) return await error_ES.send({ interaction, description: "You need to give a valid card UID" });
+		// if (!cards.length) return await error_ES.send({ interaction, description: "You need to give a valid card UID" });
 
 		// prettier-ignore
 		cards = cards.filter(c =>
