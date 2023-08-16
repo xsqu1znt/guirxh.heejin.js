@@ -26,7 +26,7 @@ module.exports = {
 		uids &&= _jsT.isArray(uids.toLowerCase().replace(/ /g, "").split(","));
 		uids ||= [];
 
-		let setIDs = interaction.options.getString("uid");
+		let setIDs = interaction.options.getString("setid");
 		setIDs &&= _jsT.isArray(setIDs.toLowerCase().replace(/ /g, "").split(","));
 		setIDs ||= [];
 
@@ -36,8 +36,8 @@ module.exports = {
 
 		// prettier-ignore
 		// Check if the user provided a uid/category
-		if (!uids.length && !categories.length) return await error_ES.send({
-			interaction, description: "You need to give either a uid or category", ephemeral: true
+		if (!uids.length && !setIDs.length) return await error_ES.send({
+			interaction, description: "You need to give either a UID or set ID", ephemeral: true
 		});
 
 		// Check if the categories the user gave exist
@@ -117,6 +117,23 @@ module.exports = {
 			// Let the user know they tried to sell locked/favorited/selected/team cards
 			if (!_cards.length) return await error_ES.send({
 				interaction, description: `${uids.length === 1 ? "That card" : "Those cards"} cannot be sold, it is either:\n\`🔒 vault\` \`🧑🏾‍🤝‍🧑 team\` \`🏃 idol\` \`⭐ favorite\``
+			});
+
+			/// Filter out non-dupes
+			let _card_globalIDs = _jsT.unique(_cards.map(c => c.globalID));
+			let _card_duplicates = [];
+
+			for (let gid of _card_globalIDs) {
+				let _dupes = _cards.filter(c => c.globalID === gid);
+				if (_dupes.length > 1) _card_duplicates.push(..._dupes.slice(1));
+			}
+
+			_cards = _card_duplicates;
+
+			// prettier-ignore
+			// Let the user know they don't have enough duplicates in that set to sell
+			if (!_cards.length) return await error_ES.send({
+				interaction, description: `You do not have enough duplicates in ${setIDs.length === 1 ? "that set" : "those sets"} to sell`
 			});
 
 			cards.push(..._cards);
@@ -202,7 +219,7 @@ module.exports = {
 				description: cards_f
 					? `You sold:\n>>> ${cards_f.join("\n")}`
 					: `You sold \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"}`,
-				footer: `you got ${config_bot.emojis.CURRENCY_1.EMOJI} ${sell_total}`
+				footer: `and got ${config_bot.emojis.CURRENCY_1.EMOJI} ${sell_total}`
 			});
 		} else {
 			return await deleteMessageAfter(

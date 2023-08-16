@@ -2,6 +2,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js"
 
 const { BetterEmbed } = require("../modules/discordTools/_dsT");
 const { userManager } = require("../modules/mongo/index");
+const cardManager = require("../modules/cardManager");
 
 module.exports = {
 	options: { deferReply: true },
@@ -12,30 +13,22 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-		let embed_beep = new BetterEmbed({ interaction });
+		/* let cards = [];
+		for (let i = 0; i < 10; i++) cards.push(...cardManager.get.setID("105"));
 
-		let stuff = [
-			"> `🗣️ 101` `📁 04` `cust` `📝` **Custom** :: CUST01",
-			"> `🗣️ 102` `📁 04` `cust` `📝` **Custom** :: CUST02",
-			"> `🗣️ 103` `📁 06` `cust` `📝` **Custom** :: CUST03",
-			"> `🗣️ 101` `📁 04` `cust` `📝` **Custom** :: CUST01",
-			"> `🗣️ 102` `📁 04` `cust` `📝` **Custom** :: CUST02",
-			"> `🗣️ 103` `📁 06` `cust` `📝` **Custom** :: CUST03",
-			"> `🗣️ 101` `📁 04` `cust` `📝` **Custom** :: CUST01",
-			"> `🗣️ 102` `📁 04` `cust` `📝` **Custom** :: CUST02",
-			"> `🗣️ 103` `📁 06` `cust` `📝` **Custom** :: CUST03",
-			"> `🗣️ 101` `📁 04` `cust` `📝` **Custom** :: CUST01"
-		];
+		await userManager.inventory.add(interaction.user.id, cards);
 
-		embed_beep.addFields(
-			{ name: "`🟣` ***Mint***", value: stuff.join("\n"), inline: true },
-			// { name: "`🟣` ***Mint***", value: stuff.slice(0, 4).join("\n"), inline: true },
-			// { name: "`🔵` ***Epic***", value: stuff.join("\n"), inline: true },
-			// { name: "`🔵` ***Epic***", value: stuff.join("\n"), inline: true },
-			// { name: "`🟢` ***Rare***", value: stuff.join("\n"), inline: true },
-			// { name: "`🟢` ***Rare***", value: stuff.join("\n"), inline: true }
+		let embed_beep = new BetterEmbed({ interaction, description: `You have been given \`${cards.length}\` cards` });
+
+		return await embed_beep.send(); */
+
+		let embed = new BetterEmbed({ interaction, author: { text: "%AUTHOR_NAME | inventory", user: interaction.member } });
+
+		embed.addFields(
+			{ name: "field title 1", value: "field description 1", inline: true },
+			{ name: "field title 2", value: "field description 2", inline: true }
 		);
 
-		return await embed_beep.send();
+		return await embed.send();
 	}
 };
