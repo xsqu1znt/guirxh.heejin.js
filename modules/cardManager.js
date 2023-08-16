@@ -49,7 +49,7 @@ const categories_general = Object.values(config_drop.chance).map(c => ({ ...c, r
 const category_names_all = _jsT.unique(cards_all.map(c => c.category));
 const category_gids_all = new Map();
 // prettier-ignore
-category_names_all.forEach(cat => category_gids_all.set(cat, cards_all.filter(c => c.category === cat)));
+category_names_all.forEach(cat => category_gids_all.set(cat, cards_all.filter(c => c.category === cat).map(c => c.globalID)));
 
 // Special charactors
 const superscript = {

@@ -315,7 +315,7 @@ async function inventory_get(userID, options) {
 	options.gids = _jsT.isArray(options.gids);
 
 	// Create an array if only a single card UID was passed
-	if (!uids.length && !gids.length) return null;
+	if (!options.uids.length && !options.gids.length) return null;
 
 	// prettier-ignore
 	// Create an aggregation pipeline
@@ -333,14 +333,13 @@ async function inventory_get(userID, options) {
 	];
 
 	let userData = (await models.user.aggregate(pipeline))[0];
-	if (!userData) return uids.length > 1 ? uids.fill(null) : null;
 
-	let cards = [...Array(uids.length)];
+	let cards = [...Array(options.uids.length + options.gids.length)].fill(null);
 	// prettier-ignore
-	for (let i = 0; i < userData.card_inventory.length; i++)
+	for (let i = 0; i < userData?.card_inventory?.length || 0; i++)
 		cards[i] = userData.card_inventory[i];
 
-	return cards.length > 1 ? cards : cards[0];
+	return options.uids.length + options.gids.length > 1 ? cards : cards[0];
 }
 
 /** @param {string} userID */

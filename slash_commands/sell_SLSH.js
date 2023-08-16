@@ -16,15 +16,23 @@ module.exports = {
         .setDescription("Sell cards in your inventory")
     
         .addStringOption(option => option.setName("uid").setDescription("Use UID separate by comma"))
-		.addStringOption(option => option.setName("category").setDescription("Use UID separate by comma")),
+		.addStringOption(option => option.setName("setid").setDescription("Use SETID separate by comma")),
+	// .addStringOption(option => option.setName("category").setDescription("Use UID separate by comma")),
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
 		/// Get interaction options
 		let uids = interaction.options.getString("uid");
 		uids &&= _jsT.isArray(uids.toLowerCase().replace(/ /g, "").split(","));
-		let categories = interaction.options.getString("category");
+		uids ||= [];
+
+		let setIDs = interaction.options.getString("uid");
+		setIDs &&= _jsT.isArray(setIDs.toLowerCase().replace(/ /g, "").split(","));
+		setIDs ||= [];
+
+		/* let categories = interaction.options.getString("category");
 		categories &&= _jsT.isArray(categories.toLowerCase().replace(/ /g, "").split(","));
+		categories ||= []; */
 
 		// prettier-ignore
 		// Check if the user provided a uid/category
@@ -33,14 +41,17 @@ module.exports = {
 		});
 
 		// Check if the categories the user gave exist
-		let _categories_invalid = categories.filter(cat => !cardManager.category_names_all.includes(cat));
-		// prettier-ignore
-		if (_categories_invalid.length) return await error_ES.send({
-			interaction, ephemeral: true,
-			description: _categories_invalid.length === 1
-				? `\`${_categories_invalid.join(", ")}\` are not valid categories`
-				: `\`${_categories_invalid[0]}\` is not a valid category`
-		});
+		/* if (categories.length) {
+			let _categories_invalid = categories.filter(cat => !cardManager.category_names_all.includes(cat));
+
+			// prettier-ignore
+			if (_categories_invalid.length) return await error_ES.send({
+				interaction, ephemeral: true,
+				description: _categories_invalid.length === 1
+					? `\`${_categories_invalid[0]}\` is not a valid category`
+					: `\`${_categories_invalid.join(", ")}\` are not valid categories`
+			});
+		} */
 
 		// Defer the interaction reply
 		await interaction.deferReply();
@@ -65,7 +76,7 @@ module.exports = {
 
 			// prettier-ignore
 			// Filter out locked/favorited/selected/team cards
-			_cards = cards.filter(c =>
+			_cards = _cards.filter(c =>
             	!c.locked && ![userData.card_favorite_uid, userData.card_selected_uid, ...userData.card_team_uids].includes(c.uid)
 			);
 
@@ -78,18 +89,49 @@ module.exports = {
 			cards.push(..._cards);
 		}
 
-		if (categories.length) {
-			let _cards = [];
-			let _cards_promise = [];
+		if (setIDs.length) {
+			let _globalIDs = [];
+			for (let id of setIDs) {
+				let _card_set = cardManager.get.setID(id);
+				if (_card_set.length) _globalIDs.push(..._card_set.map(c => c.globalID));
+			}
 
 			// prettier-ignore
-			for (let cat of categories) _cards_promise.push(_jsT.isArray(
-				userManager.inventory.get(interaction.user.id, { gids: cardManager.category_gids_all.get(cat) })
-			));
+			let _cards = _jsT
+				.isArray(await userManager.inventory.get(interaction.user.id, { gids: _globalIDs }))
+				.filter(c => c).map(c => cardManager.parse.fromCardLike(c));
 
-			await Promise.all(_cards_promise);
+			// prettier-ignore
+			// Let the user know no cards were found using those UIDs
+			if (!_cards.length) return await error_ES.send({
+				interaction, description: `No cards were found with ${uids.length === 1 ? "that set ID" : "those set IDs"}`
+			});
 
-			_cards_promise.forEach(c_arr => _cards.push(...c_arr));
+			// prettier-ignore
+			// Filter out locked/favorited/selected/team cards
+			_cards = _cards.filter(c =>
+            	!c.locked && ![userData.card_favorite_uid, userData.card_selected_uid, ...userData.card_team_uids].includes(c.uid)
+			);
+
+			// prettier-ignore
+			// Let the user know they tried to sell locked/favorited/selected/team cards
+			if (!_cards.length) return await error_ES.send({
+				interaction, description: `${uids.length === 1 ? "That card" : "Those cards"} cannot be sold, it is either:\n\`🔒 vault\` \`🧑🏾‍🤝‍🧑 team\` \`🏃 idol\` \`⭐ favorite\``
+			});
+
+			cards.push(..._cards);
+		}
+
+		/* if (categories.length) {
+			let _cards = [];
+
+			// prettier-ignore
+			await Promise.all(categories.map(async cat => {
+				let _c = await userManager.inventory.get(interaction.user.id, { gids: cardManager.category_gids_all.get(cat) });
+				_c = _c.filter(c => c);
+
+				if (_c.length) _cards.push(..._c);
+			}));
 
 			// prettier-ignore
 			// Let the user know no cards were found in those categories
@@ -99,9 +141,17 @@ module.exports = {
 
 			// prettier-ignore
 			// Filter out locked/favorited/selected/team cards
-			_cards = cards.filter(c =>
+			_cards = _cards.filter(c =>
             	!c.locked && ![userData.card_favorite_uid, userData.card_selected_uid, ...userData.card_team_uids].includes(c.uid)
 			);
+
+			// Get only cards that have duplicates
+			let _cards_gids = _jsT.unique(_cards.map(c => c.globalID));
+
+			for (let gid of _cards_gids) {
+				let _c = _cards.filter(c => c.globalID === gid);
+				if (_c.length > 2) _cards.push(..._c.slice(2));
+			}
 
 			// prettier-ignore
 			// Let the user know they tried to sell locked/favorited/selected/team cards
@@ -109,26 +159,22 @@ module.exports = {
 				interaction, description: `${uids.length === 1 ? "That card" : "Those cards"} cannot be sold, it is either:\n\`🔒 vault\` \`🧑🏾‍🤝‍🧑 team\` \`🏃 idol\` \`⭐ favorite\``
 			});
 
-			cards.push(..._cards);
+			// cards.push(..._cards);
 
 			// TODO: Filter only certain dupes
-		}
+		} */
+
+		// Parse CardLikes into Cards
+		// cards = cards.map(c => cardManager.parse.fromCardLike(c));
 
 		// Create the embed :: { SELL }
 		let embed_sell = new BetterEmbed({ interaction, author: { text: "$USERNAME | sell", user: interaction.member } });
 
-		// if (!cards.length) return await error_ES.send({ interaction, description: "You need to give a valid card UID" });
-
 		// prettier-ignore
-		cards = cards.filter(c =>
-            !c.locked && ![userData.card_favorite_uid, userData.card_selected_uid, ...userData.card_team_uids].includes(c.uid)
-        );
-
-		// prettier-ignore
-		if (!cards.length) return await error_ES.send({
+		/* if (!cards.length) return await error_ES.send({
             description: `\`$UIDS\` cannot be sold, it is either:\n\`🔒 vault\` \`🧑🏾‍🤝‍🧑 team\` \`🏃 idol\` \`⭐ favorite\``
                 .replace("$UIDS", uids.filter(uid => !cards.map(c => c.uid).includes(uid)).join(", "))
-        });
+        }); */
 
 		// Format the cards into strings if there's less than 10
 		let cards_f = cards.length <= 10 ? cards.map(c => cardManager.toString.basic(c)) : "";
