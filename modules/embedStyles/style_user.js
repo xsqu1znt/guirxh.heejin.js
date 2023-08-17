@@ -253,21 +253,38 @@ function inventory(userData, options) {
 
 	// prettier-ignore
 	// Format the user's cards into list entries, with a max of 9 per page
-	let cards_f = _jsT.chunk(cards.map(c => c.card_f), 9);
+	let cards_f = _jsT.chunk(cards.map(c => c.card_f), 10);
 
 	/// Create the embeds :: { INVENTORY }
 	let embeds_inventory = [];
+	let extra_fields = [
+		{ name: "\u200b", value: "\u200b", inline: true },
+		{ name: "\u200b", value: "\u200b", inline: true }
+	];
 
 	for (let i = 0; i < cards_f.length; i++) {
 		let _embed = new BetterEmbed({
 			author: { text: dupeCheck ? "$USERNAME | dupes" : "$USERNAME | inventory", user: options.target },
 			thumbnailURL: dupeCheck ? cards.slice(-1)[0].card.imageURL : null,
 			// description: cards_f[i].join("\n"),
-			description: `\`\`\`Inventory Page ${i + 1}\`\`\``,
+			// description: `\`\`\`Inventory Page ${i + 1}\`\`\``,
 			footer: { text: `Page ${i + 1}/${cards_f.length || 1} | Total: ${cards.length}` }
 		});
 
-		_embed.addFields(...cards_f[i].map(c_f => ({ name: "\u200b", value: c_f, inline: true })));
+		// if (i === 0) _embed.addFields({ name: "\u200b", value: "\u200b", inline: true });
+		// if (i === 2) _embed.addFields({ name: "\u200b", value: "\u200b", inline: true });
+
+		_embed.addFields(
+			{ name: "\u200b", value: "\u200b", inline: true },
+
+			...cards_f[i].slice(0, 1).map(c_f => ({ name: "\u200b", value: c_f, inline: true })),
+
+			{ name: "\u200b", value: "\u200b", inline: true },
+
+			...cards_f[i].slice(1).map(c_f => ({ name: "\u200b", value: c_f, inline: true }))
+		);
+
+		// _embed.addFields(...cards_f[i].map(c_f => ({ name: "\u200b", value: c_f, inline: true })));
 
 		embeds_inventory.push(_embed);
 	}

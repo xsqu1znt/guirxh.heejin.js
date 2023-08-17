@@ -1,6 +1,6 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { EmbedNavigator, BetterEmbed } = require("../modules/discordTools/_dsT");
+const { EmbedNavigator } = require("../modules/discordTools/_dsT");
 const { error_ES, user_ES } = require("../modules/embedStyles/index");
 const { userManager } = require("../modules/mongo/index");
 const userParser = require("../modules/userParser");
@@ -63,8 +63,8 @@ module.exports = {
 		// prettier-ignore
 		// Set up page navigation
 		let embedNav = new EmbedNavigator({
-			interaction, embeds: [embeds_inventory],
-			pagination: { type: "longJump", useReactions: true }
+			interaction, embeds: embeds_inventory,
+			// pagination: { type: "longJump", useReactions: true }
         });
 
 		return await embedNav.send();

@@ -421,6 +421,27 @@ async function inventory_sell(userID, cards) {
 	return true;
 }
 
+/** @param {string} userID */
+async function inventory_stats(userID) {
+	// Get the name of each card category
+	let categories = Object.keys(cardManager.cards);
+
+	/// Count how many cards the user has out of each category
+	// prettier-ignore
+	let cards_user_count = await Promise.all(categories.map(async category => {
+		// Get the global IDs for every card in the category
+		let _globalIDs = cardManager.cards[category].map(c => c.globalID);
+
+		// Check how many cards the user has out of the global ID array
+		let _count = (await inventory_has(userID, _globalIDs)).filter(b => b).length;
+
+		return { category, has: _count, outOf: _globalIDs.length };
+	}));
+
+	console.log(cards_user_count);
+	return cards_user_count;
+}
+
 //! UserData -> Badges
 /** @param {string} userID */
 async function badges_add(userID, badges) {
@@ -490,7 +511,8 @@ module.exports = {
 		add: inventory_add,
 		remove: inventory_remove,
 		update: inventory_update,
-		sell: inventory_sell
+		sell: inventory_sell,
+		stats: inventory_stats
 	},
 
 	badges: {

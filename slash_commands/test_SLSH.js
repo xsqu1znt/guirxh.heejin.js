@@ -22,12 +22,13 @@ module.exports = {
 
 		return await embed_beep.send(); */
 
-		let embed = new BetterEmbed({ interaction, author: { text: "%AUTHOR_NAME | inventory", user: interaction.member } });
+		await userManager.inventory.stats(interaction.user.id);
 
-		embed.addFields(
-			{ name: "field title 1", value: "field description 1", inline: true },
-			{ name: "field title 2", value: "field description 2", inline: true }
-		);
+		// prettier-ignore
+		let embed = new BetterEmbed({
+			interaction, /* author: { text: "$USERNAME | inventory", user: interaction.member }, */
+			description: "boop"
+		});
 
 		return await embed.send();
 	}
