@@ -290,22 +290,27 @@ async function inventory_has(userID, globalIDs) {
 	if (!globalIDs) return null;
 	if (!Array.isArray(globalIDs)) globalIDs = [globalIDs];
 
-	let arr = [...Array(globalIDs.length)].fill(false);
-
 	/// Check the user's card_inventory for the specified global IDs
 	let pipeline = [
 		{ $unwind: "$card_inventory" },
 		{ $match: { _id: userID, "card_inventory.globalID": { $in: globalIDs } } },
-		{ $group: { _id: "$_id", card_inventory: { $push: "$card_inventory" } } }
+		{ $group: { _id: "$_id", card_inventory: { $push: "$card_inventory.globalID" } } }
 	];
 
 	let userData = (await models.user.aggregate(pipeline))[0];
-	if (!userData) return arr;
+	// prettier-ignore
+	if (!userData || !userData?.card_inventory?.length) {
+		globalIDs.fill(false); return globalIDs;
+	}
 
+	// prettier-ignore
 	for (let i = 0; i < globalIDs.length; i++)
-		if (userData.card_inventory.find(c => c.globalID === globalIDs[i])) arr[i] = true;
+		if (userData.card_inventory.includes(globalIDs[i]))
+			globalIDs[i] = true;
+		else
+			globalIDs[i] = false;
 
-	return arr.length > 1 ? arr : arr[0];
+	return globalIDs.length > 1 ? globalIDs : globalIDs[0];
 }
 
 /** @param {string} userID @param {options_inventory_get} options */
@@ -430,15 +435,23 @@ async function inventory_stats(userID) {
 	// prettier-ignore
 	let cards_user_count = await Promise.all(categories.map(async category => {
 		// Get the global IDs for every card in the category
-		let _globalIDs = cardManager.cards[category].map(c => c.globalID);
+		let _globalIDs = cardManager.category.globalIDs.base.get(category);
+		
+		let pipeline = [
+			{ $unwind: "$card_inventory" },
+			{ $match: { _id: userID, "card_inventory.globalID": { $in: _globalIDs } } },
+			{
+				$group: {
+					_id: "$_id",
+					card_inventory: { $sum: { $size: { $filter: { input: ["$card_inventory.globalID"], cond: "$$this" } } } }
+				}
+			}
+		];
 
-		// Check how many cards the user has out of the global ID array
-		let _count = (await inventory_has(userID, _globalIDs)).filter(b => b).length;
-
-		return { category, has: _count, outOf: _globalIDs.length };
+		let userData = (await models.user.aggregate(pipeline))[0];
+		return { category, has: userData?.card_inventory || 0, outOf: _globalIDs.length };
 	}));
 
-	console.log(cards_user_count);
 	return cards_user_count;
 }
 

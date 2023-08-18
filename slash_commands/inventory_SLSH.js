@@ -44,7 +44,7 @@ module.exports = {
 			single: interaction.options.getString("single") || "",
 			name: interaction.options.getString("name") || "",
 			sorting: interaction.options.getString("sorting") || "setID",
-			order: interaction.options.getString("order") || "ascending"
+			order: interaction.options.getString("order") || "ascending",
 		};
 
 		// Fetch the targetUser from Mongo
@@ -57,8 +57,9 @@ module.exports = {
 		// Parse the user's card_inventory
 		userData = userParser.cards.parseInventory(userData);
 
+		let inventory_stats = await userManager.inventory.stats(interaction.user.id);
 		// Create the embeds :: { USER INVENTORY }
-		let embeds_inventory = user_ES.inventory(userData, options_inventory);
+		let embeds_inventory = user_ES.inventory(userData, options_inventory, inventory_stats);
 
 		// prettier-ignore
 		// Set up page navigation

@@ -46,10 +46,18 @@ const cards_general = [...cards.comn, ...cards.uncn, ...cards.rare, ...cards.epi
 
 const categories_general = Object.values(config_drop.chance).map(c => ({ ...c, rarity: c.CHANCE }));
 
+/// Card categories
+const category_names_base = Object.keys(cards);
 const category_names_all = _jsT.unique(cards_all.map(c => c.category));
-const category_gids_all = new Map();
+
 // prettier-ignore
-category_names_all.forEach(cat => category_gids_all.set(cat, cards_all.filter(c => c.category === cat).map(c => c.globalID)));
+const category_globalIDs_base = _jsT.toMap(Object.entries(cards), ([cat, c]) =>
+	({ key: cat, value: c.map(c => c.globalID) })
+);
+// prettier-ignore
+const category_globalIDs_all = _jsT.toMap(category_names_all, cat =>
+	({ key: cat, value: cards_all.filter(c => c.category === cat).map(c => c.globalID) })
+);
 
 // Special charactors
 const superscript = {
@@ -431,8 +439,20 @@ function toString_setEntry(card) {
 // prettier-ignore
 module.exports = {
 	cards, cards_all, cards_general,
-	category_names_all, category_gids_all,
 	cardCount: cards_all.length,
+
+	category: {
+		names: {
+			base: category_names_base,
+			all: category_names_all
+		},
+
+		globalIDs: {
+			base: category_globalIDs_base,
+			all: category_globalIDs_all
+		}
+	},
+
 	cards_shop: {
 		general: cards_all.filter(card => config_shop.stock.card_set_ids.GENERAL.includes(card.setID)),
 		special: cards_all.filter(card => config_shop.stock.card_set_ids.SPECIAL.includes(card.setID)),

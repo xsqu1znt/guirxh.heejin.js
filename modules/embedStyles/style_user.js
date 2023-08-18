@@ -96,7 +96,7 @@ async function profile(user, userData) {
 
 		/// Count how many cards the user has out of each category
 		// prettier-ignore
-		let cards_user_count = await Promise.all(categories.map(async category => {
+		/* let cards_user_count = await Promise.all(categories.map(async category => {
 			// Get the global IDs for every card in the category
 			let _globalIDs = cardManager.cards[category].map(c => c.globalID);
 
@@ -104,7 +104,7 @@ async function profile(user, userData) {
 			let _count = (await userManager.inventory.has(user.id, _globalIDs)).filter(b => b).length;
 
 			return { category, has: _count, outOf: _globalIDs.length };
-		}));
+		})); */
 
 		// Format the categories into a string
 		let cards_user_count_f = cards_user_count.map(c => `> 🃏 **${c.category}**: \`${c.has}/${c.outOf}\``);
@@ -150,7 +150,7 @@ function missing(user, cards, cards_have) {
 }
 
 /** @param {options_inventory} options  */
-function inventory(userData, options) {
+function inventory(userData, options, inventory_stats) {
 	// prettier-ignore
 	options = {
         target: null,
@@ -257,29 +257,37 @@ function inventory(userData, options) {
 
 	/// Create the embeds :: { INVENTORY }
 	let embeds_inventory = [];
+
+	let cat_icons_1 = ["🔴", "🟡", "🟢", "🔵", "🟣"];
+	let cat_icons_2 = ["🟦", "🟨", "🟥", "🟩", "⬜", "🟪"];
+
+	// prettier-ignore
+	let stats_1 = inventory_stats.slice(0, 5).map((c, idx) => `> **\`${cat_icons_1[idx]} ${c.category.toUpperCase()}\`** \`${c.has}/${c.outOf}\``);
+	stats_1.push(`> **\`⚪ TOTAL:\`** **\`${cards.length}\`**`);
+
+	// prettier-ignore
+	let stats_2 = inventory_stats.slice(5).map((c, idx) => `> **\`${cat_icons_2[idx]} ${c.category.toUpperCase()}\`** \`${c.has}/${c.outOf}\``);
+
 	let extra_fields = [
-		{ name: "\u200b", value: "\u200b", inline: true },
-		{ name: "\u200b", value: "\u200b", inline: true }
+		{ name: "\u200b", value: stats_1.join("\n"), inline: true },
+		{ name: "\u200b", value: stats_2.join("\n"), inline: true }
 	];
 
 	for (let i = 0; i < cards_f.length; i++) {
 		let _embed = new BetterEmbed({
 			author: { text: dupeCheck ? "$USERNAME | dupes" : "$USERNAME | inventory", user: options.target },
-			thumbnailURL: dupeCheck ? cards.slice(-1)[0].card.imageURL : null,
+			thumbnailURL: dupeCheck ? cards.slice(-1)[0].card.imageURL : null
 			// description: cards_f[i].join("\n"),
 			// description: `\`\`\`Inventory Page ${i + 1}\`\`\``,
-			footer: { text: `Page ${i + 1}/${cards_f.length || 1} | Total: ${cards.length}` }
+			// footer: { text: `Page ${i + 1}/${cards_f.length || 1} | Total: ${cards.length}` }
 		});
 
-		// if (i === 0) _embed.addFields({ name: "\u200b", value: "\u200b", inline: true });
-		// if (i === 2) _embed.addFields({ name: "\u200b", value: "\u200b", inline: true });
-
 		_embed.addFields(
-			{ name: "\u200b", value: "\u200b", inline: true },
+			extra_fields[0],
 
 			...cards_f[i].slice(0, 1).map(c_f => ({ name: "\u200b", value: c_f, inline: true })),
 
-			{ name: "\u200b", value: "\u200b", inline: true },
+			extra_fields[1],
 
 			...cards_f[i].slice(1).map(c_f => ({ name: "\u200b", value: c_f, inline: true }))
 		);
