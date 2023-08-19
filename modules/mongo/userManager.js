@@ -344,6 +344,9 @@ async function inventory_get(userID, options) {
 	for (let i = 0; i < userData?.card_inventory?.length || 0; i++)
 		cards[i] = userData.card_inventory[i];
 
+	// Parse CardLike
+	cards = cards.map(c => cardManager.parse.fromCardLike(c));
+
 	return options.uids.length + options.gids.length > 1 ? cards : cards[0];
 }
 

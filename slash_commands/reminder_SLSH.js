@@ -1,11 +1,9 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { error_ES, user_ES } = require("../modules/embedStyles/index");
+const { user_ES } = require("../modules/embedStyles/index");
 const { BetterEmbed } = require("../modules/discordTools/_dsT");
 const { userManager } = require("../modules/mongo/index");
 const _jsT = require("../modules/jsTools/_jsT");
-
-const config_player = require("../configs/config_player.json");
 
 module.exports = {
 	options: { icon: "⏰", deferReply: true },
@@ -51,6 +49,6 @@ module.exports = {
 		// Create the embed :: { REMINDERS }
 		let embed_reminders = user_ES.reminders(interaction.member, userData);
 
-		return await embed_reminders.send();
+		return await embed_reminders.send({ interaction });
 	}
 };
