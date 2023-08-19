@@ -32,36 +32,24 @@ module.exports = {
 	execute: async (client, interaction) => {
 		let toggle = interaction.options.getString("to");
 
-		// Toggle the reminder the user chose
+		// Toggle the reminder the user's cooldown reminder
 		if (toggle) {
+			let _enabled = await userManager.reminders.toggle(interaction.user.id, toggle);
+			let _cooldown_f = _jsT.toTitleCase(toggle.replace(/_/g, " "));
+
 			// prettier-ignore
 			let embed_reminder_toggle = new BetterEmbed({
-				interaction, /* author: { text: "$USERNAME | reminder", iconURL: true }, */
-				description: `**${_jsT.toTitleCase(toggle.replace(/_/g, " "))}** is now \`✔️ enabled\``
+				interaction, description: `**${_cooldown_f}** is now \`${_enabled ? "✔️ enabled" : "❌ disabled"}\``
             });
 
 			return await embed_reminder_toggle.send();
 		}
 
-		// prettier-ignore
-		let cooldowns = Object.entries(config_player.cooldowns)
-            .filter(cd => cd[1]).map(cd => cd[0]);
-
 		// Fetch the user from Mongo
 		let userData = await userManager.fetch(interaction.user.id, { type: "reminder" });
 
-		let cooldowns_f = cooldowns.map(cd => {
-			let _enabled = userData.reminders.find(r => r.type === cd)?.enabled || false;
-
-			return `\`${_enabled ? "✔️ enabled" : "❌ disabled"}\` **${_jsT.toTitleCase(cd.replace(/_/g, " "))}**`;
-		});
-
-		// prettier-ignore
 		// Create the embed :: { REMINDERS }
-		let embed_reminders = new BetterEmbed({
-            interaction, author: { text: "$USERNAME | reminder", iconURL: true },
-            description: cooldowns_f.join("\n")
-        });
+		let embed_reminders = user_ES.reminders(interaction.member, userData);
 
 		return await embed_reminders.send();
 	}

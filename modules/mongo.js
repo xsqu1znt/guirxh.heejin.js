@@ -309,7 +309,7 @@ async function userCooldown_reset(userID, cooldownType) {
 /** @param {cooldownTypes} reminderType */
 async function userReminder_toggle(userID, reminderType) {
     let userData = await user_fetch(userID, "reminders");
-    let reminder = userData.reminders.find(r => r.type === reminderType) || null;z
+    let reminder = userData.reminders.find(r => r.type === reminderType) || null;
 
     let enabled = true;
 

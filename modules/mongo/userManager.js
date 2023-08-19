@@ -478,6 +478,26 @@ async function cooldowns_set(userID, cooldownType) {}
 /** @param {string} userID @param {CooldownType} reminderType */
 async function reminders_set(userID, reminderType) {}
 
+/** @param {string} userID @param {CooldownType} reminderType */
+async function reminders_toggle(userID, reminderType) {
+	let userData = await userData_fetch(userID, { type: "reminder" });
+
+	let reminder = userData.reminders.find(r => r.type === reminderType);
+	let reminder_enabled = reminder?.enabled || false;
+
+	// prettier-ignore
+	if (reminder) await userData_update(
+		{ _id: userID, "reminders.type": reminderType },
+		{ $set: { "reminders.$": { type: reminderType, enabled: !reminder_enabled, timestamp: reminder.timestamp || null } } }
+	);
+	else await userData_update(
+		userID,
+		{ $addToSet: { "reminders": { type: reminderType, enabled: !reminder_enabled, timestamp: null } } }
+	);
+
+	return !reminder_enabled;
+}
+
 //! UserData -> Quest
 /** @param {string} userID @param {number} amount */
 async function quest_progress_increment_inventory(userID, amount) {}
@@ -538,7 +558,8 @@ module.exports = {
 	},
 
 	reminders: {
-		set: reminders_set
+		set: reminders_set,
+		toggle: reminders_toggle
 	},
 
 	quest: {

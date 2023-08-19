@@ -331,4 +331,25 @@ function cooldowns(user, userData) {
 	return embed_cooldowns;
 }
 
-module.exports = { profile, missing, inventory, cooldowns };
+function reminders(user, userData) {
+	// Get the cooldown names from the player config
+	let cooldowns = Object.keys(config_player.cooldowns);
+
+	// Parse the cooldowns into strings
+	let cooldowns_f = cooldowns.map(cd => {
+		let _enabled = userData.reminders.find(r => r.type === cd.toLowerCase())?.enabled || false;
+		let _cooldown_f = _jsT.toTitleCase(cd.replace(/_/g, " "));
+
+		return `\`${_enabled ? "✔️ enabled" : "❌ disabled"}\` **${_cooldown_f}**`;
+	});
+
+	// Create the embed :: { REMINDERS }
+	let embed_reminders = new BetterEmbed({
+		author: { text: "$USERNAME | reminder", user },
+		description: cooldowns_f.join("\n")
+	});
+
+	return embed_reminders;
+}
+
+module.exports = { profile, missing, inventory, cooldowns, reminders };
