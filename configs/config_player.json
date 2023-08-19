@@ -1,14 +1,14 @@
 {
 	"cooldowns": {
+		"DAILY": "1d",
+		"STAGE": "1h",
+		"RANDOM": "4h",
+
 		"DROP_GENERAL": "30m",
 		"DROP_WEEKLY": "7d",
 		"DROP_SEASON": null,
 		"DROP_EVENT_1": "3h",
-		"DROP_EVENT_2": "3h",
-
-		"DAILY": "1d",
-		"STAGE": "1h",
-		"RANDOM": "4h"
+		"DROP_EVENT_2": "3h"
 	},
 
 	"win_rate": {
