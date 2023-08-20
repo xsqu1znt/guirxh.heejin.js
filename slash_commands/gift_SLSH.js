@@ -3,6 +3,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js"
 const { error_ES, user_ES } = require("../modules/embedStyles/index");
 const { BetterEmbed } = require("../modules/discordTools/_dsT");
 const { userManager } = require("../modules/mongo/index");
+const messenger = require("../modules/messenger");
 const _jsT = require("../modules/jsTools/_jsT");
 
 const config_player = require("../configs/config_player.json");
@@ -20,7 +21,6 @@ module.exports = {
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
 		let uids = _jsT.isArray(interaction.options.getString("uids").replace(/ /g, "").split(","));
-
 		let recipient = interaction.options.getUser("player");
 
 		// prettier-ignore
@@ -41,8 +41,36 @@ module.exports = {
 		// Fetch the user from Mong
 		let userData = await userManager.fetch(interaction.user.id, { type: "essential" });
 
-		// Fetch the cards from the user's card_inventory
-        let cards = await userManager.inventory.get(interaction.user.id, { uids });
-        // if (!cards.length)
+		/// Fetch the cards from the user's card_inventory
+		let cards = await userManager.inventory.get(interaction.user.id, { uids });
+
+		// prettier-ignore
+		// Let the user know no cards were found using those UIDs
+		if (!cards.length) return await error_ES.send({
+			interaction, description: `No cards were found with ${uids.length === 1 ? "that UID" : "those UIDs"}`
+		});
+
+		// prettier-ignore
+		// Filter out locked/favorited/selected/team cards
+		cards = cards.filter(c =>
+            !c.locked && ![userData.card_favorite_uid, userData.card_selected_uid, ...userData.card_team_uids].includes(c.uid)
+		);
+
+		// prettier-ignore
+		// Let the user know they tried to sell locked/favorited/selected/team cards
+		if (!cards.length) return await error_ES.send({
+			interaction, description: `${uids.length === 1 ? "That card" : "Those cards"} cannot be sold, it is either:\n\`🔒 vault\` \`🧑🏾‍🤝‍🧑 team\` \`🏃 idol\` \`⭐ favorite\``
+		});
+
+		await Promise.all([
+			// Remove the cards from the user's card_inventory
+			userManager.inventory.remove(interaction.user.id, uids),
+			// Add the cards to the recipient card_inventory
+			userManager.inventory.add(recipient.id, uids),
+			// Send a DM to the recipient
+			messenger.gift.cards(recipient, interaction.member, cards)
+
+			// TODO: stat/quest stuff
+		]);
 	}
 };
