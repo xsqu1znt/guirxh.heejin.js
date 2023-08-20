@@ -10,8 +10,8 @@ const embed_titles = {
 	gift: "📬 You have a message!"
 };
 
-/** @param {User} recipient @param {User} gifter @param {Array<string>} cards_f */
-async function gift_cards(recipient, gifter, cards) {
+/** @param {User} gifter @param {User} recipient @param {Array<string>} cards_f */
+async function gift_cards(gifter, recipient, cards) {
 	if (!Array.isArray(cards)) cards = [cards];
 
 	// Get the last card in the array
