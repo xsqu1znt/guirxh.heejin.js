@@ -1,4 +1,5 @@
 {
+	"INVIS_CHAR": "\u200b",
 	"EMBED_COLOR": ["#2B2D31"],
 	"CONFIRMATION_TITLE": "⚠️ Please confirm this action",
 

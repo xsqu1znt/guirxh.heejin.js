@@ -16,7 +16,6 @@ module.exports = {
 		// prettier-ignore
 		let embed = new BetterEmbed({
 			interaction, /* author: { text: "$USERNAME | inventory", iconURL: true }, */
-			description: "```ansi\n\u001b[0;31mbeep```\n```ansi\n\u001b[1;34;4;47mboop```"
 		});
 
 		/* embed.addFields(
