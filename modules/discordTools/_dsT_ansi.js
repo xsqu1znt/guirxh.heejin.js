@@ -42,8 +42,4 @@ function ansi(str, options) {
 	return options.codeblock ? `\`\`\`ansi\n${ansi}\n\`\`\`` : ansi;
 }
 
-console.log(ansi("i'm special", { format: "bold", text_color: "pink", bg_color: "white" }));
-
-ansi("i'm special", { format: "bold", text_color: "pink", bg_color: "white" });
-
 module.exports = ansi;
