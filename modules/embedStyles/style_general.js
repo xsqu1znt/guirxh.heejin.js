@@ -118,4 +118,8 @@ function collections(user, options) {
 	return embeds_collections;
 }
 
+function gift(user, recipient, cards) {
+
+}
+
 module.exports = { collections };

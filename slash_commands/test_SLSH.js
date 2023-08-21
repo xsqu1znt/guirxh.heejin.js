@@ -13,22 +13,37 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-		/* let cards = [];
-		for (let i = 0; i < 10; i++) cards.push(...cardManager.get.setID("105"));
-
-		await userManager.inventory.add(interaction.user.id, cards);
-
-		let embed_beep = new BetterEmbed({ interaction, description: `You have been given \`${cards.length}\` cards` });
-
-		return await embed_beep.send(); */
-
-		await userManager.inventory.stats(interaction.user.id);
-
 		// prettier-ignore
 		let embed = new BetterEmbed({
-			interaction, /* author: { text: "$USERNAME | inventory", user: interaction.member }, */
-			description: "boop"
+			interaction, /* author: { text: "$USERNAME | inventory", iconURL: true }, */
+			description: "```ansi\n\u001b[0;31mbeep```\n```ansi\n\u001b[1;34;4;47mboop```"
 		});
+
+		/* embed.addFields(
+			{
+				name: "\u200b",
+				value: ">>>>>>\n>>> ```> 🔴 **`COMN`** :: *`343/368`*\n> 🟡 **`UNCN`** :: *`343/368`*\n> 🟢 **`RARE`** :: *`343/368`*\n> 🔵 **`EPIC`** :: *`343/368`*\n> 🟣 **`MINT`** :: *`343/368`*\n> ⚪ **`TOTAL`** :: *`1243/2183`*```",
+				inline: true
+			},
+			{
+				name: "\u200b",
+				value: ">>>>>>\n>>> ```> 🟥 **`BDAY`** :: *`343/368`* \n> ⬜ **`CUST`** :: *`343/368`*\n> 🟨 **`HOLI`** :: *`343/368`*\n> 🟩 **`EVNT`** :: *`343/368`*\n> 🟦 **`SEAS`** :: *`343/368`*\n> 🟪 **`SHOP`** :: *`343/368`*```",
+				inline: true
+			},
+
+			{
+				name: "\u200b",
+				value: "```🥕 16529 :: 🎀 0 :: 🃏 56/2448 :: 📈 LV. 1 ☝️ 1629XP/50XP```",
+				inline: false
+			},
+			{
+				name: "\u200b",
+				value: "> **`5ZM83A`** `5673` `🗣️856`\n> `🏫` **Future Perfect** :: `ENHYPEN` Heeseung\n> `LV. 1` `comn` `💰 45`\n> `🎤 100` : `💖 100`",
+				inline: true
+			}
+			// { name: "\u200b", value: "\u200b", inline: true },
+			// { name: "\u200b", value: "\u200b", inline: true }
+		); */
 
 		return await embed.send();
 	}

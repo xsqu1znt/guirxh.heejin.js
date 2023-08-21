@@ -23,10 +23,9 @@ const config_player = require("../../configs/config_player.json");
 const config_bot = require("../../configs/config_bot.json");
 
 async function profile(user, userData) {
-	// prettier-ignore
-	let [card_favorite, card_selected] = await userManager.inventory.get(user.id,
-		[userData.card_favorite_uid, userData.card_selected_uid]
-	);
+	let [card_favorite, card_selected] = await userManager.inventory.get(user.id, {
+		uids: [userData.card_favorite_uid, userData.card_selected_uid]
+	});
 
 	let inventory_count = await userManager.inventory.count(user.id, true);
 
@@ -96,7 +95,7 @@ async function profile(user, userData) {
 
 		/// Count how many cards the user has out of each category
 		// prettier-ignore
-		/* let cards_user_count = await Promise.all(categories.map(async category => {
+		let cards_user_count = await Promise.all(categories.map(async category => {
 			// Get the global IDs for every card in the category
 			let _globalIDs = cardManager.cards[category].map(c => c.globalID);
 
@@ -104,7 +103,7 @@ async function profile(user, userData) {
 			let _count = (await userManager.inventory.has(user.id, _globalIDs)).filter(b => b).length;
 
 			return { category, has: _count, outOf: _globalIDs.length };
-		})); */
+		}));
 
 		// Format the categories into a string
 		let cards_user_count_f = cards_user_count.map(c => `> 🃏 **${c.category}**: \`${c.has}/${c.outOf}\``);

@@ -44,9 +44,9 @@ module.exports = {
 
 		/// Create the embed :: { PROFILE }
 		// prettier-ignore
-		let [card_selected, card_favorite] = await userManager.inventory.get(interaction.user.id,
+		/* let [card_selected, card_favorite] = await userManager.inventory.get(interaction.user.id,
 			[userData.card_selected_uid, userData.card_favorite_uid]
-		);
+		); */
 
 		let embeds_profile = await user_ES.profile(user, userData);
 

@@ -254,6 +254,7 @@ function parse_toCardLike(card) {
 }
 
 function parse_fromCardLike(cardLike) {
+	if (!cardLike) return null;
 	return { ...get_globalID(cardLike.globalID), ...cardLike };
 }
 
