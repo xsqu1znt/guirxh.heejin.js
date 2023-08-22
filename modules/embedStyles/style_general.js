@@ -119,7 +119,19 @@ function collections(user, options) {
 }
 
 function gift(user, recipient, cards) {
+	let cards_f = cards.map(c => cardManager.toString.basic(c));
+	let card_last = cards.slice(-1)[0];
 
+	// Create the embed :: { GIFT }
+	let embed_gift = new BetterEmbed({
+		author: { text: "$USERNAME | gift", user },
+		description: `$GIFTED\n$FROM_TO`
+			.replace("$GIFTED", cards.length > 5 ? `You gifted \`${cards.length}\` cards` : cards_f.join("\n"))
+			.replace("$FROM_TO", `**From:** ${user}\n**To:** ${recipient}`),
+		imageURL: card_last.imageURL
+	});
+
+	return embed_gift;
 }
 
-module.exports = { collections };
+module.exports = { collections, gift };

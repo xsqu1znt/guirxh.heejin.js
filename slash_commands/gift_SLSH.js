@@ -1,12 +1,9 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
 const { error_ES, general_ES } = require("../modules/embedStyles/index");
-const { BetterEmbed } = require("../modules/discordTools/_dsT");
 const { userManager } = require("../modules/mongo/index");
 const messenger = require("../modules/messenger");
 const _jsT = require("../modules/jsTools/_jsT");
-
-const config_player = require("../configs/config_player.json");
 
 module.exports = {
 	options: { icon: "🎁", deferReply: false },
