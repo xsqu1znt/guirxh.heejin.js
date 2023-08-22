@@ -42,8 +42,8 @@ async function profile(user, userData) {
 		_embed.addFields({
 			name: "`📄` Information",
 			value: "> `$CARROTS` :: `$RIBBONS` :: `🃏 $INVENTORY_COUNT/$CARD_COUNT` :: `📈 LV. $LEVEL ☝️ $XPXP/$XP_NEEDEDXP`"
-				.replace("$CARROTS", `${config_bot.emojis.CURRENCY_1.EMOJI} ${userData.balance || 0}`)
-				.replace("$RIBBONS", `${config_bot.emojis.CURRENCY_2.EMOJI} ${userData.ribbons || 0}`)
+				.replace("$CARROTS", `${config_bot.emojis.currency_1.EMOJI} ${userData.balance || 0}`)
+				.replace("$RIBBONS", `${config_bot.emojis.currency_2.EMOJI} ${userData.ribbons || 0}`)
 
 				.replace("$INVENTORY_COUNT", inventory_count || 0)
 				.replace("$CARD_COUNT", cardManager.cardCount || 0)

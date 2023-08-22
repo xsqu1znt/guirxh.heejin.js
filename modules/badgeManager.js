@@ -64,7 +64,7 @@ function toString_shopEntry(badge) {
 		.replace("%ID", `\`${badge.id}\``)
 		.replace("%EMOJI", badge.customEmoji || `\`${badge.emoji}\``)
 		.replace("%NAME", link(badge.name, badge.emojiURL, badge.description))
-		.replace("%PRICE", `\`${botConfig.emojis.CURRENCY_1.EMOJI} ${badge.price}\``)
+		.replace("%PRICE", `\`${botConfig.emojis.currency_1.EMOJI} ${badge.price}\``)
 
 		.replace("%SET_ID", `\`🗣️ ${badge.setID}\``)
 		.replace("%SET", `**${badge.set}**`)

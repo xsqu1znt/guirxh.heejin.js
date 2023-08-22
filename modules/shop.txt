@@ -1,4 +1,4 @@
-const { emojis: { CURRENCY_1, CURRENCY_2 } } = require('../configs/config_bot.json');
+const { emojis: { currency_1, currency_2 } } = require('../configs/config_bot.json');
 
 const { BetterEmbed } = require('./discordTools');
 const { userManager } = require('./mongo/index');
@@ -9,7 +9,7 @@ const badgeManager = require('./badgeManager');
 const cardManager = require('./cardManager');
 const userParser = require('./userParser');
 
-//! Cards | CURRENCY_1
+//! Cards | currency_1
 async function card_buy(guildMember, globalID) {
     let _card = cardManager.get.fromShop(globalID); if (!_card) return null;
 
@@ -28,14 +28,14 @@ async function card_buy(guildMember, globalID) {
     let embed = new BetterEmbed({
         author: { text: "%AUTHOR_NAME | buy", user: guildMember },
         description: `You bought **\`🃏 ${_card.single} - ${_card.name}\`**:\n> ${cardManager.toString.basic(_card)}`,
-        footer: { text: `balance remaining: ${CURRENCY_1.EMOJI} ${userData.balance - _card.price}` }
+        footer: { text: `balance remaining: ${currency_1.EMOJI} ${userData.balance - _card.price}` }
     });
 
     // Return the card and embed
     return { card: _card, embed };
 }
 
-//! Special (quest ribbons) | CURRENCY_2
+//! Special (quest ribbons) | currency_2
 async function card_buy_special(guildMember, globalID) {
     let _card = cardManager.get.fromShop(globalID, true); if (!_card) return null;
 
@@ -54,14 +54,14 @@ async function card_buy_special(guildMember, globalID) {
     let embed = new BetterEmbed({
         author: { text: "%AUTHOR_NAME | buy", user: guildMember },
         description: `You bought **\`🎀 ${_card.single} - ${_card.name}\`**:\n> ${cardManager.toString.basic(_card)}`,
-        footer: { text: `ribbons remaining: ${CURRENCY_2.EMOJI} ${userData.ribbons - _card.price}` }
+        footer: { text: `ribbons remaining: ${currency_2.EMOJI} ${userData.ribbons - _card.price}` }
     });
 
     // Return the card and embed
     return { card: _card, embed };
 }
 
-//! Card Packs | CURRENCY_1
+//! Card Packs | currency_1
 // TODO: itemPack_buy | card packs
 async function itemPack_buy(guildMember, packID) {
     let _itemPack = itemPackManager.get.packID(packID); if (!_itemPack) return [];
@@ -87,7 +87,7 @@ async function itemPack_buy(guildMember, packID) {
     /// Create the embed
     let embed = new BetterEmbed({
         author: { text: "%AUTHOR_NAME | buy", user: guildMember },
-        footer: { text: `balance remaining: ${CURRENCY_1.EMOJI} ${userData.balance - _itemPack.price}` }
+        footer: { text: `balance remaining: ${currency_1.EMOJI} ${userData.balance - _itemPack.price}` }
     });
 
     /// For when the item pack contains cards
@@ -116,7 +116,7 @@ async function itemPack_buy(guildMember, packID) {
     return { content: { cards: _cards }, embed };
 }
 
-//! Badges | CURRENCY_1
+//! Badges | currency_1
 async function badge_buy(guildMember, badgeID) {
     let _badge = badgeManager.get.badgeID(badgeID); if (!_badge) return null;
 
@@ -135,7 +135,7 @@ async function badge_buy(guildMember, badgeID) {
     let embed = new BetterEmbed({
         author: { text: "%AUTHOR_NAME | buy", user: guildMember },
         description: `You bought **\`📛 ${_badge.name}\`**:\n> ${badgeManager.toString.basic(_badge)}`,
-        footer: { text: `balance remaining: ${CURRENCY_1.EMOJI} ${userData.balance - _badge.price}` }
+        footer: { text: `balance remaining: ${currency_1.EMOJI} ${userData.balance - _badge.price}` }
     });
 
     // Return the badge and embed

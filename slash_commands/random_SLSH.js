@@ -67,9 +67,9 @@ module.exports = {
 			// Send the embed
 			embed_random.send({
 				description: "You tried your luck and won `$REWARD_CARROTS` `$REWARD_XP`"
-					.replace("$REWARD_CARROTS", `${config_bot.emojis.CURRENCY_1.EMOJI} ${reward_carrots}`)
+					.replace("$REWARD_CARROTS", `${config_bot.emojis.currency_1.EMOJI} ${reward_carrots}`)
 					.replace("$REWARD_XP", `☝️ ${reward_xp}XP`),
-				footer: `balance: ${config_bot.emojis.CURRENCY_1.EMOJI} ${userData.balance + reward_carrots}`
+				footer: `balance: ${config_bot.emojis.currency_1.EMOJI} ${userData.balance + reward_carrots}`
 			})
 		]);
 	}

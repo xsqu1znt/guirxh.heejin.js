@@ -41,7 +41,7 @@ async function gift_currency(recipient, gifter, amount, currentBalance) {
 	// Create the embed
 	let embed_giftCurrency = new BetterEmbed({
 		author: { text: embed_titles.gift },
-		description: `You got \`${config_bot.emojis.CURRENCY_1.EMOJI} ${amount}\` from **${gifter.username}**\n> Balance currently: \`${config_bot.emojis.CURRENCY_1.EMOJI} ${currentBalance}\``,
+		description: `You got \`${config_bot.emojis.currency_1.EMOJI} ${amount}\` from **${gifter.username}**\n> Balance currently: \`${config_bot.emojis.currency_1.EMOJI} ${currentBalance}\``,
 		showTimestamp: true
 	});
 

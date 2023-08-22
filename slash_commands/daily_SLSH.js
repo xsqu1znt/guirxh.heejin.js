@@ -68,7 +68,7 @@ module.exports = {
 
 		/// Create the embed :: { DAILY }
 		// Update the resulting embed description with the currrency the user got
-		embed_description = embed_description.replace("$CURRENCY", `${config_bot.emojis.CURRENCY_1.EMOJI}${reward_carrots}`);
+		embed_description = embed_description.replace("$CURRENCY", `${config_bot.emojis.currency_1.EMOJI}${reward_carrots}`);
 
 		// prettier-ignore
 		let embed_daily = new BetterEmbed({

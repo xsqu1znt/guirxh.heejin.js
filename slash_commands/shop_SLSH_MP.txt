@@ -1,6 +1,6 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require('discord.js');
 
-const { emojis: { CURRENCY_1, CURRENCY_2 } } = require('../configs/config_bot.json');
+const { emojis: { currency_1, currency_2 } } = require('../configs/config_bot.json');
 
 // const { arrayTools } = require('../modules/jsTools');
 const { generalError_ES, generalShop_ES } = require('../modules/embedStyles');
@@ -76,7 +76,7 @@ module.exports = {
             case "card_general":
                 let buy_card_general = await shop.cards.buy(interaction.member, itemID);
                 if (!buy_card_general) return await generalError_ES(interaction, "purchaseFailed",
-                    `You do not have enough \`${CURRENCY_1.EMOJI}\` to buy this item`
+                    `You do not have enough \`${currency_1.EMOJI}\` to buy this item`
                 );
 
                 return await interaction.editReply({ embeds: [buy_card_general.embed] });
@@ -84,7 +84,7 @@ module.exports = {
             case "card_special":
                 let buy_card_special = await shop.cards.buy_special(interaction.member, itemID);
                 if (!buy_card_special) return await generalError_ES(interaction, "purchaseFailed",
-                    `You do not have enough \`${CURRENCY_2.EMOJI}\` to buy this item`
+                    `You do not have enough \`${currency_2.EMOJI}\` to buy this item`
                 );
 
                 return await interaction.editReply({ embeds: [buy_card_special.embed] });
@@ -92,7 +92,7 @@ module.exports = {
             case "item_pack":
                 let buy_itemPack = await shop.itemPacks.buy(interaction.member, itemID);
                 if (!buy_itemPack) return await generalError_ES(interaction, "purchaseFailed",
-                    `You do not have enough \`${CURRENCY_1.EMOJI}\` to buy this item`
+                    `You do not have enough \`${currency_1.EMOJI}\` to buy this item`
                 );
 
                 return await interaction.editReply({ embeds: [buy_itemPack.embed] });
@@ -100,7 +100,7 @@ module.exports = {
             case "badge":
                 let buy_badge = await shop.badges.buy(interaction.member, itemID);
                 if (!buy_badge) return await generalError_ES(interaction, "purchaseFailed",
-                    `You do not have enough \`${CURRENCY_1.EMOJI}\` to buy this item`
+                    `You do not have enough \`${currency_1.EMOJI}\` to buy this item`
                 );
 
                 return await interaction.editReply({ embeds: [buy_badge.embed] });

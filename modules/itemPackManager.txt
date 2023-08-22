@@ -55,7 +55,7 @@ function toString_shopEntry(packID) {
         .replace("%NAME", `*${_itemPack.name}*`)
         .replace("%SET_ID", `\`🗣️ ${_itemPack.setID}\``)
         .replace("%CONTENT_OVERVIEW", packContentOverview_f.join(" "))
-        .replace("%PRICE", `\`${botConfig.emojis.CURRENCY_1.EMOJI} ${_itemPack.price}\``)
+        .replace("%PRICE", `\`${botConfig.emojis.currency_1.EMOJI} ${_itemPack.price}\``)
 
         .replace("%CONTENT", packContent_f.join("\n"))
 }

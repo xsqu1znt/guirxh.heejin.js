@@ -404,10 +404,10 @@ function toString_shopEntry(card, currencyType = "carrot") {
 
 	switch (currencyType) {
 		case "carrot":
-			_currencyIcon = config_bot.emojis.CURRENCY_1.EMOJI;
+			_currencyIcon = config_bot.emojis.currency_1.EMOJI;
 			break;
 		case "ribbon":
-			_currencyIcon = config_bot.emojis.CURRENCY_2.EMOJI;
+			_currencyIcon = config_bot.emojis.currency_2.EMOJI;
 			break;
 	}
 

@@ -21,9 +21,9 @@
 	},
 
 	"emojis": {
-		"CURRENCY_1": { "NAME": "🥕", "EMOJI": "🥕" },
-		"CURRENCY_2": { "NAME": "🎀", "EMOJI": "🎀" },
-		"CONFIRM_SELL": { "NAME": "✅", "EMOJI": "✅" },
+		"currency_1": { "NAME": "🥕", "EMOJI": "🥕" },
+		"currency_2": { "NAME": "🎀", "EMOJI": "🎀" },
+		"confirm_sell": { "NAME": "✅", "EMOJI": "✅" },
 
 		"numbers": [
 			{ "NAME": "one", "EMOJI": "<:one:1103208748924813333>" },

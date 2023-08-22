@@ -206,7 +206,7 @@ module.exports = {
 			description: cards_f
 				? `**Are you sure you want to sell:**\n>>> ${cards_f.join("\n")}`
 				: `**Are you sure you want to sell \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"}?**`,
-			footer: `you will get ${config_bot.emojis.CURRENCY_1.EMOJI} ${sell_total}`
+			footer: `you will get ${config_bot.emojis.currency_1.EMOJI} ${sell_total}`
         });
 
 		if (confirmation_sell) {
@@ -219,7 +219,7 @@ module.exports = {
 				description: cards_f
 					? `You sold:\n>>> ${cards_f.join("\n")}`
 					: `You sold \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"}`,
-				footer: `and got ${config_bot.emojis.CURRENCY_1.EMOJI} ${sell_total}`
+				footer: `and got ${config_bot.emojis.currency_1.EMOJI} ${sell_total}`
 			});
 		} else {
 			return await deleteMessageAfter(
