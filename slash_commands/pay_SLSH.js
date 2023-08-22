@@ -70,7 +70,9 @@ module.exports = {
 					// Subtract from the user
 					userManager.currency.increment(interaction.user.id, -amount, "carrots", "pay"),
 					// Add to the recipient
-					userManager.currency.increment(recipient.id, amount, "carrots", pay)
+					userManager.currency.increment(recipient.id, amount, "carrots", pay),
+					// Send the embed :: { PAY }
+					general_ES.pay(interaction.member, recipient, amount, "carrots").send({ interaction })
 				]);
 
 			// Give the recipient ribbons
@@ -87,7 +89,9 @@ module.exports = {
 					// Subtract from the user
 					userManager.currency.increment(interaction.user.id, -amount, "ribbons", "pay"),
 					// Add to the recipient
-					userManager.currency.increment(recipient.id, amount, "ribbons", pay)
+					userManager.currency.increment(recipient.id, amount, "ribbons", pay),
+					// Send the embed :: { PAY }
+					general_ES.pay(interaction.member, recipient, amount, "ribbons").send({ interaction })
 				]);
 		}
 	}
