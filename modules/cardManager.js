@@ -21,28 +21,31 @@ const config_drop = require("../configs/config_drop.json");
 const config_bot = require("../configs/config_bot.json");
 
 const cards = {
-	comn: require("../items/cards/cards_common.json"),
-	uncn: require("../items/cards/cards_uncommon.json"),
-	rare: require("../items/cards/cards_rare.json"),
-	epic: require("../items/cards/cards_epic.json"),
-	mint: require("../items/cards/cards_mint.json"),
+	comn: { ansi: "red", cards: require("../items/cards/cards_common.json") },
+	uncn: { ansi: "yellow", cards: require("../items/cards/cards_uncommon.json") },
+	rare: { ansi: "green", cards: require("../items/cards/cards_rare.json") },
+	epic: { ansi: "blue", cards: require("../items/cards/cards_epic.json") },
+	mint: { ansi: "pink", cards: require("../items/cards/cards_mint.json") },
 
-	seas: require("../items/cards/cards_season.json"),
-	holi: require("../items/cards/cards_holiday.json"),
-	bday: require("../items/cards/cards_bday.json"),
+	bday: { ansi: "red", cards: require("../items/cards/cards_bday.json") },
+	holi: { ansi: "yellow", cards: require("../items/cards/cards_holiday.json") },
 
-	evnt: [
-		...require("../items/cards/cards_event1.json"),
-		...require("../items/cards/cards_event2.json"),
-		...require("../items/cards/cards_event3.json")
-	],
+	evnt: {
+		ansi: "green",
+		cards: [
+			...require("../items/cards/cards_event1.json"),
+			...require("../items/cards/cards_event2.json"),
+			...require("../items/cards/cards_event3.json")
+		]
+	},
 
-	cust: require("../items/cards/cards_custom.json"),
-	shop: require("../items/cards/cards_shop.json")
+	seas: { ansi: "blue", cards: require("../items/cards/cards_season.json") },
+	shop: { ansi: "pink", cards: require("../items/cards/cards_shop.json") },
+	cust: { ansi: "white", cards: require("../items/cards/cards_custom.json") }
 };
 
 const cards_all = [].concat(...Object.values(cards));
-const cards_general = [...cards.comn, ...cards.uncn, ...cards.rare, ...cards.epic, ...cards.mint];
+const cards_general = [...cards.comn.cards, ...cards.uncn.cards, ...cards.rare.cards, ...cards.epic.cards, ...cards.mint.cards];
 
 const categories_general = Object.values(config_drop.chance).map(c => ({ ...c, rarity: c.CHANCE }));
 
@@ -52,7 +55,7 @@ const category_names_all = _jsT.unique(cards_all.map(c => c.category));
 
 // prettier-ignore
 const category_globalIDs_base = _jsT.toMap(Object.entries(cards), ([cat, c]) =>
-	({ key: cat, value: c.map(c => c.globalID) })
+	({ key: cat, value: c.cards.map(c => c.globalID) })
 );
 // prettier-ignore
 const category_globalIDs_all = _jsT.toMap(category_names_all, cat =>

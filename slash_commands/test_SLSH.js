@@ -3,6 +3,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js"
 const { BetterEmbed } = require("../modules/discordTools/_dsT");
 const { userManager } = require("../modules/mongo/index");
 const cardManager = require("../modules/cardManager");
+const _dsT = require("../modules/discordTools/_dsT");
 
 module.exports = {
 	options: { deferReply: true },
@@ -13,36 +14,31 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
+		let embed = new BetterEmbed({ interaction });
+
 		// prettier-ignore
-		let embed = new BetterEmbed({
-			interaction, /* author: { text: "$USERNAME | inventory", iconURL: true }, */
-		});
+		let category_colors = Object.values(cardManager.cards).map(c => c.ansi);
 
-		/* embed.addFields(
-			{
-				name: "\u200b",
-				value: ">>>>>>\n>>> ```> 🔴 **`COMN`** :: *`343/368`*\n> 🟡 **`UNCN`** :: *`343/368`*\n> 🟢 **`RARE`** :: *`343/368`*\n> 🔵 **`EPIC`** :: *`343/368`*\n> 🟣 **`MINT`** :: *`343/368`*\n> ⚪ **`TOTAL`** :: *`1243/2183`*```",
-				inline: true
-			},
-			{
-				name: "\u200b",
-				value: ">>>>>>\n>>> ```> 🟥 **`BDAY`** :: *`343/368`* \n> ⬜ **`CUST`** :: *`343/368`*\n> 🟨 **`HOLI`** :: *`343/368`*\n> 🟩 **`EVNT`** :: *`343/368`*\n> 🟦 **`SEAS`** :: *`343/368`*\n> 🟪 **`SHOP`** :: *`343/368`*```",
-				inline: true
-			},
+		let categories = cardManager.category.names.base;
+		// prettier-ignore
+		let categories_f = categories.map((cat, idx) => _dsT.markdown.ansi(cat, { format:"bold", text_color: category_colors[idx] }));
 
-			{
-				name: "\u200b",
-				value: "```🥕 16529 :: 🎀 0 :: 🃏 56/2448 :: 📈 LV. 1 ☝️ 1629XP/50XP```",
-				inline: false
-			},
-			{
-				name: "\u200b",
-				value: "> **`5ZM83A`** `5673` `🗣️856`\n> `🏫` **Future Perfect** :: `ENHYPEN` Heeseung\n> `LV. 1` `comn` `💰 45`\n> `🎤 100` : `💖 100`",
-				inline: true
-			}
-			// { name: "\u200b", value: "\u200b", inline: true },
-			// { name: "\u200b", value: "\u200b", inline: true }
-		); */
+		let stats = await userManager.inventory.stats(interaction.user.id);
+		let inventory_count = await userManager.inventory.count(interaction.user.id, true);
+
+		// prettier-ignore
+		let stats_f = stats.map((s, idx) =>
+			`🃏 ${categories_f[idx]}: ${_dsT.markdown.ansi(`${s.has}/${s.outOf}`, { format:"bold", text_color: category_colors[idx] })}`
+		);
+
+		let stats_f_general = stats_f.slice(0, 5);
+		stats_f_general.push(_dsT.markdown.ansi(`total: ${inventory_count}`, { format: "bold", text_color: "white" }));
+		let stats_f_special = stats_f.slice(5);
+
+		embed.addFields(
+			{ name: "`🌕` Normal Sets", value: `\`\`\`ansi\n${stats_f_general.join("\n")}\n\`\`\``, inline: true },
+			{ name: "`🌗` Special Sets", value: `\`\`\`ansi\n${stats_f_special.join("\n")}\n\`\`\``, inline: true }
+		);
 
 		return await embed.send();
 	}
