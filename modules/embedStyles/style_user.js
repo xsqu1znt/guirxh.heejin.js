@@ -21,6 +21,7 @@ const _jsT = require("../jsTools/_jsT");
 
 const config_player = require("../../configs/config_player.json");
 const config_bot = require("../../configs/config_bot.json");
+const _dsT = require("../discordTools/_dsT");
 
 async function profile(user, userData) {
 	let [card_favorite, card_selected] = await userManager.inventory.get(user.id, {
@@ -149,7 +150,7 @@ function missing(user, cards, cards_have) {
 }
 
 /** @param {options_inventory} options  */
-function inventory(userData, options, inventory_stats) {
+function inventory(userData, options, stats) {
 	// prettier-ignore
 	options = {
         target: null,
@@ -251,26 +252,35 @@ function inventory(userData, options, inventory_stats) {
 	});
 
 	// prettier-ignore
-	// Format the user's cards into list entries, with a max of 9 per page
-	let cards_f = _jsT.chunk(cards.map(c => c.card_f), 10);
+	// Format the user's cards into list entries, with a max of 15 per page
+	let cards_f = _jsT.chunk(cards.map(c => c.card_f), 15);
 
 	/// Create the embeds :: { INVENTORY }
 	let embeds_inventory = [];
 
-	let cat_icons_1 = ["🔴", "🟡", "🟢", "🔵", "🟣"];
-	let cat_icons_2 = ["🟦", "🟨", "🟥", "🟩", "⬜", "🟪"];
+	let stats_f_1 = stats.slice(0, 5).map(c =>
+		_dsT.markdown.ansi(`${c.category}: ${c.has}/${c.outOf}`, {
+			format: "bold",
+			text_color: _jsT.getProp(cardManager.category.colors, c.category)
+		})
+	);
 
-	// prettier-ignore
-	let stats_1 = inventory_stats.slice(0, 5).map((c, idx) => `> **\`${cat_icons_1[idx]} ${c.category.toUpperCase()}\`** \`${c.has}/${c.outOf}\``);
+	// Add the user's inventory count to the first stat section
+	stats_f_1.push(_dsT.markdown.ansi(`total: ${cards.length}`, { format: "bold", text_color: "white" }));
+
+	let stats_f_2 = stats.slice(5).map(c =>
+		_dsT.markdown.ansi(`${c.category}: ${c.has}/${c.outOf}`, {
+			format: "bold",
+			text_color: _jsT.getProp(cardManager.category.colors, c.category)
+		})
+	);
+
+	/* // prettier-ignore
+	let stats_1 = stats.slice(0, 5).map((c, idx) => `> **\`${cat_icons_1[idx]} ${c.category.toUpperCase()}\`** \`${c.has}/${c.outOf}\``);
 	stats_1.push(`> **\`⚪ TOTAL:\`** **\`${cards.length}\`**`);
 
 	// prettier-ignore
-	let stats_2 = inventory_stats.slice(5).map((c, idx) => `> **\`${cat_icons_2[idx]} ${c.category.toUpperCase()}\`** \`${c.has}/${c.outOf}\``);
-
-	let extra_fields = [
-		{ name: "\u200b", value: stats_1.join("\n"), inline: true },
-		{ name: "\u200b", value: stats_2.join("\n"), inline: true }
-	];
+	let stats_2 = stats.slice(5).map((c, idx) => `> **\`${cat_icons_2[idx]} ${c.category.toUpperCase()}\`** \`${c.has}/${c.outOf}\``); */
 
 	for (let i = 0; i < cards_f.length; i++) {
 		let _embed = new BetterEmbed({
@@ -281,17 +291,17 @@ function inventory(userData, options, inventory_stats) {
 			// footer: { text: `Page ${i + 1}/${cards_f.length || 1} | Total: ${cards.length}` }
 		});
 
+		// Add inventory stats
 		_embed.addFields(
-			extra_fields[0],
-
-			...cards_f[i].slice(0, 1).map(c_f => ({ name: "\u200b", value: c_f, inline: true })),
-
-			extra_fields[1],
-
-			...cards_f[i].slice(1).map(c_f => ({ name: "\u200b", value: c_f, inline: true }))
+			{ name: "\u200b", value: `>>>>>>\n\`\`\`ansi\n${stats_f_1.join("\n")}\`\`\``, inline: true },
+			{ name: "\u200b", value: `>>>>>>\n\`\`\`ansi\n${stats_f_2.join("\n")}\`\`\``, inline: true }
 		);
 
-		// _embed.addFields(...cards_f[i].map(c_f => ({ name: "\u200b", value: c_f, inline: true })));
+		// Add profile stats
+		_embed.addFields({ name: "\u200b", value: `\`\`\`n/a\`\`\``, inline: false });
+
+		// Add cards
+		_embed.addFields(cards_f[i].map(c_f => ({ name: "\u200b", value: c_f, inline: true })));
 
 		embeds_inventory.push(_embed);
 	}
