@@ -15,16 +15,11 @@ module.exports = {
         .setDescription("Give a player carrots")
     
         .addUserOption(option => option.setName("player").setDescription("Player you want to pay").setRequired(true))
-        .addStringOption(option => option.setName("currency").setDescription("Currency you want to give")
-            .setRequired(true)
-            .addChoices({ name: "🥕 Carrots", value: "carrot" }, { name: "🎀 Ribbons", value: "ribbon" })
-        )
         .addNumberOption(option => option.setName("amount").setDescription("Amount you want to pay").setRequired(true)),
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
 		let recipient = interaction.options.getUser("player");
-		let currency = interaction.options.getString("currency");
 		let amount = Math.floor(interaction.options.getNumber("amount"));
 
 		// prettier-ignore
@@ -54,45 +49,21 @@ module.exports = {
 			recipient: await userManager.fetch(recipient.id, { type: "balance" })
 		};
 
-		// Determine the operation
-		switch (currency) {
-			// Give the recipient carrots
-			case "carrot":
-				// prettier-ignore
-				// Check if the user has sufficient carrots to give
-				if (userData.user.balance > amount) return await error_ES.send({
-                    interaction, description: `You do not have enough carrots to give \`${config_bot.emojis.currency_1.EMOJI} ${amount}\``,
-                    footer: `balance: ${config_bot.emojis.currency_1.EMOJI} ${userData.user.balance}`
-                });
+		// prettier-ignore
+		// Check if the user has sufficient carrots to give
+		if (userData.user.balance > amount) return await error_ES.send({
+            interaction, description: `You do not have enough carrots to give \`${config_bot.emojis.currency_1.EMOJI} ${amount}\``,
+            footer: `balance: ${config_bot.emojis.currency_1.EMOJI} ${userData.user.balance}`
+        });
 
-				// Update the user and recipient's balance in Mongo
-				return await Promise.all([
-					// Subtract from the user
-					userManager.currency.increment(interaction.user.id, -amount, "carrots", "pay"),
-					// Add to the recipient
-					userManager.currency.increment(recipient.id, amount, "carrots", pay),
-					// Send the embed :: { PAY }
-					general_ES.pay(interaction.member, recipient, amount, "carrots").send({ interaction })
-				]);
-
-			// Give the recipient ribbons
-			case "ribbon":
-				// prettier-ignore
-				// Check if the user has sufficient ribbons to give
-				if (userData.user.ribbons > amount) return await error_ES.send({
-                    interaction, description: `You do not have enough ribbons to give \`${config_bot.emojis.currency_2.EMOJI} ${amount}\``,
-                    footer: `ribbons: ${config_bot.emojis.currency_2.EMOJI} ${userData.user.ribbons}`
-                });
-
-				// Update the user and recipient's balance in Mongo
-				return await Promise.all([
-					// Subtract from the user
-					userManager.currency.increment(interaction.user.id, -amount, "ribbons", "pay"),
-					// Add to the recipient
-					userManager.currency.increment(recipient.id, amount, "ribbons", pay),
-					// Send the embed :: { PAY }
-					general_ES.pay(interaction.member, recipient, amount, "ribbons").send({ interaction })
-				]);
-		}
+		// Update the user and recipient's balance in Mongo
+		return await Promise.all([
+			// Subtract carrots from the user
+			userManager.currency.increment(interaction.user.id, -amount, "carrots", "pay"),
+			// Add carrots to the recipient
+			userManager.currency.increment(recipient.id, amount, "carrots", pay),
+			// Send the embed :: { PAY }
+			general_ES.pay(interaction.member, recipient, amount, "carrots").send({ interaction })
+		]);
 	}
 };
