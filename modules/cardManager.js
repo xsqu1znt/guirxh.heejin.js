@@ -213,7 +213,20 @@ function get_setID(setID) {
 	return structuredClone(cards_all.filter(card => card.setID === setID)) || [];
 }
 
-function get_random(basicOnly = false) {
+function get_random(options = {}) {
+	options = { type: "all", level: { min: 1, max: 100 }, count: 1, ...options };
+
+	options.level.min = _jsT.clamp(options.level.min, { min: 1, max: 100 });
+	options.level.max = _jsT.clamp(options.level.max, { min: 1, max: 100 });
+
+	let card = [];
+
+	// prettier-ignore
+	switch (options.type) {
+		case "all": break;
+		case "general": break;
+	}
+
 	return structuredClone(_jsT.choice(basicOnly ? cards_general : cards_all));
 }
 

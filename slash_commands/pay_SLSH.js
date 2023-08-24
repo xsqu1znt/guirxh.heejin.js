@@ -40,7 +40,7 @@ module.exports = {
 		// prettier-ignore
 		// Check if the recipient player started
 		if (!await userManager.exists(recipient.id)) return await error_ES.send({
-            interaction, description: "That user has not started yet"
+            interaction, description: `${recipient} has not started yet`
         });
 
 		// Fetch the user and recipient from Mongo

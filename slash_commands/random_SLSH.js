@@ -21,8 +21,7 @@ module.exports = {
 		let cooldown_random = await userManager.cooldowns.check(interaction.user.id, "random");
 		// prettier-ignore
 		if (cooldown_random) return await cooldown_ES.send({
-            interaction, ephemeral: true,
-            description: `You can use random again **${cooldown_random}**`
+            interaction, description: `Your random will be ready **${cooldown_random}**`
         });
 
 		// prettier-ignore

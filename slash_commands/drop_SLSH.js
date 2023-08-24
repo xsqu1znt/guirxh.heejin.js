@@ -38,7 +38,7 @@ module.exports = {
 		// prettier-ignore
 		if (cooldown_drop) return await cooldown_ES.send({
 			interaction, ephemeral: true,
-			description: `Your next drop will be available **${cooldown_drop}**`
+			description: `Your drop will be ready **${cooldown_drop}**`
 		});
 
 		// Create the embed :: { DROP }
