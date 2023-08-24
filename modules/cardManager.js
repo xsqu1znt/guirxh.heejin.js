@@ -10,6 +10,11 @@
  * @property {boolean} simplify
  * @property {boolean|number} duplicate */
 
+/** @typedef options_get_random
+ * @property {"all"|"general"} type
+ * @property {{min:number, max:number}} level
+ * @property {number} count */
+
 const { markdown } = require("./discordTools/_dsT");
 const _jsT = require("./jsTools/_jsT");
 const logger = require("./logger");
@@ -213,21 +218,27 @@ function get_setID(setID) {
 	return structuredClone(cards_all.filter(card => card.setID === setID)) || [];
 }
 
+/** @param {options_get_random} options */
 function get_random(options = {}) {
 	options = { type: "all", level: { min: 1, max: 100 }, count: 1, ...options };
 
 	options.level.min = _jsT.clamp(options.level.min, { min: 1, max: 100 });
 	options.level.max = _jsT.clamp(options.level.max, { min: 1, max: 100 });
 
-	let card = [];
+	let cards = [];
 
-	// prettier-ignore
 	switch (options.type) {
-		case "all": break;
-		case "general": break;
+		case "all":
+			cards.push(...[...Array(options.length)].map(_jsT.choice(cards_all, true)));
+			break;
+
+		case "general":
+			cards.push(...[...Array(options.length)].map(_jsT.choice(cards_general, true)));
+			break;
 	}
 
-	return structuredClone(_jsT.choice(basicOnly ? cards_general : cards_all));
+	cards = cards.filter(c => c);
+	return cards.length > 1 ? cards : cards[0];
 }
 
 /** @param {"general" | "weekly" | "season" | "event_1" | "event_2"} dropCategory */
