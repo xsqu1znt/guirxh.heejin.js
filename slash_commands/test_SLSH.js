@@ -14,7 +14,7 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-		let embed = new BetterEmbed({ interaction });
+		/* let embed = new BetterEmbed({ interaction });
 
 		// prettier-ignore
 		let category_colors = Object.values(cardManager.cards).map(c => c.ansi);
@@ -40,6 +40,20 @@ module.exports = {
 			{ name: "`🌗` Special Sets", value: `\`\`\`ansi\n${stats_f_special.join("\n")}\n\`\`\``, inline: true }
 		);
 
-		return await embed.send();
+		return await embed.send(); */
+
+		// prettier-ignore
+		let embed_test = new BetterEmbed({
+			interaction, author: { text: "$USERNAME | collections", iconURL: true },
+			description: "```testing```"
+		});
+
+		embed_test.addFields(
+			{ name: "field 1", value: "Lorem ipsum dolor sit amet.", inline: true },
+			{ name: "field 2", value: "Lorem ipsum dolor sit amet.", inline: true },
+			{ name: "field 3", value: "Lorem ipsum dolor sit amet.", inline: true }
+		);
+
+		return await embed_test.send();
 	}
 };
