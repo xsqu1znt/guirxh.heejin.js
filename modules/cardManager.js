@@ -257,6 +257,9 @@ function get_randomDrop(dropCategory) {
 
 //! Parse
 function parse_toCardLike(card) {
+	if (!card) return null;
+
+	// Ignores custom cards
 	return ["100"].includes(card.rarity)
 		? card
 		: {

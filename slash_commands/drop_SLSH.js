@@ -31,6 +31,8 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
+		let dropType = `drop_${interaction.options.getString("card")}`;
+
 		/// Check if the user has an active cooldown :: { DROP }
 		let cooldown_drop = await userManager.cooldowns.check(interaction.user.id, dropType);
 		// prettier-ignore
@@ -43,42 +45,41 @@ module.exports = {
 		let embed_drop = new BetterEmbed({ interaction, author: { text: "$USERNAME | drop", user: interaction.member } });
 
 		let cards = [];
-		let dropType = "";
 
 		// prettier-ignore
-		switch (interaction.options.getString("card")) {
-			case "general":
+		switch (dropType) {
+			case "drop_general":
                 embed_drop.options.author.text = "$USERNAME | drop";
-				cards = cardManager.get.drop("general"); dropType = "drop_general";
+				cards = cardManager.get.drop("general");
 				break;
 
-			case "weekly":
+			case "drop_weekly":
 				embed_drop.options.author.text = "$USERNAME | weekly";
-				cards = cardManager.get.drop("weekly"); dropType = "drop_weekly";
+				cards = cardManager.get.drop("weekly");
 				break;
 
-			case "season":
+			case "drop_season":
 				if (!config_event.season.NAME)
 					return await embed_drop.send({ description: "There is no `season` right now" });
 
 				embed_drop.options.author.text = "$USERNAME | season";
-				cards = cardManager.get.drop("season"); dropType = "drop_season";
+				cards = cardManager.get.drop("season");
 				break;
 
-			case "event_1":
+			case "drop_event_1":
 				if (!config_event.event_1.NAME)
 					return await embed_drop.send({ description: "There is no `event 1` right now" });
 
 				embed_drop.options.author.text = "$USERNAME | event 1";
-				cards = cardManager.get.drop("event_1"); dropType = "drop_event_1";
+				cards = cardManager.get.drop("event_1");
 				break;
 
-			case "event_2":
+			case "drop_event_2":
 				if (!config_event.event_2.NAME)
 					return await embed_drop.send({ description: "There is no `event 2` right now" });
 
 				embed_drop.options.author.text = "$USERNAME | event 2";
-				cards = cardManager.get.drop("event_2"); dropType = "drop_event_2";
+				cards = cardManager.get.drop("event_2");
 				break;
         }
 
