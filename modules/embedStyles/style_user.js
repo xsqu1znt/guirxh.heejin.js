@@ -293,8 +293,8 @@ function inventory(userData, options, stats) {
 
 		// Add inventory stats
 		_embed.addFields(
-			{ name: "\u200b", value: `>>>>>>\n\`\`\`ansi\n${stats_f_1.join("\n")}\`\`\``, inline: true },
-			{ name: "\u200b", value: `>>>>>>\n\`\`\`ansi\n${stats_f_2.join("\n")}\`\`\``, inline: true }
+			{ name: "\u200b", value: `\n\`\`\`ansi\n${stats_f_1.join("\n")}\`\`\``, inline: true },
+			{ name: "\u200b", value: `\n\`\`\`ansi\n${stats_f_2.join("\n")}\`\`\``, inline: true }
 		);
 
 		// Add profile stats
