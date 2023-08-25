@@ -14,6 +14,11 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
+		let embed = new BetterEmbed({ interaction, description: "boop" });
+		let cards = cardManager.get.setID("151");
+		await userManager.inventory.add(interaction.user.id, cards);
+		return await embed.send();
+
 		/* let embed = new BetterEmbed({ interaction });
 
 		// prettier-ignore
@@ -43,7 +48,7 @@ module.exports = {
 		return await embed.send(); */
 
 		// prettier-ignore
-		let embed_test = new BetterEmbed({
+		/* let embed_test = new BetterEmbed({
 			interaction, author: { text: "$USERNAME | collections", iconURL: true },
 			description: "```testing```"
 		});
@@ -54,6 +59,6 @@ module.exports = {
 			{ name: "field 3", value: "Lorem ipsum dolor sit amet.", inline: true }
 		);
 
-		return await embed_test.send();
+		return await embed_test.send(); */
 	}
 };

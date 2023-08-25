@@ -16,7 +16,8 @@ module.exports = {
         .setDescription("Sell cards in your inventory")
     
         .addStringOption(option => option.setName("uid").setDescription("Use UID separate by comma"))
-		.addStringOption(option => option.setName("setid").setDescription("Use SETID separate by comma")),
+		.addStringOption(option => option.setName("setid").setDescription("Use SETID separate by comma"))
+		.addNumberOption(option => option.setName("keepdupes").setDescription("Keeps 1 dupe by default")),
 	// .addStringOption(option => option.setName("category").setDescription("Use UID separate by comma")),
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
@@ -29,6 +30,9 @@ module.exports = {
 		let setIDs = interaction.options.getString("setid");
 		setIDs &&= _jsT.isArray(setIDs.toLowerCase().replace(/ /g, "").split(","));
 		setIDs ||= [];
+
+		let dupesToKeep = interaction.options.getNumber("keepdupes");
+		if (dupesToKeep === null) dupesToKeep = 1;
 
 		/* let categories = interaction.options.getString("category");
 		categories &&= _jsT.isArray(categories.toLowerCase().replace(/ /g, "").split(","));
@@ -125,7 +129,9 @@ module.exports = {
 
 			for (let gid of _card_globalIDs) {
 				let _dupes = _cards.filter(c => c.globalID === gid);
-				if (_dupes.length > 1) _card_duplicates.push(..._dupes.slice(1));
+				// Exclude the primary card from the list
+				_dupes.shift();
+				if (_dupes.length > dupesToKeep) _card_duplicates.push(..._dupes.slice(dupesToKeep));
 			}
 
 			_cards = _card_duplicates;
@@ -185,7 +191,7 @@ module.exports = {
 		// cards = cards.map(c => cardManager.parse.fromCardLike(c));
 
 		// Create the embed :: { SELL }
-		let embed_sell = new BetterEmbed({ interaction, author: { text: "$USERNAME | sell", user: interaction.member } });
+		let embed_sell = new BetterEmbed({ interaction, author: { text: "$USERNAME | sell", iconURL: true } });
 
 		// prettier-ignore
 		/* if (!cards.length) return await error_ES.send({
@@ -202,7 +208,7 @@ module.exports = {
 		// prettier-ignore
 		// Wait for the user to confirm
 		let confirmation_sell = await awaitConfirmation({
-			interaction, showAuthorIcon: true, deleteOnConfirmation: false,
+			interaction, deleteOnConfirmation: false,
 			description: cards_f
 				? `**Are you sure you want to sell:**\n>>> ${cards_f.join("\n")}`
 				: `**Are you sure you want to sell \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"}?**`,
@@ -226,7 +232,7 @@ module.exports = {
 				await embed_sell.send({
 					author: {},
 					components: [],
-					description: `> You cancelled selling \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"}`
+					description: `> Cancelled selling \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"}`
 				})
 			);
 		}

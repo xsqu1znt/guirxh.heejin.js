@@ -4,6 +4,7 @@ const { Client, BaseInteraction, PermissionsBitField } = require("discord.js");
 
 const { BetterEmbed } = require("../../../modules/discordTools/_dsT");
 const { userManager } = require("../../../modules/mongo/index");
+const { error_ES } = require("../../../modules/embedStyles");
 // const _jsT = require("../../../modules/jsTools/_jsT");
 const logger = require("../../../modules/logger");
 
@@ -48,8 +49,8 @@ module.exports = {
 		// Get the slash command function from the client if it exists
 		let slashCommand = client.slashCommands.get(args.interaction.commandName) || null;
 		// prettier-ignore
-		if (!slashCommand) return await embed_error.send({
-			description: `\`/${args.interaction.commandName}\` is not a command`
+		if (!slashCommand) return await error_ES.send({
+			interaction: args.interaction, description: `\`/${args.interaction.commandName}\` is not a command`, ephemeral: true
         });
 
 		// Execute the command
