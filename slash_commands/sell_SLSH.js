@@ -17,7 +17,7 @@ module.exports = {
     
         .addStringOption(option => option.setName("uid").setDescription("Use UID separate by comma"))
 		.addStringOption(option => option.setName("setid").setDescription("Use SETID separate by comma"))
-		.addNumberOption(option => option.setName("keepdupes").setDescription("Keeps 1 dupe by default")),
+		.addNumberOption(option => option.setName("dupesleft").setDescription("Number of dupes to leave of each card | Default: No Dupes")),
 	// .addStringOption(option => option.setName("category").setDescription("Use UID separate by comma")),
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
@@ -31,8 +31,7 @@ module.exports = {
 		setIDs &&= _jsT.isArray(setIDs.toLowerCase().replace(/ /g, "").split(","));
 		setIDs ||= [];
 
-		let dupesToKeep = interaction.options.getNumber("keepdupes");
-		if (dupesToKeep === null) dupesToKeep = 1;
+		let dupesToKeep = interaction.options.getNumber("dupesleft") || 0;
 
 		/* let categories = interaction.options.getString("category");
 		categories &&= _jsT.isArray(categories.toLowerCase().replace(/ /g, "").split(","));
