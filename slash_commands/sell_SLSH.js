@@ -4,9 +4,9 @@ const { BetterEmbed, awaitConfirmation, deleteMessageAfter } = require("../modul
 const { error_ES } = require("../modules/embedStyles/index");
 const { userManager } = require("../modules/mongo/index");
 const cardManager = require("../modules/cardManager");
+const _jsT = require("../modules/jsTools/_jsT");
 
 const config_bot = require("../configs/config_bot.json");
-const _jsT = require("../modules/jsTools/_jsT");
 
 module.exports = {
 	options: { icon: "💰", deferReply: false },
