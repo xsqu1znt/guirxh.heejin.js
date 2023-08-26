@@ -24,25 +24,19 @@ Remember to report any issues in <#1014513978560499732>
 
 
 
-🔧 Changelog (23/07/12) - Heejin 2.0.95
+🔧 Changelog (23/08/25)
 
 Remember to report any issues in <#1014513978560499732>
 
-`🛠️` **updates**
-> - *A new area for the shop has been added! Everyone welcome the ribbon shop, aka. Rewards shop*
-> - *Unique IDs (uid) has been changed to include letters as well as numbers*
-> - *You now no longer have to `/start` before being able to use `/help`, and `/collections`*
-
-`🎨` **design changes**
-> - *`/collections` and `/shop` now display cards using their proper card info (i.e `HOLO :: Blackpink` vs. `Special :: Holo`)*
-> - *Shop*
->  - *Removed the extra spacing between sets on the Shop Sets page*
->  - *Reorganized item packs and gave them names*
->  - *You can now see each set's drop % chance*
->  - *Redesigned the /shop buy message*
-
-`⚙️` **fixes**
-> - *Getting multiples of the same card from 1 drop or item pack caused them to share the same UID*
-> - *All card UIDs have been reset to fix duplicate uids (you will have to re-set your idol, and team using their new uids)*
-> - *Player badges did not show properly in your profile, nor shop, if they used custom emojis*
-> - *Various other minor bug fixes and overall changes to how fast commands respond*
+<!-- ```                       Heejin v2.0.96``` -->
+```ansi
+[1;2mHeejin [1;31mv2.0.96[0m[0m
+```
+`🛠️` **updated command** </sell:1106915320763011149>
+> - *You can now sell dupes using `/sell` `setid:`*
+> - *An option has been added called `dupesleft`, **this is to tell Heejin how many dupes you want to keep of each GID in the set***
+> - *You can use commas "," to sell multiple `uid` and `setid` at once
+>  - Example: `/sell` `uid:abc123, 123abc` `setid:123, 321, 456`*
+> - *The limit to selling, due to Discord's max embed size, has had a workaround by only showing card names when there's 10 or less*
+> - ***NOTE**: If you don't give a number for `dupesleft`, **the default is to keep 0 dupes of each GID***
+> - ***NOTE**: Selling using `setid` ignores the main card, **`setid` is only used to sell dupes***
