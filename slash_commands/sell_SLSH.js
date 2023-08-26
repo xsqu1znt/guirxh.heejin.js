@@ -33,28 +33,11 @@ module.exports = {
 
 		let dupesToKeep = interaction.options.getNumber("dupesleft") || 0;
 
-		/* let categories = interaction.options.getString("category");
-		categories &&= _jsT.isArray(categories.toLowerCase().replace(/ /g, "").split(","));
-		categories ||= []; */
-
 		// prettier-ignore
 		// Check if the user provided a uid/category
 		if (!uids.length && !setIDs.length) return await error_ES.send({
 			interaction, description: "You need to give either a UID or set ID", ephemeral: true
 		});
-
-		// Check if the categories the user gave exist
-		/* if (categories.length) {
-			let _categories_invalid = categories.filter(cat => !cardManager.category_names_all.includes(cat));
-
-			// prettier-ignore
-			if (_categories_invalid.length) return await error_ES.send({
-				interaction, ephemeral: true,
-				description: _categories_invalid.length === 1
-					? `\`${_categories_invalid[0]}\` is not a valid category`
-					: `\`${_categories_invalid.join(", ")}\` are not valid categories`
-			});
-		} */
 
 		// Defer the interaction reply
 		await interaction.deferReply();
@@ -144,62 +127,11 @@ module.exports = {
 			cards.push(..._cards);
 		}
 
-		/* if (categories.length) {
-			let _cards = [];
-
-			// prettier-ignore
-			await Promise.all(categories.map(async cat => {
-				let _c = await userManager.inventory.get(interaction.user.id, { gids: cardManager.category_gids_all.get(cat) });
-				_c = _c.filter(c => c);
-
-				if (_c.length) _cards.push(..._c);
-			}));
-
-			// prettier-ignore
-			// Let the user know no cards were found in those categories
-			if (!_cards.length) return await error_ES.send({
-				interaction, description: `No cards were found in ${categories.length === 1 ? "that category" : "those categories"}`
-			});
-
-			// prettier-ignore
-			// Filter out locked/favorited/selected/team cards
-			_cards = _cards.filter(c =>
-            	!c.locked && ![userData.card_favorite_uid, userData.card_selected_uid, ...userData.card_team_uids].includes(c.uid)
-			);
-
-			// Get only cards that have duplicates
-			let _cards_gids = _jsT.unique(_cards.map(c => c.globalID));
-
-			for (let gid of _cards_gids) {
-				let _c = _cards.filter(c => c.globalID === gid);
-				if (_c.length > 2) _cards.push(..._c.slice(2));
-			}
-
-			// prettier-ignore
-			// Let the user know they tried to sell locked/favorited/selected/team cards
-			if (!_cards.length) return await error_ES.send({
-				interaction, description: `${uids.length === 1 ? "That card" : "Those cards"} cannot be sold, it is either:\n\`🔒 vault\` \`🧑🏾‍🤝‍🧑 team\` \`🏃 idol\` \`⭐ favorite\``
-			});
-
-			// cards.push(..._cards);
-
-			// TODO: Filter only certain dupes
-		} */
-
-		// Parse CardLikes into Cards
-		// cards = cards.map(c => cardManager.parse.fromCardLike(c));
-
 		// Create the embed :: { SELL }
 		let embed_sell = new BetterEmbed({ interaction, author: { text: "$USERNAME | sell", iconURL: true } });
 
-		// prettier-ignore
-		/* if (!cards.length) return await error_ES.send({
-            description: `\`$UIDS\` cannot be sold, it is either:\n\`🔒 vault\` \`🧑🏾‍🤝‍🧑 team\` \`🏃 idol\` \`⭐ favorite\``
-                .replace("$UIDS", uids.filter(uid => !cards.map(c => c.uid).includes(uid)).join(", "))
-        }); */
-
 		// Format the cards into strings if there's less than 10
-		let cards_f = cards.length <= 10 ? cards.map(c => cardManager.toString.basic(c)) : "";
+		let cards_f = cards.length <= 10 ? cards.map(c => `> ${cardManager.toString.basic(c)}`) : "";
 
 		// Calculate how many carrots the user will get
 		let sell_total = _jsT.sum(cards.map(c => c.sellPrice));
@@ -209,8 +141,8 @@ module.exports = {
 		let confirmation_sell = await awaitConfirmation({
 			interaction, deleteOnConfirmation: false,
 			description: cards_f
-				? `**Are you sure you want to sell:**\n>>> ${cards_f.join("\n")}`
-				: `**Are you sure you want to sell \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"}?**`,
+				? `**Are you sure you want to sell:**\n${cards_f.join("\n")}`
+				: `**Are you sure you want to sell \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"}?**\n${setIDs.length ? `*\`${dupesToKeep}\` ${dupesToKeep === 1 ? "dupe" : "dupes"} will be kept of each GID in ${setIDs.length === 1 ? "that set" : "those sets"}*` : ""}`,
 			footer: `you will get ${config_bot.emojis.currency_1.EMOJI} ${sell_total}`
         });
 
