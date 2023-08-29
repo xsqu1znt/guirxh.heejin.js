@@ -37,16 +37,39 @@ class Stage {
 
 			embed: new BetterEmbed({
 				interaction: options.interaction,
-				author: { text: "$USERNAME | stage", iconURL: true },
-				footer: "Battle starting in $START_TIME..."
+				author: { text: "$USERNAME | stage", iconURL: true }
 			})
-        };
-        
-        this.data.embed.addFields(
-            // Team :: { HOME }
-            {name: options.opponents.home.displayName || options.opponents.home.username, value: ""},
-            // Team :: { AWAY }
-            {name: "", value: ""},
-        )
+		};
+
+		this.data.embed.setFooter({
+			text: `Battle starting in ${this.data.timeout.start} ${this.data.timeout.start === 1 ? "seconds" : "second"}...`
+		});
+
+		this.data.embed.addFields(
+			// Team :: { HOME }
+			{
+				name: this.data.opponents.home?.displayName || this.data.opponents.home?.username,
+				value: cardManager.toString.basic(this.data.idol.home),
+				inline: true
+			},
+			// Team :: { AWAY }
+			{
+				name: this.data.opponents.away?.displayName || this.data.opponents.away?.username,
+				value: cardManager.toString.basic(this.data.idol.away),
+				inline: true
+			}
+		);
+	}
+
+	async start() {
+		return new Promise(async resolve => {
+			this.#resolve = resolve;
+
+			// Start the countdown
+			await this.#countdown();
+
+			// Choose who goes first
+			_jsT.chance() ? this.#attack_away() : this.#attack_home();
+		});
 	}
 }
