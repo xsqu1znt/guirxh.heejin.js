@@ -42,7 +42,7 @@ class Stage {
 		};
 
 		this.data.embed.setFooter({
-			text: `Battle starting in ${this.data.timeout.start} ${this.data.timeout.start === 1 ? "seconds" : "second"}...`
+			text: `Duel starting in ${this.data.timeout.start} ${this.data.timeout.start === 1 ? "seconds" : "second"}...`
 		});
 
 		this.data.embed.addFields(
@@ -72,4 +72,61 @@ class Stage {
 			_jsT.chance() ? this.#attack_away() : this.#attack_home();
 		});
 	}
+
+	async refresh() {
+		return await this.data.embed.send({ sendMethod: "editReply" });
+	}
+
+	async #countdown() {
+		for (let i = 0; i < this.data.timeout.start; i++) {
+			await _jsT.wait(1000);
+			this.data.timeout.start--;
+
+			// prettier-ignore
+			this.data.embed.setFooter({
+				text: `Duel starting in ${this.data.timeout.start} ${this.data.timeout.start === 1 ? "seconds" : "second"}...`
+			});
+
+			await this.#refresh();
+		}
+	}
+
+	/** @param {"home"|"away"} attacker */
+	#applyDamage(teamToAttack) {
+		switch (teamToAttack) {
+			case "home":
+				// Calculate the resulting attack power :: { AWAY }
+				let attackPower_away = _jsT.randomNumber(
+					_jsT.percent(40, this.data.idol.away.stats.ability),
+					this.data.idol.away.stats.ability
+				);
+
+				// prettier-ignore
+				// Apply the new HP (reputation) :: { HOME }
+				this.data.idol.home.stats.reputation = _jsT.clamp(
+					this.data.idol.home.stats.reputation - attackPower_away, { min: 0 }
+				);
+				return;
+
+			case "away":
+				// Calculate the resulting attack power :: { HOME }
+				let attackPower_home = _jsT.randomNumber(
+					_jsT.percent(40, this.data.idol.away.stats.ability),
+					this.data.idol.away.stats.ability
+				);
+
+				// prettier-ignore
+				// Apply the new HP (reputation) :: { AWAY }
+				this.data.idol.away.stats.reputation = _jsT.clamp(
+					this.data.idol.away.stats.reputation - attackPower_home, { min: 0 }
+				);
+				return;
+		}
+	}
+
+	#attack_home() {}
+
+	#attack_away() {}
+
+	end() {}
 }
