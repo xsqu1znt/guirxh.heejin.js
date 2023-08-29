@@ -6,6 +6,7 @@ IMPORTANT:
 fix page jump
 add player target to /missing
 change targetPlayer to user in /inventory
+add fields to BetterEmbed
 
 
 

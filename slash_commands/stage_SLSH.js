@@ -5,7 +5,7 @@ const { error_ES } = require("../modules/embedStyles/index");
 const { userManager } = require("../modules/mongo/index");
 const cardManager = require("../modules/cardManager");
 const _jsT = require("../modules/jsTools/_jsT");
-const Stage = require("../modules/stage");
+const Stage = require("../modules/stage_OLD");
 
 const config = {
 	player: require("../configs/config_player.json"),
