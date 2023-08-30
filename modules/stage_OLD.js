@@ -161,7 +161,7 @@ class Stage {
 
     /** Attack player's card. */
     async attack_home() {
-        this.turn++;
+        this.data.turn++;
 
         this.card_home = this.applyDamage(this.card_away, this.card_home).receiver;
 

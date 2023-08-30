@@ -74,7 +74,7 @@ class Stage {
 	}
 
 	async refresh() {
-		return await this.data.embed.send({ sendMethod: "editReply" });
+		return await this.data.embed.send({ sendMethod: "editReply", footer: `Turn: ${this.data.turn}` });
 	}
 
 	async #countdown() {
@@ -91,7 +91,7 @@ class Stage {
 		}
 	}
 
-	/** @param {"home"|"away"} attacker */
+	/** @param {"home"|"away"} teamToAttack */
 	#applyDamage(teamToAttack) {
 		switch (teamToAttack) {
 			case "home":
@@ -124,9 +124,34 @@ class Stage {
 		}
 	}
 
-	#attack_home() {}
+	async #sleep() {
+		return await _jsT.wait(this.data.timeout.turn);
+	}
 
-	#attack_away() {}
+	async #attack_home() {
+		this.data.turn++;
+
+		// Damage the HOME team
+		this.#applyDamage("home");
+
+		// Update the embed's HOME team field
+		this.data.embed.data.fields[0].value = cardManager.toString.basic(this.data.idol.home);
+
+		// Refresh the embed
+		await this.refresh();
+
+		// Attack team AWAY if HOME still has HP (reputation)
+		if (this.data.idol.home.stats.reputation) {
+			// Sleep until the next turn can be played
+			await this.#sleep();
+			return await this.#attack_away();
+		}
+
+		// End the battle if HOME is out of HP (reputation)
+		return this.end();
+	}
+
+	async #attack_away() {}
 
 	end() {}
 }
