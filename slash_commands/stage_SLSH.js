@@ -5,7 +5,7 @@ const { error_ES } = require("../modules/embedStyles/index");
 const { userManager } = require("../modules/mongo/index");
 const cardManager = require("../modules/cardManager");
 const _jsT = require("../modules/jsTools/_jsT");
-const Stage = require("../modules/stage_OLD");
+const Stage = require("../modules/stage");
 
 const config = {
 	player: require("../configs/config_player.json"),
@@ -96,35 +96,10 @@ module.exports = {
 		// Create the Stage instance
 		let stage = new Stage({
 			interaction,
-			opponents: { user: interaction.user, rival },
+			opponents: { user: interaction.member, rival },
 			idol: { user: card_idol.user, rival: card_idol.rival }
 		});
 
-		// Send the stage embed
-		await stage.embed.send();
-
-		// Await the winning opponent
-		let stage_winner = await stage.start();
-
-		if (stage_winner.isUser) {
-			await Promise.all([
-				userManager.inventory.update(stage_winner.id, stage_winner.idol.card),
-				userManager.xp.increment(stage_winner.id, stage_winner.xp)
-			]);
-
-			// prettier-ignore
-			return await stage.embed.send({
-				footer: "$WINNER's idol gained ☝️ $XPXP %LEVEL_UP"
-					.replace("$WINNER", stage_winner.user.username)
-					.replace("$XP", stage_winner.idol.xp)
-					.replace("$LEVEL_UP", stage_winner.idol.levels
-						? `and gained \`${stage_winner.idol.levels}\` ${stage_winner.idol.levels === 1 ? "level" : "levels"}`
-						: ""
-					)
-			});
-		}
-
-		// If the user lost and didn't choose a rival
-		return await stage.embed.send({ footer: "You lost... Try again next time!" });
+		console.log(await stage.start());
 	}
 };

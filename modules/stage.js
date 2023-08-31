@@ -29,7 +29,7 @@ class Stage {
 			interaction: options.interaction,
 			opponents: options.opponents,
 			idol: options.idol,
-			_idol: structuredClone(options.idol),
+			// _idol: structuredClone(options.idol),
 			turn: 0,
 			timeout: {
 				start: _jsT.parseTime(config.bot.timeouts.STAGE_START, { type: "s" }),
@@ -69,12 +69,14 @@ class Stage {
 			// Start the countdown
 			await this.#countdown();
 
+			await this.data.embed.send();
+
 			// Choose who goes first
 			_jsT.chance() ? this.#attack_away() : this.#attack_home();
 		});
 	}
 
-	async refresh() {
+	async #refresh() {
 		return await this.data.embed.send({ sendMethod: "editReply", footer: `Turn: ${this.data.turn}` });
 	}
 
@@ -139,7 +141,7 @@ class Stage {
 		this.data.embed.data.fields[0].value = cardManager.toString.basic(this.data.idol.home);
 
 		// Refresh the embed
-		await this.refresh();
+		await this.#refresh();
 
 		// Attack team AWAY if HOME still has HP (reputation)
 		if (this.data.idol.home.stats.reputation) {
@@ -149,7 +151,7 @@ class Stage {
 		}
 
 		// End the battle if HOME is out of HP (reputation)
-		return this.end("away");
+		return this.#end(this.data.opponents.away, this.data.idol.away);
 	}
 
 	async #attack_away() {
@@ -162,7 +164,7 @@ class Stage {
 		this.data.embed.data.fields[1].value = cardManager.toString.basic(this.data.idol.away);
 
 		// Refresh the embed
-		await this.refresh();
+		await this.#refresh();
 
 		// Attack team HOME if AWAY still has HP (reputation)
 		if (this.data.idol.away.stats.reputation) {
@@ -172,30 +174,64 @@ class Stage {
 		}
 
 		// End the battle if AWAY is out of HP (reputation)
-		return this.end("home");
+		return this.#end(this.data.opponents.home, this.data.idol.home);
 	}
 
-	/** @param {"home"|"away"} team */
-	async end(user, idol, team) {
-		// let winner_id, winner_idol, winner_xp_user, winner_xp_card;
-
-		let id = user?.id;
-		let isUser = id ? true : false;
+	async #end(user, idol) {
 		let xp_user = _jsT.randomNumber(config.player.xp.user.rewards.stage.MIN, config.player.xp.user.rewards.stage.MAX);
-		let xp_card = _jsT.randomNumber(config.player.xp.card.rewards.stage.MIN, config.player.xp.card.rewards.stage.MAX);
+		let xp_idol = _jsT.randomNumber(config.player.xp.card.rewards.stage.MIN, config.player.xp.card.rewards.stage.MAX);
 
-		idol.stats.xp += xp_card;
+		idol.stats.xp += xp_idol;
 		let { card } = cardManager.tryLevelUp(idol);
 		card = cardManager.parse.toCardLike(card);
 
 		// prettier-ignore
-		if (isUser) await Promise.all([
+		if (user) await Promise.all([
 			userManager.inventory.update(user.id, card),
 			userManager.xp.increment(user.id, xp_user, "stage")
 		]);
 
+		/// Update embed
+		switch (user?.id) {
+			// HOME wins
+			case this.data.opponents.home.id:
+				this.data.embed.data.fields[0].name += "***Won!***";
+				this.data.embed.data.fields[1].name += "***Lost!***";
+				break;
+
+			// AWAY wins
+			case this.data.opponents.away.id:
+				this.data.embed.data.fields[0].name += "***Lost!***";
+				this.data.embed.data.fields[1].name += "***Won!***";
+				break;
+
+			// AWAY wins (user didn't pick rival)
+			default:
+				this.data.embed.data.fields[0].name += "***Lost!***";
+				this.data.embed.data.fields[1].name += "***Won!***";
+				break;
+		}
+
+		// prettier-ignore
+		await this.data.embed.send({
+			footer: user
+				? "$WINNER's idol gained ☝️ $XPXP %LEVEL_UP"
+						.replace("$WINNER", user?.displayName || user?.username)
+						.replace("$XP", xp_idol)
+						.replace("$LEVEL_UP", card.levelsGained
+							? `and gained \`${card.levelsGained}\` ${card.levelsGained === 1 ? "level" : "levels"}`
+							: ""
+						)
+				: "You lost... Try again next time!"
+		});
+
+		// prettier-ignore
 		return this.#resolve({
-			isUser: false
+			id: user?.id,
+			user, user_xp: xp_user,
+			idol: { card: card.card, levels: card.levelsGained, xp: xp_idol }
 		});
 	}
 }
+
+module.exports = Stage;

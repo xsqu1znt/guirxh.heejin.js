@@ -237,7 +237,16 @@ function get_random(options = {}) {
 			break;
 	}
 
-	cards = cards.filter(c => c);
+	// prettier-ignore
+	cards = cards.filter(c => c).map(c => {
+		if (options.level.min && options.level.max) {
+			c.level = _jsT.randomNumber(options.level.min, options.level.max)
+			return recalculateStats(c);
+		}
+
+		return c;
+	});
+
 	return cards.length > 1 ? cards : cards[0];
 }
 
