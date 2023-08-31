@@ -107,11 +107,43 @@ function recalculateStats(card) {
 	return card;
 }
 
-function tryLevelUp(card, session = null) {
-	session = { leveled: false, levelsGained: 0, ...session };
+function levelUp(card) {
+	// Used to keep track of what happened
+	let session = {
+		leveled: false,
+		levels_gained: 0,
+
+		/** @type {number} */
+		level_current: card.stats.level
+	};
+
+	const levelUp = () => {
+		if (card.stats.level >= config_player.xp.card.LEVEL_MAX) return;
+
+		if (card.stats.xp >= card.stats.xp_for_next_level) {
+			// Subtract the required XP to level up from the card
+			card.stats.xp = card.stats.xp - card.stats.xp_for_next_level || 0;
+
+			// Increase the card's level
+			card.stats.level++;
+
+			// Calculate the XP required for the next level
+			card.stats.xp_for_next_level = Math.floor(card.stats.level * config_player.xp.card.LEVEL_XP_MULTIPLIER);
+
+			// Update session data
+			session.levels_gained++;
+			session.leveled = true;
+		}
+	};
+
+	while (card.stats.xp >= card.stats.xp_for_next_level) levelUp();
+
+	return { card: recalculateStats(card), ...session };
+
+	/* session = { leveled: false, levelsGained: 0, ...session };
 
 	// Don't level the card past the max card level
-	if (card.stats.level === userSettings.xp.card.maxLevel) return session;
+	if (card.stats.level === config_player.xp.card.LEVEL_MAX) return session;
 
 	// Increase the card's level by 1 if they meet or surpass the required XP
 	if (card.stats.xp >= card.stats.xp_for_next_level) {
@@ -120,14 +152,14 @@ function tryLevelUp(card, session = null) {
 		session.levelsGained++;
 
 		// If the card's at its max level set its XP to its required xp_for_next_level
-		if (card.stats.level === userSettings.xp.card.maxLevel) card.stats.xp = card.stats.xp_for_next_level;
+		if (card.stats.level === config_player.xp.card.LEVEL_MAX) card.stats.xp = card.stats.xp_for_next_level;
 		else {
 			// Reset XP, keeping any overshoot
 			// defaults to 0 if there wasn't a positive overshoot value
 			card.stats.xp = card.stats.xp - card.stats.xp_for_next_level || 0;
 
 			// Multiply the card's xp_for_next_level by its multipler
-			card.stats.xp_for_next_level = Math.round(card.stats.level * userSettings.xp.card.nextLevelXPMultiplier);
+			card.stats.xp_for_next_level = Math.round(card.stats.level * config_player.xp.card.LEVEL_XP_MULTIPLIER);
 
 			card = recalculateStats(card);
 
@@ -138,7 +170,7 @@ function tryLevelUp(card, session = null) {
 
 	// Return whether the card was leveled up or not
 	session.card = card;
-	return session;
+	return session; */
 }
 
 //! General
@@ -229,22 +261,22 @@ function get_random(options = {}) {
 
 	switch (options.type) {
 		case "all":
-			cards.push(...[...Array(options.length)].map(_jsT.choice(cards_all, true)));
+			cards.push(...[...Array(options.length)].map(() => _jsT.choice(cards_all, true)));
 			break;
 
 		case "general":
-			cards.push(...[...Array(options.length)].map(_jsT.choice(cards_general, true)));
+			cards.push(...[...Array(options.length)].map(() => _jsT.choice(cards_general, true)));
 			break;
 	}
 
 	// prettier-ignore
 	cards = cards.filter(c => c).map(c => {
 		if (options.level.min && options.level.max) {
-			c.level = _jsT.randomNumber(options.level.min, options.level.max)
-			return recalculateStats(c);
+			c.level = _jsT.randomNumber(options.level.min, options.level.max);
+			return resetUID(recalculateStats(c));
 		}
 
-		return c;
+		return resetUID(c);
 	});
 
 	return cards.length > 1 ? cards : cards[0];
@@ -371,7 +403,7 @@ function toString_inventory(card, options = {}) {
 
 	// prettier-ignore
 	// let f = "$UID $EMOJI $GROUP : $SINGLE - $NAME $DUPE\n> $SET_ID $GLOBAL_ID $RARITY $CATEGORY $SELL_PRICE $LOCKED\n> $LEVEL $STATS $FAVORITE $SELECTED $TEAM"
-	let f = ">>> **`$UID`** `$GID` `🗣️ $SET`\n`$EMOJI` **$SINGLE** `$GROUP` $NAME $DUPE\n`LV. $LVL` `$CATEGORY` `💰 $SELL` `🎤 $ABI` : `💖 $REP`\n`🔒 ⭐ 🏃 👯`"
+	let f = "**`$UID`** `$GID` `🗣️ $SET`\n`$EMOJI` **$SINGLE** `$GROUP` $NAME $DUPE\n`LV. $LVL` `$CATEGORY` `💰 $SELL` `🎤 $ABI` : `💖 $REP`\n`🔒 ⭐ 🏃 👯`"
 		.replace("$UID", card?.uid || "")
 		.replace("$GID", card.globalID)
 		.replace("$SET", card.setID)

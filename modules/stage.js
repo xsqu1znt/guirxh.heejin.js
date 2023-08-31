@@ -33,7 +33,7 @@ class Stage {
 			turn: 0,
 			timeout: {
 				start: _jsT.parseTime(config.bot.timeouts.STAGE_START, { type: "s" }),
-				turn: _jsT.parseTime(config.bot.timeouts.STAGE_TURN, { type: "s" })
+				turn: _jsT.parseTime(config.bot.timeouts.STAGE_TURN, { type: "ms" })
 			},
 
 			embed: new BetterEmbed({
@@ -50,13 +50,13 @@ class Stage {
 			// Team :: { HOME }
 			{
 				name: this.data.opponents.home?.displayName || this.data.opponents.home?.username,
-				value: cardManager.toString.basic(this.data.idol.home),
+				value: `>>> ${cardManager.toString.inventory(this.data.idol.home)}`,
 				inline: true
 			},
 			// Team :: { AWAY }
 			{
-				name: this.data.opponents.away?.displayName || this.data.opponents.away?.username,
-				value: cardManager.toString.basic(this.data.idol.away),
+				name: this.data.opponents.away?.displayName || this.data.opponents.away?.username || "Rival",
+				value: `>>> ${cardManager.toString.inventory(this.data.idol.away)}`,
 				inline: true
 			}
 		);
@@ -77,7 +77,7 @@ class Stage {
 	}
 
 	async #refresh() {
-		return await this.data.embed.send({ sendMethod: "editReply", footer: `Turn: ${this.data.turn}` });
+		return await this.data.embed.send({ sendMethod: "editReply" });
 	}
 
 	async #countdown() {
@@ -87,7 +87,7 @@ class Stage {
 
 			// prettier-ignore
 			this.data.embed.setFooter({
-				text: `Duel starting in ${this.data.timeout.start} ${this.data.timeout.start === 1 ? "seconds" : "second"}...`
+				text: `Duel starting in ${this.data.timeout.start} ${this.data.timeout.start === 1 ? "second" : "seconds"}...`
 			});
 
 			await this.#refresh();
@@ -138,9 +138,10 @@ class Stage {
 		this.#applyDamage("home");
 
 		// Update the embed's HOME team field
-		this.data.embed.data.fields[0].value = cardManager.toString.basic(this.data.idol.home);
+		this.data.embed.data.fields[0].value = `>>> ${cardManager.toString.inventory(this.data.idol.home)}`;
 
-		// Refresh the embed
+		/// Refresh the embed
+		this.data.embed.setFooter({ text: `Turn: ${this.data.turn}` });
 		await this.#refresh();
 
 		// Attack team AWAY if HOME still has HP (reputation)
@@ -161,9 +162,10 @@ class Stage {
 		this.#applyDamage("away");
 
 		// Update the embed's AWAY team field
-		this.data.embed.data.fields[1].value = cardManager.toString.basic(this.data.idol.away);
+		this.data.embed.data.fields[1].value = `>>> ${cardManager.toString.inventory(this.data.idol.away)}`;
 
-		// Refresh the embed
+		/// Refresh the embed
+		this.data.embed.setFooter({ text: `Turn: ${this.data.turn}` });
 		await this.#refresh();
 
 		// Attack team HOME if AWAY still has HP (reputation)
@@ -195,27 +197,27 @@ class Stage {
 		switch (user?.id) {
 			// HOME wins
 			case this.data.opponents.home.id:
-				this.data.embed.data.fields[0].name += "***Won!***";
-				this.data.embed.data.fields[1].name += "***Lost!***";
+				this.data.embed.data.fields[0].name += " ***Won!***";
+				this.data.embed.data.fields[1].name += " ***Lost!***";
 				break;
 
 			// AWAY wins
-			case this.data.opponents.away.id:
-				this.data.embed.data.fields[0].name += "***Lost!***";
-				this.data.embed.data.fields[1].name += "***Won!***";
+			case this.data.opponents.away?.id:
+				this.data.embed.data.fields[0].name += " ***Lost!***";
+				this.data.embed.data.fields[1].name += " ***Won!***";
 				break;
 
 			// AWAY wins (user didn't pick rival)
 			default:
-				this.data.embed.data.fields[0].name += "***Lost!***";
-				this.data.embed.data.fields[1].name += "***Won!***";
+				this.data.embed.data.fields[0].name += " ***Lost!***";
+				this.data.embed.data.fields[1].name += " ***Won!***";
 				break;
 		}
 
 		// prettier-ignore
 		await this.data.embed.send({
 			footer: user
-				? "$WINNER's idol gained ☝️ $XPXP %LEVEL_UP"
+				? "$WINNER's idol gained ☝️ $XPXP $LEVEL_UP"
 						.replace("$WINNER", user?.displayName || user?.username)
 						.replace("$XP", xp_idol)
 						.replace("$LEVEL_UP", card.levelsGained
@@ -225,10 +227,10 @@ class Stage {
 				: "You lost... Try again next time!"
 		});
 
-		// prettier-ignore
 		return this.#resolve({
-			id: user?.id,
-			user, user_xp: xp_user,
+			id: user?.id || null,
+			user: user || null,
+			user_xp: xp_user,
 			idol: { card: card.card, levels: card.levelsGained, xp: xp_idol }
 		});
 	}

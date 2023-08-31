@@ -17,11 +17,13 @@ module.exports = {
 
 	// prettier-ignore
 	builder: new SlashCommandBuilder().setName("stage")
-        .setDescription("LV. your idol by challenging a rival to a duel"),
+		.setDescription("LV. your idol by challenging a rival to a duel")
+	
+		.addUserOption(option => option.setName("player").setDescription("Challenge a player to a duel")),
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-		let rival = interaction.user || null;
+		let rival = interaction.options.getUser("player") || null;
 
 		/* - - - - - - - - - - { COOLDOWNS } - - - - - - - - - - */
 		/// Check if the user has an active cooldown :: { STAGE }
@@ -31,41 +33,43 @@ module.exports = {
             interaction, description: `Your stage will be ready **${cooldown_stage_user}**`
 		});
 
-		/* - - - - - - - - - - { USER STARTED } - - - - - - - - - - */
-		// prettier-ignore
-		// A player can't duel themself
-		if (rival?.id === interaction.user.id) return await error_ES.send({
-			interaction, description: "You cannot duel yourself, silly!"
-		});
+		if (rival) {
+			/* - - - - - - - - - - { RIVAL STARTED } - - - - - - - - - - */
+			// prettier-ignore
+			// A player can't duel themself
+			if (rival.id === interaction.user.id) return await error_ES.send({
+				interaction, description: "You cannot duel yourself, silly!"
+			});
 
-		// prettier-ignore
-		// Check if the rival player started
-		if (!(await userManager.exists(rival?.id))) return await error_ES.send({
-			interaction, description: `${rival} has not started yet`
-		});
+			// prettier-ignore
+			// Check if the rival player started
+			if (!(await userManager.exists(rival?.id))) return await error_ES.send({
+				interaction, description: `${rival} has not started yet`
+			});
 
-		/* - - - - - - - - - - { COOLDOWNS } - - - - - - - - - - */
-		/// Check if the rival has an active cooldown :: { STAGE }
-		let cooldown_stage_rival = await userManager.cooldowns.check(rival.id, "stage");
-		// prettier-ignore
-		if (cooldown_stage_rival) return await cooldown_ES.send({
-            interaction, description: `Your stage will be ready **${cooldown_stage_rival}**`
-		});
+			/* - - - - - - - - - - { COOLDOWNS } - - - - - - - - - - */
+			/// Check if the rival has an active cooldown :: { STAGE }
+			let cooldown_stage_rival = await userManager.cooldowns.check(rival?.id, "stage");
+			// prettier-ignore
+			if (cooldown_stage_rival) return await cooldown_ES.send({
+            	interaction, description: `Your stage will be ready **${cooldown_stage_rival}**`
+			});
+		}
 
 		/* - - - - - - - - - - { USERDATA } - - - - - - - - - - */
 		// Fetch the user & rival from Mongo :: { RIVAL }
 		let userData = {
 			user: await userManager.fetch(interaction.user.id, { type: "essential" }),
-			rival: await userManager.fetch(rival?.id, { type: "essential" })
+			rival: rival ? await userManager.fetch(rival.id, { type: "essential" }) : null
 		};
 
 		/// Get the player's idol from their card_inventory
 		let card_idol = {
 			user: await userManager.inventory.get(interaction.user.id, { uids: userData.user.card_selected_uid }),
-			rival: await userManager.inventory.get(rival?.id, { uids: userData.rival?.card_selected_uid })
+			rival: rival ? await userManager.inventory.get(rival?.id, { uids: userData.rival?.card_selected_uid }) : null
 		};
 
-		/* - - - - - - - - - - { USER IDOL } - - - - - - - - - - */
+		/* - - - - - - - - - - { USER & RIVAL IDOL } - - - - - - - - - - */
 		// prettier-ignore
 		if (!card_idol.user) return await error_ES.send({
 			interaction, description: "You do not have an `🏃 idol` set\nUse `/set` `edit:🏃 idol` `add:UID`"
@@ -96,8 +100,8 @@ module.exports = {
 		// Create the Stage instance
 		let stage = new Stage({
 			interaction,
-			opponents: { user: interaction.member, rival },
-			idol: { user: card_idol.user, rival: card_idol.rival }
+			opponents: { home: interaction.member, away: rival },
+			idol: { home: card_idol.user, away: card_idol.rival }
 		});
 
 		console.log(await stage.start());
