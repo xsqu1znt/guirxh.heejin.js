@@ -104,6 +104,6 @@ module.exports = {
 			idol: { home: card_idol.user, away: card_idol.rival }
 		});
 
-		console.log(await stage.start());
+		return await stage.start();
 	}
 };

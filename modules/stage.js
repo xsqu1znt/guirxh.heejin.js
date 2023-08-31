@@ -81,16 +81,13 @@ class Stage {
 	}
 
 	async #countdown() {
-		for (let i = 0; i < this.data.timeout.start; i++) {
-			await _jsT.wait(1000);
-			this.data.timeout.start--;
-
+		for (let i = 0, _time = this.data.timeout.start; i < this.data.timeout.start; i++, _time--) {
 			// prettier-ignore
 			this.data.embed.setFooter({
-				text: `Duel starting in ${this.data.timeout.start} ${this.data.timeout.start === 1 ? "second" : "seconds"}...`
+				text: `Duel starting in ${_time} ${_time === 1 ? "second" : "seconds"}...`
 			});
 
-			await this.#refresh();
+			await Promise.all([this.#refresh(), _jsT.wait(1000)]);
 		}
 	}
 
@@ -100,7 +97,7 @@ class Stage {
 			case "home":
 				// Calculate the resulting attack power :: { AWAY }
 				let attackPower_away = _jsT.randomNumber(
-					_jsT.percent(40, this.data.idol.away.stats.ability),
+					_jsT.percent(30, this.data.idol.away.stats.ability),
 					this.data.idol.away.stats.ability
 				);
 
@@ -114,7 +111,7 @@ class Stage {
 			case "away":
 				// Calculate the resulting attack power :: { HOME }
 				let attackPower_home = _jsT.randomNumber(
-					_jsT.percent(40, this.data.idol.away.stats.ability),
+					_jsT.percent(30, this.data.idol.away.stats.ability),
 					this.data.idol.away.stats.ability
 				);
 
@@ -184,8 +181,8 @@ class Stage {
 		let xp_idol = _jsT.randomNumber(config.player.xp.card.rewards.stage.MIN, config.player.xp.card.rewards.stage.MAX);
 
 		idol.stats.xp += xp_idol;
-		let { card } = cardManager.tryLevelUp(idol);
-		card = cardManager.parse.toCardLike(card);
+		let card_leveled = cardManager.levelUp(idol);
+		let card = cardManager.parse.toCardLike(card_leveled.card);
 
 		// prettier-ignore
 		if (user) await Promise.all([
@@ -217,11 +214,11 @@ class Stage {
 		// prettier-ignore
 		await this.data.embed.send({
 			footer: user
-				? "$WINNER's idol gained ☝️ $XPXP $LEVEL_UP"
+				? "$WINNER's idol got $XPXP $LEVEL_UP"
 						.replace("$WINNER", user?.displayName || user?.username)
 						.replace("$XP", xp_idol)
-						.replace("$LEVEL_UP", card.levelsGained
-							? `and gained \`${card.levelsGained}\` ${card.levelsGained === 1 ? "level" : "levels"}`
+						.replace("$LEVEL_UP", card_leveled.levels_gained
+							? `and ${card_leveled.levels_gained} LV.`
 							: ""
 						)
 				: "You lost... Try again next time!"
@@ -231,7 +228,7 @@ class Stage {
 			id: user?.id || null,
 			user: user || null,
 			user_xp: xp_user,
-			idol: { card: card.card, levels: card.levelsGained, xp: xp_idol }
+			idol: { card: card_leveled.card, levels: card_leveled.levels_gained, xp: xp_idol }
 		});
 	}
 }

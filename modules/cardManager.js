@@ -547,7 +547,7 @@ module.exports = {
 
 	resetUID,
 	recalculateStats,
-	tryLevelUp,
+	levelUp,
 
 	drop,
 
