@@ -6,6 +6,7 @@
 const { CommandInteraction, User, GuildMember } = require("discord.js");
 
 const { BetterEmbed } = require("./discordTools/_dsT");
+const { userManager } = require("./mongo/index");
 const cardManager = require("./cardManager");
 const _jsT = require("./jsTools/_jsT");
 const logger = require("./logger");
@@ -148,10 +149,53 @@ class Stage {
 		}
 
 		// End the battle if HOME is out of HP (reputation)
-		return this.end();
+		return this.end("away");
 	}
 
-	async #attack_away() {}
+	async #attack_away() {
+		this.data.turn++;
 
-	end() {}
+		// Damage the AWAY team
+		this.#applyDamage("away");
+
+		// Update the embed's AWAY team field
+		this.data.embed.data.fields[1].value = cardManager.toString.basic(this.data.idol.away);
+
+		// Refresh the embed
+		await this.refresh();
+
+		// Attack team HOME if AWAY still has HP (reputation)
+		if (this.data.idol.away.stats.reputation) {
+			// Sleep until the next turn can be played
+			await this.#sleep();
+			return await this.#attack_home();
+		}
+
+		// End the battle if AWAY is out of HP (reputation)
+		return this.end("home");
+	}
+
+	/** @param {"home"|"away"} team */
+	async end(user, idol, team) {
+		// let winner_id, winner_idol, winner_xp_user, winner_xp_card;
+
+		let id = user?.id;
+		let isUser = id ? true : false;
+		let xp_user = _jsT.randomNumber(config.player.xp.user.rewards.stage.MIN, config.player.xp.user.rewards.stage.MAX);
+		let xp_card = _jsT.randomNumber(config.player.xp.card.rewards.stage.MIN, config.player.xp.card.rewards.stage.MAX);
+
+		idol.stats.xp += xp_card;
+		let { card } = cardManager.tryLevelUp(idol);
+		card = cardManager.parse.toCardLike(card);
+
+		// prettier-ignore
+		if (isUser) await Promise.all([
+			userManager.inventory.update(user.id, card),
+			userManager.xp.increment(user.id, xp_user, "stage")
+		]);
+
+		return this.#resolve({
+			isUser: false
+		});
+	}
 }
