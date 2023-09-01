@@ -60,6 +60,20 @@ const category_colors = {
 	cust: "white"
 };
 
+const category_emojis = {
+	comn: "🔴",
+	uncn: "🟡",
+	rare: "🟢",
+	epic: "🔵",
+	mint: "🟣",
+	bday: "🟥",
+	holi: "🟨",
+	evnt: "🟩",
+	seas: "🟦",
+	shop: "🟪",
+	cust: "⬜"
+};
+
 const cards_all = [].concat(...Object.values(cards));
 const cards_general = [...cards.comn, ...cards.uncn, ...cards.rare, ...cards.epic, ...cards.mint];
 
@@ -526,6 +540,7 @@ module.exports = {
 
 	category: {
 		colors: category_colors,
+		emojis: category_emojis,
 
 		names: {
 			base: category_names_base,

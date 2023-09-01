@@ -259,17 +259,17 @@ function inventory(userData, options, stats) {
 	let embeds_inventory = [];
 
 	let stats_f_1 = stats.slice(0, 5).map(c =>
-		_dsT.markdown.ansi(`${c.category}: ${c.has}/${c.outOf}`, {
+		_dsT.markdown.ansi(`${_jsT.getProp(cardManager.category.emojis, c.category)} ${c.category}: ${c.has}/${c.outOf}`, {
 			format: "bold",
 			text_color: _jsT.getProp(cardManager.category.colors, c.category)
 		})
 	);
 
 	// Add the user's inventory count to the first stat section
-	stats_f_1.push(_dsT.markdown.ansi(`total: ${cards.length}`, { format: "bold", text_color: "white" }));
+	stats_f_1.push(_dsT.markdown.ansi(`⚪ total: ${cards.length}`, { format: "bold", text_color: "white" }));
 
 	let stats_f_2 = stats.slice(5).map(c =>
-		_dsT.markdown.ansi(`${c.category}: ${c.has}/${c.outOf}`, {
+		_dsT.markdown.ansi(`${_jsT.getProp(cardManager.category.emojis, c.category)} ${c.category}: ${c.has}/${c.outOf}`, {
 			format: "bold",
 			text_color: _jsT.getProp(cardManager.category.colors, c.category)
 		})
@@ -282,10 +282,26 @@ function inventory(userData, options, stats) {
 	// prettier-ignore
 	let stats_2 = stats.slice(5).map((c, idx) => `> **\`${cat_icons_2[idx]} ${c.category.toUpperCase()}\`** \`${c.has}/${c.outOf}\``); */
 
+	/* - - - - - - - - - - { PROFILE STATS } - - - - - - - - - - */
+	// prettier-ignore
+	// let stats_profile = "> `$CARROTS` :: `$RIBBONS` :: `🃏 $INVENTORY_COUNT/$CARD_COUNT` :: `📈 LV. $LEVEL ☝️ $XPXP/$XP_NEEDEDXP`"
+	let stats_profile = "$CARROTS :: $RIBBONS :: 🃏 $INVENTORY_COUNT/$CARD_COUNT :: 📈 LV. $LEVEL :: ☝️ $XPXP/$XP_NEEDEDXP"
+		.replace("$CARROTS", `${config_bot.emojis.currency_1.EMOJI} ${userData.balance || 0}`)
+		.replace("$RIBBONS", `${config_bot.emojis.currency_2.EMOJI} ${userData.ribbons || 0}`)
+
+		.replace("$INVENTORY_COUNT", cards.length || 0)
+		.replace("$CARD_COUNT", cardManager.cardCount || 0)
+
+		.replace("$LEVEL", userData.level || 0)
+
+		.replace("$XP", userData.xp || 0)
+		.replace("$XP_NEEDED", userData.xp_for_next_level || 0);
+
 	for (let i = 0; i < cards_f.length; i++) {
 		let _embed = new BetterEmbed({
-			author: { text: dupeCheck ? "$USERNAME | dupes" : "$USERNAME | inventory", user: options.target },
-			thumbnailURL: dupeCheck ? cards.slice(-1)[0].card.imageURL : null
+			author: { text: dupeCheck ? "$USERNAME | dupes" : "$USERNAME | inventory", user: options.target, iconURL: true },
+			thumbnailURL: dupeCheck ? cards.slice(-1)[0].card.imageURL : null,
+			// description: `\`\`\`${stats_profile}\`\`\``
 			// description: cards_f[i].join("\n"),
 			// description: `\`\`\`Inventory Page ${i + 1}\`\`\``,
 			// footer: { text: `Page ${i + 1}/${cards_f.length || 1} | Total: ${cards.length}` }
@@ -298,7 +314,7 @@ function inventory(userData, options, stats) {
 		);
 
 		// Add profile stats
-		_embed.addFields({ name: "\u200b", value: `\`\`\`n/a\`\`\``, inline: false });
+		_embed.addFields({ name: "\u200b", value: `\`\`\`${stats_profile}\`\`\``, inline: false });
 
 		// Add cards
 		_embed.addFields(cards_f[i].map(c_f => ({ name: "\u200b", value: c_f, inline: true })));
