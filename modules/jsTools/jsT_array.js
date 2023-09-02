@@ -84,7 +84,7 @@ function betterMap(arr, callback, copy = false) {
 /** Create a map that contains the results of the given callback function
  *
  * - Gives callback access to the new map being constructed
- * @param {bM_callback} callback
+ * @param {tM_callback} callback
  * @param {boolean} copy deep copy each item added to the map using structuredClone() */
 function toMap(arr, callback, copy = false) {
 	let arr_original = arr;

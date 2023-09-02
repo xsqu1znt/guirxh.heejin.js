@@ -1,8 +1,3 @@
-// const { botSettings, userSettings, dropSettings, eventSettings, shopSettings } = require("../configs/heejinSettings.json");
-/* const {
-	shopSettings: { setsInStock: shopSetsInStock }
-} = require("../configs/heejinSettings.json"); */
-
 /** @typedef options_toStr_inventory
  * @property {boolean} favorite
  * @property {boolean} selected
@@ -19,13 +14,21 @@ const { markdown } = require("./discordTools/_dsT");
 const _jsT = require("./jsTools/_jsT");
 const logger = require("./logger");
 
-const config_player = require("../configs/config_player.json");
-const config_event = require("../configs/config_event.json");
-const config_shop = require("../configs/config_shop.json");
-const config_drop = require("../configs/config_drop.json");
-const config_bot = require("../configs/config_bot.json");
+// const config_player = require("../configs/config_player.json");
+// const config_event = require("../configs/config_event.json");
+// const config_shop = require("../configs/config_shop.json");
+// const config_drop = require("../configs/config_drop.json");
+// const config_bot = require("../configs/config_bot.json");
 
-const cards = {
+const config = {
+	player: require("../configs/config_player.json"),
+	event: require("../configs/config_event.json"),
+	shop: require("../configs/config_shop.json"),
+	drop: require("../configs/config_drop.json"),
+	bot: require("../configs/config_bot.json")
+};
+
+const cards_json = {
 	comn: require("../items/cards/cards_common.json"),
 	uncn: require("../items/cards/cards_uncommon.json"),
 	rare: require("../items/cards/cards_rare.json"),
@@ -46,7 +49,58 @@ const cards = {
 	cust: require("../items/cards/cards_custom.json")
 };
 
-const category_colors = {
+const cards_all = [].concat(...Object.values(cards_json));
+const cards_general = [].concat(...Object.values(cards_json).slice(5));
+
+const cards_category_names = {
+	base: Object.keys(cards_json),
+	all: _jsT.unique(cards_all.category),
+	general: _jsT.unique(cards_general.category)
+};
+
+const cards_globalIDs = {
+	base: _jsT.toMap(Object.entries(cards_json), ([cat, c]) => ({ key: cat, value: c.map(c => c.globalID) })),
+
+	// prettier-ignore
+	all: _jsT.toMap(cards_category_names.all, cat =>
+		({ key: cat, value: cards_all.filter(c => c.category === cat).map(c => c.globalID) })
+	),
+
+	// prettier-ignore
+	general: _jsT.toMap(cards_category_names.general, cat =>
+		({ key: cat, value: cards_all.filter(c => c.category === cat).map(c => c.globalID) })
+	)
+};
+
+const cards_category_meta = {
+	base: {
+		comn: { name: "🔴 comn", color_ansi: "red" },
+		uncn: { name: "🟡 uncn", color_ansi: "yellow" },
+		rare: { name: "🟢 rare", color_ansi: "green" },
+		epic: { name: "🔵 epic", color_ansi: "blue" },
+		mint: { name: "🟣 mint", color_ansi: "pink" },
+
+		bday: { name: "🟥 bday", color_ansi: "red" },
+		holi: { name: "🟨 holi", color_ansi: "yellow" },
+		evnt: { name: "🟩 evnt", color_ansi: "green" },
+		seas: { name: "🟦 seas", color_ansi: "blue" },
+		shop: { name: "🟪 shop", color_ansi: "pink" },
+		cust: { name: "⬜ cust", color_ansi: "white" }
+	}
+};
+
+// const categories_general = Object.values(config_drop.chance).map(c => ({ ...c, rarity: c.CHANCE }));
+
+/* const cards = {
+	json: cards_json,
+	all: cards_all,
+
+	category: {
+		// names: {all: _jsT.unique}
+	}
+}; */
+
+/* const category_colors = {
 	comn: "red",
 	uncn: "yellow",
 	rare: "green",
@@ -72,25 +126,25 @@ const category_emojis = {
 	seas: "🟦",
 	shop: "🟪",
 	cust: "⬜"
-};
+}; */
 
-const cards_all = [].concat(...Object.values(cards));
-const cards_general = [...cards.comn, ...cards.uncn, ...cards.rare, ...cards.epic, ...cards.mint];
+/* const cards_all = [].concat(...Object.values(cards_json));
+const cards_general = [...cards_json.comn, ...cards_json.uncn, ...cards_json.rare, ...cards_json.epic, ...cards_json.mint];
 
 const categories_general = Object.values(config_drop.chance).map(c => ({ ...c, rarity: c.CHANCE }));
 
 /// Card categories
-const category_names_base = Object.keys(cards);
+const category_names_base = Object.keys(cards_json);
 const category_names_all = _jsT.unique(cards_all.map(c => c.category));
 
 // prettier-ignore
-const category_globalIDs_base = _jsT.toMap(Object.entries(cards), ([cat, c]) =>
+const category_globalIDs_base = _jsT.toMap(Object.entries(cards_json), ([cat, c]) =>
 	({ key: cat, value: c.map(c => c.globalID) })
 );
 // prettier-ignore
 const category_globalIDs_all = _jsT.toMap(category_names_all, cat =>
 	({ key: cat, value: cards_all.filter(c => c.category === cat).map(c => c.globalID) })
-);
+); */
 
 // Special charactors
 const superscript = {
@@ -201,7 +255,9 @@ function drop(dropType, count = 1) {
 	switch (dropType) {
 		case "general":
 			for (let i = 0; i < count; i++) {
-				let pickedCategory = _jsT.choiceWeighted(categories_general);
+				let pickedCategory = _jsT.choiceWeighted(
+					Object.values(config.drop.chance).map(c => ({ ...c, rarity: c.CHANCE }))
+				);
 				let pickedCategory_cards = cards_general.filter(card => card.rarity === pickedCategory.cardRarityFilter);
 
 				cards_dropped.push(structuredClone(_jsT.choice(pickedCategory_cards)));
@@ -209,21 +265,23 @@ function drop(dropType, count = 1) {
 			break;
 
 		case "weekly":
-			let _cards_weekly = cards.shop.filter(card => shopSetsInStock.filter(id => id !== "100").includes(card.setID));
+			let _cards_weekly = cards_json.shop.filter(card =>
+				shopSetsInStock.filter(id => id !== "100").includes(card.setID)
+			);
 
 			for (let i = 0; i < count; i++) cards_dropped.push(structuredClone(_jsT.choice(_cards_weekly)));
 
 			break;
 
 		case "season":
-			let _cards_season = cards.seas.filter(card => eventSettings.season.cardRarityFilter.includes(card.rarity));
+			let _cards_season = cards_json.seas.filter(card => eventSettings.season.cardRarityFilter.includes(card.rarity));
 
 			for (let i = 0; i < count; i++) cards_dropped.push(structuredClone(_jsT.choice(_cards_season)));
 
 			break;
 
 		case "event_1":
-			let _cards_event1 = [...cards.evnt, ...cards.bday, ...cards.holi].filter(card =>
+			let _cards_event1 = [...cards_json.evnt, ...cards_json.bday, ...cards_json.holi].filter(card =>
 				eventSettings.event1.cardRarityFilter.includes(card.rarity)
 			);
 
@@ -232,7 +290,7 @@ function drop(dropType, count = 1) {
 			break;
 
 		case "event_2":
-			let _cards_event2 = [...cards.evnt, ...cards.bday, ...cards.holi].filter(card =>
+			let _cards_event2 = [...cards_json.evnt, ...cards_json.bday, ...cards_json.holi].filter(card =>
 				eventSettings.event2.cardRarityFilter.includes(card.rarity)
 			);
 
@@ -311,24 +369,24 @@ function get_randomDrop(dropCategory) {
 			return [...new Array(5)].map(() => _jsT.choice(card_choices, true)) || null;
 
 		case "weekly":
-			card_choices = cards.shop.filter(card =>
+			card_choices = cards_json.shop.filter(card =>
 				config_shop.stock.card_set_ids.GENERAL.filter(id => id !== "100").includes(card.setID)
 			);
 			// Return a random card from the list
 			return [_jsT.choice(card_choices, true)] || null;
 
 		case "season":
-			card_choices = cards.seas.filter(card => config_event.season.CARD_RARITY_FILTER.includes(card.rarity));
+			card_choices = cards_json.seas.filter(card => config_event.season.CARD_RARITY_FILTER.includes(card.rarity));
 			// Return a random card from the list
 			return [_jsT.choice(card_choices, true)] || null;
 
 		case "event_1":
-			card_choices = cards.evnt.filter(card => config_event.event_1.CARD_RARITY_FILTER.includes(card.rarity));
+			card_choices = cards_json.evnt.filter(card => config_event.event_1.CARD_RARITY_FILTER.includes(card.rarity));
 			// Return a random card from the list
 			return [_jsT.choice(card_choices, true)] || null;
 
 		case "event_2":
-			card_choices = cards.evnt.filter(card => config_event.event_2.CARD_RARITY_FILTER.includes(card.rarity));
+			card_choices = cards_json.evnt.filter(card => config_event.event_2.CARD_RARITY_FILTER.includes(card.rarity));
 			// Return a random card from the list
 			return [_jsT.choice(card_choices, true)] || null;
 	}
@@ -535,7 +593,7 @@ function toString_setEntry(card) {
 
 // prettier-ignore
 module.exports = {
-	cards, cards_all, cards_general,
+	cards: cards_json, cards_all, cards_general,
 	cardCount: cards_all.length,
 
 	category: {

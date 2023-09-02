@@ -99,7 +99,10 @@ function collections(user, options) {
 		let _chunk_2 = cards_stage_3[i];
 
 		for (let _chunk_10_group of _chunk_2) {
-			let _embed = new BetterEmbed({ author: { text: "$USERNAME | collections", user } });
+			let _embed = new BetterEmbed({
+				author: { text: "$USERNAME | collections", user, iconURL: true },
+				description: "```lorem ipsum dolor sit amet```"
+			});
 
 			// prettier-ignore
 			for (let _chunk_10_f of _chunk_10_group)
