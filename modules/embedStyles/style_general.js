@@ -32,8 +32,8 @@ function collections(user, options) {
 	options.group = options.group.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
 
 	// Fetch the cards from the bot
-	let cards = _jsT.unique(cardManager.cards_all, "setID");
-	let category_names = _jsT.unique(cards.map(c => c.category));
+	let cards = _jsT.unique(cardManager.cards.all, "setID");
+	let cards_category_names = _jsT.unique(cards.map(c => c.category));
 
 	// prettier-ignore
 	let filtered = false;
@@ -78,7 +78,26 @@ function collections(user, options) {
 		description: filtered ? "No sets were found with that search filter" : "There are no sets available"
 	});
 
-	/// Group sets by their category
+	// Get the cards in each category
+	let card_categories = cards_category_names.map(cat => {
+		let _cards = cards.filter(c => c.category === cat).map(c => c.globalID);
+		return { name: cat, card_chunks: _jsT.chunk(_cards, 10) };
+	});
+
+	/// Create the embeds :: { COLLECTION }
+	let embeds_collections = [];
+
+	for (let cat of card_categories) {
+		if (cat.card_chunks.length > 3) {
+			for (let _chunk of _jsT.chunk(cat.card_chunks, 3)) {
+				for (let _cards of _chunk) {
+					
+				}
+			}
+		}
+	}
+
+	/* /// Group sets by their category
 	let cards_stage_1 = category_names.map(cat =>
 		cards
 			.filter(c => c.category === cat)
@@ -118,7 +137,7 @@ function collections(user, options) {
 			text: `Page ${i + 1}/${embeds_collections.length || 1} | Total: ${cards.length}`
 		});
 
-	return embeds_collections;
+	return embeds_collections; */
 }
 
 function gift(user, recipient, cards) {

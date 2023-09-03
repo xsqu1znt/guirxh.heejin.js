@@ -62,8 +62,8 @@ const cards_shop_special = cards_shop_all.filter(card => config.shop.stock.card_
 /// Card category meta
 const cards_category_names = {
 	base: Object.keys(cards_base),
-	all: _jsT.unique(cards_all.category),
-	general: _jsT.unique(cards_general.category)
+	all: _jsT.unique(cards_all.map(c => c.category)),
+	general: _jsT.unique(cards_general.map(c => c.category))
 };
 
 const cards_globalIDs = {
@@ -607,6 +607,8 @@ module.exports = {
 		general: cards_general,
 		count: cards_all.length,
 
+		gIDs: cards_globalIDs,
+
 		shop: {
 			all: cards_shop_all,
 			general: cards_shop_general,
@@ -624,8 +626,6 @@ module.exports = {
 			names: cards_category_names,
 			meta: cards_category_meta
 		},
-
-		gIDs: cards_globalIDs
 	},
 
 	resetUID,
