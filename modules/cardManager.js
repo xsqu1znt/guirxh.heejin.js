@@ -14,11 +14,11 @@ const { markdown } = require("./discordTools/_dsT");
 const _jsT = require("./jsTools/_jsT");
 const logger = require("./logger");
 
-// const config_player = require("../configs/config_player.json");
-// const config_event = require("../configs/config_event.json");
-// const config_shop = require("../configs/config_shop.json");
-// const config_drop = require("../configs/config_drop.json");
-// const config_bot = require("../configs/config_bot.json");
+// const config.player = require("../configs/config.player.json");
+// const config.event = require("../configs/config.event.json");
+// const config.shop = require("../configs/config.shop.json");
+// const config.drop = require("../configs/config.drop.json");
+// const config.bot = require("../configs/config.bot.json");
 
 const config = {
 	player: require("../configs/config_player.json"),
@@ -28,7 +28,7 @@ const config = {
 	bot: require("../configs/config_bot.json")
 };
 
-const cards_json = {
+const cards_base = {
 	comn: require("../items/cards/cards_common.json"),
 	uncn: require("../items/cards/cards_uncommon.json"),
 	rare: require("../items/cards/cards_rare.json"),
@@ -49,17 +49,25 @@ const cards_json = {
 	cust: require("../items/cards/cards_custom.json")
 };
 
-const cards_all = [].concat(...Object.values(cards_json));
-const cards_general = [].concat(...Object.values(cards_json).slice(5));
+/// Card arrays
+const cards_all = [].concat(...Object.values(cards_base));
+const cards_general = [].concat(...Object.values(cards_base).slice(5));
 
+const cards_shop_all = cards_all.filter(card =>
+	[...config.shop.stock.card_set_ids.GENERAL, ...config.shop.stock.card_set_ids.SPECIAL].includes(card.setID)
+);
+const cards_shop_general = cards_shop_all.filter(card => config.shop.stock.card_set_ids.GENERAL.includes(card.setID));
+const cards_shop_special = cards_shop_all.filter(card => config.shop.stock.card_set_ids.SPECIAL.includes(card.setID));
+
+/// Card category meta
 const cards_category_names = {
-	base: Object.keys(cards_json),
+	base: Object.keys(cards_base),
 	all: _jsT.unique(cards_all.category),
 	general: _jsT.unique(cards_general.category)
 };
 
 const cards_globalIDs = {
-	base: _jsT.toMap(Object.entries(cards_json), ([cat, c]) => ({ key: cat, value: c.map(c => c.globalID) })),
+	base: _jsT.toMap(Object.entries(cards_base), ([cat, c]) => ({ key: cat, value: c.map(c => c.globalID) })),
 
 	// prettier-ignore
 	all: _jsT.toMap(cards_category_names.all, cat =>
@@ -89,7 +97,7 @@ const cards_category_meta = {
 	}
 };
 
-// const categories_general = Object.values(config_drop.chance).map(c => ({ ...c, rarity: c.CHANCE }));
+// const categories_general = Object.values(config.drop.chance).map(c => ({ ...c, rarity: c.CHANCE }));
 
 /* const cards = {
 	json: cards_json,
@@ -131,7 +139,7 @@ const category_emojis = {
 /* const cards_all = [].concat(...Object.values(cards_json));
 const cards_general = [...cards_json.comn, ...cards_json.uncn, ...cards_json.rare, ...cards_json.epic, ...cards_json.mint];
 
-const categories_general = Object.values(config_drop.chance).map(c => ({ ...c, rarity: c.CHANCE }));
+const categories_general = Object.values(config.drop.chance).map(c => ({ ...c, rarity: c.CHANCE }));
 
 /// Card categories
 const category_names_base = Object.keys(cards_json);
@@ -165,12 +173,12 @@ function recalculateStats(card) {
 
 	// Iterate through each level and increase the stats
 	for (let i = 0; i < card.stats.level - 1; i++) {
-		card.stats.ability += config_player.xp.card.rewards.level_up.ABILITY;
-		card.stats.reputation += config_player.xp.card.rewards.level_up.REPUTATION;
+		card.stats.ability += config.player.xp.card.rewards.level_up.ABILITY;
+		card.stats.reputation += config.player.xp.card.rewards.level_up.REPUTATION;
 	}
 
 	// Reset how much XP the card needs to level up
-	card.stats.xp_for_next_level = card.stats.level * config_player.xp.card.LEVEL_XP_MULTIPLIER;
+	card.stats.xp_for_next_level = card.stats.level * config.player.xp.card.LEVEL_XP_MULTIPLIER;
 
 	return card;
 }
@@ -186,7 +194,7 @@ function levelUp(card) {
 	};
 
 	const levelUp = () => {
-		if (card.stats.level >= config_player.xp.card.LEVEL_MAX) return;
+		if (card.stats.level >= config.player.xp.card.LEVEL_MAX) return;
 
 		if (card.stats.xp >= card.stats.xp_for_next_level) {
 			// Subtract the required XP to level up from the card
@@ -196,7 +204,7 @@ function levelUp(card) {
 			card.stats.level++;
 
 			// Calculate the XP required for the next level
-			card.stats.xp_for_next_level = Math.floor(card.stats.level * config_player.xp.card.LEVEL_XP_MULTIPLIER);
+			card.stats.xp_for_next_level = Math.floor(card.stats.level * config.player.xp.card.LEVEL_XP_MULTIPLIER);
 
 			// Update session data
 			session.levels_gained++;
@@ -211,7 +219,7 @@ function levelUp(card) {
 	/* session = { leveled: false, levelsGained: 0, ...session };
 
 	// Don't level the card past the max card level
-	if (card.stats.level === config_player.xp.card.LEVEL_MAX) return session;
+	if (card.stats.level === config.player.xp.card.LEVEL_MAX) return session;
 
 	// Increase the card's level by 1 if they meet or surpass the required XP
 	if (card.stats.xp >= card.stats.xp_for_next_level) {
@@ -220,14 +228,14 @@ function levelUp(card) {
 		session.levelsGained++;
 
 		// If the card's at its max level set its XP to its required xp_for_next_level
-		if (card.stats.level === config_player.xp.card.LEVEL_MAX) card.stats.xp = card.stats.xp_for_next_level;
+		if (card.stats.level === config.player.xp.card.LEVEL_MAX) card.stats.xp = card.stats.xp_for_next_level;
 		else {
 			// Reset XP, keeping any overshoot
 			// defaults to 0 if there wasn't a positive overshoot value
 			card.stats.xp = card.stats.xp - card.stats.xp_for_next_level || 0;
 
 			// Multiply the card's xp_for_next_level by its multipler
-			card.stats.xp_for_next_level = Math.round(card.stats.level * config_player.xp.card.LEVEL_XP_MULTIPLIER);
+			card.stats.xp_for_next_level = Math.round(card.stats.level * config.player.xp.card.LEVEL_XP_MULTIPLIER);
 
 			card = recalculateStats(card);
 
@@ -265,7 +273,7 @@ function drop(dropType, count = 1) {
 			break;
 
 		case "weekly":
-			let _cards_weekly = cards_json.shop.filter(card =>
+			let _cards_weekly = cards_base.shop.filter(card =>
 				shopSetsInStock.filter(id => id !== "100").includes(card.setID)
 			);
 
@@ -274,14 +282,14 @@ function drop(dropType, count = 1) {
 			break;
 
 		case "season":
-			let _cards_season = cards_json.seas.filter(card => eventSettings.season.cardRarityFilter.includes(card.rarity));
+			let _cards_season = cards_base.seas.filter(card => eventSettings.season.cardRarityFilter.includes(card.rarity));
 
 			for (let i = 0; i < count; i++) cards_dropped.push(structuredClone(_jsT.choice(_cards_season)));
 
 			break;
 
 		case "event_1":
-			let _cards_event1 = [...cards_json.evnt, ...cards_json.bday, ...cards_json.holi].filter(card =>
+			let _cards_event1 = [...cards_base.evnt, ...cards_base.bday, ...cards_base.holi].filter(card =>
 				eventSettings.event1.cardRarityFilter.includes(card.rarity)
 			);
 
@@ -290,7 +298,7 @@ function drop(dropType, count = 1) {
 			break;
 
 		case "event_2":
-			let _cards_event2 = [...cards_json.evnt, ...cards_json.bday, ...cards_json.holi].filter(card =>
+			let _cards_event2 = [...cards_base.evnt, ...cards_base.bday, ...cards_base.holi].filter(card =>
 				eventSettings.event2.cardRarityFilter.includes(card.rarity)
 			);
 
@@ -312,7 +320,7 @@ function get_globalID(globalID) {
 }
 
 function get_fromShop(globalID, special = false) {
-	let _card_shop_set_ids = special ? config_shop.stock.card_set_ids.SPECIAL : config_shop.stock.card_set_ids.GENERAL;
+	let _card_shop_set_ids = special ? config.shop.stock.card_set_ids.SPECIAL : config.shop.stock.card_set_ids.GENERAL;
 
 	let _cards = cards_all.filter(card => _card_shop_set_ids.includes(card.setID));
 	return structuredClone(_cards.find(card => card.globalID === globalID)) || null;
@@ -360,7 +368,7 @@ function get_randomDrop(dropCategory) {
 
 	switch (dropCategory) {
 		case "general":
-			let categories = Object.values(config_drop.chance).map(c => ({ ...c, rarity: c.CHANCE }));
+			let categories = Object.values(config.drop.chance).map(c => ({ ...c, rarity: c.CHANCE }));
 			let category_picked = _jsT.choiceWeighted(categories);
 
 			card_choices = cards_general.filter(card => card.rarity === category_picked.CARD_RARITY_FILTER);
@@ -369,24 +377,24 @@ function get_randomDrop(dropCategory) {
 			return [...new Array(5)].map(() => _jsT.choice(card_choices, true)) || null;
 
 		case "weekly":
-			card_choices = cards_json.shop.filter(card =>
-				config_shop.stock.card_set_ids.GENERAL.filter(id => id !== "100").includes(card.setID)
+			card_choices = cards_base.shop.filter(card =>
+				config.shop.stock.card_set_ids.GENERAL.filter(id => id !== "100").includes(card.setID)
 			);
 			// Return a random card from the list
 			return [_jsT.choice(card_choices, true)] || null;
 
 		case "season":
-			card_choices = cards_json.seas.filter(card => config_event.season.CARD_RARITY_FILTER.includes(card.rarity));
+			card_choices = cards_base.seas.filter(card => config.event.season.CARD_RARITY_FILTER.includes(card.rarity));
 			// Return a random card from the list
 			return [_jsT.choice(card_choices, true)] || null;
 
 		case "event_1":
-			card_choices = cards_json.evnt.filter(card => config_event.event_1.CARD_RARITY_FILTER.includes(card.rarity));
+			card_choices = cards_base.evnt.filter(card => config.event.event_1.CARD_RARITY_FILTER.includes(card.rarity));
 			// Return a random card from the list
 			return [_jsT.choice(card_choices, true)] || null;
 
 		case "event_2":
-			card_choices = cards_json.evnt.filter(card => config_event.event_2.CARD_RARITY_FILTER.includes(card.rarity));
+			card_choices = cards_base.evnt.filter(card => config.event.event_2.CARD_RARITY_FILTER.includes(card.rarity));
 			// Return a random card from the list
 			return [_jsT.choice(card_choices, true)] || null;
 	}
@@ -558,10 +566,10 @@ function toString_shopEntry(card, currencyType = "carrot") {
 
 	switch (currencyType) {
 		case "carrot":
-			_currencyIcon = config_bot.emojis.currency_1.EMOJI;
+			_currencyIcon = config.bot.emojis.currency_1.EMOJI;
 			break;
 		case "ribbon":
-			_currencyIcon = config_bot.emojis.currency_2.EMOJI;
+			_currencyIcon = config.bot.emojis.currency_2.EMOJI;
 			break;
 	}
 
@@ -593,29 +601,31 @@ function toString_setEntry(card) {
 
 // prettier-ignore
 module.exports = {
-	cards: cards_json, cards_all, cards_general,
-	cardCount: cards_all.length,
+	cards: {
+		base: cards_base,
+		all: cards_all,
+		general: cards_general,
+		count: cards_all.length,
 
-	category: {
-		colors: category_colors,
-		emojis: category_emojis,
+		shop: {
+			all: cards_shop_all,
+			general: cards_shop_general,
+			special: cards_shop_special,
+			count: cards_shop_all.length,
 
-		names: {
-			base: category_names_base,
-			all: category_names_all
+			setIDs: {
+				all: [].concat(...Object.values(config.shop.stock.card_set_ids)),
+				general: config.shop.stock.card_set_ids.GENERAL,
+				special: config.shop.stock.card_set_ids.SPECIAL
+			}
 		},
 
-		globalIDs: {
-			base: category_globalIDs_base,
-			all: category_globalIDs_all
-		}
-	},
+		category: {
+			names: cards_category_names,
+			meta: cards_category_meta
+		},
 
-	cards_shop: {
-		general: cards_all.filter(card => config_shop.stock.card_set_ids.GENERAL.includes(card.setID)),
-		special: cards_all.filter(card => config_shop.stock.card_set_ids.SPECIAL.includes(card.setID)),
-		setIDs_general: config_shop.stock.card_set_ids.GENERAL,
-		setIDs_special: config_shop.stock.card_set_ids.SPECIAL
+		gIDs: cards_globalIDs
 	},
 
 	resetUID,
