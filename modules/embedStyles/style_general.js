@@ -97,7 +97,7 @@ function collections(user, options) {
 					});
 
 					for (let _card of _cards_chunk)
-						_embed.addFields({ name: "\u200b", value: cardManager.toString.setEntry(_card), inline });
+						_embed.addFields({ name: "\u200b", value: cardManager.toString.setEntry(_card), inline: true });
 
 					embeds_collections.push(_embed);
 				}
@@ -108,8 +108,9 @@ function collections(user, options) {
 				description: "```lorem ipsum dolor sit amet```"
 			});
 
-			for (let _card of _cards_chunk)
-				_embed.addFields({ name: "\u200b", value: cardManager.toString.setEntry(_card), inline });
+			for (let _chunk of cat.card_chunks)
+				for (let _card of _chunk)
+					_embed.addFields({ name: "\u200b", value: cardManager.toString.setEntry(_card), inline: true });
 
 			embeds_collections.push(_embed);
 		}
