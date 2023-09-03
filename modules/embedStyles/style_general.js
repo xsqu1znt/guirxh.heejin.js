@@ -90,12 +90,32 @@ function collections(user, options) {
 	for (let cat of card_categories) {
 		if (cat.card_chunks.length > 3) {
 			for (let _chunk of _jsT.chunk(cat.card_chunks, 3)) {
-				for (let _cards of _chunk) {
-					
+				for (let _cards_chunk of _chunk) {
+					let _embed = new BetterEmbed({
+						author: { text: "$USERNAME | collections", user, iconURL: true },
+						description: "```lorem ipsum dolor sit amet```"
+					});
+
+					for (let _card of _cards_chunk)
+						_embed.addFields({ name: "\u200b", value: cardManager.toString.setEntry(_card), inline });
+
+					embeds_collections.push(_embed);
 				}
 			}
+		} else {
+			let _embed = new BetterEmbed({
+				author: { text: "$USERNAME | collections", user, iconURL: true },
+				description: "```lorem ipsum dolor sit amet```"
+			});
+
+			for (let _card of _cards_chunk)
+				_embed.addFields({ name: "\u200b", value: cardManager.toString.setEntry(_card), inline });
+
+			embeds_collections.push(_embed);
 		}
 	}
+
+	return embeds_collections;
 
 	/* /// Group sets by their category
 	let cards_stage_1 = category_names.map(cat =>
