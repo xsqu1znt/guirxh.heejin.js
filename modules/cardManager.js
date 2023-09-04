@@ -560,31 +560,32 @@ function toString_itemPackSetEntry(setID, chance) {
 		.replace("%CHANCE", `\`%${chance}\``);
 }
 
-/** @param {"carrot"|"ribbon"} currencyType  */
-function toString_shopEntry(card, currencyType = "carrot") {
-	let _currencyIcon = "";
+function toString_shopEntry(globalID) {
+	let card = get_globalID(globalID);
+	let isSpecial = config.shop.stock.card_set_ids.SPECIAL.includes(card.globalID);
 
-	switch (currencyType) {
-		case "carrot":
-			_currencyIcon = config.bot.emojis.currency_1.EMOJI;
-			break;
-		case "ribbon":
-			_currencyIcon = config.bot.emojis.currency_2.EMOJI;
-			break;
-	}
+	// prettier-ignore
+	let { currency_1: { EMOJI: carrot }, currency_2: { EMOJI: ribbon } } = config.bot.emojis;
 
 	return "%GLOBAL_ID %EMOJI %GROUP :: %SINGLE : %NAME %SET_ID %PRICE"
-		.replace("%GLOBAL_ID", inline(card.globalID))
-		.replace("%EMOJI", inline(card.emoji))
-		.replace("%GROUP", bold(card.group))
+		.replace("%GLOBAL_ID", `\`${card.globalID}\``)
+		.replace("%EMOJI", `\`${card.emoji}\``)
+		.replace("%GROUP", `**${card.group}**`)
 		.replace("%SINGLE", card.single)
-		.replace("%NAME", link(card.name, card.imageURL))
-		.replace("%SET_ID", inline("🗣️", card.setID))
-		.replace("%PRICE", inline(_currencyIcon, card.price));
+		.replace("%NAME", markdown.link(card.name, card.imageURL))
+		.replace("%SET_ID", `\`🗣️ ${card.setID}\``)
+		.replace("%PRICE", `\`${isSpecial ? ribbon : carrot} ${card.price}\``);
 }
 
-function toString_setEntry(card) {
-	let count = get_setID(card.setID).length || 1;
+/** @param {{globalID:number, setID:number}} options  */
+function toString_setEntry(options) {
+	options = { globalID: null, setID: null, ...options };
+
+	let card = get_globalID(options.globalID);
+	let set = get_setID(card ? card.setID : options.setID);
+	card ||= set[0];
+
+	let count = set.length || 1;
 	if (count < 10) count = `0${count}`;
 
 	// return "%SET_ID %CARD_COUNT %CATEGORY %EMOJI %DESCRIPTION%SINGLE"

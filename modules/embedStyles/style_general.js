@@ -80,15 +80,61 @@ function collections(user, options) {
 
 	// Get the cards in each category
 	let card_categories = cards_category_names.map(cat => {
-		let _cards = cards.filter(c => c.category === cat).map(c => c.globalID);
-		return { name: cat, card_chunks: _jsT.chunk(_cards, 10) };
-	});
+		let globalIDs = cards.filter(c => c.category === cat).map(c => c.globalID);
+		return { name: cat, globalIDs: _jsT.chunk(globalIDs, 5), count: globalIDs.length };
+	}).filter(cat => cat.count);
+
+	console.log(card_categories);
+
+	/* let card_category_fields = [];
+	// prettier-ignore
+	for (let cat of card_categories) cat.globalIDs.forEach((gid, idx) =>
+		card_category_fields.push({ name: idx === 0 ? cat.name : null, value: cardManager.toString.shopEntry(gid) })
+	); */
+
+	// let card_category_fields_f = _jsT.chunk()
+
+	// "\u200b"
+	// console.log(card_category_fields);
 
 	/// Create the embeds :: { COLLECTION }
-	let embeds_collections = [];
+	let embeds_collection = [];
 
-	for (let cat of card_categories) {
-		if (cat.card_chunks.length > 3) {
+	for (let category of card_categories) {
+		/* - - - - - */
+		for (let span_3_column of _jsT.chunk(category.globalIDs, 3)) {
+			// Create the embed
+			let _embed = new BetterEmbed({
+				author: { text: "$USERNAME | collections", user, iconURL: true },
+				description: "```lorem ipsum dolor sit amet```"
+			});
+
+			/* - - - - - */
+			for (let i = 0, gids_of_5 = span_3_column[i]; i < span_3_column.length; i++) {
+				_embed.addFields({
+					name: i ? "\u200b" : category.name.toUpperCase(),
+					value: gids_of_5.map(gid => cardManager.toString.setEntry({ globalID: gid })).join("\n\n"),
+					inline: true
+				});
+			}
+
+			/* for (let gids_of_5 of category.globalIDs) {
+			
+				_embed.addFields({name: });
+			} */
+
+			// Add the page to the embed array
+			embeds_collection.push(_embed);
+		}
+
+		// prettier-ignore
+		/* for (let _cat of cats) _embed.addFields({
+			name: _cat.toUpperCase(), value: "lorem ipsum", inline: true
+		}); */
+
+		// console.log(cat);
+
+		/* if (cat.card_chunks.length > 3) {
 			for (let _chunk of _jsT.chunk(cat.card_chunks, 3)) {
 				for (let _cards_chunk of _chunk) {
 					let _embed = new BetterEmbed({
@@ -113,10 +159,10 @@ function collections(user, options) {
 					_embed.addFields({ name: "\u200b", value: cardManager.toString.setEntry(_card), inline: true });
 
 			embeds_collections.push(_embed);
-		}
+		} */
 	}
 
-	return embeds_collections;
+	return embeds_collection;
 
 	/* /// Group sets by their category
 	let cards_stage_1 = category_names.map(cat =>
