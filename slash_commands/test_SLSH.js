@@ -26,15 +26,40 @@ module.exports = {
 
 		let cards = [...cardManager.cards.base.cust, ...cardManager.cards.base.shop];
 
+		/// Gather card global IDs
 		let card_categories = [];
 
 		for (let cat of cardManager.cards.category.names.all) {
 			let _globalIDs = cards.filter(c => c.category === cat).map(c => ({ name: "", globalID: c.globalID }));
 
-			let _globalID_first = { ..._globalIDs.shift(), name: cat };
-
-			card_categories.push(...[_globalID_first, ..._globalIDs]);
+			if (_globalIDs.length) {
+				let _globalID_first = { ..._globalIDs.shift(), name: cat };
+				card_categories.push(...[_globalID_first, ..._globalIDs]);
+			}
 		}
+
+		/// Split global IDs by category, with a max of 5 cards per group
+		let card_categories_split = [];
+		let row_size = 5;
+
+		for (let i = 0; i < card_categories.length; ) {
+			let chunk = card_categories.slice(i, i + row_size);
+
+			// prettier-ignore
+			for (let idx = 0; idx < chunk.length; idx++)
+				if (chunk[idx].name) {
+					let _chunk = chunk.slice(0, idx - 1);
+
+					if (_chunk.length) chunk = _chunk;
+
+					break;
+				}
+
+			card_categories_split.push(chunk);
+			i += chunk.length;
+		}
+
+		console.log(card_categories_split);
 
 		// prettier-ignore
 		/* let card_categories = cardManager.cards.category.names.all.map(cat => {
@@ -43,8 +68,6 @@ module.exports = {
 			return { name: cat, globalIDs: _jsT.chunk(globalIDs, 5), count: globalIDs.length };
 			
 		}).filter(cat => cat.count); */
-
-		console.log(card_categories);
 
 		return await embed.send();
 	}
