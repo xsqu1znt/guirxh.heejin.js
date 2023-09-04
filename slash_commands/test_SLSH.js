@@ -17,10 +17,32 @@ module.exports = {
 	execute: async (client, interaction) => {
 		let embed = new BetterEmbed({ interaction, description: "boop" });
 
+		/*
+		- ORIGINAL -
 		let card_categories = cardManager.cards.category.names.all.map(cat => {
 			let _cards = cardManager.cards.all.filter(c => c.category === cat).map(c => c.globalID);
 			return { category: cat, cards: _jsT.chunk(_cards, 10) };
-		});
+		}); */
+
+		let cards = [...cardManager.cards.base.cust, ...cardManager.cards.base.shop];
+
+		let card_categories = [];
+
+		for (let cat of cardManager.cards.category.names.all) {
+			let _globalIDs = cards.filter(c => c.category === cat).map(c => ({ name: "", globalID: c.globalID }));
+
+			let _globalID_first = { ..._globalIDs.shift(), name: cat };
+
+			card_categories.push(...[_globalID_first, ..._globalIDs]);
+		}
+
+		// prettier-ignore
+		/* let card_categories = cardManager.cards.category.names.all.map(cat => {
+			let globalIDs = cards.filter(c => c.category === cat).map(c => c.globalID);
+
+			return { name: cat, globalIDs: _jsT.chunk(globalIDs, 5), count: globalIDs.length };
+			
+		}).filter(cat => cat.count); */
 
 		console.log(card_categories);
 
