@@ -46,6 +46,7 @@ module.exports = {
 			let chunk = card_categories.slice(i, i + row_size);
 
 			// prettier-ignore
+			// TODO: split chunk if there's a category switch
 			for (let idx = 0; idx < chunk.length; idx++)
 				if (chunk[idx].name) {
 					let _chunk = chunk.slice(0, idx - 1);
