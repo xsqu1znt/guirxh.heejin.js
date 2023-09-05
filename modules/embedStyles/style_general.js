@@ -86,8 +86,15 @@ function collections(user, options) {
 
 		// NOTE: only pushes to the array if there were global IDs found
 		if (_globalIDs.length) {
+			// prettier-ignore
 			// Gets the first element in the array and appends its category name
-			let _globalID_first = { ..._globalIDs.shift(), name: cat };
+			let _globalID_first = {
+				..._globalIDs.shift()
+				// name: `${cardManager.cards.category.meta.base[cardManager.get.baseCategoryName(_globalIDs[0].globalID)].emoji} ${cat}`
+			};
+
+			_globalID_first.name = `\`${cardManager.cards.category.meta.base[cardManager.get.baseCategoryName(_globalID_first.globalID)].emoji}\` ${cat}`
+
 			// Pushes to the main array
 			card_categories.push(...[_globalID_first, ..._globalIDs]);
 		}
@@ -134,7 +141,7 @@ function collections(user, options) {
 		for (let span_3_column of card_categories_split_chunk[i]) {
 			/* - - - - - */
 			_embed.addFields({
-				name: span_3_column[0].name.toUpperCase() || "\u200b",
+				name: span_3_column[0].name ? `***${span_3_column[0].name.toUpperCase()}***` : "\u200b",
 				value: span_3_column.map(({ globalID }) => cardManager.toString.setEntry({ globalID })).join("\n\n"),
 				inline: true
 			});

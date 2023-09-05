@@ -82,18 +82,18 @@ const cards_globalIDs = {
 
 const cards_category_meta = {
 	base: {
-		comn: { name: "🔴 comn", color_ansi: "red" },
-		uncn: { name: "🟡 uncn", color_ansi: "yellow" },
-		rare: { name: "🟢 rare", color_ansi: "green" },
-		epic: { name: "🔵 epic", color_ansi: "blue" },
-		mint: { name: "🟣 mint", color_ansi: "pink" },
+		comn: { emoji: "🔴", name: "🔴 comn", color_ansi: "red" },
+		uncn: { emoji: "🟡", name: "🟡 uncn", color_ansi: "yellow" },
+		rare: { emoji: "🟢", name: "🟢 rare", color_ansi: "green" },
+		epic: { emoji: "🔵", name: "🔵 epic", color_ansi: "blue" },
+		mint: { emoji: "🟣", name: "🟣 mint", color_ansi: "pink" },
 
-		bday: { name: "🟥 bday", color_ansi: "red" },
-		holi: { name: "🟨 holi", color_ansi: "yellow" },
-		evnt: { name: "🟩 evnt", color_ansi: "green" },
-		seas: { name: "🟦 seas", color_ansi: "blue" },
-		shop: { name: "🟪 shop", color_ansi: "pink" },
-		cust: { name: "⬜ cust", color_ansi: "white" }
+		bday: { emoji: "🟥", name: "🟥 bday", color_ansi: "red" },
+		holi: { emoji: "🟨", name: "🟨 holi", color_ansi: "yellow" },
+		evnt: { emoji: "🟩", name: "🟩 evnt", color_ansi: "green" },
+		seas: { emoji: "🟦", name: "🟦 seas", color_ansi: "blue" },
+		shop: { emoji: "🟪", name: "🟪 shop", color_ansi: "pink" },
+		cust: { emoji: "⬜", name: "⬜ cust", color_ansi: "white" }
 	}
 };
 
@@ -328,6 +328,14 @@ function get_fromShop(globalID, special = false) {
 
 function get_setID(setID) {
 	return structuredClone(cards_all.filter(card => card.setID === setID)) || [];
+}
+
+function get_baseCategoryName(globalID) {
+	for (let cat of cards_category_names.base) {
+		if (cards_globalIDs.base.get(cat).includes(globalID)) return cat;
+	}
+
+	return null;
 }
 
 /** @param {options_get_random} options */
@@ -589,15 +597,16 @@ function toString_setEntry(options) {
 	if (count < 10) count = `0${count}`;
 
 	// return "%SET_ID %CARD_COUNT %CATEGORY %EMOJI %DESCRIPTION%SINGLE"
-	return "%SET_ID %CARD_COUNT %CATEGORY %EMOJI %DESCRIPTION"
-		.replace("%SET_ID", `\`🗣️${card.setID}\``)
+	return "`$CATEGORY` `$SET_ID` `$CARD_COUNT`\n`$EMOJI` **$SINGLE** `$GROUP`"
+		.replace("$SET_ID", `🗣️ ${card.setID}`)
 
-		.replace("%CARD_COUNT", `\`📁 ${count || 1}\``)
+		.replace("$CARD_COUNT", `📁 ${count || 1}`)
 
-		.replace("%CATEGORY", `\`${card.category}\``)
-		.replace("%EMOJI", `\`${card.emoji}\``)
-		.replace("%GROUP", `**${card.group}**`)
-		.replace("%DESCRIPTION", card.description);
+		.replace("$CATEGORY", card.category)
+		.replace("$EMOJI", card.emoji)
+		.replace("$SINGLE", card.single)
+		.replace("$GROUP", card.group)
+		.replace("$DESCRIPTION", card.description);
 }
 
 // prettier-ignore
@@ -608,7 +617,7 @@ module.exports = {
 		general: cards_general,
 		count: cards_all.length,
 
-		gIDs: cards_globalIDs,
+		globalIDs: cards_globalIDs,
 
 		shop: {
 			all: cards_shop_all,
@@ -636,6 +645,7 @@ module.exports = {
 	drop,
 
 	get: {
+		baseCategoryName: get_baseCategoryName,
 		globalID: get_globalID,
 		setID: get_setID,
 		fromShop: get_fromShop,
