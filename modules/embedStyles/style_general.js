@@ -114,6 +114,10 @@ function collections(user, options) {
 		let chunk_test = card_categories.slice(i, i + size);
 		// Check if it contains an entrie with a category name
 		let chunk_test_idx = chunk_test.findIndex(c => c.name);
+		let chunk_test_find = chunk_test[chunk_test_idx];
+
+		// Check again if the 1st entry had a category name
+		if (chunk_test_idx === 0) chunk_test_idx = chunk_test.findIndex(c => c.name && c.name !== chunk_test_find.name);
 
 		// Cut the row size down to the index of an entry before the category name
 		// we don't need to subtract 1 from here to get the entry before index because we're using .slice()
@@ -121,11 +125,14 @@ function collections(user, options) {
 
 		// Push the resulting chunk to the array
 		// since we're using .slice(), we need to make sure the size isn't 0 (the index of .findIndex())
-		card_categories_split.push(chunk_test.slice(0, size || 1));
+		let chunk = chunk_test.slice(0, size || 1);
+
+		card_categories_split.push(chunk);
 
 		// Increment i by size, defaulting to row size if 0 (the index of .findIndex())
 		i += size || row_size;
 	}
+
 
 	/// Create the embeds :: { COLLECTION }
 	let embeds_collection = [];

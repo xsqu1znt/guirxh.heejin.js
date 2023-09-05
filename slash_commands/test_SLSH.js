@@ -15,12 +15,12 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-		let embed = new BetterEmbed({
+		/* let embed = new BetterEmbed({
 			interaction, author: { text: "$USERNAME | missing", iconURL: true },
 			description: "```TESTING```"
-		});
+		}); */
 
-		// `🗣️ 120`
+		/* // `🗣️ 120`
 		let row_1 = [
 			"> `owned ✔️` **`1201`**\n> `🐰` **ViViD** `LOONA Solo` - [HeeJin](https://cdn.discordapp.com/attachments/1014199645750186044/1035715810200670319/vivid_heejin.png)",
 			"> `missing ❌` **`1205`**\n> `🦌` **Everyday I Love You** `LOONA Solo` - [ViVi](https://cdn.discordapp.com/attachments/1014199645750186044/1035715810200670319/vivid_heejin.png)",
@@ -47,7 +47,13 @@ module.exports = {
 			{ name: "\u200b", value: row_3.join("\n\n"), inline: true }
 		);
 
-		return await embed.send();
+		return await embed.send(); */
+
+		let embed = new BetterEmbed({
+			interaction,
+			author: { text: "$USERNAME | test", iconURL: true },
+			description: "```	 boop```"
+		});
 
 		/*
 		- ORIGINAL -
@@ -56,8 +62,8 @@ module.exports = {
 			return { category: cat, cards: _jsT.chunk(_cards, 10) };
 		}); */
 
-		/* // let cards = [...cardManager.cards.base.cust, ...cardManager.cards.base.shop];
-		let cards = [...cardManager.cards.base.evnt];
+		// let cards = [...cardManager.cards.base.cust, ...cardManager.cards.base.shop];
+		let cards = cardManager.cards.all;
 
 		/// Gather card global IDs
 		let card_categories = [];
@@ -79,7 +85,7 @@ module.exports = {
 		let card_categories_split = [];
 		let row_size = 5;
 
-		for (let i = 0; i < card_categories.length;) {
+		for (let i = 0; i < card_categories.length; ) {
 			// Get the base row size of 5
 			let size = row_size;
 
@@ -89,17 +95,20 @@ module.exports = {
 			let chunk_test_idx = chunk_test.findIndex(c => c.name);
 
 			// Cut the row size down to the index of an entry before the category name
-			// we don't need to subtract 1 from here to get the entry before index because we're using .slice() 
+			// we don't need to subtract 1 from here to get the entry before index because we're using .slice()
 			if (chunk_test_idx > 0) size = chunk_test_idx;
 
 			// Push the resulting chunk to the array
 			// since we're using .slice(), we need to make sure the size isn't 0 (the index of .findIndex())
 			card_categories_split.push(chunk_test.slice(0, size || 1));
+			console.log(chunk_test.slice(0, size || 1));
 
 			// Increment i by size, defaulting to row size if 0 (the index of .findIndex())
 			i += size || row_size;
 		}
 
-		return await embed.send(); */
+		// console.log(card_categories_split);
+
+		return await embed.send();
 	}
 };
