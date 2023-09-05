@@ -24,7 +24,8 @@ module.exports = {
 			return { category: cat, cards: _jsT.chunk(_cards, 10) };
 		}); */
 
-		let cards = [...cardManager.cards.base.cust, ...cardManager.cards.base.shop];
+		// let cards = [...cardManager.cards.base.cust, ...cardManager.cards.base.shop];
+		let cards = [...cardManager.cards.base.evnt];
 
 		/// Gather card global IDs
 		let card_categories = [];
@@ -40,27 +41,20 @@ module.exports = {
 
 		/// Split global IDs by category, with a max of 5 cards per group
 		let card_categories_split = [];
-		let row_size = 5;
 
-		for (let i = 0; i < card_categories.length; ) {
-			let chunk = card_categories.slice(i, i + row_size);
+		for (let i = 0; i < card_categories.length;) {
+			let size = 5;
+			let chunk_test = card_categories.slice(i, i + size);
+			let chunk_test_idx = chunk_test.findIndex()
 
-			// prettier-ignore
-			// TODO: split chunk if there's a category switch
-			for (let idx = 0; idx < chunk.length; idx++)
-				if (chunk[idx].name) {
-					let _chunk = chunk.slice(0, idx - 1);
+			console.log(card_categories[i]);
+			i++;
 
-					if (_chunk.length) chunk = _chunk;
-
-					break;
-				}
-
-			card_categories_split.push(chunk);
-			i += chunk.length;
+			// card_categories_split.push(chunk);
+			// i += chunk.length;
 		}
 
-		console.log(card_categories_split);
+		// console.log(card_categories_split);
 
 		// prettier-ignore
 		/* let card_categories = cardManager.cards.category.names.all.map(cat => {
