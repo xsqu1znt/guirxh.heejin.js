@@ -33,7 +33,6 @@ function collections(user, options) {
 
 	// Fetch the cards from the bot
 	let cards = _jsT.unique(cardManager.cards.all, "setID");
-	let cards_category_names = _jsT.unique(cards.map(c => c.category));
 
 	// prettier-ignore
 	let filtered = false;
@@ -78,133 +77,73 @@ function collections(user, options) {
 		description: filtered ? "No sets were found with that search filter" : "There are no sets available"
 	});
 
-	// Get the cards in each category
-	let card_categories = cards_category_names.map(cat => {
-		let globalIDs = cards.filter(c => c.category === cat).map(c => c.globalID);
-		return { name: cat, globalIDs: _jsT.chunk(globalIDs, 5), count: globalIDs.length };
-	}).filter(cat => cat.count);
+	/// Gather card global IDs
+	let card_categories = [];
 
-	console.log(card_categories);
+	for (let cat of cardManager.cards.category.names.all) {
+		/// Parse the global IDs found into a format that includes its category name on the first element in the category
+		let _globalIDs = cards.filter(c => c.category === cat).map(c => ({ name: "", globalID: c.globalID }));
 
-	/* let card_category_fields = [];
-	// prettier-ignore
-	for (let cat of card_categories) cat.globalIDs.forEach((gid, idx) =>
-		card_category_fields.push({ name: idx === 0 ? cat.name : null, value: cardManager.toString.shopEntry(gid) })
-	); */
+		// NOTE: only pushes to the array if there were global IDs found
+		if (_globalIDs.length) {
+			// Gets the first element in the array and appends its category name
+			let _globalID_first = { ..._globalIDs.shift(), name: cat };
+			// Pushes to the main array
+			card_categories.push(...[_globalID_first, ..._globalIDs]);
+		}
+	}
 
-	// let card_category_fields_f = _jsT.chunk()
+	/// Split global IDs by category, with a max of 5 cards per group
+	let card_categories_split = [];
+	let row_size = 5;
 
-	// "\u200b"
-	// console.log(card_category_fields);
+	for (let i = 0; i < card_categories.length; ) {
+		// Get the base row size of 5
+		let size = row_size;
+
+		// Get an array of the next 5 entries
+		let chunk_test = card_categories.slice(i, i + size);
+		// Check if it contains an entrie with a category name
+		let chunk_test_idx = chunk_test.findIndex(c => c.name);
+
+		// Cut the row size down to the index of an entry before the category name
+		// we don't need to subtract 1 from here to get the entry before index because we're using .slice()
+		if (chunk_test_idx > 0) size = chunk_test_idx;
+
+		// Push the resulting chunk to the array
+		// since we're using .slice(), we need to make sure the size isn't 0 (the index of .findIndex())
+		card_categories_split.push(chunk_test.slice(0, size || 1));
+
+		// Increment i by size, defaulting to row size if 0 (the index of .findIndex())
+		i += size || row_size;
+	}
 
 	/// Create the embeds :: { COLLECTION }
 	let embeds_collection = [];
+	// NOTE: 3 rows per page
+	let card_categories_split_chunk = _jsT.chunk(card_categories_split, 3);
 
-	for (let category of card_categories) {
+	for (let i = 0; i < card_categories_split_chunk.length; i++) {
+		let _embed = new BetterEmbed({
+			author: { text: "$USERNAME | collections", user, iconURL: true },
+			description: "```lorem ipsum dolor sit amet```",
+			footer: `Page: ${i + 1}/${card_categories_split_chunk.length} | Total: ${cards.length}`
+		});
+
 		/* - - - - - */
-		for (let span_3_column of _jsT.chunk(category.globalIDs, 3)) {
-			// Create the embed
-			let _embed = new BetterEmbed({
-				author: { text: "$USERNAME | collections", user, iconURL: true },
-				description: "```lorem ipsum dolor sit amet```"
-			});
-
+		for (let span_3_column of card_categories_split_chunk[i]) {
 			/* - - - - - */
-			for (let i = 0, gids_of_5 = span_3_column[i]; i < span_3_column.length; i++) {
-				_embed.addFields({
-					name: i ? "\u200b" : category.name.toUpperCase(),
-					value: gids_of_5.map(gid => cardManager.toString.setEntry({ globalID: gid })).join("\n\n"),
-					inline: true
-				});
-			}
-
-			/* for (let gids_of_5 of category.globalIDs) {
-			
-				_embed.addFields({name: });
-			} */
-
-			// Add the page to the embed array
-			embeds_collection.push(_embed);
+			_embed.addFields({
+				name: span_3_column[0].name.toUpperCase() || "\u200b",
+				value: span_3_column.map(({ globalID }) => cardManager.toString.setEntry({ globalID })).join("\n\n"),
+				inline: true
+			});
 		}
 
-		// prettier-ignore
-		/* for (let _cat of cats) _embed.addFields({
-			name: _cat.toUpperCase(), value: "lorem ipsum", inline: true
-		}); */
-
-		// console.log(cat);
-
-		/* if (cat.card_chunks.length > 3) {
-			for (let _chunk of _jsT.chunk(cat.card_chunks, 3)) {
-				for (let _cards_chunk of _chunk) {
-					let _embed = new BetterEmbed({
-						author: { text: "$USERNAME | collections", user, iconURL: true },
-						description: "```lorem ipsum dolor sit amet```"
-					});
-
-					for (let _card of _cards_chunk)
-						_embed.addFields({ name: "\u200b", value: cardManager.toString.setEntry(_card), inline: true });
-
-					embeds_collections.push(_embed);
-				}
-			}
-		} else {
-			let _embed = new BetterEmbed({
-				author: { text: "$USERNAME | collections", user, iconURL: true },
-				description: "```lorem ipsum dolor sit amet```"
-			});
-
-			for (let _chunk of cat.card_chunks)
-				for (let _card of _chunk)
-					_embed.addFields({ name: "\u200b", value: cardManager.toString.setEntry(_card), inline: true });
-
-			embeds_collections.push(_embed);
-		} */
+		embeds_collection.push(_embed);
 	}
 
 	return embeds_collection;
-
-	/* /// Group sets by their category
-	let cards_stage_1 = category_names.map(cat =>
-		cards
-			.filter(c => c.category === cat)
-			// Format the cards into a string
-			.map(c => cardManager.toString.setEntry(c))
-	);
-
-	// group by 10
-	let cards_stage_2 = cards_stage_1.map(c_f_arr => _jsT.chunk(c_f_arr, 10));
-
-	// group by 2, per page
-	let cards_stage_3 = cards_stage_2.map(c_f_arr_10 => _jsT.chunk(c_f_arr_10, 2));
-
-	/// Create the embeds :: { INVENTORY }
-	let embeds_collections = [];
-
-	for (let i = 0; i < cards_stage_3.length; i++) {
-		let _chunk_2 = cards_stage_3[i];
-
-		for (let _chunk_10_group of _chunk_2) {
-			let _embed = new BetterEmbed({
-				author: { text: "$USERNAME | collections", user, iconURL: true },
-				description: "```lorem ipsum dolor sit amet```"
-			});
-
-			// prettier-ignore
-			for (let _chunk_10_f of _chunk_10_group)
-				_embed.addFields({ name: `***${category_names[i]}***`, value: `>>> ${_chunk_10_f.join("\n")}`, inline: true });
-
-			embeds_collections.push(_embed);
-		}
-	}
-
-	// Add page numbering to the embed's footer
-	for (let i = 0; i < embeds_collections.length; i++)
-		embeds_collections[i].setFooter({
-			text: `Page ${i + 1}/${embeds_collections.length || 1} | Total: ${cards.length}`
-		});
-
-	return embeds_collections; */
 }
 
 function gift(user, recipient, cards) {
