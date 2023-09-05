@@ -23,9 +23,7 @@ let card_values = Object.values(cards);
 
 for (let i = 0; i < card_values.length; i++) {
 	card_values[i].forEach((_card, idx) => {
-		// card_values[i][idx].description = `**${_card.group}** \`Holiday\``;
-        if (_card.category === "pets") card_values[i][idx].category = "shop";
-        if (_card.category === "gold") card_values[i][idx].category = "shop";
+		card_values[i][idx].description = `**${_card.single}** \`Shop\``;
 	});
 
 	// Parse the object into a string
