@@ -79,8 +79,12 @@ function collections(user, options) {
 
 	/// Gather card global IDs
 	let card_categories = [];
+	// Gets the category names in order
+	let category_names_all = cardManager.cards.category.names.all;
+	// Reverse said order so special cards come first
+	category_names_all.reverse();
 
-	for (let cat of cardManager.cards.category.names.all) {
+	for (let cat of category_names_all) {
 		/// Parse the global IDs found into a format that includes its category name on the first element in the category
 		let _globalIDs = cards.filter(c => c.category === cat).map(c => ({ name: "", globalID: c.globalID }));
 
@@ -132,7 +136,6 @@ function collections(user, options) {
 		// Increment i by size, defaulting to row size if 0 (the index of .findIndex())
 		i += size || row_size;
 	}
-
 
 	/// Create the embeds :: { COLLECTION }
 	let embeds_collection = [];
