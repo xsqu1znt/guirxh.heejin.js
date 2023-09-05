@@ -15,7 +15,39 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-		let embed = new BetterEmbed({ interaction, description: "boop" });
+		let embed = new BetterEmbed({
+			interaction, author: { text: "$USERNAME | missing", iconURL: true },
+			description: "```TESTING```"
+		});
+
+		// `🗣️ 120`
+		let row_1 = [
+			"> `owned ✔️` **`1201`**\n> `🐰` **ViViD** `LOONA Solo` - [HeeJin](https://cdn.discordapp.com/attachments/1014199645750186044/1035715810200670319/vivid_heejin.png)",
+			"> `missing ❌` **`1205`**\n> `🦌` **Everyday I Love You** `LOONA Solo` - [ViVi](https://cdn.discordapp.com/attachments/1014199645750186044/1035715810200670319/vivid_heejin.png)",
+			"> `missing ❌` **`1210`**\n> `🐧` **Heart Attack** `LOONA Solo` - [Chuu](https://cdn.discordapp.com/attachments/1014199645750186044/1035715810200670319/vivid_heejin.png)"
+		];
+
+		let row_2 = [
+			"> `missing ❌` **`1203`**\n> `🐦` **Let Me In** `LOONA Solo` - [HaSeul](https://cdn.discordapp.com/attachments/1014199645750186044/1035715810200670319/vivid_heejin.png)",
+			"> `missing ❌` **`1205`**\n> `🐰` **ViViD** `LOONA Solo` - [HeeJin](https://cdn.discordapp.com/attachments/1014199645750186044/1035715810200670319/vivid_heejin.png)",
+			"> `owned ✔️` **`1207`**\n> `🐟` **Singing In The Rain** `LOONA Solo` - [JinSoul](https://cdn.discordapp.com/attachments/1014199645750186044/1035715810200670319/vivid_heejin.png)"
+		];
+
+		let row_3 = [
+			"> `missing ❌` **`1203`**\n> `🐦` **Let Me In** `LOONA Solo` - [HaSeul](https://cdn.discordapp.com/attachments/1014199645750186044/1035715810200670319/vivid_heejin.png)",
+			"> `missing ❌` **`1207`**\n> `🐟` **Singing In The Rain** `LOONA Solo` - [JinSoul](https://cdn.discordapp.com/attachments/1014199645750186044/1035715810200670319/vivid_heejin.png)",
+			"> `missing ❌` **`1210`**\n> `🐧` **Heart Attack** `LOONA Solo` - [Chuu](https://cdn.discordapp.com/attachments/1014199645750186044/1035715810200670319/vivid_heejin.png)"
+		];
+
+		embed.addFields(
+			{ name: "`⬜` ***SET 120***", value: row_1.join("\n\n"), inline: true },
+
+			{ name: "\u200b", value: row_2.join("\n\n"), inline: true },
+
+			{ name: "\u200b", value: row_3.join("\n\n"), inline: true }
+		);
+
+		return await embed.send();
 
 		/*
 		- ORIGINAL -
@@ -24,7 +56,7 @@ module.exports = {
 			return { category: cat, cards: _jsT.chunk(_cards, 10) };
 		}); */
 
-		// let cards = [...cardManager.cards.base.cust, ...cardManager.cards.base.shop];
+		/* // let cards = [...cardManager.cards.base.cust, ...cardManager.cards.base.shop];
 		let cards = [...cardManager.cards.base.evnt];
 
 		/// Gather card global IDs
@@ -68,6 +100,6 @@ module.exports = {
 			i += size || row_size;
 		}
 
-		return await embed.send();
+		return await embed.send(); */
 	}
 };
