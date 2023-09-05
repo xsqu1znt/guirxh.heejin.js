@@ -10,11 +10,11 @@ const cards = {
 	// cards_event1: require("../../items/cards/cards_event1.json"),
 	// cards_event2: require("../../items/cards/cards_event2.json"),
 	// cards_event3: require("../../items/cards/cards_event3.json")
-	cards_holiday: require('../../items/cards/cards_holiday.json'),
+	// cards_holiday: require('../../items/cards/cards_holiday.json'),
 	// cards_mint: require('../../items/cards/cards_mint.json'),
 	// cards_rare: require('../../items/cards/cards_rare.json'),
 	// cards_season: require('../../items/cards/cards_season.json'),
-	// cards_shop: require('../../items/cards/cards_shop.json'),
+	cards_shop: require('../../items/cards/cards_shop.json'),
 	// cards_uncommon: require('../../items/cards/cards_uncommon.json')
 };
 
@@ -23,7 +23,9 @@ let card_values = Object.values(cards);
 
 for (let i = 0; i < card_values.length; i++) {
 	card_values[i].forEach((_card, idx) => {
-		card_values[i][idx].description = `**${_card.group}** \`Holiday\``;
+		// card_values[i][idx].description = `**${_card.group}** \`Holiday\``;
+        if (_card.category === "pets") card_values[i][idx].category = "shop";
+        if (_card.category === "gold") card_values[i][idx].category = "shop";
 	});
 
 	// Parse the object into a string
