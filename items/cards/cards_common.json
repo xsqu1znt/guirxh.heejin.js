@@ -5331,7 +5331,7 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1102235450170675290/laluna_HA:TFELT1.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1102235450170675290/laluna_hatfelt1.png"
   },
   {
     "name": "HA:TFELT²",
@@ -5352,7 +5352,7 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1102235450577530980/laluna_HA:TFELT2.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1102235450577530980/laluna_hatfelt2.png"
   },
   {
     "name": "HA:TFELT³",
@@ -5373,7 +5373,7 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1102235450963394620/laluna_HA:TFELT3.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1102235450963394620/laluna_hatfelt3.png"
   },
   {
     "name": "Changsub",
@@ -7558,5 +7558,341 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1137454429575069777/YYL_Natti_Natasha.png"
+  },
+{
+    "name": "Layeon",
+    "group": "Purplebeck",
+    "single": "Valenti",
+    "category": "comn",
+    "description": "**Purplebeck** - Valenti",
+    "emoji": "💎",
+    "globalID": "8861",
+    "setID": "912",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1139907554579841114/Layeon_Valenti.png"
+  },
+{
+    "name": "Mini",
+    "group": "Purplebeck",
+    "single": "Valenti",
+    "category": "comn",
+    "description": "**Purplebeck** - Valenti",
+    "emoji": "💎",
+    "globalID": "8862",
+    "setID": "912",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1139907554839904457/Mini_Valenti.png"
+  },
+{
+    "name": "Seyeon",
+    "group": "Purplebeck",
+    "single": "Valenti",
+    "category": "comn",
+    "description": "**Purplebeck** - Valenti",
+    "emoji": "💎",
+    "globalID": "8863",
+    "setID": "912",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1139907555309662279/Seyeon_Valenti.png"
+  },
+{
+    "name": "Yeowool",
+    "group": "Purplebeck",
+    "single": "Valenti",
+    "category": "comn",
+    "description": "**Purplebeck** - Valenti",
+    "emoji": "💎",
+    "globalID": "8864",
+    "setID": "912",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1139907555615834113/Yeowool_Valenti.png"
+  },
+{
+    "name": "Yerim",
+    "group": "Purplebeck",
+    "single": "Valenti",
+    "category": "comn",
+    "description": "**Purplebeck** - Valenti",
+    "emoji": "💎",
+    "globalID": "8865",
+    "setID": "912",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1139907555955589211/Yerim_Valenti.png"
+  },
+{
+    "name": "Seori¹",
+    "group": "Seori",
+    "single": "Can't Stop This Party",
+    "category": "comn",
+    "description": "**Seori** - Can't Stop This Party",
+    "emoji": "🎊",
+    "globalID": "8866",
+    "setID": "913",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1139907556224020500/Seori_Can_tStopThisParty1.png"
+  },
+{
+    "name": "Seori²",
+    "group": "Seori",
+    "single": "Can't Stop This Party",
+    "category": "comn",
+    "description": "**Seori** - Can't Stop This Party",
+    "emoji": "🎊",
+    "globalID": "8867",
+    "setID": "913",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1139907556609884270/Seori_Can_tStopThisParty2.png"
+  },
+{
+    "name": "Seori³",
+    "group": "Seori",
+    "single": "Can't Stop This Party",
+    "category": "comn",
+    "description": "**Seori** - Can't Stop This Party",
+    "emoji": "🎊",
+    "globalID": "8868",
+    "setID": "913",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1139907556945444914/Seori_Can_tStopThisParty3.png"
+  },
+{
+    "name": "LØREN¹",
+    "group": "LØREN",
+    "single": "Folks",
+    "category": "comn",
+    "description": "**LØREN** - Folks",
+    "emoji": "👫",
+    "globalID": "8869",
+    "setID": "914",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1144959320992268318/folks_loren1.png"
+  },
+{
+    "name": "LØREN²",
+    "group": "LØREN",
+    "single": "Folks",
+    "category": "comn",
+    "description": "**LØREN** - Folks",
+    "emoji": "👫",
+    "globalID": "8870",
+    "setID": "914",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1144959321294250024/folks_loren2.png"
+  },
+{
+    "name": "LØREN³",
+    "group": "LØREN",
+    "single": "Folks",
+    "category": "comn",
+    "description": "**LØREN** - Folks",
+    "emoji": "👫",
+    "globalID": "8871",
+    "setID": "914",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1144959321571069992/folks_loren3.png"
+  },
+{
+    "name": "HYO¹",
+    "group": "HYO",
+    "single": "Picture",
+    "category": "comn",
+    "description": "**HYO** - Picture",
+    "emoji": "📸",
+    "globalID": "8872",
+    "setID": "915",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1144959321885655050/picture_hyo1.png"
+  },
+{
+    "name": "HYO²",
+    "group": "HYO",
+    "single": "Picture",
+    "category": "comn",
+    "description": "**HYO** - Picture",
+    "emoji": "📸",
+    "globalID": "8873",
+    "setID": "915",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1144959322141499442/picture_hyo2.png"
+  },
+{
+    "name": "HYO³",
+    "group": "HYO",
+    "single": "Picture",
+    "category": "comn",
+    "description": "**HYO** - Picture",
+    "emoji": "📸",
+    "globalID": "8874",
+    "setID": "915",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1144959322426707978/picture_hyo3.png"
+  },
+{
+    "name": "Chanhyuk",
+    "group": "AKMU",
+    "single": "Love Lee",
+    "category": "comn",
+    "description": "**AKMU** - Love Lee",
+    "emoji": "❤️‍🩹",
+    "globalID": "8875",
+    "setID": "916",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1147612948357980190/Chanhyuk_LoveLee.png"
+  },
+{
+    "name": "Suhyun",
+    "group": "AKMU",
+    "single": "Love Lee",
+    "category": "comn",
+    "description": "**AKMU** - Love Lee",
+    "emoji": "❤️‍🩹",
+    "globalID": "8876",
+    "setID": "916",
+    "rarity": 70,
+    "price": 30,
+    "sellPrice": 30,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1147612948676751411/Suhyun_LoveLee.png"
   }
 ]

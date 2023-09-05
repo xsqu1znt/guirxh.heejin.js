@@ -5604,7 +5604,7 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353393204297888/The_Boys_Seohyun.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1140835352890855525/The_Boys_Seohyun.png"
   },
   {
     "name": "Sooyoung",
@@ -5730,7 +5730,7 @@
       "ability": 100,
       "reputation": 100
     },
-    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1107353395125297172/The_Boys_Yuri.png"
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1140835353259933726/The_Boys_Yuri.png"
   },
   {
     "name": "Hunter",
@@ -7579,5 +7579,488 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1137457476753698906/taxi_joyuri3.png"
+  },
+{
+    "name": "Eric Nam¹",
+    "group": "Eric Nam",
+    "single": "Paradise",
+    "category": "rare",
+    "description": "**Eric Nam** - Paradise",
+    "emoji": "🏝️",
+    "globalID": "5862",
+    "setID": "612",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1139904221119000627/EricNam_Paradise1.png"
+  },
+{
+    "name": "Eric Nam²",
+    "group": "Eric Nam",
+    "single": "Paradise",
+    "category": "rare",
+    "description": "**Eric Nam** - Paradise",
+    "emoji": "🏝️",
+    "globalID": "5863",
+    "setID": "612",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1139904221429366824/EricNam_Paradise2.png"
+  },
+{
+    "name": "Eric Nam³",
+    "group": "Eric Nam",
+    "single": "Paradise",
+    "category": "rare",
+    "description": "**Eric Nam** - Paradise",
+    "emoji": "🏝️",
+    "globalID": "5864",
+    "setID": "612",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1139904221999808672/EricNam_Paradise3.png"
+  },
+{
+    "name": "U-Know¹",
+    "group": "U-Know",
+    "single": "Vuja De",
+    "category": "rare",
+    "description": "**U-Know** - Vuja De",
+    "emoji": "🎭",
+    "globalID": "5865",
+    "setID": "613",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1139904222268239902/vujade_uknow1.png"
+  },
+{
+    "name": "U-Know²",
+    "group": "U-Know",
+    "single": "Vuja De",
+    "category": "rare",
+    "description": "**U-Know** - Vuja De",
+    "emoji": "🎭",
+    "globalID": "5866",
+    "setID": "613",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1139904222591189042/vujade_uknow2.png"
+  },
+{
+    "name": "U-Know³",
+    "group": "U-Know",
+    "single": "Vuja De",
+    "category": "rare",
+    "description": "**U-Know** - Vuja De",
+    "emoji": "🎭",
+    "globalID": "5867",
+    "setID": "613",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1139904222968692747/vujade_uknow3.png"
+  },
+{
+    "name": "Irene",
+    "group": "Red Velvet",
+    "single": "Umpah Umpah",
+    "category": "rare",
+    "description": "**Red Velvet** - Umpah Umpah",
+    "emoji": "☔️",
+    "globalID": "5868",
+    "setID": "614",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1144958946088591400/Irene.png"
+  },
+{
+    "name": "Joy",
+    "group": "Red Velvet",
+    "single": "Umpah Umpah",
+    "category": "rare",
+    "description": "**Red Velvet** - Umpah Umpah",
+    "emoji": "☔️",
+    "globalID": "5869",
+    "setID": "614",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1144958946449305621/Joy.png"
+  },
+{
+    "name": "Seulgi",
+    "group": "Red Velvet",
+    "single": "Umpah Umpah",
+    "category": "rare",
+    "description": "**Red Velvet** - Umpah Umpah",
+    "emoji": "☔️",
+    "globalID": "5870",
+    "setID": "614",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1144958947070066688/Seulgi.png"
+  },
+{
+    "name": "Wendy",
+    "group": "Red Velvet",
+    "single": "Umpah Umpah",
+    "category": "rare",
+    "description": "**Red Velvet** - Umpah Umpah",
+    "emoji": "☔️",
+    "globalID": "5871",
+    "setID": "614",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1144958947455938620/Wendy.png"
+  },
+{
+    "name": "Yeri",
+    "group": "Red Velvet",
+    "single": "Umpah Umpah",
+    "category": "rare",
+    "description": "**Red Velvet** - Umpah Umpah",
+    "emoji": "☔️",
+    "globalID": "5872",
+    "setID": "614",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1144958947766321232/Yeri.png"
+  },
+{
+    "name": "Isa",
+    "group": "STAYC",
+    "single": "Bubble",
+    "category": "rare",
+    "description": " **STAYC** - Bubble",
+    "emoji": "🫧",
+    "globalID": "5873",
+    "setID": "615",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1144959026065588244/Isa_Bubble.png"
+  },
+{
+    "name": "J",
+    "group": "STAYC",
+    "single": "Bubble",
+    "category": "rare",
+    "description": " **STAYC** - Bubble",
+    "emoji": "🫧",
+    "globalID": "5874",
+    "setID": "615",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1144959026392748032/J_Bubble.png"
+  },
+{
+    "name": "Seeun",
+    "group": "STAYC",
+    "single": "Bubble",
+    "category": "rare",
+    "description": " **STAYC** - Bubble",
+    "emoji": "🫧",
+    "globalID": "5875",
+    "setID": "615",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1144959026661167194/Seeun_Bubble.png"
+  },
+{
+    "name": "Sieun",
+    "group": "STAYC",
+    "single": "Bubble",
+    "category": "rare",
+    "description": " **STAYC** - Bubble",
+    "emoji": "🫧",
+    "globalID": "5876",
+    "setID": "615",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1144959026950586369/Sieun_Bubble.png"
+  },
+{
+    "name": "Sumin",
+    "group": "STAYC",
+    "single": "Bubble",
+    "category": "rare",
+    "description": " **STAYC** - Bubble",
+    "emoji": "🫧",
+    "globalID": "5877",
+    "setID": "615",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1144959027575541770/Sumin_Bubble.png"
+  },
+{
+    "name": "Yoon",
+    "group": "STAYC",
+    "single": "Bubble",
+    "category": "rare",
+    "description": " **STAYC** - Bubble",
+    "emoji": "🫧",
+    "globalID": "5878",
+    "setID": "615",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1144959027877515294/Yoon_Bubble.png"
+  },
+{
+    "name": "Chaesol",
+    "group": "cignature",
+    "single": "Smooth Sailing",
+    "category": "rare",
+    "description": " **cignature** - Smooth Sailing",
+    "emoji": "⛵",
+    "globalID": "5879",
+    "setID": "616",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1147865738854539334/Chaesol_SmoothSailing.png"
+  },
+{
+    "name": "Chloe",
+    "group": "cignature",
+    "single": "Smooth Sailing",
+    "category": "rare",
+    "description": " **cignature** - Smooth Sailing",
+    "emoji": "⛵",
+    "globalID": "5880",
+    "setID": "616",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1147865739110404227/Chloe_SmoothSailing.png"
+  },
+{
+    "name": "Dohee",
+    "group": "cignature",
+    "single": "Smooth Sailing",
+    "category": "rare",
+    "description": " **cignature** - Smooth Sailing",
+    "emoji": "⛵",
+    "globalID": "5881",
+    "setID": "616",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1147865739357863979/Dohee_SmoothSailing.png"
+  },
+{
+    "name": "Jeewon",
+    "group": "cignature",
+    "single": "Smooth Sailing",
+    "category": "rare",
+    "description": " **cignature** - Smooth Sailing",
+    "emoji": "⛵",
+    "globalID": "5882",
+    "setID": "616",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1147865739613708379/Jeewon_SmoothSailing.png"
+  },
+{
+    "name": "Seline",
+    "group": "cignature",
+    "single": "Smooth Sailing",
+    "category": "rare",
+    "description": " **cignature** - Smooth Sailing",
+    "emoji": "⛵",
+    "globalID": "5883",
+    "setID": "616",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1147865739886350367/Seline_SmoothSailing.png"
+  },
+{
+    "name": "Semi",
+    "group": "cignature",
+    "single": "Smooth Sailing",
+    "category": "rare",
+    "description": " **cignature** - Smooth Sailing",
+    "emoji": "⛵",
+    "globalID": "5884",
+    "setID": "616",
+    "rarity": 50,
+    "price": 40,
+    "sellPrice": 40,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1147865740112838736/Semi_SmoothSailing.png"
   }
 ]

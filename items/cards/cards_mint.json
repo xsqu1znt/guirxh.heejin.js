@@ -7243,5 +7243,467 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1137449789236187226/step_seungyeon.png"
+  },
+{
+    "name": "Eunbi¹",
+    "group": "Eunbi",
+    "single": "The Flash",
+    "category": "mint",
+    "description": " **Eunbi** - The Flash",
+    "emoji": "⚡️",
+    "globalID": "2847",
+    "setID": "312",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1139903936401264711/Eunbi_TheFlash.png"
+  },
+{
+    "name": "Eunbi²",
+    "group": "Eunbi",
+    "single": "The Flash",
+    "category": "mint",
+    "description": " **Eunbi** - The Flash",
+    "emoji": "⚡️",
+    "globalID": "2848",
+    "setID": "312",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1139903936652910642/Eunbi_TheFlash2.png"
+  },
+{
+    "name": "Eunbi³",
+    "group": "Eunbi",
+    "single": "The Flash",
+    "category": "mint",
+    "description": " **Eunbi** - The Flash",
+    "emoji": "⚡️",
+    "globalID": "2849",
+    "setID": "312",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1139903936938131517/Eunbi_TheFlash3.png"
+  },
+{
+    "name": "Jeon Somi¹",
+    "group": "Jeon Somi",
+    "single": "Fast Foward",
+    "category": "mint",
+    "description": "**Jeon Somi** - Fast Foward",
+    "emoji": "⏩",
+    "globalID": "2850",
+    "setID": "313",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1139903937210765423/Somi_FastFoward.png"
+  },
+{
+    "name": "Jeon Somi²",
+    "group": "Jeon Somi",
+    "single": "Fast Foward",
+    "category": "mint",
+    "description": "**Jeon Somi** - Fast Foward",
+    "emoji": "⏩",
+    "globalID": "2851",
+    "setID": "313",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1139903937554686002/Somi_FastFoward2.png"
+  },
+{
+    "name": "Jeon Somi³",
+    "group": "Jeon Somi",
+    "single": "Fast Foward",
+    "category": "mint",
+    "description": "**Jeon Somi** - Fast Foward",
+    "emoji": "⏩",
+    "globalID": "2852",
+    "setID": "313",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1139903937881849938/Somi_FastFoward3.png"
+  },
+{
+    "name": "JIHYO¹",
+    "group": "JIHYO",
+    "single": "Killin' Me Good",
+    "category": "mint",
+    "description": "**JIHYO** - Killin' Me Good",
+    "emoji": "🗡️",
+    "globalID": "2853",
+    "setID": "314",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1144958657453375638/killinmegood_jihyo1.png"
+  },
+{
+    "name": "JIHYO²",
+    "group": "JIHYO",
+    "single": "Killin' Me Good",
+    "category": "mint",
+    "description": "**JIHYO** - Killin' Me Good",
+    "emoji": "🗡️",
+    "globalID": "2854",
+    "setID": "314",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1144958657797304380/killinmegood_jihyo2.png"
+  },
+{
+    "name": "JIHYO³",
+    "group": "JIHYO",
+    "single": "Killin' Me Good",
+    "category": "mint",
+    "description": "**JIHYO** - Killin' Me Good",
+    "emoji": "🗡️",
+    "globalID": "2855",
+    "setID": "314",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1144958658090913822/killinmegood_jihyo3.png"
+  },
+{
+    "name": "Aisha",
+    "group": "EVERGLOW",
+    "single": "SLAY",
+    "category": "mint",
+    "description": "**EVERGLOW** - SLAY",
+    "emoji": "⛓️",
+    "globalID": "2856",
+    "setID": "315",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1144958658384510987/Aisha_Slay.png"
+  },
+{
+    "name": "E:U",
+    "group": "EVERGLOW",
+    "single": "SLAY",
+    "category": "mint",
+    "description": "**EVERGLOW** - SLAY",
+    "emoji": "⛓️",
+    "globalID": "2857",
+    "setID": "315",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1144958658778771516/EU_Slay.png"
+  },
+{
+    "name": "Mia",
+    "group": "EVERGLOW",
+    "single": "SLAY",
+    "category": "mint",
+    "description": "**EVERGLOW** - SLAY",
+    "emoji": "⛓️",
+    "globalID": "2858",
+    "setID": "315",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1144958659055603804/Mia_Slay.png"
+  },
+{
+    "name": "Onda",
+    "group": "EVERGLOW",
+    "single": "SLAY",
+    "category": "mint",
+    "description": "**EVERGLOW** - SLAY",
+    "emoji": "⛓️",
+    "globalID": "2859",
+    "setID": "315",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1144958659391144038/Onda_Slay.png"
+  },
+{
+    "name": "Sihyeon",
+    "group": "EVERGLOW",
+    "single": "SLAY",
+    "category": "mint",
+    "description": "**EVERGLOW** - SLAY",
+    "emoji": "⛓️",
+    "globalID": "2860",
+    "setID": "315",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1144958659688935424/Sihyeon_Slay.png"
+  },
+{
+    "name": "Yiren",
+    "group": "EVERGLOW",
+    "single": "SLAY",
+    "category": "mint",
+    "description": "**EVERGLOW** - SLAY",
+    "emoji": "⛓️",
+    "globalID": "2861",
+    "setID": "315",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1144958659965767800/Yiren_Slay.png"
+  },
+{
+    "name": "Junji",
+    "group": "OnlyOneOf",
+    "single": "libidO",
+    "category": "mint",
+    "description": "**OnlyOneOf** - libidO",
+    "emoji": "🍌",
+    "globalID": "2862",
+    "setID": "316",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1147612696544559134/JunJi_libidO.png"
+  },
+{
+    "name": "KB",
+    "group": "OnlyOneOf",
+    "single": "libidO",
+    "category": "mint",
+    "description": "**OnlyOneOf** - libidO",
+    "emoji": "🍌",
+    "globalID": "2863",
+    "setID": "316",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1147612696792014868/KB_libidO.png"
+  },
+{
+    "name": "Love",
+    "group": "OnlyOneOf",
+    "single": "libidO",
+    "category": "mint",
+    "description": "**OnlyOneOf** - libidO",
+    "emoji": "🍌",
+    "globalID": "2864",
+    "setID": "316",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1147612697039491172/Love_libidO.png"
+  },
+{
+    "name": "Mill",
+    "group": "OnlyOneOf",
+    "single": "libidO",
+    "category": "mint",
+    "description": "**OnlyOneOf** - libidO",
+    "emoji": "🍌",
+    "globalID": "2865",
+    "setID": "316",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1147612697320505505/Mill_libidO.png"
+  },
+{
+    "name": "Nine",
+    "group": "OnlyOneOf",
+    "single": "libidO",
+    "category": "mint",
+    "description": "**OnlyOneOf** - libidO",
+    "emoji": "🍌",
+    "globalID": "2866",
+    "setID": "316",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1147612697601515590/Nine_libidO.png"
+  },
+{
+    "name": "Yoojung",
+    "group": "OnlyOneOf",
+    "single": "libidO",
+    "category": "mint",
+    "description": "**OnlyOneOf** - libidO",
+    "emoji": "🍌",
+    "globalID": "2867",
+    "setID": "316",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1147865513565884597/libido_yoojung.png"
+  },
+{
+    "name": "Rie",
+    "group": "OnlyOneOf",
+    "single": "libidO",
+    "category": "mint",
+    "description": "**OnlyOneOf** - libidO",
+    "emoji": "🍌",
+    "globalID": "2868",
+    "setID": "316",
+    "rarity": 30,
+    "price": 50,
+    "sellPrice": 50,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1147865513863688273/libido_rie.png"
   }
 ]

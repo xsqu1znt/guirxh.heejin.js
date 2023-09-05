@@ -838,5 +838,215 @@
       "reputation": 100
     },
     "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1127959691847286904/bday_Xiyeon.png"
+  },
+  {
+    "name": "Binwoo",
+    "group": "Binu",
+    "single": "BDAY23",
+    "category": "bday",
+    "description": "**Binu** :: BDAY23",
+    "emoji": "🪐",
+    "globalID": "1346",
+    "setID": "198",
+    "rarity": 91,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1142075804172431381/bday_Binwoo.png"
+  },
+  {
+    "name": "Han Jisung",
+    "group": "Binu",
+    "single": "BDAY23",
+    "category": "bday",
+    "description": "**Binu** :: BDAY23",
+    "emoji": "🪐",
+    "globalID": "1347",
+    "setID": "198",
+    "rarity": 91,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1142075804457631854/bday_Han_Jisung.png"
+  },
+  {
+    "name": "Moon Sibs",
+    "group": "Binu",
+    "single": "BDAY23",
+    "category": "bday",
+    "description": "**Binu** :: BDAY23",
+    "emoji": "🪐",
+    "globalID": "1348",
+    "setID": "198",
+    "rarity": 91,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1142075804717694976/bday_Moon_Sibs.png"
+  },
+  {
+    "name": "Moon Sua",
+    "group": "Binu",
+    "single": "BDAY23",
+    "category": "bday",
+    "description": "**Binu** :: BDAY23",
+    "emoji": "🪐",
+    "globalID": "1349",
+    "setID": "198",
+    "rarity": 91,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1142075805082583091/bday_Moon_Sua.png"
+  },
+  {
+    "name": "Moonbin",
+    "group": "Binu",
+    "single": "BDAY23",
+    "category": "bday",
+    "description": "**Binu** :: BDAY23",
+    "emoji": "🪐",
+    "globalID": "1350",
+    "setID": "198",
+    "rarity": 91,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1142075805372006420/bday_Moonbin.png"
+  },
+  {
+    "name": "Myungjin",
+    "group": "Binu",
+    "single": "BDAY23",
+    "category": "bday",
+    "description": "**Binu** :: BDAY23",
+    "emoji": "🪐",
+    "globalID": "1351",
+    "setID": "198",
+    "rarity": 91,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1142075805653020845/bday_Myungjin.png"
+  },
+  {
+    "name": "Sinbin",
+    "group": "Binu",
+    "single": "BDAY23",
+    "category": "bday",
+    "description": "**Binu** :: BDAY23",
+    "emoji": "🪐",
+    "globalID": "1352",
+    "setID": "198",
+    "rarity": 91,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1142075805992747058/bday_Sinbin.png"
+  },
+  {
+    "name": "Socky",
+    "group": "Binu",
+    "single": "BDAY23",
+    "category": "bday",
+    "description": "**Binu** :: BDAY23",
+    "emoji": "🪐",
+    "globalID": "1353",
+    "setID": "198",
+    "rarity": 91,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1142075806273781801/bday_Socky.png"
+  },
+  {
+    "name": "Boobin",
+    "group": "Binu",
+    "single": "BDAY23",
+    "category": "bday",
+    "description": "**Binu** :: BDAY23",
+    "emoji": "🪐",
+    "globalID": "1354",
+    "setID": "198",
+    "rarity": 91,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1142075806558990447/bday_Boobin.png"
+  },
+  {
+    "name": "Changgeun",
+    "group": "Binu",
+    "single": "BDAY23",
+    "category": "bday",
+    "description": "**Binu** :: BDAY23",
+    "emoji": "🪐",
+    "globalID": "1355",
+    "setID": "198",
+    "rarity": 91,
+    "price": 10,
+    "sellPrice": 10,
+    "stats": {
+      "level": 1,
+      "xp": 0,
+      "xp_for_next_level": 100,
+      "ability": 100,
+      "reputation": 100
+    },
+    "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1142075806877761596/bday_Changgeun.png"
   }
 ]

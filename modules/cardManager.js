@@ -597,15 +597,15 @@ function toString_setEntry(options) {
 	if (count < 10) count = `0${count}`;
 
 	// return "%SET_ID %CARD_COUNT %CATEGORY %EMOJI %DESCRIPTION%SINGLE"
-	return "`$CATEGORY` `$SET_ID` `$CARD_COUNT`\n`$EMOJI` **$SINGLE** `$GROUP`"
+	return "`$CATEGORY` `$SET_ID` `$CARD_COUNT`\n`$EMOJI` $DESCRIPTION"
 		.replace("$SET_ID", `🗣️ ${card.setID}`)
 
 		.replace("$CARD_COUNT", `📁 ${count || 1}`)
 
 		.replace("$CATEGORY", card.category)
 		.replace("$EMOJI", card.emoji)
-		.replace("$SINGLE", card.single)
-		.replace("$GROUP", card.group)
+		// .replace("$SINGLE", card.single)
+		// .replace("$GROUP", card.group)
 		.replace("$DESCRIPTION", card.description);
 }
 
