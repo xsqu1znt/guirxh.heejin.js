@@ -597,7 +597,7 @@ function toString_setEntry(options) {
 	if (count < 10) count = `0${count}`;
 
 	// return "%SET_ID %CARD_COUNT %CATEGORY %EMOJI %DESCRIPTION%SINGLE"
-	return "`$CATEGORY` `$SET_ID` `$CARD_COUNT`\n`$EMOJI` $DESCRIPTION"
+	return "> **`$CATEGORY`** `$SET_ID` `$CARD_COUNT`\n> `$EMOJI` $DESCRIPTION"
 		.replace("$SET_ID", `🗣️ ${card.setID}`)
 
 		.replace("$CARD_COUNT", `📁 ${count || 1}`)
