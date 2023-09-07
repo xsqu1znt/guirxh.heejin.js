@@ -539,8 +539,19 @@ function toString_inventory(card, options = {}) {
 	return f;
 }
 
-function toString_missingEntry(card, has = false) {
-	return "%GLOBAL_ID %EMOJI %GROUP :: %SINGLE - %NAME\n> %SET_ID %RARITY %CATEGORY %MISSING"
+function toString_missingEntry(card, userOwnsCard = false) {
+	return "> `$MISSING` **`$GLOBAL_ID`**\n> `$EMOJI` **$SINGLE** `$GROUP` - $NAME"
+		.replace("$MISSING", userOwnsCard ? "✔️ owned" : "❌ missing")
+		.replace("$GLOBAL_ID", card.globalID)
+		// .replace("$SET", card.setID)
+
+		.replace("$EMOJI", card.emoji)
+		.replace("$SINGLE", card.single)
+		.replace("$GROUP", card.group)
+		// .replace("$DESCRIPTION", card.description)
+		.replace("$NAME", markdown.link(card.name, card.imageURL));
+
+	/* return "%GLOBAL_ID %EMOJI %GROUP :: %SINGLE - %NAME\n> %SET_ID %RARITY %CATEGORY %MISSING"
 		.replace("%GLOBAL_ID", `\`${card.globalID}\``)
 		.replace("%EMOJI", `\`${card.emoji}\``)
 		.replace("%GROUP", `**${card.group}**`)
@@ -550,8 +561,8 @@ function toString_missingEntry(card, has = false) {
 		.replace("%SET_ID", `\`🗣️${card.setID}\``)
 		.replace("%RARITY", `\`R${card.rarity}\``)
 		.replace("%CATEGORY", `\`${card.category}\``)
-
-		.replace("%MISSING", has ? "`✔️ owned`" : "`🚫 missing`");
+		
+		.replace("%MISSING", userOwnsCard ? "`✔️ owned`" : "`🚫 missing`"); */
 }
 
 function toString_itemPackSetEntry(setID, chance) {
@@ -597,16 +608,18 @@ function toString_setEntry(options) {
 	if (count < 10) count = `0${count}`;
 
 	// return "%SET_ID %CARD_COUNT %CATEGORY %EMOJI %DESCRIPTION%SINGLE"
-	return "> **`$CATEGORY`** `$SET_ID` `$CARD_COUNT`\n> `$EMOJI` $DESCRIPTION"
-		.replace("$SET_ID", `🗣️ ${card.setID}`)
+	return (
+		"> **`$CATEGORY`** `$SET_ID` `$CARD_COUNT`\n> `$EMOJI` $DESCRIPTION"
+			.replace("$SET_ID", `🗣️ ${card.setID}`)
 
-		.replace("$CARD_COUNT", `📁 ${count || 1}`)
+			.replace("$CARD_COUNT", `📁 ${count || 1}`)
 
-		.replace("$CATEGORY", card.category)
-		.replace("$EMOJI", card.emoji)
-		// .replace("$SINGLE", card.single)
-		// .replace("$GROUP", card.group)
-		.replace("$DESCRIPTION", card.description);
+			.replace("$CATEGORY", card.category)
+			.replace("$EMOJI", card.emoji)
+			// .replace("$SINGLE", card.single)
+			// .replace("$GROUP", card.group)
+			.replace("$DESCRIPTION", card.description)
+	);
 }
 
 // prettier-ignore

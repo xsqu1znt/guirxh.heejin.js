@@ -128,23 +128,31 @@ async function profile(user, userData) {
 }
 
 function missing(user, cards, cards_have) {
+	let cards_owned_count = cards_have.filter(b => b).length;
+
 	// Sort the cards by set ID then global ID :: { DESCENDING }
 	cards.sort((a, b) => a.setID - b.setID || a.globalID - b.globalID);
 
 	// prettier-ignore
 	// Format the user's cards into list entries, with a max of 10 per page
-	let cards_f = _jsT.chunk(cards.map((c, idx) => cardManager.toString.missingEntry(c, cards_have[idx])), 10);
+	let cards_f = _jsT.chunk(cards.map((c, idx) => cardManager.toString.missingEntry(c, cards_have[idx])), 9);
 
 	// Create the embeds :: { MISSING }
 	let embeds_missing = [];
 
-	// prettier-ignore
-	for (let i = 0; i < cards_f.length; i++) embeds_missing.push(
-		new BetterEmbed({
-            author: { text: "$USERNAME | missing", user }, description: cards_f[i].join("\n"),
-			footer: { text: `Page ${i + 1}/${cards_f.length || 1} | Owned: ${cards_have.filter(b => b).length}/${cards.length}` }
-		})
-	);
+	for (let i = 0; i < cards_f.length; i++) {
+		let _embed = new BetterEmbed({
+			author: { text: "$USERNAME | missing", user, iconURL: true },
+			// description: "```Lorem ipsum dolor sit amet```",
+			description: `**\`\`\`⬜ SET ${cards[0].setID} | Owned: ${cards_owned_count}/${cards.length}\`\`\`**`,
+			// footer: `Page ${i + 1}/${cards_f.length || 1} | Owned: ${cards_have.filter(b => b).length}/${cards.length}`
+			footer: `Page ${i + 1}/${cards_f.length || 1}`
+		});
+
+		_embed.addFields(...cards_f[i].map(c => ({ name: "\u200b", value: c, inline: true })));
+
+		embeds_missing.push(_embed);
+	}
 
 	return embeds_missing;
 }
@@ -300,7 +308,7 @@ function inventory(userData, options, stats) {
 	for (let i = 0; i < cards_f.length; i++) {
 		let _embed = new BetterEmbed({
 			author: { text: dupeCheck ? "$USERNAME | dupes" : "$USERNAME | inventory", user: options.target, iconURL: true },
-			thumbnailURL: dupeCheck ? cards.slice(-1)[0].card.imageURL : null,
+			thumbnailURL: dupeCheck ? cards.slice(-1)[0].card.imageURL : null
 			// description: `\`\`\`${stats_profile}\`\`\``
 			// description: cards_f[i].join("\n"),
 			// description: `\`\`\`Inventory Page ${i + 1}\`\`\``,
