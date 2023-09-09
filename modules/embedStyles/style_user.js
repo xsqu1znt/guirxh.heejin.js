@@ -293,17 +293,18 @@ function inventory(userData, options, stats) {
 	/* - - - - - - - - - - { PROFILE STATS } - - - - - - - - - - */
 	// let stats_profile = "> `$CARROTS` :: `$RIBBONS` :: `🃏 $INVENTORY_COUNT/$CARD_COUNT` :: `📈 LV. $LEVEL ☝️ $XPXP/$XP_NEEDEDXP`"
 	let stats_profile = _dsT.markdown.ansi(
-		"$CARROTS\n$RIBBONS\n📈 LV. $LEVEL\n☝️ $XPXP/$XP_NEEDEDXP\n🃏 $INVENTORY_COUNT/$CARD_COUNT"
+		"$CARROTS\n$RIBBONS\n📆 $DAILY_STREAK\n📈 $LEVEL\n☝️ $XP/$XP_NEEDEDXP\n🃏 $INVENTORY_COUNT/$CARD_COUNT"
 			.replace("$CARROTS", `${config_bot.emojis.currency_1.EMOJI} ${userData.balance || 0}`)
 			.replace("$RIBBONS", `${config_bot.emojis.currency_2.EMOJI} ${userData.ribbons || 0}`)
 
-			.replace("$INVENTORY_COUNT", cards.length || 0)
-			.replace("$CARD_COUNT", cardManager.cards.count || 0)
-
+			.replace("$DAILY_STREAK", userData.daily_streak || 0)
 			.replace("$LEVEL", userData.level || 0)
 
 			.replace("$XP", userData.xp || 0)
-			.replace("$XP_NEEDED", userData.xp_for_next_level || 0),
+			.replace("$XP_NEEDED", userData.xp_for_next_level || 0)
+
+			.replace("$INVENTORY_COUNT", cards.length || 0)
+			.replace("$CARD_COUNT", cardManager.cards.count || 0),
 
 		{ format: "bold", text_color: "white" }
 	);
