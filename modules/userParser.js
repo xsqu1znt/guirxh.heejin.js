@@ -96,7 +96,7 @@ function cards_getInventory(userData, options = {}) {
 		let _isOnTeam = userData.card_team_uids.includes(card.uid);
 
 		// prettier-ignore
-		let _card_f = cardManager.toString.inventory(card, {
+		let _card_f = cardManager.toString.inventoryEntry(card, {
             duplicate: options.dupeTag ? duplicateCount : false, favorite: _isFavorite, selected: _isSelected, onTeam: _isOnTeam
         });
 

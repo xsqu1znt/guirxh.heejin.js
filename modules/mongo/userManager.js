@@ -432,13 +432,13 @@ async function inventory_sell(userID, cards) {
 /** @param {string} userID */
 async function inventory_stats(userID) {
 	// Get the name of each card category
-	let categories = Object.keys(cardManager.cards);
+	let categories = Object.keys(cardManager.cards.base);
 
 	/// Count how many cards the user has out of each category
 	// prettier-ignore
 	let cards_user_count = await Promise.all(categories.map(async category => {
 		// Get the global IDs for every card in the category
-		let _globalIDs = cardManager.category.globalIDs.base.get(category);
+		let _globalIDs = cardManager.cards.globalIDs.base.get(category);
 		
 		let pipeline = [
 			{ $unwind: "$card_inventory" },

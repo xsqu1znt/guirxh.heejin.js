@@ -82,18 +82,18 @@ const cards_globalIDs = {
 
 const cards_category_meta = {
 	base: {
-		comn: { emoji: "🔴", name: "🔴 comn", color_ansi: "red" },
-		uncn: { emoji: "🟡", name: "🟡 uncn", color_ansi: "yellow" },
-		rare: { emoji: "🟢", name: "🟢 rare", color_ansi: "green" },
-		epic: { emoji: "🔵", name: "🔵 epic", color_ansi: "blue" },
-		mint: { emoji: "🟣", name: "🟣 mint", color_ansi: "pink" },
+		comn: { emoji: "🔴", name: "comn", color_ansi: "red" },
+		uncn: { emoji: "🟡", name: "uncn", color_ansi: "yellow" },
+		rare: { emoji: "🟢", name: "rare", color_ansi: "green" },
+		epic: { emoji: "🔵", name: "epic", color_ansi: "blue" },
+		mint: { emoji: "🟣", name: "mint", color_ansi: "pink" },
 
-		bday: { emoji: "🟥", name: "🟥 bday", color_ansi: "red" },
-		holi: { emoji: "🟨", name: "🟨 holi", color_ansi: "yellow" },
-		evnt: { emoji: "🟩", name: "🟩 evnt", color_ansi: "green" },
-		seas: { emoji: "🟦", name: "🟦 seas", color_ansi: "blue" },
-		shop: { emoji: "🟪", name: "🟪 shop", color_ansi: "pink" },
-		cust: { emoji: "⬜", name: "⬜ cust", color_ansi: "white" }
+		bday: { emoji: "🟥", name: "bday", color_ansi: "red" },
+		holi: { emoji: "🟨", name: "holi", color_ansi: "yellow" },
+		evnt: { emoji: "🟩", name: "evnt", color_ansi: "green" },
+		seas: { emoji: "🟦", name: "seas", color_ansi: "blue" },
+		shop: { emoji: "🟪", name: "shop", color_ansi: "pink" },
+		cust: { emoji: "⬜", name: "cust", color_ansi: "white" }
 	}
 };
 
@@ -484,14 +484,14 @@ function toString_basic(card) {
 } */
 
 /** @param {options_toStr_inventory} options  */
-function toString_inventory(card, options = {}) {
+function toString_inventoryEntry(card, options = {}) {
 	if (!card) return "n/a";
 
 	options = { favorited: false, selected: false, onTeam: false, simplify: false, duplicate: false, ...options };
 
 	// prettier-ignore
 	// let f = "$UID $EMOJI $GROUP : $SINGLE - $NAME $DUPE\n> $SET_ID $GLOBAL_ID $RARITY $CATEGORY $SELL_PRICE $LOCKED\n> $LEVEL $STATS $FAVORITE $SELECTED $TEAM"
-	let f = "**`$UID`** `$GID` `🗣️ $SET`\n`$EMOJI` **$SINGLE** `$GROUP` $NAME $DUPE\n`LV. $LVL` `$CATEGORY` `💰 $SELL` `🎤 $ABI` : `💖 $REP`\n`🔒 ⭐ 🏃 👯`"
+	let f = "> **`$UID`** `$GID` `🗣️ $SET`\n> `$EMOJI` **$SINGLE** `$GROUP` $NAME $DUPE\n> `LV. $LVL` `$CATEGORY` `💰 $SELL` `🎤 $ABI` : `💖 $REP`\n> `🔒 ⭐ 🏃 👯`"
 		.replace("$UID", card?.uid || "")
 		.replace("$GID", card.globalID)
 		.replace("$SET", card.setID)
@@ -673,7 +673,7 @@ module.exports = {
 
 	toString: {
 		basic: toString_basic,
-		inventory: toString_inventory,
+		inventoryEntry: toString_inventoryEntry,
 		missingEntry: toString_missingEntry,
 		itemPackSetEntry: toString_itemPackSetEntry,
 		shopEntry: toString_shopEntry,
