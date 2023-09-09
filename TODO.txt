@@ -3,6 +3,7 @@ IMPORTANT:
 • Don't allow selling the same UID multiple times in a row
 
 >> Clean-up
+round down user xp
 fix page jump
 add player target to /missing
 change targetPlayer to user in /inventory
