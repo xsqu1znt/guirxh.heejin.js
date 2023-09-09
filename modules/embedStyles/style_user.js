@@ -300,8 +300,8 @@ function inventory(userData, options, stats) {
 			.replace("$DAILY_STREAK", userData.daily_streak || 0)
 			.replace("$LEVEL", userData.level || 0)
 
-			.replace("$XP", userData.xp || 0)
-			.replace("$XP_NEEDED", userData.xp_for_next_level || 0)
+			.replace("$XP", Math.floor(userData.xp || 0))
+			.replace("$XP_NEEDED", Math.floor(userData.xp_for_next_level || 0))
 
 			.replace("$INVENTORY_COUNT", cards.length || 0)
 			.replace("$CARD_COUNT", cardManager.cards.count || 0),

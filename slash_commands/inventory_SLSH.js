@@ -48,7 +48,7 @@ module.exports = {
 		};
 
 		// Fetch the targetUser from Mongo
-		let userData = await userManager.fetch(options_inventory.target.id, { type: "inventory" });
+		let userData = await userManager.fetch(options_inventory.target.id, { type: "full" });
 		// prettier-ignore
 		if (!userData) return await error_ES.send({
 			interaction, description: "That user has not started yet", ephemeral: true
