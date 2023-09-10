@@ -12,8 +12,8 @@ module.exports = {
 	builder: new SlashCommandBuilder().setName("missing")
         .setDescription("See which cards you're missing in a set")
     
-        .addStringOption(option => option.setName("player").setDescription("View another player's missing cards"))
-        .addStringOption(option => option.setName("setid").setDescription("The ID of the set").setRequired(true)),
+        .addStringOption(option => option.setName("setid").setDescription("The ID of the set").setRequired(true))
+        .addUserOption(option => option.setName("player").setDescription("View another player's missing cards")),
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
