@@ -12,27 +12,33 @@ module.exports = {
 	builder: new SlashCommandBuilder().setName("missing")
         .setDescription("See which cards you're missing in a set")
     
-        .addStringOption(option => option.setName("setid").setDescription("The ID of the set")
-            .setRequired(true)
-        ),
+        .addStringOption(option => option.setName("player").setDescription("View another player's missing cards"))
+        .addStringOption(option => option.setName("setid").setDescription("The ID of the set").setRequired(true)),
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
+		let target = interaction.options.getUser("player") || interaction.member;
 		let setID = interaction.options.getString("setid").toLowerCase();
 
 		/// Get the card set
-        let card_set = cardManager.get.setID(setID);
-        // prettier-ignore
-        if (!card_set.length) return await error_ES.send({
+		let card_set = cardManager.get.setID(setID);
+		// prettier-ignore
+		if (!card_set.length) return await error_ES.send({
             interaction, description: "You must provide a valid set ID", ephemeral: true
         });
 
 		// Defer the reply
 		await interaction.deferReply();
 
+		// Check if the target player started
+		// prettier-ignore
+		if (!await userManager.exists(target.id)) return await error_ES.send({
+			interaction, description: "That user has not started yet"
+		});
+
 		// prettier-ignore
 		// Check if the user has the cards in the given set using Mongo
-		let cards_have = await userManager.inventory.has(interaction.user.id, card_set.map(c => c.globalID));
+		let cards_have = await userManager.inventory.has(target.id, card_set.map(c => c.globalID));
 
 		// Create the embeds :: { USER MISSING }
 		let embeds_missing = user_ES.missing(interaction.member, card_set, cards_have);

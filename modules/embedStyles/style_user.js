@@ -231,7 +231,7 @@ function inventory(userData, options, stats) {
 
 	// prettier-ignore
 	// Apply duplicate filter
-	if (options.globalID.length) if (options.globalID[0] === "all") {
+	if (options.globalID.length) if (options.globalID[0].toLowerCase() === "all") {
         cards = cards.filter(c => c.duplicate_count);
         filtered = true;
     } else {

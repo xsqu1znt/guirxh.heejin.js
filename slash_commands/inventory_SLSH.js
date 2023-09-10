@@ -17,7 +17,7 @@ module.exports = {
 
 		.addStringOption(option => option.setName("rarity").setDescription("Filter by RARITY"))
 		.addStringOption(option => option.setName("setid").setDescription("Filter by SETID"))
-		.addStringOption(option => option.setName("dupes").setDescription("Filter by DUPES"))
+		.addStringOption(option => option.setName("dupes").setDescription("Filter by DUPES | use \"all\" to filter by all"))
 		.addStringOption(option => option.setName("category").setDescription("Filter by CATEGORY"))
 		.addStringOption(option => option.setName("group").setDescription("Filter by GROUP"))
 		.addStringOption(option => option.setName("single").setDescription("Filter by SINGLE"))
@@ -32,7 +32,7 @@ module.exports = {
         )
 
 		.addStringOption(option => option.setName("order").setDescription("Default: Ascending")
-			.addChoices({ name: "Ascending", value: "ascending" }, { name: "Descending", value: "descending" })
+			.addChoices({ name: "⬆️ Ascending", value: "ascending" }, { name: "⬇️ Descending", value: "descending" })
 		),
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
@@ -53,10 +53,7 @@ module.exports = {
 
 		// Fetch the targetUser from Mongo
 		let userData = await userManager.fetch(options_inventory.target.id, { type: "full" });
-		// prettier-ignore
-		if (!userData) return await error_ES.send({
-			interaction, description: "That user has not started yet", ephemeral: true
-		});
+		if (!userData) return await error_ES.send({ interaction, description: "That user has not started yet" });
 
 		// Parse the user's card_inventory
 		userData = userParser.cards.parseInventory(userData);
