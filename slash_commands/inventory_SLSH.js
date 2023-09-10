@@ -24,7 +24,11 @@ module.exports = {
 		.addStringOption(option => option.setName("name").setDescription("Filter by NAME"))
 
 		.addStringOption(option => option.setName("sorting").setDescription("Default: SETID")
-            .addChoices({ name: "🃏 GID", value: "global" }, { name: "🗣️ SETID", value: "set" })
+			.addChoices(
+				{ name: "🗣️ Set ID", value: "set" },
+				{ name: "🃏 Global ID", value: "global" },
+				{ name: "📅 Recent", value: "recent" }
+			)
         )
 
 		.addStringOption(option => option.setName("order").setDescription("Default: Ascending")
@@ -44,7 +48,7 @@ module.exports = {
 			single: interaction.options.getString("single") || "",
 			name: interaction.options.getString("name") || "",
 			sorting: interaction.options.getString("sorting") || "setID",
-			order: interaction.options.getString("order") || "ascending",
+			order: interaction.options.getString("order") || "ascending"
 		};
 
 		// Fetch the targetUser from Mongo
@@ -65,7 +69,7 @@ module.exports = {
 		// Set up page navigation
 		let embedNav = new EmbedNavigator({
 			interaction, embeds: embeds_inventory,
-			// pagination: { type: "longJump", useReactions: true }
+			pagination: { type: "longJump", useReactions: true }
         });
 
 		return await embedNav.send();

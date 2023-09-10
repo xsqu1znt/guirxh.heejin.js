@@ -7,7 +7,7 @@
  * @property {string} group
  * @property {string} single
  * @property {string} name
- * @property {"setID"|"gid"} sorting
+ * @property {"gid"|"setID"|"recent"} sorting
  * @property {"ascending"|"descending"} order */
 
 const { GuildMember, User, time, TimestampStyles } = require("discord.js");
@@ -242,8 +242,9 @@ function inventory(userData, options, stats) {
 	// prettier-ignore
 	// Sort the user's cards
 	switch (options.sorting) {
-        case "setID": cards.sort((a, b) => a.card.setID - b.card.setID || a.card.globalID - b.card.globalID); break;
         case "gid": cards.sort((a, b) => a.card.globalID - b.card.globalID); break;
+        case "setID": cards.sort((a, b) => a.card.setID - b.card.setID || a.card.globalID - b.card.globalID); break;
+        case "recent": break;
     }
 
 	// Reverse the order of the user's cards, if needed
@@ -283,13 +284,6 @@ function inventory(userData, options, stats) {
 		})
 	);
 
-	/* // prettier-ignore
-	let stats_1 = stats.slice(0, 5).map((c, idx) => `> **\`${cat_icons_1[idx]} ${c.category.toUpperCase()}\`** \`${c.has}/${c.outOf}\``);
-	stats_1.push(`> **\`⚪ TOTAL:\`** **\`${cards.length}\`**`);
-
-	// prettier-ignore
-	let stats_2 = stats.slice(5).map((c, idx) => `> **\`${cat_icons_2[idx]} ${c.category.toUpperCase()}\`** \`${c.has}/${c.outOf}\``); */
-
 	/* - - - - - - - - - - { PROFILE STATS } - - - - - - - - - - */
 	// let stats_profile = "> `$CARROTS` :: `$RIBBONS` :: `🃏 $INVENTORY_COUNT/$CARD_COUNT` :: `📈 LV. $LEVEL ☝️ $XPXP/$XP_NEEDEDXP`"
 	let stats_profile = _dsT.markdown.ansi(
@@ -313,11 +307,8 @@ function inventory(userData, options, stats) {
 		let _embed = new BetterEmbed({
 			author: { text: dupeCheck ? "$USERNAME | dupes" : "$USERNAME | inventory", user: options.target, iconURL: true },
 			thumbnailURL: dupeCheck ? cards.slice(-1)[0].card.imageURL : null,
-			description: `\`\`\`lorem ipsum dolor sit amet\`\`\``
-			// description: `\`\`\`${stats_profile}\`\`\``
-			// description: cards_f[i].join("\n"),
-			// description: `\`\`\`Inventory Page ${i + 1}\`\`\``,
-			// footer: { text: `Page ${i + 1}/${cards_f.length || 1} | Total: ${cards.length}` }
+			description: `\`\`\`lorem ipsum dolor sit amet\`\`\``,
+			footer: { text: `Page ${i + 1}/${cards_f.length || 1}` }
 		});
 
 		// Add inventory stats
