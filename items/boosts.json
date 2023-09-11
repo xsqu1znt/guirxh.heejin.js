@@ -1,12 +1,14 @@
-{
-	"id": "b01",
-	"name": "Dupe Repellent",
-	"emoji": "🍀",
-	"price": "100",
-	"in_stock": true,
-    "data": {
-        "type": "dupe_repellent",
-        "duration": "7d",
-		"power": 50
-    }
-}
+[
+	{
+		"id": "b01",
+		"name": "Dupe Repellent",
+		"emoji": "🍀",
+		"price": "100",
+		"in_stock": true,
+		"data": {
+			"type": "dupe_repellent",
+			"duration": "7d",
+			"power": 50
+		}
+	}
+]
