@@ -65,7 +65,7 @@ module.exports = {
 		// prettier-ignore
 		// Set up page navigation
 		let embedNav = new EmbedNavigator({
-			interaction, embeds: embeds_inventory,
+			interaction, embeds: [embeds_inventory],
 			pagination: { type: "longJump", useReactions: true }
         });
 

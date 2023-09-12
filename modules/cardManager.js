@@ -487,11 +487,16 @@ function toString_basic(card) {
 function toString_inventoryEntry(card, options = {}) {
 	if (!card) return "n/a";
 
-	options = { favorited: false, selected: false, onTeam: false, simplify: false, duplicate: false, ...options };
+	options = { favorite: false, selected: false, onTeam: false, simplify: false, duplicate: false, ...options };
+
+	let extra = [];
+	if (options.favorite) extra.push("🔒");
+	if (options.selected) extra.push("🏃");
+	if (options.onTeam) extra.push("👯");
 
 	// prettier-ignore
 	// let f = "$UID $EMOJI $GROUP : $SINGLE - $NAME $DUPE\n> $SET_ID $GLOBAL_ID $RARITY $CATEGORY $SELL_PRICE $LOCKED\n> $LEVEL $STATS $FAVORITE $SELECTED $TEAM"
-	let f = "> **`$UID`** `$GID` `🗣️ $SET`\n> `$EMOJI` **$SINGLE** `$GROUP` $NAME $DUPE\n> `LV. $LVL` `$CATEGORY` `💰 $SELL` `🎤 $ABI` : `💖 $REP`\n> `🔒 ⭐ 🏃 👯`"
+	let f = "> **`$UID`** `$GID` `🗣️ $SET`\n> `$EMOJI` **$SINGLE** *`$GROUP`* $NAME $DUPE\n> `LV. $LVL` `$CATEGORY` `💰 $SELL` `🎤 $ABI` : `💖 $REP`\n> $EXTRA"
 		.replace("$UID", card?.uid || "")
 		.replace("$GID", card.globalID)
 		.replace("$SET", card.setID)
@@ -508,7 +513,8 @@ function toString_inventoryEntry(card, options = {}) {
 
 
 		.replace("$ABI", card.stats.ability)
-		.replace("$REP", card.stats.reputation);
+		.replace("$REP", card.stats.reputation)
+		.replace("> $EXTRA", extra.length ? `> ${extra.join(" ")}` : "");
 
 	// .replace("$RARITY", `\`R${card.rarity}\``)
 	// .replace("$CATEGORY", `\`${card.category}\``)
@@ -540,16 +546,18 @@ function toString_inventoryEntry(card, options = {}) {
 }
 
 function toString_missingEntry(card, userOwnsCard = false) {
-	return "> `$MISSING` **`$GLOBAL_ID`**\n> `$EMOJI` **$SINGLE** `$GROUP` - $NAME"
-		.replace("$MISSING", userOwnsCard ? "✔️ owned" : "❌ missing")
-		.replace("$GLOBAL_ID", card.globalID)
-		// .replace("$SET", card.setID)
+	return (
+		"> `$MISSING` **`$GLOBAL_ID`**\n> `$EMOJI` **$SINGLE** *`$GROUP`* - $NAME"
+			.replace("$MISSING", userOwnsCard ? "✔️ owned" : "❌ missing")
+			.replace("$GLOBAL_ID", card.globalID)
+			// .replace("$SET", card.setID)
 
-		.replace("$EMOJI", card.emoji)
-		.replace("$SINGLE", card.single)
-		.replace("$GROUP", card.group)
-		// .replace("$DESCRIPTION", card.description)
-		.replace("$NAME", markdown.link(card.name, card.imageURL));
+			.replace("$EMOJI", card.emoji)
+			.replace("$SINGLE", card.single)
+			.replace("$GROUP", card.group)
+			// .replace("$DESCRIPTION", card.description)
+			.replace("$NAME", markdown.link(card.name, card.imageURL))
+	);
 
 	/* return "%GLOBAL_ID %EMOJI %GROUP :: %SINGLE - %NAME\n> %SET_ID %RARITY %CATEGORY %MISSING"
 		.replace("%GLOBAL_ID", `\`${card.globalID}\``)

@@ -311,14 +311,14 @@ function inventory(userData, options, stats) {
 			footer: { text: `Page ${i + 1}/${cards_f.length || 1}` }
 		});
 
-		// Add inventory stats
 		_embed.addFields(
+			// Inventory stats
 			{ name: "\u200b", value: `\n\`\`\`ansi\n${stats_f_1.join("\n")}\`\`\``, inline: true },
+			// Profile stats
+			{ name: "\u200b", value: `\`\`\`ansi\n${stats_profile}\`\`\``, inline: true },
+			// Inventory stats
 			{ name: "\u200b", value: `\n\`\`\`ansi\n${stats_f_2.join("\n")}\`\`\``, inline: true }
 		);
-
-		// Add profile stats
-		_embed.addFields({ name: "\u200b", value: `\`\`\`ansi\n${stats_profile}\`\`\``, inline: true });
 
 		// Add cards
 		_embed.addFields(cards_f[i].map(c_f => ({ name: "\u200b", value: c_f, inline: true })));
