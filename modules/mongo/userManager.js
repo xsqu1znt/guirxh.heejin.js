@@ -470,6 +470,17 @@ async function badges_add(userID, badges) {
 	return await userData_update(userID, { $push: { badges: { $each: badges } } });
 }
 
+/// -- Charms --
+async function charms_add(userID, charms) {
+	// Create an array if only a single charm object was passed
+	// filtering out invalid charms in the process
+	if (!charms) return;
+	if (!Array.isArray(charms)) charms = [charms].filter(charms => charms?.id);
+
+	// Push the new charms to the user's charm array
+	return await userData_update(userID, { $push: { charms: { $each: charms } } });
+}
+
 //! UserData -> Cooldowns
 /** @param {string} userID @param {CooldownType} cooldownType */
 async function cooldowns_check(userID, cooldownType) {}

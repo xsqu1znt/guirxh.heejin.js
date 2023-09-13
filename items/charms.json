@@ -1,6 +1,6 @@
 [
 	{
-		"id": "b01",
+		"id": "ch01",
 		"name": "Dupe Repellent",
 		"emoji": "🍀",
 		"price": "100",
@@ -8,6 +8,7 @@
 		"data": {
 			"type": "dupe_repellent",
 			"duration": "7d",
+			"expiration": 0,
 			"power": 50
 		}
 	}
