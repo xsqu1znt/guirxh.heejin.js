@@ -7,7 +7,7 @@ const _jst = require("./jsTools/_jsT");
 const items = {
 	card_packs: require("../items/card_packs.json"),
 	badges: require("../items/badges.json"),
-	charms: require("../items/charm.json")
+	charms: require("../items/charms.json")
 };
 
 const config = {
@@ -72,8 +72,8 @@ async function charm_buy(userID, charmID) {
 	let userData = await userManager.fetch(userID, { type: "balance" });
 	if (charm.price > userData.balance) return null;
 
-	// Set the charm's expiraction date
-	charm.data.expiraction = _jst.parseTime(charm.data.duration, { fromNow: true });
+	// Set the charm's expiration date
+	charm.data.expiration = _jst.parseTime(charm.data.duration, { fromNow: true });
 
 	await Promise.all([
 		// Subtract the badge's price from the user's balance

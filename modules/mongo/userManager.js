@@ -25,13 +25,15 @@
  * @property {UserQuestPartial[]} quests_complete
  * @property {number} timestamp_started */
 
-/** @typedef {"id"|"full"|"inventory"|"noInventory"|"essential"|"balance"|"xp"|"reminder"|"quest"} UserDataType */
+/** @typedef {"id"|"full"|"inventory"|"noInventory"|"essential"|"charm"|"balance"|"xp"|"reminder"|"quest"} UserDataType */
 
 /** @typedef UserDataFetchOptions
  * @property {UserDataType} type
  * @property {boolean} lean
  * @property {boolean} upsert
  * @property {boolean} awaitQueueCleared */
+
+/** @typedef {"dupe_repellent"} CharmType */
 
 /** @typedef {"drop_general"|"drop_weekly"|"drop_season"|"drop_event_1"|"drop_event_2"|"random"} CooldownType */
 
@@ -121,7 +123,6 @@ async function userData_fetch(userID, options = {}) {
 		case "essential":
 			fetchFilter = {
 				_id: 1,
-				timestamp_started: 1,
 				daily_streak: 1,
 				daily_streak_reminder: 1,
 				level: 1,
@@ -130,10 +131,16 @@ async function userData_fetch(userID, options = {}) {
 				biography: 1,
 				balance: 1,
 				ribbons: 1,
+				badges: 1,
+				charms: 1,
 				card_selected_uid: 1,
 				card_favorite_uid: 1,
-				card_team_uids: 1
+				card_team_uids: 1,
+				timestamp_started: 1
 			};
+			break;
+		case "charm":
+			fetchFilter = { _id: 1, charms: 1 };
 			break;
 		case "balance":
 			fetchFilter = { _id: 1, balance: 1, ribbons: 1 };
@@ -471,14 +478,26 @@ async function badges_add(userID, badges) {
 }
 
 /// -- Charms --
-async function charms_add(userID, charms) {
+/** @param {string} userID @param {CharmType} charmType  */
+async function charms_get(userID, charmType) {
+	let userData = await userData_fetch(userID, { type: "charm", lean: false });
+	return userData.charms.get(charmType) || null;
+}
+
+/** @param {string} userID */
+async function charms_set(userID, charms) {
 	// Create an array if only a single charm object was passed
 	// filtering out invalid charms in the process
 	if (!charms) return;
 	if (!Array.isArray(charms)) charms = [charms].filter(charms => charms?.id);
 
-	// Push the new charms to the user's charm array
-	return await userData_update(userID, { $push: { charms: { $each: charms } } });
+	let userData = await userData_fetch(userID, { type: "charm", lean: false });
+	let _charms = userData.charms || new Map();
+
+	for (let charm of charms) _charms.set(charm.data.type, charm);
+
+	// Update the user's charm map
+	return await userData_update(userID, { charms: _charms });
 }
 
 //! UserData -> Cooldowns
@@ -564,6 +583,11 @@ module.exports = {
 
 	badges: {
 		add: badges_add
+	},
+
+	charms: {
+		get: charms_get,
+		set: charms_set
 	},
 
 	cooldowns: {

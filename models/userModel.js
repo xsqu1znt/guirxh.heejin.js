@@ -15,6 +15,7 @@ const schema_user = new Schema({
     ribbons: { type: Number, default: 0 },
 
     badges: { type: Array, default: new Array() },
+    charms: { type: Map, default: new Map() },
 
     card_selected_uid: { type: String, default: new String() },
     card_favorite_uid: { type: String, default: new String() },
