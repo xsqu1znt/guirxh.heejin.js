@@ -25,7 +25,11 @@ function getItem(id) {
 	}
 
 	if (!item) {
-		item = items.charms.find(b => b.id === id);
+		for (let charm of items.charms) {
+			let _item = charm.charms.find(c => c.id === id);
+			if (_item) item = item;
+		}
+
 		itemType = ItemType.charm;
 	}
 

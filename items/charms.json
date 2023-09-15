@@ -1,15 +1,13 @@
 [
 	{
-		"id": "ch01",
-		"name": "Dupe Repellent",
+		"type": "dupeRepel",
+		"stock": ["c01", "c02", "c03"],
 		"emoji": "🍀",
-		"price": "100",
-		"in_stock": true,
-		"data": {
-			"type": "dupe_repellent",
-			"duration": "7d",
-			"expiration": 0,
-			"power": 50
-		}
+
+		"charms": [
+			{ "id": "d01", "name": "Dupe Repellent", "price": 30000, "duration": "7d", "power": 75 },
+			{ "id": "d02", "name": "Dupe Repellent", "price": 15000, "duration": "7d", "power": 50 },
+			{ "id": "d03", "name": "Dupe Repellent", "price": 7500, "duration": "7d", "power": 25 }
+		]
 	}
 ]

@@ -97,63 +97,6 @@ const cards_category_meta = {
 	}
 };
 
-// const categories_general = Object.values(config.drop.chance).map(c => ({ ...c, rarity: c.CHANCE }));
-
-/* const cards = {
-	json: cards_json,
-	all: cards_all,
-
-	category: {
-		// names: {all: _jsT.unique}
-	}
-}; */
-
-/* const category_colors = {
-	comn: "red",
-	uncn: "yellow",
-	rare: "green",
-	epic: "blue",
-	mint: "pink",
-	bday: "red",
-	holi: "yellow",
-	evnt: "green",
-	seas: "blue",
-	shop: "pink",
-	cust: "white"
-};
-
-const category_emojis = {
-	comn: "🔴",
-	uncn: "🟡",
-	rare: "🟢",
-	epic: "🔵",
-	mint: "🟣",
-	bday: "🟥",
-	holi: "🟨",
-	evnt: "🟩",
-	seas: "🟦",
-	shop: "🟪",
-	cust: "⬜"
-}; */
-
-/* const cards_all = [].concat(...Object.values(cards_json));
-const cards_general = [...cards_json.comn, ...cards_json.uncn, ...cards_json.rare, ...cards_json.epic, ...cards_json.mint];
-
-const categories_general = Object.values(config.drop.chance).map(c => ({ ...c, rarity: c.CHANCE }));
-
-/// Card categories
-const category_names_base = Object.keys(cards_json);
-const category_names_all = _jsT.unique(cards_all.map(c => c.category));
-
-// prettier-ignore
-const category_globalIDs_base = _jsT.toMap(Object.entries(cards_json), ([cat, c]) =>
-	({ key: cat, value: c.map(c => c.globalID) })
-);
-// prettier-ignore
-const category_globalIDs_all = _jsT.toMap(category_names_all, cat =>
-	({ key: cat, value: cards_all.filter(c => c.category === cat).map(c => c.globalID) })
-); */
-
 // Special charactors
 const superscript = {
 	numbers: ["⁰", "¹", "²", "³", "⁴", "⁵", "⁶", "⁷", "⁸", "⁹"],
@@ -438,50 +381,6 @@ function toString_basic(card) {
 		.replace("%NAME", markdown.link(card.name, card.imageURL))
 		.replace("%SELL_PRICE", `\`💰 ${card.sellPrice}\``);
 }
-
-/* function toString_inventory(card, options = {}) {
-	if (!card) return "n/a";
-
-	options = { favorited: false, selected: false, onTeam: false, simplify: false, duplicate: false, ...options };
-
-	// prettier-ignore
-	let f = "$UID $EMOJI $GROUP : $SINGLE - $NAME $DUPE\n> $SET_ID $GLOBAL_ID $RARITY $CATEGORY $SELL_PRICE $LOCKED\n> $LEVEL $STATS $FAVORITE $SELECTED $TEAM"
-		.replace("$UID ", card?.uid ? `\`${card?.uid}\` ` : "")
-		.replace("$EMOJI", `\`${card.emoji}\``)
-		.replace("$GROUP", `**${card.group}**`)
-		.replace("$SINGLE", card.single)
-		.replace("$NAME", markdown.link(card.name, card.imageURL))
-
-		.replace("$SET_ID", `\`🗣️ ${card.setID}\``)
-		.replace("$GLOBAL_ID", `\`${card.globalID}\``)
-		.replace("$RARITY", `\`R${card.rarity}\``)
-		.replace("$CATEGORY", `\`${card.category}\``)
-		.replace("$SELL_PRICE", `\`💰 ${card.sellPrice}\``)
-		
-		.replace(
-			" $LOCKED\n> $LEVEL $STATS $FAVORITE $SELECTED $TEAM",
-			options.simplify ? "" : " $LOCKED\n> $LEVEL $STATS $FAVORITE $SELECTED $TEAM"
-		)
-		
-		.replace(" $LOCKED", card.locked ? " \`🔒\`" : "")
-		
-		.replace("$LEVEL", `\`LV.${card.stats.level}\``)
-		.replace("$STATS", `\`🎤 ${card.stats.ability} : 💖 ${card.stats.reputation}\``)
-		.replace(" $FAVORITE", options.favorite ? " \`⭐\`" : "")
-		.replace(" $SELECTED", options.selected ? " \`🏃\`" : "")
-		.replace(" $TEAM", options.onTeam ? "  \`👯\`" : "");
-
-	// prettier-ignore
-	// Format duplicate option
-	if (options.duplicate === true)
-		f = f.replace(" $DUPE", ` *${superscript.dupe}*`);
-	else if (!isNaN(options.duplicate) && options.duplicate > 0)
-		f = f.replace(" $DUPE", ` **-- ${String(options.duplicate).split("").map(n => superscript.numbers[+n]).join("")}**`);
-	else
-		f = f.replace(" $DUPE", "");
-
-	return f;
-} */
 
 /** @param {options_toStr_inventory} options  */
 function toString_inventoryEntry(card, options = {}) {

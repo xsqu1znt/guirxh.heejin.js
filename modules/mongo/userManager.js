@@ -33,7 +33,7 @@
  * @property {boolean} upsert
  * @property {boolean} awaitQueueCleared */
 
-/** @typedef {"dupe_repellent"} CharmType */
+/** @typedef {"dupeRepel"} CharmType */
 
 /** @typedef {"drop_general"|"drop_weekly"|"drop_season"|"drop_event_1"|"drop_event_2"|"random"} CooldownType */
 
@@ -481,7 +481,12 @@ async function badges_add(userID, badges) {
 /** @param {string} userID @param {CharmType} charmType  */
 async function charms_get(userID, charmType) {
 	let userData = await userData_fetch(userID, { type: "charm", lean: false });
-	return userData.charms.get(charmType) || null;
+
+	let charm = userData.charms.get(charmType);
+	if (!charm) return null;
+	if (Date.now() >= charm.expiration) return null;
+
+	return charm;
 }
 
 /** @param {string} userID */
@@ -494,7 +499,7 @@ async function charms_set(userID, charms) {
 	let userData = await userData_fetch(userID, { type: "charm", lean: false });
 	let _charms = userData.charms || new Map();
 
-	for (let charm of charms) _charms.set(charm.data.type, charm);
+	for (let charm of charms) _charms.set(charm.type, charm);
 
 	// Update the user's charm map
 	return await userData_update(userID, { charms: _charms });
