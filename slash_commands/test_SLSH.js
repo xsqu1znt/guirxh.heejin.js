@@ -18,11 +18,13 @@ module.exports = {
 	execute: async (client, interaction) => {
 		let embed = new BetterEmbed({ interaction, description: "boop" });
 
-		let charm = itemManager.items.charms[0];
+		let charm = itemManager.items.charms[0].charms[0];
+		charm.type = itemManager.items.charms[0].type;
+		charm.expiration = _jsT.parseTime("7d", { fromNow: true });
 		await userManager.charms.set(interaction.user.id, charm);
 
-		let _charm = await userManager.charms.get(interaction.user.id, "dupe_repellent");
-		console.log(_charm);
+		console.log(charm);
+		// let _charm = await userManager.charms.get(interaction.user.id, "dupe_repellent");
 
 		return await embed.send();
 	}

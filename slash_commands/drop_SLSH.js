@@ -51,12 +51,12 @@ module.exports = {
 		switch (dropType) {
 			case "drop_general":
                 embed_drop.options.author.text = "$USERNAME | drop";
-				cards = dropManager.drop(interaction.user.id, "general");
+				cards = await dropManager.drop(interaction.user.id, "general");
 				break;
 
 			case "drop_weekly":
 				embed_drop.options.author.text = "$USERNAME | weekly";
-				cards = dropManager.drop(interaction.user.id, "weekly");
+				cards = await dropManager.drop(interaction.user.id, "weekly");
 				break;
 
 			case "drop_season":
@@ -106,7 +106,7 @@ module.exports = {
 
 		// Format the cards into list entries
 		let cards_f = cards.map(c =>
-			cardManager.toString.inventory(c, {
+			cardManager.toString.inventoryEntry(c, {
 				duplicate: userParser.cards.hasDuplicates(userData, c.globalID),
 				simplify: true
 			})

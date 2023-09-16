@@ -18,12 +18,10 @@ async function drop(userID, dropType) {
 		dupeRepel: await userManager.charms.get(userID, "dupeRepel")
 	};
 
-	let cards = [];
-
 	const reroll = async cards => {
 		// prettier-ignore
 		// Check if the user already has the chosen cards
-		let _isDupe = await userManager.inventory.has(userID, cards.map(c => c.card.globalID));
+		let _isDupe = _jsT.isArray(await userManager.inventory.has(userID, cards.map(c => c.card.globalID)));
 
 		// Calculate reroll chances
 		let _reroll = _isDupe.map(d => (d ? _jsT.chance(user_charms.dupeRepel.power) : false));
@@ -32,8 +30,12 @@ async function drop(userID, dropType) {
 		if (_reroll.filter(r => r).length)
 			for (let i = 0; i < _reroll.length; i++)
 				if (_reroll[i]) {
+					// prettier-ignore
 					// Check which cards the user has in the current category
-					let _has = await userManager.inventory.has(userID, cards[i]._gID_pool);
+					let _has = (await userManager.inventory.get(userID, { gids: cards[i]._gID_pool }))
+						.filter(c => c)
+						.map(c => c.globalID);
+
 					let _possible_gID_pool = cards[i]._gID_pool.filter(gid => !_has.includes(gid));
 
 					// Reroll a new global ID if possible
@@ -59,7 +61,7 @@ async function drop(userID, dropType) {
 		}
 
 		// Put the user's charm to good use
-		if (!user_charms.dupeRepel) await reroll(cards);
+		if (user_charms.dupeRepel) await reroll(cards);
 
 		return cards.map(c => c.card);
 	};
@@ -68,7 +70,7 @@ async function drop(userID, dropType) {
 		/// Randomly pick the cards
 		let cards = [];
 
-		let _cards = cards_base.shop.filter(card =>
+		let _cards = cardManager.cards.shop.general.filter(card =>
 			config.shop.stock.card_set_ids.GENERAL.filter(id => id !== "100").includes(card.setID)
 		);
 
@@ -80,17 +82,17 @@ async function drop(userID, dropType) {
 			});
 
 		// Put the user's charm to good use
-		if (!user_charms.dupeRepel) await reroll(cards);
+		if (user_charms.dupeRepel) await reroll(cards);
 
 		return cards.map(c => c.card);
 	};
 
 	switch (dropType) {
 		// prettier-ignore
-		case "general": return drop_general();
+		case "general": return await drop_general();
 
 		// prettier-ignore
-		case "weekly": return;
+		case "weekly": return await drop_weekly();
 
 		// prettier-ignore
 		case "season": return;
