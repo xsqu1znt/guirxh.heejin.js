@@ -4,6 +4,7 @@ const { BetterEmbed } = require("../modules/discordTools/_dsT");
 const { cooldown_ES } = require("../modules/embedStyles/index");
 const { userManager } = require("../modules/mongo/index");
 const cardManager = require("../modules/cardManager");
+const dropManager = require("../modules/dropManager");
 const userParser = require("../modules/userParser");
 const _jsT = require("../modules/jsTools/_jsT");
 
@@ -50,12 +51,12 @@ module.exports = {
 		switch (dropType) {
 			case "drop_general":
                 embed_drop.options.author.text = "$USERNAME | drop";
-				cards = cardManager.get.drop("general");
+				cards = dropManager.drop(interaction.user.id, "general");
 				break;
 
 			case "drop_weekly":
 				embed_drop.options.author.text = "$USERNAME | weekly";
-				cards = cardManager.get.drop("weekly");
+				cards = dropManager.drop(interaction.user.id, "weekly");
 				break;
 
 			case "drop_season":
