@@ -1,4 +1,11 @@
 {
+	"count": {
+		"general": 5,
+		"weekly": 1,
+		"event_1": 1,
+		"event_2": 2
+	},
+
 	"chance": {
 		"common": { "CHANCE": 100, "CARD_RARITY_FILTER": 70 },
 		"uncommon": { "CHANCE": 25, "CARD_RARITY_FILTER": 60 },
