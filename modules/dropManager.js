@@ -1,7 +1,7 @@
 /** @typedef {"general"|"weekly"|"season"|"event_1"|"event_2"|"card_pack"} DropType */
 
 /** @typedef CardPackOptions
- * @property {string|string[]} setIDs
+ * @property {{id:number, rarity:number}[]} sets
  * @property {number} count */
 
 const { userManager } = require("./mongo/index");
@@ -139,18 +139,22 @@ async function drop(userID, dropType, cardPackOptions) {
 	};
 
 	const drop_cardPack = async () => {
-		cardPackOptions.setIDs = _jsT.isArray(cardPackOptions.setIDs);
+		cardPackOptions.sets = _jsT.isArray(cardPackOptions.sets);
 
 		/// Randomly pick the cards
 		let cards = [];
-		let _cards = cardManager.cards.all.filter(card => cardPackOptions.setIDs.includes(card.setID));
+		let sets = cardPackOptions.sets.map(set => ({ id: set.id, rarity: set.rarity }));
 
-		for (let i = 0; i < cardPackOptions.count; i++)
+		for (let i = 0; i < cardPackOptions.count; i++) {
+			let { id: setID } = _jsT.choiceWeighted(sets);
+			let _cards = randomTools.choice(cardManager.get.setID(setID));
+
 			cards.push({
 				card: _jsT.choice(_cards, true),
 				// Used for getting possible global IDs of the same category to reroll
 				_gID_pool: _cards.map(c => c.globalID)
 			});
+		}
 
 		// Put the user's charm to good use
 		if (user_charms.dupeRepel) await reroll(cards);
@@ -175,7 +179,7 @@ async function drop(userID, dropType, cardPackOptions) {
 		case "event_2": return await drop_event(2);
 
 		// prettier-ignore
-		case "card_pack": return;
+		case "card_pack": return await drop_cardPack();
 	}
 }
 
