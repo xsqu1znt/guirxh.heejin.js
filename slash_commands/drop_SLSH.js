@@ -51,37 +51,32 @@ module.exports = {
 		switch (dropType) {
 			case "drop_general":
                 embed_drop.options.author.text = "$USERNAME | drop";
-				cards = await dropManager.drop(interaction.user.id, "general");
-				break;
+				cards = await cardManager.drop(interaction.user.id, "general"); break;
 
 			case "drop_weekly":
 				embed_drop.options.author.text = "$USERNAME | weekly";
-				cards = await dropManager.drop(interaction.user.id, "weekly");
-				break;
+				cards = await cardManager.drop(interaction.user.id, "weekly"); break;
 
 			case "drop_season":
 				if (!config_event.season.NAME)
 					return await embed_drop.send({ description: "There is no `season` right now" });
 
 				embed_drop.options.author.text = "$USERNAME | season";
-				cards = cardManager.get.drop("season");
-				break;
+				cards = await cardManager.drop(interaction.user.id, "season"); break;
 
 			case "drop_event_1":
 				if (!config_event.event_1.NAME)
 					return await embed_drop.send({ description: "There is no `event 1` right now" });
 
 				embed_drop.options.author.text = "$USERNAME | event 1";
-				cards = cardManager.get.drop("event_1");
-				break;
+				cards = await cardManager.drop(interaction.user.id, "event_1"); break;
 
 			case "drop_event_2":
 				if (!config_event.event_2.NAME)
 					return await embed_drop.send({ description: "There is no `event 2` right now" });
 
 				embed_drop.options.author.text = "$USERNAME | event 2";
-				cards = cardManager.get.drop("event_2");
-				break;
+				cards = await cardManager.drop(interaction.user.id, "event_2"); break;
         }
 
 		await Promise.all([
@@ -118,16 +113,17 @@ module.exports = {
 		// Get the last card in the array
 		let cards_last = cards.slice(-1)[0];
 
-		embed_drop.options.description = cards_f.join("\n");
-		embed_drop.setImage(cards_last.imageURL);
-		// prettier-ignore
-		embed_drop.setFooter({
-            text: cards.length > 1
-                ? "React with any number and confirm to sell"
-                : "React to sell this card",
-            iconURL: "https://cdn.discordapp.com/attachments/1014199645750186044/1104414979798618243/carrot.png"
-        });
+		return await embed_drop.send({
+			description: cards_f.join("\n"),
+			imageURL: cards_last.imageURL,
 
-		return await embed_drop.send();
+			// prettier-ignore
+			footer: {
+				text: cards.length > 1
+					? "React with any number and confirm to sell"
+					: "React to sell this card",
+				iconURL: "https://cdn.discordapp.com/attachments/1014199645750186044/1104414979798618243/carrot.png"
+			}
+		});
 	}
 };
