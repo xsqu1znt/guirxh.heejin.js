@@ -1,5 +1,9 @@
 /** @typedef {"general"|"weekly"|"season"|"event_1"|"event_2"|"card_pack"} DropType */
 
+/** @typedef CardPackOptions
+ * @property {string|string[]} setIDs
+ * @property {number} count */
+
 const { userManager } = require("./mongo/index");
 const cardManager = require("./cardManager");
 const _jsT = require("./jsTools/_jsT");
@@ -12,8 +16,10 @@ const config = {
 	bot: require("../configs/config_bot.json")
 };
 
-/** @param {DropType} dropType @param {number} count  */
-async function drop(userID, dropType) {
+/** @param {DropType} dropType @param {number} count @param {CardPackOptions} cardPackOptions  */
+async function drop(userID, dropType, cardPackOptions) {
+	cardPackOptions = { cardRarity: null, count: null, ...cardPackOptions };
+
 	let user_charms = {
 		dupeRepel: await userManager.charms.get(userID, "dupeRepel")
 	};
@@ -69,12 +75,77 @@ async function drop(userID, dropType) {
 	const drop_weekly = async () => {
 		/// Randomly pick the cards
 		let cards = [];
-
 		let _cards = cardManager.cards.shop.general.filter(card =>
 			config.shop.stock.card_set_ids.GENERAL.filter(id => id !== "100").includes(card.setID)
 		);
 
 		for (let i = 0; i < config.drop.count.weekly; i++)
+			cards.push({
+				card: _jsT.choice(_cards, true),
+				// Used for getting possible global IDs of the same category to reroll
+				_gID_pool: _cards.map(c => c.globalID)
+			});
+
+		// Put the user's charm to good use
+		if (user_charms.dupeRepel) await reroll(cards);
+
+		return cards.map(c => c.card);
+	};
+
+	const drop_season = async () => {
+		/// Randomly pick the cards
+		let cards = [];
+		let _cards = cardManager.cards.base.seas.filter(card =>
+			config.event.season.CARD_RARITY_FILTER.includes(card.rarity)
+		);
+
+		for (let i = 0; i < config.drop.count.season; i++)
+			cards.push({
+				card: _jsT.choice(_cards, true),
+				// Used for getting possible global IDs of the same category to reroll
+				_gID_pool: _cards.map(c => c.globalID)
+			});
+
+		// Put the user's charm to good use
+		if (user_charms.dupeRepel) await reroll(cards);
+
+		return cards.map(c => c.card);
+	};
+
+	const drop_event = async eventType => {
+		let _CARD_RARITY_FILTER, _count;
+		// prettier-ignore
+		switch (eventType) {
+			case 1: config.event.event_1.CARD_RARITY_FILTER; _count = config.drop.count.event_1; break;
+			case 2: config.event.event_1.CARD_RARITY_FILTER; _count = config.drop.count.event_2; break;
+			default: return null;
+		}
+
+		/// Randomly pick the cards
+		let cards = [];
+		let _cards = cardManager.cards.event.filter(card => _CARD_RARITY_FILTER.includes(card.rarity));
+
+		for (let i = 0; i < _count; i++)
+			cards.push({
+				card: _jsT.choice(_cards, true),
+				// Used for getting possible global IDs of the same category to reroll
+				_gID_pool: _cards.map(c => c.globalID)
+			});
+
+		// Put the user's charm to good use
+		if (user_charms.dupeRepel) await reroll(cards);
+
+		return cards.map(c => c.card);
+	};
+
+	const drop_cardPack = async () => {
+		cardPackOptions.setIDs = _jsT.isArray(cardPackOptions.setIDs);
+
+		/// Randomly pick the cards
+		let cards = [];
+		let _cards = cardManager.cards.all.filter(card => cardPackOptions.setIDs.includes(card.setID));
+
+		for (let i = 0; i < cardPackOptions.count; i++)
 			cards.push({
 				card: _jsT.choice(_cards, true),
 				// Used for getting possible global IDs of the same category to reroll
@@ -95,13 +166,13 @@ async function drop(userID, dropType) {
 		case "weekly": return await drop_weekly();
 
 		// prettier-ignore
-		case "season": return;
+		case "season": return await drop_season();
 
 		// prettier-ignore
-		case "event_1": return;
+		case "event_1": return await drop_event(1);
 
 		// prettier-ignore
-		case "event_2": return;
+		case "event_2": return await drop_event(2);
 
 		// prettier-ignore
 		case "card_pack": return;

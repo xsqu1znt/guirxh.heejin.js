@@ -37,7 +37,6 @@ const cards_base = {
 
 	bday: require("../items/cards/cards_bday.json"),
 	holi: require("../items/cards/cards_holiday.json"),
-
 	evnt: [
 		...require("../items/cards/cards_event1.json"),
 		...require("../items/cards/cards_event2.json"),
@@ -52,6 +51,7 @@ const cards_base = {
 /// Card arrays
 const cards_all = [].concat(...Object.values(cards_base));
 const cards_general = [].concat(...Object.values(cards_base).slice(5));
+const cards_event = [...cards_base.bday, ...cards_base.holi, ...cards_base.evnt];
 
 const cards_shop_all = cards_all.filter(card =>
 	[...config.shop.stock.card_set_ids.GENERAL, ...config.shop.stock.card_set_ids.SPECIAL].includes(card.setID)
@@ -535,6 +535,7 @@ module.exports = {
 		base: cards_base,
 		all: cards_all,
 		general: cards_general,
+		event: cards_event,
 		count: cards_all.length,
 
 		globalIDs: cards_globalIDs,
