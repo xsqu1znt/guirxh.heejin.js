@@ -57,7 +57,7 @@ async function drop(userID, dropType, cardPackOptions) {
 
 		for (let i = 0; i < config.drop.count.general; i++) {
 			let _category = _jsT.choiceWeighted(Object.values(config.drop.chance).map(c => ({ ...c, rarity: c.CHANCE })));
-			let _cards = cardManager.cards.general.filter(card => card.rarity === _category.cardRarityFilter);
+			let _cards = cardManager.cards.general.filter(card => card.rarity === _category.CARD_RARITY_FILTER);
 
 			cards.push({
 				card: _jsT.choice(_cards, true),
