@@ -166,17 +166,24 @@ function collections(user, options) {
 }
 
 function gift(user, recipient, cards) {
-	let cards_f = cards.map(c => cardManager.toString.basic(c));
+	let from_to = `**From:** ${user}\n**To:** ${recipient}`;
+
+	let cards_f = cards.map(c => cardManager.toString.inventoryEntry(c, { simplify: true }));
 	let card_last = cards.slice(-1)[0];
 
 	// Create the embed :: { GIFT }
 	let embed_gift = new BetterEmbed({
 		author: { text: "$USERNAME | gift", user },
 		description: `$GIFTED\n$FROM_TO`
-			.replace("$GIFTED", cards.length > 5 ? `You gifted \`${cards.length}\` cards` : cards_f.join("\n"))
-			.replace("$FROM_TO", `**From:** ${user}\n**To:** ${recipient}`),
+			.replace("$GIFTED", `You gifted \`${cards.length}\` cards`)
+			.replace("$FROM_TO", from_to),
 		imageURL: card_last.imageURL
 	});
+
+	if (cards.length <= 6) {
+		embed_gift.addFields(...cards_f.map(f => ({ name: "\u200b", value: f, inline: true })));
+		embed_gift.options.description = from_to;
+	}
 
 	return embed_gift;
 }

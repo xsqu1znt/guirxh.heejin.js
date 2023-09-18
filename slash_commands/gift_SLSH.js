@@ -39,7 +39,7 @@ module.exports = {
 		let userData = await userManager.fetch(interaction.user.id, { type: "essential" });
 
 		/// Fetch the cards from the user's card_inventory
-		let cards = await userManager.inventory.get(interaction.user.id, { uids });
+		let cards = _jsT.isArray(await userManager.inventory.get(interaction.user.id, { uids }));
 
 		// prettier-ignore
 		// Let the user know no cards were found using those UIDs

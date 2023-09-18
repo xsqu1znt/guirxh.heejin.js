@@ -108,13 +108,21 @@ module.exports = {
 		);
 
 		// Add the index for each card in the list
-		if (cards_f.length > 1) cards_f = cards_f.map((str, idx) => `${config_bot.emojis.numbers[idx].EMOJI} ${str}`);
+		// if (cards_f.length > 1) cards_f = cards_f.map((str, idx) => `${config_bot.emojis.numbers[idx].EMOJI} ${str}`);
 
 		// Get the last card in the array
 		let cards_last = cards.slice(-1)[0];
 
+		embed_drop.addFields(
+			...cards_f.map((f, idx) => ({
+				name: cards_f.length > 1 ? config_bot.emojis.numbers[idx].EMOJI : "\u200b",
+				value: f,
+				inline: true
+			}))
+		);
+
 		return await embed_drop.send({
-			description: cards_f.join("\n"),
+			// description: cards_f.join("\n"),
 			imageURL: cards_last.imageURL,
 
 			// prettier-ignore
