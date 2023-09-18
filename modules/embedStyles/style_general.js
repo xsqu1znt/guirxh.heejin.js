@@ -257,6 +257,11 @@ function view(user, userData, card, viewType) {
 		});
 	};
 
+	const embed_viewVault = () => {
+		// Sort the cards by set ID and global ID, then group them by 10 per embed
+        // let cards = _jsT.chunk(card.sort((a, b) => a.setID - b.setID || a.globalID - b.globalID), 15);
+	};
+
 	const embed_viewTeam = () => {
 		// Sort the cards by global ID and split it
 		let _cards = card.sort((a, b) => a.globalID - b.globalID);

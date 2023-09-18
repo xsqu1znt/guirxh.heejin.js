@@ -78,5 +78,17 @@ module.exports = {
 
 			return await embedNav.send();
 		}
+
+		else if (section) {
+			// Fetch the user from Mongo
+			let userData = await userManager.fetch(interaction.user.id, { type: "essential" });
+
+			switch (section) {
+				case "favorite": return;
+				case "idol": return;
+				case "vault": return;
+				case "team": return;
+			}
+		}
 	}
 };
