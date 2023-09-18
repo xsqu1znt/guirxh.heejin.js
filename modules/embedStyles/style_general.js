@@ -6,13 +6,17 @@
  * @property {string} group
  * @property {"ascending"|"descending"} order */
 
+/** @typedef {"uid"|"gid"|"set"|"idol"|"favorite"|"vault"|"team"} CardViewType */
+
 const { GuildMember, User } = require("discord.js");
 
 const BetterEmbed = require("../discordTools/dsT_betterEmbed");
 const cardManager = require("../cardManager");
+const userParser = require("../userParser");
 const _jsT = require("../jsTools/_jsT");
+const { userManager } = require("../mongo/index");
 
-/** @param {options_collectons} options  */
+/** @param {GuildMember|User} user @param {options_collectons} options  */
 function collections(user, options) {
 	// prettier-ignore
 	options = {
@@ -165,6 +169,134 @@ function collections(user, options) {
 	return embeds_collection;
 }
 
+/** @param {GuildMember|User} user @param {UserData} userData @param {Card} card @param {CardViewType} viewType */
+function view(user, userData, card, viewType) {
+	const embed_viewUID = () => {
+		// Whether or not this card is selected, favorited, or on the user's team
+		let selected = card.uid === userData.card_selected_uid;
+		let favorite = card.uid === userData.card_favorite_uid;
+		let onTeam = userData.card_team_uids.includes(card.uid);
+
+		// let duplicate_count = (await userManager.inventory.get(user.id, { gids: card.globalID }))?.length || 0;
+
+		// prettier-ignore
+		let card_f = cardManager.toString.inventoryEntry(card, {
+			duplicate: duplicate_count,
+			selected, favorite, onTeam,
+			showXP: true
+		});
+
+		// prettier-ignore
+		return new BetterEmbed({
+			description: card_f, author: { text: "$USERNAME | view", user, iconURL: true },
+			imageURL: card.imageURL
+		});
+	};
+
+	const embed_viewGID = () => {
+		return new BetterEmbed({
+			description: cardManager.toString.inventoryEntry(card),
+			author: { text: "$USERNAME | view", user, iconURL: true },
+			imageURL: card.imageURL
+		});
+	};
+
+	const embed_viewSet = () => {
+		// Sort the cards by global ID and split it
+		let _cards = card.sort((a, b) => a.globalID - b.globalID);
+
+		/** @type {BetterEmbed[]} */
+		let embeds = [];
+
+		_cards.forEach((_card, idx) => {
+			// Create the embed
+			let _embed = new BetterEmbed({
+				description: cardManager.toString.inventoryEntry(_card, { simplify: true }),
+				author: { text: `$USERNAME | ${_card.group} - ${_card.single}`, user, iconURL: true },
+				footer: `Card ${idx + 1}/${_cards.length}`,
+				imageURL: _card.imageURL
+			});
+
+			embeds.push(_embed);
+		});
+
+		return embeds;
+	};
+
+	const embed_viewIdol = () => {
+		// Whether or not this card is favorited, or on the user's team
+		let favorite = card.uid === userData.card_favorite_uid;
+		let onTeam = userData.card_team_uids.includes(card.uid);
+
+		// prettier-ignore
+		let card_f = cardManager.toString.inventoryEntry(card, {
+			selected: true, favorite, onTeam, showXP: true
+		});
+
+		// prettier-ignore
+		return new BetterEmbed({
+			description: card_f, author: { text: "$USERNAME | idol", user, iconURL: true },
+			imageURL: card.imageURL
+		});
+	};
+
+	const embed_viewFavorite = () => {
+		// Whether or not this card is selected, or on the user's team
+		let selected = card.uid === userData.card_selected_uid;
+		let onTeam = userData.card_team_uids.includes(card.uid);
+
+		// prettier-ignore
+		let card_f = cardManager.toString.inventoryEntry(card, {
+			selected, favorite: true, onTeam, showXP: true
+		});
+
+		// prettier-ignore
+		return new BetterEmbed({
+			description: card_f, author: { text: "$USERNAME | favorite", user, iconURL: true },
+			imageURL: card.imageURL
+		});
+	};
+
+	const embed_viewTeam = () => {
+		// Sort the cards by global ID and split it
+		let _cards = card.sort((a, b) => a.globalID - b.globalID);
+
+		let total_ability = _jsT.sum(_cards, "stats.ability");
+		let total_reputation = _jsT.sum(_cards, "stats.reputation");
+
+		/** @type {BetterEmbed[]} */
+		let embeds = [];
+
+		_cards.forEach((_card, idx) => {
+			// Create the embed
+			let _embed = new BetterEmbed({
+				description: cardManager.toString.inventoryEntry(_card, { simplify: true }),
+				author: { text: "$USERNAME | team", user, iconURL: true },
+				footer: `Card ${idx + 1}/${_cards.length} | Total :: ABI. %TOTAL_ABI / REP. %TOTAL_REP`
+					.replace("%TOTAL_ABI", total_ability)
+					.replace("%TOTAL_REP", total_reputation),
+				imageURL: _card.imageURL
+			});
+
+			embeds.push(_embed);
+		});
+
+		return embeds;
+	};
+
+	// prettier-ignore
+	switch (viewType) {
+        case "uid": return embed_viewUID();
+        case "gid": return embed_viewGID();
+        case "set": return embed_viewSet();
+        case "idol": return embed_viewIdol();
+        case "favorite": return embed_viewFavorite();
+        case "vault": return embed_viewVault();
+        case "team": return embed_viewTeam();
+    }
+}
+
+/** @param {GuildMember|User} user @param {GuildMember|User} recipient @param {Card[]} cards */
 function gift(user, recipient, cards) {
 	let from_to = `**From:** ${user}\n**To:** ${recipient}`;
 
@@ -188,4 +320,4 @@ function gift(user, recipient, cards) {
 	return embed_gift;
 }
 
-module.exports = { collections, gift };
+module.exports = { collections, view, gift };

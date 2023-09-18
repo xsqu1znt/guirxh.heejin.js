@@ -2,8 +2,9 @@
  * @property {boolean} favorite
  * @property {boolean} selected
  * @property {boolean} onTeam
- * @property {boolean} simplify
- * @property {boolean|number} duplicate */
+ * @property {boolean|number} duplicate
+ * @property {boolean} showXP
+ * @property {boolean} simplify */
 
 /** @typedef options_get_random
  * @property {"all"|"general"} type
@@ -318,10 +319,15 @@ function toString_basic(card) {
 }
 
 /** @param {options_toStr_inventory} options  */
-function toString_inventoryEntry(card, options = {}) {
+function toString_inventoryEntry(card, options) {
 	if (!card) return "n/a";
 
-	options = { favorite: false, selected: false, onTeam: false, simplify: false, duplicate: false, ...options };
+	// prettier-ignore
+	options = {
+		favorite: false, selected: false, onTeam: false,
+		duplicate: false, showXP: false, simplify: false,
+		...options
+	};
 
 	let extra = [];
 	if (options.favorite) extra.push("🔒");
@@ -329,22 +335,29 @@ function toString_inventoryEntry(card, options = {}) {
 	if (options.onTeam) extra.push("👯");
 
 	// prettier-ignore
-	// let f = "$UID $EMOJI $GROUP : $SINGLE - $NAME $DUPE\n> $SET_ID $GLOBAL_ID $RARITY $CATEGORY $SELL_PRICE $LOCKED\n> $LEVEL $STATS $FAVORITE $SELECTED $TEAM"
-	let f = "> **`$UID`** `$GID` `🗣️ $SET`\n> `$EMOJI` **$SINGLE** *`$GROUP`* $NAME $DUPE\n> `LV. $LVL` `$CATEGORY` `💰 $SELL` `🎤 $ABI` : `💖 $REP`\n> $EXTRA"
-		.replace("$UID", card?.uid || "")
+	let f = "> $UID `$GID` `🗣️ $SET`\n> `$EMOJI` **$SINGLE** *`$GROUP`* $NAME $DUPE\n> `LV. $LVL` `$CATEGORY` `💰 $SELL` `🎤 $ABI` : `💖 $REP`\n> $EXTRA"
+		.replace(" $UID", card?.uid ? `**\`${card.uid}\`**` : "")
 		.replace("$GID", card.globalID)
 		.replace("$SET", card.setID)
 
 		.replace("$EMOJI", card.emoji)
 		.replace("$SINGLE", card.single)
 		.replace("$GROUP", card.group)
-		// .replace("$NAME", card.name)
-		.replace("$NAME", markdown.link(card.name, card.imageURL))
+		.replace("$NAME", markdown.link(card.name, card.imageURL));
 
-		.replace("$LVL", card.stats.level)
+	// prettier-ignore
+	if (options.simplify) f = f
+		.replace(" $DUPE", "")
+		.replace("` LV. $LVL`", "")
+		.replace(" `💰 $SELL`", "")
+		.replace("> $EXTRA", "");
+
+	// prettier-ignore
+	f = f
+		.replace("$LVL", `${card.stats.level}${options.showXP ? ` : ${card.stats.xp}/${card.stats.xp_for_next_level}XP` : ""}`)
+
 		.replace("$CATEGORY", card.category)
 		.replace("$SELL", card.sellPrice)
-
 
 		.replace("$ABI", card.stats.ability)
 		.replace("$REP", card.stats.reputation)

@@ -1,12 +1,13 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { BetterEmbed } = require("../modules/discordTools/_dsT");
+const { EmbedNavigator } = require("../modules/discordTools/_dsT");
 const { error_ES, general_ES } = require("../modules/embedStyles/index");
 const { userManager } = require("../modules/mongo/index");
+const cardManager = require("../modules/cardManager");
 const _jsT = require("../modules/jsTools/_jsT");
 
 module.exports = {
-	options: { icon: "👀", deferReply: true },
+	options: { icon: "👀", deferReply: false },
 
 	// prettier-ignore
 	builder: new SlashCommandBuilder().setName("view")
@@ -33,14 +34,49 @@ module.exports = {
 		let setID = interaction.options.getString("setid");
 		let section = interaction.options.getString("section");
 
+		// prettier-ignore
 		// Send the appropriate view based on what option the user provided
 		if (uid) {
+			await interaction.deferReply();
+
 			// Fetch the card from the user's card_inventory
 			let card = await userManager.inventory.get(interaction.user.id, { uids: uid });
-			if (!card) return await error_ES.send({ description: "You need to give a valid UID" });
+			if (!card) return await error_ES.send({ interaction, description: "You need to give a valid UID" });
+
+			// Fetch the user from Mongo
+			let userData = await userManager.fetch(interaction.user.id, { type: "essential" });
 
 			// Create the view embed
-			let embed_view = general_ES.view(interaction.member, card, "uid");
+			let embed_view = general_ES.view(interaction.member, userData, card, "uid");
+			return await embed_view.send({ interaction });
+		}
+		
+		else if (globalID) {
+			// Get the card from our database
+			let card = cardManager.get.globalID(globalID);
+			if (!card) return await error_ES.send({ interaction, description: "You need to give a valid GID" });
+
+			// Create the view embed
+			let embed_view = general_ES.view(interaction.member, null, card, "gid");
+			return await embed_view.send({ interaction });
+		}
+		
+		else if (setID) {
+			// Get the cards from our database
+			let cards = cardManager.get.setID(setID);
+			if (!cards.length) return await error_ES.send({ interaction, description: "You need to give a valid set ID" });
+
+			// Create the view embed
+			let embeds_view = general_ES.view(interaction.member, null, cards, "set");
+
+			// prettier-ignore
+			// Send the embeds with navigation
+			let embedNav = new EmbedNavigator({
+				interaction, embeds: [embeds_view],
+				pagination: { type: "shortJump", dynamic: true, useReactions: true }
+			});
+
+			return await embedNav.send();
 		}
 	}
 };
