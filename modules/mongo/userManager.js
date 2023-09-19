@@ -357,6 +357,22 @@ async function inventory_get(userID, options) {
 	return options.uids.length + options.gids.length > 1 ? cards : cards[0];
 }
 
+async function inventory_vault_get(userID) {
+	// Create an aggregation pipeline
+	let pipeline = [
+		{ $unwind: "$card_inventory" },
+		{ $match: { _id: userID, "card_inventory.locked": true } },
+		{ $group: { _id: "$_id", card_inventory: { $push: "$card_inventory" } } }
+	];
+
+	let userData = (await models.user.aggregate(pipeline))[0];
+
+	// Parse CardLike
+	let cards = userData.card_inventory.map(c => cardManager.parse.fromCardLike(c));
+
+	return cards;
+}
+
 /** @param {string} userID */
 async function inventory_add(userID, cards) {
 	// Create an array if only a single card object was passed
@@ -446,7 +462,7 @@ async function inventory_stats(userID) {
 	let cards_user_count = await Promise.all(categories.map(async category => {
 		// Get the global IDs for every card in the category
 		let _globalIDs = cardManager.cards.globalIDs.base.get(category);
-		
+
 		let pipeline = [
 			{ $unwind: "$card_inventory" },
 			{ $match: { _id: userID, "card_inventory.globalID": { $in: _globalIDs } } },
@@ -507,14 +523,14 @@ async function charms_set(userID, charms) {
 
 //! UserData -> Cooldowns
 /** @param {string} userID @param {CooldownType} cooldownType */
-async function cooldowns_check(userID, cooldownType) {}
+async function cooldowns_check(userID, cooldownType) { }
 
 /** @param {string} userID @param {CooldownType} cooldownType */
-async function cooldowns_set(userID, cooldownType) {}
+async function cooldowns_set(userID, cooldownType) { }
 
 //! UserData -> Reminders
 /** @param {string} userID @param {CooldownType} reminderType */
-async function reminders_set(userID, reminderType) {}
+async function reminders_set(userID, reminderType) { }
 
 /** @param {string} userID @param {CooldownType} reminderType */
 async function reminders_toggle(userID, reminderType) {
@@ -538,25 +554,25 @@ async function reminders_toggle(userID, reminderType) {
 
 //! UserData -> Quest
 /** @param {string} userID @param {number} amount */
-async function quest_progress_increment_inventory(userID, amount) {}
+async function quest_progress_increment_inventory(userID, amount) { }
 
 /** @param {string} userID @param {number} amount */
-async function quest_progress_increment_balance(userID, amount) {}
+async function quest_progress_increment_balance(userID, amount) { }
 
 /** @param {string} userID @param {number} amount */
-async function quest_progress_increment_xp(userID, amount) {}
+async function quest_progress_increment_xp(userID, amount) { }
 
 //! UserData -> Statistics
 /** @param {string | {_id: string}} filter userID or filter @param {{}} query */
-async function statistics_update(filter, query) {}
+async function statistics_update(filter, query) { }
 
 /** @param {string} userID @param {number} amount */
-async function statistics_increment_commandsUsed(userID, amount) {}
+async function statistics_increment_commandsUsed(userID, amount) { }
 
 /** @param {string} userID @param {number} amount */
-async function statistics_increment_carrots(userID, amount) {}
+async function statistics_increment_carrots(userID, amount) { }
 /** @param {string} userID @param {number} amount */
-async function statistics_increment_ribbons(userID, amount) {}
+async function statistics_increment_ribbons(userID, amount) { }
 
 module.exports = {
 	count: userData_count,
@@ -583,7 +599,11 @@ module.exports = {
 		remove: inventory_remove,
 		update: inventory_update,
 		sell: inventory_sell,
-		stats: inventory_stats
+		stats: inventory_stats,
+
+		vault: {
+			get: inventory_vault_get
+		}
 	},
 
 	badges: {

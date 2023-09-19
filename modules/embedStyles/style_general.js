@@ -20,10 +20,10 @@ const { userManager } = require("../mongo/index");
 function collections(user, options) {
 	// prettier-ignore
 	options = {
-        target: null, rarity: null, setID: "",
-        category: "", group: "",
-        order: "ascending", ...options
-    };
+		target: null, rarity: null, setID: "",
+		category: "", group: "",
+		order: "ascending", ...options
+	};
 
 	/// Parse options
 	// prettier-ignore
@@ -45,25 +45,25 @@ function collections(user, options) {
 	// prettier-ignore
 	if (options.rarity.length) {
 		let _cards = [];
-		for (let _rarity of options.rarity)_cards.push(...cards.filter(c => String(c.rarity).toLowerCase().includes(_rarity)));
+		for (let _rarity of options.rarity) _cards.push(...cards.filter(c => String(c.rarity).toLowerCase().includes(_rarity)));
 		cards = _cards; filtered = true;
 	}
 	// prettier-ignore
 	if (options.setID.length) {
 		let _cards = [];
-		for (let _setID of options.setID)_cards.push(...cards.filter(c => c.setID.toLowerCase().includes(_setID)));
+		for (let _setID of options.setID) _cards.push(...cards.filter(c => c.setID.toLowerCase().includes(_setID)));
 		cards = _cards; filtered = true;
 	}
 	// prettier-ignore
 	if (options.category.length) {
 		let _cards = [];
-		for (let _category of options.category)_cards.push(...cards.filter(c => c.category.toLowerCase().includes(_category)));
+		for (let _category of options.category) _cards.push(...cards.filter(c => c.category.toLowerCase().includes(_category)));
 		cards = _cards; filtered = true;
 	}
 	// prettier-ignore
 	if (options.group.length) {
 		let _cards = [];
-		for (let _group of options.group)_cards.push(...cards.filter(c => c.group.toLowerCase().includes(_group)));
+		for (let _group of options.group) _cards.push(...cards.filter(c => c.group.toLowerCase().includes(_group)));
 		cards = _cards; filtered = true;
 	}
 
@@ -101,9 +101,8 @@ function collections(user, options) {
 				// name: `${cardManager.cards.category.meta.base[cardManager.get.baseCategoryName(_globalIDs[0].globalID)].emoji} ${cat}`
 			};
 
-			_globalID_first.name = `\`${
-				cardManager.cards.category.meta.base[cardManager.get.baseCategoryName(_globalID_first.globalID)].emoji
-			}\` ***${cat}***`;
+			_globalID_first.name = `\`${cardManager.cards.category.meta.base[cardManager.get.baseCategoryName(_globalID_first.globalID)].emoji
+				}\` ***${cat}***`;
 
 			// Pushes to the main array
 			card_categories.push(...[_globalID_first, ..._globalIDs]);
@@ -114,7 +113,7 @@ function collections(user, options) {
 	let card_categories_split = [];
 	let row_size = 5;
 
-	for (let i = 0; i < card_categories.length; ) {
+	for (let i = 0; i < card_categories.length;) {
 		// Get the base row size of 5
 		let size = row_size;
 
@@ -259,25 +258,53 @@ function view(user, userData, card, viewType) {
 
 	const embed_viewVault = () => {
 		// Sort the cards by set ID and global ID, then group them by 10 per embed
-        // let cards = _jsT.chunk(card.sort((a, b) => a.setID - b.setID || a.globalID - b.globalID), 15);
-	};
+		// let cards = _jsT.chunk(card.sort((a, b) => a.setID - b.setID || a.globalID - b.globalID), 15);
+		let cards = card.sort((a, b) => a.setID - b.setID || a.globalID - b.globalID);
 
-	const embed_viewTeam = () => {
-		// Sort the cards by global ID and split it
-		let _cards = card.sort((a, b) => a.globalID - b.globalID);
+		// Parse the cards into strings, and group them by 15 per page
+		let cards_f = _jsT.chunk(cards.map(c => {
+			// Whether or not this card is selected, favorited, or on the user's team
+			let selected = card.uid === userData.card_selected_uid;
+			let favorite = card.uid === userData.card_favorite_uid;
+			let onTeam = userData.card_team_uids.includes(card.uid);
 
-		let total_ability = _jsT.sum(_cards, "stats.ability");
-		let total_reputation = _jsT.sum(_cards, "stats.reputation");
+			return cardManager.toString.inventoryEntry(c, { selected, favorite, onTeam });
+		}), 15);
 
 		/** @type {BetterEmbed[]} */
 		let embeds = [];
 
-		_cards.forEach((_card, idx) => {
+		for (let i = 0; i < cards_f.length; i++) {
+			/// Create the embed
+			let _embed = new BetterEmbed({
+				author: { text: "$USERNAME | vualt", user, iconURL: true },
+				footer: `Page ${idx + 1}/${cards_f.length}`
+			});
+
+			_embed.addFields(...cards_f[i].map(c => ({ name: "\u200b", value: c, inline: true })));
+
+			embeds.push(_embed);
+		}
+
+		return embeds;
+	};
+
+	const embed_viewTeam = () => {
+		// Sort the cards by global ID and split it
+		let cards = card.sort((a, b) => a.globalID - b.globalID);
+
+		let total_ability = _jsT.sum(cards, "stats.ability");
+		let total_reputation = _jsT.sum(cards, "stats.reputation");
+
+		/** @type {BetterEmbed[]} */
+		let embeds = [];
+
+		cards.forEach((_card, idx) => {
 			// Create the embed
 			let _embed = new BetterEmbed({
 				description: cardManager.toString.inventoryEntry(_card, { simplify: true }),
 				author: { text: "$USERNAME | team", user, iconURL: true },
-				footer: `Card ${idx + 1}/${_cards.length} | Total :: ABI. %TOTAL_ABI / REP. %TOTAL_REP`
+				footer: `Card ${idx + 1}/${cards.length} | Total :: ABI. %TOTAL_ABI / REP. %TOTAL_REP`
 					.replace("%TOTAL_ABI", total_ability)
 					.replace("%TOTAL_REP", total_reputation),
 				imageURL: _card.imageURL
@@ -291,14 +318,14 @@ function view(user, userData, card, viewType) {
 
 	// prettier-ignore
 	switch (viewType) {
-        case "uid": return embed_viewUID();
-        case "gid": return embed_viewGID();
-        case "set": return embed_viewSet();
-        case "idol": return embed_viewIdol();
-        case "favorite": return embed_viewFavorite();
-        case "vault": return embed_viewVault();
-        case "team": return embed_viewTeam();
-    }
+		case "uid": return embed_viewUID();
+		case "gid": return embed_viewGID();
+		case "set": return embed_viewSet();
+		case "idol": return embed_viewIdol();
+		case "favorite": return embed_viewFavorite();
+		case "vault": return embed_viewVault();
+		case "team": return embed_viewTeam();
+	}
 }
 
 /** @param {GuildMember|User} user @param {GuildMember|User} recipient @param {Card[]} cards */

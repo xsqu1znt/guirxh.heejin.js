@@ -73,7 +73,7 @@ module.exports = {
 			// Send the embeds with navigation
 			let embedNav = new EmbedNavigator({
 				interaction, embeds: [embeds_view],
-				pagination: { type: "shortJump", dynamic: true, useReactions: true }
+				pagination: { type: "shortJump", useReactions: true }
 			});
 
 			return await embedNav.send();
@@ -101,27 +101,44 @@ module.exports = {
 					break;
 
 				// Fetch cards from the user's card_inventory :: { VAULT }
-				case "vault": return;
+				case "vault":
+					let cards_vault = await userManager.inventory.vault.get(interaction.user.id);
+					// prettier-ignore
+					if (!cards_vault || !cards_vault.length) return await error_ES.send({
+						interaction, description: "You don't have any cards in your vault\n> *Use \`/set\` \`edit:🔒 vault\` to add cards to your vault*"
+					});
+
+					// Create the embeds :: { VIEW }
+					let embeds_view_vault = general_ES.view(interaction.member, userData, cards_vault, "vault");
+
+					// prettier-ignore
+					// Send the embeds with navigation
+					let embedNav_vault = new EmbedNavigator({
+						interaction, embeds: [embeds_view_vault],
+						pagination: { type: "longJump", useReactions: true }
+					});
+
+					return await embedNav_vault.send();
 
 				// Fetch cards from the user's card_inventory :: { TEAM }
 				case "team":
-					let cards = await userManager.inventory.get(interaction.user.id, { uids: userData.card_team_uids });
+					let cards_team = await userManager.inventory.get(interaction.user.id, { uids: userData.card_team_uids });
 					// prettier-ignore
-					if (!cards || !cards.length) return await error_ES.send({
+					if (!cards_team || !cards_team.length) return await error_ES.send({
 						interaction, description: "You do not have a team set\n> *Use \`/set\` \`edit:👯 team\` to set one*"
 					});
 
 					// Create the embeds :: { VIEW }
-					let embeds_view = general_ES.view(interaction.member, userData, card, "team");
+					let embeds_view_team = general_ES.view(interaction.member, userData, cards_team, "team");
 
 					// prettier-ignore
 					// Send the embeds with navigation
-					let embedNav = new EmbedNavigator({
-						interaction, embeds: [embeds_view],
+					let embedNav_team = new EmbedNavigator({
+						interaction, embeds: [embeds_view_team],
 						pagination: { type: "short", dynamic: false, useReactions: true }
 					});
 
-					return await embedNav.send();
+					return await embedNav_team.send();
 			}
 
 			if (card) {
