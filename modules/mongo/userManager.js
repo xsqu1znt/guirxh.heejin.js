@@ -361,11 +361,13 @@ async function inventory_vault_get(userID) {
 	// Create an aggregation pipeline
 	let pipeline = [
 		{ $unwind: "$card_inventory" },
-		{ $match: { _id: userID, "card_inventory.locked": true } },
+		{ $match: { _id: userID, "card_inventory.locked": "true" } },
 		{ $group: { _id: "$_id", card_inventory: { $push: "$card_inventory" } } }
 	];
 
-	let userData = (await models.user.aggregate(pipeline))[0];
+	// let userData = (await models.user.aggregate(pipeline))[0];
+	let userData = await models.user.aggregate(pipeline);
+	console.log(userData);
 
 	// Parse CardLike
 	let cards = userData.card_inventory.map(c => cardManager.parse.fromCardLike(c));
