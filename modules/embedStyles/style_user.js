@@ -161,11 +161,11 @@ function missing(user, cards, cards_have) {
 function inventory(userData, options, stats) {
 	// prettier-ignore
 	options = {
-        target: null,
-        rarity: "", setID: "", globalID: "",
-        category: "", group: "", single: "", name: "",
-        sorting: "setID", order: "ascending", ...options
-    };
+		target: null,
+		rarity: "", setID: "", globalID: "",
+		category: "", group: "", single: "", name: "",
+		sorting: "setID", order: "ascending", ...options
+	};
 
 	/// Parse options
 	// prettier-ignore
@@ -195,31 +195,31 @@ function inventory(userData, options, stats) {
 	// prettier-ignore
 	if (options.rarity.length) {
 		let _cards = [];
-		for (let _rarity of options.rarity)_cards.push(...cards.filter(c => String(c.card.rarity).toLowerCase().includes(_rarity)));
+		for (let _rarity of options.rarity) _cards.push(...cards.filter(c => String(c.card.rarity).toLowerCase().includes(_rarity)));
 		cards = _cards; filtered = true;
 	}
 	// prettier-ignore
 	if (options.setID.length) {
 		let _cards = [];
-		for (let _setID of options.setID)_cards.push(...cards.filter(c => c.card.setID.toLowerCase().includes(_setID)));
+		for (let _setID of options.setID) _cards.push(...cards.filter(c => c.card.setID.toLowerCase().includes(_setID)));
 		cards = _cards; filtered = true;
 	}
 	// prettier-ignore
 	if (options.category.length) {
 		let _cards = [];
-		for (let _category of options.category)_cards.push(...cards.filter(c => c.card.category.toLowerCase().includes(_category)));
+		for (let _category of options.category) _cards.push(...cards.filter(c => c.card.category.toLowerCase().includes(_category)));
 		cards = _cards; filtered = true;
 	}
 	// prettier-ignore
 	if (options.group.length) {
 		let _cards = [];
-		for (let _group of options.group)_cards.push(...cards.filter(c => c.card.group.toLowerCase().includes(_group)));
+		for (let _group of options.group) _cards.push(...cards.filter(c => c.card.group.toLowerCase().includes(_group)));
 		cards = _cards; filtered = true;
 	}
 	// prettier-ignore
 	if (options.single.length) {
 		let _cards = [];
-		for (let _single of options.single)_cards.push(...cards.filter(c => c.card.single.toLowerCase().includes(_single)));
+		for (let _single of options.single) _cards.push(...cards.filter(c => c.card.single.toLowerCase().includes(_single)));
 		cards = _cards; filtered = true;
 	}
 	// prettier-ignore
@@ -232,20 +232,20 @@ function inventory(userData, options, stats) {
 	// prettier-ignore
 	// Apply duplicate filter
 	if (options.globalID.length) if (options.globalID[0].toLowerCase() === "all") {
-        cards = cards.filter(c => c.duplicate_count);
-        filtered = true;
-    } else {
-        cards = cards.filter(c => options.globalID.includes(c.card.globalID) && c.duplicate_count);
-        filtered = true; dupeCheck = true;
-    }
+		cards = cards.filter(c => c.duplicate_count);
+		filtered = true;
+	} else {
+		cards = cards.filter(c => options.globalID.includes(c.card.globalID) && c.duplicate_count);
+		filtered = true; dupeCheck = true;
+	}
 
 	// prettier-ignore
 	// Sort the user's cards
 	switch (options.sorting) {
-        case "gid": cards.sort((a, b) => a.card.globalID - b.card.globalID); break;
-        case "setID": cards.sort((a, b) => a.card.setID - b.card.setID || a.card.globalID - b.card.globalID); break;
-        case "recent": break;
-    }
+		case "gid": cards.sort((a, b) => a.card.globalID - b.card.globalID); break;
+		case "setID": cards.sort((a, b) => a.card.setID - b.card.setID || a.card.globalID - b.card.globalID); break;
+		case "recent": break;
+	}
 
 	// Reverse the order of the user's cards, if needed
 	if (options.order === "descending") cards.reverse();
@@ -255,8 +255,8 @@ function inventory(userData, options, stats) {
 	if (!cards.length) return new BetterEmbed({
 		author: { text: "$USERNAME | inventory", user: options.target },
 		description: filtered ? dupeCheck
-				? `You do not have any dupes of ${options.globalID.length === 1 ? "that card" : "those cards"}`
-				: "No cards were found with that search filter"
+			? `You do not have any dupes of ${options.globalID.length === 1 ? "that card" : "those cards"}`
+			: "No cards were found with that search filter"
 			: "There are no cards in your inventory"
 	});
 
@@ -366,16 +366,29 @@ function reminders(user, userData) {
 
 	// Parse the cooldowns into strings
 	let cooldowns_f = cooldowns.map(cd => {
-		let _enabled = userData.reminders.find(r => r.type === cd.toLowerCase())?.enabled || false;
-		let _cooldown_f = _jsT.toTitleCase(cd.replace(/_/g, " "));
+		let reminder = userData.reminders.find(r => r.type === cd.toLowerCase()) || {}
+		// let enabled = reminder?.enabled || false;
+		let enabled = _jsT.chance();
 
-		return `\`${_enabled ? "✔️ enabled" : "❌ disabled"}\` **${_cooldown_f}**`;
+		reminder.notificationType = _jsT.choice(["channel", "dm"]);
+		let notificationType = "";
+
+		switch (reminder.notificationType) {
+			case "channel": notificationType = "💬"; break;
+			case "dm": notificationType = "📫"; break;
+		}
+
+		// return "`$TOGGLE` `$NOTIFICATION_TYPE` **$COOLDOWN**"
+		return "$TOGGLE $NOTIFICATION_TYPE $COOLDOWN"
+			.replace("$TOGGLE", enabled ? "✔️ enabled " : "❌ disabled")
+			.replace("$NOTIFICATION_TYPE", notificationType)
+			.replace("$COOLDOWN", _jsT.toTitleCase(cd.replace(/_/g, " ")));
 	});
 
 	// Create the embed :: { REMINDERS }
 	let embed_reminders = new BetterEmbed({
-		author: { text: "$USERNAME | reminder", user },
-		description: cooldowns_f.join("\n")
+		author: { text: "$USERNAME | reminder", user, iconURL: true },
+		description: `\`\`\`${cooldowns_f.join("\n")}\`\`\``
 	});
 
 	return embed_reminders;

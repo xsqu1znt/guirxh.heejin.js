@@ -12,7 +12,7 @@ module.exports = {
 	builder: new SlashCommandBuilder().setName("reminder")
 		.setDescription("View or toggle your cooldown reminders")
 
-		.addStringOption(option => option.setName("to").setDescription("The cooldown you want to toggle being reminded for")
+		.addStringOption(option => option.setName("toggle").setDescription("The cooldown you want to toggle being reminded for")
         .addChoices(
 				{ name: "Daily", value: "daily" },
 				{ name: "Stage", value: "stage" },
@@ -28,7 +28,7 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-		let toggle = interaction.options.getString("to");
+		let toggle = interaction.options.getString("toggle");
 
 		// Toggle the reminder the user's cooldown reminder
 		if (toggle) {
