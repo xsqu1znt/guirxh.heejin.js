@@ -46,8 +46,6 @@ importers_dir.forEach(fn => {
 logger.log("connecting to Discord...");
 // prettier-ignore
 client.login(TOKEN).then(async () => {
-	await mongo.connect();
-
 	// Register slash commands to a specific server :: { LOCAL }
 	// await slashCommandManager.push(client, { ids: "1107285909365329922" });
 
@@ -59,4 +57,6 @@ client.login(TOKEN).then(async () => {
 
 	// Remove commands (does nothing if commands were registered locally) :: { GLOBAL }
 	// await slashCommandManager.remove(client, { global: true });
+
+	await mongo.connect();
 });

@@ -19,8 +19,8 @@ module.exports = {
 
 		.addStringOption(option => option.setName("section").setDescription("More sections to view")
 			.addChoices(
-				{ name: "⭐ favorite", value: "favorite" },
 				{ name: "🏃 idol", value: "idol" },
+				{ name: "⭐ favorite", value: "favorite" },
 				{ name: "🔒 vault", value: "vault" },
 				{ name: "👯 team", value: "team" }
 			)
@@ -88,16 +88,16 @@ module.exports = {
 			let card = null;
 
 			switch (section) {
-				// Fetch a card from the user's card_inventory :: { FAVORITE }
-				case "favorite":
-					card = await userManager.inventory.get(interaction.user.id, { uids: userData.card_favorite_uid });
-					if (!card) return await error_ES.send({ interaction, description: "You do not have a favorite card\n> Use \`/set\` \`edit:⭐ favorite\` to set one" });
-					break;
-
 				// Fetch a card from the user's card_inventory :: { IDOL }
 				case "idol":
 					card = await userManager.inventory.get(interaction.user.id, { uids: userData.card_selected_uid });
-					if (!card) return await error_ES.send({ interaction, description: "You do not have an idol set\n> Use \`/set\` \`edit:🏃 idol\` to set one" });
+					if (!card) return await error_ES.send({ interaction, description: "You do not have an idol set\n> *Use \`/set\` \`edit:🏃 idol\` to set one*" });
+					break;
+
+				// Fetch a card from the user's card_inventory :: { FAVORITE }
+				case "favorite":
+					card = await userManager.inventory.get(interaction.user.id, { uids: userData.card_favorite_uid });
+					if (!card) return await error_ES.send({ interaction, description: "You do not have a favorite card\n> *Use \`/set\` \`edit:⭐ favorite\` to set one*" });
 					break;
 
 				// Fetch cards from the user's card_inventory :: { VAULT }
@@ -106,7 +106,10 @@ module.exports = {
 				// Fetch cards from the user's card_inventory :: { TEAM }
 				case "team":
 					let cards = await userManager.inventory.get(interaction.user.id, { uids: userData.card_team_uids });
-					if (!cards.length) return await error_ES.send({ interaction, description: "You do not have a team set\n> Use \`/set\` \`edit:👯 team\` to set one" });
+					// prettier-ignore
+					if (!cards || !cards.length) return await error_ES.send({
+						interaction, description: "You do not have a team set\n> *Use \`/set\` \`edit:👯 team\` to set one*"
+					});
 
 					// Create the embeds :: { VIEW }
 					let embeds_view = general_ES.view(interaction.member, userData, card, "team");

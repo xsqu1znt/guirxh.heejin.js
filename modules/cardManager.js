@@ -336,7 +336,7 @@ function toString_inventoryEntry(card, options) {
 
 	// prettier-ignore
 	let f = "> $UID `$GID` `🗣️ $SET`\n> `$EMOJI` **$SINGLE** *`$GROUP`* $NAME $DUPE\n> `LV. $LVL` `$CATEGORY` `💰 $SELL` `🎤 $ABI` : `💖 $REP`\n> $EXTRA"
-		.replace(" $UID", card?.uid ? `**\`${card.uid}\`**` : "")
+		.replace(" $UID", card?.uid ? ` **\`${card.uid}\`**` : "")
 		.replace("$GID", card.globalID)
 		.replace("$SET", card.setID)
 
