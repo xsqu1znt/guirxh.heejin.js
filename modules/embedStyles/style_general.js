@@ -10,7 +10,7 @@
 
 const { GuildMember, User } = require("discord.js");
 
-const BetterEmbed = require("../discordTools/dsT_betterEmbed");
+const { BetterEmbed, markdown } = require("../discordTools/_dsT");
 const cardManager = require("../cardManager");
 const userParser = require("../userParser");
 const _jsT = require("../jsTools/_jsT");
@@ -278,6 +278,9 @@ function view(user, userData, card, viewType) {
 			/// Create the embed
 			let _embed = new BetterEmbed({
 				author: { text: "$USERNAME | vault", user, iconURL: true },
+				description: markdown.ansi(`Total: ${cards.length}`, {
+					text_color: "white", format: "bold", codeblock: true
+				}),
 				footer: `Page ${i + 1}/${cards_f.length}`
 			});
 
