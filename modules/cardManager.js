@@ -1,4 +1,5 @@
 /** @typedef options_toStr_inventory
+ * @property {boolean} locked
  * @property {boolean} favorite
  * @property {boolean} selected
  * @property {boolean} onTeam
@@ -324,13 +325,14 @@ function toString_inventoryEntry(card, options) {
 
 	// prettier-ignore
 	options = {
-		favorite: false, selected: false, onTeam: false,
+		locked: false, favorite: false, selected: false, onTeam: false,
 		duplicate: false, showXP: false, simplify: false,
 		...options
 	};
 
 	let extra = [];
-	if (options.favorite) extra.push("🔒");
+	if (options.locked) extra.push("🔒");
+	if (options.favorite) extra.push("⭐");
 	if (options.selected) extra.push("🏃");
 	if (options.onTeam) extra.push("👯");
 

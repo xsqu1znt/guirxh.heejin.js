@@ -87,24 +87,19 @@ function cards_getInventory(userData, options = {}) {
 		let { duplicateCount } = cards_getDuplicates(userData, card.globalID);
 
 		// Whether or not this is the user's favorited card
-		let _isFavorite = card.uid === userData.card_favorite_uid;
-
+		let favorite = card.uid === userData.card_favorite_uid;
 		// Whether or not this is the user's selected card
-		let _isSelected = card.uid === userData.card_selected_uid;
-
+		let selected = card.uid === userData.card_selected_uid;
 		// Whether or not this is on the user's team
-		let _isOnTeam = userData.card_team_uids.includes(card.uid);
+		let onTeam = userData.card_team_uids.includes(card.uid);
 
 		// prettier-ignore
 		let _card_f = cardManager.toString.inventoryEntry(card, {
-            duplicate: options.dupeTag ? duplicateCount : false, favorite: _isFavorite, selected: _isSelected, onTeam: _isOnTeam
-        });
+			duplicate: options.dupeTag ? duplicateCount : false,
+			locked: card.locked, favorite, selected, onTeam
+		});
 
-		// prettier-ignore
-		cards.push({
-            card, card_f: _card_f,
-            duplicate_count: duplicateCount, favorited: _isFavorite, selected: _isSelected, onTeam: _isOnTeam,
-        });
+		cards.push({ card, card_f: _card_f, duplicateCount, favorite, selected, onTeam });
 	}
 
 	return cards;

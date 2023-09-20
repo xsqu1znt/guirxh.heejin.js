@@ -181,7 +181,7 @@ function view(user, userData, card, viewType) {
 		// prettier-ignore
 		let card_f = cardManager.toString.inventoryEntry(card, {
 			duplicate: duplicate_count,
-			selected, favorite, onTeam,
+			locked: card.locked, selected, favorite, onTeam,
 			showXP: true
 		});
 
@@ -229,7 +229,7 @@ function view(user, userData, card, viewType) {
 
 		// prettier-ignore
 		let card_f = cardManager.toString.inventoryEntry(card, {
-			selected: true, favorite, onTeam, showXP: true
+			locked: card.locked, selected: true, favorite, onTeam, showXP: true
 		});
 
 		// prettier-ignore
@@ -246,7 +246,7 @@ function view(user, userData, card, viewType) {
 
 		// prettier-ignore
 		let card_f = cardManager.toString.inventoryEntry(card, {
-			selected, favorite: true, onTeam, showXP: true
+			locked: card.locked, selected, favorite: true, onTeam, showXP: true
 		});
 
 		// prettier-ignore
@@ -268,7 +268,7 @@ function view(user, userData, card, viewType) {
 			let favorite = card.uid === userData.card_favorite_uid;
 			let onTeam = userData.card_team_uids.includes(card.uid);
 
-			return cardManager.toString.inventoryEntry(c, { selected, favorite, onTeam });
+			return cardManager.toString.inventoryEntry(c, { locked: true, selected, favorite, onTeam });
 		}), 15);
 
 		/** @type {BetterEmbed[]} */
@@ -277,8 +277,8 @@ function view(user, userData, card, viewType) {
 		for (let i = 0; i < cards_f.length; i++) {
 			/// Create the embed
 			let _embed = new BetterEmbed({
-				author: { text: "$USERNAME | vualt", user, iconURL: true },
-				footer: `Page ${idx + 1}/${cards_f.length}`
+				author: { text: "$USERNAME | vault", user, iconURL: true },
+				footer: `Page ${i + 1}/${cards_f.length}`
 			});
 
 			_embed.addFields(...cards_f[i].map(c => ({ name: "\u200b", value: c, inline: true })));
