@@ -7,7 +7,10 @@ const MONGO_URI = process.env.MONGO_URI || require("../../configs/config_client.
 
 /// Custom Mongo modules
 // const questManager = require("./questManager");
-const userManager = require("./userManager");
+const userManager = {
+	index: require("./uM_index"),
+	reminders: require("./uM_reminders")
+};
 
 module.exports = {
 	/** Connect to MongoDB */
@@ -28,5 +31,8 @@ module.exports = {
 	},
 
 	// questManager,
-	userManager
+	userManager: {
+		...userManager.index,
+		reminders: userManager.reminders
+	}
 };

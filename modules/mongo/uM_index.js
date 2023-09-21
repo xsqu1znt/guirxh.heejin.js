@@ -531,6 +531,15 @@ async function cooldowns_check(userID, cooldownType) {}
 async function cooldowns_set(userID, cooldownType) {}
 
 //! UserData -> Reminders
+async function reminders_upsert(userID, reminderType) {
+	let userData = await userData_fetch(userID, { type: "reminder" });
+
+	let reminder = userData.reminders.find(r => r.type === reminderType);
+	if (reminder) return reminder;
+
+	reminder ||= { type: reminderType, mode: "channel", enabled: false };
+}
+
 /** @param {string} userID @param {CooldownType} reminderType */
 async function reminders_set(userID, reminderType) {}
 
