@@ -1,19 +1,19 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { user_ES } = require("../modules/embedStyles/index");
+const { error_ES, user_ES } = require("../modules/embedStyles/index");
 const { BetterEmbed } = require("../modules/discordTools/_dsT");
 const { userManager } = require("../modules/mongo/index");
 const _jsT = require("../modules/jsTools/_jsT");
 
 module.exports = {
-	options: { icon: "⏰", deferReply: true },
+	options: { icon: "⏰", deferReply: false },
 
 	// prettier-ignore
 	builder: new SlashCommandBuilder().setName("reminder")
 		.setDescription("View or toggle your cooldown reminders")
 
-		.addStringOption(option => option.setName("toggle").setDescription("The cooldown you want to toggle being reminded for")
-        .addChoices(
+		.addStringOption(option => option.setName("edit").setDescription("The cooldown you want to edit/toggle")
+			.addChoices(
 				{ name: "Daily", value: "daily" },
 				{ name: "Stage", value: "stage" },
 				{ name: "Random", value: "random" },
@@ -23,25 +23,56 @@ module.exports = {
 				{ name: "Drop Season", value: "drop_season" },
 				{ name: "Drop Event 1", value: "drop_event_1" },
 				{ name: "Drop Event 2", value: "drop_event_2" }
-			)
-		),
+			))
+	
+		.addStringOption(option => option.setName("notify").setDescription("Choose where your reminder is sent")
+			.addChoices({ name: "📫 DM", value: "dm" }, { name: "💬 Channel", value: "channel" })),
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-		let toggle = interaction.options.getString("toggle");
+		let edit = interaction.options.getString("edit");
+		let notify = interaction.options.getString("notify");
 
-		// Toggle the reminder the user's cooldown reminder
-		if (toggle) {
-			let _enabled = await userManager.reminders.toggle(interaction.user.id, toggle);
-			let _cooldown_f = _jsT.toTitleCase(toggle.replace(/_/g, " "));
+		// Toggle the reminder
+		if (edit && !notify) {
+			await interaction.deferReply();
+
+			let enabled = await userManager.reminders.toggle(interaction.user.id, edit);
+			let cooldown_f = _jsT.toTitleCase(edit.replace(/_/g, " "));
 
 			// prettier-ignore
-			let embed_reminder_toggle = new BetterEmbed({
-				interaction, description: `**${_cooldown_f}** is now \`${_enabled ? "✔️ enabled" : "❌ disabled"}\``
-            });
-
-			return await embed_reminder_toggle.send();
+			return await new BetterEmbed({
+				interaction, description: `**${cooldown_f}** is now \`${enabled ? "✔️ enabled" : "❌ disabled"}\``
+			}).send();
 		}
+
+		// prettier-ignore
+		// User must provide a reminder type to edit it's notification mode
+		if (notify && !edit) return await error_ES.send({
+			interaction, description: "You didn't select a reminder to edit", ephemeral: true
+		});
+
+		// Set the reminder's notification mode
+		if (edit && notify) {
+			await interaction.deferReply();
+
+			let mode = await userManager.reminders.setMode(interaction.user.id, notify);
+
+			let mode_f = "";
+			// prettier-ignore
+			switch (mode) {
+				case "dm": mode_f = "DM your reminder"; break;
+				case "channel": mode_f = "send your reminder in the channel you ran the command"; break;
+			}
+
+			// prettier-ignore
+			return await new BetterEmbed({
+				interaction, description: `**${cooldown_f}** will now ${mode_f}`
+			}).send();
+		}
+
+		/* - - - - - - - - - - */
+		await interaction.deferReply();
 
 		// Fetch the user from Mongo
 		let userData = await userManager.fetch(interaction.user.id, { type: "reminder" });
