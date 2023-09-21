@@ -367,21 +367,19 @@ function reminders(user, userData) {
 	// Parse the cooldowns into strings
 	let cooldowns_f = cooldowns.map(cd => {
 		let reminder = userData.reminders.find(r => r.type === cd.toLowerCase()) || {}
-		// let enabled = reminder?.enabled || false;
-		let enabled = _jsT.chance();
+		let enabled = reminder?.enabled || false;
 
-		reminder.notificationType = _jsT.choice(["channel", "dm"]);
-		let notificationType = "";
+		let notificationMode = "";
 
-		switch (reminder.notificationType) {
-			case "channel": notificationType = "💬"; break;
-			case "dm": notificationType = "📫"; break;
+		switch (reminder.notificationMode) {
+			case "channel": notificationMode = "💬"; break;
+			case "dm": notificationMode = "📫"; break;
 		}
 
 		// return "`$TOGGLE` `$NOTIFICATION_TYPE` **$COOLDOWN**"
 		return "$TOGGLE $NOTIFICATION_TYPE $COOLDOWN"
 			.replace("$TOGGLE", enabled ? "✔️ enabled " : "❌ disabled")
-			.replace("$NOTIFICATION_TYPE", notificationType)
+			.replace("$NOTIFICATION_TYPE", notificationMode)
 			.replace("$COOLDOWN", _jsT.toTitleCase(cd.replace(/_/g, " ")));
 	});
 

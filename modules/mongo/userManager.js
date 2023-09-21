@@ -554,7 +554,6 @@ async function reminders_toggle(userID, reminderType) {
 	return !reminder_enabled;
 }
 
-// ReminderNotificationMode
 /** @param {string} userID @param {CooldownType} reminderType @param {ReminderNotificationMode} mode */
 async function reminders_setMode(userID, reminderType, mode) {
 	await userData_update({ _id: userID, "reminders.type": reminderType }, { $set: { "card_inventory.$.mode": mode } });
@@ -631,6 +630,7 @@ module.exports = {
 
 	reminders: {
 		set: reminders_set,
+		setMode: reminders_setMode,
 		toggle: reminders_toggle
 	},
 
