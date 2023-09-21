@@ -37,6 +37,8 @@
 
 /** @typedef {"drop_general"|"drop_weekly"|"drop_season"|"drop_event_1"|"drop_event_2"|"random"} CooldownType */
 
+/** @typedef {"dm"|"channel"} ReminderNotificationMode */
+
 /** @typedef {"drop"|"random"} StatisticType */
 
 /** @typedef {{uids: string|string[], gids:string|string[]}} options_inventory_get */
@@ -357,7 +359,7 @@ async function inventory_get(userID, options) {
 	return options.uids.length + options.gids.length > 1 ? cards : cards[0];
 }
 
-async function inventory_vault_get(userID) {
+async function inventory_get_vault(userID) {
 	// Create an aggregation pipeline
 	let pipeline = [
 		{ $unwind: "$card_inventory" },
@@ -523,14 +525,14 @@ async function charms_set(userID, charms) {
 
 //! UserData -> Cooldowns
 /** @param {string} userID @param {CooldownType} cooldownType */
-async function cooldowns_check(userID, cooldownType) { }
+async function cooldowns_check(userID, cooldownType) {}
 
 /** @param {string} userID @param {CooldownType} cooldownType */
-async function cooldowns_set(userID, cooldownType) { }
+async function cooldowns_set(userID, cooldownType) {}
 
 //! UserData -> Reminders
 /** @param {string} userID @param {CooldownType} reminderType */
-async function reminders_set(userID, reminderType) { }
+async function reminders_set(userID, reminderType) {}
 
 /** @param {string} userID @param {CooldownType} reminderType */
 async function reminders_toggle(userID, reminderType) {
@@ -552,27 +554,34 @@ async function reminders_toggle(userID, reminderType) {
 	return !reminder_enabled;
 }
 
+// ReminderNotificationMode
+/** @param {string} userID @param {CooldownType} reminderType @param {ReminderNotificationMode} mode */
+async function reminders_setMode(userID, reminderType, mode) {
+	await userData_update({ _id: userID, "reminders.type": reminderType }, { $set: { "card_inventory.$.mode": mode } });
+	return;
+}
+
 //! UserData -> Quest
 /** @param {string} userID @param {number} amount */
-async function quest_progress_increment_inventory(userID, amount) { }
+async function quest_progress_increment_inventory(userID, amount) {}
 
 /** @param {string} userID @param {number} amount */
-async function quest_progress_increment_balance(userID, amount) { }
+async function quest_progress_increment_balance(userID, amount) {}
 
 /** @param {string} userID @param {number} amount */
-async function quest_progress_increment_xp(userID, amount) { }
+async function quest_progress_increment_xp(userID, amount) {}
 
 //! UserData -> Statistics
 /** @param {string | {_id: string}} filter userID or filter @param {{}} query */
-async function statistics_update(filter, query) { }
+async function statistics_update(filter, query) {}
 
 /** @param {string} userID @param {number} amount */
-async function statistics_increment_commandsUsed(userID, amount) { }
+async function statistics_increment_commandsUsed(userID, amount) {}
 
 /** @param {string} userID @param {number} amount */
-async function statistics_increment_carrots(userID, amount) { }
+async function statistics_increment_carrots(userID, amount) {}
 /** @param {string} userID @param {number} amount */
-async function statistics_increment_ribbons(userID, amount) { }
+async function statistics_increment_ribbons(userID, amount) {}
 
 module.exports = {
 	count: userData_count,
@@ -602,7 +611,7 @@ module.exports = {
 		stats: inventory_stats,
 
 		vault: {
-			get: inventory_vault_get
+			get: inventory_get_vault
 		}
 	},
 

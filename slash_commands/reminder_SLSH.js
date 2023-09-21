@@ -56,11 +56,11 @@ module.exports = {
 		if (edit && notify) {
 			await interaction.deferReply();
 
-			let mode = await userManager.reminders.setMode(interaction.user.id, notify);
+			await userManager.reminders.setMode(interaction.user.id, notify);
 
 			let mode_f = "";
 			// prettier-ignore
-			switch (mode) {
+			switch (notify) {
 				case "dm": mode_f = "DM your reminder"; break;
 				case "channel": mode_f = "send your reminder in the channel you ran the command"; break;
 			}
