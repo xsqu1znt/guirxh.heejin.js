@@ -136,13 +136,24 @@ async function add(userID, cards) {
 	}
 
 	const testUIDs = async () => {
+		/// Look for cards in the user's card_inventory that have the save UIDs as cards in cards_parsed
 		let pipeline = [
 			{ $unwind: "$card_inventory" },
 			{ $match: { _id: userID, "card_inventory.uid": { $in: cards_parsed.map(c => c.uid) } } },
-			{ $group: { _id: "$_id", card_inventory: { $push: "$card_inventory.uid" } } }
+			{ $group: { _id: "$_id", uids: { $push: "$card_inventory.uid" } } }
 		];
 
-		let userData = (await userManager.models.user.aggregate(pipeline))[0];
+		let { uids } = (await userManager.models.user.aggregate(pipeline))[0];
+		if (!uids.length) return; // Do nothing if no UIDs were found
+
+		// Iterate through each found UID and make a note of the card's index so we can reset it later
+		let reset = [];
+		// prettier-ignore
+		uids.forEach((uid, idx) => { if (uids.includes(cards_parsed[idx].uid)) reset.push(idx); });
+
+		// prettier-ignore
+		if (reset.length) reset.forEach(i => cardManager.resetUID(cards_parsed[i]));
+		return testUIDs();
 	};
 
 	// Push the new cards to the user's card_inventory
