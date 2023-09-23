@@ -16,7 +16,7 @@ async function get(userID, charmType) {
 
 /** @param {string} userID */
 async function set(userID, charms) {
-	if (!charms) return;
+	if (!charms || charms.filter(c => c?.id)) return;
 
 	// Create an array if only a single charm object was passed
 	charms = _jsT.isArray(charms).filter(c => c?.id);

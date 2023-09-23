@@ -113,33 +113,27 @@ async function get_vault(userID) {
 
 /** @param {string} userID */
 async function add(userID, cards) {
+	if (!cards || !cards.filter(c => c?.globalID).length) return;
+
 	// Create an array if only a single card object was passed
-	// filtering out invalid cards in the process
-	if (!cards) return;
 	cards = _jsT.isArray(cards).filter(c => c?.globalID);
 
-	// Fetch the user's card_inventory
-	// let { card_inventory } = await userManager.fetch(userID, { type: "inventory" });
-
 	// Parse the given cards
-	let cards_parsed = structuredClone(cards);
+	let _cards = structuredClone(cards);
 
-	for (let i = 0; i < cards_parsed.length; i++) {
-		// Reset the card's UID if necessary
-		while (!cards_parsed[i]?.uid || uidList.includes(cards_parsed[i]?.uid)) cardManager.resetUID(cards_parsed[i]);
+	for (let i = 0, c = _cards[i]; i < _cards.length; i++) {
+		// Reset the card's UID if needed
+		if (!c.uid) cardManager.resetUID(_cards[i]);
 
-		// Add the new UID to the list
-		uidList.push(cards_parsed[i].uid);
-
-		// Convert the card into a slimmer CardLike object (ignores custom cards)
-		cards_parsed[i] = cardManager.parse.toCardLike(cards_parsed[i]);
+		// Parse the card into a CardLike object (ignores custom cards)
+		_cards[i] = cardManager.parse.toCardLike(_c);
 	}
 
 	const testUIDs = async () => {
 		/// Look for cards in the user's card_inventory that have the save UIDs as cards in cards_parsed
 		let pipeline = [
 			{ $unwind: "$card_inventory" },
-			{ $match: { _id: userID, "card_inventory.uid": { $in: cards_parsed.map(c => c.uid) } } },
+			{ $match: { _id: userID, "card_inventory.uid": { $in: _cards.map(c => c.uid) } } },
 			{ $group: { _id: "$_id", uids: { $push: "$card_inventory.uid" } } }
 		];
 
@@ -149,62 +143,59 @@ async function add(userID, cards) {
 		// Iterate through each found UID and make a note of the card's index so we can reset it later
 		let reset = [];
 		// prettier-ignore
-		uids.forEach((uid, idx) => { if (uids.includes(cards_parsed[idx].uid)) reset.push(idx); });
+		uids.forEach((uid, idx) => { if (uids.includes(_cards[idx].uid)) reset.push(idx); });
 
+		// Reset card UIDs
 		// prettier-ignore
-		if (reset.length) reset.forEach(i => cardManager.resetUID(cards_parsed[i]));
+		if (reset.length) reset.forEach(i => cardManager.resetUID(_cards[i]));
 		return testUIDs();
 	};
 
+	await testUIDs();
+
 	// Push the new cards to the user's card_inventory
-	await userManager.update(userID, { $push: { card_inventory: { $each: cards_parsed } } });
+	await userManager.update(userID, { $push: { card_inventory: { $each: _cards } } });
 
 	// Add the new cards' UIDs to the given card array
-	cards.forEach((c, idx) => (c.uid = `${cards_parsed[idx].uid}`));
-	return;
+	cards.forEach((c, idx) => (c.uid = `${_cards[idx].uid}`));
+
+	return _cards;
 }
 
 /** @param {string} userID @param {string | string[]} uids */
 async function remove(userID, uids) {
+	if (!uids || !uids.length) return;
+
 	// Create an array if only a single card UID was passed
-	if (!uids) return;
-	if (!Array.isArray(uids)) uids = [uids];
+	uids = _jsT.isArray(uids);
 
 	// Send a pull request to Mongo
-	await userData_update(userID, { $pull: { card_inventory: { uid: { $in: uids } } } });
-	return;
+	await userManager.update(userID, { $pull: { "card_inventory.uid": { $in: uids } } });
 }
 
 /** @param {string} userID */
 async function update(userID, card) {
 	await userData_update({ _id: userID, "card_inventory.uid": card.uid }, { $set: { "card_inventory.$": card } });
-	return;
 }
 
 /** @param {string} userID */
 async function sell(userID, cards) {
+	if (!cards || !cards.filter(c => c?.globalID && c?.sellPrice).length) return false;
+
 	// Create an array if only a single card was passed
-	if (!cards) return;
-	if (!Array.isArray(cards)) cards = [cards];
+	cards = _jsT.isArray(cards);
 
 	// Check if the user still has the cards in their card_inventory
-	if (
-		!exists(
-			userID,
-			cards.map(card => card.uid)
-		)
-	)
-		return false;
+	if (!(await exists(userID, uids))) return false;
 
+	// prettier-ignore
 	await Promise.all([
 		// Update the user's balance
 		userData_update(userID, { $inc: { balance: _jsT.sum(cards.map(c => c.sellPrice)) } }),
 		// Remove the cards from the user's card_inventory
-		remove(
-			userID,
-			cards.map(card => card.uid)
-		)
-	]);
+		remove(userID, cards.map(card => card.uid))
+    ]);
+
 	return true;
 }
 
@@ -213,8 +204,8 @@ async function stats(userID) {
 	// Get the name of each card category
 	let categories = Object.keys(cardManager.cards.base);
 
-	/// Count how many cards the user has out of each category
 	// prettier-ignore
+	/// Count how many cards the user has out of each category
 	let cards_user_count = await Promise.all(categories.map(async category => {
 		// Get the global IDs for every card in the category
 		let _globalIDs = cardManager.cards.globalIDs.base.get(category);
@@ -225,13 +216,13 @@ async function stats(userID) {
 			{
 				$group: {
 					_id: "$_id",
-					card_inventory: { $sum: { $size: { $filter: { input: ["$card_inventory.globalID"], cond: "$$this" } } } }
+					inventory_count: { $sum: { $size: { $filter: { input: ["$card_inventory.globalID"], cond: "$$this" } } } }
 				}
 			}
 		];
 
 		let userData = (await models.user.aggregate(pipeline))[0];
-		return { category, has: userData?.card_inventory || 0, outOf: _globalIDs.length };
+		return { category, has: userData.inventory_count || 0, outOf: _globalIDs.length };
 	}));
 
 	return cards_user_count;
