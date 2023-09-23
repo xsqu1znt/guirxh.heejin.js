@@ -592,6 +592,8 @@ async function statistics_increment_carrots(userID, amount) {}
 async function statistics_increment_ribbons(userID, amount) {}
 
 module.exports = {
+	models,
+
 	count: userData_count,
 	exists: userData_exists,
 	insertNew: userData_insertNew,
