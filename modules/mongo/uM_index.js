@@ -52,8 +52,10 @@ const logger = require("../logger");
 const playerConfig = require("../../configs/config_player.json");
 
 // Models
-const { model: userModel } = require("../../models/userModel");
-const models = { user: userModel };
+const models = {
+	user: require("../../models/userModel").model,
+	userStatistics: require("../../models/userStatisticsModel").model
+};
 
 // Queues
 /* const MongoQueueManager = require("../queueManager");
@@ -70,25 +72,23 @@ async function userData_count() {
 async function userData_exists(userID, upsert = false) {
 	let exists = await models.user.exists({ _id: userID });
 
-	if (!exists && upsert) await userData_insertNew(userID);
+	if (!exists && upsert) await userData_insert(userID);
 
 	return exists || upsert ? true : false;
 }
 
 /** @param {string} userID @param {{}} query */
-async function userData_insertNew(userID, query = {}) {
-	/** @type {UserData} */
-	let userData = await userData_fetch(userID);
-
+async function userData_insert(userID, query = {}) {
+	// prettier-ignore
 	// Save a new UserData document if it doesn't exist
-	userData ||= await new models.user({
+	if (!(await userData_exists(userID))) return await new models.user({
 		_id: userID,
 		balance: playerConfig.currency.STARTING_BALANCE,
 		timestamp_started: Date.now(),
 		...query
 	}).save();
 
-	return userData;
+	return (await userData_fetch(userID)) || null;
 }
 
 /** @param {string} userID @param {UserDataFetchOptions} options */
@@ -596,7 +596,7 @@ module.exports = {
 
 	count: userData_count,
 	exists: userData_exists,
-	insertNew: userData_insertNew,
+	insertNew: userData_insert,
 	fetch: userData_fetch,
 	update: userData_update,
 

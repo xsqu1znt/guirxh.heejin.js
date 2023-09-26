@@ -1,5 +1,6 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require("mongoose");
 
+// prettier-ignore
 const schema_user = new Schema({
     _id: { type: String, require: true },
 
@@ -29,6 +30,4 @@ const schema_user = new Schema({
     timestamp_started: { type: Number, require: true }
 }, { collection: "users" });
 
-module.exports = {
-    schema: schema_user, model: model("users", schema_user)
-};
+module.exports = { schema: schema_user, model: model("users", schema_user) };
