@@ -221,9 +221,11 @@ async function stats(userID) {
 			}
 		];
 
-		let userData = (await models.user.aggregate(pipeline))[0];
-		return { category, has: userData.inventory_count || 0, outOf: _globalIDs.length };
+		let { inventory_count } = (await models.user.aggregate(pipeline))[0];
+		return { category, has: inventory_count || 0, outOf: _globalIDs.length };
 	}));
 
 	return cards_user_count;
 }
+
+module.exports = { count, exists, has, get, getVault: get_vault, add, remove, update, sell, stats };
