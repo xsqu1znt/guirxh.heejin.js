@@ -18,7 +18,7 @@ async function upsert(userID, reminderType) {
 
 	/// Add a new reminder to the user's data
 	reminder = new UserReminder(reminderType, "channel", false);
-	await userData_update(userID, { $addToSet: { reminders: { ...reminder } } });
+	await userManager.update(userID, { $set: { [`reminders.${reminderType}`]: { ...reminder } } });
 
 	return reminder;
 }
