@@ -1,30 +1,3 @@
-/** @typedef UserData
- * @property {string} _id
- *
- * @property {number} daily_streak
- * @property {number} daily_streak_expires
- *
- * @property {number} level
- * @property {number} xp
- * @property {number} xp_for_next_level
- *
- * @property {string} biography
- * @property {number} balance
- * @property {number} ribbons
- *
- * @property {UserBadge[]} badges
- *
- * @property {string} card_selected_uid
- * @property {string} card_favorite_uid
- * @property {string[]} card_team_uids
- * @property {CardLike[]} card_inventory
- *
- * @property {UserCommandCooldown[]} cooldowns
- * @property {UserReminderType[]} reminders
- *
- * @property {UserQuestPartial[]} quests_complete
- * @property {number} timestamp_started */
-
 /** @typedef {"id"|"full"|"inventory"|"noInventory"|"essential"|"charm"|"balance"|"xp"|"reminder"|"quest"} UserDataType */
 
 /** @typedef UserDataFetchOptions
@@ -162,7 +135,6 @@ async function userData_fetch(userID, options = {}) {
 	}
 
 	/// Fetch the user from the database
-	/** @type {UserData | UserData[]} */
 	let userData;
 
 	if (userID)
@@ -177,7 +149,7 @@ async function userData_fetch(userID, options = {}) {
 	return userData;
 }
 
-/** @param {string | {_id: string}} filter userID or filter @param {{}} query @param {{addToQueue:boolean}} options */
+/** @param {string | {}} filter userID or filter @param {{}} query @param {{addToQueue:boolean}} options */
 async function userData_update(filter, query, options = {}) {
 	options = { addToQueue: false, ...options };
 
