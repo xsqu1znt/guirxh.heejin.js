@@ -1,22 +1,22 @@
-> **URGENT:**
+### **URGENT:**
  - make global id a link to the card's image in /quest
  - round down user xp
  - fix page jump
 
-> **NEXT UP:**
+### **NEXT UP:**
  - `cardmanager.toString.setEntry` use card global ID instead of card object
  - add player target to /missing
 
-> **NEW COMMAND IDEAS:**
+### **NEW COMMAND IDEAS:**
  - `/setting` `section:purge` :: removes card(s) from user
  - `/leaderboard` :: "a per server leaderboard"
  - `/applycard` :: "update global ids"
 
-> **IDEAS:**
+### **IDEAS:**
  - show player's start date in `/information`
  - request customs through heejin (uses modals)
 
-> **UNRELATED REFACTORING:**
+### **UNRELATED REFACTORING:**
  - add fields to the `BetterEmbed` constructor and `send()`
  - `BetterEmbed.new()` :: "returns a new `BetterEmbed` with the same configuration"
 
