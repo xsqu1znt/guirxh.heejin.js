@@ -11,7 +11,7 @@ const uM_balance = require("./uM_balance");
 /** @param {string} userID @param */
 async function insert(userID) {
 	if (!(await userManager.models.userStatistics.exists({ _id: userID })))
-		return await new userManager.models.userStatistics({ timestamp_started: Date.now() }).save();
+		return await new userManager.models.userStatistics({ _id: userID, timestamp_data_created: Date.now() }).save();
 
 	return (await userManager.models.userStatistics.findById(userID)) || null;
 }
@@ -36,12 +36,12 @@ async function update(filter, query) {
 
 /// Commands
 /** @param {string} userID @param */
-async function commandsUsed_count(userID) {
+async function commandsExecuted_count(userID) {
 	// prettier-ignore
 	// Create an aggregation pipeline
 	let pipeline = [
 		{ $match: { _id: userID } },
-		{ $project: { count: { $size: "$commands.used" } } }
+		{ $project: { count: { $size: "$commands.executed" } } }
 	];
 
 	let { count } = (await userManager.models.userStatistics.aggregate(pipeline))[0];
@@ -49,18 +49,22 @@ async function commandsUsed_count(userID) {
 }
 
 /** @param {string} userID @param {options_commandsUsed_increment} options */
-async function commandsUsed_push(userID, options) {
+async function commandsExecuted_push(userID, options) {
+	await insert(userID);
+
 	options = { name: "", timestamp: Date.now(), ...options };
 
 	// Create the command data
 	let data = { name: options.name, timestamp: options.timestamp };
 
-	await update(userID, { $push: { "commands.used": data } });
+	await update(userID, { $push: { "commands.executed": data } });
 }
 
 /// Levels
 /** @param {string} userID @param {number} amount @param {CommandType_XP} commandType_XP  */
 async function level_xp_increment(userID, amount, commandType_XP) {
+	await insert(userID);
+
 	if (!CommandTypes_XP.includes(commandType_XP)) return;
 	await update(userID, { $inc: { [`level.xp.${commandType_XP}`]: amount } });
 }
@@ -68,6 +72,8 @@ async function level_xp_increment(userID, amount, commandType_XP) {
 /// Balance
 /** @param {string} userID @param {number} amount @param {import("./uM_balance").CurrencyType} currencyType  */
 async function balance_increment(userID, amount, currencyType = "carrot") {
+	await insert(userID);
+
 	if (!uM_balance.CurrencyTypes.includes(currencyType)) return;
 	await update(userID, { $inc: { [`balance.${currencyType}`]: amount } });
 }
@@ -78,9 +84,9 @@ module.exports = {
 	update,
 
 	commands: {
-		used: {
-			count: commandsUsed_count,
-			push: commandsUsed_push
+		executed: {
+			count: commandsExecuted_count,
+			push: commandsExecuted_push
 		}
 	},
 

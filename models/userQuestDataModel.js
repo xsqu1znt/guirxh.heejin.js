@@ -89,10 +89,10 @@ const schema_questData = new Schema(
 		in_progress: Array,
 		temp: Object
 	},
-	{ collection: "quest_data" }
+	{ collection: "user_quest_data" }
 );
 
 module.exports = {
 	schema: schema_questData,
-	model: model("quest_data", schema_questData)
+	model: model("user_quest_data", schema_questData)
 };

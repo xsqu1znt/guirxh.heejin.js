@@ -137,7 +137,7 @@ async function add(userID, cards) {
 			{ $group: { _id: "$_id", uids: { $push: "$card_inventory.uid" } } }
 		];
 
-		let { uids } = (await userManager.models.user.aggregate(pipeline))[0];
+		let { uids } = (await userManager.models.user.aggregate(pipeline))[0] || [];
 		if (!uids.length) return; // Do nothing if no UIDs were found
 
 		// Iterate through each found UID and make a note of the card's index so we can reset it later
@@ -221,7 +221,7 @@ async function stats(userID) {
 			}
 		];
 
-		let { inventory_count } = (await models.user.aggregate(pipeline))[0];
+		let { inventory_count } = (await userManager.models.user.aggregate(pipeline))[0] || [];
 		return { category, has: inventory_count || 0, outOf: _globalIDs.length };
 	}));
 
