@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require("mongoose");
 
 /** @typedef ObjectiveTypes
  * @type {"balance"|"ribbons"|"cards_in_inventory"|"level_user"|"level_idol"|"team_ability"|"team_reputation"|"card_global_ids"|"card_sets_complete"|"card_duplicates"} */
@@ -73,17 +73,26 @@ class QuestCache {
     }
 } */
 
-const schema_questCache = new Schema({
-    _id: { type: String, require: true },
+const schema_questData = new Schema(
+	{
+		_id: { type: String, require: true },
 
-    balance: Number, ribbons: Number, cards_in_inventory: Number,
-    level_user: Number, level_idol: Number,
-    team_ability: Number, team_reputation: Number,
+		balance: Number,
+		ribbons: Number,
+		inventory_count: Number,
+		level_user: Number,
+		level_idol: Number,
+		team_ability: Number,
+		team_reputation: Number,
 
-    quests_in_progress: Array, progress: Array, temp: Object
-}, { collection: "quest_cache" });
+		progress: Array,
+		in_progress: Array,
+		temp: Object
+	},
+	{ collection: "quest_data" }
+);
 
 module.exports = {
-    schema: schema_questCache,
-    model: model("quest_cache", schema_questCache)
+	schema: schema_questData,
+	model: model("quest_data", schema_questData)
 };

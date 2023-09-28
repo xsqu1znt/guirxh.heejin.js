@@ -27,6 +27,7 @@ const playerConfig = require("../../configs/config_player.json");
 // Models
 const models = {
 	user: require("../../models/userModel").model,
+	userQuestData: require("../../models/userQuestDataModel").model,
 	userStatistics: require("../../models/userStatisticsModel").model
 };
 

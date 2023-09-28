@@ -1,9 +1,12 @@
+/** @typedef {"carrot"|"ribbon"} CurrencyType */
+const CurrencyTypes = ["carrot", "ribbon"];
+
 const userManager = require("./uM_index");
 const uM_statistics = require("./uM_statistics");
 
 const _aJM = require("../asyncJobManager");
 
-/** @param {string} userID @param {number} amount use a negative number to subtract @param {StatisticType} statType */
+/** @param {string} userID @param {number} amount use a negative number to subtract @param {CurrencyType} currencyType */
 async function increment(userID, amount, currencyType) {
 	let job = new _aJM.Job();
 
@@ -24,4 +27,4 @@ async function increment(userID, amount, currencyType) {
 	await job.await();
 }
 
-module.exports = { increment };
+module.exports = { CurrencyTypes, increment };

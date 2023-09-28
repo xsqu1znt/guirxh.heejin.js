@@ -1,14 +1,12 @@
 /** @typedef {"drop"|"random"} StatisticType */
 
-/** @typedef {"carrot"|"ribbon"} CurrencyType */
-const CurrencyTypes = ["carrot", "ribbon"];
-
 /** @typedef {"drop"|"random"} CommandType_XP */
 const CommandTypes_XP = ["drop", "random"];
 
 /** @typedef {{name:string, timestamp:number}} options_commandsUsed_increment */
 
 const userManager = require("./uM_index");
+const uM_balance = require("./uM_balance");
 
 /** @param {string} userID @param */
 async function insert(userID) {
@@ -68,9 +66,9 @@ async function level_xp_increment(userID, amount, commandType_XP) {
 }
 
 /// Balance
-/** @param {string} userID @param {number} amount @param {CurrencyType} currencyType  */
+/** @param {string} userID @param {number} amount @param {import("./uM_balance").CurrencyType} currencyType  */
 async function balance_increment(userID, amount, currencyType = "carrot") {
-	if (!CurrencyTypes.includes(currencyType)) return;
+	if (!uM_balance.CurrencyTypes.includes(currencyType)) return;
 	await update(userID, { $inc: { [`balance.${currencyType}`]: amount } });
 }
 

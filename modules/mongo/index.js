@@ -10,10 +10,15 @@ const MONGO_URI = process.env.MONGO_URI || require("../../configs/config_client.
 
 const userManager = {
 	index: require("./uM_index"),
+	levels: require("./uM_levels"),
+	balance: require("./uM_balance"),
 	inventory: require("./uM_inventory"),
 	badges: require("./uM_badges"),
 	charms: require("./uM_charms"),
-	reminders: require("./uM_reminders")
+	cooldowns: require("./uM_cooldowns"),
+	reminders: require("./uM_reminders"),
+	quests: require("./uM_quests"),
+	statistics: require("./uM_statistics")
 };
 
 module.exports = {
@@ -37,9 +42,14 @@ module.exports = {
 	// questManager,
 	userManager: {
 		...userManager.index,
+		levels: userManager.levels,
+		balance: userManager.balance,
 		inventory: userManager.inventory,
 		badges: userManager.badges,
 		charms: userManager.charms,
-		reminders: userManager.reminders
+		cooldowns: userManager.cooldowns,
+		reminders: userManager.reminders,
+		quests: userManager.quests,
+		statistics: userManager.statistics
 	}
 };

@@ -53,3 +53,5 @@ class UserCooldown {
 		this.timestamp = _jsT.parseTime(config.player.cooldowns[cooldownType.toUpperCase()], { fromNow: true });
 	}
 }
+
+module.exports = { UserCooldown, upsert, eta, set };
