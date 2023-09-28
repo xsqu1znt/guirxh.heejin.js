@@ -569,7 +569,7 @@ module.exports = {
 
 	count: userData_count,
 	exists: userData_exists,
-	insertNew: userData_insert,
+	insert: userData_insert,
 	fetch: userData_fetch,
 	update: userData_update
 

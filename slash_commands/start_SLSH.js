@@ -29,7 +29,7 @@ module.exports = {
 		await interaction.deferReply();
 
 		// Add the user to the Mongo database
-		await userManager.insertNew(interaction.user.id);
+		await userManager.insert(interaction.user.id);
 
 		// Send the embed
 		return await embed_start.send({

@@ -18,7 +18,7 @@ module.exports = {
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
 		/// Check if the user has an active cooldown :: { RANDOM }
-		let cooldown_random = await userManager.cooldowns.check(interaction.user.id, "random");
+		let cooldown_random = await userManager.cooldowns.eta(interaction.user.id, "random");
 		// prettier-ignore
 		if (cooldown_random) return await cooldown_ES.send({
             interaction, description: `Your random will be ready **${cooldown_random}**`
@@ -37,7 +37,7 @@ module.exports = {
 			// Set the user's cooldown
 			userManager.cooldowns.set(interaction.user.id, "random"),
 			// Set the user's reminder
-			userManager.reminders.set(interaction.user.id, "random"),
+			userManager.reminders.set(interaction.user.id, "random", interaction.channelId),
 			// Send the embed
 			embed_random.send()
 		]);
@@ -57,8 +57,8 @@ module.exports = {
 			// Update the user's XP in Mongo
 			userManager.xp.increment(interaction.user.id, reward_xp, "random"),
 			/// Update the user's quest progress
-			userManager.quest.progress.increment.balance(interaction.user.id, reward_carrots),
-			userManager.quest.progress.increment.xp(interaction.user.id, reward_xp),
+			userManager.quests.progress.increment.xp(interaction.user.id, reward_xp),
+			userManager.quests.progress.increment.balance(interaction.user.id, reward_carrots),
 			// Set the user's cooldown
 			userManager.cooldowns.set(interaction.user.id, "random"),
 			// Set the user's reminder

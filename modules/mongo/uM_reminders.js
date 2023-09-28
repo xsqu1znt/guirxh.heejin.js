@@ -1,4 +1,3 @@
-/** @typedef {"drop_general"|"drop_weekly"|"drop_season"|"drop_event_1"|"drop_event_2"|"random"} ReminderType */
 /** @typedef {"dm"|"channel"} ReminderNotificationMode */
 
 const userManager = require("./uM_index");
@@ -6,7 +5,7 @@ const _jsT = require("../jsTools/_jsT");
 
 const config = { player: require("../../configs/config_player.json") };
 
-/** @param {string} userID @param {ReminderType} reminderType */
+/** @param {string} userID @param {import("./uM_cooldowns").CooldownType} reminderType */
 async function upsert(userID, reminderType) {
 	// Fetch the user's data from Mongo
 	let userData = await userManager.fetch(userID, { type: "reminder" });
@@ -23,7 +22,7 @@ async function upsert(userID, reminderType) {
 	return reminder;
 }
 
-/** @param {string} userID @param {ReminderType} reminderType */
+/** @param {string} userID @param {import("./uM_cooldowns").CooldownType} reminderType */
 async function toggle(userID, reminderType) {
 	let reminder = await upsert(userID, reminderType);
 	reminder.enabled = !reminder.enabled;
@@ -37,7 +36,7 @@ async function toggle(userID, reminderType) {
 	return reminder;
 }
 
-/** @param {string} userID @param {ReminderType} reminderType @param {string} channelID  */
+/** @param {string} userID @param {import("./uM_cooldowns").CooldownType} reminderType @param {string} channelID  */
 async function set(userID, reminderType, channelID) {
 	let reminder = await upsert(userID, reminderType);
 
@@ -52,7 +51,7 @@ async function set(userID, reminderType, channelID) {
 	return reminder;
 }
 
-/** @param {string} userID @param {ReminderType} reminderType @param {ReminderNotificationMode} mode */
+/** @param {string} userID @param {import("./uM_cooldowns").CooldownType} reminderType @param {ReminderNotificationMode} mode */
 async function setMode(userID, reminderType, mode) {
 	let reminder = await upsert(userID, reminderType);
 

@@ -1,13 +1,14 @@
 const userManager = require("./uM_index");
 const uM_balance = require("./uM_balance");
 
+/// Increment
 /** @param {string} userID @param {number} amount */
-async function progress_xp_increment(userID, amount) {
+async function progress_increment_xp(userID, amount) {
 	await userManager.models.userQuestData.findByIdAndUpdate(userID, { $inc: { xp: amount } });
 }
 
 /** @param {string} userID @param {number} amount @param {import("./uM_balance").CurrencyType} currencyType  */
-async function progress_balance_increment(userID, amount, currencyType) {
+async function progress_increment_balance(userID, amount, currencyType) {
 	if (!uM_balance.CurrencyTypes.includes(currencyType)) return;
 
 	// prettier-ignore
@@ -18,14 +19,16 @@ async function progress_balance_increment(userID, amount, currencyType) {
 }
 
 /** @param {string} userID @param {number} amount */
-async function progress_inventory_increment(userID, amount) {
+async function progress_increment_inventory(userID, amount) {
 	await userManager.models.userQuestData.findByIdAndUpdate(userID, { $inc: { inventory_count: amount } });
 }
 
 module.exports = {
 	progress: {
-		xp: { increment: progress_xp_increment },
-		balance: { increment: progress_balance_increment },
-		inventory: { increment: progress_inventory_increment }
+		increment: {
+			xp: progress_increment_xp,
+			balance: progress_increment_balance,
+			inventory: progress_increment_inventory
+		}
 	}
 };
