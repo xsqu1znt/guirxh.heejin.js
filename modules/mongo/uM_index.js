@@ -571,9 +571,9 @@ module.exports = {
 	exists: userData_exists,
 	insertNew: userData_insert,
 	fetch: userData_fetch,
-	update: userData_update,
+	update: userData_update
 
-	xp: {
+	/* xp: {
 		increment: xp_increment,
 		levelUp: xp_levelUp
 	},
@@ -633,5 +633,5 @@ module.exports = {
 		increment: {
 			commandsUsed: statistics_increment_commandsUsed
 		}
-	}
+	} */
 };
