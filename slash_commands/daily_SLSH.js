@@ -52,7 +52,7 @@ module.exports = {
 
 		await Promise.all([
 			// Update the user's balance in Mongo
-			userManager.currency.increment(interaction.user.id, reward_carrots, "carrots", "daily"),
+			userManager.balance.increment(interaction.user.id, reward_carrots, "carrots", "daily"),
 			// Update the user's daily streak in Mongo
 			userManager.update(interaction.user.id, {
 				$inc: { daily_streak: streak_reset ? -userData.daily_streak : 1 },

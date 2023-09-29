@@ -60,7 +60,7 @@ async function badge_buy(userID, badgeID) {
 
 	await Promise.all([
 		// Subtract the badge's price from the user's balance
-		userManager.currency.increment(userID, -badge.price, "carrot"),
+		userManager.balance.increment(userID, -badge.price, "carrot"),
 		// Give the badge to the user
 		userManager.badges.add(userID, badge)
 	]);
@@ -81,7 +81,7 @@ async function charm_buy(userID, charmID) {
 
 	await Promise.all([
 		// Subtract the badge's price from the user's balance
-		userManager.currency.increment(userID, -charm.price, "carrot"),
+		userManager.balance.increment(userID, -charm.price, "carrot"),
 		// Give the badge to the user
 		userManager.charms.add(userID, charm)
 	]);

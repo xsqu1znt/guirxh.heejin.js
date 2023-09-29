@@ -25,3 +25,5 @@
  - overall design changes
  - optimized backend
  - removed gift/sell limit (due to discord's embed limitations)
+ - added a list to `/reminders` to see what you have enabled/notification mode
+ - can set whether your reminders are sent to the last channel the command was ran or through DMs

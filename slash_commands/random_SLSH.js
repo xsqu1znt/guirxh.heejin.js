@@ -53,7 +53,7 @@ module.exports = {
 
 		return await Promise.all([
 			// Update the user's balance in Mongo
-			userManager.currency.increment(interaction.user.id, reward_carrots, "carrots", "random"),
+			userManager.balance.increment(interaction.user.id, reward_carrots, "carrots", "random"),
 			// Update the user's XP in Mongo
 			userManager.xp.increment(interaction.user.id, reward_xp, "random"),
 			/// Update the user's quest progress
