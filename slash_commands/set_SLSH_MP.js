@@ -32,9 +32,12 @@ module.exports = {
 		// Interaction options
 		let _add = interaction.options.getString("add");
 		let _remove = interaction.options.getString("remove");
-        let uids = (_add || _remove || "").toLowerCase().replace(/ /g, "").split(",");
-        
-        // TODO: make add/remove booleans for easy switch case use
+		let uids = (_add || _remove || "").toLowerCase().replace(/ /g, "").split(",");
+
+		// Determine the operation
+		let operation = "";
+		if (_add) operation = "add";
+		else if (_remove) operation = "remove";
 
 		// prettier-ignore
 		let cards, cards_f;
@@ -54,30 +57,130 @@ module.exports = {
 
 		// Determine the operation type
 		switch (interaction.options.getString("edit")) {
-			case "favorite": // TODO: use a switch case to determine whether add/remove was used
-				uids.length = 1;
+			// prettier-ignore
+			case "favorite": switch (operation) {
+				case "add":
+					uids.length = 1;
 
-				// prettier-ignore
-				// Check if the card's already favorited
-				if (uids[0] === userData.card_favorite_uid) return await error_ES.send({
-                    interaction, description: `\`${uids}\` is already your \`⭐ favorite\``
-                });
+					// prettier-ignore
+					// Check if the card's already favorited
+					if (uids[0] === userData.card_favorite_uid) return await error_ES.send({
+                	    interaction, description: `\`${uids}\` is already your \`⭐ favorite\``
+                	});
 
-				// Fetch the card from the user's card_inventory
-				cards = await userManager.inventory.get(interaction.user.id, { uids });
+					// Fetch the card from the user's card_inventory
+					cards = await userManager.inventory.get(interaction.user.id, { uids });
 
-				// prettier-ignore
-				// Check if the card exists
-				if (!cards) return await error_ES.send({
-                    interaction, description: `\`${uids}\` is not a valid UID`
-                });
+					// prettier-ignore
+					// Check if the card exists
+					if (!cards) return await error_ES.send({
+                	    interaction, description: `\`${uids}\` is not a valid UID`
+                	});
 
-				// Set the user's card_favorite_uid in Mongo
-				await userManager.update(interaction.user.id, { card_favorite_uid: cards.uid });
+					// Set the user's card_favorite_uid in Mongo
+					await userManager.update(interaction.user.id, { card_favorite_uid: cards.uid });
 
-				/// Let the user know the result
-				cards_f = cardManager.toString.basic(cards);
-				return await embed_set.send({ description: `Your \`⭐ favorite\` has been set to:\n> ${cards_f}` });
+					/// Let the user know the result
+					cards_f = cardManager.toString.basic(cards);
+					return await embed_set.send({ description: `Your \`⭐ favorite\` has been set to:\n> ${cards_f}` });
+					
+				case "remove":
+					await userManager.update(interaction.user.id, { card_favorite_uid: "" });
+					// Let the user know the result
+                    return await embed_set.send({ description: "You successfully removed your \`⭐ favorite\`" });
+			}
+
+			// prettier-ignore
+			case "idol": switch (operation) {
+				case "add":
+					uids.length = 1;
+
+					// prettier-ignore
+					// Check if the card's already favorited
+					if (uids[0] === userData.card_selected_uid) return await error_ES.send({
+                	    interaction, description: `\`${uids}\` is already your \`🏃 idol\``
+                	});
+
+					// Fetch the card from the user's card_inventory
+					cards = await userManager.inventory.get(interaction.user.id, { uids });
+
+					// prettier-ignore
+					// Check if the card exists
+					if (!cards) return await error_ES.send({
+                	    interaction, description: `\`${uids}\` is not a valid UID`
+                	});
+
+					// Set the user's card_selected_uid in Mongo
+					await userManager.update(interaction.user.id, { card_selected_uid: cards.uid });
+
+					/// Let the user know the result
+					cards_f = cardManager.toString.basic(cards);
+					return await embed_set.send({ description: `Your \`🏃 idol\` has been set to:\n> ${cards_f}` });
+					
+				case "remove":
+					await userManager.update(interaction.user.id, { card_selected_uid: "" });
+					// Let the user know the result
+                    return await embed_set.send({ description: "You successfully removed your \`🏃 idol\`" });
+			}
+
+			// prettier-ignore
+			case "vault": switch (operation) {
+				case "add":
+					// Fetch the cards from the user's card_inventory
+					cards = await userManager.inventory.get(interaction.user.id, { uids });
+
+					// Filter out UIDs that weren't found (used for extra info at the end)
+					uids = cards.map(c => c.uid);
+
+					// prettier-ignore
+					// Check if the card exists
+					if (!cards.length) return await error_ES.send({
+                	    interaction, description: `\`${uids.join(", ")}\` ${uids.length === 1 ? "is not a valid UID" : "are not valid UIDs"}`
+					});
+					
+					/// Check if the cards are already locked
+					cards = cards.filter(c => !c.locked);
+					// prettier-ignore
+					if (!cards.length) return await error_ES.send({
+                	    interaction, description: `${cards.length === 1 ? `\`${uids}\` is` : "Those cards are"} already in your \`🔒 vault\``
+					});
+
+					/// Update the user's cards in Mongo
+					cards.forEach(c => c.locked = true);
+					await Promise.all(cards.map(c => userManager.inventory.update(interaction.user.id, c)));
+
+					/// Let the user know the result
+					let extraInfo_add = cards.length < uids.length ? `\`${cards.length}\` ${cards.length === 1 ? "card was" : "cards were"} already in your \`🔒 vault\`` : ""
+					return await embed_set.send({ description: `\`${cards.length}\` ${cards.length === 1 ? "card" : "cards"} added to your \`🔒 vault\`\n${extraInfo_add}` });
+
+				case "remove":
+					// Fetch the cards from the user's card_inventory
+					cards = await userManager.inventory.get(interaction.user.id, { uids });
+
+					// Filter out UIDs that weren't found (used for extra info at the end)
+					uids = cards.map(c => c.uid);
+
+					// prettier-ignore
+					// Check if the card exists
+					if (!cards.length) return await error_ES.send({
+                	    interaction, description: `\`${uids.join(", ")}\` ${uids.length === 1 ? "is not a valid UID" : "are not valid UIDs"}`
+					});
+					
+					/// Check if the cards are already unlocked
+					cards = cards.filter(c => c.locked);
+					// prettier-ignore
+					if (!cards.length) return await error_ES.send({
+                	    interaction, description: `${cards.length === 1 ? `\`${uids}\` is` : "Those cards are"} not in your \`🔒 vault\``
+					});
+
+					/// Update the user's cards in Mongo
+					cards.forEach(c => c.locked = false);
+					await Promise.all(cards.map(c => userManager.inventory.update(interaction.user.id, c)));
+
+					/// Let the user know the result
+					let extraInfo_remove = cards.length < uids.length ? `\`${cards.length}\` ${cards.length === 1 ? "card was" : "cards were"} not in your \`🔒 vault\`` : ""
+					return await embed_set.send({ description: `\`${cards.length}\` ${cards.length === 1 ? "card" : "cards"} removed from your \`🔒 vault\`\n${extraInfo_remove}` });
+			}
 		}
 	}
 };
