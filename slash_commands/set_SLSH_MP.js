@@ -7,6 +7,8 @@ const userParser = require("../modules/userParser");
 const cardManager = require("../modules/cardManager");
 const _jsT = require("../modules/jsTools/_jsT");
 
+const config = { player: require("../configs/config_player.json") };
+
 module.exports = {
 	options: { icon: "🏃", deferReply: false },
 
@@ -133,7 +135,7 @@ module.exports = {
 					uids = cards.map(c => c.uid);
 
 					// prettier-ignore
-					// Check if the card exists
+					// Check if the cards exists
 					if (!cards.length) return await error_ES.send({
                 	    interaction, description: `\`${uids.join(", ")}\` ${uids.length === 1 ? "is not a valid UID" : "are not valid UIDs"}`
 					});
@@ -161,7 +163,7 @@ module.exports = {
 					uids = cards.map(c => c.uid);
 
 					// prettier-ignore
-					// Check if the card exists
+					// Check if the cards exists
 					if (!cards.length) return await error_ES.send({
                 	    interaction, description: `\`${uids.join(", ")}\` ${uids.length === 1 ? "is not a valid UID" : "are not valid UIDs"}`
 					});
@@ -177,6 +179,72 @@ module.exports = {
 					cards.forEach(c => c.locked = false);
 					await Promise.all(cards.map(c => userManager.inventory.update(interaction.user.id, c)));
 
+					/// Let the user know the result
+					let extraInfo_remove = cards.length < uids.length ? `\`${cards.length}\` ${cards.length === 1 ? "card was" : "cards were"} not in your \`🔒 vault\`` : ""
+					return await embed_set.send({ description: `\`${cards.length}\` ${cards.length === 1 ? "card" : "cards"} removed from your \`🔒 vault\`\n${extraInfo_remove}` });
+			}
+
+			// prettier-ignore
+			case "team": switch (operation) {
+				case "add":
+					uids.length = config.player.team.MAX_SIZE;
+					
+					// Fetch the user's team cards from the their card_inventory
+					cards = await userManager.inventory.get(interaction.user.id, { uids: userData.card_team_uids });
+
+					// prettier-ignore
+					// Check if the user's team is full
+					if (cards.length >= config.player.team.MAX_SIZE) return await error_ES.send({
+						interaction, description: `Your \`👯 team\` can only have up to \`${config.player.team.MAX_SIZE}\` cards`
+					});
+
+					// TODO: LEFT OFF HERE
+			
+					// prettier-ignore
+					// Check if the card exists
+					if (!cards.length) return await error_ES.send({
+						interaction, description: `\`${uids.join(", ")}\` ${uids.length === 1 ? "is not a valid UID" : "are not valid UIDs"}`
+					});
+					
+					/// Check if the cards are already locked
+					cards = cards.filter(c => !c.locked);
+					// prettier-ignore
+					if (!cards.length) return await error_ES.send({
+						interaction, description: `${cards.length === 1 ? `\`${uids}\` is` : "Those cards are"} already in your \`🔒 vault\``
+					});
+			
+					/// Update the user's cards in Mongo
+					cards.forEach(c => c.locked = true);
+					await Promise.all(cards.map(c => userManager.inventory.update(interaction.user.id, c)));
+			
+					/// Let the user know the result
+					let extraInfo_add = cards.length < uids.length ? `\`${cards.length}\` ${cards.length === 1 ? "card was" : "cards were"} already in your \`🔒 vault\`` : ""
+					return await embed_set.send({ description: `\`${cards.length}\` ${cards.length === 1 ? "card" : "cards"} added to your \`🔒 vault\`\n${extraInfo_add}` });
+			
+				case "remove":
+					// Fetch the cards from the user's card_inventory
+					cards = await userManager.inventory.get(interaction.user.id, { uids });
+			
+					// Filter out UIDs that weren't found (used for extra info at the end)
+					uids = cards.map(c => c.uid);
+			
+					// prettier-ignore
+					// Check if the card exists
+					if (!cards.length) return await error_ES.send({
+						interaction, description: `\`${uids.join(", ")}\` ${uids.length === 1 ? "is not a valid UID" : "are not valid UIDs"}`
+					});
+					
+					/// Check if the cards are already unlocked
+					cards = cards.filter(c => c.locked);
+					// prettier-ignore
+					if (!cards.length) return await error_ES.send({
+						interaction, description: `${cards.length === 1 ? `\`${uids}\` is` : "Those cards are"} not in your \`🔒 vault\``
+					});
+			
+					/// Update the user's cards in Mongo
+					cards.forEach(c => c.locked = false);
+					await Promise.all(cards.map(c => userManager.inventory.update(interaction.user.id, c)));
+			
 					/// Let the user know the result
 					let extraInfo_remove = cards.length < uids.length ? `\`${cards.length}\` ${cards.length === 1 ? "card was" : "cards were"} not in your \`🔒 vault\`` : ""
 					return await embed_set.send({ description: `\`${cards.length}\` ${cards.length === 1 ? "card" : "cards"} removed from your \`🔒 vault\`\n${extraInfo_remove}` });
