@@ -65,12 +65,6 @@ module.exports = {
 				case "add":
 					uids.length = 1;
 
-					// prettier-ignore
-					// Check if the card's already favorited
-					if (uids[0] === userData.card_favorite_uid) return await error_ES.send({
-                	    interaction, description: `\`${uids}\` is already your \`⭐ favorite\``
-                	});
-
 					// Fetch the card from the user's card_inventory
 					cards = await userManager.inventory.get(interaction.user.id, { uids });
 
@@ -78,6 +72,12 @@ module.exports = {
 					// Check if the card exists
 					if (!cards) return await error_ES.send({
                 	    interaction, description: `\`${uids}\` is not a valid UID`
+                	});
+
+					// prettier-ignore
+					// Check if the card's already favorited
+					if (cards.uid === userData.card_favorite_uid) return await error_ES.send({
+                	    interaction, description: `\`${uids}\` is already your \`⭐ favorite\``
                 	});
 
 					// Set the user's card_favorite_uid in Mongo
@@ -107,19 +107,13 @@ module.exports = {
 
 					await userManager.update(interaction.user.id, { card_favorite_uid: "" });
 					// Let the user know the result
-                    return await embed_set.send({ description: "You successfully removed your \`⭐ favorite\`" });
+                    return await embed_set.send({ description: "Your \`⭐ favorite\` has been deselected" });
 			}
 
 			// prettier-ignore
 			case "idol": switch (operation) {
 				case "add":
 					uids.length = 1;
-
-					// prettier-ignore
-					// Check if the card's already favorited
-					if (uids[0] === userData.card_selected_uid) return await error_ES.send({
-                	    interaction, description: `\`${uids}\` is already your \`🏃 idol\``
-                	});
 
 					// Fetch the card from the user's card_inventory
 					cards = await userManager.inventory.get(interaction.user.id, { uids });
@@ -128,6 +122,12 @@ module.exports = {
 					// Check if the card exists
 					if (!cards) return await error_ES.send({
                 	    interaction, description: `\`${uids}\` is not a valid UID`
+                	});
+
+					// prettier-ignore
+					// Check if the card's already favorited
+					if (cards.uid === userData.card_selected_uid) return await error_ES.send({
+                	    interaction, description: `\`${uids}\` is already your \`🏃 idol\``
                 	});
 
 					// Set the user's card_selected_uid in Mongo
@@ -157,7 +157,7 @@ module.exports = {
 
 					await userManager.update(interaction.user.id, { card_selected_uid: "" });
 					// Let the user know the result
-                    return await embed_set.send({ description: "You successfully removed your \`🏃 idol\`" });
+                    return await embed_set.send({ description: "Your \`🏃 idol\` has been deselected" });
 			}
 
 			// prettier-ignore
@@ -233,10 +233,10 @@ module.exports = {
 			// prettier-ignore
 			case "team": switch (operation) {
 				case "add":
-					uids.length = config.player.team.MAX_SIZE;
+					uids.length = _jsT.clamp(uids.length, { max: config.player.team.MAX_SIZE });
 
 					// Fetch the user's team cards from their card_inventory
-					let card_team_add = await userManager.inventory.get(interaction.user.id, { uids: userData.card_team_uids });
+					let card_team_add = _jsT.isArray(await userManager.inventory.get(interaction.user.id, { uids: userData.card_team_uids }));
 
 					// prettier-ignore
 					// Check if the user's team is full
@@ -245,7 +245,7 @@ module.exports = {
 					});
 
 					// Fetch the cards from the user's card_inventory
-					cards = await userManager.inventory.get(interaction.user.id, { uids });
+					cards = _jsT.isArray(await userManager.inventory.get(interaction.user.id, { uids }));
 
 					// prettier-ignore
 					// Check if the cards exists
@@ -253,33 +253,50 @@ module.exports = {
                 	    interaction, description: `\`${uids.join(", ")}\` ${uids.length === 1 ? "is not a valid UID" : "are not valid UIDs"}`
 					});
 
+					/// Check if the cards are already in the user's team
+					cards = cards.filter(c => !card_team_add.map(_c => _c?.uid).includes(c.uid));
+					if (!cards.length) return await error_ES.send({
+                	    interaction, description: `${uids.length === 1 ? `\`${uids}\` is` : "Those cards are"} already in your \`👯 team \``
+					});
+
 					// Add the card to the user's team
-					await userManager.update(interaction.user.id, { card_team_uids: [...card_team_add, ...cards].map(c => c.uid) });
+					await userManager.update(interaction.user.id, { card_team_uids: [...card_team_add, ...cards].filter(c => c).map(c => c.uid) });
 
 					/// Let the user know the result
 					cards_f = cards.map(c => cardManager.toString.basic(c));
-                    return await embed_set.send({ description: `\`👯 team edit\` You successfully added:\n> ${cards_f}` });
+                    return await embed_set.send({ description: `\`👯 team edit\` You successfully added:\n>>> ${cards_f.join("\n")}` });
 
 				case "remove":
-					uids.length = config.player.team.MAX_SIZE;
+					uids.length = _jsT.clamp(uids.length, { max: config.player.team.MAX_SIZE });
 
-					// Fetch the user's team cards from their card_inventory
-					let card_team_remove = await userManager.inventory.get(interaction.user.id, { uids: userData.card_team_uids });;
-					
-					// Check if the user gave valid UIDs that are in their team
-					uids = uids.filter(uid => card_team_remove.map(c => c.uid).includes(uid));
+					/// Check if the user gave valid UIDs
+					// Fetch the cards from the user's card_inventory
+					cards = _jsT.isArray(await userManager.inventory.get(interaction.user.id, { uids }));
 
 					// prettier-ignore
-					if (!uids.length) return await error_ES.send({
+					// Check if the cards exists
+					if (!cards.length) return await error_ES.send({
+                	    interaction, description: `\`${uids.join(", ")}\` ${uids.length === 1 ? "is not a valid UID" : "are not valid UIDs"}`
+					});
+
+					// Fetch the user's team cards from their card_inventory
+					let card_team_remove = _jsT.isArray(await userManager.inventory.get(interaction.user.id, { uids: userData.card_team_uids }));
+					
+					// Check if the user gave valid UIDs that are in their team
+					uids_remove_filter = uids.filter(uid => card_team_remove.filter(c => c).map(c => c.uid.toLowerCase()).includes(uid));
+
+					// prettier-ignore
+					if (!uids_remove_filter.length) return await error_ES.send({
                 	    interaction, description: `\`${uids.join(", ")}\` ${uids.length === 1 ? "is not" : "are not"} in your \`👯 team\``
 					});
 
-					// Send a pull request for the user's card_team_uids
-					await userManager.update(interaction.user.id, { $pull: { card_team_uids: { $in: uids } } });
+					/// Set the user's card team
+					card_team_remove = card_team_remove.filter(c => !uids_remove_filter.includes(c.uid.toLowerCase()));
+					await userManager.update(interaction.user.id, { card_team_uids: card_team_remove.map(c => c.uid) });
 
 					/// Let the user know the result
 					cards_f = cards.map(c => cardManager.toString.basic(c));
-                    return await embed_set.send({ description: `\`👯 team edit\` You successfully removed:\n> ${cards_f}` });
+                    return await embed_set.send({ description: `\`👯 team edit\` You successfully removed:\n>>> ${cards_f.join("\n")}` });
 			}
 		}
 	}
