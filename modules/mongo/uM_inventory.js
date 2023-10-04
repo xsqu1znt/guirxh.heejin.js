@@ -1,4 +1,4 @@
-/** @typedef {{uids: string|string[], gids:string|string[]}} options_inventory_get */
+/** @typedef {{uids: string|string[], gids:string|string[], filter:boolean}} options_inventory_get */
 
 const cardManager = require("../cardManager");
 const userManager = require("./uM_index");
@@ -60,7 +60,7 @@ async function has(userID, globalIDs) {
 
 /** @param {string} userID @param {options_inventory_get} options */
 async function get(userID, options) {
-	options = { uids: [], gids: [], ...options };
+	options = { uids: [], gids: [], filter: false, ...options };
 	options.uids = _jsT.isArray(options.uids).map(uid => new RegExp(`^${uid.toUpperCase()}$`, "i"));
 	options.gids = _jsT.isArray(options.gids);
 
@@ -91,6 +91,8 @@ async function get(userID, options) {
 
 	// Parse CardLike
 	cards = cards.map(c => cardManager.parse.fromCardLike(c));
+
+	if (options.filter) cards = cards.filter(c => c);
 
 	return options.uids.length + options.gids.length > 1 ? cards : cards[0];
 }
