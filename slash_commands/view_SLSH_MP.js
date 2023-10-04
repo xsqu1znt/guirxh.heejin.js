@@ -102,7 +102,7 @@ module.exports = {
 
 				// Fetch cards from the user's card_inventory :: { VAULT }
 				case "vault":
-					let cards_vault = await userManager.inventory.vault.get(interaction.user.id);
+					let cards_vault = await userManager.inventory.getVault(interaction.user.id);
 					// prettier-ignore
 					if (!cards_vault || !cards_vault.length) return await error_ES.send({
 						interaction, description: "You don't have any cards in your vault\n> *Use \`/set\` \`edit:🔒 vault\` to add cards to your vault*"

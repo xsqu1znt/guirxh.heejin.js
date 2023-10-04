@@ -60,7 +60,7 @@ async function has(userID, globalIDs) {
 
 /** @param {string} userID @param {options_inventory_get} options */
 async function get(userID, options) {
-	options = { uids: [], gids: [], filter: false, ...options };
+	options = { uids: [], gids: [], filter: true, ...options };
 	options.uids = _jsT.isArray(options.uids).map(uid => new RegExp(`^${uid.toUpperCase()}$`, "i"));
 	options.gids = _jsT.isArray(options.gids);
 
@@ -94,7 +94,7 @@ async function get(userID, options) {
 
 	if (options.filter) cards = cards.filter(c => c);
 
-	return options.uids.length + options.gids.length > 1 ? cards : cards[0];
+	return options.uids.length + options.gids.length > 1 ? cards : cards[0] || null;
 }
 
 async function get_vault(userID) {
@@ -177,7 +177,7 @@ async function remove(userID, uids) {
 
 /** @param {string} userID */
 async function update(userID, card) {
-	await userData_update({ _id: userID, "card_inventory.uid": card.uid }, { $set: { "card_inventory.$": card } });
+	await userManager.update({ _id: userID, "card_inventory.uid": card.uid }, { $set: { "card_inventory.$": card } });
 }
 
 /** @param {string} userID */
