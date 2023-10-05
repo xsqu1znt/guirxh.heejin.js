@@ -12,11 +12,9 @@ const { GuildMember, User } = require("discord.js");
 
 const { BetterEmbed, markdown } = require("../discordTools/_dsT");
 const cardManager = require("../cardManager");
-const userParser = require("../userParser");
 const _jsT = require("../jsTools/_jsT");
-const { userManager } = require("../mongo/index");
 
-/** @param {GuildMember|User} user @param {options_collectons} options  */
+/** @param {GuildMember|User} user @param {options_collectons} options */
 function collections(user, options) {
 	// prettier-ignore
 	options = {

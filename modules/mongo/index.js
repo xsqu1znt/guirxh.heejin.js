@@ -21,6 +21,8 @@ const userManager = {
 	statistics: require("./uM_statistics")
 };
 
+const questManager = require("./questManager");
+
 module.exports = {
 	/** Connect to MongoDB */
 	connect: async (uri = MONGO_URI) => {
@@ -39,7 +41,6 @@ module.exports = {
 		logger.error("Failed to connect to MongoDB", null, connection);
 	},
 
-	// questManager,
 	userManager: {
 		...userManager.index,
 		levels: userManager.levels,
@@ -51,5 +52,7 @@ module.exports = {
 		reminders: userManager.reminders,
 		quests: userManager.quests,
 		statistics: userManager.statistics
-	}
+	},
+
+	questManager
 };

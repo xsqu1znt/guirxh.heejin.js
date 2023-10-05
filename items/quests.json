@@ -1,38 +1,27 @@
 [
 	{
-		"id": "q03",
-		"name": "Town with Spicy Paint",
-		"reward_overview": "`☝️ 1000XP` `🥕 1000` `🎀 500`",
+		"id": "q25",
+		"name": "Crazy Mini Teen Butterfly",
+		"reward_overview": "`☝️ 5000XP` `🎀 500` `🥕 1000`",
 		"description": "",
 		"date": {
-			"start": "2023-07-15",
-			"end": "2023-07-28"
+			"start": "2023-10-01",
+			"end": "2023-10-14"
 		},
+
 		"objectives": {
-			"card_sets_complete": ["454", "293"]
+			"card_sets_complete": ["551"],
+			"card_duplicates": [
+				{ "globalID": "7091", "count": 3 },
+				{ "globalID": "8829", "count": 3 },
+				{ "globalID": "2639", "count": 6 }
+			]
 		},
+
 		"rewards": {
-			"xp": 1000,
-			"carrots": 1000,
-			"ribbons": 500
-		}
-	},
-	{
-		"id": "q04",
-		"name": "The Unforgiven Butterfly",
-		"reward_overview": "`☝️ 1000XP` `🥕 1000` `🎀 500`",
-		"description": "",
-		"date": {
-			"start": "2023-07-15",
-			"end": "2023-07-28"
-		},
-		"objectives": {
-			"card_sets_complete": ["270", "294"]
-		},
-		"rewards": {
-			"xp": 1000,
-			"carrots": 1000,
-			"ribbons": 500
+			"xp": 5000,
+			"ribbons": 500,
+			"carrots": 1000
 		}
 	}
 ]

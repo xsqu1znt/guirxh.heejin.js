@@ -13,6 +13,7 @@
 const { GuildMember, User, time, TimestampStyles } = require("discord.js");
 
 const BetterEmbed = require("../discordTools/dsT_betterEmbed");
+const { questManager } = require("../mongo/index");
 const { userManager } = require("../mongo/index");
 const badgeManager = require("../badgeManager");
 const cardManager = require("../cardManager");
@@ -23,6 +24,7 @@ const config_player = require("../../configs/config_player.json");
 const config_bot = require("../../configs/config_bot.json");
 const _dsT = require("../discordTools/_dsT");
 
+/** @param {GuildMember|User} user, @param {UserData} userData */
 async function profile(user, userData) {
 	let [card_favorite, card_selected] = await userManager.inventory.get(user.id, {
 		uids: [userData.card_favorite_uid, userData.card_selected_uid]
@@ -329,6 +331,7 @@ function inventory(userData, options, stats) {
 	return embeds_inventory;
 }
 
+/** @param {GuildMember|User} user, @param {UserData} userData */
 function cooldowns(user, userData) {
 	// Get the active cooldowns from the config
 	let cooldown_types = Object.entries(config_player.cooldowns)
@@ -360,6 +363,7 @@ function cooldowns(user, userData) {
 	return embed_cooldowns;
 }
 
+/** @param {GuildMember|User} user, @param {UserData} userData */
 function reminders(user, userData) {
 	// Get the cooldown names from the player config
 	let cooldowns = Object.keys(config_player.cooldowns);
@@ -392,4 +396,13 @@ function reminders(user, userData) {
 	return embed_reminders;
 }
 
-module.exports = { profile, missing, inventory, cooldowns, reminders };
+/** @param {GuildMember|User} user, @param {UserData} userData */
+function quest(user, userData) {
+	let quest_f = [];
+
+	for (let quest of questManager.quests) {
+		
+	}
+}
+
+module.exports = { profile, missing, inventory, cooldowns, reminders, quest };
