@@ -41,8 +41,7 @@ function quest_getProgress(questID, userData, questCache) {
 				objectives.ribbons = quest.objectives?.ribbons <= questCache.ribbons;
 				break;
 			case "cards_in_inventory":
-				objectives.cards_in_inventory =
-					quest.objectives?.cards_in_inventory <= questCache.cards_in_inventory;
+				objectives.cards_in_inventory = quest.objectives?.cards_in_inventory <= questCache.cards_in_inventory;
 				break;
 
 			case "level_user":
@@ -54,15 +53,11 @@ function quest_getProgress(questID, userData, questCache) {
 
 			case "team_ability_reputation":
 				objectives.team_ability_reputation =
-					quest.objectives?.team_ability_reputation <=
-					(questCache.team_ability && questCache.team_reputation);
+					quest.objectives?.team_ability_reputation <= (questCache.team_ability && questCache.team_reputation);
 				break;
 
 			case "card_global_ids":
-				objectives.card_global_ids = userParser.cards.has(
-					userData,
-					quest.objectives.card_global_ids
-				);
+				objectives.card_global_ids = userParser.cards.has(userData, quest.objectives.card_global_ids);
 				break;
 			case "card_sets_complete":
 				objectives.card_sets_complete = userParser.cards.setsCompleted(
@@ -146,30 +141,36 @@ function quest_toString_objectiveDescription(questID, objectiveType) {
 			return `\`🥕 Balance\` - \`get ${quest.objectives?.balance || "n/a"} new ${
 				quest.objectives?.balance === 1 ? "carrot" : "carrots"
 			}\``;
+
 		case "ribbons":
 			return `\`🎀 Ribbons\` - \`get ${quest.objectives?.ribbons || "n/a"} new ${
 				quest.objectives?.ribbons === 1 ? "ribbon" : "ribbons"
 			}\``;
+
 		case "cards_in_inventory":
-			return `\`🃏 Inventory\` - \`drop ${
-				quest.objectives?.cards_in_inventory || "n/a"
-			} new ${quest.objectives?.cards_in_inventory === 1 ? "card" : "cards"}\``;
+			return `\`🃏 Inventory\` - \`drop ${quest.objectives?.cards_in_inventory || "n/a"} new ${
+				quest.objectives?.cards_in_inventory === 1 ? "card" : "cards"
+			}\``;
+
 		case "level_user":
 			return `\`📈 User LV.\` - \`reach LV. ${quest.objectives?.level_user || "n/a"}\``;
+
 		case "level_idol":
 			return `\`📈 Idol LV.\` - \`reach LV. ${quest.objectives?.level_idol || "n/a"}\``;
+
 		case "team_ability_reputation":
-			return `\`👯‍♀️ ABI REP\` - \`reach ${
-				quest.objectives?.team_ability_reputation || "n/a"
-			} in ABI. REP. stats\``;
+			return `\`👯‍♀️ ABI REP\` - \`reach ${quest.objectives?.team_ability_reputation || "n/a"} in ABI. REP. stats\``;
+
 		case "card_global_ids":
 			return `\`🃏 GID\` - \`own ${
 				quest.objectives?.card_global_ids?.length === 1 ? "a card" : "cards"
 			} with ${quest.objectives?.card_global_ids?.map(gid => `gid ${gid}`).join(", ")}\``;
+
 		case "card_sets_complete":
 			return `\`🗣️ Set\` - \`complete ${
 				quest.objectives?.card_sets_complete?.length === 1 ? "set" : "sets"
 			} ${quest.objectives?.card_sets_complete?.join(", ")}\``;
+
 		case "card_duplicates":
 			return `\`🃏 Dupes\` - \`own ${quest.objectives?.card_duplicates
 				?.map(d => `${d.count} dupes of gid ${d.globalID}`)
@@ -200,8 +201,7 @@ async function mongo_user_markQuestComplete(userID, questID) {
 	if (!quest) return false;
 
 	// Get the rewarded cards, if available
-	let cards_reward =
-		quest.rewards?.card_global_ids?.map(globalID => cardManager.get.byGlobalID(globalID)) || [];
+	let cards_reward = quest.rewards?.card_global_ids?.map(globalID => cardManager.get.byGlobalID(globalID)) || [];
 	// Fillter out nulls
 	cards_reward = cards_reward.filter(card => card);
 
@@ -245,12 +245,9 @@ async function mongo_user_markQuestComplete(userID, questID) {
 
 async function mongo_user_questsChanged(userID) {
 	// Fetch user quest cache from Mongo
-    let questCache = await mongo_questCache_fetch(userID);
+	let questCache = await mongo_questCache_fetch(userID);
 
-	return (
-		questCache.quests_in_progress.filter(questID => quest_ids.includes(questID)).length !==
-		quest_ids.length
-	);
+	return questCache.quests_in_progress.filter(questID => quest_ids.includes(questID)).length !== quest_ids.length;
 }
 
 //! QuestCache parsing (Mongo)
@@ -305,9 +302,7 @@ async function mongo_questCache_updateCache(userID) {
 
 	/// Push the update to Mongo
 	// Determine which active quests the user hasn't complete yet
-	let userActiveQuests = quests.filter(
-		quest => !userData.quests_complete.map(({ id }) => id).includes(quest.id)
-	);
+	let userActiveQuests = quests.filter(quest => !userData.quests_complete.map(({ id }) => id).includes(quest.id));
 
 	let clampPos = num => (num < 0 ? 0 : num);
 	questCache = await mongo_questCache_update(userID, {
@@ -349,9 +344,7 @@ async function mongo_questCache_updateCache(userID) {
 	});
 
 	// Get the user's progress for each active quest
-	let questProgress = userActiveQuests.map(({ id }) =>
-		quest_getProgress(id, userData, questCache)
-	);
+	let questProgress = userActiveQuests.map(({ id }) => quest_getProgress(id, userData, questCache));
 
 	// Filter out null returns
 	questProgress = questProgress.filter(progress => progress);
@@ -363,9 +356,7 @@ async function mongo_questCache_updateCache(userID) {
 	return {
 		cache: questCache,
 		progress: questProgress,
-		quests_complete: questProgress
-			.filter(progress => progress.complete)
-			.map(progress => progress.quest)
+		quests_complete: questProgress.filter(progress => progress.complete).map(progress => progress.quest)
 	};
 }
 

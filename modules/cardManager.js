@@ -199,15 +199,15 @@ function get_globalID(globalID) {
 	return structuredClone(cards_all.find(card => card.globalID === globalID)) || null;
 }
 
+function get_setID(setID) {
+	return structuredClone(cards_all.filter(card => card.setID === setID)) || [];
+}
+
 function get_fromShop(globalID, special = false) {
 	let _card_shop_set_ids = special ? config.shop.stock.card_set_ids.SPECIAL : config.shop.stock.card_set_ids.GENERAL;
 
 	let _cards = cards_all.filter(card => _card_shop_set_ids.includes(card.setID));
 	return structuredClone(_cards.find(card => card.globalID === globalID)) || null;
-}
-
-function get_setID(setID) {
-	return structuredClone(cards_all.filter(card => card.setID === setID)) || [];
 }
 
 function get_baseCategoryName(globalID) {
@@ -216,6 +216,13 @@ function get_baseCategoryName(globalID) {
 	}
 
 	return null;
+}
+
+function get_imageURL(globalID) {
+	let card = get_globalID(globalID);
+	if (!card) return null;
+
+	return card.imageURL || "";
 }
 
 /** @param {options_get_random} options */
@@ -514,10 +521,11 @@ module.exports = {
 	levelUp,
 
 	get: {
-		baseCategoryName: get_baseCategoryName,
 		globalID: get_globalID,
 		setID: get_setID,
 		fromShop: get_fromShop,
+		baseCategoryName: get_baseCategoryName,
+		imageURL: get_imageURL,
 		random: get_random,
 		drop: get_randomDrop
 	},
