@@ -12,7 +12,7 @@
 
 const { GuildMember, User, time, TimestampStyles } = require("discord.js");
 
-const BetterEmbed = require("../discordTools/dsT_betterEmbed");
+const { BetterEmbed, markdown } = require("../discordTools/_dsT");
 const { questManager } = require("../mongo/index");
 const { userManager } = require("../mongo/index");
 const badgeManager = require("../badgeManager");
@@ -409,20 +409,39 @@ function quest(user, userData) {
 		let _objectives = Object.keys(quest.objectives);
 
 		// Add quest info to the field's title
-		let name = `\`📜\` **${quest.name}** :: ending ${_jsT.eta({ then: Date.parse(quest.date.end) })}`;
+		// let name = `\`📜\` **${quest.name}** :: ending ${_jsT.eta({ then: Date.parse(quest.date.end)})}`;
+		let name = `\`📜\` **${quest.name}** \`⏰\` *${_jsT.eta({ then: Date.parse(quest.date.end) })}*`;
+
+		let value = [
+			// prettier-ignore
+			markdown.ansi(
+				"🏆 Rewards: $OVERVIEW\n$COMPLETE : 📈 $OBJECTIVE_PROGRESS objectives\n\n$DESCRIPTION"
+					.replace("$OVERVIEW", quest.reward_overview.join(" • "))
+
+					.replace("$COMPLETE", "🚫 incomplete")
+					.replace("$OBJECTIVE_PROGRESS", `0/${_objectives.length}`)
+
+					.replace("\n\n$DESCRIPTION", quest.description ? `> ${quest.description}` : ""),
+				{ format: "bold", text_color: "gray", codeblock: true }
+			),
+
+			_objectives.map((obj, idx) => `> ${questManager.toString.objectiveDetails(quest.id, obj)}`).join("\n")
+		];
 
 		// prettier-ignore
 		// Add formatted quest info to the field's description property
-		let value = "`$COMPLETE` `📈 $OBJECTIVE_PROGRESS objectives`\n> *Rewards* :: $OVERVIEW\n\n***objectives:***\n$OBJECTIVES\n$DESCRIPTION"
+		/* let value = "`$COMPLETE` `📈 $OBJECTIVE_PROGRESS objectives`\n> *Rewards* :: $OVERVIEW\n\n***objectives:***\n$OBJECTIVES\n$DESCRIPTION"
 			.replace("$COMPLETE", "🚫 incomplete")
 			.replace("$OBJECTIVE_PROGRESS", `0/${_objectives.length}`)
 			
 			.replace("$OVERVIEW", quest.reward_overview)
 
-			.replace("$DESCRIPTION", quest.description ? `> ${quest.description}` : "");
+			.replace("$OBJECTIVES", _objectives.map((obj, idx) => `> \`🚫\` ${questManager.toString.objectiveDetails(quest.id, obj)}`).join("\n"))
+
+			.replace("$DESCRIPTION", quest.description ? `> ${quest.description}` : ""); */
 
 		// Add the field data to the array
-		quest_fields_f.push({ name, value, inline: true });
+		quest_fields_f.push({ name, value: value.join("\n"), inline: true });
 	}
 
 	// Create the embed :: { QUEST }

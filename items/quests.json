@@ -2,7 +2,7 @@
 	{
 		"id": "q25",
 		"name": "Crazy Mini Teen Butterfly",
-		"reward_overview": "`☝️ 5000XP` `🎀 500` `🥕 1000`",
+		"reward_overview": ["☝️ 5000XP", "🎀 500", "🥕 1000"],
 		"description": "",
 		"date": {
 			"start": "2023-10-01",
