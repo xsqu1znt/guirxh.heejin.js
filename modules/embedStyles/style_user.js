@@ -406,12 +406,20 @@ function quest(user, userData) {
 
 	// Iterate through each available quest
 	for (let quest of questManager.quests) {
+		let _objectives = Object.keys(quest.objectives);
+
 		// Add quest info to the field's title
-		let name = `\`📜\` **${quest.name}** :: ending ${_jsT.eta(Date.parse(quest.date.end))}`;
+		let name = `\`📜\` **${quest.name}** :: ending ${_jsT.eta({ then: Date.parse(quest.date.end) })}`;
 
 		// prettier-ignore
 		// Add formatted quest info to the field's description property
-		let value = "`$COMPLETE` `📈 $PROGRESS_OBJECTIVE`\n> *Rewards* :: $OVERVIEW\n\n***objectives :***\n$OBJECTIVES\n$DESCRIPTION";
+		let value = "`$COMPLETE` `📈 $OBJECTIVE_PROGRESS objectives`\n> *Rewards* :: $OVERVIEW\n\n***objectives:***\n$OBJECTIVES\n$DESCRIPTION"
+			.replace("$COMPLETE", "🚫 incomplete")
+			.replace("$OBJECTIVE_PROGRESS", `0/${_objectives.length}`)
+			
+			.replace("$OVERVIEW", quest.reward_overview)
+
+			.replace("$DESCRIPTION", quest.description ? `> ${quest.description}` : "");
 
 		// Add the field data to the array
 		quest_fields_f.push({ name, value, inline: true });
