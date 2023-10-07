@@ -1,6 +1,6 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { error_ES, general_ES } = require("../modules/embedStyles/index");
+const { error_ES, user_ES } = require("../modules/embedStyles/index");
 const { userManager, questManager } = require("../modules/mongo/index");
 // const _jsT = require("../modules/jsTools/_jsT");
 
@@ -23,7 +23,7 @@ module.exports = {
 		let userData = await userManager.fetch(interaction.user.id, { type: "quest" });
 
 		// Create the embed :: { QUEST }
-		let embed_quest = general_ES.quest(interaction.member, userData);
+		let embed_quest = user_ES.quest(interaction.member, userData);
 
 		// Send the embed
 		return await embed_quest.send({ interaction });

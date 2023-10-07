@@ -370,14 +370,18 @@ function reminders(user, userData) {
 
 	// Parse the cooldowns into strings
 	let cooldowns_f = cooldowns.map(cd => {
-		let reminder = userData.reminders.find(r => r.type === cd.toLowerCase()) || {}
+		let reminder = userData.reminders.find(r => r.type === cd.toLowerCase()) || {};
 		let enabled = reminder?.enabled || false;
 
 		let notificationMode = "";
 
 		switch (reminder.notificationMode) {
-			case "channel": notificationMode = "💬"; break;
-			case "dm": notificationMode = "📫"; break;
+			case "channel":
+				notificationMode = "💬";
+				break;
+			case "dm":
+				notificationMode = "📫";
+				break;
 		}
 
 		// return "`$TOGGLE` `$NOTIFICATION_TYPE` **$COOLDOWN**"
@@ -398,11 +402,32 @@ function reminders(user, userData) {
 
 /** @param {GuildMember|User} user, @param {UserData} userData */
 function quest(user, userData) {
-	let quest_f = [];
+	let quest_fields_f = [];
 
+	// Iterate through each available quest
 	for (let quest of questManager.quests) {
-		
+		// Add quest info to the field's title
+		let name = `\`📜\` **${quest.name}** :: ending ${_jsT.eta(Date.parse(quest.date.end))}`;
+
+		// prettier-ignore
+		// Add formatted quest info to the field's description property
+		let value = "`$COMPLETE` `📈 $PROGRESS_OBJECTIVE`\n> *Rewards* :: $OVERVIEW\n\n***objectives :***\n$OBJECTIVES\n$DESCRIPTION";
+
+		// Add the field data to the array
+		quest_fields_f.push({ name, value, inline: true });
 	}
+
+	// Create the embed :: { QUEST }
+	let embed = new BetterEmbed({
+		author: { text: "$USERNAME | quest", user, iconURL: true },
+		description: quest_fields_f.length ? "" : "There are no quests right now"
+	});
+
+	// Add the fields
+	embed.addFields(...quest_fields_f);
+
+	// Return the embed
+	return embed;
 }
 
 module.exports = { profile, missing, inventory, cooldowns, reminders, quest };
