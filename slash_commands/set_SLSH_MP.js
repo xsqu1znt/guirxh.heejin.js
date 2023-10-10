@@ -3,7 +3,6 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js"
 const { BetterEmbed } = require("../modules/discordTools/_dsT");
 const { error_ES } = require("../modules/embedStyles/index");
 const { userManager } = require("../modules/mongo/index");
-const userParser = require("../modules/userParser");
 const cardManager = require("../modules/cardManager");
 const _jsT = require("../modules/jsTools/_jsT");
 
@@ -85,7 +84,11 @@ module.exports = {
 
 					/// Let the user know the result
 					cards_f = cardManager.toString.basic(cards);
-					return await embed_set.send({ description: `Your \`⭐ favorite\` has been set to:\n> ${cards_f}` });
+
+					return await embed_set.send({
+						description: `Your \`⭐ favorite\` has been set to:\n> ${cards_f}`,
+						imageURL: cards.imageURL
+					});
 					
 				case "remove":
 					uids.length = 1;
@@ -135,7 +138,11 @@ module.exports = {
 
 					/// Let the user know the result
 					cards_f = cardManager.toString.basic(cards);
-					return await embed_set.send({ description: `Your \`🏃 idol\` has been set to:\n> ${cards_f}` });
+
+					return await embed_set.send({
+						description: `Your \`🏃 idol\` has been set to:\n> ${cards_f}`,
+						imageURL: cards.imageURL
+					});
 					
 				case "remove":
 					uids.length = 1;
