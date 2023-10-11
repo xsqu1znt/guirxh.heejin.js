@@ -39,31 +39,31 @@ function toString_objectiveDetails(id, objectiveType) {
 	// prettier-ignore
 	switch (objectiveType) {
         case "balance": return quest.objectives?.balance
-            ? `\`🚫 :: 🥕 Balance\` get ${quest.objectives.balance} new ${quest.objectives.balance === 1 ? "carrot" : "carrots"}`
+            ? `\`🥕 Balance\` get ${quest.objectives.balance} new ${quest.objectives.balance === 1 ? "carrot" : "carrots"}`
             : "n/a";
 
         case "ribbons": return quest.objectives?.ribbons
-            ? `\`🚫 :: 🎀 Ribbons\` get ${quest.objectives.ribbons} new ${quest.objectives.ribbons === 1 ? "ribbon" : "ribbons"}`
+            ? `\`🎀 Ribbons\` get ${quest.objectives.ribbons} new ${quest.objectives.ribbons === 1 ? "ribbon" : "ribbons"}`
             : "n/a";
 
         case "cards_in_inventory": return quest.objectives?.cards_in_inventory
-            ? `\`🚫 :: 🃏 Inventory\` drop ${quest.objectives.cards_in_inventory} new ${quest.objectives.cards_in_inventory === 1 ? "card" : "cards"}`
+            ? `\`🃏 Inventory\` drop ${quest.objectives.cards_in_inventory} new ${quest.objectives.cards_in_inventory === 1 ? "card" : "cards"}`
             : "n/a";
 
         case "level_user": return quest.objectives?.level_user
-            ? `\`🚫 :: 📈 User LV.\` reach LV. ${quest.objectives.level_user}`
+            ? `\`📈 User LV.\` reach LV. ${quest.objectives.level_user}`
             : "n/a";
 
         case "level_idol": return quest.objectives?.level_idol
-            ? `\`🚫 :: 📈 Idol LV.\` reach LV. ${quest.objectives.level_idol}`
+            ? `\`📈 Idol LV.\` reach LV. ${quest.objectives.level_idol}`
             : "n/a";
 
         case "team_ability_reputation": return quest.objectives?.team_ability_reputation
-            ? `\`🚫 :: 👯‍♀️ ABI REP\` reach ${quest.objectives.team_ability_reputation} in ABI. REP. stats`
+            ? `\`👯‍♀️ ABI REP\` reach ${quest.objectives.team_ability_reputation} in ABI. REP. stats`
             : "n/a";
 
         case "card_global_ids": return quest.objectives?.card_global_ids
-            ? `\`🚫 :: 🃏 GID\` own ${quest.objectives.card_global_ids.length === 1 ? "a card" : "cards"} with ${quest.objectives.card_global_ids.map(gid => {
+            ? `\`🃏 GID\` own ${quest.objectives.card_global_ids.length === 1 ? "a card" : "cards"} with ${quest.objectives.card_global_ids.map(gid => {
                 let card = cardManager.get.globalID(gid);
                 if (!card) return "invalid global ID";
 
@@ -72,16 +72,16 @@ function toString_objectiveDetails(id, objectiveType) {
             : "n/a";
 
         case "card_sets_complete": return quest.objectives?.card_sets_complete
-            ? `\`🚫 :: 🗣️ Set\` complete ${quest.objectives.card_sets_complete.length === 1 ? "set" : "sets"} ${quest.objectives.card_sets_complete.join(", ")}`
+            ? `\`🗣️ Set\` complete ${quest.objectives.card_sets_complete.length === 1 ? "set" : "sets"}:\n${quest.objectives.card_sets_complete.map(str => ` - \`🚫\` ${str}`).join("\n")}`
             : "n/a";
 
         case "card_duplicates": return quest.objectives?.card_duplicates
-            ? `\`🚫 :: 🃏 Dupes\` own ${quest.objectives.card_duplicates.map(d => {
+            ? `\`🃏 Dupes\` own:\n${quest.objectives.card_duplicates.map(d => {
                 let card = cardManager.get.globalID(d.globalID);
                 if (!card) return "invalid global ID";
 
-                return `${d.count} ${d.count === 1 ? "dupe" : "dupes"} of ${markdown.link(d.globalID, card.imageURL, `${card.single} - ${card.name}`)}`;
-            }).join(", ")}`
+                return ` - \`🚫\` ${d.count} ${d.count === 1 ? "dupe" : "dupes"} of ${markdown.link(d.globalID, card.imageURL, `${card.single} - ${card.name}`)}`;
+            }).join("\n")}`
             : "n/a";
 
         default: return "invalid objective type";

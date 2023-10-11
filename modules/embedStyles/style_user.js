@@ -415,17 +415,17 @@ function quest(user, userData) {
 		let value = [
 			// prettier-ignore
 			markdown.ansi(
-				"🏆 Rewards: $OVERVIEW\n$COMPLETE : 📈 $OBJECTIVE_PROGRESS objectives\n\n$DESCRIPTION"
+				"🏆 Rewards: $OVERVIEW\n$COMPLETE :: 📈 $OBJECTIVE_PROGRESS objectives\n\n$DESCRIPTION"
 					.replace("$OVERVIEW", quest.reward_overview.join(" • "))
 
 					.replace("$COMPLETE", "🚫 incomplete")
 					.replace("$OBJECTIVE_PROGRESS", `0/${_objectives.length}`)
 
 					.replace("\n\n$DESCRIPTION", quest.description ? `> ${quest.description}` : ""),
-				{ format: "bold", text_color: "gray", codeblock: true }
+				{ text_color: "yellow", format: "bold", codeblock: true }
 			),
 
-			_objectives.map((obj, idx) => `> ${questManager.toString.objectiveDetails(quest.id, obj)}`).join("\n")
+			_objectives.map((obj, idx) => `- ${questManager.toString.objectiveDetails(quest.id, obj)}`).join("\n")
 		];
 
 		// prettier-ignore
