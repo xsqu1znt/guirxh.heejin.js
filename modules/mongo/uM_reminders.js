@@ -69,7 +69,7 @@ class UserReminder {
 	/** @param {ReminderType} reminderType @param {ReminderNotificationMode} mode @param {boolean} enabled */
 	constructor(reminderType, mode, enabled) {
 		let time = _jsT.parseTime(config.player.cooldowns[reminderType.toUpperCase()]);
-		let isLongDuration = time > _jsT.parseTime("12h");
+		let isLongDuration = time > _jsT.parseTime(config.player.COOLDOWN_LONG_THRESHOLD);
 
 		this.type = reminderType;
 		this.timestamp = _jsT.parseTime(time, { fromNow: true });

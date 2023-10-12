@@ -24,6 +24,8 @@ const config_player = require("../../configs/config_player.json");
 const config_bot = require("../../configs/config_bot.json");
 const _dsT = require("../discordTools/_dsT");
 
+const config = { player: require("../../configs/config_player.json") };
+
 /** @param {GuildMember|User} user, @param {UserData} userData */
 async function profile(user, userData) {
 	let [card_favorite, card_selected] = await userManager.inventory.get(user.id, {
@@ -376,12 +378,12 @@ function reminders(user, userData) {
 		let notificationMode = "";
 
 		switch (reminder.notificationMode) {
-			case "channel":
-				notificationMode = "💬";
-				break;
-			case "dm":
-				notificationMode = "📫";
-				break;
+			case "channel": notificationMode = "💬"; break;
+			case "dm": notificationMode = "📫"; break;
+			
+			default: _jsT.parseTime(config.player.cooldowns[cd]) > _jsT.parseTime(config.player.COOLDOWN_LONG_THRESHOLD)
+				? notificationMode = "📫"
+				: notificationMode = "💬";
 		}
 
 		// return "`$TOGGLE` `$NOTIFICATION_TYPE` **$COOLDOWN**"

@@ -11,6 +11,8 @@
 		"DROP_EVENT_2": "3h"
 	},
 
+	"COOLDOWN_LONG_THRESHOLD": "6h",
+
 	"win_rate": {
 		"RANDOM": 100
 	},
