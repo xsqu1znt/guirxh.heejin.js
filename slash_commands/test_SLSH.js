@@ -16,15 +16,9 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-		let embed = new BetterEmbed({ interaction, description: "boop" });
+		let card = cardManager.get.random({ count: 1 });
 
-		let charm = itemManager.items.charms[0].charms[0];
-		charm.type = itemManager.items.charms[0].type;
-		charm.expiration = _jsT.parseTime("7d", { fromNow: true });
-		await userManager.charms.set(interaction.user.id, charm);
-
-		console.log(charm);
-		// let _charm = await userManager.charms.get(interaction.user.id, "dupe_repellent");
+		let embed = new BetterEmbed({ interaction, description: cardManager.toString.basic(card) });
 
 		return await embed.send();
 	}

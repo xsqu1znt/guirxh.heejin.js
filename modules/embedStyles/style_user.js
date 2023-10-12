@@ -309,7 +309,7 @@ function inventory(userData, options, stats) {
 		let _embed = new BetterEmbed({
 			author: { text: dupeCheck ? "$USERNAME | dupes" : "$USERNAME | inventory", user: options.target, iconURL: true },
 			thumbnailURL: dupeCheck ? cards.slice(-1)[0].card.imageURL : null,
-			description: `\`\`\`lorem ipsum dolor sit amet\`\`\``,
+			// description: `\`\`\`lorem ipsum dolor sit amet\`\`\``,
 			footer: { text: `Page ${i + 1}/${cards_f.length || 1}` }
 		});
 
