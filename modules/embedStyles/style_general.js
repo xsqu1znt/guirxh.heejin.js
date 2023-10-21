@@ -14,6 +14,11 @@ const { BetterEmbed, markdown } = require("../discordTools/_dsT");
 const cardManager = require("../cardManager");
 const _jsT = require("../jsTools/_jsT");
 
+/** @param {GuildMember|User} user */
+function shop(user) {
+
+}
+
 /** @param {GuildMember|User} user @param {options_collectons} options */
 function collections(user, options) {
 	// prettier-ignore
@@ -353,4 +358,4 @@ function gift(user, recipient, cards) {
 	return embed_gift;
 }
 
-module.exports = { collections, view, gift };
+module.exports = { shop, collections, view, gift };
