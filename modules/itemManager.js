@@ -90,7 +90,23 @@ async function charm_buy(userID, charmID) {
 }
 
 module.exports = {
-	items,
+	items: {
+		card_packs: {
+			general: items.card_packs,
+			setIDs: _jst.unique(items.card_packs.map(pack => pack.setID))
+		},
+
+		badges: {
+			general: items.badges,
+			setIDs: _jst.unique(items.badges.map(b => b.setID))
+		},
+
+		charms: {
+			general: items.charms,
+			setIDs: _jst.unique(items.charms.map(c => c.setID))
+		}
+	},
+
 	getItem,
 	buyItem
 };

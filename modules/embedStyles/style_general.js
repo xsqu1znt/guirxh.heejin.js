@@ -11,12 +11,34 @@
 const { GuildMember, User } = require("discord.js");
 
 const { BetterEmbed, markdown } = require("../discordTools/_dsT");
+const itemManager = require("../itemManager");
 const cardManager = require("../cardManager");
 const _jsT = require("../jsTools/_jsT");
 
 /** @param {GuildMember|User} user */
 function shop(user) {
+	/* - - - - - { Parse Cards } - - - - - */
+	// Get shop cards and sort by global ID :: { ASCENDING }
+	let _cards = {
+		general: cardManager.cards.shop.general.sort((a, b) => a.globalID - b.globalID),
+		special: cardManager.cards.shop.special.sort((a, b) => a.globalID - b.globalID)
+	};
 
+	// Sort cards by groups of similar set IDs
+	let _card_sets = {
+		general: cardManager.cards.shop.setIDs.general.map(setID => _cards.general.filter(c => c.setID === setID)),
+		special: cardManager.cards.shop.setIDs.special.map(setID => _cards.special.filter(c => c.setID === setID))
+	};
+
+	/* - - - - - { Parse Item Packs } - - - - - */
+	// Get card packs and sort by set ID :: { ASCENDING }
+	let _itemPacks = {
+		card: itemManager.items.card_packs.general.sort((a, b) => a.setID - b.setID)
+	};
+
+	/* - - - - - { Parse Badges } - - - - - */
+	// Sort badges by groups of similar set ID
+	let _badges = itemManager.items.badges.setIDs.map(setID => itemManager.items.badges.filter(b => b.setID === setID));
 }
 
 /** @param {GuildMember|User} user @param {options_collectons} options */
@@ -104,8 +126,9 @@ function collections(user, options) {
 				// name: `${cardManager.cards.category.meta.base[cardManager.get.baseCategoryName(_globalIDs[0].globalID)].emoji} ${cat}`
 			};
 
-			_globalID_first.name = `\`${cardManager.cards.category.meta.base[cardManager.get.baseCategoryName(_globalID_first.globalID)].emoji
-				}\` ***${cat}***`;
+			_globalID_first.name = `\`${
+				cardManager.cards.category.meta.base[cardManager.get.baseCategoryName(_globalID_first.globalID)].emoji
+			}\` ***${cat}***`;
 
 			// Pushes to the main array
 			card_categories.push(...[_globalID_first, ..._globalIDs]);
@@ -116,7 +139,7 @@ function collections(user, options) {
 	let card_categories_split = [];
 	let row_size = 5;
 
-	for (let i = 0; i < card_categories.length;) {
+	for (let i = 0; i < card_categories.length; ) {
 		// Get the base row size of 5
 		let size = row_size;
 
@@ -265,14 +288,17 @@ function view(user, userData, card, viewType) {
 		let cards = card.sort((a, b) => a.setID - b.setID || a.globalID - b.globalID);
 
 		// Parse the cards into strings, and group them by 15 per page
-		let cards_f = _jsT.chunk(cards.map(c => {
-			// Whether or not this card is selected, favorited, or on the user's team
-			let selected = card.uid === userData.card_selected_uid;
-			let favorite = card.uid === userData.card_favorite_uid;
-			let onTeam = userData.card_team_uids.includes(card.uid);
+		let cards_f = _jsT.chunk(
+			cards.map(c => {
+				// Whether or not this card is selected, favorited, or on the user's team
+				let selected = card.uid === userData.card_selected_uid;
+				let favorite = card.uid === userData.card_favorite_uid;
+				let onTeam = userData.card_team_uids.includes(card.uid);
 
-			return cardManager.toString.inventoryEntry(c, { locked: true, selected, favorite, onTeam });
-		}), 15);
+				return cardManager.toString.inventoryEntry(c, { locked: true, selected, favorite, onTeam });
+			}),
+			15
+		);
 
 		/** @type {BetterEmbed[]} */
 		let embeds = [];
@@ -282,7 +308,9 @@ function view(user, userData, card, viewType) {
 			let _embed = new BetterEmbed({
 				author: { text: "$USERNAME | vault", user, iconURL: true },
 				description: markdown.ansi(`Total: ${cards.length}`, {
-					text_color: "white", format: "bold", codeblock: true
+					text_color: "white",
+					format: "bold",
+					codeblock: true
 				}),
 				footer: `Page ${i + 1}/${cards_f.length}`
 			});
