@@ -37,10 +37,26 @@ function shop(user) {
 	};
 
 	/* - - - - - { Parse Badges } - - - - - */
+	// prettier-ignore
 	// Sort badges by groups of similar set ID
-	let _badges = itemManager.items.badges.setIDs.map(setID => itemManager.items.badges.filter(b => b.setID === setID));
+	let _badges = itemManager.items.badges.setIDs.general.map(setID => itemManager.items.badges.filter(b => b.setID === setID));
 
-	
+	/* - - - - - { Pages } - - - - - */
+	// Create the embed :: { SHOP TEMPLATE }
+	let embed_shop = new BetterEmbed({ author: { text: "$USERNAME | shop", iconURL: true, user } });
+
+	const shop_overview = () => {
+		let _card_sets_f = {
+			general: cardManager.cards.shop.setIDs.general.map(setID => cardManager.toString.setEntry({ setID })),
+			special: cardManager.cards.shop.setIDs.special.map(setID => cardManager.toString.setEntry({ setID }))
+		};
+
+		/* let _itemPacks_f = {
+			card: itemManager.items.card_packs.setIDs.general.map(setID => itemManager.items.card_packs.toString.setEntry({ setID }))
+		}; */
+
+		let _badges_f = itemManager.items.badges.setIDs.general.map(setID => itemManager.toString.badges.setEntry(setID));
+	};
 }
 
 /** @param {GuildMember|User} user @param {options_collectons} options */

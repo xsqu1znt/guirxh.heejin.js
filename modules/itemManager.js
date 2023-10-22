@@ -68,6 +68,23 @@ async function badge_buy(userID, badgeID) {
 	return badge;
 }
 
+function badge_toString_setEntry(setID) {
+	let badges = items.badges.filter(b => b.setID === setID);
+	if (!badges.length) return "n/a";
+
+	let badges_first = badges.slice(-1)[0];
+	let count = badges.length >= 10 ? badges.length : `0${badges.length}`;
+
+	return "$SET_ID $COUNT $CATEGORY $EMOJI $SET"
+		.replace("$SET_ID", `\`🗣️ ${badges_first.setID}\``)
+
+		.replace("$COUNT", `\`📁 ${count}\``)
+
+		.replace("$CATEGORY", `\`${badges_first.category}\``)
+		.replace("$EMOJI", badges_first?.customEmoji || `\`${badges_first.emoji}\``)
+		.replace("$SET", `**${badges_first.set}**`);
+}
+
 /// -- Charms --
 async function charm_buy(userID, charmID) {
 	let { item: charm, type: _itemType } = getItem(charmID);
@@ -93,18 +110,22 @@ module.exports = {
 	items: {
 		card_packs: {
 			general: items.card_packs,
-			setIDs: _jst.unique(items.card_packs.map(pack => pack.setID))
+			setIDs: { general: _jst.unique(items.card_packs.map(pack => pack.setID)) }
 		},
 
 		badges: {
 			general: items.badges,
-			setIDs: _jst.unique(items.badges.map(b => b.setID))
+			setIDs: { general: _jst.unique(items.badges.map(b => b.setID)) }
 		},
 
 		charms: {
 			general: items.charms,
-			setIDs: _jst.unique(items.charms.map(c => c.setID))
+			setIDs: { general: _jst.unique(items.charms.map(c => c.setID)) }
 		}
+	},
+
+	toString: {
+		badges: { setEntry: badge_toString_setEntry }
 	},
 
 	getItem,

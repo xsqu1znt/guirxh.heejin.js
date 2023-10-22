@@ -471,7 +471,6 @@ function toString_setEntry(options) {
 	let count = set.length || 1;
 	if (count < 10) count = `0${count}`;
 
-	// return "%SET_ID %CARD_COUNT %CATEGORY %EMOJI %DESCRIPTION%SINGLE"
 	return (
 		"> **`$CATEGORY`** `$SET_ID` `$CARD_COUNT`\n> `$EMOJI` $DESCRIPTION"
 			.replace("$SET_ID", `🗣️ ${card.setID}`)
@@ -480,8 +479,7 @@ function toString_setEntry(options) {
 
 			.replace("$CATEGORY", card.category)
 			.replace("$EMOJI", card.emoji)
-			// .replace("$SINGLE", card.single)
-			// .replace("$GROUP", card.group)
+
 			.replace("$DESCRIPTION", card.description)
 	);
 }
