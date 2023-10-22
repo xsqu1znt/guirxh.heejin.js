@@ -39,6 +39,8 @@ function shop(user) {
 	/* - - - - - { Parse Badges } - - - - - */
 	// Sort badges by groups of similar set ID
 	let _badges = itemManager.items.badges.setIDs.map(setID => itemManager.items.badges.filter(b => b.setID === setID));
+
+	
 }
 
 /** @param {GuildMember|User} user @param {options_collectons} options */

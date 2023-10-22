@@ -27,6 +27,8 @@ for (let [key, val] of Object.entries(config.navigator.buttons)) if (!val.TEXT) 
 );
 
 module.exports = {
+	config_dsT: config,
+
 	BetterEmbed,
 	EmbedNavigator,
 
