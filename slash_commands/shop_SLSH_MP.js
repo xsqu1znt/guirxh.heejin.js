@@ -17,23 +17,24 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-        let itemID = interaction.options.getString("buy");
+		let itemID = interaction.options.getString("buy");
 
-        // Display the shop if an item ID wasn't provided
-        if (!itemID) {
-            // Create the embed :: { SHOP }
-            let embeds_shop = general_ES.shop(interaction.member);
+		// Display the shop if an item ID wasn't provided
+		if (!itemID) {
+			// Create the embed :: { SHOP }
+			let embeds_shop = general_ES.shop(interaction.member);
 
-            // Set up embed navigation
-            let embedNav = new EmbedNavigator({
-                interaction, embeds: embeds_shop.all, useReactionsForPagination: false,
+			// prettier-ignore
+			// Set up embed navigation
+			let embedNav = new EmbedNavigator({
+                interaction, embeds: embeds_shop, useReactionsForPagination: false,
                 paginationType: "shortJump", dynamicPagination: false, selectMenu: true
             });
 
-            /// Add select menu options
+			/// Add select menu options
 
-            // Send the embed with navigation
-
-        }
+			// Send the embed with navigation
+			return await embedNav.send();
+		}
 	}
 };

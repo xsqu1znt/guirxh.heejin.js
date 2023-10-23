@@ -42,7 +42,7 @@ function shop(user) {
 	let _badges = itemManager.items.badges.setIDs.general.map(setID => itemManager.items.badges.filter(b => b.setID === setID));
 
 	/* - - - - - { Pages } - - - - - */
-	// Create the embed :: { SHOP TEMPLATE }
+	// Create the embed :: { SHOP - TEMPLATE }
 	let embed_shop = new BetterEmbed({ author: { text: "$USERNAME | shop", iconURL: true, user } });
 
 	const shop_overview = () => {
@@ -56,7 +56,26 @@ function shop(user) {
 		}; */
 
 		let _badges_f = itemManager.items.badges.setIDs.general.map(setID => itemManager.toString.badges.setEntry(setID));
+
+		/// Create an array of string with each available shop category
+		let shopCategories_f = [];
+
+		/* - - - - - { Cards } - - - - - */
+		if (_card_sets_f.general.length)
+			shopCategories_f.push(`**\`🃏\` Cards**\n${_card_sets_f.general.map(f => `> ${f}`).join("\n")}`);
+
+		if (_card_sets_f.special.length)
+			shopCategories_f.push(`**\`🃏\` Cards**\n${_card_sets_f.special.map(f => `> ${f}`).join("\n")}`);
+
+		// Create the embed :: { SHOP - OVERVIEW }
+		return embed_shop.copy({
+			description: shopCategories_f.length
+				? shopCategories_f.join("\n")
+				: "The shop is empty right now.\nCheck back later!"
+		});
 	};
+
+	return embed_shop();
 }
 
 /** @param {GuildMember|User} user @param {options_collectons} options */
