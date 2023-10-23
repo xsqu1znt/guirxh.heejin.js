@@ -75,14 +75,13 @@ function badge_toString_setEntry(setID) {
 	let badges_first = badges.slice(-1)[0];
 	let count = badges.length >= 10 ? badges.length : `0${badges.length}`;
 
-	return "$SET_ID $COUNT $CATEGORY $EMOJI $SET"
-		.replace("$SET_ID", `\`🗣️ ${badges_first.setID}\``)
-
-		.replace("$COUNT", `\`📁 ${count}\``)
-
-		.replace("$CATEGORY", `\`${badges_first.category}\``)
+	// return "> $CATEGORY $SET_ID $COUNT $EMOJI $SET"
+	return "> **`$CATEGORY`** `$SET_ID` `$COUNT` $EMOJI $DESCRIPTION"
+		.replace("$CATEGORY", badges_first.category)
+		.replace("$SET_ID", `🗣️ ${badges_first.setID}`)
+		.replace("$COUNT", `📁 ${count}`)
 		.replace("$EMOJI", badges_first?.customEmoji || `\`${badges_first.emoji}\``)
-		.replace("$SET", `**${badges_first.set}**`);
+		.replace("$DESCRIPTION", badges_first.description);
 }
 
 /// -- Charms --

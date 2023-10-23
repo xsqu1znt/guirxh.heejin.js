@@ -20,8 +20,8 @@ function shop(user) {
 	/* - - - - - { Parse Cards } - - - - - */
 	// Get shop cards and sort by global ID :: { ASCENDING }
 	let _cards = {
-		general: cardManager.cards.shop.general.sort((a, b) => a.globalID - b.globalID),
-		special: cardManager.cards.shop.special.sort((a, b) => a.globalID - b.globalID)
+		general: cardManager.cards.shop.general.filter(c => c.price !== null).sort((a, b) => a.globalID - b.globalID),
+		special: cardManager.cards.shop.special.filter(c => c.price !== null).sort((a, b) => a.globalID - b.globalID)
 	};
 
 	// Sort cards by groups of similar set IDs
@@ -39,7 +39,7 @@ function shop(user) {
 	/* - - - - - { Parse Badges } - - - - - */
 	// prettier-ignore
 	// Sort badges by groups of similar set ID
-	let _badges = itemManager.items.badges.setIDs.general.map(setID => itemManager.items.badges.filter(b => b.setID === setID));
+	// let _badges = itemManager.items.badges.setIDs.general.map(setID => itemManager.items.badges);
 
 	/* - - - - - { Pages } - - - - - */
 	// Create the embed :: { SHOP - TEMPLATE }
@@ -61,21 +61,21 @@ function shop(user) {
 		let shopCategories_f = [];
 
 		/* - - - - - { Cards } - - - - - */
-		if (_card_sets_f.general.length)
-			shopCategories_f.push(`**\`🃏\` Cards**\n${_card_sets_f.general.map(f => `> ${f}`).join("\n")}`);
-
-		if (_card_sets_f.special.length)
-			shopCategories_f.push(`**\`🃏\` Cards**\n${_card_sets_f.special.map(f => `> ${f}`).join("\n")}`);
+		if (_card_sets_f.general.length) shopCategories_f.push(`**\`🃏\` Cards**\n${_card_sets_f.general.join("\n")}`);
+		if (_card_sets_f.special.length) shopCategories_f.push(`**\`🃏\` Cards**\n${_card_sets_f.special.join("\n")}`);
+		
+		/* - - - - - { Badges } - - - - - */
+		if (_badges_f.length) shopCategories_f.push(`**\`📛\` Badges**\n${_badges_f.join("\n")}`);
 
 		// Create the embed :: { SHOP - OVERVIEW }
 		return embed_shop.copy({
 			description: shopCategories_f.length
-				? shopCategories_f.join("\n")
+				? shopCategories_f.join("\n\n")
 				: "The shop is empty right now.\nCheck back later!"
 		});
 	};
 
-	return embed_shop();
+	return shop_overview();
 }
 
 /** @param {GuildMember|User} user @param {options_collectons} options */

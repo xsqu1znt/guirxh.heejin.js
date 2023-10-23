@@ -317,7 +317,7 @@ function parse_fromCardLike(cardLike) {
 
 //! To String
 function toString_basic(card) {
-	return "**\`$UID\`** \`$EMOJI\` **$GROUP** *\`$SINGLE\`* $NAME \`💰 $SELL_PRICE\`"
+	return "**`$UID`** `$EMOJI` **$GROUP** *`$SINGLE`* $NAME `💰 $SELL_PRICE`"
 		.replace("$UID", card.uid)
 		.replace("$EMOJI", card.emoji)
 		.replace("$GROUP", card.group)
@@ -468,20 +468,15 @@ function toString_setEntry(options) {
 	let set = get_setID(card ? card.setID : options.setID);
 	card ||= set[0];
 
-	let count = set.length || 1;
-	if (count < 10) count = `0${count}`;
+	return "> **`$CATEGORY`** `$SET_ID` `$COUNT` `$EMOJI` $DESCRIPTION"
+		.replace("$SET_ID", `🗣️ ${card.setID}`)
 
-	return (
-		"> **`$CATEGORY`** `$SET_ID` `$CARD_COUNT`\n> `$EMOJI` $DESCRIPTION"
-			.replace("$SET_ID", `🗣️ ${card.setID}`)
+		.replace("$COUNT", `📁 ${set.length < 10 ? `0${set.length}` : set.length}`)
 
-			.replace("$CARD_COUNT", `📁 ${count || 1}`)
+		.replace("$CATEGORY", card.category)
+		.replace("$EMOJI", card.emoji)
 
-			.replace("$CATEGORY", card.category)
-			.replace("$EMOJI", card.emoji)
-
-			.replace("$DESCRIPTION", card.description)
-	);
+		.replace("$DESCRIPTION", card.description);
 }
 
 // prettier-ignore
