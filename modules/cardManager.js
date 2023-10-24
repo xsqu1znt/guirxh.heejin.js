@@ -372,23 +372,6 @@ function toString_inventoryEntry(card, options) {
 		.replace("$REP", card.stats.reputation)
 		.replace("> $EXTRA", extra.length ? `> ${extra.join(" ")}` : "");
 
-	// .replace("$RARITY", `\`R${card.rarity}\``)
-	// .replace("$CATEGORY", `\`${card.category}\``)
-	// .replace("$SELL_PRICE", `\`💰 ${card.sellPrice}\``)
-
-	/* .replace(
-			" $LOCKED\n> $LEVEL $STATS $FAVORITE $SELECTED $TEAM",
-			options.simplify ? "" : " $LOCKED\n> $LEVEL $STATS $FAVORITE $SELECTED $TEAM"
-		) */
-
-	// .replace(" $LOCKED", card.locked ? " \`🔒\`" : "")
-
-	// .replace("$LEVEL", `\`LV.${card.stats.level}\``)
-	// .replace("$STATS", `\`🎤 ${card.stats.ability} : 💖 ${card.stats.reputation}\``)
-	// .replace(" $FAVORITE", options.favorite ? " \`⭐\`" : "")
-	// .replace(" $SELECTED", options.selected ? " \`🏃\`" : "")
-	// .replace(" $TEAM", options.onTeam ? "  \`👯\`" : "");
-
 	// prettier-ignore
 	// Format duplicate option
 	if (options.duplicate === true)
@@ -450,14 +433,15 @@ function toString_shopEntry(globalID) {
 	// prettier-ignore
 	let { currency_1: { EMOJI: carrot }, currency_2: { EMOJI: ribbon } } = config.bot.emojis;
 
-	return "%GLOBAL_ID %EMOJI %GROUP :: %SINGLE : %NAME %SET_ID %PRICE"
-		.replace("%GLOBAL_ID", `\`${card.globalID}\``)
-		.replace("%EMOJI", `\`${card.emoji}\``)
-		.replace("%GROUP", `**${card.group}**`)
-		.replace("%SINGLE", card.single)
-		.replace("%NAME", markdown.link(card.name, card.imageURL))
-		.replace("%SET_ID", `\`🗣️ ${card.setID}\``)
-		.replace("%PRICE", `\`${isSpecial ? ribbon : carrot} ${card.price}\``);
+	// return "`$GLOBAL_ID` `$EMOJI` **$GROUP** :: $SINGLE : $NAME $SET_ID $PRICE"
+	return "> `$GID` `🗣️ $SET` `$EMOJI` **$SINGLE** *`$GROUP`* $NAME `$PRICE`"
+		.replace("$GID", card.globalID)
+		.replace("$SET", card.setID)
+		.replace("$EMOJI", card.emoji)
+		.replace("$SINGLE", card.single)
+		.replace("$GROUP", card.group)
+		.replace("$NAME", markdown.link(card.name, card.imageURL))
+		.replace("$PRICE", `${isSpecial ? ribbon : carrot} ${card.price}`);
 }
 
 /** @param {{globalID:number, setID:number}} options  */

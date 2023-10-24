@@ -27,8 +27,8 @@ module.exports = {
 			// prettier-ignore
 			// Set up embed navigation
 			let embedNav = new EmbedNavigator({
-                interaction, embeds: embeds_shop, useReactionsForPagination: false,
-                paginationType: "shortJump", dynamicPagination: false, selectMenu: true
+                interaction, embeds: [embeds_shop], selectMenuEnabled: true,
+				pagination: { type: "shortJump", dynamic: false, useReactions: false }
             });
 
 			/// Add select menu options

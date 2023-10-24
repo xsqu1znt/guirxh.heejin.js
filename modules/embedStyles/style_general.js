@@ -32,9 +32,9 @@ function shop(user) {
 
 	/* - - - - - { Parse Item Packs } - - - - - */
 	// Get card packs and sort by set ID :: { ASCENDING }
-	let _itemPacks = {
+	/* let _itemPacks = {
 		card: itemManager.items.cardPacks.general.sort((a, b) => a.setID - b.setID)
-	};
+	}; */
 
 	/* - - - - - { Parse Badges } - - - - - */
 	// prettier-ignore
@@ -88,10 +88,39 @@ function shop(user) {
 
 		if (!_embed.data.fields?.length) _embed.setDescription("The shop is empty right now.\nCheck back later!");
 
+		// Return the shop overview
 		return _embed;
 	};
 
-	return shop_overview();
+	const shop_cards = () => {
+		// Format cards into strings
+		let _card_sets_f = _card_sets.general.map(set => set.map(c => cardManager.toString.shopEntry(c.globalID)));
+
+		/* - - - - - { Split Large Card Sets (MAX=10) } - - - - - */
+		let _card_set_chunks = [];
+
+		// Chunk the array into groups of 10 and push each one to the final array
+		for (let i = 0; i < _card_sets_f.length; i++)
+			_jsT.chunk(_card_sets_f[i], 10).forEach(chunk => _card_set_chunks.push(chunk));
+
+		/* - - - - - { Create the Embed Pages } - - - - - */
+		let _embeds = [];
+
+		for (let i = 0; i < _card_set_chunks.length; i++) {
+			// Create the embed :: { Shop - Cards }
+			let _embed = embed_shop.copy({
+				description: _card_set_chunks[i].length ? _card_set_chunks[i].join("\n") : "This page is empty",
+				footer: `Page ${i + 1}/${_card_set_chunks.length || 1}`
+			});
+
+			_embeds.push(_embed);
+		}
+
+		// Return the embed array
+		return _embeds;
+	};
+
+	return shop_cards();
 }
 
 /** @param {GuildMember|User} user @param {options_collectons} options */
