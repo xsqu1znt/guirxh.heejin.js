@@ -470,12 +470,9 @@ function toString_setEntry(options) {
 
 	return "> **`$CATEGORY`** `$SET_ID` `$COUNT` `$EMOJI` $DESCRIPTION"
 		.replace("$SET_ID", `🗣️ ${card.setID}`)
-
 		.replace("$COUNT", `📁 ${set.length < 10 ? `0${set.length}` : set.length}`)
-
 		.replace("$CATEGORY", card.category)
 		.replace("$EMOJI", card.emoji)
-
 		.replace("$DESCRIPTION", card.description);
 }
 

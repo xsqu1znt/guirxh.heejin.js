@@ -1,72 +1,75 @@
 [
-    {
-        "id": "P1",
-        "setID": "P01",
-        "name": "Tier 1",
-        "category": "pack",
-        "set": "Cards",
-        "emoji": "📦",
-        "rarity": 1,
-        "price": 300,
-        "content": {
-            "cards": {
-                "count": 3,
-                "sets": [
-                    { "id": "454", "chance": 100 },
-                    { "id": "601", "chance": 100 },
-                    { "id": "904", "chance": 100 }
-                ]
-            }
-        }
-    },
-    {
-        "id": "P2",
-        "setID": "P01",
-        "name": "Tier 2",
-        "category": "pack",
-        "set": "Cards",
-        "emoji": "📦",
-        "rarity": 1,
-        "price": 600,
-        "content": {
-            "cards": {
-                "count": 6,
-                "sets": [
-                    { "id": "454", "chance": 100 },
-                    { "id": "601", "chance": 100 },
-                    { "id": "904", "chance": 100 },
-                    { "id": "901", "chance": 100 },
-                    { "id": "752", "chance": 100 },
-                    { "id": "301", "chance": 100 }
-                ]
-            }
-        }
-    },
-    {
-        "id": "P3",
-        "setID": "P01",
-        "name": "Tier 3 Holo",
-        "category": "pack",
-        "set": "Cards",
-        "emoji": "📦",
-        "rarity": 1,
-        "price": 900,
-        "content": {
-            "cards": {
-                "count": 9,
-                "sets": [
-                    { "id": "101", "chance": 50 },
-                    { "id": "454", "chance": 100 },
-                    { "id": "601", "chance": 100 },
-                    { "id": "904", "chance": 100 },
-                    { "id": "901", "chance": 100 },
-                    { "id": "752", "chance": 100 },
-                    { "id": "301", "chance": 100 },
-                    { "id": "451", "chance": 100 },
-                    { "id": "453", "chance": 100 },
-                    { "id": "299", "chance": 100 }
-                ]
-            }
-        }
-    }
+	{
+		"id": "P1",
+		"setID": "P01",
+		"name": "Tier 1",
+		"description": "**Pack** *`Weekly`*",
+		"category": "pack",
+		"set": "Cards",
+		"emoji": "📦",
+		"rarity": 1,
+		"price": 300,
+		"content": {
+			"cards": {
+				"count": 3,
+				"sets": [
+					{ "id": "454", "chance": 100 },
+					{ "id": "601", "chance": 100 },
+					{ "id": "904", "chance": 100 }
+				]
+			}
+		}
+	},
+	{
+		"id": "P2",
+		"setID": "P01",
+		"name": "Tier 2",
+		"description": "**Pack** *`Weekly`*",
+		"category": "pack",
+		"set": "Cards",
+		"emoji": "📦",
+		"rarity": 1,
+		"price": 600,
+		"content": {
+			"cards": {
+				"count": 6,
+				"sets": [
+					{ "id": "454", "chance": 100 },
+					{ "id": "601", "chance": 100 },
+					{ "id": "904", "chance": 100 },
+					{ "id": "901", "chance": 100 },
+					{ "id": "752", "chance": 100 },
+					{ "id": "301", "chance": 100 }
+				]
+			}
+		}
+	},
+	{
+		"id": "P3",
+		"setID": "P01",
+		"name": "Tier 3 Holo",
+		"description": "**Pack** *`Weekly`*",
+		"category": "pack",
+		"set": "Cards",
+		"emoji": "📦",
+		"rarity": 1,
+		"price": 900,
+		"content": {
+			"cards": {
+				"count": 9,
+				"sets": [
+					{ "id": "101", "chance": 50 },
+					{ "id": "454", "chance": 100 },
+					{ "id": "601", "chance": 100 },
+					{ "id": "904", "chance": 100 },
+					{ "id": "901", "chance": 100 },
+					{ "id": "752", "chance": 100 },
+					{ "id": "301", "chance": 100 },
+					{ "id": "451", "chance": 100 },
+					{ "id": "453", "chance": 100 },
+					{ "id": "299", "chance": 100 }
+				]
+			}
+		}
+	}
 ]

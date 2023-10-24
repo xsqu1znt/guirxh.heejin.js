@@ -33,7 +33,7 @@ function shop(user) {
 	/* - - - - - { Parse Item Packs } - - - - - */
 	// Get card packs and sort by set ID :: { ASCENDING }
 	let _itemPacks = {
-		card: itemManager.items.card_packs.general.sort((a, b) => a.setID - b.setID)
+		card: itemManager.items.cardPacks.general.sort((a, b) => a.setID - b.setID)
 	};
 
 	/* - - - - - { Parse Badges } - - - - - */
@@ -46,33 +46,49 @@ function shop(user) {
 	let embed_shop = new BetterEmbed({ author: { text: "$USERNAME | shop", iconURL: true, user } });
 
 	const shop_overview = () => {
+		// Create the embed :: { SHOP - OVERVIEW }
+		let _embed = embed_shop.copy({
+			description: markdown.ansi("Welcome to the shop!", { text_color: "white", codeblock: true })
+		});
+
 		let _card_sets_f = {
 			general: cardManager.cards.shop.setIDs.general.map(setID => cardManager.toString.setEntry({ setID })),
 			special: cardManager.cards.shop.setIDs.special.map(setID => cardManager.toString.setEntry({ setID }))
 		};
 
-		/* let _itemPacks_f = {
-			card: itemManager.items.card_packs.setIDs.general.map(setID => itemManager.items.card_packs.toString.setEntry({ setID }))
-		}; */
+		let _itemPacks_f = {
+			card: itemManager.items.cardPacks.setIDs.general.map(setID => itemManager.toString.cardPacks.setEntry(setID))
+		};
 
 		let _badges_f = itemManager.items.badges.setIDs.general.map(setID => itemManager.toString.badges.setEntry(setID));
 
-		/// Create an array of string with each available shop category
-		let shopCategories_f = [];
+		// Create an array of string with each available shop category
+		// let shopCategories_f = [];
 
 		/* - - - - - { Cards } - - - - - */
-		if (_card_sets_f.general.length) shopCategories_f.push(`**\`🃏\` Cards**\n${_card_sets_f.general.join("\n")}`);
-		if (_card_sets_f.special.length) shopCategories_f.push(`**\`🃏\` Cards**\n${_card_sets_f.special.join("\n")}`);
-		
-		/* - - - - - { Badges } - - - - - */
-		if (_badges_f.length) shopCategories_f.push(`**\`📛\` Badges**\n${_badges_f.join("\n")}`);
+		// if (_card_sets_f.general.length) shopCategories_f.push(`**\`🃏\` Cards**\n${_card_sets_f.general.join("\n")}`);
+		if (_card_sets_f.general.length) _embed.addFields({ name: "`🃏` Cards", value: _card_sets_f.general.join("\n") });
+		// if (_card_sets_f.special.length) shopCategories_f.push(`**\`🃏\` Cards**\n${_card_sets_f.special.join("\n")}`);
+		if (_card_sets_f.special.length) _embed.addFields({ name: "`🎀` Rewards", value: _card_sets_f.special.join("\n") });
 
-		// Create the embed :: { SHOP - OVERVIEW }
+		/* - - - - - { Items } - - - - - */
+		// if (_itemPacks_f.card.length) shopCategories_f.push(`**\`📦\` Items**\n${_itemPacks_f.card.join("\n")}`);
+		if (_itemPacks_f.card.length) _embed.addFields({ name: "`📦` Items", value: _itemPacks_f.card.join("\n") });
+
+		/* - - - - - { Badges } - - - - - */
+		// if (_badges_f.length) shopCategories_f.push(`**\`📛\` Badges**\n${_badges_f.join("\n")}`);
+		if (_badges_f.length) _embed.addFields({ name: "`📛` Badges", value: _badges_f.join("\n") });
+
+		/* // Create the embed :: { SHOP - OVERVIEW }
 		return embed_shop.copy({
 			description: shopCategories_f.length
 				? shopCategories_f.join("\n\n")
 				: "The shop is empty right now.\nCheck back later!"
-		});
+		}); */
+
+		if (!_embed.data.fields?.length) _embed.setDescription("The shop is empty right now.\nCheck back later!");
+
+		return _embed;
 	};
 
 	return shop_overview();

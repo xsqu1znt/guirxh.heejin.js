@@ -5,7 +5,7 @@ const { userManager } = require("./mongo/index");
 const _jst = require("./jsTools/_jsT");
 
 const items = {
-	card_packs: require("../items/card_packs.json"),
+	cardPacks: require("../items/card_packs.json"),
 	badges: require("../items/badges.json"),
 	charms: require("../items/charms.json")
 };
@@ -16,7 +16,7 @@ const config = {
 
 /** @param {string} id */
 function getItem(id) {
-	let item = items.card_packs.find(c => c.id === id);
+	let item = items.cardPacks.find(c => c.id === id);
 	let itemType = ItemType.card_pack;
 
 	if (!item) {
@@ -49,6 +49,19 @@ async function buyItem(id, itemType) {
 }
 
 /// -- Card Packs --
+function cardPack_toString_setEntry(setID) {
+	let cardPack = items.cardPacks.filter(pack => pack.setID === setID);
+	if (!cardPack.length) return "n/a";
+
+	let cardPack_first = cardPack.slice(-1)[0];
+
+	return "> **`$CATEGORY`** `🗣️ $SET_ID` `📁 $COUNT` `$EMOJI` $DESCRIPTION"
+		.replace("$SET_ID", cardPack_first.setID)
+		.replace("$COUNT", cardPack.length >= 10 ? cardPack.length : `0${cardPack.length}`)
+		.replace("$CATEGORY", cardPack_first.category)
+		.replace("$EMOJI", cardPack_first.emoji)
+		.replace("$DESCRIPTION", cardPack_first.description);
+}
 
 /// -- Badges --
 async function badge_buy(userID, badgeID) {
@@ -73,13 +86,12 @@ function badge_toString_setEntry(setID) {
 	if (!badges.length) return "n/a";
 
 	let badges_first = badges.slice(-1)[0];
-	let count = badges.length >= 10 ? badges.length : `0${badges.length}`;
 
 	// return "> $CATEGORY $SET_ID $COUNT $EMOJI $SET"
-	return "> **`$CATEGORY`** `$SET_ID` `$COUNT` $EMOJI $DESCRIPTION"
+	return "> **`$CATEGORY`** `🗣️ $SET_ID` `📁 $COUNT` $EMOJI $DESCRIPTION"
 		.replace("$CATEGORY", badges_first.category)
-		.replace("$SET_ID", `🗣️ ${badges_first.setID}`)
-		.replace("$COUNT", `📁 ${count}`)
+		.replace("$SET_ID", badges_first.setID)
+		.replace("$COUNT", badges.length >= 10 ? badges.length : `0${badges.length}`)
 		.replace("$EMOJI", badges_first?.customEmoji || `\`${badges_first.emoji}\``)
 		.replace("$DESCRIPTION", badges_first.description);
 }
@@ -107,9 +119,9 @@ async function charm_buy(userID, charmID) {
 
 module.exports = {
 	items: {
-		card_packs: {
-			general: items.card_packs,
-			setIDs: { general: _jst.unique(items.card_packs.map(pack => pack.setID)) }
+		cardPacks: {
+			general: items.cardPacks,
+			setIDs: { general: _jst.unique(items.cardPacks.map(pack => pack.setID)) }
 		},
 
 		badges: {
@@ -124,6 +136,7 @@ module.exports = {
 	},
 
 	toString: {
+		cardPacks: { setEntry: cardPack_toString_setEntry },
 		badges: { setEntry: badge_toString_setEntry }
 	},
 
