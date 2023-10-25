@@ -2,12 +2,11 @@
     {
         "id": "RS01",
         "setID": "B01",
-        "name": "Cephalopod",
-        "description": "**Badge** *`Special`*",
+        "name": "squ1d",
+        "description": "**Badge** *`Dev`*",
         "category": "bdge",
-        "set": "CEPH",
+        "set": "DEV",
         "customEmoji": "<:realsquid:1085169097114910760>",
-        "emojiURL": "https://cdn.discordapp.com/emojis/1085169097114910760.webp?quality=lossless",
         "rarity": 1,
         "price": 500
     }

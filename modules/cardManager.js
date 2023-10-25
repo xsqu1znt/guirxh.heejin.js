@@ -433,9 +433,9 @@ function toString_shopEntry(globalID) {
 	// prettier-ignore
 	let { currency_1: { EMOJI: carrot }, currency_2: { EMOJI: ribbon } } = config.bot.emojis;
 
-	return "`$GID` `🗣️ $SET` `$EMOJI` **$SINGLE** *`$GROUP`* $NAME `$PRICE`"
+	return "`$GID` `🗣️ $SET_ID` `$EMOJI` **$SINGLE** *`$GROUP`* $NAME `$PRICE`"
 		.replace("$GID", card.globalID)
-		.replace("$SET", card.setID)
+		.replace("$SET_ID", card.setID)
 		.replace("$EMOJI", card.emoji)
 		.replace("$SINGLE", card.single)
 		.replace("$GROUP", card.group)

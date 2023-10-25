@@ -96,6 +96,20 @@ function badge_toString_setEntry(setID) {
 		.replace("$DESCRIPTION", badges_first.description);
 }
 
+function badge_toString_shopEntry(badgeID) {
+	let badge = items.badges.find(b => b.id === badgeID);
+	if (!badge) return "n/a";
+
+	return "`$ID` `🗣️ $SET_ID` $EMOJI **$SET** *`$CATEGORY`* $NAME `$PRICE`"
+		.replace("$ID", badge.id)
+		.replace("$SET_ID", badge.setID)
+		.replace("$EMOJI", badge?.customEmoji || `\`${badge.emoji}\``)
+		.replace("$SET", badge.set)
+		.replace("$CATEGORY", badge.category)
+		.replace("$NAME", badge.name)
+		.replace("$PRICE", `${config.bot.emojis.currency_1.EMOJI} ${badge.price}`);
+}
+
 /// -- Charms --
 async function charm_buy(userID, charmID) {
 	let { item: charm, type: _itemType } = getItem(charmID);
@@ -137,7 +151,10 @@ module.exports = {
 
 	toString: {
 		cardPacks: { setEntry: cardPack_toString_setEntry },
-		badges: { setEntry: badge_toString_setEntry }
+		badges: {
+			setEntry: badge_toString_setEntry,
+			shopEntry: badge_toString_shopEntry
+		}
 	},
 
 	getItem,

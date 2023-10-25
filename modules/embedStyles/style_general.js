@@ -41,7 +41,7 @@ function shop(user) {
 	/* - - - - - { Parse Badges } - - - - - */
 	// prettier-ignore
 	// Sort badges by groups of similar set ID
-	// let _badges = itemManager.items.badges.setIDs.general.map(setID => itemManager.items.badges);
+	let _badges = itemManager.items.badges.general;
 
 	/* - - - - - { Pages } - - - - - */
 	// Create the embed :: { SHOP - TEMPLATE }
@@ -94,6 +94,7 @@ function shop(user) {
 		return _embed;
 	};
 
+	// TODO: Group embeds by card set
 	const shop_card = (special = false) => {
 		// Format cards into strings
 		let _card_sets_f = (special ? _card_sets.special : _card_sets.general).map(set =>
@@ -101,20 +102,20 @@ function shop(user) {
 		);
 
 		/* - - - - - { Split Large Card Sets (MAX=10) } - - - - - */
-		let _card_set_chunks = [];
+		let _card_set_chunks_f = [];
 
 		// Chunk the array into groups of 10 and push each one to the final array
 		for (let i = 0; i < _card_sets_f.length; i++)
-			_jsT.chunk(_card_sets_f[i], 10).forEach(chunk => _card_set_chunks.push(chunk));
+			_jsT.chunk(_card_sets_f[i], 10).forEach(chunk => _card_set_chunks_f.push(chunk));
 
 		/* - - - - - { Create the Embed Pages } - - - - - */
 		let _embeds = [];
 
-		for (let i = 0; i < _card_set_chunks.length; i++) {
+		for (let i = 0; i < _card_set_chunks_f.length; i++) {
 			// Create the embed :: { Shop - Cards }
 			let _embed = embed_shop.copy({
-				description: _card_set_chunks[i].length ? _card_set_chunks[i].join("\n") : "This page is empty",
-				footer: `Page ${i + 1}/${_card_set_chunks.length || 1}`
+				description: _card_set_chunks_f[i].length ? _card_set_chunks_f[i].join("\n") : "This page is empty",
+				footer: `Page ${i + 1}/${_card_set_chunks_f.length || 1}`
 			});
 
 			// prettier-ignore
@@ -129,7 +130,31 @@ function shop(user) {
 		return _embeds;
 	};
 
-	return shop_card(true);
+	const shop_badges = () => {
+		// Format badges into strings
+		let _badges_f = _badges.map(b => itemManager.toString.badges.shopEntry(b.id));
+
+		/* - - - - - { Split Large Badges Sets (MAX=10) } - - - - - */
+		let _badges_chunks_f = _jsT.chunk(_badges_f, 10);
+
+		/* - - - - - { Create the Embed Pages } - - - - - */
+		let _embeds = [];
+
+		for (let i = 0; i < _badges_chunks_f.length; i++) {
+			// Create the embed :: { Shop - Badges }
+			let _embed = embed_shop.copy({
+				description: _badges_chunks_f[i].length ? _badges_chunks_f[i].join("\n") : "This page is empty",
+				footer: `Page ${i + 1}/${_badges_chunks_f.length || 1}`
+			});
+
+			_embeds.push(_embed);
+		}
+
+		// Return the embed array
+		return _embeds;
+	};
+
+	return shop_badges(true);
 }
 
 /** @param {GuildMember|User} user @param {options_collectons} options */
