@@ -15,6 +15,8 @@ const itemManager = require("../itemManager");
 const cardManager = require("../cardManager");
 const _jsT = require("../jsTools/_jsT");
 
+const config = { bot: require("../../configs/config_bot.json") };
+
 /** @param {GuildMember|User} user */
 function shop(user) {
 	/* - - - - - { Parse Cards } - - - - - */
@@ -92,9 +94,11 @@ function shop(user) {
 		return _embed;
 	};
 
-	const shop_cards = () => {
+	const shop_card = (special = false) => {
 		// Format cards into strings
-		let _card_sets_f = _card_sets.general.map(set => set.map(c => cardManager.toString.shopEntry(c.globalID)));
+		let _card_sets_f = (special ? _card_sets.special : _card_sets.general).map(set =>
+			set.map(c => cardManager.toString.shopEntry(c.globalID))
+		);
 
 		/* - - - - - { Split Large Card Sets (MAX=10) } - - - - - */
 		let _card_set_chunks = [];
@@ -113,6 +117,11 @@ function shop(user) {
 				footer: `Page ${i + 1}/${_card_set_chunks.length || 1}`
 			});
 
+			// prettier-ignore
+			// Check if the page contains custom cards
+			if (_embed.data.description.includes("custom"))
+				_embed.setDescription(`${markdown.link("*Request customs in our server*", config.bot.community_server.INVITE_URL)}\n\n${_embed.data.description}`)
+
 			_embeds.push(_embed);
 		}
 
@@ -120,7 +129,7 @@ function shop(user) {
 		return _embeds;
 	};
 
-	return shop_cards();
+	return shop_card(true);
 }
 
 /** @param {GuildMember|User} user @param {options_collectons} options */

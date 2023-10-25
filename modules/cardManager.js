@@ -428,13 +428,12 @@ function toString_itemPackSetEntry(setID, chance) {
 
 function toString_shopEntry(globalID) {
 	let card = get_globalID(globalID);
-	let isSpecial = config.shop.stock.card_set_ids.SPECIAL.includes(card.globalID);
+	let isSpecial = config.shop.stock.card_set_ids.SPECIAL.includes(card.setID);
 
 	// prettier-ignore
 	let { currency_1: { EMOJI: carrot }, currency_2: { EMOJI: ribbon } } = config.bot.emojis;
 
-	// return "`$GLOBAL_ID` `$EMOJI` **$GROUP** :: $SINGLE : $NAME $SET_ID $PRICE"
-	return "> `$GID` `🗣️ $SET` `$EMOJI` **$SINGLE** *`$GROUP`* $NAME `$PRICE`"
+	return "`$GID` `🗣️ $SET` `$EMOJI` **$SINGLE** *`$GROUP`* $NAME `$PRICE`"
 		.replace("$GID", card.globalID)
 		.replace("$SET", card.setID)
 		.replace("$EMOJI", card.emoji)
