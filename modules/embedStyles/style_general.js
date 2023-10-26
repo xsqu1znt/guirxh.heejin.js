@@ -230,7 +230,7 @@ function shop(user) {
 			embeds.card_rewards,
 			embeds.itemPacks,
 			embeds.badges
-		],
+		].filter(a => (Array.isArray(a) && !a.length ? false : true)),
 
 		navigationData
 	};
