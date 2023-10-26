@@ -80,7 +80,7 @@ function shop(user) {
 		return embed;
 	};
 
-	const shop_cards = (special = false) => {
+	const shop_cards = (special = false, perSetPageIndex = true) => {
 		let _cards = special ? card_sets.special : card_sets.general;
 
 		// Format cards into strings
@@ -92,15 +92,20 @@ function shop(user) {
 
 		/* - - - - - { Create the Embed Pages } - - - - - */
 		let embeds = [];
+		let pageIndex = { current: 1, end: [].concat(...card_sets_split).length };
 
 		for (let _chunk of card_sets_split) {
+			if (perSetPageIndex) pageIndex.current = 1;
+
 			let _embeds = [];
 
 			for (let i = 0; i < _chunk.length; i++) {
+				if (perSetPageIndex) pageIndex.end = _chunk.length || 1;
+
 				// Create the embed :: { Shop - Cards }
 				let _embed = embed_shop.copy({
 					description: _chunk[i].length ? _chunk[i].join("\n") : "This page is empty!",
-					footer: `Page ${i + 1}/${_chunk.length || 1}`
+					footer: `Page ${pageIndex.current}/${pageIndex.end}`
 				});
 
 				// prettier-ignore
@@ -114,6 +119,8 @@ function shop(user) {
 
 				// Push the embed to the nested array
 				_embeds.push(_embed);
+
+				pageIndex.current++;
 			}
 
 			// Push the embed to the array
@@ -126,7 +133,7 @@ function shop(user) {
 				nested: embeds,
 				flat: embeds.flat(Infinity)
 			},
-			sets: _cards.map(set => ({ emoji: set[0].emoji, name: set[0].name }))
+			sets: _cards.map(set => ({ emoji: set[0].emoji, name: set[0].group }))
 		};
 	};
 
@@ -179,7 +186,8 @@ function shop(user) {
 	};
 
 	/* - - - - - { Put Everything Together } - - - - - */
-	let shop_cards_general = shop_cards();
+	let shop_cards_general = shop_cards(false, false);
+	let shop_cards_general_nested = shop_cards(false, true);
 	let shop_cards_special = shop_cards(true);
 
 	let embeds = {
@@ -188,11 +196,11 @@ function shop(user) {
 		// All cards
 		cards_all: [...shop_cards_general.embeds.flat],
 		// Card sets
-		card_sets: [...shop_cards_general.embeds.nested],
+		card_sets: [...shop_cards_general_nested.embeds.nested],
 		// Rewards
 		card_rewards: [...shop_cards_special.embeds.flat],
-		// Card Packs
-		itemPacks: { card: shop_cardPacks() },
+		// Item Packs
+		itemPacks: shop_cardPacks(),
 		// Badges
 		badges: shop_badges()
 	};
@@ -204,17 +212,28 @@ function shop(user) {
 	if (embeds.cards_all) navigationData.push({ emoji: "📁", label: "Cards", description: "View all available cards" });
 	// prettier-ignore
 	if (embeds.card_sets) navigationData.push(
-		shop_cards_special.sets.map(set => ({
+		...shop_cards_general.sets.map(set => ({
 			emoji: set.emoji,
 			label: _jsT.toTitleCase(set.name),
-			description: `View all ${_jsT.toTitleCase(set.name)} cards`
+			description: `View ${_jsT.toTitleCase(set.name)} cards`
 		}))
 	);
 	if (embeds.card_rewards) navigationData.push({ emoji: "🎀", label: "Rewards", description: "Buy a special card" });
-	if (embeds.itemPacks.card) navigationData.push({ emoji: "✨", label: "Card Packs", description: "Buy a card pack" });
+	if (embeds.itemPacks) navigationData.push({ emoji: "📦", label: "Item Packs", description: "Buy a card pack" });
 	if (embeds.badges) navigationData.push({ emoji: "📛", label: "Badges", description: "Buy a badge" });
 
-	return { embeds, navigationData };
+	return {
+		embeds: [
+			embeds.overview,
+			embeds.cards_all,
+			...embeds.card_sets,
+			embeds.card_rewards,
+			embeds.itemPacks,
+			embeds.badges
+		],
+
+		navigationData
+	};
 }
 
 /** @param {GuildMember|User} user @param {options_collectons} options */

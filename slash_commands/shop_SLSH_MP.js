@@ -32,7 +32,7 @@ module.exports = {
             });
 
 			// Add select menu options
-			embedNav.addSelectMenuOptions(embeds_shop.navigationData);
+			embedNav.addSelectMenuOptions(...embeds_shop.navigationData);
 
 			// Send the embed with navigation
 			return await embedNav.send();
