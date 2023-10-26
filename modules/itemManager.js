@@ -68,13 +68,13 @@ function cardPack_toString_shopEntry(packID) {
 	let cardPack = items.cardPacks.find(pack => pack.id === packID);
 	if (!cardPack) return "n/a";
 
-	let cards_f = cardPack.content.sets.map(set => cardManager.toString.cardPackEntry(set.setID, set.chance));
+	let cards_f = cardPack.content.sets.map(set => cardManager.toString.cardPackEntry(set.id, set.chance));
 
-	return "`$ID` **$SET** :: *$NAME* `🗣️ $SET_ID` `🃏 $CARD_COUNT` `$PRICE`\n$CARDS"
+	return "`$ID` `🗣️ $SET_ID` **$SET** $NAME `🃏 $CARD_COUNT` `$PRICE`\n$CARDS"
 		.replace("$ID", cardPack.id)
+		.replace("$SET_ID", cardPack.setID)
 		.replace("$SET", cardPack.set)
 		.replace("$NAME", cardPack.name)
-		.replace("$SET_ID", cardPack.setID)
 		.replace("$CARD_COUNT", cardPack.content.count)
 		.replace("$PRICE", `${config.bot.emojis.currency_1.EMOJI} ${cardPack.price}`)
 		.replace("$CARDS", cards_f.join("\n"));

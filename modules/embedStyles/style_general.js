@@ -34,9 +34,9 @@ function shop(user) {
 
 	/* - - - - - { Parse Item Packs } - - - - - */
 	// Get card packs and sort by set ID :: { ASCENDING }
-	/* let _itemPacks = {
+	let _itemPacks = {
 		card: itemManager.items.cardPacks.general.sort((a, b) => a.setID - b.setID)
-	}; */
+	};
 
 	/* - - - - - { Parse Badges } - - - - - */
 	// prettier-ignore
@@ -131,17 +131,17 @@ function shop(user) {
 	};
 
 	const shop_itemPacks = () => {
-		// Format badges into strings
-		let _packs_f = _badges.map(b => itemManager.toString.badges.shopEntry(b.id));
+		// Format Item Packs into strings
+		let _packs_f = _itemPacks.card.map(pack => itemManager.toString.cardPacks.shopEntry(pack.id));
 
-		/* - - - - - { Split Large Badges Sets (MAX=10) } - - - - - */
-		let _pack_chunks_f = _jsT.chunk(_packs_f, 10);
+		/* - - - - - { Split Large Item Packs (MAX=3) } - - - - - */
+		let _pack_chunks_f = _jsT.chunk(_packs_f, 3);
 
 		/* - - - - - { Create the Embed Pages } - - - - - */
 		let _embeds = [];
 
 		for (let i = 0; i < _pack_chunks_f.length; i++) {
-			// Create the embed :: { Shop - Badges }
+			// Create the embed :: { Shop - Item Packs }
 			let _embed = embed_shop.copy({
 				description: _pack_chunks_f[i].length ? _pack_chunks_f[i].join("\n") : "This page is empty",
 				footer: `Page ${i + 1}/${_pack_chunks_f.length || 1}`
@@ -178,7 +178,7 @@ function shop(user) {
 		return _embeds;
 	};
 
-	return shop_badges(true);
+	return shop_itemPacks();
 }
 
 /** @param {GuildMember|User} user @param {options_collectons} options */

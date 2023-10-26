@@ -12,9 +12,9 @@
 		"content": {
 			"count": 3,
 			"sets": [
-				{ "gid": "454", "chance": 100 },
-				{ "gid": "601", "chance": 100 },
-				{ "gid": "904", "chance": 100 }
+				{ "id": "454", "chance": 100 },
+				{ "id": "601", "chance": 100 },
+				{ "id": "904", "chance": 100 }
 			]
 		}
 	}

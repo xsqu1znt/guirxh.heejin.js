@@ -445,12 +445,12 @@ function toString_setEntry(options) {
 		.replace("$DESCRIPTION", card.description);
 }
 
-function toString_cardPackSetEntry(setID, chance) {
+function toString_cardPackEntry(setID, chance) {
 	let card = get_setID(setID)[0];
 	if (!card) return "n/a";
 
 	// return "%SET_ID %EMOJI %GROUP :: %SINGLE %CHANCE"
-	return "`$SET_ID` `$EMOJI` **$DESCRIPTION** `%$CHANCE`"
+	return "> `$SET_ID` `$EMOJI` $DESCRIPTION `$CHANCE%`"
 		.replace("$SET_ID", card.setID)
 		.replace("$EMOJI", card.emoji)
 		.replace("$GROUP", card.group)
@@ -512,7 +512,7 @@ module.exports = {
 		basic: toString_basic,
 		inventoryEntry: toString_inventoryEntry,
 		missingEntry: toString_missingEntry,
-		cardPackSetEntry: toString_cardPackSetEntry,
+		cardPackEntry: toString_cardPackEntry,
 		shopEntry: toString_shopEntry,
 		setEntry: toString_setEntry
 	}
