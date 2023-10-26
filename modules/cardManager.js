@@ -412,20 +412,6 @@ function toString_missingEntry(card, userOwnsCard = false) {
 		.replace("%MISSING", userOwnsCard ? "`✔️ owned`" : "`🚫 missing`"); */
 }
 
-function toString_itemPackSetEntry(setID, chance) {
-	let _card = get_setID(setID)[0];
-	if (!_card) return "n/a";
-
-	// return "%SET_ID %EMOJI %GROUP :: %SINGLE %CHANCE"
-	return "%SET_ID %EMOJI %DESCRIPTION %CHANCE"
-		.replace("%SET_ID", `\`${_card.setID}\``)
-		.replace("%EMOJI", `\`${_card.emoji}\``)
-		.replace("%GROUP", `**${_card.group}**`)
-		.replace("%SINGLE", _card.single)
-		.replace("%DESCRIPTION", _card.description)
-		.replace("%CHANCE", `\`%${chance}\``);
-}
-
 function toString_shopEntry(globalID) {
 	let card = get_globalID(globalID);
 	let isSpecial = config.shop.stock.card_set_ids.SPECIAL.includes(card.setID);
@@ -457,6 +443,20 @@ function toString_setEntry(options) {
 		.replace("$CATEGORY", card.category)
 		.replace("$EMOJI", card.emoji)
 		.replace("$DESCRIPTION", card.description);
+}
+
+function toString_cardPackSetEntry(setID, chance) {
+	let card = get_setID(setID)[0];
+	if (!card) return "n/a";
+
+	// return "%SET_ID %EMOJI %GROUP :: %SINGLE %CHANCE"
+	return "`$SET_ID` `$EMOJI` **$DESCRIPTION** `%$CHANCE`"
+		.replace("$SET_ID", card.setID)
+		.replace("$EMOJI", card.emoji)
+		.replace("$GROUP", card.group)
+		.replace("$SINGLE", card.single)
+		.replace("$DESCRIPTION", card.description)
+		.replace("$CHANCE", chance);
 }
 
 // prettier-ignore
@@ -512,7 +512,7 @@ module.exports = {
 		basic: toString_basic,
 		inventoryEntry: toString_inventoryEntry,
 		missingEntry: toString_missingEntry,
-		itemPackSetEntry: toString_itemPackSetEntry,
+		cardPackSetEntry: toString_cardPackSetEntry,
 		shopEntry: toString_shopEntry,
 		setEntry: toString_setEntry
 	}

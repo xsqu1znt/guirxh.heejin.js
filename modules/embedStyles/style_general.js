@@ -130,6 +130,30 @@ function shop(user) {
 		return _embeds;
 	};
 
+	const shop_itemPacks = () => {
+		// Format badges into strings
+		let _packs_f = _badges.map(b => itemManager.toString.badges.shopEntry(b.id));
+
+		/* - - - - - { Split Large Badges Sets (MAX=10) } - - - - - */
+		let _pack_chunks_f = _jsT.chunk(_packs_f, 10);
+
+		/* - - - - - { Create the Embed Pages } - - - - - */
+		let _embeds = [];
+
+		for (let i = 0; i < _pack_chunks_f.length; i++) {
+			// Create the embed :: { Shop - Badges }
+			let _embed = embed_shop.copy({
+				description: _pack_chunks_f[i].length ? _pack_chunks_f[i].join("\n") : "This page is empty",
+				footer: `Page ${i + 1}/${_pack_chunks_f.length || 1}`
+			});
+
+			_embeds.push(_embed);
+		}
+
+		// Return the embed array
+		return _embeds;
+	};
+
 	const shop_badges = () => {
 		// Format badges into strings
 		let _badges_f = _badges.map(b => itemManager.toString.badges.shopEntry(b.id));

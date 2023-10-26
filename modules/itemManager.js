@@ -2,10 +2,11 @@
 const ItemType = { card_pack: "card_pack", badge: "badge", charm: "charm" };
 
 const { userManager } = require("./mongo/index");
+const cardManager = require("./cardManager");
 const _jst = require("./jsTools/_jsT");
 
 const items = {
-	cardPacks: require("../items/card_packs.json"),
+	cardPacks: require("../items/itemPack_cards.json"),
 	badges: require("../items/badges.json"),
 	charms: require("../items/charms.json")
 };
@@ -61,6 +62,22 @@ function cardPack_toString_setEntry(setID) {
 		.replace("$CATEGORY", cardPack_first.category)
 		.replace("$EMOJI", cardPack_first.emoji)
 		.replace("$DESCRIPTION", cardPack_first.description);
+}
+
+function cardPack_toString_shopEntry(packID) {
+	let cardPack = items.cardPacks.find(pack => pack.id === packID);
+	if (!cardPack) return "n/a";
+
+	let cards_f = cardPack.content.sets.map(set => cardManager.toString.cardPackEntry(set.setID, set.chance));
+
+	return "`$ID` **$SET** :: *$NAME* `🗣️ $SET_ID` `🃏 $CARD_COUNT` `$PRICE`\n$CARDS"
+		.replace("$ID", cardPack.id)
+		.replace("$SET", cardPack.set)
+		.replace("$NAME", cardPack.name)
+		.replace("$SET_ID", cardPack.setID)
+		.replace("$CARD_COUNT", cardPack.content.count)
+		.replace("$PRICE", `${config.bot.emojis.currency_1.EMOJI} ${cardPack.price}`)
+		.replace("$CARDS", cards_f.join("\n"));
 }
 
 /// -- Badges --
@@ -150,7 +167,10 @@ module.exports = {
 	},
 
 	toString: {
-		cardPacks: { setEntry: cardPack_toString_setEntry },
+		cardPacks: {
+			setEntry: cardPack_toString_setEntry,
+			shopEntry: cardPack_toString_shopEntry
+		},
 		badges: {
 			setEntry: badge_toString_setEntry,
 			shopEntry: badge_toString_shopEntry

@@ -1,0 +1,21 @@
+[
+	{
+		"id": "P1",
+		"setID": "P01",
+		"name": "Tier 1",
+		"description": "**Pack** *`Weekly`*",
+		"emoji": "📦",
+		"category": "pack",
+		"set": "Card Pack",
+		"rarity": 1,
+		"price": 300,
+		"content": {
+			"count": 3,
+			"sets": [
+				{ "gid": "454", "chance": 100 },
+				{ "gid": "601", "chance": 100 },
+				{ "gid": "904", "chance": 100 }
+			]
+		}
+	}
+]
