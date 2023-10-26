@@ -31,7 +31,8 @@ module.exports = {
 				pagination: { type: "shortJump", dynamic: false, useReactions: false }
             });
 
-			/// Add select menu options
+			// Add select menu options
+			embedNav.addSelectMenuOptions(embeds_shop.navigationData);
 
 			// Send the embed with navigation
 			return await embedNav.send();

@@ -190,21 +190,31 @@ function shop(user) {
 		// Card sets
 		card_sets: [...shop_cards_general.embeds.nested],
 		// Rewards
-		rewards: [...shop_cards_special.embeds.flat],
+		card_rewards: [...shop_cards_special.embeds.flat],
 		// Card Packs
 		itemPacks: { card: shop_cardPacks() },
 		// Badges
 		badges: shop_badges()
 	};
 
-	let selectMenuData = [];
+	let navigationData = [];
 
-	if (embeds.overview) selectMenuData.push({ emoji: "📁", label: "Cards", description: "View all available cards" });
-	if (embeds.overview) selectMenuData.push({ emoji: "🎀", label: "Rewards", description: "Buy a special card" });
+	// prettier-ignore
+	if (embeds.overview) navigationData.push({ emoji: "🛍️", label: "Shop Sets", description: "View a list of every set available" });
+	if (embeds.cards_all) navigationData.push({ emoji: "📁", label: "Cards", description: "View all available cards" });
+	// prettier-ignore
+	if (embeds.card_sets) navigationData.push(
+		shop_cards_special.sets.map(set => ({
+			emoji: set.emoji,
+			label: _jsT.toTitleCase(set.name),
+			description: `View all ${_jsT.toTitleCase(set.name)} cards`
+		}))
+	);
+	if (embeds.card_rewards) navigationData.push({ emoji: "🎀", label: "Rewards", description: "Buy a special card" });
+	if (embeds.itemPacks.card) navigationData.push({ emoji: "✨", label: "Card Packs", description: "Buy a card pack" });
+	if (embeds.badges) navigationData.push({ emoji: "📛", label: "Badges", description: "Buy a badge" });
 
-	return {
-		embeds
-	};
+	return { embeds, navigationData };
 }
 
 /** @param {GuildMember|User} user @param {options_collectons} options */
