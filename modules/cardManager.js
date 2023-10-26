@@ -449,7 +449,6 @@ function toString_cardPackEntry(setID, chance) {
 	let card = get_setID(setID)[0];
 	if (!card) return "n/a";
 
-	// return "%SET_ID %EMOJI %GROUP :: %SINGLE %CHANCE"
 	return "> `$SET_ID` `$EMOJI` $DESCRIPTION `$CHANCE%`"
 		.replace("$SET_ID", card.setID)
 		.replace("$EMOJI", card.emoji)

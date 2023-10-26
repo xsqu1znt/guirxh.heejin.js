@@ -21,142 +21,142 @@ const config = { bot: require("../../configs/config_bot.json") };
 function shop(user) {
 	/* - - - - - { Parse Cards } - - - - - */
 	// Get shop cards and sort by global ID :: { ASCENDING }
-	let _cards = {
+	let cards = {
 		general: cardManager.cards.shop.general.filter(c => c.price !== null).sort((a, b) => a.globalID - b.globalID),
 		special: cardManager.cards.shop.special.filter(c => c.price !== null).sort((a, b) => a.globalID - b.globalID)
 	};
 
 	// Sort cards by groups of similar set IDs
-	let _card_sets = {
-		general: cardManager.cards.shop.setIDs.general.map(setID => _cards.general.filter(c => c.setID === setID)),
-		special: cardManager.cards.shop.setIDs.special.map(setID => _cards.special.filter(c => c.setID === setID))
+	let card_sets = {
+		general: cardManager.cards.shop.setIDs.general.map(setID => cards.general.filter(c => c.setID === setID)),
+		special: cardManager.cards.shop.setIDs.special.map(setID => cards.special.filter(c => c.setID === setID))
 	};
 
 	/* - - - - - { Parse Item Packs } - - - - - */
 	// Get card packs and sort by set ID :: { ASCENDING }
-	let _itemPacks = {
+	let itemPacks = {
 		card: itemManager.items.cardPacks.general.sort((a, b) => a.setID - b.setID)
 	};
 
 	/* - - - - - { Parse Badges } - - - - - */
-	// prettier-ignore
 	// Sort badges by groups of similar set ID
-	let _badges = itemManager.items.badges.general;
+	let badges = itemManager.items.badges.general;
 
 	/* - - - - - { Pages } - - - - - */
 	// Create the embed :: { SHOP - TEMPLATE }
 	let embed_shop = new BetterEmbed({ author: { text: "$USERNAME | shop", iconURL: true, user } });
 
 	const shop_overview = () => {
-		// Create the embed :: { SHOP - OVERVIEW }
-		let _embed = embed_shop.copy({
-			description: markdown.ansi("Welcome to the shop!", { text_color: "white", codeblock: true })
-		});
-
-		let _card_sets_f = {
+		let card_sets_f = {
 			general: cardManager.cards.shop.setIDs.general.map(setID => cardManager.toString.setEntry({ setID })),
 			special: cardManager.cards.shop.setIDs.special.map(setID => cardManager.toString.setEntry({ setID }))
 		};
 
-		let _itemPacks_f = {
+		let itemPacks_f = {
 			card: itemManager.items.cardPacks.setIDs.general.map(setID => itemManager.toString.cardPacks.setEntry(setID))
 		};
 
-		let _badges_f = itemManager.items.badges.setIDs.general.map(setID => itemManager.toString.badges.setEntry(setID));
+		let badges_f = itemManager.items.badges.setIDs.general.map(setID => itemManager.toString.badges.setEntry(setID));
 
-		// Create an array of string with each available shop category
-		// let shopCategories_f = [];
+		// Create the embed :: { SHOP - OVERVIEW }
+		let embed = embed_shop.copy({
+			description: markdown.ansi("Welcome to the shop!", { text_color: "white", codeblock: true })
+		});
 
 		/* - - - - - { Cards } - - - - - */
-		// if (_card_sets_f.general.length) shopCategories_f.push(`**\`🃏\` Cards**\n${_card_sets_f.general.join("\n")}`);
-		if (_card_sets_f.general.length) _embed.addFields({ name: "`🃏` Cards", value: _card_sets_f.general.join("\n") });
-		// if (_card_sets_f.special.length) shopCategories_f.push(`**\`🃏\` Cards**\n${_card_sets_f.special.join("\n")}`);
-		if (_card_sets_f.special.length) _embed.addFields({ name: "`🎀` Rewards", value: _card_sets_f.special.join("\n") });
+		if (card_sets_f.general.length) embed.addFields({ name: "`🃏` Cards", value: card_sets_f.general.join("\n") });
+		if (card_sets_f.special.length) embed.addFields({ name: "`🎀` Rewards", value: card_sets_f.special.join("\n") });
 
 		/* - - - - - { Items } - - - - - */
-		// if (_itemPacks_f.card.length) shopCategories_f.push(`**\`📦\` Items**\n${_itemPacks_f.card.join("\n")}`);
-		if (_itemPacks_f.card.length) _embed.addFields({ name: "`📦` Items", value: _itemPacks_f.card.join("\n") });
+		if (itemPacks_f.card.length) embed.addFields({ name: "`📦` Items", value: itemPacks_f.card.join("\n") });
 
 		/* - - - - - { Badges } - - - - - */
-		// if (_badges_f.length) shopCategories_f.push(`**\`📛\` Badges**\n${_badges_f.join("\n")}`);
-		if (_badges_f.length) _embed.addFields({ name: "`📛` Badges", value: _badges_f.join("\n") });
+		if (badges_f.length) embed.addFields({ name: "`📛` Badges", value: badges_f.join("\n") });
 
-		/* // Create the embed :: { SHOP - OVERVIEW }
-		return embed_shop.copy({
-			description: shopCategories_f.length
-				? shopCategories_f.join("\n\n")
-				: "The shop is empty right now.\nCheck back later!"
-		}); */
-
-		if (!_embed.data.fields?.length) _embed.setDescription("The shop is empty right now.\nCheck back later!");
+		// Set the embed's description
+		if (!embed.data.fields?.length) embed.setDescription("The shop is empty right now.\nCheck back later!");
 
 		// Return the shop overview
-		return _embed;
+		return embed;
 	};
 
-	// TODO: Group embeds by card set
-	const shop_card = (special = false) => {
+	const shop_cards = (special = false) => {
+		let _cards = special ? card_sets.special : card_sets.general;
+
 		// Format cards into strings
-		let _card_sets_f = (special ? _card_sets.special : _card_sets.general).map(set =>
-			set.map(c => cardManager.toString.shopEntry(c.globalID))
-		);
+		let card_sets_f = _cards.map(set => set.map(c => cardManager.toString.shopEntry(c.globalID)));
 
-		/* - - - - - { Split Large Card Sets (MAX=10) } - - - - - */
-		let _card_set_chunks_f = [];
-
-		// Chunk the array into groups of 10 and push each one to the final array
-		for (let i = 0; i < _card_sets_f.length; i++)
-			_jsT.chunk(_card_sets_f[i], 10).forEach(chunk => _card_set_chunks_f.push(chunk));
+		/// Split each set into multiple arrays with a max of 10 cards each
+		let card_sets_split = [];
+		for (let _set of card_sets_f) card_sets_split.push(_jsT.chunk(_set, 10));
 
 		/* - - - - - { Create the Embed Pages } - - - - - */
-		let _embeds = [];
+		let embeds = [];
 
-		for (let i = 0; i < _card_set_chunks_f.length; i++) {
-			// Create the embed :: { Shop - Cards }
-			let _embed = embed_shop.copy({
-				description: _card_set_chunks_f[i].length ? _card_set_chunks_f[i].join("\n") : "This page is empty",
-				footer: `Page ${i + 1}/${_card_set_chunks_f.length || 1}`
-			});
+		for (let _chunk of card_sets_split) {
+			let _embeds = [];
 
-			// prettier-ignore
-			// Check if the page contains custom cards
-			if (_embed.data.description.includes("custom"))
-				_embed.setDescription(`${markdown.link("*Request customs in our server*", config.bot.community_server.INVITE_URL)}\n\n${_embed.data.description}`)
+			for (let i = 0; i < _chunk.length; i++) {
+				// Create the embed :: { Shop - Cards }
+				let _embed = embed_shop.copy({
+					description: _chunk[i].length ? _chunk[i].join("\n") : "This page is empty!",
+					footer: `Page ${i + 1}/${_chunk.length || 1}`
+				});
 
-			_embeds.push(_embed);
+				// prettier-ignore
+				// Check if the page contains custom cards
+				if (_embed.data.description.includes("custom"))
+					_embed.setDescription(
+						"$LINK\n\n$DESCRIPTION"
+							.replace("$LINK", markdown.link("*Request customs in our server*", config.bot.community_server.INVITE_URL))
+							.replace("$DESCRIPTION", _embed.data.description)
+					)
+
+				// Push the embed to the nested array
+				_embeds.push(_embed);
+			}
+
+			// Push the embed to the array
+			embeds.push(_embeds);
 		}
 
 		// Return the embed array
-		return _embeds;
+		return {
+			embeds: {
+				nested: embeds,
+				flat: embeds.flat(Infinity)
+			},
+			sets: _cards.map(set => ({ emoji: set[0].emoji, name: set[0].name }))
+		};
 	};
 
-	const shop_itemPacks = () => {
+	const shop_cardPacks = () => {
 		// Format Item Packs into strings
-		let _packs_f = _itemPacks.card.map(pack => itemManager.toString.cardPacks.shopEntry(pack.id));
+		let packs_f = itemPacks.card.map(pack => itemManager.toString.cardPacks.shopEntry(pack.id));
 
 		/* - - - - - { Split Large Item Packs (MAX=3) } - - - - - */
-		let _pack_chunks_f = _jsT.chunk(_packs_f, 3);
+		let pack_chunks_f = _jsT.chunk(packs_f, 3);
 
 		/* - - - - - { Create the Embed Pages } - - - - - */
-		let _embeds = [];
+		let embeds = [];
 
-		for (let i = 0; i < _pack_chunks_f.length; i++) {
+		for (let i = 0; i < pack_chunks_f.length; i++) {
 			// Create the embed :: { Shop - Item Packs }
 			let _embed = embed_shop.copy({
-				description: _pack_chunks_f[i].length ? _pack_chunks_f[i].join("\n") : "This page is empty",
-				footer: `Page ${i + 1}/${_pack_chunks_f.length || 1}`
+				description: pack_chunks_f[i].length ? pack_chunks_f[i].join("\n") : "This page is empty!",
+				footer: `Page ${i + 1}/${pack_chunks_f.length || 1}`
 			});
 
-			_embeds.push(_embed);
+			embeds.push(_embed);
 		}
 
 		// Return the embed array
-		return _embeds;
+		return embeds;
 	};
 
 	const shop_badges = () => {
 		// Format badges into strings
-		let _badges_f = _badges.map(b => itemManager.toString.badges.shopEntry(b.id));
+		let _badges_f = badges.map(b => itemManager.toString.badges.shopEntry(b.id));
 
 		/* - - - - - { Split Large Badges Sets (MAX=10) } - - - - - */
 		let _badges_chunks_f = _jsT.chunk(_badges_f, 10);
@@ -167,7 +167,7 @@ function shop(user) {
 		for (let i = 0; i < _badges_chunks_f.length; i++) {
 			// Create the embed :: { Shop - Badges }
 			let _embed = embed_shop.copy({
-				description: _badges_chunks_f[i].length ? _badges_chunks_f[i].join("\n") : "This page is empty",
+				description: _badges_chunks_f[i].length ? _badges_chunks_f[i].join("\n") : "This page is empty!",
 				footer: `Page ${i + 1}/${_badges_chunks_f.length || 1}`
 			});
 
@@ -178,7 +178,33 @@ function shop(user) {
 		return _embeds;
 	};
 
-	return shop_itemPacks();
+	/* - - - - - { Put Everything Together } - - - - - */
+	let shop_cards_general = shop_cards();
+	let shop_cards_special = shop_cards(true);
+
+	let embeds = {
+		// Overview
+		overview: shop_overview(),
+		// All cards
+		cards_all: [...shop_cards_general.embeds.flat],
+		// Card sets
+		card_sets: [...shop_cards_general.embeds.nested],
+		// Rewards
+		rewards: [...shop_cards_special.embeds.flat],
+		// Card Packs
+		itemPacks: { card: shop_cardPacks() },
+		// Badges
+		badges: shop_badges()
+	};
+
+	let selectMenuData = [];
+
+	if (embeds.overview) selectMenuData.push({ emoji: "📁", label: "Cards", description: "View all available cards" });
+	if (embeds.overview) selectMenuData.push({ emoji: "🎀", label: "Rewards", description: "Buy a special card" });
+
+	return {
+		embeds
+	};
 }
 
 /** @param {GuildMember|User} user @param {options_collectons} options */
