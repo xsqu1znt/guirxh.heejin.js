@@ -2,6 +2,7 @@
 const ItemType = { card: "card", card_pack: "card_pack", badge: "badge", charm: "charm" };
 
 const { BetterEmbed } = require("./discordTools/_dsT");
+const { error_ES } = require("./embedStyles/index");
 const { userManager } = require("./mongo/index");
 const cardManager = require("./cardManager");
 const _jst = require("./jsTools/_jsT");
@@ -69,16 +70,22 @@ async function buyItem(user, id) {
 	switch (type) {
 		case ItemType.card:
 			item = await card_buy(user.id, id);
-			if (!item.card) break;
+			if (!item) return null;
+
+			if (!item.card) return error_ES.copy({
+				interaction, author: { text: "⛔ Purchase failed" },
+				description: `You do not have enough ${item.isSpecial ? emojis.currency_1 : emojis.currency_2} to buy this card`,
+				footer: { text: `balance: ${item.isSpecial ? emojis.currency_1 : emojis.currency_2} ${item.balance}` }
+			});
 
 			// Create the embed :: { Shop Buy - Card }
 			let embed_card = new BetterEmbed({
 				author: { text: "$USERNAME | buy", iconURL: true, user },
 				description: `You bought **\`🃏 ${item.card.single} - ${item.card.name}\`**:\n> ${cardManager.toString.basic(item.card)}`,
-				footer: { text: `balance remaining: ${item.isSpecial ? emojis.currency_1 : emojis.currency_2} ${item.balance}` }
+				footer: { text: `balance: ${item.isSpecial ? emojis.currency_1 : emojis.currency_2} ${item.balance}` }
 			});
 
-			break;
+			return { item: item.card, type, embed: embed_card };
 
 		case ItemType.card_pack: item = null; break;
 		
