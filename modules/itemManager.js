@@ -1,6 +1,7 @@
 /** @typedef {"card"|"card_pack"|"badge"|"charm"} ItemType */
 const ItemType = { card: "card", card_pack: "card_pack", badge: "badge", charm: "charm" };
 
+const { BetterEmbed } = require("./discordTools/_dsT");
 const { userManager } = require("./mongo/index");
 const cardManager = require("./cardManager");
 const _jst = require("./jsTools/_jsT");
@@ -55,19 +56,35 @@ function getItem(id) {
 }
 
 /** @param {string} id */
-async function buyItem(id) {
+async function buyItem(user, id) {
 	// prettier-ignore
 	let item, { type } = getItem(id);
 
+	let emojis = {
+		currency_1: config.bot.emojis.currency_1.EMOJI,
+		currency_2: config.bot.emojis.currency_2.EMOJI
+	};
+
 	// prettier-ignore
 	switch (type) {
-		case ItemType.card: item = await card_buy(userID, id); break;
+		case ItemType.card:
+			item = await card_buy(user.id, id);
+			if (!item.card) break;
+
+			// Create the embed :: { Shop Buy - Card }
+			let embed_card = new BetterEmbed({
+				author: { text: "$USERNAME | buy", iconURL: true, user },
+				description: `You bought **\`🃏 ${item.card.single} - ${item.card.name}\`**:\n> ${cardManager.toString.basic(item.card)}`,
+				footer: { text: `balance remaining: ${item.isSpecial ? emojis.currency_1 : emojis.currency_2} ${item.balance}` }
+			});
+
+			break;
 
 		case ItemType.card_pack: item = null; break;
 		
-		case ItemType.badge: item = await badge_buy(userID, id); break;
+		case ItemType.badge: item = await badge_buy(user.id, id); break;
 		
-		case ItemType.charm: item = await charm_buy(userID, id); break;
+		case ItemType.charm: item = await charm_buy(user.id, id); break;
 	}
 
 	return { item, type };
@@ -91,7 +108,11 @@ async function card_buy(userID, globalID) {
 	await userManager.balance.increment(userID, -card.price, isSpecial ? "ribbon" : "carrot");
 
 	// Give the card to the user
-	return await userManager.inventory.add(userID, card);
+	return {
+		card: await userManager.inventory.add(userID, card),
+		isSpecial,
+		balance: (isSpecial ? userData.ribbons : userData.balance) - card.price || 0
+	};
 }
 
 /* - - - - - { Card Packs } - - - - - */

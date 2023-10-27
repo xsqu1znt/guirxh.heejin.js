@@ -2,6 +2,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js"
 
 const { BetterEmbed, EmbedNavigator } = require("../modules/discordTools/_dsT");
 const { error_ES, general_ES } = require("../modules/embedStyles/index");
+const { userManager } = require("../modules/mongo/index");
 const itemManager = require("../modules/itemManager");
 const _jsT = require("../modules/jsTools/_jsT");
 
@@ -22,8 +23,10 @@ module.exports = {
 
 		// Display the shop if an item ID wasn't provided
 		if (!itemID) {
+			let userData = await userManager.fetch(interaction.user.id, { type: "balance" });
+
 			// Create the embed :: { SHOP }
-			let embeds_shop = general_ES.shop(interaction.member);
+			let embeds_shop = general_ES.shop(interaction.member, userData);
 
 			// prettier-ignore
 			// Set up embed navigation
@@ -42,8 +45,22 @@ module.exports = {
 		/* - - - - - { Buy an Item } - - - - - */
 		let item = await itemManager.buyItem();
 
+		// prettier-ignore
+		// Purchase failed due to not having enoug balance
+		if (!item.item && item.type) return error_ES.send({
+			interaction, author: { text: "⛔ Purchase failed" },
+			description: "You do not have enough to buy this item"
+		});
+
 		switch (item.type) {
-			default: return;
+			// prettier-ignore
+			case "card": return;
+
+			// prettier-ignore
+			default: return error_ES.send({
+				interaction, author: { text: "⛔ Purchase failed" },
+				description: `\`${itemID}\` is not an item in the shop`
+			});
 		}
 	}
 };

@@ -18,7 +18,7 @@ const _jsT = require("../jsTools/_jsT");
 const config = { bot: require("../../configs/config_bot.json") };
 
 /** @param {GuildMember|User} user */
-function shop(user) {
+function shop(user, userData) {
 	/* - - - - - { Parse Cards } - - - - - */
 	// Get shop cards and sort by global ID :: { ASCENDING }
 	let cards = {
@@ -60,7 +60,10 @@ function shop(user) {
 
 		// Create the embed :: { SHOP - OVERVIEW }
 		let embed = embed_shop.copy({
-			description: markdown.ansi("Welcome to the shop!", { text_color: "white", codeblock: true })
+			description: markdown.ansi(
+				`${config.bot.emojis.currency_1.EMOJI} ${userData.balance} :: ${config.bot.emojis.currency_2.EMOJI} ${userData.ribbons}`,
+				{ format: "bold", text_color: "white", codeblock: true }
+			)
 		});
 
 		/* - - - - - { Cards } - - - - - */

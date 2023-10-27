@@ -49,11 +49,10 @@ const cards_all = [].concat(...Object.values(cards_base));
 const cards_general = [...cards_base.comn, ...cards_base.uncn, ...cards_base.rare, ...cards_base.epic, ...cards_base.mint];
 const cards_event = [...cards_base.bday, ...cards_base.holi, ...cards_base.evnt];
 
+// prettier-ignore
 const cards_shop_all = cards_all.filter(card =>
-	[...config.shop.stock.card_set_ids.GENERAL, ...config.shop.stock.card_set_ids.SPECIAL]
-		.includes(card.setID)
-		.filter(c => c.price !== null)
-);
+	[...config.shop.stock.card_set_ids.GENERAL, ...config.shop.stock.card_set_ids.SPECIAL].includes(card.setID)
+).filter(c => c.price !== null);
 const cards_shop_general = cards_shop_all.filter(card => config.shop.stock.card_set_ids.GENERAL.includes(card.setID));
 const cards_shop_special = cards_shop_all.filter(card => config.shop.stock.card_set_ids.SPECIAL.includes(card.setID));
 
