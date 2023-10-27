@@ -1,5 +1,5 @@
-/** @typedef {"card_pack"|"badge"|"charm"} ItemType */
-const ItemType = { card_pack: "card_pack", badge: "badge", charm: "charm" };
+/** @typedef {"card"|"card_pack"|"badge"|"charm"} ItemType */
+const ItemType = { card: "card", card_pack: "card_pack", badge: "badge", charm: "charm" };
 
 const { userManager } = require("./mongo/index");
 const cardManager = require("./cardManager");
@@ -17,39 +17,84 @@ const config = {
 
 /** @param {string} id */
 function getItem(id) {
-	let item = items.cardPacks.find(c => c.id === id);
-	let itemType = ItemType.card_pack;
+	// prettier-ignore
+	let item, itemType = ItemType.card;
 
+	// Test for cards
+	if (!item) {
+		item = cardManager.get.fromShop(globalID);
+		itemType = ItemType.card;
+	}
+
+	// Test for card packs
+	if (!item) {
+		item = items.cardPacks.find(c => c.id === id);
+		itemType = ItemType.card_pack;
+	}
+
+	// Test for badges
 	if (!item) {
 		item = items.badges.find(b => b.id === id);
 		itemType = ItemType.badge;
 	}
 
+	// Test for charms
 	if (!item) {
 		for (let charm of items.charms) {
-			let _item = charm.charms.find(c => c.id === id);
-			if (_item) item = item;
-		}
+			let _item = charm.items.find(c => c.id === id);
 
-		itemType = ItemType.charm;
+			if (_item) {
+				item = _item;
+				itemType = ItemType.charm;
+				break;
+			}
+		}
 	}
 
 	return { item: item ? structuredClone(item) : null, type: item ? itemType : null };
 }
 
-/** @param {string} id @param {ItemType} itemType */
-async function buyItem(id, itemType) {
+/** @param {string} id */
+async function buyItem(id) {
 	// prettier-ignore
-	switch (itemType) {
-		case ItemType.card_pack: return;
+	let item, { type } = getItem(id);
+
+	// prettier-ignore
+	switch (type) {
+		case ItemType.card: item = await card_buy(userID, id); break;
+
+		case ItemType.card_pack: item = null; break;
 		
-		case ItemType.badge: return await badge_buy(userID, id);
+		case ItemType.badge: item = await badge_buy(userID, id); break;
 		
-		case ItemType.charm: return await charm_buy(userID, id);
-    }
+		case ItemType.charm: item = await charm_buy(userID, id); break;
+	}
+
+	return { item, type };
 }
 
-/// -- Card Packs --
+/* - - - - - { Cards } - - - - - */
+async function card_buy(userID, globalID) {
+	let card = cardManager.get.fromShop(globalID);
+	if (!card) return null;
+
+	// Check if it's a special card
+	let isSpecial = cardManager.cards.shop.special.find(c => c.globalID === card.globalID) ? true : false;
+
+	let userData = await userManager.fetch(userID, { type: "balance" });
+	let user_balance = isSpecial ? userData.ribbons : userData.balance;
+
+	// Check if the user can afford it
+	if (card.price > user_balance) return null;
+
+	// Subtract the card's price from the user's balance
+	await userManager.balance.increment(userID, -card.price, isSpecial ? "ribbon" : "carrot");
+
+	// Give the card to the user
+	return await userManager.inventory.add(userID, card);
+}
+
+/* - - - - - { Card Packs } - - - - - */
 function cardPack_toString_setEntry(setID) {
 	let cardPack = items.cardPacks.filter(pack => pack.setID === setID);
 	if (!cardPack.length) return "n/a";
@@ -80,7 +125,7 @@ function cardPack_toString_shopEntry(packID) {
 		.replace("$CARDS", cards_f.join("\n"));
 }
 
-/// -- Badges --
+/* - - - - - { Badges } - - - - - */
 async function badge_buy(userID, badgeID) {
 	let { item: badge, type: _itemType } = getItem(badgeID);
 	if (!_itemType !== ItemType.badge) return null;
@@ -127,7 +172,7 @@ function badge_toString_shopEntry(badgeID) {
 		.replace("$PRICE", `${config.bot.emojis.currency_1.EMOJI} ${badge.price}`);
 }
 
-/// -- Charms --
+/* - - - - - { Charms } - - - - - */
 async function charm_buy(userID, charmID) {
 	let { item: charm, type: _itemType } = getItem(charmID);
 	if (!_itemType !== ItemType.charm) return null;

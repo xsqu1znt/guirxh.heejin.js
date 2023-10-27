@@ -50,7 +50,9 @@ const cards_general = [...cards_base.comn, ...cards_base.uncn, ...cards_base.rar
 const cards_event = [...cards_base.bday, ...cards_base.holi, ...cards_base.evnt];
 
 const cards_shop_all = cards_all.filter(card =>
-	[...config.shop.stock.card_set_ids.GENERAL, ...config.shop.stock.card_set_ids.SPECIAL].includes(card.setID)
+	[...config.shop.stock.card_set_ids.GENERAL, ...config.shop.stock.card_set_ids.SPECIAL]
+		.includes(card.setID)
+		.filter(c => c.price !== null)
 );
 const cards_shop_general = cards_shop_all.filter(card => config.shop.stock.card_set_ids.GENERAL.includes(card.setID));
 const cards_shop_special = cards_shop_all.filter(card => config.shop.stock.card_set_ids.SPECIAL.includes(card.setID));
@@ -203,11 +205,8 @@ function get_setID(setID) {
 	return structuredClone(cards_all.filter(card => card.setID === setID)) || [];
 }
 
-function get_fromShop(globalID, special = false) {
-	let _card_shop_set_ids = special ? config.shop.stock.card_set_ids.SPECIAL : config.shop.stock.card_set_ids.GENERAL;
-
-	let _cards = cards_all.filter(card => _card_shop_set_ids.includes(card.setID));
-	return structuredClone(_cards.find(card => card.globalID === globalID)) || null;
+function get_fromShop(globalID) {
+	return structuredClone(cards_shop_all.find(card => card.globalID === globalID)) || null;
 }
 
 function get_baseCategoryName(globalID) {

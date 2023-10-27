@@ -22,8 +22,8 @@ function shop(user) {
 	/* - - - - - { Parse Cards } - - - - - */
 	// Get shop cards and sort by global ID :: { ASCENDING }
 	let cards = {
-		general: cardManager.cards.shop.general.filter(c => c.price !== null).sort((a, b) => a.globalID - b.globalID),
-		special: cardManager.cards.shop.special.filter(c => c.price !== null).sort((a, b) => a.globalID - b.globalID)
+		general: cardManager.cards.shop.general.sort((a, b) => a.globalID - b.globalID),
+		special: cardManager.cards.shop.special.sort((a, b) => a.globalID - b.globalID)
 	};
 
 	// Sort cards by groups of similar set IDs

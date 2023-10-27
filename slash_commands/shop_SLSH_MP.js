@@ -2,6 +2,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js"
 
 const { BetterEmbed, EmbedNavigator } = require("../modules/discordTools/_dsT");
 const { error_ES, general_ES } = require("../modules/embedStyles/index");
+const itemManager = require("../modules/itemManager");
 const _jsT = require("../modules/jsTools/_jsT");
 
 const config = { bot: require("../configs/config_bot.json") };
@@ -13,7 +14,7 @@ module.exports = {
 	builder: new SlashCommandBuilder().setName("shop")
         .setDescription("View the shop")
 
-        .addStringOption(option => option.setName("buy").setDescription("Buy an item using the ID")),
+        .addStringOption(option => option.setName("buy").setDescription("Buy items using their ID")),
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
@@ -36,6 +37,13 @@ module.exports = {
 
 			// Send the embed with navigation
 			return await embedNav.send();
+		}
+
+		/* - - - - - { Buy an Item } - - - - - */
+		let item = await itemManager.buyItem();
+
+		switch (item.type) {
+			default: return;
 		}
 	}
 };
