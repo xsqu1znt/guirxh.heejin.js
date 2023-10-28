@@ -45,22 +45,12 @@ module.exports = {
 		/* - - - - - { Buy an Item } - - - - - */
 		let item = await itemManager.buyItem();
 
+		if (item.embed) return await item.embed.send({ interaction });
+
 		// prettier-ignore
-		// Purchase failed due to not having enoug balance
-		if (!item.item && item.type) return error_ES.send({
+		if (!item.item) return await error_ES.send({
 			interaction, author: { text: "⛔ Purchase failed" },
-			description: "You do not have enough to buy this item"
+			description: `\`${itemID}\` is not an item in the shop`
 		});
-
-		switch (item.type) {
-			// prettier-ignore
-			case "card": return;
-
-			// prettier-ignore
-			default: return error_ES.send({
-				interaction, author: { text: "⛔ Purchase failed" },
-				description: `\`${itemID}\` is not an item in the shop`
-			});
-		}
 	}
 };
