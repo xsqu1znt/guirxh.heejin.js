@@ -17,6 +17,11 @@ const config = {
 	bot: require("../configs/config_bot.json")
 };
 
+const emojis = {
+	currency_1: config.bot.emojis.currency_1.EMOJI,
+	currency_2: config.bot.emojis.currency_2.EMOJI
+};
+
 /** @param {string} id */
 function getItem(id) {
 	// prettier-ignore
@@ -61,20 +66,16 @@ async function buyItem(user, id) {
 	// prettier-ignore
 	let item, { type } = getItem(id);
 
-	let emojis = {
-		currency_1: config.bot.emojis.currency_1.EMOJI,
-		currency_2: config.bot.emojis.currency_2.EMOJI
-	};
-
 	// prettier-ignore
 	switch (type) {
 		case ItemType.card:
 			item = await card_buy(user.id, id);
 			if (!item) return null;
 
+			// Create the embed :: { Purchase Failed }
 			if (!item.card) return error_ES.copy({
-				interaction, author: { text: "⛔ Purchase failed" },
-				description: `You do not have enough ${item.isSpecial ? emojis.currency_1 : emojis.currency_2} to buy this card`,
+				interaction, author: "⛔ Purchase failed",
+				description: `You do not have enough \`${item.isSpecial ? emojis.currency_1 : emojis.currency_2}\` to buy this card`,
 				footer: { text: `balance: ${item.isSpecial ? emojis.currency_1 : emojis.currency_2} ${item.balance}` }
 			});
 
@@ -89,9 +90,59 @@ async function buyItem(user, id) {
 
 		case ItemType.card_pack: item = null; break;
 		
-		case ItemType.badge: item = await badge_buy(user.id, id); break;
+		case ItemType.badge:
+			item = await badge_buy(user.id, id);
+			if (!item) return null;
+
+			// Create the embed :: { Purchase Failed - Already Owned }
+			if (item.alreadyOwned) return error_ES.copy({
+				interaction, author: "⛔ Purchase failed",
+				description: `You already own this badge`,
+				footer: { text: `balance: ${emojis.currency_1} ${item.balance}` }
+			});
+
+			// Create the embed :: { Purchase Failed }
+			if (!item.badge) return error_ES.copy({
+				interaction, author: "⛔ Purchase failed",
+				description: `You do not have enough \`${emojis.currency_1}\` to buy this badge`,
+				footer: { text: `balance: ${emojis.currency_1} ${item.balance}` }
+			});
+
+			// Create the embed :: { Shop Buy - Badge }
+			let embed_badge = new BetterEmbed({
+				author: { text: "$USERNAME | buy", iconURL: true, user },
+				description: `You bought **\`📛 ${item.badge.name}\`**:\n> ${badge_toString_basic(item.badge.id)}`,
+				footer: { text: `balance: ${emojis.currency_1} ${item.balance}` }
+			});
+
+			return { item: item.badge, type, embed: embed_badge };
 		
-		case ItemType.charm: item = await charm_buy(user.id, id); break;
+		case ItemType.charm:
+			item = await charm_buy(user.id, id);
+			if (!item) return null;
+
+			// Create the embed :: { Purchase Failed - Already Owned }
+			if (item.alreadyOwned) return error_ES.copy({
+				interaction, author: "⛔ Purchase failed",
+				description: `You already own this charm and it is still active`,
+				footer: { text: `balance: ${emojis.currency_1} ${item.balance}` }
+			});
+
+			// Create the embed :: { Purchase Failed }
+			if (!item.charm) return error_ES.copy({
+				interaction, author: "⛔ Purchase failed",
+				description: `You do not have enough \`${emojis.currency_1}\` to buy this charm`,
+				footer: { text: `balance: ${emojis.currency_1} ${item.balance}` }
+			});
+
+			// Create the embed :: { Shop Buy - Charm }
+			let embed_charm = new BetterEmbed({
+				author: { text: "$USERNAME | buy", iconURL: true, user },
+				description: `You bought **\`${item.charm.emoji} ${item.charm.name}\`**:\n> ${charm_toString_basic(item.charm.id)}`,
+				footer: { text: `balance: ${emojis.currency_1} ${item.balance}` }
+			});
+
+			return { item: item.charm, type, embed: embed_charm };
 	}
 
 	return { item, type };
@@ -158,7 +209,11 @@ async function badge_buy(userID, badgeID) {
 	let { item: badge, type: _itemType } = getItem(badgeID);
 	if (!_itemType !== ItemType.badge) return null;
 
-	let userData = await userManager.fetch(userID, { type: "balance" });
+	// Check if the user already owns the badge
+	if (await userManager.badges.has(badgeID)) return { alreadyOwned: true };
+
+	// Check if the user has enough to complete the purchase
+	let userData = userManager.fetch(userID, { type: "balance" });
 	if (badge.price > userData.balance) return null;
 
 	await Promise.all([
@@ -168,7 +223,7 @@ async function badge_buy(userID, badgeID) {
 		userManager.badges.add(userID, badge)
 	]);
 
-	return badge;
+	return { badge, balance: userData.balance - (badge.price || 0) };
 }
 
 function badge_toString_setEntry(setID) {
