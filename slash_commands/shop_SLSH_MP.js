@@ -48,7 +48,7 @@ module.exports = {
 		if (item.embed) return await item.embed.send({ interaction });
 
 		// prettier-ignore
-		if (!item.item) return await error_ES.send({
+		if (!item.item || !item.item.length) return await error_ES.send({
 			interaction, author: { text: "⛔ Purchase failed" },
 			description: `\`${itemID}\` is not an item in the shop`
 		});

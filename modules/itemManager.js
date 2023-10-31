@@ -5,7 +5,8 @@ const { BetterEmbed } = require("./discordTools/_dsT");
 const { error_ES } = require("./embedStyles/index");
 const { userManager } = require("./mongo/index");
 const cardManager = require("./cardManager");
-const _jst = require("./jsTools/_jsT");
+const dropManager = require("./dropManager");
+const _jsT = require("./jsTools/_jsT");
 
 const items = {
 	cardPacks: require("../items/itemPack_cards.json"),
@@ -88,7 +89,26 @@ async function buyItem(user, id) {
 
 			return { item: item.card, type, embed: embed_card };
 
-		case ItemType.card_pack: item = null; break;
+		case ItemType.card_pack:
+			item = await cardPack_buy(user.id, id);
+			if (!item) return null;
+
+			// Create the embed :: { Purchase Failed }
+			if (!item.cards || item.cards.length) return error_ES.copy({
+				interaction, author: "⛔ Purchase failed",
+				description: `You do not have enough \`${emojis.currency_1}\` to buy this card pack`,
+				footer: { text: `balance: ${emojis.currency_1} ${item.balance}` }
+			});
+
+			// Create the embed :: { Shop Buy - Card Pack }
+			let embed_cardPack = new BetterEmbed({
+				author: { text: "$USERNAME | buy", iconURL: true, user },
+				description: `You bought **\`📦 ${item.name}\`** and got:\n> ${item.cards_f.join("\n")}`,
+				footer: { text: `balance: ${emojis.currency_1} ${item.balance}` },
+				imageURL: item.card_imageURL
+			});
+
+			return { item: item.cards, type, embed: embed_cardPack };
 		
 		case ItemType.badge:
 			item = await badge_buy(user.id, id);
@@ -156,24 +176,56 @@ async function card_buy(userID, globalID) {
 	// Check if it's a special card
 	let isSpecial = cardManager.cards.shop.special.find(c => c.globalID === card.globalID) ? true : false;
 
+	/// Check if the user has enough to complete the purchase
 	let userData = await userManager.fetch(userID, { type: "balance" });
 	let user_balance = isSpecial ? userData.ribbons : userData.balance;
+	if (card.price > user_balance) return { balance: user_balance };
 
-	// Check if the user can afford it
-	if (card.price > user_balance) return null;
+	await Promise.all([
+		// Subtract the card pack's price from the user's balance
+		userManager.balance.increment(userID, -card.price, isSpecial ? "ribbon" : "carrot"),
+		// Give the cards to the user
+		userManager.inventory.add(userID, card)
+	]);
 
-	// Subtract the card's price from the user's balance
-	await userManager.balance.increment(userID, -card.price, isSpecial ? "ribbon" : "carrot");
-
-	// Give the card to the user
-	return {
-		card: await userManager.inventory.add(userID, card),
-		isSpecial,
-		balance: (isSpecial ? userData.ribbons : userData.balance) - card.price || 0
-	};
+	return { card, isSpecial, balance: user_balance - (card.price || 0) };
 }
 
 /* - - - - - { Card Packs } - - - - - */
+async function cardPack_buy(userID, packID) {
+	let cardPack = items.cardPacks.find(pack => pack.id === packID);
+	if (!cardPack) return null;
+
+	/// Check if the user has enough to complete the purchase
+	let userData = userManager.fetch(userID, { type: "balance" });
+	if (cardPack.price > userData.balance) return { balance: userData.balance };
+
+	// Choose which cards the user gets
+	let cards = await dropManager.drop(userID, "cardPack", { count: cardPack.content.count, sets: cardPack.content.sets });
+
+	// Check which cards the user already has
+	// prettier-ignore
+	let cards_isDupe = await userManager.inventory.has(userID, cards.map(c => c.globalID));
+
+	// Format the cards into strings
+	let cards_f = cards.map((c, idx) =>
+		cardManager.toString.inventoryEntry(c, { simplify: true, duplicate: cards_isDupe[idx] })
+	);
+
+	await Promise.all([
+		// Subtract the card pack's price from the user's balance
+		userManager.balance.increment(userID, -cardPack.price, "carrot"),
+		// Give the cards to the user
+		userManager.inventory.add(userID, cards)
+	]);
+
+	// prettier-ignore
+	return {
+		cards, cards_f, card_imageURL: cards.slice(-1)[0]?.imageURL,
+		name: cardPack.name, balance: userData.balance - (cardPack.price || 0)
+	};
+}
+
 function cardPack_toString_setEntry(setID) {
 	let cardPack = items.cardPacks.filter(pack => pack.setID === setID);
 	if (!cardPack.length) return "n/a";
@@ -212,9 +264,9 @@ async function badge_buy(userID, badgeID) {
 	// Check if the user already owns the badge
 	if (await userManager.badges.has(badgeID)) return { alreadyOwned: true };
 
-	// Check if the user has enough to complete the purchase
+	/// Check if the user has enough to complete the purchase
 	let userData = userManager.fetch(userID, { type: "balance" });
-	if (badge.price > userData.balance) return null;
+	if (badge.price > userData.balance) return { balance: userData.balance };
 
 	await Promise.all([
 		// Subtract the badge's price from the user's balance
@@ -260,11 +312,12 @@ async function charm_buy(userID, charmID) {
 	let { item: charm, type: _itemType } = getItem(charmID);
 	if (!_itemType !== ItemType.charm) return null;
 
+	/// Check if the user has enough to complete the purchase
 	let userData = await userManager.fetch(userID, { type: "balance" });
-	if (charm.price > userData.balance) return null;
+	if (charm.price > userData.balance) return { balance: userData.balance };
 
 	// Set the charm's expiration date
-	charm.data.expiration = _jst.parseTime(charm.data.duration, { fromNow: true });
+	charm.data.expiration = _jsT.parseTime(charm.data.duration, { fromNow: true });
 
 	await Promise.all([
 		// Subtract the badge's price from the user's balance
@@ -280,17 +333,17 @@ module.exports = {
 	items: {
 		cardPacks: {
 			general: items.cardPacks,
-			setIDs: { general: _jst.unique(items.cardPacks.map(pack => pack.setID)) }
+			setIDs: { general: _jsT.unique(items.cardPacks.map(pack => pack.setID)) }
 		},
 
 		badges: {
 			general: items.badges,
-			setIDs: { general: _jst.unique(items.badges.map(b => b.setID)) }
+			setIDs: { general: _jsT.unique(items.badges.map(b => b.setID)) }
 		},
 
 		charms: {
 			general: items.charms,
-			setIDs: { general: _jst.unique(items.charms.map(c => c.setID)) }
+			setIDs: { general: _jsT.unique(items.charms.map(c => c.setID)) }
 		}
 	},
 

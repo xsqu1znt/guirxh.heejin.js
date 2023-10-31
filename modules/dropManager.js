@@ -1,4 +1,4 @@
-/** @typedef {"general"|"weekly"|"season"|"event_1"|"event_2"|"card_pack"} DropType */
+/** @typedef {"general"|"weekly"|"season"|"event_1"|"event_2"|"cardPack"} DropType */
 
 /** @typedef CardPackOptions
  * @property {{id:number, rarity:number}[]} sets
@@ -139,14 +139,15 @@ async function drop(userID, dropType, cardPackOptions) {
 	};
 
 	const drop_cardPack = async () => {
+		if (!cardPackOptions.sets) return null;
+
 		cardPackOptions.sets = _jsT.isArray(cardPackOptions.sets);
 
 		/// Randomly pick the cards
 		let cards = [];
-		let sets = cardPackOptions.sets.map(set => ({ id: set.id, rarity: set.rarity }));
 
 		for (let i = 0; i < cardPackOptions.count; i++) {
-			let { id: setID } = _jsT.choiceWeighted(sets);
+			let { id: setID } = _jsT.choiceWeighted(cardPackOptions.sets);
 			let _cards = randomTools.choice(cardManager.get.setID(setID));
 
 			cards.push({
@@ -179,7 +180,7 @@ async function drop(userID, dropType, cardPackOptions) {
 		case "event_2": return await drop_event(2);
 
 		// prettier-ignore
-		case "card_pack": return await drop_cardPack();
+		case "cardPack": return await drop_cardPack();
 	}
 }
 

@@ -12,9 +12,9 @@
 		"content": {
 			"count": 3,
 			"sets": [
-				{ "id": "454", "chance": 100 },
-				{ "id": "601", "chance": 100 },
-				{ "id": "904", "chance": 100 }
+				{ "id": "454", "rarity": 100 },
+				{ "id": "601", "rarity": 100 },
+				{ "id": "904", "rarity": 100 }
 			]
 		}
 	}
