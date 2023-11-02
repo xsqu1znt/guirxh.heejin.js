@@ -323,10 +323,22 @@ async function charm_buy(userID, charmID) {
 		// Subtract the badge's price from the user's balance
 		userManager.balance.increment(userID, -charm.price, "carrot"),
 		// Give the badge to the user
-		userManager.charms.add(userID, charm)
+		userManager.charms.set(userID, charm)
 	]);
 
 	return charm;
+}
+
+function charm_toString_basic(charmID) {
+	let { item: charm, type: _itemType } = getItem(charmID);
+	if (!_itemType !== ItemType.charm) return null;
+
+	return "`$ID` `$EMOJI` **$NAME** `🌟 $POWER%` `⏰ $DURATION`"
+		.replace("ID", charm.id)
+		.replace("EMOJI", charm.emoji)
+		.replace("NAME", charm.name)
+		.replace("POWER", charm.power)
+		.replace("DURATION", _jsT.eta({ then: charm.duration }).substring(3));
 }
 
 module.exports = {
