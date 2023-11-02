@@ -354,7 +354,7 @@ function toString_inventoryEntry(card, options) {
 
 	// prettier-ignore
 	if (options.simplify) f = f
-		.replace(" $DUPE", "")
+		.replace(" $DUPE", !options.duplicate ? "" : " $DUPE")
 		.replace("` LV. $LVL`", "")
 		.replace(" `💰 $SELL`", "")
 		.replace("> $EXTRA", "");

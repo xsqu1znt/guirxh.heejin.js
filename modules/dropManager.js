@@ -148,7 +148,7 @@ async function drop(userID, dropType, cardPackOptions) {
 
 		for (let i = 0; i < cardPackOptions.count; i++) {
 			let { id: setID } = _jsT.choiceWeighted(cardPackOptions.sets);
-			let _cards = randomTools.choice(cardManager.get.setID(setID));
+			let _cards = cardManager.get.setID(setID);
 
 			cards.push({
 				card: _jsT.choice(_cards, true),

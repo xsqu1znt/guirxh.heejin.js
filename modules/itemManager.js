@@ -1,5 +1,5 @@
-/** @typedef {"card"|"card_pack"|"badge"|"charm"} ItemType */
-const ItemType = { card: "card", card_pack: "card_pack", badge: "badge", charm: "charm" };
+/** @typedef {"card"|"cardPack"|"badge"|"charm"} ItemType */
+const ItemType = { card: "card", cardPack: "cardPack", badge: "badge", charm: "charm" };
 
 const { BetterEmbed } = require("./discordTools/_dsT");
 const { userManager } = require("./mongo/index");
@@ -22,6 +22,8 @@ const emojis = {
 
 /** @param {string} id */
 function getItem(id) {
+	id = id.toLowerCase();
+
 	// prettier-ignore
 	let item, itemType = ItemType.card;
 
@@ -33,20 +35,20 @@ function getItem(id) {
 
 	// Test for card packs
 	if (!item) {
-		item = items.cardPacks.find(c => c.id === id);
-		itemType = ItemType.card_pack;
+		item = items.cardPacks.find(pack => pack.id.toLowerCase() === id);
+		itemType = ItemType.cardPack;
 	}
 
 	// Test for badges
 	if (!item) {
-		item = items.badges.find(b => b.id === id);
+		item = items.badges.find(b => b.id.toLowerCase() === id);
 		itemType = ItemType.badge;
 	}
 
 	// Test for charms
 	if (!item) {
 		for (let charm of items.charms) {
-			let _item = charm.items.find(c => c.id === id);
+			let _item = charm.items.find(c => c.id.toLowerCase() === id);
 
 			if (_item) {
 				item = _item;
@@ -61,6 +63,8 @@ function getItem(id) {
 
 /** @param {string} id */
 async function buyItem(user, id) {
+	id = id.toLowerCase();
+
 	// prettier-ignore
 	let { item, type } = getItem(id);
 
@@ -86,12 +90,12 @@ async function buyItem(user, id) {
 
 			return { item: item.card, type, embed: embed_card };
 
-		case ItemType.card_pack:
+		case ItemType.cardPack:
 			item = await cardPack_buy(user.id, id);
 			if (!item) return null;
 
 			// Create the embed :: { Purchase Failed }
-			if (!item.cards || item.cards.length) return { embed: new BetterEmbed({
+			if (!item.cards || !item.cards.length) return { embed: new BetterEmbed({
 				author: "⛔ Purchase failed",
 				description: `You do not have enough \`${emojis.currency_1}\` to buy this card pack`,
 				footer: { text: `balance: ${emojis.currency_1} ${item.balance}` }
@@ -100,7 +104,7 @@ async function buyItem(user, id) {
 			// Create the embed :: { Shop Buy - Card Pack }
 			let embed_cardPack = new BetterEmbed({
 				author: { text: "$USERNAME | buy", iconURL: true, user },
-				description: `You bought **\`📦 ${item.name}\`** and got:\n> ${item.cards_f.join("\n")}`,
+				description: `You bought **\`📦 ${item.name}\`** and got:\n${item.cards_f.join("\n")}`,
 				footer: { text: `balance: ${emojis.currency_1} ${item.balance}` },
 				imageURL: item.card_imageURL
 			});
@@ -190,24 +194,15 @@ async function card_buy(userID, globalID) {
 
 /* - - - - - { Card Packs } - - - - - */
 async function cardPack_buy(userID, packID) {
-	let cardPack = items.cardPacks.find(pack => pack.id === packID);
-	if (!cardPack) return null;
+	let { item: cardPack, type: _itemType } = getItem(packID);
+	if (!cardPack || _itemType !== ItemType.cardPack) return null;
 
 	/// Check if the user has enough to complete the purchase
-	let userData = userManager.fetch(userID, { type: "balance" });
+	let userData = await userManager.fetch(userID, { type: "balance" });
 	if (cardPack.price > userData.balance) return { balance: userData.balance };
 
 	// Choose which cards the user gets
 	let cards = await dropManager.drop(userID, "cardPack", { count: cardPack.content.count, sets: cardPack.content.sets });
-
-	// Check which cards the user already has
-	// prettier-ignore
-	let cards_isDupe = await userManager.inventory.has(userID, cards.map(c => c.globalID));
-
-	// Format the cards into strings
-	let cards_f = cards.map((c, idx) =>
-		cardManager.toString.inventoryEntry(c, { simplify: true, duplicate: cards_isDupe[idx] })
-	);
 
 	await Promise.all([
 		// Subtract the card pack's price from the user's balance
@@ -215,6 +210,15 @@ async function cardPack_buy(userID, packID) {
 		// Give the cards to the user
 		userManager.inventory.add(userID, cards)
 	]);
+
+	// prettier-ignore
+	// Check which cards the user already has
+	let cards_isDupe = await userManager.inventory.has(userID, cards.map(c => c.globalID));
+
+	// Format the cards into strings
+	let cards_f = cards.map((c, idx) =>
+		cardManager.toString.inventoryEntry(c, { simplify: true, duplicate: cards_isDupe[idx] })
+	);
 
 	// prettier-ignore
 	return {
@@ -256,13 +260,13 @@ function cardPack_toString_shopEntry(packID) {
 /* - - - - - { Badges } - - - - - */
 async function badge_buy(userID, badgeID) {
 	let { item: badge, type: _itemType } = getItem(badgeID);
-	if (!_itemType !== ItemType.badge) return null;
+	if (!badge || _itemType !== ItemType.badge) return null;
 
 	// Check if the user already owns the badge
 	if (await userManager.badges.has(badgeID)) return { alreadyOwned: true };
 
 	/// Check if the user has enough to complete the purchase
-	let userData = userManager.fetch(userID, { type: "balance" });
+	let userData = await userManager.fetch(userID, { type: "balance" });
 	if (badge.price > userData.balance) return { balance: userData.balance };
 
 	await Promise.all([
@@ -307,7 +311,7 @@ function badge_toString_shopEntry(badgeID) {
 /* - - - - - { Charms } - - - - - */
 async function charm_buy(userID, charmID) {
 	let { item: charm, type: _itemType } = getItem(charmID);
-	if (!_itemType !== ItemType.charm) return null;
+	if (!badge || _itemType !== ItemType.charm) return null;
 
 	/// Check if the user has enough to complete the purchase
 	let userData = await userManager.fetch(userID, { type: "balance" });
