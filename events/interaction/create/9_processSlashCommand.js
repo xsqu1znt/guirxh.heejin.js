@@ -4,7 +4,7 @@ const { Client, BaseInteraction, PermissionsBitField } = require("discord.js");
 
 const { BetterEmbed } = require("../../../modules/discordTools/_dsT");
 const { userManager } = require("../../../modules/mongo/index");
-const { error_ES } = require("../../../modules/embedStyles");
+const { error_ES } = require("../../../modules/embedStyles/index");
 // const _jsT = require("../../../modules/jsTools/_jsT");
 const logger = require("../../../modules/logger");
 

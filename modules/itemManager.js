@@ -2,7 +2,6 @@
 const ItemType = { card: "card", card_pack: "card_pack", badge: "badge", charm: "charm" };
 
 const { BetterEmbed } = require("./discordTools/_dsT");
-const { error_ES } = require("./embedStyles/index");
 const { userManager } = require("./mongo/index");
 const cardManager = require("./cardManager");
 const dropManager = require("./dropManager");
@@ -14,9 +13,7 @@ const items = {
 	charms: require("../items/charms.json")
 };
 
-const config = {
-	bot: require("../configs/config_bot.json")
-};
+const config = { bot: require("../configs/config_bot.json") };
 
 const emojis = {
 	currency_1: config.bot.emojis.currency_1.EMOJI,
@@ -74,8 +71,8 @@ async function buyItem(user, id) {
 			if (!item) return null;
 
 			// Create the embed :: { Purchase Failed }
-			if (!item.card) return error_ES.copy({
-				interaction, author: "⛔ Purchase failed",
+			if (!item.card) return new BetterEmbed({
+				author: "⛔ Purchase failed",
 				description: `You do not have enough \`${item.isSpecial ? emojis.currency_1 : emojis.currency_2}\` to buy this card`,
 				footer: { text: `balance: ${item.isSpecial ? emojis.currency_1 : emojis.currency_2} ${item.balance}` }
 			});
@@ -94,8 +91,8 @@ async function buyItem(user, id) {
 			if (!item) return null;
 
 			// Create the embed :: { Purchase Failed }
-			if (!item.cards || item.cards.length) return error_ES.copy({
-				interaction, author: "⛔ Purchase failed",
+			if (!item.cards || item.cards.length) return new BetterEmbed({
+				author: "⛔ Purchase failed",
 				description: `You do not have enough \`${emojis.currency_1}\` to buy this card pack`,
 				footer: { text: `balance: ${emojis.currency_1} ${item.balance}` }
 			});
@@ -115,15 +112,15 @@ async function buyItem(user, id) {
 			if (!item) return null;
 
 			// Create the embed :: { Purchase Failed - Already Owned }
-			if (item.alreadyOwned) return error_ES.copy({
-				interaction, author: "⛔ Purchase failed",
+			if (item.alreadyOwned) return new BetterEmbed({
+				author: "⛔ Purchase failed",
 				description: `You already own this badge`,
 				footer: { text: `balance: ${emojis.currency_1} ${item.balance}` }
 			});
 
 			// Create the embed :: { Purchase Failed }
-			if (!item.badge) return error_ES.copy({
-				interaction, author: "⛔ Purchase failed",
+			if (!item.badge) return new BetterEmbed({
+				author: "⛔ Purchase failed",
 				description: `You do not have enough \`${emojis.currency_1}\` to buy this badge`,
 				footer: { text: `balance: ${emojis.currency_1} ${item.balance}` }
 			});
@@ -142,15 +139,15 @@ async function buyItem(user, id) {
 			if (!item) return null;
 
 			// Create the embed :: { Purchase Failed - Already Owned }
-			if (item.alreadyOwned) return error_ES.copy({
-				interaction, author: "⛔ Purchase failed",
+			if (item.alreadyOwned) return new BetterEmbed({
+				author: "⛔ Purchase failed",
 				description: `You already own this charm and it is still active`,
 				footer: { text: `balance: ${emojis.currency_1} ${item.balance}` }
 			});
 
 			// Create the embed :: { Purchase Failed }
-			if (!item.charm) return error_ES.copy({
-				interaction, author: "⛔ Purchase failed",
+			if (!item.charm) return new BetterEmbed({
+				author: "⛔ Purchase failed",
 				description: `You do not have enough \`${emojis.currency_1}\` to buy this charm`,
 				footer: { text: `balance: ${emojis.currency_1} ${item.balance}` }
 			});
