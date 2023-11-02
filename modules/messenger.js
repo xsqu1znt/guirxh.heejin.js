@@ -36,20 +36,28 @@ async function gift_cards(gifter, recipient, cards) {
 	}
 }
 
-/** @param {User} recipient @param {User} gifter @param {number} amount  @param {number} currentBalance */
-async function gift_currency(recipient, gifter, amount, currentBalance) {
-	// Create the embed
-	let embed_giftCurrency = new BetterEmbed({
-		author: { text: embed_titles.gift },
-		description: `You got \`${config_bot.emojis.currency_1.EMOJI} ${amount}\` from **${gifter.username}**\n> Balance currently: \`${config_bot.emojis.currency_1.EMOJI} ${currentBalance}\``,
-		showTimestamp: true
+/** @param {User} recipient @param {User} gifter @param {number} amount  @param {number} balance */
+async function gift_currency(recipient, gifter, amount, balance, currencyType) {
+	let currencyEmoji = "";
+	// prettier-ignore
+	switch (currencyType) {
+        case "carrot": currencyEmoji = config.bot.emojis.currency_1.EMOJI; break;
+        case "ribbon": currencyEmoji = config.bot.emojis.currency_2.EMOJI; break;
+	}
+
+	// Create the embed :: { CURRENCY }
+	let embed_currency = new BetterEmbed({
+		author: embed_titles.gift,
+		description: `**${gifter.username}** gave you \`${currencyEmoji} ${amount}\``,
+		footer: `balance: ${currencyEmoji} ${balance}`,
+		timestamp: true
 	});
 
 	// Send the embed to the user
 	try {
-		return await recipient.send({ embeds: [embed_giftCurrency] });
+		return await recipient.send({ embeds: [embed_currency] });
 	} catch (err) {
-		logger.error("Failed to DM user", `userID: ${recipient?.userID || "N/A"} | TYPE: gift_currency`, err);
+		logger.error("Failed to DM user", `userID: ${recipient?.userID || "n/a"} | type: gift_currency`, err);
 	}
 }
 
