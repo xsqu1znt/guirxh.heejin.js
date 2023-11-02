@@ -81,7 +81,7 @@ async function profile(user, userData) {
 		let onTeam = userData.card_team_uids.includes(card.uid);
 
 		// Parse the card into a string
-		let card_f = cardManager.toString.inventory(card, { selected, favorited, onTeam });
+		let card_f = cardManager.toString.inventoryEntry(card, { selected, favorited, onTeam });
 
 		let _embed = new BetterEmbed({
 			author: { text: "$USERNAME | profile", user },

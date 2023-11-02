@@ -50,13 +50,13 @@ class Stage {
 			// Team :: { HOME }
 			{
 				name: this.data.opponents.home?.displayName || this.data.opponents.home?.username,
-				value: `>>> ${cardManager.toString.inventory(this.data.idol.home)}`,
+				value: `>>> ${cardManager.toString.inventoryEntry(this.data.idol.home)}`,
 				inline: true
 			},
 			// Team :: { AWAY }
 			{
 				name: this.data.opponents.away?.displayName || this.data.opponents.away?.username || "Rival",
-				value: `>>> ${cardManager.toString.inventory(this.data.idol.away)}`,
+				value: `>>> ${cardManager.toString.inventoryEntry(this.data.idol.away)}`,
 				inline: true
 			}
 		);
@@ -135,7 +135,7 @@ class Stage {
 		this.#applyDamage("home");
 
 		// Update the embed's HOME team field
-		this.data.embed.data.fields[0].value = `>>> ${cardManager.toString.inventory(this.data.idol.home)}`;
+		this.data.embed.data.fields[0].value = `>>> ${cardManager.toString.inventoryEntry(this.data.idol.home)}`;
 
 		/// Refresh the embed
 		this.data.embed.setFooter({ text: `Turn: ${this.data.turn}` });
@@ -159,7 +159,7 @@ class Stage {
 		this.#applyDamage("away");
 
 		// Update the embed's AWAY team field
-		this.data.embed.data.fields[1].value = `>>> ${cardManager.toString.inventory(this.data.idol.away)}`;
+		this.data.embed.data.fields[1].value = `>>> ${cardManager.toString.inventoryEntry(this.data.idol.away)}`;
 
 		/// Refresh the embed
 		this.data.embed.setFooter({ text: `Turn: ${this.data.turn}` });
