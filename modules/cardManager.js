@@ -443,17 +443,17 @@ function toString_setEntry(options) {
 		.replace("$DESCRIPTION", card.description);
 }
 
-function toString_cardPackEntry(setID, chance) {
+function toString_cardPackEntry(setID, rarity) {
 	let card = get_setID(setID)[0];
 	if (!card) return "n/a";
 
-	return "> `$SET_ID` `$EMOJI` $DESCRIPTION `$CHANCE%`"
+	return "> `$SET_ID` `$EMOJI` $DESCRIPTION `$RARITY%`"
 		.replace("$SET_ID", card.setID)
 		.replace("$EMOJI", card.emoji)
 		.replace("$GROUP", card.group)
 		.replace("$SINGLE", card.single)
 		.replace("$DESCRIPTION", card.description)
-		.replace("$CHANCE", chance);
+		.replace("$RARITY", rarity);
 }
 
 // prettier-ignore

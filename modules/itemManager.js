@@ -241,7 +241,7 @@ function cardPack_toString_shopEntry(packID) {
 	let cardPack = items.cardPacks.find(pack => pack.id === packID);
 	if (!cardPack) return "n/a";
 
-	let cards_f = cardPack.content.sets.map(set => cardManager.toString.cardPackEntry(set.id, set.chance));
+	let cards_f = cardPack.content.sets.map(set => cardManager.toString.cardPackEntry(set.id, set.rarity));
 
 	return "`$ID` `🗣️ $SET_ID` **$SET** $NAME `🃏 $CARD_COUNT` `$PRICE`\n$CARDS"
 		.replace("$ID", cardPack.id)
