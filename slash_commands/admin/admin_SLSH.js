@@ -59,7 +59,8 @@ module.exports = {
             .addChoices(
                 // { name: "💻 server", value: "server" },
                 // { name: "🪶 summon", value: "summon" },
-                { name: "🥕 pay", value: "pay_carrot" }
+                { name: "🥕 pay", value: "pay_carrot" },
+                { name: "🎀 pay", value: "pay_ribbon" },
             )
         )
 
@@ -73,6 +74,7 @@ module.exports = {
 		// prettier-ignore
 		switch (command) {
             case "pay_carrot": return await payUser(interaction, "carrot");
+            case "pay_ribbon": return await payUser(interaction, "ribbon");
 		}
 	}
 };

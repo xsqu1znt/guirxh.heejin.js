@@ -71,11 +71,11 @@ async function buyItem(user, id) {
 			if (!item) return null;
 
 			// Create the embed :: { Purchase Failed }
-			if (!item.card) return new BetterEmbed({
+			if (!item.card) return { embed: new BetterEmbed({
 				author: "⛔ Purchase failed",
-				description: `You do not have enough \`${item.isSpecial ? emojis.currency_1 : emojis.currency_2}\` to buy this card`,
+				description: `You do not have enough \`${item.isSpecial ? emojis.currency_2 : emojis.currency_1}\` to buy this card`,
 				footer: { text: `balance: ${item.isSpecial ? emojis.currency_2 : emojis.currency_1} ${item.balance}` }
-			});
+			}) };
 
 			// Create the embed :: { Shop Buy - Card }
 			let embed_card = new BetterEmbed({
@@ -91,11 +91,11 @@ async function buyItem(user, id) {
 			if (!item) return null;
 
 			// Create the embed :: { Purchase Failed }
-			if (!item.cards || item.cards.length) return new BetterEmbed({
+			if (!item.cards || item.cards.length) return { embed: new BetterEmbed({
 				author: "⛔ Purchase failed",
 				description: `You do not have enough \`${emojis.currency_1}\` to buy this card pack`,
 				footer: { text: `balance: ${emojis.currency_1} ${item.balance}` }
-			});
+			}) };
 
 			// Create the embed :: { Shop Buy - Card Pack }
 			let embed_cardPack = new BetterEmbed({
@@ -112,18 +112,18 @@ async function buyItem(user, id) {
 			if (!item) return null;
 
 			// Create the embed :: { Purchase Failed - Already Owned }
-			if (item.alreadyOwned) return new BetterEmbed({
+			if (item.alreadyOwned) return { embed: new BetterEmbed({
 				author: "⛔ Purchase failed",
 				description: `You already own this badge`,
 				footer: { text: `balance: ${emojis.currency_1} ${item.balance}` }
-			});
+			}) };
 
 			// Create the embed :: { Purchase Failed }
-			if (!item.badge) return new BetterEmbed({
+			if (!item.badge) return { embed: new BetterEmbed({
 				author: "⛔ Purchase failed",
 				description: `You do not have enough \`${emojis.currency_1}\` to buy this badge`,
 				footer: { text: `balance: ${emojis.currency_1} ${item.balance}` }
-			});
+			}) };
 
 			// Create the embed :: { Shop Buy - Badge }
 			let embed_badge = new BetterEmbed({
@@ -139,18 +139,18 @@ async function buyItem(user, id) {
 			if (!item) return null;
 
 			// Create the embed :: { Purchase Failed - Already Owned }
-			if (item.alreadyOwned) return new BetterEmbed({
+			if (item.alreadyOwned) return { embed: new BetterEmbed({
 				author: "⛔ Purchase failed",
 				description: `You already own this charm and it is still active`,
 				footer: { text: `balance: ${emojis.currency_1} ${item.balance}` }
-			});
+			}) };
 
 			// Create the embed :: { Purchase Failed }
-			if (!item.charm) return new BetterEmbed({
+			if (!item.charm) return { embed: new BetterEmbed({
 				author: "⛔ Purchase failed",
 				description: `You do not have enough \`${emojis.currency_1}\` to buy this charm`,
 				footer: { text: `balance: ${emojis.currency_1} ${item.balance}` }
-			});
+			}) };
 
 			// Create the embed :: { Shop Buy - Charm }
 			let embed_charm = new BetterEmbed({
@@ -176,7 +176,7 @@ async function card_buy(userID, globalID) {
 	/// Check if the user has enough to complete the purchase
 	let userData = await userManager.fetch(userID, { type: "balance" });
 	let user_balance = isSpecial ? userData.ribbons : userData.balance;
-	if (card.price > user_balance) return { balance: user_balance };
+	if (card.price > user_balance) return { isSpecial, balance: user_balance };
 
 	await Promise.all([
 		// Subtract the card pack's price from the user's balance
