@@ -115,7 +115,7 @@ async function get_vault(userID) {
 
 /** @param {string} userID */
 async function add(userID, cards) {
-	if (!cards || !cards.filter(c => c?.globalID).length) return;
+	if (!cards || (Array.isArray(cards) && !cards.length)) return;
 
 	// Create an array if only a single card object was passed
 	cards = _jsT.isArray(cards).filter(c => c?.globalID);
@@ -128,7 +128,7 @@ async function add(userID, cards) {
 		if (!c.uid) cardManager.resetUID(_cards[i]);
 
 		// Parse the card into a CardLike object (ignores custom cards)
-		_cards[i] = cardManager.parse.toCardLike(_c);
+		_cards[i] = cardManager.parse.toCardLike(c);
 	}
 
 	const testUIDs = async () => {
@@ -139,7 +139,7 @@ async function add(userID, cards) {
 			{ $group: { _id: "$_id", uids: { $push: "$card_inventory.uid" } } }
 		];
 
-		let { uids } = (await userManager.models.user.aggregate(pipeline))[0] || [];
+		let uids = (await userManager.models.user.aggregate(pipeline))[0]?.uids || [];
 		if (!uids.length) return; // Do nothing if no UIDs were found
 
 		// Iterate through each found UID and make a note of the card's index so we can reset it later
@@ -150,7 +150,7 @@ async function add(userID, cards) {
 		// Reset card UIDs
 		// prettier-ignore
 		if (reset.length) reset.forEach(i => cardManager.resetUID(_cards[i]));
-		return testUIDs();
+		return await testUIDs();
 	};
 
 	await testUIDs();
@@ -166,13 +166,13 @@ async function add(userID, cards) {
 
 /** @param {string} userID @param {string | string[]} uids */
 async function remove(userID, uids) {
-	if (!uids || !uids.length) return;
+	if (!uids || (Array.isArray(uids) && !uids.length)) return;
 
 	// Create an array if only a single card UID was passed
 	uids = _jsT.isArray(uids);
 
 	// Send a pull request to Mongo
-	await userManager.update(userID, { $pull: { "card_inventory.uid": { $in: uids } } });
+	await userManager.update(userID, { $pull: { card_inventory: { uid: { $in: uids } } } });
 }
 
 /** @param {string} userID */
@@ -187,13 +187,14 @@ async function sell(userID, cards) {
 	// Create an array if only a single card was passed
 	cards = _jsT.isArray(cards);
 
+	// prettier-ignore
 	// Check if the user still has the cards in their card_inventory
-	if (!(await exists(userID, uids))) return false;
+	if (!(await exists(userID, cards.map(c => c.uid)))) return false;
 
 	// prettier-ignore
 	await Promise.all([
 		// Update the user's balance
-		userData_update(userID, { $inc: { balance: _jsT.sum(cards.map(c => c.sellPrice)) } }),
+		userManager.update(userID, { $inc: { balance: _jsT.sum(cards.map(c => c.sellPrice)) } }),
 		// Remove the cards from the user's card_inventory
 		remove(userID, cards.map(card => card.uid))
     ]);

@@ -56,7 +56,7 @@ const cards_shop_all = cards_all.filter(card =>
 const cards_shop_general = cards_shop_all.filter(card => config.shop.stock.card_set_ids.GENERAL.includes(card.setID));
 const cards_shop_special = cards_shop_all.filter(card => config.shop.stock.card_set_ids.SPECIAL.includes(card.setID));
 
-/// Card category meta
+// Card category meta
 const cards_category_names = {
 	base: Object.keys(cards_base),
 	all: _jsT.unique(cards_all.map(c => c.category)),
@@ -205,7 +205,7 @@ function get_setID(setID) {
 }
 
 function get_fromShop(globalID) {
-	return structuredClone(cards_shop_all.find(card => card.globalID === globalID)) || null;
+	return structuredClone(cards_shop_all.find(c => c.globalID === globalID)) || null;
 }
 
 function get_baseCategoryName(globalID) {

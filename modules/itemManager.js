@@ -27,7 +27,7 @@ function getItem(id) {
 
 	// Test for cards
 	if (!item) {
-		item = cardManager.get.fromShop(globalID);
+		item = cardManager.get.fromShop(id);
 		itemType = ItemType.card;
 	}
 
@@ -62,7 +62,7 @@ function getItem(id) {
 /** @param {string} id */
 async function buyItem(user, id) {
 	// prettier-ignore
-	let item, { type } = getItem(id);
+	let { item, type } = getItem(id);
 
 	// prettier-ignore
 	switch (type) {
@@ -74,14 +74,14 @@ async function buyItem(user, id) {
 			if (!item.card) return new BetterEmbed({
 				author: "⛔ Purchase failed",
 				description: `You do not have enough \`${item.isSpecial ? emojis.currency_1 : emojis.currency_2}\` to buy this card`,
-				footer: { text: `balance: ${item.isSpecial ? emojis.currency_1 : emojis.currency_2} ${item.balance}` }
+				footer: { text: `balance: ${item.isSpecial ? emojis.currency_2 : emojis.currency_1} ${item.balance}` }
 			});
 
 			// Create the embed :: { Shop Buy - Card }
 			let embed_card = new BetterEmbed({
 				author: { text: "$USERNAME | buy", iconURL: true, user },
 				description: `You bought **\`🃏 ${item.card.single} - ${item.card.name}\`**:\n> ${cardManager.toString.basic(item.card)}`,
-				footer: { text: `balance: ${item.isSpecial ? emojis.currency_1 : emojis.currency_2} ${item.balance}` }
+				footer: { text: `balance: ${item.isSpecial ? emojis.currency_2 : emojis.currency_1} ${item.balance}` }
 			});
 
 			return { item: item.card, type, embed: embed_card };
