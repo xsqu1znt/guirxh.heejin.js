@@ -4,6 +4,8 @@ const { BetterEmbed } = require("./discordTools/_dsT");
 const cardManager = require("./cardManager");
 const logger = require("./logger");
 
+const config = { bot: require("../configs/config_bot.json") };
+
 const embed_titles = {
 	gift: "📬 You have a message!"
 };

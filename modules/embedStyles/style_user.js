@@ -92,6 +92,7 @@ async function profile(user, userData) {
 		return _embed;
 	};
 
+	// TODO: use userManager.inventory.stats()
 	const embed_inventory_stats = async () => {
 		let _embed = new BetterEmbed({ author: { text: "$USERNAME | profile", user } });
 
@@ -126,8 +127,8 @@ async function profile(user, userData) {
 		main: embed_main(),
 		badges: userData.badges?.length ? embed_badges() : null,
 		favorited: card_favorite ? embed_card(card_favorite) : null,
-		selected: card_selected ? embed_card(card_selected) : null,
-		stats: await embed_inventory_stats()
+		selected: card_selected ? embed_card(card_selected) : null
+		// stats: await embed_inventory_stats()
 	};
 }
 
@@ -377,6 +378,7 @@ function reminders(user, userData) {
 
 		let notificationMode = "";
 
+		// prettier-ignore
 		switch (reminder.notificationMode) {
 			case "channel": notificationMode = "💬"; break;
 			case "dm": notificationMode = "📫"; break;

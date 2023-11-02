@@ -34,13 +34,13 @@ async function payUser(interaction, currencyType) {
     }
 
 	// Let the user know they were given currency
-	if (amount) messenger.gift.currency(user, interaction.member, amount, balance, currencyType);
+	if (amount > 0) messenger.gift.currency(user, interaction.user, amount, balance, currencyType);
 
 	// prettier-ignore
 	// Create the embed :: { ADMIN - PAY }
 	let embed_pay = new BetterEmbed({
-        interaction, author: { text: "$USERNAME | Admin", iconURL: true },
-        description: `\`${currencyEmoji} ${amount}\` ${amount > 0 ? "given to" : "withdrawn from"} ${user.username}`,
+        interaction, author: { text: "$USERNAME | admin", iconURL: true },
+        description: `\`${currencyEmoji} ${amount}\` ${amount > 0 ? "given to" : "withdrawn from"} **${user.username}**`,
         footer: `balance: ${currencyEmoji} ${balance}`
     });
 

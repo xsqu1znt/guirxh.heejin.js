@@ -12,15 +12,15 @@ async function increment(userID, amount, currencyType) {
 
 	// prettier-ignore
 	switch (currencyType) {
-		case "carrots": job.add(userManager.update(userID, { $inc: { balance: amount } })); break;
-		case "ribbons": job.add(userManager.update(userID, { $inc: { ribbons: amount } })); break;
+		case "carrot": job.add(userManager.update(userID, { $inc: { balance: amount } })); break;
+		case "ribbon": job.add(userManager.update(userID, { $inc: { ribbons: amount } })); break;
 		default: return;
 	}
 
 	// prettier-ignore
 	if (amount) switch (currencyType) {
-		case "carrots": job.add(uM_statistics.balance.increment(userID, amount, currencyType)); break;
-		case "ribbons": job.add(uM_statistics.balance.increment(userID, amount, currencyType)); break;
+		case "carrot": job.add(uM_statistics.balance.increment(userID, amount, currencyType)); break;
+		case "ribbon": job.add(uM_statistics.balance.increment(userID, amount, currencyType)); break;
 		default: return;
 	}
 
