@@ -1,8 +1,8 @@
 [
   {
-    "name": "Custom",
+    "name": "CUST00",
     "group": "Custom",
-    "single": "CUST00",
+    "single": "Custom",
     "category": "cust",
     "description": "**Custom** *`Special`*",
     "emoji": "📝",
@@ -21,9 +21,9 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1088081215271223377/custom_cust01.png"
   },
   {
-    "name": "Custom",
+    "name": "CUST01",
     "group": "Custom",
-    "single": "CUST01",
+    "single": "Custom",
     "category": "cust",
     "description": "**Custom** *`Special`*",
     "emoji": "📝",
@@ -42,9 +42,9 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1088081215271223377/custom_cust01.png"
   },
   {
-    "name": "Custom",
+    "name": "CUST02",
     "group": "Custom",
-    "single": "CUST02",
+    "single": "Custom",
     "category": "cust",
     "description": "**Custom** *`Special`*",
     "emoji": "📝",
@@ -63,9 +63,9 @@
     "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1088081215606755398/custom_cust02.png"
   },
   {
-    "name": "Custom",
+    "name": "CUST03",
     "group": "Custom",
-    "single": "CUST03",
+    "single": "Custom",
     "category": "cust",
     "description": "**Custom** *`Special`*",
     "emoji": "📝",
