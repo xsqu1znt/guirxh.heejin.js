@@ -3,7 +3,7 @@
         "id": "RS01",
         "setID": "B01",
         "name": "squ1d",
-        "description": "**Badge** *`Dev`*",
+        "description": "*`Dev`* **Badge**",
         "category": "bdge",
         "set": "DEV",
         "customEmoji": "<:realsquid:1085169097114910760>",

@@ -25,7 +25,7 @@ function getItem(id) {
 	id = id.toLowerCase();
 
 	// prettier-ignore
-	let item, itemType = ItemType.card, itemParent;
+	let item, itemType = ItemType.card;
 
 	// Test for cards
 	if (!item) {
@@ -47,19 +47,11 @@ function getItem(id) {
 
 	// Test for charms
 	if (!item) {
-		for (let _charm of items.charms) {
-			let _item = _charm.items.find(c => c.id.toLowerCase() === id);
-
-			if (_item) {
-				item = _item;
-				itemType = ItemType.charm;
-				itemParent = _charm;
-				break;
-			}
-		}
+		item = items.charms.find(c => c.id.toLowerCase() === id);
+		itemType = ItemType.charm;
 	}
 
-	return { item: item ? structuredClone(item) : null, type: item ? itemType : null, itemParent: itemParent || null };
+	return { item: item ? structuredClone(item) : null, type: item ? itemType : null };
 }
 
 /** @param {string} id */
@@ -287,12 +279,14 @@ function badge_toString_setEntry(setID) {
 	let badges_first = badges.slice(-1)[0];
 
 	// return "> $CATEGORY $SET_ID $COUNT $EMOJI $SET"
-	return "> **`$CATEGORY`** `🗣️ $SET_ID` `📁 $COUNT` $EMOJI $DESCRIPTION"
-		.replace("$CATEGORY", badges_first.category)
-		.replace("$SET_ID", badges_first.setID)
-		.replace("$COUNT", badges.length >= 10 ? badges.length : `0${badges.length}`)
-		.replace("$EMOJI", badges_first?.customEmoji || `\`${badges_first.emoji}\``)
-		.replace("$DESCRIPTION", badges_first.description);
+	return (
+		"> **`$CATEGORY`** `🗣️ $SET_ID` `📁 $COUNT` `📛` $DESCRIPTION"
+			.replace("$CATEGORY", badges_first.category)
+			.replace("$SET_ID", badges_first.setID)
+			.replace("$COUNT", badges.length >= 10 ? badges.length : `0${badges.length}`)
+			// .replace("$EMOJI", badges_first?.customEmoji || `\`${badges_first.emoji}\``)
+			.replace("$DESCRIPTION", badges_first.description)
+	);
 }
 
 function badge_toString_shopEntry(badgeID) {
@@ -333,7 +327,7 @@ async function charm_buy(userID, charmID) {
 
 function charm_toString_basic(charmID) {
 	let { item: charm, type: _itemType } = getItem(charmID);
-	if (!_itemType !== ItemType.charm) return null;
+	if (_itemType !== ItemType.charm) return null;
 
 	return "`$ID` `$EMOJI` **$NAME** `🌟 $POWER%` `⏰ $DURATION`"
 		.replace("ID", charm.id)
@@ -343,31 +337,34 @@ function charm_toString_basic(charmID) {
 		.replace("DURATION", _jsT.eta({ then: charm.duration }).substring(3));
 }
 
-function badge_toString_setEntry(setID) {
+function charm_toString_setEntry(setID) {
 	let charms = items.charms.filter(c => c.setID === setID);
 	if (!charms.length) return "n/a";
 
 	let charms_first = charms.slice(-1)[0];
 
-	return "> **`$CATEGORY`** `🗣️ $SET_ID` `📁 $COUNT` `$EMOJI` $DESCRIPTION"
-		.replace("$CATEGORY", charms_first.category)
-		.replace("$SET_ID", charms_first.setID)
-		.replace("$COUNT", charms.length >= 10 ? charms.length : `0${charms.length}`)
-		.replace("$EMOJI", charms_first.emoji)
-		.replace("$DESCRIPTION", charms_first.description);
+	return (
+		"> **`$CATEGORY`** `🗣️ $SET_ID` `📁 $COUNT` `🌟` $DESCRIPTION"
+			.replace("$CATEGORY", charms_first.category)
+			.replace("$SET_ID", charms_first.setID)
+			.replace("$COUNT", charms.length >= 10 ? charms.length : `0${charms.length}`)
+			// .replace("$EMOJI", charms_first.emoji)
+			.replace("$DESCRIPTION", charms_first.description)
+	);
 }
 
 function charm_toString_shopEntry(charmID) {
-	let { item: charm, type: _itemType, itemParent: charmBase } = getItem(charmID);
-	if (!_itemType !== ItemType.charm) return null;
+	let { item: charm, type: _itemType } = getItem(charmID);
+	if (_itemType !== ItemType.charm) return null;
 
-	return "`$ID` `🗣️ $SET_ID` `$EMOJI` **$TYPE** $NAME $PRICE"
-		.replace("ID", charm.id)
-		.replace("EMOJI", charmBase.emoji)
-		.replace("TYPE", charBase.type)
-		.replace("NAME", charm.name)
-		.replace("POWER", charm.power)
-		.replace("DURATION", _jsT.eta({ then: charm.duration }).substring(3));
+	return "`$ID` `🗣️ $SET_ID` `$EMOJI` *`$TYPE`* $NAME `⏰ $DURATION` `💰 $PRICE`"
+		.replace("$ID", charm.id)
+		.replace("$SET_ID", charm.setID)
+		.replace("$EMOJI", charm.emoji)
+		.replace("$TYPE", charm.type)
+		.replace("$NAME", charm.name)
+		.replace("$PRICE", charm.price)
+		.replace("$DURATION", charm.duration);
 }
 
 module.exports = {

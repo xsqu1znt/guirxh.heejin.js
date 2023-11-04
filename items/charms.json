@@ -1,17 +1,38 @@
 [
 	{
+		"id": "C01",
 		"type": "dupeRepel",
+		"name": "Dupe Repellent",
 		"emoji": "🍀",
-		"setID": "C01",
+		"setID": "DR01",
 		"category": "chrm",
-		"description": "**Charm** *`Dev`*",
-
-		"stock": ["DR01", "DR02", "DR03"],
-
-		"items": [
-			{ "id": "DR01", "name": "Dupe Repellent", "price": 30000, "duration": "7d", "power": 75 },
-			{ "id": "DR02", "name": "Dupe Repellent", "price": 15000, "duration": "7d", "power": 50 },
-			{ "id": "DR03", "name": "Dupe Repellent", "price": 7500, "duration": "7d", "power": 25 }
-		]
+		"description": "*`Dev`* **Charm**",
+		"price": 30000,
+		"duration": "1w",
+		"power": 75
+	},
+	{
+		"id": "C02",
+		"type": "dupeRepel",
+		"name": "Dupe Repellent",
+		"emoji": "🍀",
+		"setID": "DR01",
+		"category": "chrm",
+		"description": "*`Dev`* **Charm**",
+		"price": 50000,
+		"duration": "1w",
+		"power": 50
+	},
+	{
+		"id": "C03",
+		"type": "dupeRepel",
+		"name": "Dupe Repellent",
+		"emoji": "🍀",
+		"setID": "DR01",
+		"category": "chrm",
+		"description": "*`Dev`* **Charm**",
+		"price": 60000,
+		"duration": "1w",
+		"power": 25
 	}
 ]

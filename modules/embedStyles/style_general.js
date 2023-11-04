@@ -268,7 +268,8 @@ function shop(user, userData) {
 			...embeds.card_sets,
 			embeds.card_rewards,
 			embeds.itemPacks,
-			embeds.badges
+			embeds.badges,
+			embeds.charms
 		].filter(a => (Array.isArray(a) && !a.length ? false : true)),
 
 		navigationData
