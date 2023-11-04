@@ -25,7 +25,7 @@ function getItem(id) {
 	id = id.toLowerCase();
 
 	// prettier-ignore
-	let item, itemType = ItemType.card;
+	let item, itemType = ItemType.card, itemParent;
 
 	// Test for cards
 	if (!item) {
@@ -47,18 +47,19 @@ function getItem(id) {
 
 	// Test for charms
 	if (!item) {
-		for (let charm of items.charms) {
-			let _item = charm.items.find(c => c.id.toLowerCase() === id);
+		for (let _charm of items.charms) {
+			let _item = _charm.items.find(c => c.id.toLowerCase() === id);
 
 			if (_item) {
 				item = _item;
 				itemType = ItemType.charm;
+				itemParent = _charm;
 				break;
 			}
 		}
 	}
 
-	return { item: item ? structuredClone(item) : null, type: item ? itemType : null };
+	return { item: item ? structuredClone(item) : null, type: item ? itemType : null, itemParent: itemParent || null };
 }
 
 /** @param {string} id */
@@ -342,6 +343,33 @@ function charm_toString_basic(charmID) {
 		.replace("DURATION", _jsT.eta({ then: charm.duration }).substring(3));
 }
 
+function badge_toString_setEntry(setID) {
+	let charms = items.charms.filter(c => c.setID === setID);
+	if (!charms.length) return "n/a";
+
+	let charms_first = charms.slice(-1)[0];
+
+	return "> **`$CATEGORY`** `🗣️ $SET_ID` `📁 $COUNT` `$EMOJI` $DESCRIPTION"
+		.replace("$CATEGORY", charms_first.category)
+		.replace("$SET_ID", charms_first.setID)
+		.replace("$COUNT", charms.length >= 10 ? charms.length : `0${charms.length}`)
+		.replace("$EMOJI", charms_first.emoji)
+		.replace("$DESCRIPTION", charms_first.description);
+}
+
+function charm_toString_shopEntry(charmID) {
+	let { item: charm, type: _itemType, itemParent: charmBase } = getItem(charmID);
+	if (!_itemType !== ItemType.charm) return null;
+
+	return "`$ID` `🗣️ $SET_ID` `$EMOJI` **$TYPE** $NAME $PRICE"
+		.replace("ID", charm.id)
+		.replace("EMOJI", charmBase.emoji)
+		.replace("TYPE", charBase.type)
+		.replace("NAME", charm.name)
+		.replace("POWER", charm.power)
+		.replace("DURATION", _jsT.eta({ then: charm.duration }).substring(3));
+}
+
 module.exports = {
 	items: {
 		cardPacks: {
@@ -365,9 +393,16 @@ module.exports = {
 			setEntry: cardPack_toString_setEntry,
 			shopEntry: cardPack_toString_shopEntry
 		},
+
 		badges: {
 			setEntry: badge_toString_setEntry,
 			shopEntry: badge_toString_shopEntry
+		},
+
+		charms: {
+			basic: charm_toString_basic,
+			setEntry: charm_toString_setEntry,
+			shopEntry: charm_toString_shopEntry
 		}
 	},
 

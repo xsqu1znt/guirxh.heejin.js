@@ -42,6 +42,10 @@ function shop(user, userData) {
 	// Sort badges by groups of similar set ID
 	let badges = itemManager.items.badges.general;
 
+	/* - - - - - { Parse Charms } - - - - - */
+	// Sort badges by groups of similar set ID
+	let charms = itemManager.items.charms.general;
+
 	/* - - - - - { Pages } - - - - - */
 	// Create the embed :: { SHOP - TEMPLATE }
 	let embed_shop = new BetterEmbed({ author: { text: "$USERNAME | shop", iconURL: true, user } });
@@ -57,6 +61,8 @@ function shop(user, userData) {
 		};
 
 		let badges_f = itemManager.items.badges.setIDs.general.map(setID => itemManager.toString.badges.setEntry(setID));
+
+		let charms_f = itemManager.items.charms.setIDs.general.map(setID => itemManager.toString.charms.setEntry(setID));
 
 		// Create the embed :: { SHOP - OVERVIEW }
 		let embed = embed_shop.copy({
@@ -75,6 +81,9 @@ function shop(user, userData) {
 
 		/* - - - - - { Badges } - - - - - */
 		if (badges_f.length) embed.addFields({ name: "`📛` Badges", value: badges_f.join("\n") });
+
+		/* - - - - - { Charms } - - - - - */
+		if (charms_f.length) embed.addFields({ name: "`🌟` Charms", value: charms_f.join("\n") });
 
 		// Set the embed's description
 		if (!embed.data.fields?.length) embed.setDescription("The shop is empty right now.\nCheck back later!");
@@ -144,14 +153,14 @@ function shop(user, userData) {
 		// Format Item Packs into strings
 		let packs_f = itemPacks.card.map(pack => itemManager.toString.cardPacks.shopEntry(pack.id));
 
-		/* - - - - - { Split Large Item Packs (MAX=3) } - - - - - */
+		/* - - - - - { Split Large Card Packs (MAX=3) } - - - - - */
 		let pack_chunks_f = _jsT.chunk(packs_f, 3);
 
 		/* - - - - - { Create the Embed Pages } - - - - - */
 		let embeds = [];
 
 		for (let i = 0; i < pack_chunks_f.length; i++) {
-			// Create the embed :: { Shop - Item Packs }
+			// Create the embed :: { Shop - Card Packs }
 			let _embed = embed_shop.copy({
 				description: pack_chunks_f[i].length ? pack_chunks_f[i].join("\n") : "This page is empty!",
 				footer: `Page ${i + 1}/${pack_chunks_f.length || 1}`
@@ -168,7 +177,7 @@ function shop(user, userData) {
 		// Format badges into strings
 		let _badges_f = badges.map(b => itemManager.toString.badges.shopEntry(b.id));
 
-		/* - - - - - { Split Large Badges Sets (MAX=10) } - - - - - */
+		/* - - - - - { Split Large Badge Sets (MAX=10) } - - - - - */
 		let _badges_chunks_f = _jsT.chunk(_badges_f, 10);
 
 		/* - - - - - { Create the Embed Pages } - - - - - */
@@ -179,6 +188,30 @@ function shop(user, userData) {
 			let _embed = embed_shop.copy({
 				description: _badges_chunks_f[i].length ? _badges_chunks_f[i].join("\n") : "This page is empty!",
 				footer: `Page ${i + 1}/${_badges_chunks_f.length || 1}`
+			});
+
+			_embeds.push(_embed);
+		}
+
+		// Return the embed array
+		return _embeds;
+	};
+
+	const shop_charms = () => {
+		// Format charms into strings
+		let _charms_f = charms.map(c => itemManager.toString.charms.shopEntry(c.id));
+
+		/* - - - - - { Split Large Charm Sets (MAX=10) } - - - - - */
+		let _charms_chunks_f = _jsT.chunk(_charms_f, 10);
+
+		/* - - - - - { Create the Embed Pages } - - - - - */
+		let _embeds = [];
+
+		for (let i = 0; i < _charms_chunks_f.length; i++) {
+			// Create the embed :: { Shop - Charms }
+			let _embed = embed_shop.copy({
+				description: _charms_chunks_f[i].length ? _charms_chunks_f[i].join("\n") : "This page is empty!",
+				footer: `Page ${i + 1}/${_charms_chunks_f.length || 1}`
 			});
 
 			_embeds.push(_embed);
@@ -205,7 +238,9 @@ function shop(user, userData) {
 		// Item Packs
 		itemPacks: shop_cardPacks(),
 		// Badges
-		badges: shop_badges()
+		badges: shop_badges(),
+		// Charms
+		charms: shop_charms()
 	};
 
 	let navigationData = [];
@@ -224,6 +259,7 @@ function shop(user, userData) {
 	if (embeds.card_rewards) navigationData.push({ emoji: "🎀", label: "Rewards", description: "Buy a special card" });
 	if (embeds.itemPacks) navigationData.push({ emoji: "📦", label: "Item Packs", description: "Buy a card pack" });
 	if (embeds.badges) navigationData.push({ emoji: "📛", label: "Badges", description: "Buy a badge" });
+	if (embeds.charms) navigationData.push({ emoji: "🌟", label: "Charms", description: "Buy a charm" });
 
 	return {
 		embeds: [
