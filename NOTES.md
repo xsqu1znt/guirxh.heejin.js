@@ -1,11 +1,8 @@
 ### **URGENT:**
- - make global id a link to the card's image in `/quest`
- - round down user xp
  - fix page jump
 
 ### **NEXT UP:**
- - `cardmanager.toString.setEntry` use card global ID instead of card object
- - add player target to `/missing`
+ - **`N/A`**
 
 ### **NEW COMMAND IDEAS:**
  - `/setting` `section:purge` | removes card(s) from user
@@ -17,13 +14,16 @@
  - request customs through heejin (uses modals)
 
 ### **UNRELATED REFACTORING:**
- - add fields to the `BetterEmbed` constructor and `send()`
- - `BetterEmbed.new()` | returns a new `BetterEmbed` with the same configuration
+ - **`N/A`**
 
 <!-- - - - - - - - - - - -->
 # **CHANGELOG:** *(last: v2.0.95.1 | current: v2.1)*
- - overall design changes
  - optimized backend
- - removed gift/sell limit (due to discord's embed limitations)
- - added a list to `/reminders` to see what you have enabled/notification mode
+ - overall design changes
+
  - can set whether your reminders are sent to the last channel the command was ran or through DMs
+
+ - removed gift/sell limit (due to discord's embed limitations)
+
+ - added a list to `/reminders` to see what you have enabled/notification mode
+ - added a player option to `/missing`

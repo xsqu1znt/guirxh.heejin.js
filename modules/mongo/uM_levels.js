@@ -44,7 +44,7 @@ async function xp_levelUp(userID) {
 
 		if (userData.xp >= userData.xp_for_next_level) {
 			// Subtract the required XP to level up from the user
-			userData.xp = userData.xp - userData.xp_for_next_level || 0;
+			userData.xp = Math.floor(userData.xp - userData.xp_for_next_level) || 0;
 
 			// Increase the user's level
 			userData.level++;
