@@ -342,7 +342,7 @@ function toString_inventoryEntry(card, options) {
 	if (options.onTeam) extra.push("👯");
 
 	// prettier-ignore
-	let f = "> $UID `$GID` `🗣️ $SET`\n> `$EMOJI` **$SINGLE** *`$GROUP`* $NAME $DUPE\n> `LV. $LVL` `$CATEGORY` `💰 $SELL` `🎤 $ABI` : `💖 $REP`\n> $EXTRA"
+	let f = "> $UID `$GID` `🗣️ $SET`\n> `$EMOJI` **$SINGLE** `[$GROUP]` $NAME $DUPE\n> `LV. $LVL` `$CATEGORY` `💰 $SELL` `🎤 $ABI` : `💖 $REP`\n> $EXTRA"
 		.replace(" $UID", card?.uid ? ` **\`${card.uid}\`**` : "")
 		.replace("$GID", card.globalID)
 		.replace("$SET", card.setID)
@@ -373,7 +373,7 @@ function toString_inventoryEntry(card, options) {
 	// prettier-ignore
 	// Format duplicate option
 	if (options.duplicate === true)
-		f = f.replace(" $DUPE", ` *${superscript.dupe}*`);
+		f = f.replace(" $DUPE", ` ***${superscript.dupe}***`);
 	else if (!isNaN(options.duplicate) && options.duplicate > 0)
 		f = f.replace(" $DUPE", ` **-- ${String(options.duplicate).split("").map(n => superscript.numbers[+n]).join("")}**`);
 	else
@@ -383,31 +383,13 @@ function toString_inventoryEntry(card, options) {
 }
 
 function toString_missingEntry(card, userOwnsCard = false) {
-	return (
-		"> `$MISSING` **`$GLOBAL_ID`**\n> `$EMOJI` **$SINGLE** *`$GROUP`* - $NAME"
-			.replace("$MISSING", userOwnsCard ? "✔️ owned" : "❌ missing")
-			.replace("$GLOBAL_ID", card.globalID)
-			// .replace("$SET", card.setID)
-
-			.replace("$EMOJI", card.emoji)
-			.replace("$SINGLE", card.single)
-			.replace("$GROUP", card.group)
-			// .replace("$DESCRIPTION", card.description)
-			.replace("$NAME", markdown.link(card.name, card.imageURL))
-	);
-
-	/* return "%GLOBAL_ID %EMOJI %GROUP :: %SINGLE - %NAME\n> %SET_ID %RARITY %CATEGORY %MISSING"
-		.replace("%GLOBAL_ID", `\`${card.globalID}\``)
-		.replace("%EMOJI", `\`${card.emoji}\``)
-		.replace("%GROUP", `**${card.group}**`)
-		.replace("%SINGLE", card.single)
-		.replace("%NAME", markdown.link(card.name, card.imageURL))
-
-		.replace("%SET_ID", `\`🗣️${card.setID}\``)
-		.replace("%RARITY", `\`R${card.rarity}\``)
-		.replace("%CATEGORY", `\`${card.category}\``)
-		
-		.replace("%MISSING", userOwnsCard ? "`✔️ owned`" : "`🚫 missing`"); */
+	return "> `$MISSING` **`$GLOBAL_ID`**\n> `$EMOJI` **$GROUP** `[$SINGLE]` $NAME"
+		.replace("$MISSING", userOwnsCard ? "✔️ owned" : "❌ missing")
+		.replace("$GLOBAL_ID", card.globalID)
+		.replace("$EMOJI", card.emoji)
+		.replace("$SINGLE", card.single)
+		.replace("$GROUP", card.group)
+		.replace("$NAME", markdown.link(card.name, card.imageURL));
 }
 
 function toString_shopEntry(globalID) {
@@ -417,7 +399,7 @@ function toString_shopEntry(globalID) {
 	// prettier-ignore
 	let { currency_1: { EMOJI: carrot }, currency_2: { EMOJI: ribbon } } = config.bot.emojis;
 
-	return "`$GID` `🗣️ $SET_ID` `$EMOJI` *`$GROUP`* **$SINGLE** $NAME `$PRICE`"
+	return "`$GID` `🗣️ $SET_ID` `$EMOJI` **$GROUP** `[$SINGLE]` $NAME `$PRICE`"
 		.replace("$GID", card.globalID)
 		.replace("$SET_ID", card.setID)
 		.replace("$EMOJI", card.emoji)

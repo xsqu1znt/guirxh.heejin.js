@@ -32,19 +32,16 @@ function shop(user, userData) {
 		special: cardManager.cards.shop.setIDs.special.map(setID => cards.special.filter(c => c.setID === setID))
 	};
 
-	/* - - - - - { Parse Item Packs } - - - - - */
-	// Get card packs and sort by set ID :: { ASCENDING }
-	let itemPacks = {
-		card: itemManager.items.cardPacks.general.sort((a, b) => a.setID - b.setID)
+	/* - - - - - { Parse Item } - - - - - */
+	let items = {
+		// Get card packs and sort by set ID :: { ASCENDING }
+		card: itemManager.items.cardPacks.general.sort((a, b) => a.setID - b.setID),
+		charms: itemManager.items.charms.general
 	};
 
 	/* - - - - - { Parse Badges } - - - - - */
 	// Sort badges by groups of similar set ID
 	let badges = itemManager.items.badges.general;
-
-	/* - - - - - { Parse Charms } - - - - - */
-	// Sort badges by groups of similar set ID
-	let charms = itemManager.items.charms.general;
 
 	/* - - - - - { Pages } - - - - - */
 	// Create the embed :: { SHOP - TEMPLATE }
@@ -56,13 +53,12 @@ function shop(user, userData) {
 			special: cardManager.cards.shop.setIDs.special.map(setID => cardManager.toString.setEntry({ setID }))
 		};
 
-		let itemPacks_f = {
-			card: itemManager.items.cardPacks.setIDs.general.map(setID => itemManager.toString.cardPacks.setEntry(setID))
+		let items_f = {
+			card: itemManager.items.cardPacks.setIDs.general.map(setID => itemManager.toString.cardPacks.setEntry(setID)),
+			charms: itemManager.items.charms.setIDs.general.map(setID => itemManager.toString.charms.setEntry(setID))
 		};
 
 		let badges_f = itemManager.items.badges.setIDs.general.map(setID => itemManager.toString.badges.setEntry(setID));
-
-		let charms_f = itemManager.items.charms.setIDs.general.map(setID => itemManager.toString.charms.setEntry(setID));
 
 		// Create the embed :: { SHOP - OVERVIEW }
 		let embed = embed_shop.copy({
@@ -73,17 +69,17 @@ function shop(user, userData) {
 		});
 
 		/* - - - - - { Cards } - - - - - */
-		if (card_sets_f.general.length) embed.addFields({ name: "`🃏` Cards", value: card_sets_f.general.join("\n") });
-		if (card_sets_f.special.length) embed.addFields({ name: "`🎀` Rewards", value: card_sets_f.special.join("\n") });
+		if (card_sets_f.general.length) embed.addFields({ name: "`🃏` Cards", value: card_sets_f.general.join("\n"), inline: true });
+		if (card_sets_f.special.length) embed.addFields({ name: "`🎀` Rewards", value: card_sets_f.special.join("\n"), inline: true });
 
 		/* - - - - - { Items } - - - - - */
-		if (itemPacks_f.card.length) embed.addFields({ name: "`📦` Items", value: itemPacks_f.card.join("\n") });
+		let _items_f = [];
+		if (items_f.card.length) _items_f.push(...items_f.card)
+		if (items_f.charms.length) _items_f.push(...items_f.charms);
+		if (_items_f.length) embed.addFields({ name: "`📦` Items", value: _items_f.join("\n"), inline: true });
 
 		/* - - - - - { Badges } - - - - - */
-		if (badges_f.length) embed.addFields({ name: "`📛` Badges", value: badges_f.join("\n") });
-
-		/* - - - - - { Charms } - - - - - */
-		if (charms_f.length) embed.addFields({ name: "`🌟` Charms", value: charms_f.join("\n") });
+		if (badges_f.length) embed.addFields({ name: "`📛` Badges", value: badges_f.join("\n"), inline: true });
 
 		// Set the embed's description
 		if (!embed.data.fields?.length) embed.setDescription("The shop is empty right now.\nCheck back later!");
@@ -151,7 +147,7 @@ function shop(user, userData) {
 
 	const shop_cardPacks = () => {
 		// Format Item Packs into strings
-		let packs_f = itemPacks.card.map(pack => itemManager.toString.cardPacks.shopEntry(pack.id));
+		let packs_f = items.card.map(pack => itemManager.toString.cardPacks.shopEntry(pack.id));
 
 		/* - - - - - { Split Large Card Packs (MAX=3) } - - - - - */
 		let pack_chunks_f = _jsT.chunk(packs_f, 3);
@@ -199,7 +195,7 @@ function shop(user, userData) {
 
 	const shop_charms = () => {
 		// Format charms into strings
-		let _charms_f = charms.map(c => itemManager.toString.charms.shopEntry(c.id));
+		let _charms_f = items.charms.map(c => itemManager.toString.charms.shopEntry(c.id));
 
 		/* - - - - - { Split Large Charm Sets (MAX=10) } - - - - - */
 		let _charms_chunks_f = _jsT.chunk(_charms_f, 10);

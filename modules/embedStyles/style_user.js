@@ -351,7 +351,7 @@ function cooldowns(user, userData) {
 	let cooldowns_f = cooldowns.map(cd => {
 		let _eta = _jsT.eta({ then: cd.timestamp, ignorePast: true });
 
-		return "`$AVAILABILITY $TYPE:` **$TIME**"
+		return "`$AVAILABILITY` **$TYPE** `[$TIME]`"
 			.replace("$AVAILABILITY", _eta ? "❌" : "✔️")
 			.replace("$TYPE", _jsT.toTitleCase(cd.type.replace(/_/g, " ")))
 			.replace("$TIME", _eta ? time(_jsT.msToSec(cd.timestamp), TimestampStyles.RelativeTime) : "Available");

@@ -39,7 +39,7 @@ async function clean(userID) {
 
 /** @param {string} userID @param {Charm[]} charms  */
 async function set(userID, charms) {
-	if (!charms || charms.filter(c => c?.id)) return;
+	if (!charms || (Array.isArray(charms) && charms.filter(c => c?.id))) return;
 
 	// Create an array if only a single charm object was passed
 	charms = _jsT.isArray(charms).filter(c => c?.id);

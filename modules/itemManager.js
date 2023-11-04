@@ -306,14 +306,14 @@ function badge_toString_shopEntry(badgeID) {
 /* - - - - - { Charms } - - - - - */
 async function charm_buy(userID, charmID) {
 	let { item: charm, type: _itemType } = getItem(charmID);
-	if (!badge || _itemType !== ItemType.charm) return null;
+	if (!charm || _itemType !== ItemType.charm) return null;
 
 	/// Check if the user has enough to complete the purchase
 	let userData = await userManager.fetch(userID, { type: "balance" });
 	if (charm.price > userData.balance) return { balance: userData.balance };
 
 	// Set the charm's expiration date
-	charm.data.expiration = _jsT.parseTime(charm.data.duration, { fromNow: true });
+	charm.expiration = _jsT.parseTime(charm.duration, { fromNow: true });
 
 	await Promise.all([
 		// Subtract the badge's price from the user's balance
@@ -322,7 +322,7 @@ async function charm_buy(userID, charmID) {
 		userManager.charms.set(userID, charm)
 	]);
 
-	return charm;
+	return { charm, balance: userData.balance - (charm.price || 0) };
 }
 
 function charm_toString_basic(charmID) {

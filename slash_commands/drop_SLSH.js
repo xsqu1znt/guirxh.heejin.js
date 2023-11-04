@@ -35,15 +35,15 @@ module.exports = {
 		let dropType = `drop_${interaction.options.getString("card")}`;
 
 		/// Check if the user has an active cooldown :: { DROP }
-		let cooldown_drop = await userManager.cooldowns.check(interaction.user.id, dropType);
+		// let cooldown_drop = await userManager.cooldowns.check(interaction.user.id, dropType);
 		// prettier-ignore
-		if (cooldown_drop) return await cooldown_ES.send({
+		/* if (cooldown_drop) return await cooldown_ES.send({
 			interaction, ephemeral: true,
 			description: `Your drop will be ready **${cooldown_drop}**`
-		});
+		}); */
 
 		// Create the embed :: { DROP }
-		let embed_drop = new BetterEmbed({ interaction, author: { text: "$USERNAME | drop", user: interaction.member } });
+		let embed_drop = new BetterEmbed({ interaction, author: { text: "$USERNAME | drop", iconURL: true } });
 
 		let cards = [];
 
@@ -83,16 +83,17 @@ module.exports = {
 			// Add the cards to the user's card_inventory
 			userManager.inventory.add(interaction.user.id, cards),
 			// Give the user XP
-			userManager.xp.increment(
+			userManager.levels.xp.increment(
 				interaction.user.id,
-				_jsT.randomNumber(config_player.xp.user.rewards.drop.MIN, config_player.xp.user.rewards.drop.MAX)
-			),
+				_jsT.randomNumber(config_player.xp.user.rewards.drop.MIN, config_player.xp.user.rewards.drop.MAX),
+				"drop"
+			)
 			// Update the user's quest progress
-			userManager.quest.progress.increment.inventory(interaction.user.id, cards.length),
+			// userManager.quest.progress.increment.inventory(interaction.user.id, cards.length),
 			// Reset the user's cooldown :: { DROP }
-			userManager.cooldowns.set(interaction.user.id, dropType),
+			// userManager.cooldowns.set(interaction.user.id, dropType),
 			// Set the user's next reminder :: { DROP }
-			userManager.reminders.set(interaction.user.id, dropType)
+			// userManager.reminders.set(interaction.user.id, dropType)
 		]);
 
 		/// Update drop embed
@@ -104,7 +105,7 @@ module.exports = {
 			cardManager.toString.inventoryEntry(c, {
 				duplicate: userParser.cards.hasDuplicates(userData, c.globalID),
 				simplify: true
-			})
+			}).substring(2)
 		);
 
 		// Add the index for each card in the list
@@ -115,9 +116,8 @@ module.exports = {
 
 		embed_drop.addFields(
 			...cards_f.map((f, idx) => ({
-				name: cards_f.length > 1 ? config_bot.emojis.numbers[idx].EMOJI : "\u200b",
-				value: f,
-				inline: true
+				name: "\u200b",
+				value: `${cards_f.length > 1 ? `${config_bot.emojis.numbers[idx].EMOJI}` : ""} ${f}`
 			}))
 		);
 
