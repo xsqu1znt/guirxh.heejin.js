@@ -2,7 +2,8 @@
  - fix page jump
 
 ### **NEXT UP:**
- - **`N/A`**
+ - enable cooldowns
+ - enable reminders
 
 ### **NEW COMMAND IDEAS:**
  - `/setting` `section:purge` | removes card(s) from user
