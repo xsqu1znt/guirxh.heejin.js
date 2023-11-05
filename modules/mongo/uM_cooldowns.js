@@ -17,7 +17,7 @@ async function upsert(userID, cooldownType) {
 
 	/// Add a new cooldown to the user's data
 	cooldown = new UserCooldown(cooldownType);
-	await userData_update(userID, { $addToSet: { [`cooldowns.${cooldownType}`]: { ...cooldown } } });
+	await userManager.update(userID, { $addToSet: { cooldowns: cooldown } });
 
 	return cooldown;
 }
@@ -37,7 +37,7 @@ async function set(userID, cooldownType) {
 	cooldown.timestamp = _jsT.parseTime(config.player.cooldowns[cooldownType.toUpperCase()], { fromNow: true });
 
 	// prettier-ignore
-	await userData_update(
+	await userManager.update(
         { _id: userID, "cooldowns.type": cooldownType },
         { $set: { "cooldowns.$": cooldown } }
     );

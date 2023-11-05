@@ -77,7 +77,7 @@ const schema_questData = new Schema(
 	{
 		_id: { type: String, require: true },
 
-		carrot: Number,
+		balance: Number,
 		ribbons: Number,
 		inventory_count: Number,
 		level_user: Number,

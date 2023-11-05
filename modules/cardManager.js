@@ -368,7 +368,7 @@ function toString_inventoryEntry(card, options) {
 
 		.replace("$ABI", card.stats.ability)
 		.replace("$REP", card.stats.reputation)
-		.replace("> $EXTRA", extra.length ? `> ${extra.join(" ")}` : "");
+		.replace("\n> $EXTRA", extra.length ? `\n> ${extra.join(" ")}` : "");
 
 	// prettier-ignore
 	// Format duplicate option

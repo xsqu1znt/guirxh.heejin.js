@@ -17,7 +17,7 @@ async function upsert(userID, reminderType) {
 
 	/// Add a new reminder to the user's data
 	reminder = new UserReminder(reminderType, "channel", false);
-	await userManager.update(userID, { $addToSet: { [`reminders.${reminderType}`]: { ...reminder } } });
+	await userManager.update(userID, { $addToSet: { reminders: reminder } });
 
 	return reminder;
 }
@@ -28,7 +28,7 @@ async function toggle(userID, reminderType) {
 	reminder.enabled = !reminder.enabled;
 
 	// prettier-ignore
-	await userData_update(
+	await userManager.update(
         { _id: userID, "reminders.type": reminderType },
         { $set: { "reminders.$.enabled": reminder.enabled } }
     );
@@ -43,7 +43,7 @@ async function set(userID, reminderType, channelID) {
 	reminder.channelID = channelID;
 
 	// prettier-ignore
-	await userData_update(
+	await userManager.update(
         { _id: userID, "reminders.type": reminderType },
         { $set: { "reminders.$": reminder } }
     );
@@ -56,7 +56,7 @@ async function setMode(userID, reminderType, mode) {
 	let reminder = await upsert(userID, reminderType);
 
 	// prettier-ignore
-	await userData_update(
+	await userManager.update(
         { _id: userID, "reminders.type": reminderType },
         { $set: { "reminders.$.mode": mode } }
     );

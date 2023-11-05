@@ -34,14 +34,15 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-		let dropType = `drop_${interaction.options.getString("card")}`;
+		let choice = interaction.options.getString("card");
+		let dropType = `drop_${choice}`;
 
 		// Check if the user has an active cooldown :: { DROP }
 		let cooldown_drop = await userManager.cooldowns.eta(interaction.user.id, dropType);
 		// prettier-ignore
 		if (cooldown_drop) return await cooldown_ES.send({
 			interaction, ephemeral: true,
-			description: `Your \`${_jsT.toTitleCase(dropType)}\` will be ready **${cooldown_drop}**`
+			description: `Your \`${_jsT.toTitleCase(dropType.replace("_", " "))}\` will be ready **${cooldown_drop}**`
 		});
 
 		// Create the embed :: { DROP }
@@ -53,12 +54,12 @@ module.exports = {
 		switch (dropType) {
 			case "drop_general":
 				embed_drop.setAuthor("$USERNAME | drop");
-				cards = await dropManager.drop(interaction.user.id, dropType);
+				cards.push(...(await dropManager.drop(interaction.user.id, choice)));
 				break;
 
 			case "drop_weekly":
 				embed_drop.setAuthor("$USERNAME | weekly");
-				cards = await dropManager.drop(interaction.user.id, dropType);
+				cards.push(...(await dropManager.drop(interaction.user.id, choice)));
 				break;
 
 			case "drop_season":
@@ -68,7 +69,7 @@ module.exports = {
 				});
 
 				embed_drop.setAuthor("$USERNAME | season");
-				cards = await dropManager.drop(interaction.user.id, dropType);
+				cards.push(...(await dropManager.drop(interaction.user.id, choice)));
 				break;
 
 			case "drop_event_1":
@@ -78,7 +79,7 @@ module.exports = {
 				});
 
 				embed_drop.setAuthor("$USERNAME | event 1");
-				cards = await dropManager.drop(interaction.user.id, dropType);
+				cards.push(...(await dropManager.drop(interaction.user.id, choice)));
 				break;
 
 			case "drop_event_2":
@@ -88,7 +89,7 @@ module.exports = {
 				});
 
 				embed_drop.setAuthor("$USERNAME | event 2");
-				cards = await dropManager.drop(interaction.user.id, dropType);
+				cards.push(...(await dropManager.drop(interaction.user.id, choice)));
 				break;
 		}
 
@@ -117,9 +118,10 @@ module.exports = {
 
 		// prettier-ignore
 		// Format the cards into strings
-		let cards_f = cards.map((c, idx) => cardManager.toString.inventoryEntry(c, { duplicate: cards_isDupe[idx] }))
+		let cards_f = cards.map((c, idx) => cardManager.toString.inventoryEntry(c, { duplicate: cards_isDupe[idx] })
 			// Get rid of the (> ) quote markdown
-			.substring(2);
+			.substring(2)
+		);
 
 		// Index the cards if there's more than 1
 		if (cards_f.length > 1) cards_f = cards_f.map((str, idx) => `${config.bot.emojis.numbers[idx].EMOJI} ${str}`);
@@ -128,10 +130,11 @@ module.exports = {
 		let cards_last = cards.slice(-1)[0];
 
 		// Add the card info to the embed as fields
-		embed_drop.addFields(...cards_f.map(f => ({ name: "\u200b", value: f })));
+		// embed_drop.addFields(...cards_f.map(f => ({ name: "\u200b", value: f })));
 
 		// Send the embed
 		return await embed_drop.send({
+			description: cards_f.join("\n"),
 			imageURL: cards_last.imageURL,
 			footer: {
 				text: "React to sell",
