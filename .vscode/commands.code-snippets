@@ -9,11 +9,7 @@
 			"const _jsT = require(\"../modules/jsTools/_jsT\");\n",
 
 			"module.exports = {",
-			"    // prettier-ignore",
-			"    options: {",
-			"        icon: \"🍪\", deferReply: false",
-			"        // botAdminOnly: true // guildAdminOnly: true",
-			"    },\n",
+			"    options: { icon: \"🍪\", deferReply: false, botAdminOnly: false, guildAdminOnly: false },\n",
 
 			"    // prettier-ignore",
 			"    builder: new SlashCommandBuilder().setName(\"${1:cookie}\")",
@@ -29,8 +25,8 @@
 
 			"        // prettier-ignore",
 			"        let embed_cookie = new BetterEmbed({",
-			"            interaction, author: { user: interaction.member },",
-			"            description: _jsT.choice(choices), showTimestamp: true",
+			"            interaction, author: { iconURL: true },",
+			"            description: _jsT.choice(choices), timestamp: true",
 			"        });\n",
 
 			"        return await embed_cookie.send();$0",
