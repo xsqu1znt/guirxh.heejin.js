@@ -41,6 +41,7 @@ async function set(userID, reminderType, channelID) {
 	let reminder = await upsert(userID, reminderType);
 
 	reminder.channelID = channelID;
+	reminder.timestamp = _jsT.parseTime(config.player.cooldowns[reminderType.toUpperCase()], { fromNow: true });
 
 	// prettier-ignore
 	await userManager.update(
