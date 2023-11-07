@@ -98,7 +98,7 @@ module.exports = {
 				"drop"
 			),
 			// Update the user's quest progress
-			userManager.quests.progress.increment.inventory(interaction.user.id, cards.length),
+			userManager.quests.increment.inventory(interaction.user.id, cards.length),
 			// Reset the user's cooldown :: { DROP }
 			userManager.cooldowns.set(interaction.user.id, dropType),
 			// Set the user's next reminder :: { DROP }

@@ -8,33 +8,37 @@ const CommandTypes_XP = ["drop", "random"];
 
 const userManager = require("./uM_index");
 
-/** @param {string} userID @param */
-async function insert(userID) {
-	if (!(await userManager.models.userStatistics.exists({ _id: userID })))
-		return await new userManager.models.userStatistics({ _id: userID, timestamp_data_created: Date.now() }).save();
+/** @param {string} userID @param {boolean} upsert */
+async function exists(userID, upsert = false) {
+	let exists = await userManager.models.userStatistics.exists({ _id: userID });
 
+	if (!exists && upsert) await upsert(userID);
+
+	return exists || upsert ? true : false;
+}
+
+/** @param {string} userID @param */
+async function insert(userID, query = {}) {
+	if (!exists({ _id: userID }))
+		return await new userManager.models.userStatistics({
+			_id: userID,
+			timestamp_data_created: Date.now(),
+			...query
+		}).save();
+}
+
+/** @param {string} userID */
+async function fetch(userID) {
 	return (await userManager.models.userStatistics.findById(userID)) || null;
 }
 
-/** @param {string} userID @param {boolean} upsert */
-async function fetch(userID, upsert = true) {
-	let userDataStats = (await userManager.models.userStatistics.findById(userID)) || null;
-
-	if (!userDataStats && upsert) return await insert();
-
-	return userDataStats;
+/** @param {string} userID @param {{}} query */
+async function update(userID, query) {
+	await insert(userID);
+	return userManager.models.userStatistics.findByIdAndUpdate(userID, query);
 }
 
-/** @param {string | {}} filter userID or filter @param {{}} query */
-async function update(filter, query) {
-	// prettier-ignore
-	if (typeof filter === "object")
-        return await userManager.models.userStatistics.updateOne(filter, query);
-    else
-        return await userManager.models.userStatistics.findByIdAndUpdate(filter, query);
-}
-
-/// Commands
+/* - - - - - { Commands } - - - - - */
 /** @param {string} userID @param */
 async function commandsExecuted_count(userID) {
 	// prettier-ignore
@@ -50,8 +54,6 @@ async function commandsExecuted_count(userID) {
 
 /** @param {string} userID @param {options_commandsUsed_increment} options */
 async function commandsExecuted_push(userID, options) {
-	await insert(userID);
-
 	options = { name: "", timestamp: Date.now(), ...options };
 
 	// Create the command data
@@ -60,20 +62,16 @@ async function commandsExecuted_push(userID, options) {
 	await update(userID, { $push: { "commands.executed": data } });
 }
 
-/// Levels
+/* - - - - - { Levels } - - - - - */
 /** @param {string} userID @param {number} amount @param {CommandType_XP} commandType_XP  */
 async function level_xp_increment(userID, amount, commandType_XP) {
-	await insert(userID);
-
 	if (!CommandTypes_XP.includes(commandType_XP)) return;
 	await update(userID, { $inc: { [`level.xp.${commandType_XP}`]: amount } });
 }
 
-/// Balance
+/* - - - - - { Balance } - - - - - */
 /** @param {string} userID @param {number} amount @param {CurrencyType} currencyType  */
 async function balance_increment(userID, amount, currencyType = "carrot") {
-	await insert(userID);
-
 	if (!CurrencyTypes.includes(currencyType)) return;
 	await update(userID, { $inc: { [`balance.${currencyType}`]: amount } });
 }

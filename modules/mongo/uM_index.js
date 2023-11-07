@@ -18,9 +18,7 @@
 
 // const badgeManager = require('./badgeManager');
 const cardManager = require("../cardManager");
-const userParser = require("../userParser");
 const _jsT = require("../jsTools/_jsT");
-const logger = require("../logger");
 
 const playerConfig = require("../../configs/config_player.json");
 
@@ -61,8 +59,6 @@ async function userData_insert(userID, query = {}) {
 		timestamp_started: Date.now(),
 		...query
 	}).save();
-
-	return (await userData_fetch(userID)) || null;
 }
 
 /** @param {string} userID @param {UserDataFetchOptions} options */

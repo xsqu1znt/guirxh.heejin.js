@@ -194,8 +194,11 @@ async function cardPack_buy(userID, packID) {
 	let userData = await userManager.fetch(userID, { type: "balance" });
 	if (cardPack.price > userData.balance) return { balance: userData.balance };
 
+	// prettier-ignore
 	// Choose which cards the user gets
-	let cards = await dropManager.drop(userID, "cardPack", { count: cardPack.content.count, sets: cardPack.content.sets });
+	let { cards, dupeIndex } = await dropManager.drop(userID, "cardPack", {
+		count: cardPack.content.count, sets: cardPack.content.sets
+	});
 
 	await Promise.all([
 		// Subtract the card pack's price from the user's balance
@@ -204,13 +207,9 @@ async function cardPack_buy(userID, packID) {
 		userManager.inventory.add(userID, cards)
 	]);
 
-	// prettier-ignore
-	// Check which cards the user already has
-	let cards_isDupe = await userManager.inventory.has(userID, cards.map(c => c.globalID));
-
 	// Format the cards into strings
 	let cards_f = cards.map((c, idx) =>
-		cardManager.toString.inventoryEntry(c, { simplify: true, duplicate: cards_isDupe[idx] })
+		cardManager.toString.inventoryEntry(c, { simplify: true, duplicate: dupeIndex[idx] })
 	);
 
 	// prettier-ignore
