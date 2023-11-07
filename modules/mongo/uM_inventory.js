@@ -30,9 +30,9 @@ async function exists(userID, uids) {
 
 /** @param {string} userID @param {string | string[]} globalIDs */
 async function has(userID, globalIDs) {
-	if (!globalIDs) return null;
+	if (!globalIDs || (Array.isArray(globalIDs) && !globalIDs.length)) return;
 
-	// Create an array if only a single card UID was passed
+	// Create an array if only a single card global ID was passed
 	globalIDs = _jsT.isArray(globalIDs);
 
 	/// Check the user's card_inventory for the specified global IDs
@@ -121,18 +121,19 @@ async function add(userID, cards) {
 	cards = _jsT.isArray(cards).filter(c => c?.globalID);
 
 	// Parse the given cards
-	let _cards = structuredClone(cards);
+	let _cards = cards.map(c => {
+		// Deep copies the object to avoid conflictions
+		c = structuredClone(c);
 
-	for (let i = 0, c = _cards[i]; i < _cards.length; i++) {
 		// Reset the card's UID if needed
-		if (!c.uid) cardManager.resetUID(_cards[i]);
+		if (!c.uid) cardManager.resetUID(c);
 
-		// Parse the card into a CardLike object (ignores custom cards)
-		_cards[i] = cardManager.parse.toCardLike(c);
-	}
+		// Return a CardLike object (does not change custom cards)
+		return cardManager.parse.toCardLike(c);
+	});
 
+	/** Check for duplicate card UIDs in the user's card_inventory */
 	const testUIDs = async () => {
-		/// Look for cards in the user's card_inventory that have the save UIDs as cards in cards_parsed
 		let pipeline = [
 			{ $unwind: "$card_inventory" },
 			{ $match: { _id: userID, "card_inventory.uid": { $in: _cards.map(c => c.uid) } } },
@@ -142,13 +143,11 @@ async function add(userID, cards) {
 		let uids = (await userManager.models.user.aggregate(pipeline))[0]?.uids || [];
 		if (!uids.length) return; // Do nothing if no UIDs were found
 
-		// Iterate through each found UID and make a note of the card's index so we can reset it later
+		/// Iterate through each card and check if its UID matches
 		let reset = [];
-		// prettier-ignore
-		uids.forEach((uid, idx) => { if (uids.includes(_cards[idx].uid)) reset.push(idx); });
+		_cards.forEach((c, idx) => (uids.includes(c.uid) ? reset.push(idx) : false));
 
 		// Reset card UIDs
-		// prettier-ignore
 		if (reset.length) reset.forEach(i => cardManager.resetUID(_cards[i]));
 		return await testUIDs();
 	};
@@ -158,8 +157,8 @@ async function add(userID, cards) {
 	// Push the new cards to the user's card_inventory
 	await userManager.update(userID, { $push: { card_inventory: { $each: _cards } } });
 
-	// Add the new cards' UIDs to the given card array
-	cards.forEach((c, idx) => (c.uid = `${_cards[idx].uid}`));
+	// Append the new UIDs to the original array
+	_cards.forEach((c, idx) => (cards[idx].uid = c.uid));
 
 	return _cards;
 }

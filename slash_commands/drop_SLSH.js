@@ -49,17 +49,13 @@ module.exports = {
 		let embed_drop = new BetterEmbed({ interaction, author: { text: "$USERNAME | drop", iconURL: true } });
 
 		/* - - - - - { Drop the Cards } - - - - - */
-		let cards = [];
-
 		switch (dropType) {
 			case "drop_general":
 				embed_drop.setAuthor("$USERNAME | drop");
-				cards.push(...(await dropManager.drop(interaction.user.id, choice)));
 				break;
 
 			case "drop_weekly":
 				embed_drop.setAuthor("$USERNAME | weekly");
-				cards.push(...(await dropManager.drop(interaction.user.id, choice)));
 				break;
 
 			case "drop_season":
@@ -69,7 +65,6 @@ module.exports = {
 				});
 
 				embed_drop.setAuthor("$USERNAME | season");
-				cards.push(...(await dropManager.drop(interaction.user.id, choice)));
 				break;
 
 			case "drop_event_1":
@@ -79,7 +74,6 @@ module.exports = {
 				});
 
 				embed_drop.setAuthor("$USERNAME | event 1");
-				cards.push(...(await dropManager.drop(interaction.user.id, choice)));
 				break;
 
 			case "drop_event_2":
@@ -89,9 +83,10 @@ module.exports = {
 				});
 
 				embed_drop.setAuthor("$USERNAME | event 2");
-				cards.push(...(await dropManager.drop(interaction.user.id, choice)));
 				break;
 		}
+
+		let { cards, dupeIndex } = await dropManager.drop(interaction.user.id, choice);
 
 		/* - - - - - { Update User Data } - - - - - */
 		await Promise.all([
@@ -113,12 +108,8 @@ module.exports = {
 
 		/* - - - - - { Edit the Embed } - - - - - */
 		// prettier-ignore
-		// Check if the user has duplicates of what was dropped
-		let cards_isDupe = await userManager.inventory.has(interaction.user.id, cards.map(c => c.globalID));
-
-		// prettier-ignore
 		// Format the cards into strings
-		let cards_f = cards.map((c, idx) => cardManager.toString.inventoryEntry(c, { duplicate: cards_isDupe[idx] })
+		let cards_f = cards.map((c, idx) => cardManager.toString.inventoryEntry(c, { duplicate: dupeIndex[idx] })
 			// Get rid of the (> ) quote markdown
 			.substring(2)
 		);
@@ -134,7 +125,7 @@ module.exports = {
 
 		// Send the embed
 		return await embed_drop.send({
-			description: cards_f.join("\n"),
+			description: cards_f.join("\n\n"),
 			imageURL: cards_last.imageURL,
 			footer: {
 				text: "React to sell",

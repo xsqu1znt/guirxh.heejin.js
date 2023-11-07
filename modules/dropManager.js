@@ -163,25 +163,28 @@ async function drop(userID, dropType, cardPackOptions) {
 		return cards.map(c => c.card);
 	};
 
+	let cards = null;
+
+	// prettier-ignore
 	switch (dropType) {
-		// prettier-ignore
-		case "general": return await drop_general();
+		case "general": cards = await drop_general(); break;
 
-		// prettier-ignore
-		case "weekly": return await drop_weekly();
+		case "weekly": cards = await drop_weekly(); break;
 
-		// prettier-ignore
-		case "season": return await drop_season();
+		case "season": cards = await drop_season(); break;
 
-		// prettier-ignore
-		case "event_1": return await drop_event(1);
+		case "event_1": cards = await drop_event(1); break;
 
-		// prettier-ignore
-		case "event_2": return await drop_event(2);
+		case "event_2": cards = await drop_event(2); break;
 
-		// prettier-ignore
-		case "cardPack": return await drop_cardPack();
+		case "cardPack": cards = await drop_cardPack(); break;
 	}
+
+	// prettier-ignore
+	// Check if the user has duplicates of what was dropped
+	let dupeIndex = await userManager.inventory.has(userID, cards.map(c => c.globalID));
+
+	return { cards, dupeIndex };
 }
 
 module.exports = { drop };
