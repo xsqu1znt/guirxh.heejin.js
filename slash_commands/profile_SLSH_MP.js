@@ -17,39 +17,39 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-		let user = interaction.options.getUser("player") || interaction.member;
+		let target = interaction.options.getUser("player") || interaction.member;
 		let biography = interaction.options.getString("bio");
 
-		// Check if a biography was provided
+		// Set the user's biography
 		if (biography) {
-			// prettier-ignore
-			let embed_biography = new BetterEmbed({
-                interaction, author: { text: "$USERNAME | biography", user: interaction.member },
-                description: biography.toLowerCase() === "reset"
-                    ? "Your bio has been reset"
-                    : `Your bio has been set to:\n> ${biography}`
-			});
+			// Update the user's biography in Mongo
+			userManager.update(interaction.user.id, { biography: biography.toLowerCase() === "reset" ? "" : biography });
 
-			return await Promise.all([
-				// Update the user's biography in Mongo
-				userManager.update(interaction.user.id, { biography: biography.toLowerCase() === "reset" ? "" : biography }),
-				// Send the embed
-				embed_biography.send()
-			]);
+			// prettier-ignore
+			// Create the embed and send it :: { BIOGRAPHY }
+			return await new BetterEmbed({
+				interaction, author: { text: "$USERNAME | biography", iconURL: true },
+				description: biography.toLowerCase() === "reset"
+					? "Your bio has been reset"
+					: `Your bio has been set to:\n> ${biography}`
+			}).send({ ephemeral: true });
 		}
 
-		// Fetch the user from Mongo
-		let userData = await userManager.fetch(user.id, { type: "noInventory" });
-		if (!userData) return await error_ES.send({ description: "That user has not started yet", ephemeral: true });
-
-		/// Create the embed :: { PROFILE }
 		// prettier-ignore
-		/* let [card_selected, card_favorite] = await userManager.inventory.get(interaction.user.id,
-			[userData.card_selected_uid, userData.card_favorite_uid]
-		); */
+		// Check if the target user started the bot
+		if (!(await userManager.exists(interaction.user.id))) return await error_ES.send({
+			description: "That user has not started yet", ephemeral: true
+		});
 
-		let embeds_profile = await user_ES.profile(user, userData);
+		// Fetch the user from Mongo
+		let userData = await userManager.fetch(interaction.user.id, { type: "essential" });
 
+		// Create the embed :: { PROFILE }
+		let embeds_profile = user_ES.profile(target, { userData });
+
+		return await embeds_profile.send();
+
+		/* 
 		// prettier-ignore
 		// Create embed navigation
 		let embedNav = new EmbedNavigator({
@@ -69,6 +69,6 @@ module.exports = {
 
 		embedNav.addSelectMenuOptions({ label: "🃏 Detailed Collection", description: "View your detailed collection" });
 
-		return await embedNav.send();
+		return await embedNav.send(); */
 	}
 };

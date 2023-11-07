@@ -1,3 +1,9 @@
+/** @typedef options_profile
+ * @property {UserData} userData
+ * @property {Card} card_selected
+ * @property {Card} card_favorite
+ * @property {UserInventoryStats} inventoryStats */
+
 /** @typedef options_inventory
  * @property {GuildMember|User} target
  * @property {string} rarity
@@ -24,15 +30,46 @@ const config_player = require("../../configs/config_player.json");
 const config_bot = require("../../configs/config_bot.json");
 const _dsT = require("../discordTools/_dsT");
 
-const config = { player: require("../../configs/config_player.json") };
+const config = {
+	bot: require("../../configs/config_bot.json"),
+	player: require("../../configs/config_player.json")
+};
 
-/** @param {GuildMember|User} user, @param {UserData} userData */
-async function profile(user, userData) {
-	let [card_favorite, card_selected] = await userManager.inventory.get(user.id, {
+/** @param {GuildMember|User} user, @param {options_profile} options */
+function profile(user, options) {
+	options = { userData: null, card_selected: null, card_favorite: null, inventoryStats: null, ...options };
+
+	const profile_overview = () => {
+		let embed = new BetterEmbed({
+			author: { text: "$USERNAME | profile", user },
+			thumbnailURL: options.card_selected?.imageURL
+		});
+
+		// Add the user's biography if they have one
+		if (options.biography) embed.addFields({ name: "`👤` Biography", value: options.biography });
+
+		/* - - - - - { General Information } - - - - - */
+		embed.addFields({
+			name: "`💰` Balance",
+			value: markdown.ansi(
+				"$BALANCE :: $RIBBON"
+					.replace("$BALANCE", `${config.bot.emojis.currency_1.EMOJI} ${userData.balance || 0}`)
+					.replace("$RIBBON", `${config.bot.emojis.currency_2.EMOJI} ${userData.ribbons || 0}`),
+				{ format: "bold", text_color: "white", codeblock: true }
+			),
+			inline: true
+		});
+
+		return embed;
+	};
+
+	return profile_overview();
+
+	/* let [card_favorite, card_selected] = userManager.inventory.get(user.id, {
 		uids: [userData.card_favorite_uid, userData.card_selected_uid]
 	});
 
-	let inventory_count = await userManager.inventory.count(user.id, true);
+	let inventory_count = userManager.inventory.count(user.id, true);
 
 	const embed_main = () => {
 		let _embed = new BetterEmbed({
@@ -129,7 +166,7 @@ async function profile(user, userData) {
 		favorited: card_favorite ? embed_card(card_favorite) : null,
 		selected: card_selected ? embed_card(card_selected) : null
 		// stats: await embed_inventory_stats()
-	};
+	}; */
 }
 
 function missing(user, cards, cards_have) {
@@ -289,7 +326,7 @@ function inventory(userData, options, stats) {
 		})
 	);
 
-	/* - - - - - - - - - - { PROFILE STATS } - - - - - - - - - - */
+	/* - - - - - { PROFILE STATS } - - - - - */
 	// let stats_profile = "> `$CARROTS` :: `$RIBBONS` :: `🃏 $INVENTORY_COUNT/$CARD_COUNT` :: `📈 LV. $LEVEL ☝️ $XPXP/$XP_NEEDEDXP`"
 	let stats_profile = _dsT.markdown.ansi(
 		"$CARROTS\n$RIBBONS\n📆 $DAILY_STREAK\n📈 $LEVEL\n☝️ $XP/$XP_NEEDEDXP\n🃏 $INVENTORY_COUNT/$CARD_COUNT"
