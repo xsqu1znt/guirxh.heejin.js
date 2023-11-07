@@ -1,11 +1,10 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { BetterEmbed } = require("../modules/discordTools/_dsT");
 const { error_ES, cooldown_ES } = require("../modules/embedStyles/index");
+const { BetterEmbed } = require("../modules/discordTools/_dsT");
 const { userManager } = require("../modules/mongo/index");
 const cardManager = require("../modules/cardManager");
 const dropManager = require("../modules/dropManager");
-const userParser = require("../modules/userParser");
 const _jsT = require("../modules/jsTools/_jsT");
 
 const config = {
@@ -51,11 +50,11 @@ module.exports = {
 		/* - - - - - { Drop the Cards } - - - - - */
 		switch (dropType) {
 			case "drop_general":
-				embed_drop.setAuthor("$USERNAME | drop");
+				embed_drop.setAuthor({ text: "$USERNAME | drop" });
 				break;
 
 			case "drop_weekly":
-				embed_drop.setAuthor("$USERNAME | weekly");
+				embed_drop.setAuthor({ text: "$USERNAME | weekly" });
 				break;
 
 			case "drop_season":
@@ -64,7 +63,7 @@ module.exports = {
 					interaction, description: "There is no `season` right now", ephemeral: true
 				});
 
-				embed_drop.setAuthor("$USERNAME | season");
+				embed_drop.setAuthor({ text: "$USERNAME | season" });
 				break;
 
 			case "drop_event_1":
@@ -73,7 +72,7 @@ module.exports = {
 					interaction, description: "There is no `event 1` right now", ephemeral: true
 				});
 
-				embed_drop.setAuthor("$USERNAME | event 1");
+				embed_drop.setAuthor({ text: "$USERNAME | event 1" });
 				break;
 
 			case "drop_event_2":
@@ -82,7 +81,7 @@ module.exports = {
 					interaction, description: "There is no `event 2` right now", ephemeral: true
 				});
 
-				embed_drop.setAuthor("$USERNAME | event 2");
+				embed_drop.setAuthor({ text: "$USERNAME | event 2" });
 				break;
 		}
 
