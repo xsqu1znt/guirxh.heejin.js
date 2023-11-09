@@ -207,7 +207,7 @@ async function stats(userID) {
 	let categories = Object.keys(cardManager.cards.base);
 
 	// prettier-ignore
-	/// Count how many cards the user has out of each category
+	// Count how many cards the user has out of each category
 	let cards_user_count = await Promise.all(categories.map(async category => {
 		// Get the global IDs for every card in the category
 		let _globalIDs = cardManager.cards.globalIDs.base.get(category);
@@ -224,10 +224,16 @@ async function stats(userID) {
 		];
 
 		let { inventory_count } = (await userManager.models.user.aggregate(pipeline))[0] || [];
-		return { category, has: inventory_count || 0, outOf: _globalIDs.length };
+		return { name: category, has: inventory_count || 0, outOf: _globalIDs.length };
 	}));
 
-	return cards_user_count;
+	return {
+		count: {
+			has: _jsT.sum(cards_user_count.map(cat => cat.has)),
+			outOf: cardManager.cards.all.length
+		},
+		categories: cards_user_count
+	};
 }
 
 module.exports = { count, exists, has, get, getVault: get_vault, add, remove, update, sell, stats };

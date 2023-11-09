@@ -60,7 +60,7 @@ module.exports = {
 
 		let inventory_stats = await userManager.inventory.stats(interaction.user.id);
 		// Create the embeds :: { USER INVENTORY }
-		let embeds_inventory = user_ES.inventory(userData, options_inventory, inventory_stats);
+		let embeds_inventory = user_ES.inventory(userData, options_inventory, inventory_stats.categories);
 
 		// prettier-ignore
 		// Set up page navigation

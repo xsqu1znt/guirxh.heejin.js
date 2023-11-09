@@ -41,23 +41,28 @@ function profile(user, options) {
 
 	const profile_overview = () => {
 		let embed = new BetterEmbed({
-			author: { text: "$USERNAME | profile", user },
+			author: { text: "$USERNAME | profile", user, iconURL: true },
 			thumbnailURL: options.card_selected?.imageURL
 		});
 
+		// prettier-ignore
 		// Add the user's biography if they have one
-		if (options.biography) embed.addFields({ name: "`👤` Biography", value: options.biography });
+		if (options.userData.biography) embed.addFields({
+			name: "`👤` Biography", value: options.userData.biography
+		});
 
 		/* - - - - - { General Information } - - - - - */
 		embed.addFields({
-			name: "`💰` Balance",
+			name: "`📄` Information",
 			value: markdown.ansi(
-				"$BALANCE :: $RIBBON"
-					.replace("$BALANCE", `${config.bot.emojis.currency_1.EMOJI} ${userData.balance || 0}`)
-					.replace("$RIBBON", `${config.bot.emojis.currency_2.EMOJI} ${userData.ribbons || 0}`),
+				"$BALANCE :: $RIBBON :: 🃏 $INV_COUNT/$CARD_COUNT :: 📈 LV. $LEVEL"
+					.replace("$BALANCE", `${config.bot.emojis.currency_1.EMOJI} ${options.userData.balance || 0}`)
+					.replace("$RIBBON", `${config.bot.emojis.currency_2.EMOJI} ${options.userData.ribbons || 0}`)
+					.replace("$INV_COUNT", options.inventoryStats.count.has)
+					.replace("$CARD_COUNT", options.inventoryStats.count.outOf)
+					.replace("$LEVEL", options.userData.level),
 				{ format: "bold", text_color: "white", codeblock: true }
-			),
-			inline: true
+			)
 		});
 
 		return embed;
@@ -311,8 +316,8 @@ function inventory(userData, options, stats) {
 
 	// prettier-ignore
 	let stats_f_1 = stats.slice(0, 5).map(c =>
-		_dsT.markdown.ansi(`${cardManager.cards.category.meta.base[c.category].emoji} ${c.category}: ${c.has}/${c.outOf}`, {
-			format: "bold", text_color: cardManager.cards.category.meta.base[c.category].color_ansi
+		_dsT.markdown.ansi(`${cardManager.cards.category.meta.base[c.category].emoji} ${c.name}: ${c.has}/${c.outOf}`, {
+			format: "bold", text_color: cardManager.cards.category.meta.base[c.name].color_ansi
 		})
 	);
 
@@ -321,8 +326,8 @@ function inventory(userData, options, stats) {
 
 	// prettier-ignore
 	let stats_f_2 = stats.slice(5).map(c =>
-		_dsT.markdown.ansi(`${cardManager.cards.category.meta.base[c.category].emoji} ${c.category}: ${c.has}/${c.outOf}`, {
-			format: "bold", text_color: cardManager.cards.category.meta.base[c.category].color_ansi
+		_dsT.markdown.ansi(`${cardManager.cards.category.meta.base[c.category].emoji} ${c.name}: ${c.has}/${c.outOf}`, {
+			format: "bold", text_color: cardManager.cards.category.meta.base[c.name].color_ansi
 		})
 	);
 

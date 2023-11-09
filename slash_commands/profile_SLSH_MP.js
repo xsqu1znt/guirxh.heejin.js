@@ -6,14 +6,14 @@ const { userManager } = require("../modules/mongo/index");
 const _jsT = require("../modules/jsTools/_jsT");
 
 module.exports = {
-	options: { icon: "📈", deferReply: true },
+	options: { icon: "📈", deferReply: false },
 
 	// prettier-ignore
 	builder: new SlashCommandBuilder().setName("profile")
         .setDescription("View your profile")
     
         .addUserOption(option => option.setName("player").setDescription("View another player's profile"))
-        .addStringOption(option => option.setName("bio").setDescription("Change your bio | use \"reset\" to remove")),
+        .addStringOption(option => option.setName("bio").setDescription("Set your biography, use \"clear\" to remove")),
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
@@ -22,17 +22,29 @@ module.exports = {
 
 		// Set the user's biography
 		if (biography) {
+			// prettier-ignore
+			// Character limit
+			if (biography.length > 256) return await error_ES.send({
+				interaction, description: "Your biography cannot be longer than 256 characters",
+				ephemeral: true
+			});
+
+			/* - - - - - { Set the User's Biography } - - - - - */
+			let reset = biography.toLowerCase() === "clear" ? true : false;
+
 			// Update the user's biography in Mongo
-			userManager.update(interaction.user.id, { biography: biography.toLowerCase() === "reset" ? "" : biography });
+			await userManager.update(interaction.user.id, { biography: reset ? "" : biography });
 
 			// prettier-ignore
-			// Create the embed and send it :: { BIOGRAPHY }
-			return await new BetterEmbed({
-				interaction, author: { text: "$USERNAME | biography", iconURL: true },
-				description: biography.toLowerCase() === "reset"
-					? "Your bio has been reset"
-					: `Your bio has been set to:\n> ${biography}`
-			}).send({ ephemeral: true });
+			// Create the embed :: { BIOGRAPHY }
+			let embed_biography = new BetterEmbed({
+				interaction, author: "✏️ Profile Edit",
+				description: reset
+					? "You cleared your ***\`👤 biography\`**"
+					: `You set your **\`👤 biography\`**:\n> ${biography}`
+			});
+
+			return await embed_biography.send({ ephemeral: true });
 		}
 
 		// prettier-ignore
@@ -41,13 +53,17 @@ module.exports = {
 			description: "That user has not started yet", ephemeral: true
 		});
 
+		// Defer the reply
+		await interaction.deferReply();
+
 		// Fetch the user from Mongo
 		let userData = await userManager.fetch(interaction.user.id, { type: "essential" });
+		let inventoryStats = await userManager.inventory.stats(interaction.user.id);
 
 		// Create the embed :: { PROFILE }
-		let embeds_profile = user_ES.profile(target, { userData });
+		let embeds_profile = user_ES.profile(target, { userData, inventoryStats });
 
-		return await embeds_profile.send();
+		return await embeds_profile.send({ interaction });
 
 		/* 
 		// prettier-ignore
