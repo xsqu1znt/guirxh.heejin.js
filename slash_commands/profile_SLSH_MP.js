@@ -20,7 +20,7 @@ module.exports = {
 		let target = interaction.options.getUser("player") || interaction.member;
 		let biography = interaction.options.getString("bio");
 
-		// Set the user's biography
+		/* - - - - - { Set the User's Biography } - - - - - */
 		if (biography) {
 			// prettier-ignore
 			// Character limit
@@ -29,7 +29,6 @@ module.exports = {
 				ephemeral: true
 			});
 
-			/* - - - - - { Set the User's Biography } - - - - - */
 			let reset = biography.toLowerCase() === "clear" ? true : false;
 
 			// Update the user's biography in Mongo
@@ -38,15 +37,16 @@ module.exports = {
 			// prettier-ignore
 			// Create the embed :: { BIOGRAPHY }
 			let embed_biography = new BetterEmbed({
-				interaction, author: "✏️ Profile Edit",
+				interaction, author: "✏️ Biography",
 				description: reset
-					? "You cleared your ***\`👤 biography\`**"
+					? "You cleared your **\`👤 biography\`**"
 					: `You set your **\`👤 biography\`**:\n> ${biography}`
 			});
 
 			return await embed_biography.send({ ephemeral: true });
 		}
 
+		/* - - - - - { Show the User's Profile } - - - - - */
 		// prettier-ignore
 		// Check if the target user started the bot
 		if (!(await userManager.exists(interaction.user.id))) return await error_ES.send({
@@ -56,12 +56,15 @@ module.exports = {
 		// Defer the reply
 		await interaction.deferReply();
 
-		// Fetch the user from Mongo
+		/// Fetch user data from Mongo
 		let userData = await userManager.fetch(interaction.user.id, { type: "essential" });
 		let inventoryStats = await userManager.inventory.stats(interaction.user.id);
+		let [card_selected, card_favorite] = await userManager.inventory.get(interaction.user.id, {
+			uids: [userData.card_selected_uid, userData.card_favorite_uid]
+		});
 
 		// Create the embed :: { PROFILE }
-		let embeds_profile = user_ES.profile(target, { userData, inventoryStats });
+		let embeds_profile = user_ES.profile(target, { userData, card_selected, card_favorite, inventoryStats });
 
 		return await embeds_profile.send({ interaction });
 

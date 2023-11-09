@@ -48,7 +48,7 @@ function profile(user, options) {
 		// prettier-ignore
 		// Add the user's biography if they have one
 		if (options.userData.biography) embed.addFields({
-			name: "`👤` Biography", value: options.userData.biography
+			name: "`👤` Biography", value: options.userData.biography,
 		});
 
 		/* - - - - - { General Information } - - - - - */
@@ -316,7 +316,7 @@ function inventory(userData, options, stats) {
 
 	// prettier-ignore
 	let stats_f_1 = stats.slice(0, 5).map(c =>
-		_dsT.markdown.ansi(`${cardManager.cards.category.meta.base[c.category].emoji} ${c.name}: ${c.has}/${c.outOf}`, {
+		_dsT.markdown.ansi(`${cardManager.cards.category.meta.base[c.name].emoji} ${c.name}: ${c.has}/${c.outOf}`, {
 			format: "bold", text_color: cardManager.cards.category.meta.base[c.name].color_ansi
 		})
 	);
@@ -326,7 +326,7 @@ function inventory(userData, options, stats) {
 
 	// prettier-ignore
 	let stats_f_2 = stats.slice(5).map(c =>
-		_dsT.markdown.ansi(`${cardManager.cards.category.meta.base[c.category].emoji} ${c.name}: ${c.has}/${c.outOf}`, {
+		_dsT.markdown.ansi(`${cardManager.cards.category.meta.base[c.name].emoji} ${c.name}: ${c.has}/${c.outOf}`, {
 			format: "bold", text_color: cardManager.cards.category.meta.base[c.name].color_ansi
 		})
 	);
