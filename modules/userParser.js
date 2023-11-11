@@ -1,4 +1,4 @@
-const _jsT = require("./jsTools/_jsT");
+const _jsT = require("./jsTools");
 const cardManager = require("./cardManager");
 
 function cards_get(userData, uids, keepArray = false) {

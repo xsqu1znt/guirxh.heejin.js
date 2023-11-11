@@ -5,10 +5,10 @@
 
 const { CommandInteraction, User, GuildMember } = require("discord.js");
 
-const { BetterEmbed } = require("./discordTools/_dsT");
+const { BetterEmbed } = require("./discordTools");
 const { userManager } = require("./mongo/index");
 const cardManager = require("./cardManager");
-const _jsT = require("./jsTools/_jsT");
+const _jsT = require("./jsTools");
 const logger = require("./logger");
 
 const config = {

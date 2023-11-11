@@ -1,10 +1,10 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { EmbedNavigator } = require("../modules/discordTools/_dsT");
+const { EmbedNavigator } = require("../modules/discordTools");
 const { error_ES, general_ES } = require("../modules/embedStyles/index");
 const { userManager } = require("../modules/mongo/index");
 const cardManager = require("../modules/cardManager");
-const _jsT = require("../modules/jsTools/_jsT");
+const _jsT = require("../modules/jsTools");
 
 module.exports = {
 	options: { icon: "👀", deferReply: false },

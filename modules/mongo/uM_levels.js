@@ -1,6 +1,6 @@
 const userManager = require("./uM_index");
 const uM_statistics = require("./uM_statistics");
-const _jsT = require("../jsTools/_jsT");
+const _jsT = require("../jsTools");
 const _aJM = require("../asyncJobManager");
 
 const config = { player: require("../../configs/config_player.json") };

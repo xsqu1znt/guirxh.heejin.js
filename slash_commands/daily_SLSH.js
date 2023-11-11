@@ -1,9 +1,9 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { BetterEmbed } = require("../modules/discordTools/_dsT");
+const { BetterEmbed } = require("../modules/discordTools");
 const { cooldown_ES } = require("../modules/embedStyles/index");
 const { userManager } = require("../modules/mongo/index");
-const _jsT = require("../modules/jsTools/_jsT");
+const _jsT = require("../modules/jsTools");
 
 const config_player = require("../configs/config_player.json");
 const config_bot = require("../configs/config_bot.json");

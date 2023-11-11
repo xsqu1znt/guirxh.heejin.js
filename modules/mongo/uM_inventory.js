@@ -2,7 +2,7 @@
 
 const cardManager = require("../cardManager");
 const userManager = require("./uM_index");
-const _jsT = require("../jsTools/_jsT");
+const _jsT = require("../jsTools");
 
 async function count(userID, uniqueOnly = false) {
 	// Create an aggregation pipeline

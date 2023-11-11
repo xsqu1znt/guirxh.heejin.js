@@ -1,10 +1,10 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { BetterEmbed } = require("../modules/discordTools/_dsT");
+const { BetterEmbed } = require("../modules/discordTools");
 const { error_ES } = require("../modules/embedStyles/index");
 const { userManager } = require("../modules/mongo/index");
 const cardManager = require("../modules/cardManager");
-const _jsT = require("../modules/jsTools/_jsT");
+const _jsT = require("../modules/jsTools");
 const Stage = require("../modules/stage");
 
 const config = {

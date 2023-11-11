@@ -1,4 +1,4 @@
-const { BetterEmbed } = require("../discordTools/_dsT");
+const { BetterEmbed } = require("../discordTools");
 const user_ES = require("./style_user");
 const general_ES = require("./style_general");
 

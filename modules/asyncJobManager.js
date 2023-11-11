@@ -1,4 +1,4 @@
-const _jsT = require("./jsTools/_jsT");
+const _jsT = require("./jsTools");
 
 class Job {
 	constructor(arr = []) {

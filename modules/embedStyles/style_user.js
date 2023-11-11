@@ -18,17 +18,16 @@
 
 const { GuildMember, User, time, TimestampStyles } = require("discord.js");
 
-const { BetterEmbed, markdown } = require("../discordTools/_dsT");
-const { questManager } = require("../mongo/index");
-const { userManager } = require("../mongo/index");
-const badgeManager = require("../badgeManager");
+const { BetterEmbed, markdown } = require("../discordTools");
+const { userManager } = require("../mongo");
 const cardManager = require("../cardManager");
+const itemManager = require("../itemManager");
 const userParser = require("../userParser");
-const _jsT = require("../jsTools/_jsT");
+const _jsT = require("../jsTools");
 
 const config_player = require("../../configs/config_player.json");
 const config_bot = require("../../configs/config_bot.json");
-const _dsT = require("../discordTools/_dsT");
+const _dsT = require("../discordTools");
 
 const config = {
 	bot: require("../../configs/config_bot.json"),
@@ -68,7 +67,31 @@ function profile(user, options) {
 		return embed;
 	};
 
-	return profile_overview();
+	const profile_badges = () => {
+		let badges_f = userData.badges.map(b => itemManager.toString.badges.profile(b));
+
+		let embed = new BetterEmbed({
+			author: { text: "$USERNAME | profile", user, iconURL: true },
+			description: badges_f.join(" ")
+		});
+
+		return embed;
+	};
+
+	return profile_badges();
+
+	/* const embed_badges = () => {
+		let _embed = new BetterEmbed({ author: { text: "$USERNAME | profile", user } });
+
+		// let _badge_sets = _jsT.unique(badgeManager.badges, "set");
+
+		// Convert the BadgeLike objects to full badges
+		let _badges_f = userData.badges.map(b => badgeManager.toString.profile(b.id));
+		// Add the badges to the embed
+		_embed.addFields([{ name: "`📛` Badges", value: _badges_f.join("\n") }]);
+
+		return _embed;
+	}; */
 
 	/* let [card_favorite, card_selected] = userManager.inventory.get(user.id, {
 		uids: [userData.card_favorite_uid, userData.card_selected_uid]

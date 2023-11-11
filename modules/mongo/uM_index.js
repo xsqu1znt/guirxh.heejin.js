@@ -18,7 +18,7 @@
 
 // const badgeManager = require('./badgeManager');
 const cardManager = require("../cardManager");
-const _jsT = require("../jsTools/_jsT");
+const _jsT = require("../jsTools");
 
 const playerConfig = require("../../configs/config_player.json");
 

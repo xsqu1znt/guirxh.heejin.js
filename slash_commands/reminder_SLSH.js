@@ -1,9 +1,9 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
 const { error_ES, user_ES } = require("../modules/embedStyles/index");
-const { BetterEmbed } = require("../modules/discordTools/_dsT");
+const { BetterEmbed } = require("../modules/discordTools");
 const { userManager } = require("../modules/mongo/index");
-const _jsT = require("../modules/jsTools/_jsT");
+const _jsT = require("../modules/jsTools");
 
 module.exports = {
 	options: { icon: "⏰", deferReply: false },

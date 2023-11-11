@@ -1,5 +1,5 @@
 const userManager = require("./uM_index");
-const _jsT = require("../jsTools/_jsT");
+const _jsT = require("../jsTools");
 
 /** @param {string} userID @param {string|string[]} badgeIDs */
 async function has(userID, badgeIDs) {

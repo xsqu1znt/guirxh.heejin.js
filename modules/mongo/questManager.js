@@ -1,6 +1,6 @@
 /** @typedef {"balance"|"ribbons"|"cards_in_inventory"|"level_user"|"level_idol"|"team_ability_reputation"|"card_global_ids"|"card_sets_complete"|"card_duplicates"} ObjectiveType */
 
-const { markdown } = require("../discordTools/_dsT");
+const { markdown } = require("../discordTools");
 const cardManager = require("../cardManager");
 // const userParser = require("../userParser");
 // const userManager = require("./uM_index");

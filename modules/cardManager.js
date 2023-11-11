@@ -12,8 +12,8 @@
  * @property {{min:number, max:number}} level
  * @property {number} count */
 
-const { markdown } = require("./discordTools/_dsT");
-const _jsT = require("./jsTools/_jsT");
+const { markdown } = require("./discordTools");
+const _jsT = require("./jsTools");
 const logger = require("./logger");
 
 const config = {

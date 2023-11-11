@@ -6,7 +6,7 @@
 
 const { userManager } = require("./mongo/index");
 const cardManager = require("./cardManager");
-const _jsT = require("./jsTools/_jsT");
+const _jsT = require("./jsTools");
 
 const config = {
 	player: require("../configs/config_player.json"),

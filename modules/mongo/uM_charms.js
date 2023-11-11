@@ -1,7 +1,7 @@
 /** @typedef {"dupeRepel"} CharmType */
 
 const userManager = require("./uM_index");
-const _jsT = require("../jsTools/_jsT");
+const _jsT = require("../jsTools");
 
 /** @param {string} userID @param {CharmType} charmType */
 async function get(userID, charmType) {

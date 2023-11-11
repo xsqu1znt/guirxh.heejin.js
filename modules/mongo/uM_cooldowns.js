@@ -1,7 +1,7 @@
 /** @typedef {"daily"|"stage"|"random"|"drop_general"|"drop_weekly"|"drop_season"|"drop_event_1"|"drop_event_2"} CooldownType */
 
 const userManager = require("./uM_index");
-const _jsT = require("../jsTools/_jsT");
+const _jsT = require("../jsTools");
 
 const config = { player: require("../../configs/config_player.json") };
 

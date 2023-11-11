@@ -10,10 +10,10 @@
 
 const { GuildMember, User } = require("discord.js");
 
-const { BetterEmbed, markdown } = require("../discordTools/_dsT");
+const { BetterEmbed, markdown } = require("../discordTools");
 const itemManager = require("../itemManager");
 const cardManager = require("../cardManager");
-const _jsT = require("../jsTools/_jsT");
+const _jsT = require("../jsTools");
 
 const config = { bot: require("../../configs/config_bot.json") };
 

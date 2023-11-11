@@ -1,5 +1,5 @@
-const { markdown } = require("./discordTools/_dsT");
-const _jsT = require("./jsTools/_jsT");
+const { markdown } = require("./discordTools");
+const _jsT = require("./jsTools");
 
 const badges = require("../items/badges.json");
 

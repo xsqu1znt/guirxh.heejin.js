@@ -1,11 +1,11 @@
 /** @typedef {"card"|"cardPack"|"badge"|"charm"} ItemType */
 const ItemType = { card: "card", cardPack: "cardPack", badge: "badge", charm: "charm" };
 
-const { BetterEmbed } = require("./discordTools/_dsT");
+const { BetterEmbed } = require("./discordTools");
 const { userManager } = require("./mongo/index");
 const cardManager = require("./cardManager");
 const dropManager = require("./dropManager");
-const _jsT = require("./jsTools/_jsT");
+const _jsT = require("./jsTools");
 
 const items = {
 	cardPacks: require("../items/itemPack_cards.json"),
@@ -302,6 +302,15 @@ function badge_toString_shopEntry(badgeID) {
 		.replace("$PRICE", `${config.bot.emojis.currency_1.EMOJI} ${badge.price}`);
 }
 
+function badge_toString_profile(badge) {
+	if (!badge?.name) return "n/a";
+
+	// prettier-ignore
+	return "$EMOJI $NAME"
+		.replace("$EMOJI", badge?.customEmoji || `\`${badge.emoji}\``)
+		.replace("$NAME", badge.name);
+}
+
 /* - - - - - { Charms } - - - - - */
 async function charm_buy(userID, charmID) {
 	let { item: charm, type: _itemType } = getItem(charmID);
@@ -392,7 +401,8 @@ module.exports = {
 
 		badges: {
 			setEntry: badge_toString_setEntry,
-			shopEntry: badge_toString_shopEntry
+			shopEntry: badge_toString_shopEntry,
+			profile: badge_toString_profile
 		},
 
 		charms: {

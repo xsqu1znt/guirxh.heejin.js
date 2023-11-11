@@ -1,6 +1,6 @@
 const { User } = require("discord.js");
 
-const { BetterEmbed } = require("./discordTools/_dsT");
+const { BetterEmbed } = require("./discordTools");
 const cardManager = require("./cardManager");
 const logger = require("./logger");
 

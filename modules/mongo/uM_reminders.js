@@ -1,7 +1,7 @@
 /** @typedef {"dm"|"channel"} ReminderNotificationMode */
 
 const userManager = require("./uM_index");
-const _jsT = require("../jsTools/_jsT");
+const _jsT = require("../jsTools");
 
 const config = { player: require("../../configs/config_player.json") };
 

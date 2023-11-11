@@ -1,11 +1,11 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { BetterEmbed } = require("../modules/discordTools/_dsT");
+const { BetterEmbed } = require("../modules/discordTools");
 const { userManager } = require("../modules/mongo/index");
 const cardManager = require("../modules/cardManager");
 const itemManager = require("../modules/itemManager");
-const _dsT = require("../modules/discordTools/_dsT");
-const _jsT = require("../modules/jsTools/_jsT");
+const _dsT = require("../modules/discordTools");
+const _jsT = require("../modules/jsTools");
 
 module.exports = {
 	options: { deferReply: true },
