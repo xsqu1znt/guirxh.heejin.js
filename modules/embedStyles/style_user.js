@@ -68,11 +68,11 @@ function profile(user, options) {
 	};
 
 	const profile_badges = () => {
-		let badges_f = userData.badges.map(b => itemManager.toString.badges.profile(b));
+		let badges_f = options.userData.badges.map(b => itemManager.toString.badges.profile(b));
 
 		let embed = new BetterEmbed({
 			author: { text: "$USERNAME | profile", user, iconURL: true },
-			description: badges_f.join(" ")
+			description: `>>> ${badges_f.join("\n")}`
 		});
 
 		return embed;

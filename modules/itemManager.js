@@ -125,7 +125,7 @@ async function buyItem(user, id) {
 			// Create the embed :: { Shop Buy - Badge }
 			let embed_badge = new BetterEmbed({
 				author: { text: "$USERNAME | buy", iconURL: true, user },
-				description: `You bought **\`📛 ${item.badge.name}\`**:\n> ${badge_toString_basic(item.badge.id)}`,
+				description: `You bought **\`📛 ${item.badge.name}\`**:\n> ${badge_toString_basic(item.badge)}`,
 				footer: { text: `balance: ${emojis.currency_1} ${item.balance}` }
 			});
 
@@ -271,6 +271,15 @@ async function badge_buy(userID, badgeID) {
 	return { badge, balance: userData.balance - (badge.price || 0) };
 }
 
+function badge_toString_basic(badge) {
+	return "`$ID` `🗣️ $SET_ID` $EMOJI *`$SET`* $NAME"
+		.replace("$ID", badge.id)
+		.replace("$SET_ID", badge.setID)
+		.replace("$EMOJI", badge?.customEmoji || `\`${badge.emoji}\``)
+		.replace("$SET", badge.set)
+		.replace("$NAME", badge.name);
+}
+
 function badge_toString_setEntry(setID) {
 	let badges = items.badges.filter(b => b.setID === setID);
 	if (!badges.length) return "n/a";
@@ -400,6 +409,7 @@ module.exports = {
 		},
 
 		badges: {
+			basic: badge_toString_basic,
 			setEntry: badge_toString_setEntry,
 			shopEntry: badge_toString_shopEntry,
 			profile: badge_toString_profile
