@@ -27,7 +27,6 @@ const _jsT = require("../jsTools");
 
 const config_player = require("../../configs/config_player.json");
 const config_bot = require("../../configs/config_bot.json");
-const _dsT = require("../discordTools");
 
 const config = {
 	bot: require("../../configs/config_bot.json"),
@@ -38,11 +37,10 @@ const config = {
 function profile(user, options) {
 	options = { userData: null, card_selected: null, card_favorite: null, inventoryStats: null, ...options };
 
+	let embed_profile = new BetterEmbed({ author: { text: "$USERNAME | profile", user, iconURL: true } });
+
 	const profile_overview = () => {
-		let embed = new BetterEmbed({
-			author: { text: "$USERNAME | profile", user, iconURL: true },
-			thumbnailURL: options.card_selected?.imageURL
-		});
+		let embed = embed_profile.copy({ thumbnailURL: options.card_selected?.imageURL });
 
 		// prettier-ignore
 		// Add the user's biography if they have one
@@ -69,26 +67,70 @@ function profile(user, options) {
 
 	const profile_badges = () => {
 		let badges_f = options.userData.badges.map(b => itemManager.toString.badges.profile(b));
+		return embed_profile.copy({ description: `>>> ${badges_f.join("\n")}` });
+	};
 
-		let embed = new BetterEmbed({
-			author: { text: "$USERNAME | profile", user, iconURL: true },
-			description: `>>> ${badges_f.join("\n")}`
+	const profile_cardView = card => {
+		let selected = card.uid === options?.card_selected?.uid;
+		let favorite = card.uid === options?.card_favorite?.uid;
+		let onTeam = options.userData.card_team_uids.includes(card?.uid);
+
+		// prettier-ignore
+		// Format the card into a string
+		let card_f = cardManager.toString.inventoryEntry(card, {
+			selected, favorite, onTeam,
+			locked: card.locked, showXP: true
 		});
+
+		return embed_profile.copy({ description: card_f, imageURL: card.imageURL });
+	};
+
+	const profile_inventoryStats = () => {
+		let embed = embed_profile.copy();
+
+		let stats_f = options.inventoryStats.categories.slice(0, 5).map(cat =>
+			markdown.ansi(`${cardManager.cards.category.meta.base[cat.name].emoji} ${cat.name}: ${cat.has}/${cat.outOf}`, {
+				format: "bold",
+				text_color: cardManager.cards.category.meta.base[cat.name].color_ansi
+			})
+		);
+
+		embed.addFields(
+			{ name: "`🌕` Normal Sets", value: stats_f.slice(0, 5).join("\n"), inline: true },
+			{ name: "`🌗` Special Sets", value: stats_f.slice(5).join("\n"), inline: true }
+		);
 
 		return embed;
 	};
 
-	return profile_badges();
+	return profile_inventoryStats();
 
-	/* const embed_badges = () => {
+	/* const embed_inventory_stats = async () => {
 		let _embed = new BetterEmbed({ author: { text: "$USERNAME | profile", user } });
 
-		// let _badge_sets = _jsT.unique(badgeManager.badges, "set");
+		// Get the name of each card category
+		let categories = Object.keys(cardManager.cards);
 
-		// Convert the BadgeLike objects to full badges
-		let _badges_f = userData.badges.map(b => badgeManager.toString.profile(b.id));
-		// Add the badges to the embed
-		_embed.addFields([{ name: "`📛` Badges", value: _badges_f.join("\n") }]);
+		/// Count how many cards the user has out of each category
+		// prettier-ignore
+		let cards_user_count = await Promise.all(categories.map(async category => {
+			// Get the global IDs for every card in the category
+			let _globalIDs = cardManager.cards[category].map(c => c.globalID);
+
+			// Check how many cards the user has out of the global ID array
+			let _count = (await userManager.inventory.has(user.id, _globalIDs)).filter(b => b).length;
+
+			return { category, has: _count, outOf: _globalIDs.length };
+		}));
+
+		// Format the categories into a string
+		let cards_user_count_f = cards_user_count.map(c => `> 🃏 **${c.category}**: \`${c.has}/${c.outOf}\``);
+
+		// Add fields to the embed
+		_embed.addFields(
+			{ name: "`🌕` Normal Sets", value: cards_user_count_f.slice(0, 5).join("\n"), inline: true },
+			{ name: "`🌗` Special Sets", value: cards_user_count_f.slice(5).join("\n"), inline: true }
+		);
 
 		return _embed;
 	}; */
@@ -339,24 +381,24 @@ function inventory(userData, options, stats) {
 
 	// prettier-ignore
 	let stats_f_1 = stats.slice(0, 5).map(c =>
-		_dsT.markdown.ansi(`${cardManager.cards.category.meta.base[c.name].emoji} ${c.name}: ${c.has}/${c.outOf}`, {
+		markdown.ansi(`${cardManager.cards.category.meta.base[c.name].emoji} ${c.name}: ${c.has}/${c.outOf}`, {
 			format: "bold", text_color: cardManager.cards.category.meta.base[c.name].color_ansi
 		})
 	);
 
 	// Add the user's inventory count to the first stat section
-	stats_f_1.push(_dsT.markdown.ansi(`⚪ total: ${cards.length}`, { format: "bold", text_color: "white" }));
+	stats_f_1.push(markdown.ansi(`⚪ total: ${cards.length}`, { format: "bold", text_color: "white" }));
 
 	// prettier-ignore
 	let stats_f_2 = stats.slice(5).map(c =>
-		_dsT.markdown.ansi(`${cardManager.cards.category.meta.base[c.name].emoji} ${c.name}: ${c.has}/${c.outOf}`, {
+		markdown.ansi(`${cardManager.cards.category.meta.base[c.name].emoji} ${c.name}: ${c.has}/${c.outOf}`, {
 			format: "bold", text_color: cardManager.cards.category.meta.base[c.name].color_ansi
 		})
 	);
 
 	/* - - - - - { PROFILE STATS } - - - - - */
 	// let stats_profile = "> `$CARROTS` :: `$RIBBONS` :: `🃏 $INVENTORY_COUNT/$CARD_COUNT` :: `📈 LV. $LEVEL ☝️ $XPXP/$XP_NEEDEDXP`"
-	let stats_profile = _dsT.markdown.ansi(
+	let stats_profile = markdown.ansi(
 		"$CARROTS\n$RIBBONS\n📆 $DAILY_STREAK\n📈 $LEVEL\n☝️ $XP/$XP_NEEDEDXP\n🃏 $INVENTORY_COUNT/$CARD_COUNT"
 			.replace("$CARROTS", `${config_bot.emojis.currency_1.EMOJI} ${userData.balance || 0}`)
 			.replace("$RIBBONS", `${config_bot.emojis.currency_2.EMOJI} ${userData.ribbons || 0}`)
