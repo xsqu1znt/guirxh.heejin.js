@@ -32,7 +32,7 @@ module.exports = {
 			// Set up embed navigation
 			let embedNav = new EmbedNavigator({
                 interaction, embeds: embeds_shop.embeds, selectMenuEnabled: true,
-				pagination: { type: "shortJump", dynamic: false, useReactions: false }
+				pagination: { type: "shortJump", dynamic: false, useReactions: true }
             });
 
 			// Add select menu options

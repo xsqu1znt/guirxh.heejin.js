@@ -45,22 +45,43 @@ function profile(user, options) {
 		// prettier-ignore
 		// Add the user's biography if they have one
 		if (options.userData.biography) embed.addFields({
-			name: "`👤` Biography", value: options.userData.biography,
+			name: "`👤` Biography", value: `> ${options.userData.biography}`,
 		});
 
 		/* - - - - - { General Information } - - - - - */
-		embed.addFields({
-			name: "`📄` Information",
-			value: markdown.ansi(
-				"$BALANCE :: $RIBBON :: 🃏 $INV_COUNT/$CARD_COUNT :: 📈 LV. $LEVEL"
-					.replace("$BALANCE", `${config.bot.emojis.currency_1.EMOJI} ${options.userData.balance || 0}`)
-					.replace("$RIBBON", `${config.bot.emojis.currency_2.EMOJI} ${options.userData.ribbons || 0}`)
-					.replace("$INV_COUNT", options.inventoryStats.count.has)
-					.replace("$CARD_COUNT", options.inventoryStats.count.outOf)
-					.replace("$LEVEL", options.userData.level),
-				{ format: "bold", text_color: "white", codeblock: true }
-			)
-		});
+		embed.addFields(
+			{
+				name: "`🪙` Balance",
+				value: markdown.ansi(
+					"$BALANCE\n$RIBBON"
+						.replace("$BALANCE", `${config.bot.emojis.currency_1.EMOJI} ${options.userData.balance || 0}`)
+						.replace("$RIBBON", `${config.bot.emojis.currency_2.EMOJI} ${options.userData.ribbons || 0}`)
+						.replace("$INV_COUNT", options.inventoryStats.count.has)
+						.replace("$CARD_COUNT", options.inventoryStats.count.outOf)
+						.replace("$LEVEL", options.userData.level)
+						.replace("$XP", options.userData.xp)
+						.replace("$XP_NEEDED", options.userData.xp_for_next_level),
+					{ format: "bold", text_color: "white", codeblock: true }
+				),
+				inline: true
+			},
+
+			{
+				name: "`📄` Level",
+				value: markdown.ansi(
+					"📈 $LEVEL\n👆 $XP/$XP_NEEDEDXP"
+						.replace("$BALANCE", `${config.bot.emojis.currency_1.EMOJI} ${options.userData.balance || 0}`)
+						.replace("$RIBBON", `${config.bot.emojis.currency_2.EMOJI} ${options.userData.ribbons || 0}`)
+						.replace("$INV_COUNT", options.inventoryStats.count.has)
+						.replace("$CARD_COUNT", options.inventoryStats.count.outOf)
+						.replace("$LEVEL", options.userData.level)
+						.replace("$XP", options.userData.xp)
+						.replace("$XP_NEEDED", options.userData.xp_for_next_level),
+					{ format: "bold", text_color: "white", codeblock: true }
+				),
+				inline: true
+			}
+		);
 
 		return embed;
 	};
@@ -97,15 +118,23 @@ function profile(user, options) {
 			})
 		);
 
+		// prettier-ignore
+		// Insert inventory count
+		stats_f.splice(5, 0,
+			markdown.ansi(`⚪ total: ${options.inventoryStats.count.has}/${options.inventoryStats.count.outOf}`, {
+				format: "bold", text_color: "white"
+			})
+		);
+
 		embed.addFields(
 			{
 				name: "`🌕` Normal Sets",
-				value: `\`\`\`ansi\n${stats_f.slice(0, 5).join("\n")}\`\`\``,
+				value: `\`\`\`ansi\n${stats_f.slice(0, 6).join("\n")}\`\`\``,
 				inline: true
 			},
 			{
 				name: "`🌗` Special Sets",
-				value: `\`\`\`ansi\n${stats_f.slice(5).join("\n")}\`\`\``,
+				value: `\`\`\`ansi\n${stats_f.slice(6).join("\n")}\`\`\``,
 				inline: true
 			}
 		);
@@ -133,7 +162,7 @@ function profile(user, options) {
 	if (embeds.card_selected) navigationData.push({ label: "🏃 Stage Idol", description: "View your stage idol" });
 	if (embeds.card_favorite) navigationData.push({ label: "⭐ Favorite Card", description: "View your favorite" });
 	// prettier-ignore
-	if (embeds.inventoryStats) navigationData.push({ label: "🃏 Detailed Collection", description: "View your detailed collection" });
+	if (embeds.inventoryStats) navigationData.push({ label: "🃏 Inventory Details", description: "View your inventory details" });
 
 	// prettier-ignore
 	return {

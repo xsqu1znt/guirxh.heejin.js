@@ -66,28 +66,13 @@ module.exports = {
 		// Create the embed :: { PROFILE }
 		let embeds_profile = user_ES.profile(target, { userData, card_selected, card_favorite, inventoryStats });
 
-		return await embeds_profile.send({ interaction });
+		// Set up embed navigation
+		let embedNav = new EmbedNavigator({ interaction, embeds: embeds_profile.embeds, selectMenuEnabled: true });
 
-		/* 
-		// prettier-ignore
-		// Create embed navigation
-		let embedNav = new EmbedNavigator({
-			interaction, embeds: Object.values(embeds_profile).filter(e => e),
-			selectMenuEnabled: true
-		});
+		// Add select menu options
+		embedNav.addSelectMenuOptions(...embeds_profile.navigationData);
 
-		/// Add select menu options
-		embedNav.addSelectMenuOptions({ label: "📄 Basic Information", description: "View your basic information" });
-
-		// prettier-ignore
-		if (embeds_profile.badges) embedNav.addSelectMenuOptions({ label: "📛 User Badges", description: "View your badges" });
-		// prettier-ignore
-		if (embeds_profile.favorited) embedNav.addSelectMenuOptions({ label: "⭐ Favorite Card", description: "View your favorite" });
-		// prettier-ignore
-		if (embeds_profile.selected) embedNav.addSelectMenuOptions({ label: "🏃 Stage Idol", description: "View your stage idol" });
-
-		embedNav.addSelectMenuOptions({ label: "🃏 Detailed Collection", description: "View your detailed collection" });
-
-		return await embedNav.send(); */
+		// Send the embed with navigation
+		return await embedNav.send();
 	}
 };
