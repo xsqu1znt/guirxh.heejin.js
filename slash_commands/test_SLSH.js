@@ -1,11 +1,8 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { BetterEmbed } = require("../modules/discordTools");
+const { BetterEmbed, markdown } = require("../modules/discordTools");
 const { userManager } = require("../modules/mongo/index");
 const cardManager = require("../modules/cardManager");
-const itemManager = require("../modules/itemManager");
-const _dsT = require("../modules/discordTools");
-const _jsT = require("../modules/jsTools");
 
 module.exports = {
 	options: { deferReply: true },
@@ -16,10 +13,39 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-		let card = cardManager.get.random({ count: 1 });
+		let inventoryStats = await userManager.inventory.stats(interaction.user.id);
 
-		let embed = new BetterEmbed({ interaction, description: cardManager.toString.basic(card) });
+		let stats_f = inventoryStats.categories.map(cat =>
+			markdown.ansi(`${cardManager.cards.category.meta.base[cat.name].emoji} ${cat.name}: ${cat.has}/${cat.outOf}`, {
+				format: "bold",
+				text_color: cardManager.cards.category.meta.base[cat.name].color_ansi
+			})
+		);
 
-		return await embed.send();
+		// prettier-ignore
+		// Insert inventory count
+		stats_f.splice(5, 0,
+			markdown.ansi(`⚪ total: ${inventoryStats.count.has}/${inventoryStats.count.outOf}`, {
+				format: "bold", text_color: "white"
+			})
+		);
+
+		/* - - - - - { Creat the Embed } - - - - - */
+		let embed_invStats = new BetterEmbed({ interaction });
+
+		embed_invStats.addFields(
+			{
+				name: "`🌕` Normal Sets",
+				value: `\`\`\`ansi\n${stats_f.slice(0, 6).join("\n")}\`\`\``,
+				inline: true
+			},
+			{
+				name: "`🌗` Special Sets",
+				value: `\`\`\`ansi\n${stats_f.slice(6).join("\n")}\`\`\``,
+				inline: true
+			}
+		);
+
+		return await embed_invStats.send();
 	}
 };

@@ -58,5 +58,5 @@ client.login(TOKEN).then(async () => {
 	// Remove commands (does nothing if commands were registered locally) :: { GLOBAL }
 	// await slashCommandManager.remove(client, { global: true });
 
-	await mongo.connect();
+	await mongo.connect(process.env.MONGO_URI_PROD);
 });

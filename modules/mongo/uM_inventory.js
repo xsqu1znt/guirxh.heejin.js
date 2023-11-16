@@ -218,7 +218,13 @@ async function stats(userID) {
 			{
 				$group: {
 					_id: "$_id",
-					inventory_count: { $sum: { $size: { $filter: { input: ["$card_inventory.globalID"], cond: "$$this" } } } }
+					gids: { $addToSet: "$card_inventory.globalID" }
+				}
+			},
+			{
+				$project: {
+					_id: 0,
+					inventory_count: { $size: "$gids" }
 				}
 			}
 		];
