@@ -55,25 +55,16 @@ function profile(user, options) {
 				value: markdown.ansi(
 					"$BALANCE\n$RIBBON"
 						.replace("$BALANCE", `${config.bot.emojis.currency_1.EMOJI} ${options.userData.balance || 0}`)
-						.replace("$RIBBON", `${config.bot.emojis.currency_2.EMOJI} ${options.userData.ribbons || 0}`)
-						.replace("$INV_COUNT", options.inventoryStats.count.has)
-						.replace("$CARD_COUNT", options.inventoryStats.count.outOf)
-						.replace("$LEVEL", options.userData.level)
-						.replace("$XP", options.userData.xp)
-						.replace("$XP_NEEDED", options.userData.xp_for_next_level),
+						.replace("$RIBBON", `${config.bot.emojis.currency_2.EMOJI} ${options.userData.ribbons || 0}`),
 					{ format: "bold", text_color: "white", codeblock: true }
 				),
 				inline: true
 			},
 
 			{
-				name: "`📄` Level",
+				name: "`📊` Level",
 				value: markdown.ansi(
 					"📈 $LEVEL\n👆 $XP/$XP_NEEDEDXP"
-						.replace("$BALANCE", `${config.bot.emojis.currency_1.EMOJI} ${options.userData.balance || 0}`)
-						.replace("$RIBBON", `${config.bot.emojis.currency_2.EMOJI} ${options.userData.ribbons || 0}`)
-						.replace("$INV_COUNT", options.inventoryStats.count.has)
-						.replace("$CARD_COUNT", options.inventoryStats.count.outOf)
 						.replace("$LEVEL", options.userData.level)
 						.replace("$XP", options.userData.xp)
 						.replace("$XP_NEEDED", options.userData.xp_for_next_level),

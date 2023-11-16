@@ -315,7 +315,8 @@ function parse_fromCardLike(cardLike) {
 
 //! To String
 function toString_basic(card) {
-	return "**`$UID`** `$EMOJI` **$GROUP** *`$SINGLE`* $NAME `💰 $SELL_PRICE`"
+	// return "**`$UID`** `$EMOJI` **$GROUP** *`$SINGLE`* $NAME `💰 $SELL_PRICE`"
+	return "**`$UID`** `$EMOJI` **$SINGLE** `[$GROUP]` $NAME"
 		.replace("$UID", card.uid)
 		.replace("$EMOJI", card.emoji)
 		.replace("$GROUP", card.group)
@@ -336,13 +337,13 @@ function toString_inventoryEntry(card, options) {
 	};
 
 	let extra = [];
-	if (options.locked) extra.push("🔒");
-	if (options.favorite) extra.push("⭐");
-	if (options.selected) extra.push("🏃");
-	if (options.onTeam) extra.push("👯");
+	if (options.locked) extra.push("`🔒`");
+	if (options.favorite) extra.push("`⭐`");
+	if (options.selected) extra.push("`🏃`");
+	if (options.onTeam) extra.push("`👯`");
 
 	// prettier-ignore
-	let f = "> $UID `$GID` `🗣️ $SET`\n> `$EMOJI` **$SINGLE** `[$GROUP]` $NAME $DUPE\n> `LV. $LVL` `$CATEGORY` `💰 $SELL` `🎤 $ABI` : `💖 $REP`\n> $EXTRA"
+	let f = "> $UID `$GID` `🗣️ $SET`\n> `$EMOJI` **$SINGLE** `[$GROUP]` $NAME $DUPE\n> `$CATEGORY` `🎤 $ABI` `💖 $REP`\n> `📈 $LVL` `💰 $SELL` $EXTRA"
 		.replace(" $UID", card?.uid ? ` **\`${card.uid}\`**` : "")
 		.replace("$GID", card.globalID)
 		.replace("$SET", card.setID)
@@ -355,9 +356,9 @@ function toString_inventoryEntry(card, options) {
 	// prettier-ignore
 	if (options.simplify) f = f
 		.replace(" $DUPE", !options.duplicate ? "" : " $DUPE")
-		.replace("` LV. $LVL`", "")
+		.replace("` 📈 $LVL`", "")
 		.replace(" `💰 $SELL`", "")
-		.replace("> $EXTRA", "");
+		.replace(" $EXTRA", "");
 
 	// prettier-ignore
 	f = f
@@ -368,7 +369,7 @@ function toString_inventoryEntry(card, options) {
 
 		.replace("$ABI", card.stats.ability)
 		.replace("$REP", card.stats.reputation)
-		.replace("\n> $EXTRA", extra.length ? `\n> ${extra.join(" ")}` : "");
+		.replace(" $EXTRA", extra.length ? ` ${extra.join(" ")}` : "");
 
 	// prettier-ignore
 	// Format duplicate option
