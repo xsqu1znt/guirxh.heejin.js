@@ -24,6 +24,7 @@ async function drop(userID, dropType, cardPackOptions) {
 		dupeRepel: await userManager.charms.get(userID, "dupeRepel")
 	};
 
+	// TODO: Rewrite this function to be less confusing
 	const reroll = async cards => {
 		let card_globalIDs = cards.map(c => c.card.globalID);
 
