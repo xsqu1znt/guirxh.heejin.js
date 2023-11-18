@@ -33,7 +33,7 @@ async function has(userID, globalIDs) {
 	if (!globalIDs || (Array.isArray(globalIDs) && !globalIDs.length)) return;
 
 	// Create an array if only a single card global ID was passed
-	globalIDs = _jsT.isArray(globalIDs);
+	globalIDs = _jsT.isArray(globalIDs, true);
 
 	/// Check the user's card_inventory for the specified global IDs
 	let pipeline = [

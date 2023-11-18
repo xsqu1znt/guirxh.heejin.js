@@ -25,6 +25,8 @@ async function drop(userID, dropType, cardPackOptions) {
 	};
 
 	const reroll = async cards => {
+		let card_globalIDs = cards.map(c => c.card.globalID);
+
 		// prettier-ignore
 		// Check if the user already has the chosen cards
 		let _isDupe = _jsT.isArray(await userManager.inventory.has(userID, cards.map(c => c.card.globalID)));
@@ -42,10 +44,27 @@ async function drop(userID, dropType, cardPackOptions) {
 						.filter(c => c)
 						.map(c => c.globalID);
 
-					let _possible_gID_pool = cards[i]._gID_pool.filter(gid => !_has.includes(gid));
+					let _possible_gID_pool = cards[i]._gID_pool.filter(
+						gid => !_has.includes(gid) && !card_globalIDs.includes(cards[i].card.globalID)
+					);
+
+					if (!_possible_gID_pool.length)
+						console.log(
+							`user has all cards in set ${cards[i].card.setID} | triggered by gid ${cards[i].card.globalID}`
+						);
+					if (_possible_gID_pool.length)
+						console.log(
+							`possible gID pool for set ${cards[i].card.setID}: ${_possible_gID_pool.join(
+								", "
+							)} | triggered by gid ${cards[i].card.globalID}`
+						);
 
 					// Reroll a new global ID if possible
-					if (_possible_gID_pool.length) cards[i].card = cardManager.get.globalID(_jsT.choice(_possible_gID_pool));
+					if (_possible_gID_pool.length) {
+						let rerolledCard = cardManager.get.globalID(_jsT.choice(_possible_gID_pool));
+						console.log(`${cards[i].card.globalID} replaced with ${rerolledCard.globalID}`);
+						cards[i].card = rerolledCard;
+					}
 				}
 
 		return cards;
@@ -180,9 +199,19 @@ async function drop(userID, dropType, cardPackOptions) {
 		case "cardPack": cards = await drop_cardPack(); break;
 	}
 
+	/* - - - - - { Check for Dupes } - - - - - */
+	let card_globalIDs = cards.map(c => c.globalID);
+	// console.log(card_globalIDs);
+
 	// prettier-ignore
-	// Check if the user has duplicates of what was dropped
-	let dupeIndex = await userManager.inventory.has(userID, cards.map(c => c.globalID));
+	// Check if the user has duplicates of what was dropped already in their inventory
+	let dupeIndex = await userManager.inventory.has(userID, card_globalIDs);
+
+	// Check if the user got duplicates in the drop
+	for (let i = 0; i < dupeIndex.length; i++) {
+		let previousGlobalIDs = card_globalIDs.slice(0, i);
+		if (previousGlobalIDs.includes(card_globalIDs[i])) dupeIndex[i] = true;
+	}
 
 	return { cards, dupeIndex };
 }

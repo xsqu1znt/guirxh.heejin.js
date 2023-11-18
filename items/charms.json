@@ -9,7 +9,7 @@
 		"description": "**Charm** *`Dev`*",
 		"price": 30000,
 		"duration": "1w",
-		"power": 75
+		"power": 25
 	},
 	{
 		"id": "DR02",
@@ -33,6 +33,6 @@
 		"description": "**Charm** *`Dev`*",
 		"price": 60000,
 		"duration": "1w",
-		"power": 25
+		"power": 100
 	}
 ]

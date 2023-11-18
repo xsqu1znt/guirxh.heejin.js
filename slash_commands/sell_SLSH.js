@@ -52,7 +52,7 @@ module.exports = {
 			// prettier-ignore
 			let _cards = _jsT
 				.isArray(await userManager.inventory.get(interaction.user.id, { uids }))
-				.filter(c => c).map(c => cardManager.parse.fromCardLike(c));
+				.filter(c => c);
 
 			// prettier-ignore
 			// Let the user know no cards were found using those UIDs
@@ -85,7 +85,7 @@ module.exports = {
 			// prettier-ignore
 			let _cards = _jsT
 				.isArray(await userManager.inventory.get(interaction.user.id, { gids: _globalIDs }))
-				.filter(c => c).map(c => cardManager.parse.fromCardLike(c));
+				.filter(c => c);
 
 			// prettier-ignore
 			// Let the user know no cards were found using those UIDs
@@ -112,7 +112,7 @@ module.exports = {
 			for (let gid of _card_globalIDs) {
 				let _dupes = _cards.filter(c => c.globalID === gid);
 				// Exclude the primary card from the list
-				_dupes.shift();
+				if (dupesToKeep) _dupes.shift();
 				if (_dupes.length > dupesToKeep) _card_duplicates.push(..._dupes.slice(dupesToKeep));
 			}
 

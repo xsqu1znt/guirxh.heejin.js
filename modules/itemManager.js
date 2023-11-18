@@ -346,12 +346,12 @@ function charm_toString_basic(charmID) {
 	let { item: charm, type: _itemType } = getItem(charmID);
 	if (_itemType !== ItemType.charm) return null;
 
-	return "`$ID` `$EMOJI` **$NAME** `🌟 $POWER%` `⏰ $DURATION`"
-		.replace("ID", charm.id)
-		.replace("EMOJI", charm.emoji)
-		.replace("NAME", charm.name)
-		.replace("POWER", charm.power)
-		.replace("DURATION", _jsT.eta({ then: charm.duration }).substring(3));
+	return "`$ID` `$EMOJI` **$NAME** `🌟 $POWER` `⏰ $DURATION`"
+		.replace("$ID", charm.id)
+		.replace("$EMOJI", charm.emoji)
+		.replace("$NAME", charm.name)
+		.replace("$POWER", charm.power)
+		.replace("$DURATION", charm.duration);
 }
 
 function charm_toString_setEntry(setID) {
@@ -374,14 +374,15 @@ function charm_toString_shopEntry(charmID) {
 	let { item: charm, type: _itemType } = getItem(charmID);
 	if (_itemType !== ItemType.charm) return null;
 
-	return "`$ID` `🗣️ $SET_ID` `$EMOJI` *`$TYPE`* $NAME `⏰ $DURATION` `💰 $PRICE`"
+	return "`$ID` `🗣️ $SET_ID` `$EMOJI` *`$TYPE`* $NAME `☀️ $POWER` `⏰ $DURATION` `💰 $PRICE`"
 		.replace("$ID", charm.id)
 		.replace("$SET_ID", charm.setID)
 		.replace("$EMOJI", charm.emoji)
 		.replace("$TYPE", charm.type)
 		.replace("$NAME", charm.name)
-		.replace("$PRICE", charm.price)
-		.replace("$DURATION", charm.duration);
+		.replace("$POWER", charm.power)
+		.replace("$DURATION", charm.duration)
+		.replace("$PRICE", charm.price);
 }
 
 module.exports = {
