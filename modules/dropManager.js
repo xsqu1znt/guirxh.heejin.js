@@ -20,12 +20,62 @@ const config = {
 async function drop(userID, dropType, cardPackOptions) {
 	cardPackOptions = { cardRarity: null, count: null, ...cardPackOptions };
 
-	let user_charms = {
+	let userCharms = {
 		dupeRepel: await userManager.charms.get(userID, "dupeRepel")
 	};
 
-	// TODO: Rewrite this function to be less confusing
 	const reroll = async cards => {
+		let dropGlobalIDs = cards.map(c => c.card.globalID);
+
+		// Check the user's card_inventory for dupes
+		let dupeIndex = await userManager.inventory.has(userID, dropGlobalIDs);
+
+		// Determine reroll chances
+		let chanceForReroll = dupeIndex.map(di => (di ? _jsT.chance(userCharms.dupeRepel.chance) : false));
+		// Check for at least 1 case of reroll
+		if (!chanceForReroll.find(r => r)) return cards;
+
+		/* - - - - - { User Inventory Processing } - - - - - */
+		// Gather possible global IDs we can use in the reroll
+		let rerollGIDPool = await Promise.all(
+			dropGlobalIDs.map(async (gid, idx) => {
+				if (!chanceForReroll[idx]) return null;
+
+				/// Check which cards the user has in their card_inventory from the set
+				// injects the global IDs in the current card array to exclude them as possibilities
+				let _setGIDs = _jsT.unique([...cards[idx].setGIDs, ...dropGlobalIDs]);
+				let _has = await userManager.inventory.has(userID, _setGIDs);
+
+				// Filter out global IDs the user already has in the set
+				let possibleGIDs = cards[idx].setGIDs.filter((gid, idx) => !_has[idx]);
+
+				// prettier-ignore
+				// for debugging purposes
+				if (!possibleGIDs.length)
+					console.log(`trigger: \"${gid}\" | user completed set \"${cards[idx].card.setID}\"`);
+				else
+					console.log(`trigger: \"${gid}\" | possible global IDs: \"${possibleGIDs.join(", ")}\"`);
+
+				return possibleGIDs.length ? possibleGIDs : null;
+			})
+		);
+
+		// Iterate through each reroll chance
+		for (let i = 0; i < rerollGIDPool.length; i++) {
+			if (rerollGIDPool[i]) {
+				let _rerolledCard = cardManager.get.globalID(_jsT.chance(rerollGIDPool[i]));
+
+				// for debugging purposes
+				console.log(`trigger: \"${cards[i].card.globalID}\" | replaced with: \"${_rerolledCard.globalID}\"`);
+
+				cards[i].card = _rerolledCard;
+			}
+		}
+
+		return cards;
+	};
+
+	/* const reroll = async cards => {
 		let card_globalIDs = cards.map(c => c.card.globalID);
 
 		// prettier-ignore
@@ -69,7 +119,7 @@ async function drop(userID, dropType, cardPackOptions) {
 				}
 
 		return cards;
-	};
+	}; */
 
 	const drop_general = async () => {
 		/// Randomly pick the cards
@@ -87,7 +137,7 @@ async function drop(userID, dropType, cardPackOptions) {
 		}
 
 		// Put the user's charm to good use
-		if (user_charms.dupeRepel) await reroll(cards);
+		if (userCharms.dupeRepel) await reroll(cards);
 
 		return cards.map(c => c.card);
 	};
@@ -107,7 +157,7 @@ async function drop(userID, dropType, cardPackOptions) {
 			});
 
 		// Put the user's charm to good use
-		if (user_charms.dupeRepel) await reroll(cards);
+		if (userCharms.dupeRepel) await reroll(cards);
 
 		return cards.map(c => c.card);
 	};
@@ -127,7 +177,7 @@ async function drop(userID, dropType, cardPackOptions) {
 			});
 
 		// Put the user's charm to good use
-		if (user_charms.dupeRepel) await reroll(cards);
+		if (userCharms.dupeRepel) await reroll(cards);
 
 		return cards.map(c => c.card);
 	};
@@ -153,7 +203,7 @@ async function drop(userID, dropType, cardPackOptions) {
 			});
 
 		// Put the user's charm to good use
-		if (user_charms.dupeRepel) await reroll(cards);
+		if (userCharms.dupeRepel) await reroll(cards);
 
 		return cards.map(c => c.card);
 	};
@@ -173,12 +223,12 @@ async function drop(userID, dropType, cardPackOptions) {
 			cards.push({
 				card: _jsT.choice(_cards, true),
 				// Used for getting possible global IDs of the same category to reroll
-				_gID_pool: _cards.map(c => c.globalID)
+				setGIDs: _cards.map(c => c.globalID)
 			});
 		}
 
 		// Put the user's charm to good use
-		if (user_charms.dupeRepel) await reroll(cards);
+		if (userCharms.dupeRepel) await reroll(cards);
 
 		return cards.map(c => c.card);
 	};
