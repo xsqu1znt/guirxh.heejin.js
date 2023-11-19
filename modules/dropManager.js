@@ -32,9 +32,6 @@ async function drop(userID, dropType, cardPackOptions) {
 
 		// Check if the user got duplicates in the drop
 		for (let i = 0; i < dupeIndex.length; i++) {
-			// let previousGlobalIDs = drop_globalIDs.slice(0, i);
-			// if (previousGlobalIDs.includes(drop_globalIDs[i])) dupeIndex[i] = true;
-
 			// Filter out the current global ID from the array so we aren't falsly assuming it's a dupe
 			let cleanGlobalIDs = drop_globalIDs.filter(gid => gid !== drop_globalIDs[i]);
 			// Add back the GID if there's more than 1 instance which counts as an actual dupe
