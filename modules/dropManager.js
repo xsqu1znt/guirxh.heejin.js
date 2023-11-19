@@ -78,7 +78,7 @@ async function drop(userID, dropType, cardPackOptions) {
 			// Skip nulls
 			if (!rerollGIDPool[i]) continue;
 
-			// Filter out cards already chosen
+			// Filter out global IDs of cards already in the card drop array
 			let cleanRerollGIDPool = rerollGIDPool[i].filter(gid => !cards.map(c => c.card.globalID).includes(gid));
 
 			// for debugging purposes
