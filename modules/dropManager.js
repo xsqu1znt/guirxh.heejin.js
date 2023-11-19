@@ -102,52 +102,6 @@ async function drop(userID, dropType, cardPackOptions) {
 		return cards;
 	};
 
-	/* const reroll = async cards => {
-		let card_globalIDs = cards.map(c => c.card.globalID);
-
-		// prettier-ignore
-		// Check if the user already has the chosen cards
-		let _isDupe = _jsT.isArray(await userManager.inventory.has(userID, cards.map(c => c.card.globalID)));
-
-		// Calculate reroll chances
-		let _reroll = _isDupe.map(d => (d ? _jsT.chance(user_charms.dupeRepel.power) : false));
-
-		// Reroll if needed (checks if there's at least 1 true case)
-		if (_reroll.filter(r => r).length)
-			for (let i = 0; i < _reroll.length; i++)
-				if (_reroll[i]) {
-					// prettier-ignore
-					// Check which cards the user has in the current category
-					let _has = (await userManager.inventory.get(userID, { gids: cards[i]._gID_pool }))
-						.filter(c => c)
-						.map(c => c.globalID);
-
-					let _possible_gID_pool = cards[i]._gID_pool.filter(
-						gid => !_has.includes(gid) && !card_globalIDs.includes(cards[i].card.globalID)
-					);
-
-					if (!_possible_gID_pool.length)
-						console.log(
-							`user has all cards in set ${cards[i].card.setID} | triggered by gid ${cards[i].card.globalID}`
-						);
-					if (_possible_gID_pool.length)
-						console.log(
-							`possible gID pool for set ${cards[i].card.setID}: ${_possible_gID_pool.join(
-								", "
-							)} | triggered by gid ${cards[i].card.globalID}`
-						);
-
-					// Reroll a new global ID if possible
-					if (_possible_gID_pool.length) {
-						let rerolledCard = cardManager.get.globalID(_jsT.choice(_possible_gID_pool));
-						console.log(`${cards[i].card.globalID} replaced with ${rerolledCard.globalID}`);
-						cards[i].card = rerolledCard;
-					}
-				}
-
-		return cards;
-	}; */
-
 	const drop_general = async () => {
 		/// Randomly pick the cards
 		let cards = [];
