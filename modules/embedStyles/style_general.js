@@ -437,7 +437,7 @@ function view(user, userData, card, viewType) {
 
 		// prettier-ignore
 		let card_f = cardManager.toString.inventoryEntry(card, {
-			duplicate: duplicate_count,
+			// duplicate: duplicate_count,
 			locked: card.locked, selected, favorite, onTeam,
 			showXP: true
 		});

@@ -76,7 +76,7 @@ function toString_objectiveDetails(id, objectiveType) {
             : "n/a";
 
         case "card_duplicates": return quest.objectives?.card_duplicates
-            ? `\`🃏 Dupes\` own:\n${quest.objectives.card_duplicates.map(d => {
+            ? `\`🃏 Dupes\` owned:\n${quest.objectives.card_duplicates.map(d => {
                 let card = cardManager.get.globalID(d.globalID);
                 if (!card) return "invalid global ID";
 

@@ -356,7 +356,7 @@ function toString_inventoryEntry(card, options) {
 	// prettier-ignore
 	if (options.simplify) f = f
 		.replace(" $DUPE", !options.duplicate ? "" : " $DUPE")
-		.replace("` 📈 $LVL`", "")
+		.replace("> `📈 $LVL`", "")
 		.replace(" `💰 $SELL`", "")
 		.replace(" $EXTRA", "");
 
@@ -384,7 +384,7 @@ function toString_inventoryEntry(card, options) {
 }
 
 function toString_missingEntry(card, userOwnsCard = false) {
-	return "> `$MISSING` **`$GLOBAL_ID`**\n> `$EMOJI` **$GROUP** `[$SINGLE]` $NAME"
+	return "> **`$MISSING`** **`$GLOBAL_ID`**\n> `$EMOJI` **$GROUP** `[$SINGLE]` $NAME"
 		.replace("$MISSING", userOwnsCard ? "✔️ owned" : "❌ missing")
 		.replace("$GLOBAL_ID", card.globalID)
 		.replace("$EMOJI", card.emoji)

@@ -18,7 +18,7 @@ module.exports = {
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
 		/// Check if the user has an active cooldown :: { DAILY }
-		let cooldown_daily = await userManager.cooldowns.check(interaction.user.id, "daily");
+		let cooldown_daily = await userManager.cooldowns.eta(interaction.user.id, "daily");
 		// prettier-ignore
 		if (cooldown_daily) return await cooldown_ES.send({
 			interaction, description: `You can claim your daily **${cooldown_daily}**`, ephemeral: true
@@ -59,7 +59,7 @@ module.exports = {
 				$set: { daily_streak_expires: userData.daily_streak_expires }
 			}),
 			// Update the user's quest progress
-			userManager.quest.progress.increment.balance(interaction.user.id, reward_carrots),
+			userManager.quests.increment.balance(interaction.user.id, reward_carrots),
 			// Set the user's cooldown
 			userManager.cooldowns.set(interaction.user.id, "daily"),
 			// Set the user's reminder

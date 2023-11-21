@@ -3,17 +3,17 @@ const {
 	Client, Message, CommandInteraction, InteractionCollector,
 	SlashCommandBuilder, ModalBuilder, TextInputBuilder,
 	ActionRowBuilder, ButtonBuilder, ChannelSelectMenuBuilder,
-	ButtonStyle, ComponentType, TextInputStyle, StringSelectMenuBuilder, EmbedBuilder,
+	ButtonStyle, ComponentType, TextInputStyle, StringSelectMenuBuilder
 } = require("discord.js");
 
 const { BetterEmbed } = require("../modules/discordTools");
-const _jsT = require("../modules/jsTools");
+const jt = require("../modules/jsTools");
 
 const config = require("./embed_config.json");
 
 const timeouts = {
-	base: _jsT.parseTime(config.timeouts.BASE),
-	channelSelect: _jsT.parseTime(config.timeouts.CHANNEL_SELECT)
+	base: jt.parseTime(config.timeouts.BASE),
+	channelSelect: jt.parseTime(config.timeouts.CHANNEL_SELECT)
 };
 
 module.exports = {
@@ -51,7 +51,7 @@ module.exports = {
 		}
 
 		// Apply formatting to the template
-		formatTemplate(template, interaction.member);
+		template = formatTemplate(template, interaction.member);
 
 		/* - - - - - { Configure the Modal } - - - - - */
 		// Create the modal
@@ -313,8 +313,8 @@ module.exports = {
 					// Update the modal's text fields to the current template
 					modal_components.embedContent[0].setValue(template.author.text || "");
 					modal_components.embedContent[1].setValue(template.title.text || "");
-					modal_components.embedContent[2].setValue(template.footer.text || "");
-					modal_components.embedContent[3].setValue(template.description || "");
+					modal_components.embedContent[2].setValue(template.description || "");
+					modal_components.embedContent[3].setValue(template.footer.text || "");
 					modal_components.embedContent[4].setValue(template.imageURL || "");
 
 					// Show the modal and await submit
@@ -734,7 +734,8 @@ async function showModal(interaction, modal, collector) {
 
 		// Return the modal interaction
 		return modalSubmit;
-	} catch {
+	} catch (err) {
+		console.error(err);
 		return null;
 	}
 }

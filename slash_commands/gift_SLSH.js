@@ -50,7 +50,7 @@ module.exports = {
 		// prettier-ignore
 		// Filter out locked/favorited/selected/team cards
 		cards = cards.filter(c =>
-            !c.locked && ![userData.card_favorite_uid, userData.card_selected_uid, ...userData.card_team_uids].includes(c.uid)
+            !c?.locked && ![userData.card_favorite_uid, userData.card_selected_uid, ...userData.card_team_uids].includes(c.uid)
 		);
 
 		// prettier-ignore
@@ -68,9 +68,9 @@ module.exports = {
 			// Add the cards to the recipient card_inventory
 			userManager.inventory.add(recipient.id, uids),
 			// Update the recipient's quest progress
-			userManager.quest.progress.increment.inventory(recipient.id, cards.length),
+			userManager.quests.increment.inventory(recipient.id, cards.length),
 			// Send a DM to the recipient
-			messenger.gift.cards(interaction.member, recipient, cards),
+			messenger.gift.cards(interaction.user, recipient, cards),
 			// Send the embed :: { GIFT }
 			embed_gift.send({ interaction })
 		]);

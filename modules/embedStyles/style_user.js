@@ -19,7 +19,7 @@
 const { GuildMember, User, time, TimestampStyles } = require("discord.js");
 
 const { BetterEmbed, markdown } = require("../discordTools");
-const { userManager } = require("../mongo");
+const { userManager, questManager } = require("../mongo/index");
 const cardManager = require("../cardManager");
 const itemManager = require("../itemManager");
 const userParser = require("../userParser");
@@ -373,7 +373,7 @@ function inventory(userData, options, stats) {
 
 /** @param {GuildMember|User} user, @param {UserData} userData */
 function cooldowns(user, userData) {
-	// Get the active cooldowns from the config
+	// Get the enabled cooldowns from config_player
 	let cooldown_types = Object.entries(config_player.cooldowns)
 		.filter(([type, time]) => time)
 		.map(([type, time]) => type);
@@ -381,22 +381,22 @@ function cooldowns(user, userData) {
 	// prettier-ignore
 	// Get the user's cooldown timestamps from their UserData
 	let cooldowns = cooldown_types.map(type => ({
-		type, timestamp: userData.cooldowns.find(c => c.type === type)?.timestamp || 0
+		type, timestamp: userData.cooldowns.find(c => c.type === type.toLowerCase())?.timestamp || 0
 	}));
 
 	// Format the user's cooldowns into list entries
 	let cooldowns_f = cooldowns.map(cd => {
 		let _eta = _jsT.eta({ then: cd.timestamp, ignorePast: true });
 
-		return "`$AVAILABILITY` **$TYPE** `[$TIME]`"
+		return "`$AVAILABILITY` **$TYPE** $TIME"
 			.replace("$AVAILABILITY", _eta ? "❌" : "✔️")
 			.replace("$TYPE", _jsT.toTitleCase(cd.type.replace(/_/g, " ")))
-			.replace("$TIME", _eta ? time(_jsT.msToSec(cd.timestamp), TimestampStyles.RelativeTime) : "Available");
+			.replace("$TIME", _eta ? time(_jsT.msToSec(cd.timestamp), TimestampStyles.RelativeTime) : "`[Available]`");
 	});
 
 	// Create the embed : { COOLDOWNS }
 	let embed_cooldowns = new BetterEmbed({
-		author: { text: "$USERNAME | cooldowns", user },
+		author: { text: "$USERNAME | cooldowns", user, iconURL: true },
 		description: cooldowns_f.join("\n")
 	});
 

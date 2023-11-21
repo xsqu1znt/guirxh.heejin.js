@@ -54,7 +54,7 @@ async function drop(userID, dropType, cardPackOptions) {
 
 				// Check which cards the user has in their card_inventory from the set
 				let _has = await userManager.inventory.has(userID, cards[idx].setGIDs);
-				
+
 				// Filter out global IDs the user already has of the set in there card_inventory
 				// also filters out cards already in the card array
 				let possibleGIDs = cards[idx].setGIDs.filter((gid, idx) => !_has[idx] && !drop_globalIDs.includes(gid));
@@ -79,9 +79,10 @@ async function drop(userID, dropType, cardPackOptions) {
 			let cleanRerollGIDPool = rerollGIDPool[i].filter(gid => !cards.map(c => c.card.globalID).includes(gid));
 
 			// for debugging purposes
-			if (!cleanRerollGIDPool.length) console.log(
-				`trigger: \"${cards[i].card.globalID}\" | idx[${i}] | can't be replaced; it would've been a dupe`
-			);
+			if (!cleanRerollGIDPool.length)
+				console.log(
+					`trigger: \"${cards[i].card.globalID}\" | idx[${i}] | can't be replaced; it would've been a dupe`
+				);
 
 			// Replace the cards
 			if (cleanRerollGIDPool.length) {
@@ -162,11 +163,20 @@ async function drop(userID, dropType, cardPackOptions) {
 
 	const drop_event = async eventType => {
 		let _CARD_RARITY_FILTER, _count;
-		// prettier-ignore
+
 		switch (eventType) {
-			case 1: config.event.event_1.CARD_RARITY_FILTER; _count = config.drop.count.event_1; break;
-			case 2: config.event.event_1.CARD_RARITY_FILTER; _count = config.drop.count.event_2; break;
-			default: return null;
+			case 1:
+				_CARD_RARITY_FILTER = config.event.event_1.CARD_RARITY_FILTER;
+				_count = config.drop.count.event_1;
+				break;
+
+			case 2:
+				_CARD_RARITY_FILTER = config.event.event_1.CARD_RARITY_FILTER;
+				_count = config.drop.count.event_2;
+				break;
+
+			default:
+				return null;
 		}
 
 		/// Randomly pick the cards
