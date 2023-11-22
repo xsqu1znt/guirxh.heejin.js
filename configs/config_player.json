@@ -4,11 +4,11 @@
 		"STAGE": "1h",
 		"RANDOM": "4h",
 
-		"DROP_GENERAL": "20m",
-		"DROP_WEEKLY": "7d",
+		"DROP_GENERAL": "5s",
+		"DROP_WEEKLY": null,
 		"DROP_SEASON": null,
-		"DROP_EVENT_1": "3h",
-		"DROP_EVENT_2": "3h"
+		"DROP_EVENT_1": null,
+		"DROP_EVENT_2": null
 	},
 
 	"COOLDOWN_LONG_THRESHOLD": "6h",

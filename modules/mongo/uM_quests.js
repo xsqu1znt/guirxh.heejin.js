@@ -11,7 +11,7 @@ async function exists(userID, upsert = false) {
 }
 
 /** @param {string} userID @param {{}} query */
-async function insert(userID, query = {}) {
+async function upsert(userID, query = {}) {
 	// prettier-ignore
 	if (!(await exists(userID))) return await new userManager.models.userQuestData({
 		_id: userID, ...query
@@ -25,7 +25,7 @@ async function fetch(userID) {
 
 /** @param {string} userID @param {{}} query */
 async function update(userID, query) {
-	await insert(userID);
+	await upsert(userID);
 	return userManager.models.userQuestData.findByIdAndUpdate(userID, query);
 }
 
@@ -53,7 +53,7 @@ async function progress_increment_inventory(userID, amount) {
 
 module.exports = {
 	exists,
-	upsert: insert,
+	upsert,
 	fetch,
 	update,
 

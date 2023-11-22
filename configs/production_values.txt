@@ -27,3 +27,62 @@
     "confirmation": "15s",
     "errorMessage": "5s"
 }
+
+{
+	"cooldowns": {
+		"DAILY": "1d",
+		"STAGE": "1h",
+		"RANDOM": "4h",
+
+		"DROP_GENERAL": "20m",
+		"DROP_WEEKLY": "7d",
+		"DROP_SEASON": null,
+		"DROP_EVENT_1": "3h",
+		"DROP_EVENT_2": "3h"
+	},
+
+	"COOLDOWN_LONG_THRESHOLD": "6h",
+
+	"win_rate": {
+		"RANDOM": 100
+	},
+
+	"currency": {
+		"STARTING_BALANCE": 250,
+
+		"rewards": {
+			"daily": { "AMOUNT": 50, "MAX_STREAK_MULTIPLIER": 10 },
+			"random": { "MIN": 500, "MAX": 5000 }
+		}
+	},
+
+	"xp": {
+		"user": {
+			"LEVEL_MAX": 100,
+			"LEVEL_XP_MULTIPLIER": 50,
+
+			"rewards": {
+				"level_up": {},
+
+				"drop": { "MIN": 10, "MAX": 30 },
+				"random": { "MIN": 10, "MAX": 250 },
+				"stage": { "MIN": 10, "MAX": 250 }
+			}
+		},
+
+		"card": {
+			"LEVEL_MAX": 100,
+			"LEVEL_XP_MULTIPLIER": 50,
+
+			"rewards": {
+				"level_up": { "ABILITY": 9, "REPUTATION": 9 },
+
+				"stage": { "MIN": 150, "MAX": 500 }
+			}
+		}
+	},
+
+	"team": {
+		"MAX_SIZE": 4
+	}
+}

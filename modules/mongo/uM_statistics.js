@@ -18,7 +18,7 @@ async function exists(userID, upsert = false) {
 }
 
 /** @param {string} userID @param */
-async function insert(userID, query = {}) {
+async function upsert(userID, query = {}) {
 	if (!exists({ _id: userID }))
 		return await new userManager.models.userStatistics({
 			_id: userID,
@@ -34,7 +34,7 @@ async function fetch(userID) {
 
 /** @param {string} userID @param {{}} query */
 async function update(userID, query) {
-	await insert(userID);
+	await upsert(userID);
 	return userManager.models.userStatistics.findByIdAndUpdate(userID, query);
 }
 
@@ -77,7 +77,8 @@ async function balance_increment(userID, amount, currencyType = "carrot") {
 }
 
 module.exports = {
-	insert,
+	exists,
+	upsert,
 	fetch,
 	update,
 
