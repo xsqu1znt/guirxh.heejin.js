@@ -63,27 +63,24 @@ module.exports = {
 		]);
 
 		/* - - - - - { Create the Embed } - - - - - */
+		/// Create the streak progress bar
+		let daily_streak_clamped = _jsT.clamp(userData.daily_streak + 1, { max: config_daily.MAX_STREAK_MULTIPLIER });
+		let streakProgress = Array(config_daily.MAX_STREAK_MULTIPLIER).fill("▱");
+		streakProgress.splice(0, daily_streak_clamped, ...Array(daily_streak_clamped).fill("▰"));
+
 		// prettier-ignore
 		let _description = (streakReset
-			? `You lost your streak of ${userData.daily_streak}\nYou got $CURRENCY`
-			: `Streak increased to ${userData.daily_streak + 1}\nYou got $CURRENCY`)
-		.replace("$CURRENCY", `${config.bot.emojis.currency_1.EMOJI} ${reward_carrots}`);
+			? `You lost your streak of ${userData.daily_streak}`
+			: `Streak increased to ${userData.daily_streak + 1}`);
 
 		// prettier-ignore
 		// Create the embed :: { DAILY }
 		let embed_daily = new BetterEmbed({
             interaction, author: { text: "$USERNAME | daily", iconURL: true },
-			description: markdown.ansi(_description, { format: "bold", text_color: streakReset ? "red" : "white", codeblock: true })
+			description: "```ansi\n$HEADER\n\n$REWARDS\n```"
+				.replace("$HEADER", markdown.ansi(`${_description}\nMultiplier: ${streakProgress.join("")}`, { format: "bold", text_color: streakReset ? "red" : "yellow" }))
+				.replace("$REWARDS", markdown.ansi(`You got ${config.bot.emojis.currency_1.EMOJI} ${reward_carrots}`, { text_color: "white" }))
 		});
-
-		/// Create the streak progress bar
-		let daily_streak_clamped = _jsT.clamp(userData.daily_streak + 1, { max: config_daily.MAX_STREAK_MULTIPLIER });
-
-		let streakProgress = Array(config_daily.MAX_STREAK_MULTIPLIER).fill("□");
-		streakProgress.splice(0, daily_streak_clamped, ...Array(daily_streak_clamped).fill("■"));
-
-		// Add the field to the embed
-		embed_daily.addFields({ name: "***Streak Multiplier***", value: streakProgress.join("") });
 
 		return await embed_daily.send();
 	}
