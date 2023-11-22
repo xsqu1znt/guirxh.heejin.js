@@ -14,9 +14,9 @@ async function exists(userID, upsert = false) {
 
 /** @param {string} userID @param {{}} query */
 async function insertNew(userID, query = {}) {
-	let exists = await exists(userID);
+	let _exists = await exists(userID);
 
-	if (!exists) {
+	if (!_exists) {
 		let _model = new userManager.models.userQuestData({ _id: userID, ...query });
 		await _model.save();
 	}
