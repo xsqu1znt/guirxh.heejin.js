@@ -5,12 +5,13 @@ const schema_questData = new Schema(
 		_id: { type: String, require: true },
 
 		balance: Number,
-		ribbons: Number,
+		ribbon: Number,
+		daily_streak: Number,
+		user_level: Number,
+		xp: Number,
 		inventory_count: Number,
-		level_user: Number,
-		level_idol: Number,
-		team_ability: Number,
-		team_reputation: Number
+		idol_level: Number,
+		team_power: Number
 	},
 	{ collection: "user_quest_data" }
 );

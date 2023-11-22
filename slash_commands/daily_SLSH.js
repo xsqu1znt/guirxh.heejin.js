@@ -59,7 +59,7 @@ module.exports = {
 				$set: { daily_streak_expires: userData.daily_streak_expires }
 			}),
 			// Update the user's quest progress
-			userManager.quests.increment.balance(interaction.user.id, reward_carrots),
+			userManager.quests.increment.balance(interaction.user.id, reward_carrots, "carrot"),
 			// Set the user's cooldown
 			userManager.cooldowns.set(interaction.user.id, "daily"),
 			// Set the user's reminder
