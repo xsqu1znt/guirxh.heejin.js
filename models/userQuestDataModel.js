@@ -5,7 +5,7 @@ const schema_questData = new Schema(
 		_id: { type: String, require: true },
 
 		balance: { type: Number, default: 0 },
-		ribbon: { type: Number, default: 0 },
+		ribbons: { type: Number, default: 0 },
 		daily_streak: { type: Number, default: 0 },
 		user_level: { type: Number, default: 0 },
 		xp: { type: Number, default: 0 },

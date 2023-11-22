@@ -1,7 +1,4 @@
-/** @typedef {"user"|"idol"|"xp"} levelType */
-
 const userManager = require("./uM_index");
-const uM_balance = require("./uM_balance");
 
 /** @param {string} userID @param {boolean} upsert */
 async function exists(userID, upsert = false) {
@@ -34,10 +31,8 @@ async function update(userID, query) {
 }
 
 /* - - - - - { Increment } - - - - - */
-/** @param {string} userID @param {number} amount @param {levelType} levelType  */
+/** @param {string} userID @param {number} amount @param {import("./uM_levels").levelType} levelType  */
 async function increment_level(userID, amount, levelType) {
-	if (!["user", "idol", "xp"].includes(levelType)) return;
-
 	// prettier-ignore
 	switch (levelType) {
 		case "user": await update(userID, { $inc: { user_level: amount } }); break;
@@ -48,12 +43,10 @@ async function increment_level(userID, amount, levelType) {
 
 /** @param {string} userID @param {number} amount @param {import("./uM_balance").CurrencyType} currencyType  */
 async function increment_balance(userID, amount, currencyType) {
-	if (!uM_balance.CurrencyTypes.includes(currencyType)) return;
-
 	// prettier-ignore
 	switch (currencyType) {
         case "carrot": await update(userID, { $inc: { balance: amount } }); break;
-        case "ribbon": await update(userID, { $inc: { ribbon: amount } }); break;
+        case "ribbon": await update(userID, { $inc: { ribbons: amount } }); break;
 	}
 }
 

@@ -1,29 +1,9 @@
+/** @typedef {"user"|"idol"|"xp"} levelType */
+
 const userManager = require("./uM_index");
 const uM_statistics = require("./uM_statistics");
-const _jsT = require("../jsTools");
-const _aJM = require("../asyncJobManager");
 
 const config = { player: require("../../configs/config_player.json") };
-
-/// XP
-/**
- * @param {string} userID
- * @param {number} amount use a negative number to subtract
- * @param {import("./uM_statistics").StatisticType} statType */
-async function xp_increment(userID, amount, statType = null) {
-	let job = new _aJM.Job();
-
-	job.add(userManager.update(userID, { $inc: { xp: amount } }));
-
-	// prettier-ignore
-	switch (statType) {
-        case "drop": job.add(uM_statistics.level.xp.increment(userID, amount, "drop")); break;
-        case "random": job.add(uM_statistics.level.xp.increment(userID, amount, "random")); break;
-		default: break;
-    }
-
-	await job.await();
-}
 
 /** @param {string} userID */
 async function xp_levelUp(userID) {
@@ -72,9 +52,18 @@ async function xp_levelUp(userID) {
 	return session;
 }
 
+/**
+ * @param {string} userID
+ * @param {number} amount use a negative number to subtract
+ * @param {import("./uM_statistics").StatisticType} statType */
+async function increment_xp(userID, amount, statType) {
+	await Promise.all([
+		userManager.update(userID, { $inc: { xp: amount } }),
+		uM_statistics.push.xp(userID, amount, statType)
+	]);
+}
+
 module.exports = {
-	xp: {
-		increment: xp_increment,
-		levelUp: xp_levelUp
-	}
+	increment: { xp: increment_xp },
+	xp: { levelUp: xp_levelUp }
 };

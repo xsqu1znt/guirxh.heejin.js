@@ -54,12 +54,15 @@ module.exports = {
 				$inc: { daily_streak: streakReset ? -userData.daily_streak : 1 },
 				$set: { daily_streak_expires: userData.daily_streak_expires }
 			}),
-			// Update the user's quest progress
-			userManager.quests.increment.balance(interaction.user.id, reward_carrots, "carrot"),
 			// Set the user's cooldown
 			userManager.cooldowns.set(interaction.user.id, "daily"),
 			// Set the user's reminder
-			userManager.reminders.set(interaction.user.id, "daily")
+			userManager.reminders.set(interaction.user.id, "daily"),
+
+			// Update the user's quest progress
+			userManager.quests.increment.balance(interaction.user.id, reward_carrots, "carrot"),
+			// Update the user's statistics
+			userManager.statistics.push.balance(interaction.user.id, reward_carrots, "carrot", "daily")
 		]);
 
 		/* - - - - - { Create the Embed } - - - - - */

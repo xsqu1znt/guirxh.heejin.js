@@ -1,10 +1,6 @@
-/** @typedef {{name:string, timestamp:number}} options_commandsUsed_increment */
+/** @typedef {"drop"|"daily"|"random"} StatisticType */
 
-/** @typedef {"drop"|"random"} StatisticType */
-/** @typedef {"carrot"|"ribbon"} CurrencyType */
-const CurrencyTypes = ["carrot", "ribbon"];
-/** @typedef {"drop"|"random"} CommandType_XP */
-const CommandTypes_XP = ["drop", "random"];
+/** @typedef {{name:string, timestamp:number}} options_commandsUsed_increment */
 
 const userManager = require("./uM_index");
 
@@ -18,7 +14,7 @@ async function exists(userID, upsert = false) {
 }
 
 /** @param {string} userID @param */
-async function upsert(userID, query = {}) {
+async function insertNew(userID, query = {}) {
 	if (!exists({ _id: userID }))
 		return await new userManager.models.userStatistics({
 			_id: userID,
@@ -34,7 +30,7 @@ async function fetch(userID) {
 
 /** @param {string} userID @param {{}} query */
 async function update(userID, query) {
-	await upsert(userID);
+	await insertNew(userID);
 	return userManager.models.userStatistics.findByIdAndUpdate(userID, query);
 }
 
@@ -62,23 +58,37 @@ async function commandsExecuted_push(userID, options) {
 	await update(userID, { $push: { "commands.executed": data } });
 }
 
-/* - - - - - { Levels } - - - - - */
-/** @param {string} userID @param {number} amount @param {CommandType_XP} commandType_XP  */
-async function level_xp_increment(userID, amount, commandType_XP) {
-	if (!CommandTypes_XP.includes(commandType_XP)) return;
-	await update(userID, { $inc: { [`level.xp.${commandType_XP}`]: amount } });
+/* - - - - - { Push } - - - - - */
+/** @param {string} userID @param {number} amount @param {StatisticType} statType */
+async function push_xp(userID, amount, statType) {
+	let data = { name: statType || "n/a", amount };
+	await update(userID, { $push: { xp: data } });
 }
 
-/* - - - - - { Balance } - - - - - */
-/** @param {string} userID @param {number} amount @param {CurrencyType} currencyType  */
-async function balance_increment(userID, amount, currencyType = "carrot") {
-	if (!CurrencyTypes.includes(currencyType)) return;
-	await update(userID, { $inc: { [`balance.${currencyType}`]: amount } });
+/**
+ * @param {string} userID
+ * @param {number} amount
+ * @param {import("./uM_balance").CurrencyType} currencyType
+ * @param {StatisticType} statType */
+async function push_balance(userID, amount, currencyType, statType) {
+	let data = { name: statType || "n/a", amount };
+
+	// prettier-ignore
+	switch (currencyType) {
+        case "carrot": await update(userID, { $push: { balance: data } }); break;
+        case "ribbon": await update(userID, { $push: { ribbons: data } }); break;
+	}
+}
+
+/* - - - - - { Increment } - - - - - */
+/** @param {string} userID @param {number} amount */
+async function increment_cardsDropped(userID, amount) {
+	await update(userID, { $inc: { cards_dropped: amount } });
 }
 
 module.exports = {
 	exists,
-	upsert,
+	insertNew,
 	fetch,
 	update,
 
@@ -89,13 +99,10 @@ module.exports = {
 		}
 	},
 
-	level: {
-		xp: {
-			increment: level_xp_increment
-		}
+	push: {
+		xp: push_xp,
+		balance: push_balance
 	},
 
-	balance: {
-		increment: balance_increment
-	}
+	increment: { cardsDropped: increment_cardsDropped }
 };

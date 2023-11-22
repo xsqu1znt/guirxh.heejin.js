@@ -4,8 +4,11 @@ const schema_userStatistics = new Schema(
 	{
 		_id: { type: String, require: true },
 
-		commands: { executed: Array },
-		balance: { currency: Number, ribbons: Number },
+		commands: { executed: { type: Array, default: [] } },
+		xp: { type: Array, default: [] },
+		balance: { type: Array, default: [] },
+		ribbons: { type: Array, default: [] },
+		cards_dropped: { type: Number, default: 0 },
 
 		timestamp_data_created: { type: Number, require: true },
 		timestamp_started: { type: Number, require: true }

@@ -88,21 +88,22 @@ module.exports = {
 		let { cards, dupeIndex } = await dropManager.drop(interaction.user.id, choice);
 
 		/* - - - - - { Update User Data } - - - - - */
+		let xpGained = _jsT.randomNumber(config.player.xp.user.rewards.drop.MIN, config.player.xp.user.rewards.drop.MAX);
 		await Promise.all([
 			// Add the cards to the user's card_inventory
 			userManager.inventory.add(interaction.user.id, cards),
 			// Give the user XP
-			userManager.levels.xp.increment(
-				interaction.user.id,
-				_jsT.randomNumber(config.player.xp.user.rewards.drop.MIN, config.player.xp.user.rewards.drop.MAX),
-				"drop"
-			),
-			// Update the user's quest progress
-			userManager.quests.increment.inventory(interaction.user.id, cards.length),
+			userManager.levels.increment.xp(interaction.user.id, xpGained, "drop"),
 			// Reset the user's cooldown :: { DROP }
 			userManager.cooldowns.set(interaction.user.id, dropType),
 			// Set the user's next reminder :: { DROP }
-			userManager.reminders.set(interaction.user.id, dropType, interaction.channel.id)
+			userManager.reminders.set(interaction.user.id, dropType, interaction.channel.id),
+
+			// Update the user's quest progress
+			userManager.quests.increment.inventory(interaction.user.id, cards.length),
+			userManager.quests.increment.level(interaction.user.id, xpGained, "xp"),
+			// Update the user's statistics
+			userManager.statistics.increment.cardsDropped(interaction.user.id, cards.length)
 		]);
 
 		/* - - - - - { Edit the Embed } - - - - - */
