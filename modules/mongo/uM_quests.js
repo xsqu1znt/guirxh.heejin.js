@@ -4,7 +4,7 @@ const userManager = require("./uM_index");
 async function exists(userID, upsert = false) {
 	let exists = await userManager.models.userQuestData.exists({ _id: userID });
 
-	if (!exists && upsert) await upsert(userID);
+	if (!exists && upsert) await insertNew(userID);
 
 	return exists || upsert ? true : false;
 }

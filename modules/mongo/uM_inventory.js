@@ -189,17 +189,20 @@ async function sell(userID, cards) {
 
 	// prettier-ignore
 	// Check if the user still has the cards in their card_inventory
-	if (!(await exists(userID, cards.map(c => c.uid)))) return false;
+	if (!(await exists(userID, cards.map(c => c.uid)))) return { success: false };
+
+	// Calculate sell price sum
+	let sellPriceSum = _jsT.sum(cards.map(c => c.sellPrice));
 
 	// prettier-ignore
 	await Promise.all([
 		// Update the user's balance
-		uM_balance.increment(userID, _jsT.sum(cards.map(c => c.sellPrice)), "carrot"),
+		uM_balance.increment(userID, sellPriceSum, "carrot"),
 		// Remove the cards from the user's card_inventory
 		remove(userID, cards.map(card => card.uid))
     ]);
 
-	return true;
+	return { success: true, amount: sellPriceSum };
 }
 
 /** @param {string} userID */
