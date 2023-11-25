@@ -111,7 +111,7 @@ module.exports = {
 			/// Update the user's statistics
 			await Promise.all([
 				// Commands used
-				userManager.statistics.commands.executed.push(args.interaction.user.id, { name: args.interaction.commandName })
+				userManager.statistics.commands.executed.increment(args.interaction.user.id)
 			]);
 		});
 	}

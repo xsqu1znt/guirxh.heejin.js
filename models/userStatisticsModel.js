@@ -4,7 +4,7 @@ const schema_userStatistics = new Schema(
 	{
 		_id: { type: String, require: true },
 
-		commands: { executed: { type: Array, default: [] } },
+		commands_executed: { type: Number, default: 0 },
 		xp: { type: Array, default: [] },
 		balance: { type: Array, default: [] },
 		ribbons: { type: Array, default: [] },

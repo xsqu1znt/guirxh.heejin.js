@@ -27,7 +27,7 @@ module.exports = {
 		// prettier-ignore
 		// Create the embed :: { RANDOM }
 		let embed_random = new BetterEmbed({
-			interaction, author: { text: "$USERNAME | random", user: interaction.member },
+			interaction, author: { text: "$USERNAME | random", iconURL: true },
 			description: "You tried your luck and did not win anything"
 		});
 
@@ -53,16 +53,15 @@ module.exports = {
 
 		return await Promise.all([
 			// Update the user's balance in Mongo
-			userManager.balance.increment(interaction.user.id, reward_carrots, "carrots", "random"),
+			userManager.balance.increment(interaction.user.id, reward_carrots, "balance", "random"),
 			// Update the user's XP in Mongo
-			userManager.xp.increment(interaction.user.id, reward_xp, "random"),
+			userManager.levels.increment.xp(interaction.user.id, reward_xp, "random"),
 			/// Update the user's quest progress
-			userManager.quests.progress.increment.xp(interaction.user.id, reward_xp),
-			userManager.quests.progress.increment.balance(interaction.user.id, reward_carrots),
-			// Set the user's cooldown
+			userManager.quests.increment.level(interaction.user.id, reward_xp, "xp"),
+			userManager.quests.increment.balance(interaction.user.id, reward_carrots, "carrot"),
+			// Set the user's cooldown/reminder
 			userManager.cooldowns.set(interaction.user.id, "random"),
-			// Set the user's reminder
-			userManager.reminders.set(interaction.user.id, "random"),
+			userManager.reminders.set(interaction.user.id, "random", interaction.channel.id),
 			// Send the embed
 			embed_random.send({
 				description: "You tried your luck and won `$REWARD_CARROTS` `$REWARD_XP`"

@@ -8,19 +8,19 @@ const userManager = require("./uM_index");
 async function exists(userID, upsert = false) {
 	let exists = await userManager.models.userStatistics.exists({ _id: userID });
 
-	if (!exists && upsert) await upsert(userID);
+	if (!exists && upsert) await insertNew(userID);
 
 	return exists || upsert ? true : false;
 }
 
 /** @param {string} userID @param */
 async function insertNew(userID, query = {}) {
-	if (!exists({ _id: userID }))
-		return await new userManager.models.userStatistics({
-			_id: userID,
-			timestamp_data_created: Date.now(),
-			...query
-		}).save();
+	let _exists = await exists(userID);
+
+	if (!_exists) {
+		let _model = new userManager.models.userStatistics({ _id: userID, timestamp_data_created: Date.now(), ...query });
+		await _model.save();
+	}
 }
 
 /** @param {string} userID */
@@ -49,13 +49,15 @@ async function commandsExecuted_count(userID) {
 }
 
 /** @param {string} userID @param {options_commandsUsed_increment} options */
-async function commandsExecuted_push(userID, options) {
-	options = { name: "", timestamp: Date.now(), ...options };
+async function commandsExecuted_increment(userID, amount = 1) {
+	/* options = { name: "", timestamp: Date.now(), ...options };
 
 	// Create the command data
 	let data = { name: options.name, timestamp: options.timestamp };
 
-	await update(userID, { $push: { "commands.executed": data } });
+	await update(userID, { $push: { "commands.executed": data } }); */
+
+	await update(userID, { $inc: { "commands_executed": amount } });
 }
 
 /* - - - - - { Push } - - - - - */
@@ -95,7 +97,7 @@ module.exports = {
 	commands: {
 		executed: {
 			count: commandsExecuted_count,
-			push: commandsExecuted_push
+			increment: commandsExecuted_increment
 		}
 	},
 

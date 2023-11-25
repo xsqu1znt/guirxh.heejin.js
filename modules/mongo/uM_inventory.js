@@ -197,7 +197,7 @@ async function sell(userID, cards) {
 	// prettier-ignore
 	await Promise.all([
 		// Update the user's balance
-		uM_balance.increment(userID, sellPriceSum, "carrot"),
+		uM_balance.increment(userID, sellPriceSum, "balance", "sell"),
 		// Remove the cards from the user's card_inventory
 		remove(userID, cards.map(card => card.uid))
     ]);

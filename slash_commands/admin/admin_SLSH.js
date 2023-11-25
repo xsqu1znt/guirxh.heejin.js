@@ -8,7 +8,7 @@ const _jsT = require("../../modules/jsTools");
 
 const config = { bot: require("../../configs/config_bot.json") };
 
-/** @param {CommandInteraction} interaction @param {"carrot"|"ribbon"} currencyType */
+/** @param {CommandInteraction} interaction @param {"balance"|"ribbons"} currencyType */
 async function payUser(interaction, currencyType) {
 	let user = interaction.options.getUser("user");
 	let amount = interaction.options.getNumber("amount");
@@ -73,8 +73,8 @@ module.exports = {
 
 		// prettier-ignore
 		switch (command) {
-            case "pay_carrot": return await payUser(interaction, "carrot");
-            case "pay_ribbon": return await payUser(interaction, "ribbon");
+            case "pay_carrot": return await payUser(interaction, "balance");
+            case "pay_ribbon": return await payUser(interaction, "ribbons");
 		}
 	}
 };

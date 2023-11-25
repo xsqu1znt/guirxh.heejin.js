@@ -59,9 +59,9 @@ module.exports = {
 		// Update the user and recipient's balance in Mongo
 		return await Promise.all([
 			// Subtract carrots from the user
-			userManager.balance.increment(interaction.user.id, -amount, "carrots"),
+			userManager.balance.increment(interaction.user.id, -amount, "balance", "pay"),
 			// Add carrots to the recipient
-			userManager.balance.increment(recipient.id, amount, "carrots", pay),
+			userManager.balance.increment(recipient.id, amount, "balance", "pay"),
 			// Send the embed :: { PAY }
 			general_ES.pay(interaction.member, recipient, amount, "carrots").send({ interaction })
 		]);
