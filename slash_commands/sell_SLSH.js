@@ -147,10 +147,15 @@ module.exports = {
         });
 
 		if (confirmation_sell) {
+			let { success: _success, amount: _amount } = await userManager.inventory.sell(interaction.user.id, cards);
+
 			// prettier-ignore
-			if (!await userManager.inventory.sell(interaction.user.id, cards)) return await error_ES.send({
-                interaction, description: "Cannot sell cards that are not in your inventory", sendMethod: "channel", ephemeral: true
-            });
+			if (!_success) return await error_ES.send({
+				interaction, description: "Cannot sell cards that are not in your inventory", sendMethod: "channel"
+			});
+
+			// Update the user's quest stats
+			userManager.quests.increment.balance(interaction.user.id, _amount, "carrot");
 
 			return await embed_sell.send({
 				description: cards_f

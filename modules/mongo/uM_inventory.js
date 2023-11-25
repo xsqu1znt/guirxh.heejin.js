@@ -2,6 +2,7 @@
 
 const cardManager = require("../cardManager");
 const userManager = require("./uM_index");
+const uM_balance = require("./uM_balance");
 const _jsT = require("../jsTools");
 
 async function count(userID, uniqueOnly = false) {
@@ -193,7 +194,7 @@ async function sell(userID, cards) {
 	// prettier-ignore
 	await Promise.all([
 		// Update the user's balance
-		userManager.update(userID, { $inc: { balance: _jsT.sum(cards.map(c => c.sellPrice)) } }),
+		uM_balance.increment(userID, _jsT.sum(cards.map(c => c.sellPrice)), "carrot"),
 		// Remove the cards from the user's card_inventory
 		remove(userID, cards.map(card => card.uid))
     ]);
