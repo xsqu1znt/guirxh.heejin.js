@@ -22,7 +22,7 @@ class Stage {
 	constructor(options) {
 		// prettier-ignore
 		options = { interaction: null, opponents: { home: null, away: null }, idol: { home: null, away: null }, ...options };
-		options.idol.away ||= cardManager.get.random({ type: "all", level: { min: 1, max: 100 } });
+		options.idol.away ||= cardManager.get.random({ type: "all", level: { min: 1, max: 100 } }); // TODO: ???
 
 		this.data = {
 			interaction: options.interaction,
@@ -39,6 +39,8 @@ class Stage {
 			embed: new BetterEmbed({ interaction: options.interaction, author: { text: "$USERNAME | stage", iconURL: true } })
 		};
 
+		console.log(this.data.interaction);
+
 		this.data.embed.setFooter({
 			text: `Duel starting in ${this.data.timeout.start} ${this.data.timeout.start === 1 ? "seconds" : "second"}...`
 		});
@@ -47,13 +49,13 @@ class Stage {
 			// Team :: { HOME }
 			{
 				name: this.data.opponents.home?.displayName || this.data.opponents.home?.username,
-				value: cardManager.toString.inventoryEntry(this.data.idol.home),
+				value: cardManager.toString.inventoryEntry(this.data.idol.home, { simplify: true }),
 				inline: true
 			},
 			// Team :: { AWAY }
 			{
 				name: this.data.opponents.away?.displayName || this.data.opponents.away?.username || "Rival",
-				value: cardManager.toString.inventoryEntry(this.data.idol.away),
+				value: cardManager.toString.inventoryEntry(this.data.idol.away, { simplify: true }),
 				inline: true
 			}
 		);
@@ -131,8 +133,9 @@ class Stage {
 		// Damage the HOME team
 		this.#applyDamage("home");
 
+		// prettier-ignore
 		// Update the embed's HOME team field
-		this.data.embed.data.fields[0].value = `>>> ${cardManager.toString.inventoryEntry(this.data.idol.home)}`;
+		this.data.embed.data.fields[0].value = `>>> ${cardManager.toString.inventoryEntry(this.data.idol.home, { simplify: true })}`;
 
 		/// Refresh the embed
 		this.data.embed.setFooter({ text: `Turn: ${this.data.turn}` });
@@ -155,8 +158,9 @@ class Stage {
 		// Damage the AWAY team
 		this.#applyDamage("away");
 
+		// prettier-ignore
 		// Update the embed's AWAY team field
-		this.data.embed.data.fields[1].value = `>>> ${cardManager.toString.inventoryEntry(this.data.idol.away)}`;
+		this.data.embed.data.fields[1].value = `>>> ${cardManager.toString.inventoryEntry(this.data.idol.away, { simplify: true })}`;
 
 		/// Refresh the embed
 		this.data.embed.setFooter({ text: `Turn: ${this.data.turn}` });
