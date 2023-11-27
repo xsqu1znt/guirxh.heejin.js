@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { EmbedNavigator } = require("../modules/discordTools");
 const { error_ES, user_ES } = require("../modules/embedStyles/index");
+const { EmbedNavigator } = require("../modules/discordTools");
 const { userManager } = require("../modules/mongo/index");
 const cardManager = require("../modules/cardManager");
 
@@ -42,10 +42,7 @@ module.exports = {
 
 		// Create the embeds :: { USER MISSING }
 		// let embeds_missing = user_ES.missing(target, target.id === interaction.user.id, card_set, cards_have);
-		let embeds_missing = user_ES.missing(target, {
-			difID: target.id === interaction.user.id,
-			cards: { set: card_set, has: cards_have }
-		});
+		let embeds_missing = user_ES.missing(interaction.member, target, card_set, cards_have);
 
 		// prettier-ignore
 		// Set up page navigation

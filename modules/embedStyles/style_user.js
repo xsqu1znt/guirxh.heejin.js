@@ -17,7 +17,6 @@
  * @property {"ascending"|"descending"} order */
 
 /** @typedef options_missing
- * @property {boolean} difID
  * @property {{set:Card[], has:boolean[]}} cards */
 
 const { GuildMember, User, time, TimestampStyles } = require("discord.js");
@@ -174,33 +173,33 @@ function profile(user, options) {
 }
 
 /** @param {GuildMember|User} user, @param {options_missing} options */
-function missing(user, options) {
-	options = { difID: false, cards: { set: null, has: null }, ...options };
-
-	let cards_owned_count = cards_have.filter(b => b).length;
-
+function missing(user, target, cards, cards_has) {
 	// Sort the cards by set ID then global ID :: { DESCENDING }
-	options.cards.set.sort((a, b) => a.setID - b.setID || a.globalID - b.globalID);
-
-	// prettier-ignore
+	cards.sort((a, b) => a.setID - b.setID || a.globalID - b.globalID);
 	// Format the user's cards into list entries, with a max of 10 per page
-	let cards_f = _jsT.chunk(cards.map((c, idx) => cardManager.toString.missingEntry(c, cards_have[idx])), 9);
+	let cards_f = cards.map((c, idx) => cardManager.toString.missingEntry(c, cards_has[idx]));
+	// Limit to 9 cards per page
+	let cards_f_chunk = _jsT.chunk(cards_f, 9);
 
-	// Create the embeds :: { MISSING }
+	/* - - - - - { Create the Embeds } - - - - - */
+	let _has_count = cards_has.filter(b => b).length;
 	let embeds_missing = [];
 
-	for (let i = 0; i < cards_f.length; i++) {
-		let _embed = new BetterEmbed({
-			author: { text: "$USERNAME | missing", user, iconURL: true },
+	// Create the embed template :: { MISSING }
+	let embed_missing = new BetterEmbed({ author: { text: "$USERNAME | missing", user, iconURL: true } });
+
+	for (let i = 0; i < cards_f_chunk.length; i++) {
+		let _embed = embed_missing.copy({
 			description: `**\`\`\`⬜ $SET_ID | 🃏 $HAS/$OUT_OF $TARGET_USERNAME\`\`\`**`
 				.replace("$SET_ID", cards[0].setID)
-				.replace("$HAS", cards_owned_count)
-				.replace("$OUT_OF", cards.length)
-				.replace("$TARGET_USERNAME", options.difID ? `| 🔎 ${target.username}` : ""),
+				.replace("$HAS", _has_count)
+				.replace("$OUT_OF", cards_has.length)
+				.replace("$TARGET_USERNAME", target.id !== user.id ? `| 🔎 ${target.username}` : ""),
 			footer: `Page ${i + 1}/${cards_f.length || 1}`
 		});
 
-		_embed.addFields(...cards_f[i].map(c => ({ name: "\u200b", value: c, inline: true })));
+		// Add the missing entries as fields
+		_embed.addFields(...cards_f_chunk[i].map(c => ({ name: "\u200b", value: c, inline: true })));
 
 		embeds_missing.push(_embed);
 	}
