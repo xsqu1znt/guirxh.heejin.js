@@ -16,6 +16,10 @@
  * @property {"gid"|"setID"|"recent"} sorting
  * @property {"ascending"|"descending"} order */
 
+/** @typedef options_missing
+ * @property {boolean} difID
+ * @property {{set:Card[], has:boolean[]}} cards */
+
 const { GuildMember, User, time, TimestampStyles } = require("discord.js");
 
 const { BetterEmbed, markdown } = require("../discordTools");
@@ -169,11 +173,14 @@ function profile(user, options) {
 	};
 }
 
-function missing(user, cards, cards_have) {
+/** @param {GuildMember|User} user, @param {options_missing} options */
+function missing(user, options) {
+	options = { difID: false, cards: { set: null, has: null }, ...options };
+
 	let cards_owned_count = cards_have.filter(b => b).length;
 
 	// Sort the cards by set ID then global ID :: { DESCENDING }
-	cards.sort((a, b) => a.setID - b.setID || a.globalID - b.globalID);
+	options.cards.set.sort((a, b) => a.setID - b.setID || a.globalID - b.globalID);
 
 	// prettier-ignore
 	// Format the user's cards into list entries, with a max of 10 per page
@@ -185,9 +192,11 @@ function missing(user, cards, cards_have) {
 	for (let i = 0; i < cards_f.length; i++) {
 		let _embed = new BetterEmbed({
 			author: { text: "$USERNAME | missing", user, iconURL: true },
-			// description: "```Lorem ipsum dolor sit amet```",
-			description: `**\`\`\`⬜ SET ${cards[0].setID} | Owned: ${cards_owned_count}/${cards.length}\`\`\`**`,
-			// footer: `Page ${i + 1}/${cards_f.length || 1} | Owned: ${cards_have.filter(b => b).length}/${cards.length}`
+			description: `**\`\`\`⬜ $SET_ID | 🃏 $HAS/$OUT_OF $TARGET_USERNAME\`\`\`**`
+				.replace("$SET_ID", cards[0].setID)
+				.replace("$HAS", cards_owned_count)
+				.replace("$OUT_OF", cards.length)
+				.replace("$TARGET_USERNAME", options.difID ? `| 🔎 ${target.username}` : ""),
 			footer: `Page ${i + 1}/${cards_f.length || 1}`
 		});
 

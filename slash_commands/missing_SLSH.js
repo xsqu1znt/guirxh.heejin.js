@@ -41,7 +41,11 @@ module.exports = {
 		let cards_have = await userManager.inventory.has(target.id, card_set.map(c => c.globalID));
 
 		// Create the embeds :: { USER MISSING }
-		let embeds_missing = user_ES.missing(interaction.member, card_set, cards_have);
+		// let embeds_missing = user_ES.missing(target, target.id === interaction.user.id, card_set, cards_have);
+		let embeds_missing = user_ES.missing(target, {
+			difID: target.id === interaction.user.id,
+			cards: { set: card_set, has: cards_have }
+		});
 
 		// prettier-ignore
 		// Set up page navigation
