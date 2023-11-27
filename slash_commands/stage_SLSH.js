@@ -18,14 +18,13 @@ module.exports = {
 	// prettier-ignore
 	builder: new SlashCommandBuilder().setName("stage")
 		.setDescription("LV. your idol by challenging a rival to a duel")
-	
 		.addUserOption(option => option.setName("player").setDescription("Challenge a player to a duel")),
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
 		let rival = interaction.options.getUser("player") || null;
 
-		/* - - - - - - - - - - { COOLDOWNS } - - - - - - - - - - */
+		/* - - - - - { COOLDOWNS } - - - - - */
 		/// Check if the user has an active cooldown :: { STAGE }
 		let cooldown_stage_user = await userManager.cooldowns.eta(interaction.user.id, "stage");
 		// prettier-ignore
@@ -34,7 +33,7 @@ module.exports = {
 		});
 
 		if (rival) {
-			/* - - - - - - - - - - { RIVAL STARTED } - - - - - - - - - - */
+			/* - - - - - { RIVAL STARTED } - - - - - */
 			// prettier-ignore
 			// A player can't duel themself
 			if (rival.id === interaction.user.id) return await error_ES.send({
@@ -47,7 +46,7 @@ module.exports = {
 				interaction, description: `${rival} has not started yet`
 			});
 
-			/* - - - - - - - - - - { COOLDOWNS } - - - - - - - - - - */
+			/* - - - - - { COOLDOWNS } - - - - - */
 			/// Check if the rival has an active cooldown :: { STAGE }
 			let cooldown_stage_rival = await userManager.cooldowns.eta(rival?.id, "stage");
 			// prettier-ignore
@@ -56,8 +55,8 @@ module.exports = {
 			});
 		}
 
-		/* - - - - - - - - - - { USERDATA } - - - - - - - - - - */
-		// Fetch the user & rival from Mongo :: { RIVAL }
+		/* - - - - - { USERDATA } - - - - - */
+		// Fetch the user and rival from Mongo
 		let userData = {
 			user: await userManager.fetch(interaction.user.id, { type: "essential" }),
 			rival: rival ? await userManager.fetch(rival.id, { type: "essential" }) : null
@@ -69,7 +68,7 @@ module.exports = {
 			rival: rival ? await userManager.inventory.get(rival?.id, { uids: userData.rival?.card_selected_uid }) : null
 		};
 
-		/* - - - - - - - - - - { USER & RIVAL IDOL } - - - - - - - - - - */
+		/* - - - - - { USER & RIVAL IDOL } - - - - - */
 		// prettier-ignore
 		if (!card_idol.user) return await error_ES.send({
 			interaction, description: "You do not have an `🏃 idol` set\nUse `/set` `edit:🏃 idol` `add:UID`"
@@ -79,24 +78,25 @@ module.exports = {
 			interaction, description: `${rival} does not have an \`🏃 idol\` set\nUse \`/set\` \`edit:🏃 idol\` \`add:UID\``
 		});
 
+		// prettier-ignore
 		// Assign a random card as the rival idol if the user didn't choose to battle a player
-		if (!rival) card_idol.rival = cardManager.get.random({ basic: true, lvl_min: 0, lvl_max: 100 });
+		if (!rival) card_idol.rival = cardManager.get.random({
+			basic: true,
+			lvl_min: card_idol.user.stats.level - 5,
+			lvl_max: card_idol.user.stats.level
+		});
 
-		/* - - - - - - - - - - { COOLDOWNS } - - - - - - - - - - */
-		// Set the user's cooldown & reminder
+		/* - - - - - { COOLDOWNS } - - - - - */
+		// Set the user's cooldown and reminder
 		await Promise.all([
 			userManager.cooldowns.set(interaction.user.id, "stage"),
-			userManager.reminders.set(interaction.user.id, "stage")
+			userManager.reminders.set(interaction.user.id, "stage"),
+			// Set the rival's cooldown and reminder
+			rival ? userManager.cooldowns.set(rival.id, "stage") : true,
+			rival ? userManager.reminders.set(rival.id, "stage") : true
 		]);
 
-		// prettier-ignore
-		// Set the rival's cooldown & reminder
-		if (rival) await Promise.all([
-			userManager.cooldowns.set(rival.id, "stage"),
-			userManager.reminders.set(rival.id, "stage")
-		]);
-
-		/* - - - - - - - - - - { STAGE } - - - - - - - - - - */
+		/* - - - - - { STAGE } - - - - - */
 		// Create the Stage instance
 		let stage = new Stage({
 			interaction,

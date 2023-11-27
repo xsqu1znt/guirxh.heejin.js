@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { error_ES, user_ES } = require("../modules/embedStyles/index");
 const { EmbedNavigator } = require("../modules/discordTools");
+const { error_ES, user_ES } = require("../modules/embedStyles/index");
 const { userManager } = require("../modules/mongo/index");
 const cardManager = require("../modules/cardManager");
 

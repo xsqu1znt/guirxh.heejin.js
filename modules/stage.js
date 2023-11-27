@@ -9,7 +9,6 @@ const { BetterEmbed } = require("./discordTools");
 const { userManager } = require("./mongo/index");
 const cardManager = require("./cardManager");
 const _jsT = require("./jsTools");
-const logger = require("./logger");
 
 const config = {
 	player: require("../configs/config_player.json"),
@@ -36,10 +35,8 @@ class Stage {
 				turn: _jsT.parseTime(config.bot.timeouts.STAGE_TURN, { type: "ms" })
 			},
 
-			embed: new BetterEmbed({
-				interaction: options.interaction,
-				author: { text: "$USERNAME | stage", iconURL: true }
-			})
+			// prettier-ignore
+			embed: new BetterEmbed({ interaction: options.interaction, author: { text: "$USERNAME | stage", iconURL: true } })
 		};
 
 		this.data.embed.setFooter({
@@ -50,13 +47,13 @@ class Stage {
 			// Team :: { HOME }
 			{
 				name: this.data.opponents.home?.displayName || this.data.opponents.home?.username,
-				value: `>>> ${cardManager.toString.inventoryEntry(this.data.idol.home)}`,
+				value: cardManager.toString.inventoryEntry(this.data.idol.home),
 				inline: true
 			},
 			// Team :: { AWAY }
 			{
 				name: this.data.opponents.away?.displayName || this.data.opponents.away?.username || "Rival",
-				value: `>>> ${cardManager.toString.inventoryEntry(this.data.idol.away)}`,
+				value: cardManager.toString.inventoryEntry(this.data.idol.away),
 				inline: true
 			}
 		);
