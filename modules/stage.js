@@ -18,44 +18,61 @@ const config = {
 class Stage {
 	#resolve = null;
 
+	async #refresh() {
+		return await this.data.interaction.editReply({ embeds: [this.embed] });
+	}
+
+	async #countdown() {
+		for (let t = this.data.timeout.start; t >= 0; t--) {
+			this.embed.setFooter(`Duel starting in ${t} ${t === 1 ? "second" : "seconds"}...`);
+
+			// Refresh the embed
+			await this.#refresh();
+			// Wait 1 second
+			await _jsT.wait(1000);
+		}
+	}
+
 	/** @param {options} options  */
 	constructor(options) {
-		// prettier-ignore
 		options = { interaction: null, opponents: { home: null, away: null }, idol: { home: null, away: null }, ...options };
-		options.idol.away ||= cardManager.get.random({ type: "all", level: { min: 1, max: 100 } }); // TODO: ???
 
 		this.data = {
 			interaction: options.interaction,
 			opponents: options.opponents,
 			idol: options.idol,
-			// _idol: structuredClone(options.idol),
 			turn: 0,
 			timeout: {
 				start: _jsT.parseTime(config.bot.timeouts.STAGE_START, { type: "s" }),
 				turn: _jsT.parseTime(config.bot.timeouts.STAGE_TURN, { type: "ms" })
-			},
-
-			// prettier-ignore
-			embed: new BetterEmbed({ interaction: options.interaction, author: { text: "$USERNAME | stage", iconURL: true } })
+			}
 		};
 
-		console.log(this.data.interaction);
-
-		this.data.embed.setFooter({
-			text: `Duel starting in ${this.data.timeout.start} ${this.data.timeout.start === 1 ? "seconds" : "second"}...`
+		// Get a random idol if one wasn't provided :: { AWAY }
+		this.data.idol.away ||= cardManager.get.random({
+			type: "all",
+			level: { min: options.idol.home.stats.level - 4, max: options.idol.home.stats.level }
 		});
 
-		this.data.embed.addFields(
-			// Team :: { HOME }
+		/* - - - - - { Create the Embed } - - - - - */
+		this.embed = new BetterEmbed({
+			interaction: options.interaction,
+			author: { text: "$USERNAME | stage", iconURL: true },
+			footer: `Duel starting in ${this.data.timeout.start} ${this.data.timeout.start === 1 ? "second" : "seconds"}...`
+		});
+
+		// Add opponent info fields
+		this.embed.addFields(
+			// Opponent info :: { HOME }
 			{
-				name: this.data.opponents.home?.displayName || this.data.opponents.home?.username,
-				value: cardManager.toString.inventoryEntry(this.data.idol.home, { simplify: true }),
+				name: this.data.opponents.home?.displayName || this.data.opponents.home?.username || "Player 1",
+				value: cardManager.toString.stage(this.data.idol.home),
 				inline: true
 			},
-			// Team :: { AWAY }
+			// Opponent info :: { AWAY }
 			{
 				name: this.data.opponents.away?.displayName || this.data.opponents.away?.username || "Rival",
-				value: cardManager.toString.inventoryEntry(this.data.idol.away, { simplify: true }),
+				value: cardManager.toString.stage(this.data.idol.away),
 				inline: true
 			}
 		);
@@ -65,29 +82,20 @@ class Stage {
 		return new Promise(async resolve => {
 			this.#resolve = resolve;
 
+			// Send the embed
+			await this.embed.send();
+			// Start the countdown
+			await this.#countdown();
+
+			/* 
 			// Start the countdown
 			await this.#countdown();
 
 			await this.data.embed.send();
 
 			// Choose who goes first
-			_jsT.chance() ? this.#attack_away() : this.#attack_home();
+			_jsT.chance() ? this.#attack_away() : this.#attack_home(); */
 		});
-	}
-
-	async #refresh() {
-		return await this.data.embed.send({ sendMethod: "editReply" });
-	}
-
-	async #countdown() {
-		for (let i = 0, _time = this.data.timeout.start; i < this.data.timeout.start; i++, _time--) {
-			// prettier-ignore
-			this.data.embed.setFooter({
-				text: `Duel starting in ${_time} ${_time === 1 ? "second" : "seconds"}...`
-			});
-
-			await Promise.all([this.#refresh(), _jsT.wait(1000)]);
-		}
 	}
 
 	/** @param {"home"|"away"} teamToAttack */

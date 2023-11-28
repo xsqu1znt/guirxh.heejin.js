@@ -226,31 +226,28 @@ function get_imageURL(globalID) {
 /** @param {options_get_random} options */
 function get_random(options = {}) {
 	options = { type: "all", level: { min: 1, max: 100 }, count: 1, ...options };
-
 	options.level.min = _jsT.clamp(options.level.min, { min: 1, max: 100 });
 	options.level.max = _jsT.clamp(options.level.max, { min: 1, max: 100 });
 
 	let cards = [];
 
+	// prettier-ignore
 	switch (options.type) {
-		case "all":
-			cards.push(...[...Array(options.length)].map(() => _jsT.choice(cards_all, true)));
-			break;
-
-		case "general":
-			cards.push(...[...Array(options.length)].map(() => _jsT.choice(cards_general, true)));
-			break;
+		case "all": cards = [...Array(options.length)].map(() => _jsT.choice(cards_all, true)); break;
+		
+		case "general": cards = [...Array(options.length)].map(() => _jsT.choice(cards_general, true)); break;
 	}
 
-	// prettier-ignore
-	cards = cards.filter(c => c).map(c => {
-		if (options.level.min && options.level.max) {
-			c.level = _jsT.randomNumber(options.level.min, options.level.max);
-			return resetUID(recalculateStats(c));
-		}
+	// Parse cards
+	for (let i = 0; i < cards.length; i++) {
+		// Give it a random level
+		cards[i].stats.level = _jsT.randomNumber(options.level.min, options.level.max);
 
-		return resetUID(c);
-	});
+		// Recalculate stats
+		recalculateStats(cards[i]);
+		// Give it a fake UID
+		resetUID(cards[i]);
+	}
 
 	return cards.length > 1 ? cards : cards[0];
 }
@@ -323,6 +320,22 @@ function toString_basic(card) {
 		.replace("$SINGLE", card.single)
 		.replace("$NAME", markdown.link(card.name, card.imageURL))
 		.replace("$SELL_PRICE", card.sellPrice);
+}
+
+function toString_stage(card) {
+	return "> **`$UID`** `$GID` `🗣️ $SET`\n> `$EMOJI` **$SINGLE** `[$GROUP]` $NAME\n> `📈 $LVL` `🎤 $ABI` `💖 $REP`"
+		.replace("$UID", card.uid)
+		.replace("$GID", card.globalID)
+		.replace("$SET", card.setID)
+
+		.replace("$EMOJI", card.emoji)
+		.replace("$SINGLE", card.single)
+		.replace("$GROUP", card.group)
+		.replace("$NAME", markdown.link(card.name, card.imageURL))
+
+		.replace("$LVL", card.stats.level)
+		.replace("$ABI", card.stats.ability)
+		.replace("$REP", card.stats.reputation);
 }
 
 /** @param {options_toStr_inventory} options  */
@@ -490,6 +503,7 @@ module.exports = {
 
 	toString: {
 		basic: toString_basic,
+		stage: toString_stage,
 		inventoryEntry: toString_inventoryEntry,
 		missingEntry: toString_missingEntry,
 		cardPackEntry: toString_cardPackEntry,

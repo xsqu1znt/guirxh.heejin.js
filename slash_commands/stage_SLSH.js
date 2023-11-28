@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
 const { BetterEmbed } = require("../modules/discordTools");
-const { error_ES } = require("../modules/embedStyles/index");
+const { error_ES, cooldown_ES } = require("../modules/embedStyles/index");
 const { userManager } = require("../modules/mongo/index");
 const cardManager = require("../modules/cardManager");
 const _jsT = require("../modules/jsTools");
@@ -32,8 +32,8 @@ module.exports = {
             interaction, description: `Your stage will be ready **${cooldown_stage_user}**`
 		});
 
+		/* - - - - - { RIVAL } - - - - - */
 		if (rival) {
-			/* - - - - - { RIVAL STARTED } - - - - - */
 			// prettier-ignore
 			// A player can't duel themself
 			if (rival.id === interaction.user.id) return await error_ES.send({
@@ -62,7 +62,7 @@ module.exports = {
 			rival: rival ? await userManager.fetch(rival.id, { type: "essential" }) : null
 		};
 
-		/// Get the player's idol from their card_inventory
+		// Get the player's idol from their card_inventory
 		let card_idol = {
 			user: await userManager.inventory.get(interaction.user.id, { uids: userData.user.card_selected_uid }),
 			rival: rival ? await userManager.inventory.get(rival?.id, { uids: userData.rival?.card_selected_uid }) : null
@@ -76,14 +76,6 @@ module.exports = {
 		// prettier-ignore
 		if (!card_idol.rival && rival) return await error_ES.send({
 			interaction, description: `${rival} does not have an \`🏃 idol\` set\nUse \`/set\` \`edit:🏃 idol\` \`add:UID\``
-		});
-
-		// prettier-ignore
-		// Assign a random card as the rival idol if the user didn't choose to battle a player
-		if (!rival) card_idol.rival = cardManager.get.random({
-			basic: true,
-			lvl_min: card_idol.user.stats.level - 5,
-			lvl_max: card_idol.user.stats.level
 		});
 
 		/* - - - - - { COOLDOWNS } - - - - - */
