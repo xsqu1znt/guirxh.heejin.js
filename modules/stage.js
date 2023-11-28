@@ -18,18 +18,55 @@ const config = {
 class Stage {
 	#resolve = null;
 
+	async #sleep() {
+		return await _jsT.wait(this.data.timeout.turn);
+	}
+
 	async #refresh() {
 		return await this.data.interaction.editReply({ embeds: [this.embed] });
 	}
 
 	async #countdown() {
-		for (let t = this.data.timeout.start; t >= 0; t--) {
+		for (let t = this.data.timeout.start; t > 0; t--) {
 			this.embed.setFooter(`Duel starting in ${t} ${t === 1 ? "second" : "seconds"}...`);
 
 			// Refresh the embed
 			await this.#refresh();
 			// Wait 1 second
 			await _jsT.wait(1000);
+		}
+	}
+
+	/** @param {"home"|"away"} teamToAttack */
+	#applyDamage(teamToAttack) {
+		switch (teamToAttack) {
+			case "home":
+				// Calculate the resulting attack power :: { AWAY }
+				let attackPower_away = _jsT.randomNumber(
+					_jsT.percent(30, this.data.idol.away.stats.ability),
+					this.data.idol.away.stats.ability
+				);
+
+				// prettier-ignore
+				// Apply the new HP (reputation) :: { HOME }
+				this.data.idol.home.stats.reputation = _jsT.clamp(
+						this.data.idol.home.stats.reputation - attackPower_away, { min: 0 }
+				);
+				break;
+
+			case "away":
+				// Calculate the resulting attack power :: { HOME }
+				let attackPower_home = _jsT.randomNumber(
+					_jsT.percent(30, this.data.idol.away.stats.ability),
+					this.data.idol.away.stats.ability
+				);
+
+				// prettier-ignore
+				// Apply the new HP (reputation) :: { AWAY }
+				this.data.idol.away.stats.reputation = _jsT.clamp(
+						this.data.idol.away.stats.reputation - attackPower_home, { min: 0 }
+				);
+				break;
 		}
 	}
 
@@ -87,52 +124,9 @@ class Stage {
 			// Start the countdown
 			await this.#countdown();
 
-			/* 
-			// Start the countdown
-			await this.#countdown();
-
-			await this.data.embed.send();
-
 			// Choose who goes first
-			_jsT.chance() ? this.#attack_away() : this.#attack_home(); */
+			_jsT.chance() ? this.#attack_away() : this.#attack_home();
 		});
-	}
-
-	/** @param {"home"|"away"} teamToAttack */
-	#applyDamage(teamToAttack) {
-		switch (teamToAttack) {
-			case "home":
-				// Calculate the resulting attack power :: { AWAY }
-				let attackPower_away = _jsT.randomNumber(
-					_jsT.percent(30, this.data.idol.away.stats.ability),
-					this.data.idol.away.stats.ability
-				);
-
-				// prettier-ignore
-				// Apply the new HP (reputation) :: { HOME }
-				this.data.idol.home.stats.reputation = _jsT.clamp(
-					this.data.idol.home.stats.reputation - attackPower_away, { min: 0 }
-				);
-				return;
-
-			case "away":
-				// Calculate the resulting attack power :: { HOME }
-				let attackPower_home = _jsT.randomNumber(
-					_jsT.percent(30, this.data.idol.away.stats.ability),
-					this.data.idol.away.stats.ability
-				);
-
-				// prettier-ignore
-				// Apply the new HP (reputation) :: { AWAY }
-				this.data.idol.away.stats.reputation = _jsT.clamp(
-					this.data.idol.away.stats.reputation - attackPower_home, { min: 0 }
-				);
-				return;
-		}
-	}
-
-	async #sleep() {
-		return await _jsT.wait(this.data.timeout.turn);
 	}
 
 	async #attack_home() {
@@ -143,10 +137,10 @@ class Stage {
 
 		// prettier-ignore
 		// Update the embed's HOME team field
-		this.data.embed.data.fields[0].value = `>>> ${cardManager.toString.inventoryEntry(this.data.idol.home, { simplify: true })}`;
+		this.embed.data.fields[0].value = cardManager.toString.stage(this.data.idol.home);
 
 		/// Refresh the embed
-		this.data.embed.setFooter({ text: `Turn: ${this.data.turn}` });
+		this.embed.setFooter(`Turn: ${this.data.turn}`);
 		await this.#refresh();
 
 		// Attack team AWAY if HOME still has HP (reputation)
@@ -166,12 +160,11 @@ class Stage {
 		// Damage the AWAY team
 		this.#applyDamage("away");
 
-		// prettier-ignore
 		// Update the embed's AWAY team field
-		this.data.embed.data.fields[1].value = `>>> ${cardManager.toString.inventoryEntry(this.data.idol.away, { simplify: true })}`;
+		this.embed.data.fields[1].value = cardManager.toString.stage(this.data.idol.away);
 
 		/// Refresh the embed
-		this.data.embed.setFooter({ text: `Turn: ${this.data.turn}` });
+		this.embed.setFooter(`Turn: ${this.data.turn}`);
 		await this.#refresh();
 
 		// Attack team HOME if AWAY still has HP (reputation)
@@ -194,45 +187,41 @@ class Stage {
 		let card = cardManager.parse.toCardLike(card_leveled.card);
 
 		// prettier-ignore
+		// Give the winning user/idol XP
 		if (user) await Promise.all([
 			userManager.inventory.update(user.id, card),
-			userManager.xp.increment(user.id, xp_user, "stage")
+			userManager.levels.increment.xp(user.id, xp_user, "stage")
 		]);
 
-		/// Update embed
+		/* - - - - - { Update the Embed } - - - - - */
 		switch (user?.id) {
-			// HOME wins
+			// HOME won
 			case this.data.opponents.home.id:
-				this.data.embed.data.fields[0].name += " ***Won!***";
-				this.data.embed.data.fields[1].name += " ***Lost!***";
+				this.embed.data.fields[0].name = `\`🏆\` ${this.embed.data.fields[0].name} ***WON!***`;
+				this.embed.data.fields[1].name += " ***LOST!***";
 				break;
 
-			// AWAY wins
+			// AWAY won
 			case this.data.opponents.away?.id:
-				this.data.embed.data.fields[0].name += " ***Lost!***";
-				this.data.embed.data.fields[1].name += " ***Won!***";
-				break;
-
-			// AWAY wins (user didn't pick rival)
-			default:
-				this.data.embed.data.fields[0].name += " ***Lost!***";
-				this.data.embed.data.fields[1].name += " ***Won!***";
+				this.embed.data.fields[0].name += " ***LOST!***";
+				this.embed.data.fields[1].name = `\`🏆\` ${this.embed.data.fields[1].name} ***WON!***`;
 				break;
 		}
 
-		// prettier-ignore
-		await this.data.embed.send({
-			footer: user
+		// Set the embed's footer
+		this.embed.setFooter(
+			user
 				? "$WINNER's idol got $XPXP $LEVEL_UP"
 						.replace("$WINNER", user?.displayName || user?.username)
 						.replace("$XP", xp_idol)
-						.replace("$LEVEL_UP", card_leveled.levels_gained
-							? `and ${card_leveled.levels_gained} LV.`
-							: ""
-						)
+						.replace("$LEVEL_UP", card_leveled.levels_gained ? `and ${card_leveled.levels_gained} LV.` : "")
 				: "You lost... Try again next time!"
-		});
+		);
 
+		// Refresh the embed
+		await this.#refresh();
+
+		// Return stage data
 		return this.#resolve({
 			id: user?.id || null,
 			user: user || null,
