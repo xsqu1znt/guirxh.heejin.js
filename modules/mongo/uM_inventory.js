@@ -182,7 +182,7 @@ async function update(userID, card) {
 
 /** @param {string} userID */
 async function sell(userID, cards) {
-	if (!cards || !cards.filter(c => c?.globalID && c?.sellPrice).length) return false;
+	if (!cards || !cards.filter(c => c?.globalID && c?.sellPrice).length) return { success: false };
 
 	// Create an array if only a single card was passed
 	cards = _jsT.isArray(cards);
