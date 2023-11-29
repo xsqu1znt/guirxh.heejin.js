@@ -147,7 +147,7 @@ module.exports = {
         });
 
 		if (confirmation_sell) {
-			let { success: _success, amount: _amount } = await userManager.inventory.sell(interaction.user.id, cards);
+			let { success: _success, sellTotal: _amount } = await userManager.inventory.sell(interaction.user.id, cards);
 
 			// prettier-ignore
 			if (!_success) return await error_ES.send({

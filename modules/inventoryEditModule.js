@@ -1,13 +1,14 @@
+/** @typedef {"sell"|"setFavorite"|"setIdol"|"vault"} ModuleType */
+
 /** @typedef options
  * @property {CommandInteraction} interaction
  * @property {Cards[]|Cards} cards
- * @property {InventoryEditType} type
- */
+ * @property {Message} message */
 
-const { CommandInteraction } = require("discord.js");
+const { CommandInteraction, Message } = require("discord.js");
 
 const { BetterEmbed, awaitConfirmation } = require("./discordTools");
-const { error_ES } = require("./embedStyles");
+const { error_ES, user_ES } = require("./embedStyles");
 const { userManager } = require("./mongo");
 const _jsT = require("./jsTools");
 
@@ -19,16 +20,39 @@ class InventoryEditModule {
 		confirm: config.bot.emojis.confirm_sell
 	};
 
+	/** @param {options} options */
 	constructor(options) {
-		this.cards = cards;
-		this.selected = [];
+		options = { interaction: null, message: null, cards: [], ...options };
+
+		this.data = {
+			interaction: options.interaction,
+			message: options.message,
+			cards: options.cards,
+			selected: []
+		};
+	}
+
+	/** @param {...ModuleType} moduleType  */
+	async addModuleReactions(...moduleType) {
+		// prettier-ignore
+		for (let type of moduleType) switch (type) {
+			case "sell": await this.message.react(config.bot.emojis.editModule_sell.EMOJI); break;
+
+			case "setFavorite": await this.message.react(config.bot.emojis.editModule_setFavorite.EMOJI); break;
+
+			case "setIdol": await this.message.react(config.bot.emojis.editModule_setIdol.EMOJI); break;
+
+			case "vault": await this.message.react(config.bot.emojis.editModule_setVault.EMOJI); break;
+		}
+
+		return this;
 	}
 
 	async #sell() {
 		if (!this.selected.length) return;
 
 		// Try selling the cards
-		let { success, amount } = await userManager.inventory.sell(interaction.user.id, this.selected);
+		let { success, sellTotal } = await userManager.inventory.sell(interaction.user.id, this.data.selected);
 
 		// prettier-ignore
 		if (!success) return await error_ES.send({
@@ -36,11 +60,9 @@ class InventoryEditModule {
             sendMethod: "channel"
         });
 
-		/* - - - - - { Create the Embed } - - - - - */
-		let embed_sell = new BetterEmbed({
-			interaction,
-			author: { text: "" }
-		});
+		// Create the embed :: { SELL }
+		let embed_sell = user_ES.sell(interaction.member, this.data.selected, sellTotal);
+		return await embed_sell.reply(this.data.message);
 	}
 }
 

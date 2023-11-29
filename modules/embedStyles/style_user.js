@@ -506,4 +506,21 @@ function quest(user, userData) {
 	return embed;
 }
 
-module.exports = { profile, missing, inventory, cooldowns, reminders, quest };
+/** @param {GuildMember|User} user, @param {Cards[]} cards, @param {number} sellTotal */
+function sell(user, cards, sellTotal) {
+	// Parse the cards into strings
+	let cards_f = cards.length > 10 ? null : cards.map(c => cardManager.toString.basic(c));
+
+	// Create the embed :: { SELL }
+	let embed_sell = new BetterEmbed({
+		author: { text: `$USERNAME | ${config.bot.emojis.currency_1.EMOJI} sell`, user, iconURL: true },
+		description: cards_f
+			? `You sold:\n${cards_f.join("\n")}`
+			: `You sold \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"}`,
+		footer: `and got ${config_bot.emojis.currency_1.EMOJI} ${sellTotal}`
+	});
+
+	return embed_sell;
+}
+
+module.exports = { profile, missing, inventory, cooldowns, reminders, quest, sell };

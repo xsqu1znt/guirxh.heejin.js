@@ -202,7 +202,7 @@ async function sell(userID, cards) {
 		remove(userID, cards.map(card => card.uid))
     ]);
 
-	return { success: true, amount: sellPriceSum };
+	return { success: true, sellTotal: sellPriceSum };
 }
 
 /** @param {string} userID */
