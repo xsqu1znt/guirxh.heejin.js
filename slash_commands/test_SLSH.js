@@ -1,4 +1,11 @@
-const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
+const {
+	Client,
+	CommandInteraction,
+	SlashCommandBuilder,
+	StringSelectMenuBuilder,
+	StringSelectMenuOptionBuilder,
+	ActionRowBuilder
+} = require("discord.js");
 
 const { BetterEmbed, markdown } = require("../modules/discordTools");
 const { userManager } = require("../modules/mongo/index");
@@ -13,39 +20,33 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-		let inventoryStats = await userManager.inventory.stats(interaction.user.id);
-
-		let stats_f = inventoryStats.categories.map(cat =>
-			markdown.ansi(`${cardManager.cards.category.meta.base[cat.name].emoji} ${cat.name}: ${cat.has}/${cat.outOf}`, {
-				format: "bold",
-				text_color: cardManager.cards.category.meta.base[cat.name].color_ansi
-			})
-		);
+		let cards = cardManager.get.random({ type: "general", count: 5 });
 
 		// prettier-ignore
-		// Insert inventory count
-		stats_f.splice(5, 0,
-			markdown.ansi(`⚪ total: ${inventoryStats.count.has}/${inventoryStats.count.outOf}`, {
-				format: "bold", text_color: "white"
-			})
+		// Create the embed :: { SELL MOCKUP }
+		let embed = new BetterEmbed({
+			interaction, author: "🥕 Sell",
+			description: "Choose which cards you want to sell"
+		});
+
+		// Create the select menu
+		let selectMenu_options = cards.map((c, idx) =>
+			new StringSelectMenuOptionBuilder()
+				.setValue(`card_${idx}`)
+				// .setEmoji("🃏")
+				.setLabel(`${c.emoji} ${c.single} [${c.group}] ${c.name}`)
+				.setDescription(`UID: ${c.uid} :: GID: ${c.globalID} :: 🗣️ ${c.setID}`)
 		);
 
-		/* - - - - - { Creat the Embed } - - - - - */
-		let embed_invStats = new BetterEmbed({ interaction });
+		let selectMenu = new StringSelectMenuBuilder()
+			.setCustomId("test")
+			.setPlaceholder("Select what you want to sell")
+			.addOptions(...selectMenu_options)
+			.setMaxValues(cards.length);
 
-		embed_invStats.addFields(
-			{
-				name: "`🌕` Normal Sets",
-				value: `\`\`\`ansi\n${stats_f.slice(0, 6).join("\n")}\`\`\``,
-				inline: true
-			},
-			{
-				name: "`🌗` Special Sets",
-				value: `\`\`\`ansi\n${stats_f.slice(6).join("\n")}\`\`\``,
-				inline: true
-			}
-		);
+		let actionRow = new ActionRowBuilder().addComponents(selectMenu);
 
-		return await embed_invStats.send();
+		// Send the embed with components
+		return await embed.send({ components: actionRow });
 	}
 };

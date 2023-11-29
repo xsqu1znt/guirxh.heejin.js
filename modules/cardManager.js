@@ -233,9 +233,9 @@ function get_random(options = {}) {
 
 	// prettier-ignore
 	switch (options.type) {
-		case "all": cards = [...Array(options.length)].map(() => _jsT.choice(cards_all, true)); break;
+		case "all": cards = [...Array(options.count)].map(() => _jsT.choice(cards_all, true)); break;
 		
-		case "general": cards = [...Array(options.length)].map(() => _jsT.choice(cards_general, true)); break;
+		case "general": cards = [...Array(options.count)].map(() => _jsT.choice(cards_general, true)); break;
 	}
 
 	// Parse cards
