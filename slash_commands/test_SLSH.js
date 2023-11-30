@@ -33,6 +33,9 @@ module.exports = {
 
 		let msg = await embed.send();
 
+		let inventoryEditModule = new InventoryEditModule({ interaction, cards, message: msg });
+		await inventoryEditModule.addModuleReactions("sell", "setFavorite", "setIdol", "vault");
+
 		/* // Create the select menu
 		let selectMenu_options = cards.map((c, idx) =>
 			new StringSelectMenuOptionBuilder()

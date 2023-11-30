@@ -25,6 +25,11 @@
 		"currency_2": { "NAME": "🎀", "EMOJI": "🎀" },
 		"confirm_sell": { "NAME": "✅", "EMOJI": "✅" },
 
+		"editModule_sell": { "NAME": "🥕", "EMOJI": "🥕" },
+		"editModule_setFavorite": { "NAME": "⭐", "EMOJI": "⭐" },
+		"editModule_setIdol": { "NAME": "🏃", "EMOJI": "🏃" },
+		"editModule_vault": { "NAME": "🔒", "EMOJI": "🔒" },
+
 		"numbers": [
 			{ "NAME": "one", "EMOJI": "<:one:1103208748924813333>" },
 			{ "NAME": "two", "EMOJI": "<:two:1103208760639504465>" },

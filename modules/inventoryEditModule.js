@@ -5,7 +5,11 @@
  * @property {Cards[]|Cards} cards
  * @property {Message} message */
 
-const { CommandInteraction, Message } = require("discord.js");
+// prettier-ignore
+const {
+	CommandInteraction, Message,
+	StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRow
+} = require("discord.js");
 
 const { BetterEmbed, awaitConfirmation } = require("./discordTools");
 const { error_ES, user_ES } = require("./embedStyles");
@@ -17,11 +21,13 @@ const config = { bot: require("../configs/config_bot.json") };
 
 class InventoryEditModule {
 	#emojis = {
-		numbers: config.bot.emojis.numbers,
-		confirm: config.bot.emojis.confirm_sell
+		moduleType: [
+			config.bot.emojis.editModule_sell.NAME,
+			config.bot.emojis.editModule_setFavorite.NAME,
+			config.bot.emojis.editModule_setIdol.NAME,
+			config.bot.emojis.editModule_vault.NAME
+		]
 	};
-
-	#embed_set = new BetterEmbed({ interaction: this.data.interaction, author: { text: "$USERNAME | set", iconURL: true } });
 
 	async #validateCard(cards) {
 		let card_uids = _jsT.isArray(cards).map(c => c?.uid);
@@ -48,7 +54,12 @@ class InventoryEditModule {
 			interaction: options.interaction,
 			message: options.message,
 			cards: options.cards,
-			selected: []
+			selected: [],
+			reactionCollector: null
+		};
+
+		this.embeds = {
+			set: new BetterEmbed({ interaction: this.data.interaction, author: { text: "$USERNAME | set", iconURL: true } })
 		};
 	}
 
@@ -56,16 +67,82 @@ class InventoryEditModule {
 	async addModuleReactions(...moduleType) {
 		// prettier-ignore
 		for (let type of moduleType) switch (type) {
-			case "sell": await this.data.message.react(config.bot.emojis.edit_sell.EMOJI); break;
+			case "sell": await this.data.message.react(config.bot.emojis.editModule_sell.EMOJI); break;
 
-			case "setFavorite": await this.data.message.react(config.bot.emojis.edit_setFavorite.EMOJI); break;
+			case "setFavorite": await this.data.message.react(config.bot.emojis.editModule_setFavorite.EMOJI); break;
 
-			case "setIdol": await this.data.message.react(config.bot.emojis.edit_setIdol.EMOJI); break;
+			case "setIdol": await this.data.message.react(config.bot.emojis.editModule_setIdol.EMOJI); break;
 
-			case "vault": await this.data.message.react(config.bot.emojis.edit_vault.EMOJI); break;
+			case "vault": await this.data.message.react(config.bot.emojis.editModule_vault.EMOJI); break;
 		}
 
 		return this;
+	}
+
+	async #startReactionCollection() {
+		if (this.data.reactionCollector || !this.data.message) {
+			this.data.reactionCollector.resetTimer();
+			return;
+		}
+
+		// Create the collector filter
+		let filter = (reaction, user) => {
+			return this.#emojis.moduleType.includes(reaction.emoji.name) && user.id === interaction.user.id;
+		};
+
+		/// Create the collector
+		let collector = this.data.message.createReactionCollector({ filter, time: 60000 });
+		this.data.reactionCollector = collector;
+
+		/* - - - - - { Collector - COLLECT } - - - - - */
+		collector.on("collect", async (reaction, user) => {
+			// prettier-ignore
+			switch (reaction.emoji.name) {
+				case config.bot.emojis.editModule_sell.NAME: return await this.#sendSellModule();
+
+				case config.bot.emojis.editModule_setFavorite.NAME: break;
+
+				case config.bot.emojis.editModule_setIdol.NAME: break;
+
+				case config.bot.emojis.editModule_vault.NAME: break;
+			}
+		});
+
+		/* - - - - - { Collector - END } - - - - - */
+		collector.on("end", collected => {
+			console.log(`Collected ${collected.size} items`);
+		});
+	}
+
+	async #sendSellModule() {
+		// prettier-ignore
+		// Create the embed :: { SELL MODULE }
+		let embed_sellModule = new BetterEmbed({
+			interaction, author: { text: "$USERNAME | 🥕 sell", iconURL: true },
+			description: "Choose which cards you want to sell"
+		});
+
+		/* - - - - - { Create the Select Menu } - - - - - */
+		let selectMenu_options = this.data.cards.map((c, idx) =>
+			new StringSelectMenuOptionBuilder()
+				.setValue(`card_${idx}`)
+				// .setEmoji("🃏")
+				.setLabel(`${c.emoji} ${c.single} [${c.group}] ${c.name}`)
+				.setDescription(`UID: ${c.uid} :: GID: ${c.globalID} :: 🗣️ ${c.setID}`)
+		);
+
+		// Create the select menu builder
+		let selectMenu = new StringSelectMenuBuilder()
+			.setCustomId("test")
+			.setPlaceholder("Select what you want to sell")
+			.addOptions(...selectMenu_options)
+			.setMaxValues(this.data.cards.length);
+
+		// Create the action row builder
+		let actionRow = new ActionRowBuilder().addComponents(selectMenu);
+
+		// Send the embed with components
+		await embed_sellModule.send({ components: actionRow });
 	}
 
 	async sell(cards = null) {
@@ -127,7 +204,7 @@ class InventoryEditModule {
 		/// Create the embed :: { SET FAVORITE }
 		let card_f = cardManager.toString.basic(card);
 
-		let embed_setFavorite = this.#embed_set({
+		let embed_setFavorite = this.embeds.set({
 			description: `Your \`⭐ favorite\` has been set to:\n> ${card_f}`,
 			imageURL: card.imageURL
 		});
@@ -158,7 +235,7 @@ class InventoryEditModule {
 		/// Create the embed :: { SET IDOL }
 		let card_f = cardManager.toString.basic(card);
 
-		let embed_setIdol = this.#embed_set({
+		let embed_setIdol = this.embeds.set({
 			description: `Your \`🏃 idol\` has been set to:\n> ${card_f}`,
 			imageURL: card.imageURL
 		});
@@ -182,7 +259,7 @@ class InventoryEditModule {
 		});
 
 		// Create the embed :: { SET VAULT }
-		let embed_setVault = this.#embed_set({
+		let embed_setVault = this.embeds.set({
 			description: `\`${cards.length}\` ${cards.length === 1 ? "card" : "cards"} added to your \`🔒 vault\``
 		});
 
