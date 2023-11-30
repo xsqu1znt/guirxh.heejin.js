@@ -56,24 +56,42 @@ class InventoryEditModule {
 	async addModuleReactions(...moduleType) {
 		// prettier-ignore
 		for (let type of moduleType) switch (type) {
-			case "sell": await this.message.react(config.bot.emojis.edit_sell.EMOJI); break;
+			case "sell": await this.data.message.react(config.bot.emojis.edit_sell.EMOJI); break;
 
-			case "setFavorite": await this.message.react(config.bot.emojis.edit_setFavorite.EMOJI); break;
+			case "setFavorite": await this.data.message.react(config.bot.emojis.edit_setFavorite.EMOJI); break;
 
-			case "setIdol": await this.message.react(config.bot.emojis.edit_setIdol.EMOJI); break;
+			case "setIdol": await this.data.message.react(config.bot.emojis.edit_setIdol.EMOJI); break;
 
-			case "vault": await this.message.react(config.bot.emojis.edit_vault.EMOJI); break;
+			case "vault": await this.data.message.react(config.bot.emojis.edit_vault.EMOJI); break;
 		}
 
 		return this;
 	}
 
-	async #sell(cards = null) {
+	async sell(cards = null) {
 		cards ? _jsT.isArray(cards) : this.selected;
 		if (!cards.length) return;
 
-		// Try selling the cards
-		let { success, sellTotal } = await userManager.inventory.sell(interaction.user.id, cards);
+		/* - - - - - { Await Confirmation } - - - - - */
+		let sellTotal = _jsT.sum(cards.map(c => c.sellPrice));
+
+		// Parse the cards into strings
+		let cards_f = cards.length > 10 ? null : cards.map(c => cardManager.toString.basic(c));
+
+		// prettier-ignore
+		// Wait for the user to confirm
+		let confirmation = await awaitConfirmation({
+			interaction, deleteOnConfirmation: false,
+			description: cards_f
+				? `**Are you sure you want to sell:**\n${cards_f.join("\n")}`
+				: `**Are you sure you want to sell \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"}?**`,
+			footer: `you will get ${config.bot.emojis.currency_1.EMOJI} ${sellTotal}`
+		});
+
+		if (!confirmation) return;
+
+		/* - - - - - { Sell the Cards } - - - - - */
+		let { success } = await userManager.inventory.sell(interaction.user.id, cards);
 
 		// prettier-ignore
 		if (!success) return await error_ES.send({
@@ -81,14 +99,12 @@ class InventoryEditModule {
             sendMethod: "channel"
 		});
 
-		// TODO: AWAIT CONFIRMATION
-
 		// Create the embed :: { SELL }
 		let embed_sell = user_ES.sell(interaction.member, cards, sellTotal);
 		return await embed_sell.reply(this.data.message);
 	}
 
-	async #setFavorite(card = null) {
+	async setFavorite(card = null) {
 		card ||= this.data.selected[0];
 		if (!card) return;
 
@@ -119,7 +135,7 @@ class InventoryEditModule {
 		return await embed_setFavorite.send({ sendMethod: "channel" });
 	}
 
-	async #setIdol(card = null) {
+	async setIdol(card = null) {
 		card ||= this.data.selected[0];
 		if (!card) return;
 
@@ -150,7 +166,7 @@ class InventoryEditModule {
 		return await embed_setIdol.send({ sendMethod: "channel" });
 	}
 
-	async #vault(cards = null) {
+	async vault(cards = null) {
 		cards ? _jsT.isArray(cards) : this.selected;
 		if (!cards.length) return;
 
