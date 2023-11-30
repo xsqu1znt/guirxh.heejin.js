@@ -8,7 +8,7 @@
 // prettier-ignore
 const {
 	CommandInteraction, Message,
-	StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRow
+	StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder
 } = require("discord.js");
 
 const { BetterEmbed, awaitConfirmation } = require("./discordTools");
@@ -65,6 +65,8 @@ class InventoryEditModule {
 
 	/** @param {...ModuleType} moduleType  */
 	async addModuleReactions(...moduleType) {
+		this.#startReactionCollection();
+
 		// prettier-ignore
 		for (let type of moduleType) switch (type) {
 			case "sell": await this.data.message.react(config.bot.emojis.editModule_sell.EMOJI); break;
@@ -87,7 +89,7 @@ class InventoryEditModule {
 
 		// Create the collector filter
 		let filter = (reaction, user) => {
-			return this.#emojis.moduleType.includes(reaction.emoji.name) && user.id === interaction.user.id;
+			return this.#emojis.moduleType.includes(reaction.emoji.name) && user.id === this.data.interaction.user.id;
 		};
 
 		/// Create the collector
@@ -118,7 +120,7 @@ class InventoryEditModule {
 		// prettier-ignore
 		// Create the embed :: { SELL MODULE }
 		let embed_sellModule = new BetterEmbed({
-			interaction, author: { text: "$USERNAME | 🥕 sell", iconURL: true },
+			interaction: this.data.interaction, author: { text: "$USERNAME | 🥕 sell", iconURL: true },
 			description: "Choose which cards you want to sell"
 		});
 
@@ -142,7 +144,7 @@ class InventoryEditModule {
 		let actionRow = new ActionRowBuilder().addComponents(selectMenu);
 
 		// Send the embed with components
-		await embed_sellModule.send({ components: actionRow });
+		await embed_sellModule.reply(this.data.message, { components: actionRow });
 	}
 
 	async sell(cards = null) {
