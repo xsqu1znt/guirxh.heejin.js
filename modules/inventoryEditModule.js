@@ -190,4 +190,4 @@ class InventoryEditModule {
 	}
 }
 
-module.exports = ReactionSellModule;
+module.exports = InventoryEditModule;
