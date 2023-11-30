@@ -9,6 +9,7 @@ const {
 
 const { BetterEmbed, markdown } = require("../modules/discordTools");
 const { userManager } = require("../modules/mongo/index");
+const InventoryEditModule = require("../modules/inventoryEditModule");
 const cardManager = require("../modules/cardManager");
 
 module.exports = {
@@ -21,15 +22,18 @@ module.exports = {
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
 		let cards = cardManager.get.random({ type: "general", count: 5 });
+		let cards_f = cards.map(c => cardManager.toString.basic(c));
 
 		// prettier-ignore
 		// Create the embed :: { SELL MOCKUP }
 		let embed = new BetterEmbed({
-			interaction, author: "🥕 Sell",
-			description: "Choose which cards you want to sell"
+			interaction, author: { text: "$USERNAME | card test", iconURL: true },
+			description: `>>> ${cards_f.join("\n")}`
 		});
 
-		// Create the select menu
+		let msg = await embed.send();
+
+		/* // Create the select menu
 		let selectMenu_options = cards.map((c, idx) =>
 			new StringSelectMenuOptionBuilder()
 				.setValue(`card_${idx}`)
@@ -47,6 +51,6 @@ module.exports = {
 		let actionRow = new ActionRowBuilder().addComponents(selectMenu);
 
 		// Send the embed with components
-		return await embed.send({ components: actionRow });
+		return await embed.send({ components: actionRow }); */
 	}
 };
