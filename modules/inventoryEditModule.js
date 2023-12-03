@@ -8,6 +8,7 @@
 // prettier-ignore
 const {
 	CommandInteraction, Message,
+	ReactionCollector, InteractionCollector,
 	StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder
 } = require("discord.js");
 
@@ -55,7 +56,12 @@ class InventoryEditModule {
 			message: options.message,
 			cards: options.cards,
 			selected: [],
-			reactionCollector: null
+			collectors: {
+				/** @type {ReactionCollector} */
+				reaction: null,
+				/** @type {InteractionCollector} */
+				selectMenu: null
+			}
 		};
 
 		this.embeds = {
@@ -82,18 +88,18 @@ class InventoryEditModule {
 	}
 
 	async #startReactionCollection() {
-		if (this.data.reactionCollector || !this.data.message) {
-			this.data.reactionCollector.resetTimer();
+		if (this.data.collectors.reaction || !this.data.message) {
+			this.data.collectors.reaction.resetTimer();
 			return;
 		}
 
-		// Create the collector filter
+		// Create the collection filter
 		let filter = (reaction, user) => {
 			return this.#emojis.moduleType.includes(reaction.emoji.name) && user.id === this.data.interaction.user.id;
 		};
 
-		/// Create the collector
-		let collector = this.data.message.createReactionCollector({ filter, time: 60000 });
+		// Create the collector
+		let collector = this.data.message.createReactionCollector({ filter, idle: 60000 });
 		this.data.reactionCollector = collector;
 
 		/* - - - - - { Collector - COLLECT } - - - - - */
@@ -107,6 +113,35 @@ class InventoryEditModule {
 				case config.bot.emojis.editModule_setIdol.NAME: break;
 
 				case config.bot.emojis.editModule_vault.NAME: break;
+			}
+		});
+
+		/* - - - - - { Collector - END } - - - - - */
+		collector.on("end", collected => {
+			console.log(`Collected ${collected.size} items`);
+		});
+	}
+
+	/** @param {Message} message  */
+	async #startMenuCollection(message) {
+		if (this.data.collectors.selectMenu) this.data.collectors.selectMenu.stop();
+
+		// Create the collection filter
+		let filter = async i => {
+			await i.deferUpdate();
+			return i.user.id === this.data.interaction.user.id;
+		};
+
+		// Create the collector
+		let collector = message.createMessageComponentCollector({ filter, idle: 30000 });
+
+		/* - - - - - { Collector - COLLECT } - - - - - */
+		collector.on("collect", async (i) => {
+			switch (i.customId) {
+				case "ssm_cardSelect":
+					console.log(i);
+					
+					return;
 			}
 		});
 
@@ -135,7 +170,7 @@ class InventoryEditModule {
 
 		// Create the select menu builder
 		let selectMenu = new StringSelectMenuBuilder()
-			.setCustomId("test")
+			.setCustomId("ssm_cardSelect")
 			.setPlaceholder("Select what you want to sell")
 			.addOptions(...selectMenu_options)
 			.setMaxValues(this.data.cards.length);
@@ -144,7 +179,7 @@ class InventoryEditModule {
 		let actionRow = new ActionRowBuilder().addComponents(selectMenu);
 
 		// Send the embed with components
-		await embed_sellModule.reply(this.data.message, { components: actionRow });
+		await embed_sellModule.send({ sendMethod: "followUp", components: actionRow, ephemeral: true });
 	}
 
 	async sell(cards = null) {
