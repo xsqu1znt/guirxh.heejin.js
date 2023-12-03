@@ -47,6 +47,97 @@ class InventoryEditModule {
 		return exists;
 	}
 
+	async #startReactionCollection() {
+		if (this.data.collectors.reaction || !this.data.message) {
+			this.data.collectors.reaction.resetTimer();
+			return;
+		}
+
+		// Create the collection filter
+		let filter = (reaction, user) => {
+			return this.#emojis.moduleType.includes(reaction.emoji.name) && user.id === this.data.interaction.user.id;
+		};
+
+		/// Create the collector
+		let collector = this.data.message.createReactionCollector({ filter, idle: 60000, dispose: true });
+		this.data.reactionCollector = collector;
+
+		/* - - - - - { Collector - COLLECT } - - - - - */
+		collector.on("collect", async (reaction, user) => {
+			// prettier-ignore
+			switch (reaction.emoji.name) {
+				case config.bot.emojis.editModule_sell.NAME: return await this.#sendSellModule();
+
+				case config.bot.emojis.editModule_setFavorite.NAME: break;
+
+				case config.bot.emojis.editModule_setIdol.NAME: break;
+
+				case config.bot.emojis.editModule_vault.NAME: break;
+			}
+		});
+
+		/* - - - - - { Collector - DISPOSE } - - - - - */
+		collector.on("collect", async (reaction, user) => {
+			// prettier-ignore
+			switch (reaction.emoji.name) {
+				case config.bot.emojis.editModule_sell.NAME:
+					// Delete the sell module message
+					if (this.data.messages.sellModule) {
+						try {
+							this.data.messages.sellModule.delete();
+							this.data.messages.sellModule = null;
+						} catch {}
+					}
+					
+					return;
+
+				case config.bot.emojis.editModule_setFavorite.NAME: break;
+
+				case config.bot.emojis.editModule_setIdol.NAME: break;
+
+				case config.bot.emojis.editModule_vault.NAME: break;
+			}
+		});
+
+		/* - - - - - { Collector - END } - - - - - */
+		collector.on("end", collected => {
+			console.log(`Collected ${collected.size} items`);
+		});
+	}
+
+	/** @param {Message} message  */
+	async #startMenuCollection(message) {
+		if (this.data.collectors.selectMenu) this.data.collectors.selectMenu.stop();
+
+		// Create the collection filter
+		let filter = async i => {
+			await i.deferUpdate();
+			return i.user.id === this.data.interaction.user.id;
+		};
+
+		/// Create the collector
+		let collector = message.createMessageComponentCollector({ filter, idle: 30000 });
+		this.data.collectors.selectMenu = collector;
+
+		/* - - - - - { Collector - COLLECT } - - - - - */
+		collector.on("collect", async i => {
+			switch (i.customId) {
+				case "ssm_cardSelect":
+					// Gather index numbers
+					let card_idxs = i.values.map(val => Number(val.split("_")[1]));
+
+					// Gather selected cards
+					this.data.selectedCards.sell = card_idxs.map(idx => this.data.cards[idx]);
+					return await this.sell();
+			}
+		});
+
+		/* - - - - - { Collector - END } - - - - - */
+		collector.on("end", collected => {
+			console.log(`Collected ${collected.size} items`);
+		});
+	}
+
 	/** @param {options} options */
 	constructor(options) {
 		options = { interaction: null, message: null, cards: [], ...options };
@@ -55,7 +146,11 @@ class InventoryEditModule {
 			interaction: options.interaction,
 			message: options.message,
 			cards: options.cards,
-			selected: [],
+			selectedCards: {
+				sell: []
+			},
+			messages: { sellModule: null },
+			interactions: { sellModule: null },
 			collectors: {
 				/** @type {ReactionCollector} */
 				reaction: null,
@@ -87,70 +182,6 @@ class InventoryEditModule {
 		return this;
 	}
 
-	async #startReactionCollection() {
-		if (this.data.collectors.reaction || !this.data.message) {
-			this.data.collectors.reaction.resetTimer();
-			return;
-		}
-
-		// Create the collection filter
-		let filter = (reaction, user) => {
-			return this.#emojis.moduleType.includes(reaction.emoji.name) && user.id === this.data.interaction.user.id;
-		};
-
-		// Create the collector
-		let collector = this.data.message.createReactionCollector({ filter, idle: 60000 });
-		this.data.reactionCollector = collector;
-
-		/* - - - - - { Collector - COLLECT } - - - - - */
-		collector.on("collect", async (reaction, user) => {
-			// prettier-ignore
-			switch (reaction.emoji.name) {
-				case config.bot.emojis.editModule_sell.NAME: return await this.#sendSellModule();
-
-				case config.bot.emojis.editModule_setFavorite.NAME: break;
-
-				case config.bot.emojis.editModule_setIdol.NAME: break;
-
-				case config.bot.emojis.editModule_vault.NAME: break;
-			}
-		});
-
-		/* - - - - - { Collector - END } - - - - - */
-		collector.on("end", collected => {
-			console.log(`Collected ${collected.size} items`);
-		});
-	}
-
-	/** @param {Message} message  */
-	async #startMenuCollection(message) {
-		if (this.data.collectors.selectMenu) this.data.collectors.selectMenu.stop();
-
-		// Create the collection filter
-		let filter = async i => {
-			await i.deferUpdate();
-			return i.user.id === this.data.interaction.user.id;
-		};
-
-		// Create the collector
-		let collector = message.createMessageComponentCollector({ filter, idle: 30000 });
-
-		/* - - - - - { Collector - COLLECT } - - - - - */
-		collector.on("collect", async (i) => {
-			switch (i.customId) {
-				case "ssm_cardSelect":
-					console.log(i);
-					
-					return;
-			}
-		});
-
-		/* - - - - - { Collector - END } - - - - - */
-		collector.on("end", collected => {
-			console.log(`Collected ${collected.size} items`);
-		});
-	}
-
 	async #sendSellModule() {
 		// prettier-ignore
 		// Create the embed :: { SELL MODULE }
@@ -179,11 +210,14 @@ class InventoryEditModule {
 		let actionRow = new ActionRowBuilder().addComponents(selectMenu);
 
 		// Send the embed with components
-		await embed_sellModule.send({ sendMethod: "followUp", components: actionRow, ephemeral: true });
+		let message = await embed_sellModule.send({ sendMethod: "followUp", components: actionRow /* , ephemeral: true */ });
+		this.data.messages.sellModule = message;
+
+		return await this.#startMenuCollection(message);
 	}
 
 	async sell(cards = null) {
-		cards ? _jsT.isArray(cards) : this.selected;
+		cards = cards ? _jsT.isArray(cards) : this.data.selectedCards.sell;
 		if (!cards.length) return;
 
 		/* - - - - - { Await Confirmation } - - - - - */
@@ -195,7 +229,7 @@ class InventoryEditModule {
 		// prettier-ignore
 		// Wait for the user to confirm
 		let confirmation = await awaitConfirmation({
-			interaction, deleteOnConfirmation: false,
+			message: this.data.messages.sellModule, sendMethod: "edit",
 			description: cards_f
 				? `**Are you sure you want to sell:**\n${cards_f.join("\n")}`
 				: `**Are you sure you want to sell \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"}?**`,
@@ -204,18 +238,26 @@ class InventoryEditModule {
 
 		if (!confirmation) return;
 
+		// Delete the sell module message
+		if (this.data.messages.sellModule) {
+			try {
+				this.data.messages.sellModule.delete();
+				this.data.messages.sellModule = null;
+			} catch {}
+		}
+
 		/* - - - - - { Sell the Cards } - - - - - */
-		let { success } = await userManager.inventory.sell(interaction.user.id, cards);
+		// let { success } = await userManager.inventory.sell(interaction.user.id, cards);
 
 		// prettier-ignore
-		if (!success) return await error_ES.send({
+		/* if (!success) return await error_ES.send({
             interaction, description: "Cannot sell cards that are not in your inventory",
             sendMethod: "channel"
-		});
+		}); */
 
 		// Create the embed :: { SELL }
-		let embed_sell = user_ES.sell(interaction.member, cards, sellTotal);
-		return await embed_sell.reply(this.data.message);
+		let embed_sell = user_ES.sell(this.data.interaction.member, cards, sellTotal);
+		return await embed_sell.send({ interaction: this.data.interaction, sendMethod: "followUp" });
 	}
 
 	async setFavorite(card = null) {

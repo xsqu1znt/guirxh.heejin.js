@@ -6,17 +6,18 @@
  * • $USERNAME :: interaction user's display/user name
  *
  * @property {CommandInteraction} interaction
+ * @property {Message} message
  * @property {{text:string, useAuthor:boolean}} title
  * @property {string} description
  * @property {string} footer
- * @property {"reply"|"editReply"|"followUp"|"channel"} sendMethod if "reply" fails it will use "editReply" | "followUp" is default
+ * @property {"reply"|"editReply"|"followUp"|"channel"|"edit"} sendMethod if "reply" fails it will use "editReply" | "followUp" is default
  * @property {boolean} showAuthorIcon
  * @property {boolean} deleteOnConfirmation
  * @property {number} timeout */
 
 const config = require("./dsT_config.json");
 
-const { CommandInteraction, Embed, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType } = require("discord.js");
+const { CommandInteraction, Message, ComponentType, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require("discord.js");
 const BetterEmbed = require("./dsT_betterEmbed");
 const _jsT = require("../jsTools");
 
@@ -25,7 +26,7 @@ const _jsT = require("../jsTools");
 async function awaitConfirmation(options) {
 	// prettier-ignore
 	options = {
-		interaction: null,
+		interaction: null, message: null,
 		title: config.CONFIRMATION_TITLE, description: "", footer: "",
 		sendMethod: "followUp",
 		showAuthorIcon: false, deleteOnConfirmation: true,
@@ -33,11 +34,10 @@ async function awaitConfirmation(options) {
 	};
 
 	/// Error Handeling
-	if (!options.interaction) throw new Error("CommandInteraction not provided");
+	if (!options.interaction && !options.message) throw new Error("CommandInteraction or Message not provided");
 
 	/// Create the confirmation embed
 	// prettier-ignore
-	/** @type {Embed} */
 	let embed = new BetterEmbed({
 		interaction: options.interaction,
 		author: { text: options.title, iconURL: options.showAuthorIcon ? "" : false },
@@ -61,7 +61,9 @@ async function awaitConfirmation(options) {
 	let actionRow = new ActionRowBuilder().addComponents(...Object.values(buttons));
 
 	// Send the confirmation embed
-	let message = await embed.send({ method: options.sendMethod, components: actionRow });
+	let message;
+	if (options.interaction) await embed.send({ sendMethod: options.sendMethod, components: actionRow });
+	else if (options.message) await options.message.edit({ components: [actionRow] });
 
 	// Wait for the user's decision, or timeout
 	return new Promise(resolve => {
