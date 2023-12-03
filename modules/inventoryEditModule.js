@@ -1,6 +1,7 @@
 /** @typedef {"sell"|"setFavorite"|"setIdol"|"vault"} ModuleType */
 
 /** @typedef options
+ * @property {Client} client
  * @property {CommandInteraction} interaction
  * @property {Cards[]|Cards} cards
  * @property {Message} message */
@@ -9,7 +10,7 @@
 const {
 	CommandInteraction, Message,
 	ReactionCollector, InteractionCollector,
-	StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder
+	StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, Client
 } = require("discord.js");
 
 const { BetterEmbed, awaitConfirmation } = require("./discordTools");
@@ -55,6 +56,9 @@ class InventoryEditModule {
 
 		// Create the collection filter
 		let filter = (reaction, user) => {
+			// Remove the user's reaction
+			if (![this.data.client.user.id, this.data.interaction.user.id].includes(user.id)) reaction.users.remove(user.id);
+
 			return this.#emojis.moduleType.includes(reaction.emoji.name) && user.id === this.data.interaction.user.id;
 		};
 
@@ -66,7 +70,7 @@ class InventoryEditModule {
 		collector.on("collect", async (reaction, user) => {
 			// prettier-ignore
 			switch (reaction.emoji.name) {
-				case config.bot.emojis.editModule_sell.NAME: return await this.#sendSellModule();
+				case config.bot.emojis.editModule_sell.NAME: return await this.#sendSellModule(() => reaction.users.remove(user.id));
 
 				case config.bot.emojis.editModule_setFavorite.NAME: break;
 
@@ -77,18 +81,19 @@ class InventoryEditModule {
 		});
 
 		/* - - - - - { Collector - DISPOSE } - - - - - */
-		collector.on("collect", async (reaction, user) => {
+		collector.on("remove", async (reaction, user) => {
 			// prettier-ignore
 			switch (reaction.emoji.name) {
 				case config.bot.emojis.editModule_sell.NAME:
 					// Delete the sell module message
-					if (this.data.messages.sellModule) {
+					if (this.data.messages.sellModule.msg && this.data.messages.sellModule.canDelete) {
 						try {
-							this.data.messages.sellModule.delete();
-							this.data.messages.sellModule = null;
+							await this.data.messages.sellModule.msg.delete();
+							this.data.messages.sellModule.msg = null;
+							this.data.messages.sellModule.canDelete = false;
 						} catch {}
 					}
-					
+
 					return;
 
 				case config.bot.emojis.editModule_setFavorite.NAME: break;
@@ -106,12 +111,13 @@ class InventoryEditModule {
 	}
 
 	/** @param {Message} message  */
-	async #startMenuCollection(message) {
+	async #startMenuCollection(message, removeReaction = null) {
 		if (this.data.collectors.selectMenu) this.data.collectors.selectMenu.stop();
 
 		// Create the collection filter
 		let filter = async i => {
-			await i.deferUpdate();
+			// prettier-ignore
+			try { await i.deferUpdate(); } catch {}
 			return i.user.id === this.data.interaction.user.id;
 		};
 
@@ -128,7 +134,7 @@ class InventoryEditModule {
 
 					// Gather selected cards
 					this.data.selectedCards.sell = card_idxs.map(idx => this.data.cards[idx]);
-					return await this.sell();
+					return await this.sell(null, removeReaction);
 			}
 		});
 
@@ -138,18 +144,19 @@ class InventoryEditModule {
 		});
 	}
 
-	/** @param {options} options */
-	constructor(options) {
-		options = { interaction: null, message: null, cards: [], ...options };
+	/** @param {Client} client @param {options} options */
+	constructor(client, options) {
+		options = { client: null, interaction: null, message: null, cards: [], ...options };
 
 		this.data = {
+			client: client,
 			interaction: options.interaction,
 			message: options.message,
 			cards: options.cards,
 			selectedCards: {
 				sell: []
 			},
-			messages: { sellModule: null },
+			messages: { sellModule: { msg: null, canDelete: false } },
 			interactions: { sellModule: null },
 			collectors: {
 				/** @type {ReactionCollector} */
@@ -182,7 +189,7 @@ class InventoryEditModule {
 		return this;
 	}
 
-	async #sendSellModule() {
+	async #sendSellModule(removeReaction = null) {
 		// prettier-ignore
 		// Create the embed :: { SELL MODULE }
 		let embed_sellModule = new BetterEmbed({
@@ -209,14 +216,20 @@ class InventoryEditModule {
 		// Create the action row builder
 		let actionRow = new ActionRowBuilder().addComponents(selectMenu);
 
-		// Send the embed with components
+		/// Send the embed with components
 		let message = await embed_sellModule.send({ sendMethod: "followUp", components: actionRow /* , ephemeral: true */ });
-		this.data.messages.sellModule = message;
+		this.data.messages.sellModule.msg = message;
+		this.data.messages.sellModule.canDelete = true;
 
-		return await this.#startMenuCollection(message);
+		return await this.#startMenuCollection(message, removeReaction);
 	}
 
-	async sell(cards = null) {
+	async sell(cards = null, removeReaction = null) {
+		if (removeReaction) {
+			this.data.messages.sellModule.canDelete = false;
+			removeReaction();
+		}
+
 		cards = cards ? _jsT.isArray(cards) : this.data.selectedCards.sell;
 		if (!cards.length) return;
 
@@ -229,7 +242,7 @@ class InventoryEditModule {
 		// prettier-ignore
 		// Wait for the user to confirm
 		let confirmation = await awaitConfirmation({
-			message: this.data.messages.sellModule, sendMethod: "edit",
+			user: this.data.interaction.user, message: this.data.messages.sellModule.msg, sendMethod: "edit",
 			description: cards_f
 				? `**Are you sure you want to sell:**\n${cards_f.join("\n")}`
 				: `**Are you sure you want to sell \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"}?**`,
@@ -237,14 +250,6 @@ class InventoryEditModule {
 		});
 
 		if (!confirmation) return;
-
-		// Delete the sell module message
-		if (this.data.messages.sellModule) {
-			try {
-				this.data.messages.sellModule.delete();
-				this.data.messages.sellModule = null;
-			} catch {}
-		}
 
 		/* - - - - - { Sell the Cards } - - - - - */
 		// let { success } = await userManager.inventory.sell(interaction.user.id, cards);
@@ -254,6 +259,10 @@ class InventoryEditModule {
             interaction, description: "Cannot sell cards that are not in your inventory",
             sendMethod: "channel"
 		}); */
+
+		// Update the cards the user can select
+		let _selectedUIDs = this.data.selectedCards.map(c => c.uid);
+		this.data.cards = this.data.cards.filter(c => !_selectedUIDs.includes(c.uid));
 
 		// Create the embed :: { SELL }
 		let embed_sell = user_ES.sell(this.data.interaction.member, cards, sellTotal);

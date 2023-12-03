@@ -5,6 +5,7 @@
  *
  * • $USERNAME :: interaction user's display/user name
  *
+ * @property {GuildMember|User} user
  * @property {CommandInteraction} interaction
  * @property {Message} message
  * @property {{text:string, useAuthor:boolean}} title
@@ -17,7 +18,16 @@
 
 const config = require("./dsT_config.json");
 
-const { CommandInteraction, Message, ComponentType, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require("discord.js");
+const {
+	CommandInteraction,
+	Message,
+	GuildMember,
+	User,
+	ComponentType,
+	ButtonBuilder,
+	ButtonStyle,
+	ActionRowBuilder
+} = require("discord.js");
 const BetterEmbed = require("./dsT_betterEmbed");
 const _jsT = require("../jsTools");
 
@@ -62,13 +72,14 @@ async function awaitConfirmation(options) {
 
 	// Send the confirmation embed
 	let message;
-	if (options.interaction) await embed.send({ sendMethod: options.sendMethod, components: actionRow });
-	else if (options.message) await options.message.edit({ components: [actionRow] });
+	if (options.interaction) message = await embed.send({ sendMethod: options.sendMethod, components: actionRow });
+	else if (options.message) message = await options.message.edit({ embeds: [embed], components: [actionRow] });
 
 	// Wait for the user's decision, or timeout
 	return new Promise(resolve => {
 		// Collect button interactions
-		let filter = i => i.componentType === ComponentType.Button && i.user.id === options.interaction.user.id;
+		let filter = i =>
+			i.componentType === ComponentType.Button && i.user.id === (options.interaction?.user?.id || options.user?.id);
 
 		message
 			.awaitMessageComponent({ filter, time: options.timeout })

@@ -513,7 +513,7 @@ function sell(user, cards, sellTotal) {
 
 	// Create the embed :: { SELL }
 	let embed_sell = new BetterEmbed({
-		author: { text: `$USERNAME | ${config.bot.emojis.currency_1.EMOJI} sell`, user, iconURL: true },
+		author: { text: `$USERNAME | sell`, user, iconURL: true },
 		description: cards_f
 			? `You sold:\n${cards_f.join("\n")}`
 			: `You sold \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"}`,

@@ -33,7 +33,7 @@ module.exports = {
 
 		let msg = await embed.send();
 
-		let inventoryEditModule = new InventoryEditModule({ interaction, cards, message: msg });
+		let inventoryEditModule = new InventoryEditModule(client, { interaction, cards, message: msg });
 		await inventoryEditModule.addModuleReactions("sell", "setFavorite", "setIdol", "vault");
 
 		/* // Create the select menu
