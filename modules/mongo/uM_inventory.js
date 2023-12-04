@@ -1,3 +1,4 @@
+/** @typedef {{uids: string|string[], gids:string|string[], sum:boolean}} options_inventory_has */
 /** @typedef {{uids: string|string[], gids:string|string[], filter:boolean}} options_inventory_get */
 
 const cardManager = require("../cardManager");
@@ -18,45 +19,49 @@ async function count(userID, uniqueOnly = false) {
 	return userData ? userData.card_inventory : null;
 }
 
-/** @param {string} userID @param {string | string[]} uids */
-async function exists(userID, uids) {
-	if (!uids) return false;
+/** @param {string} userID @param {options_inventory_has} options */
+async function has(userID, options) {
+	options = { uids: [], gids: [], sum: false, ...options };
+	options.uids = _jsT.isArray(options.uids).map(uid => new RegExp(`^${uid.toUpperCase()}$`, "i"));
+	options.gids = _jsT.isArray(options.gids);
 
-	// Create an array if only a single card UID was passed
-	uids = _jsT.isArray(uids);
+	if (!options.uids.length && !options.gids.length) return null;
 
-	let exists = await userManager.models.user.exists({ _id: userID, "card_inventory.uid": { $all: uids } });
-	return exists ? true : false;
-}
+	let isUIDOperation = options.uids.length > 0;
 
-/** @param {string} userID @param {string | string[]} globalIDs */
-async function has(userID, globalIDs) {
-	if (!globalIDs || (Array.isArray(globalIDs) && !globalIDs.length)) return;
+	// Create an aggregation pipeline
+	let pipeline = isUIDOperation
+		? [
+				{ $unwind: "$card_inventory" },
+				{ $match: { _id: userID, "card_inventory.uid": { $in: options.uids } } },
+				{ $group: { _id: "$_id", uids: { $push: "$card_inventory.uid" } } }
+		  ]
+		: [
+				{ $unwind: "$card_inventory" },
+				{ $match: { _id: userID, "card_inventory.globalID": { $in: options.gids } } },
+				{ $group: { _id: "$_id", gids: { $push: "$card_inventory.globalID" } } }
+		  ];
 
-	// Create an array if only a single card global ID was passed
-	globalIDs = _jsT.isArray(globalIDs, true);
-
-	/// Check the user's card_inventory for the specified global IDs
-	let pipeline = [
-		{ $unwind: "$card_inventory" },
-		{ $match: { _id: userID, "card_inventory.globalID": { $in: globalIDs } } },
-		{ $group: { _id: "$_id", card_inventory: { $push: "$card_inventory.globalID" } } }
-	];
-
+	// Aggregate the user's card_inventory
 	let userData = (await userManager.models.user.aggregate(pipeline))[0];
-	// prettier-ignore
-	if (!userData || !userData?.card_inventory?.length) {
-		globalIDs.fill(false); return globalIDs;
+
+	/* - - - - - { Parse Data } - - - - - */
+	let boolArray = isUIDOperation
+		? [...Array(options.uids.length)].fill(false)
+		: [...Array(options.gids.length)].fill(false);
+
+	if (!userData || (!userData.uids && userData.gids)) return boolArray;
+
+	if (isUIDOperation) {
+		for (let i = 0; i < options.uids.length; i++) if (userData.uids.includes(options.uids[i])) boolArray[i] = true;
+	} else {
+		for (let i = 0; i < options.gids.length; i++) if (userData.gids.includes(options.gids[i])) boolArray[i] = true;
 	}
 
-	// prettier-ignore
-	for (let i = 0; i < globalIDs.length; i++)
-		if (userData.card_inventory.includes(globalIDs[i]))
-			globalIDs[i] = true;
-		else
-			globalIDs[i] = false;
+	/// Return the results
+	if (options.sum) return boolArray.filter(b => b).length === boolArray.length;
 
-	return globalIDs.length > 1 ? globalIDs : globalIDs[0];
+	return boolArray.length > 1 ? boolArray : boolArray[0];
 }
 
 /** @param {string} userID @param {options_inventory_get} options */
@@ -65,7 +70,6 @@ async function get(userID, options) {
 	options.uids = _jsT.isArray(options.uids).map(uid => new RegExp(`^${uid.toUpperCase()}$`, "i"));
 	options.gids = _jsT.isArray(options.gids);
 
-	// Create an array if only a single card UID was passed
 	if (!options.uids.length && !options.gids.length) return null;
 
 	// prettier-ignore
@@ -246,4 +250,4 @@ async function stats(userID) {
 	};
 }
 
-module.exports = { count, exists, has, get, getVault: get_vault, add, remove, update, sell, stats };
+module.exports = { count, has, get, getVault: get_vault, add, remove, update, sell, stats };

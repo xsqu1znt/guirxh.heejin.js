@@ -21,16 +21,16 @@ const _jsT = require("./jsTools");
 
 const config = { bot: require("../configs/config_bot.json") };
 
-class InventoryEditModule {
-	#emojis = {
-		moduleType: [
-			config.bot.emojis.editModule_sell.NAME,
-			config.bot.emojis.editModule_setFavorite.NAME,
-			config.bot.emojis.editModule_setIdol.NAME,
-			config.bot.emojis.editModule_vault.NAME
-		]
-	};
+const ModuleType = { inactive: 0, sell: 1, setFavorite: 2, setIdolon: 3, vault: 4 };
 
+const moduleTypeEmojiNames = [
+	config.bot.emojis.editModule_sell.NAME,
+	config.bot.emojis.editModule_setFavorite.NAME,
+	config.bot.emojis.editModule_setIdol.NAME,
+	config.bot.emojis.editModule_vault.NAME
+];
+
+class InventoryEditModule {
 	async #validateCard(cards) {
 		let card_uids = _jsT.isArray(cards).map(c => c?.uid);
 
@@ -48,7 +48,7 @@ class InventoryEditModule {
 		return exists;
 	}
 
-	async #startReactionCollection() {
+	async #collectReactions() {
 		if (this.data.collectors.reaction || !this.data.message) {
 			this.data.collectors.reaction.resetTimer();
 			return;
@@ -145,35 +145,41 @@ class InventoryEditModule {
 	}
 
 	/** @param {Client} client @param {options} options */
-	constructor(client, options) {
-		options = { client: null, interaction: null, message: null, cards: [], ...options };
+	constructor(client, interaction, message, options) {
+		options = { cards: [], ...options };
+
+		/* - - - - - { Variables } - - - - - */
+		this.client = client;
+		this.interaction = interaction;
+		this.message = message;
+
+		this.cards = options.cards;
+		this.cards_selected = [];
 
 		this.data = {
-			client: client,
-			interaction: options.interaction,
-			message: options.message,
-			cards: options.cards,
-			selectedCards: {
-				sell: []
-			},
-			messages: { sellModule: { msg: null, canDelete: false } },
-			interactions: { sellModule: null },
+			activeModule: ModuleType.inactive,
+
 			collectors: {
 				/** @type {ReactionCollector} */
 				reaction: null,
 				/** @type {InteractionCollector} */
 				selectMenu: null
-			}
-		};
+			},
 
-		this.embeds = {
-			set: new BetterEmbed({ interaction: this.data.interaction, author: { text: "$USERNAME | set", iconURL: true } })
+			// messages: { sellModule: { msg: null, canDelete: false } },
+			// interactions: { sellModule: null },
+			// prettier-ignore
+
+			/* - - - - - { Embeds } - - - - - */
+			embeds: {
+				set: new BetterEmbed({ interaction: this.data.interaction, author: { text: "$USERNAME | set", iconURL: true } })
+			}
 		};
 	}
 
-	/** @param {...ModuleType} moduleType  */
+	/** @param {...ModuleType} moduleType */
 	async addModuleReactions(...moduleType) {
-		this.#startReactionCollection();
+		this.#collectReactions();
 
 		// prettier-ignore
 		for (let type of moduleType) switch (type) {
@@ -185,8 +191,6 @@ class InventoryEditModule {
 
 			case "vault": await this.data.message.react(config.bot.emojis.editModule_vault.EMOJI); break;
 		}
-
-		return this;
 	}
 
 	async #sendSellModule(removeReaction = null) {
