@@ -31,7 +31,7 @@ const moduleTypeEmojiNames = [
 ];
 
 class InventoryEditModule {
-	async #validateSelected(cards = null || this.cards_selected) {
+	async #validateSelectedCards(cards = null || this.cards_selected) {
 		// prettier-ignore
 		let uids = _jsT.isArray(cards).map(c => c?.uid).filter(uid => uid);
 
@@ -52,6 +52,7 @@ class InventoryEditModule {
 		return cards.length ? cards : false;
 	}
 
+	// TODO: Up next to fix.
 	async #collectReactions() {
 		if (this.data.collectors.reaction || !this.data.message) {
 			this.data.collectors.reaction.resetTimer();
@@ -63,7 +64,7 @@ class InventoryEditModule {
 			// Remove the user's reaction
 			if (![this.data.client.user.id, this.data.interaction.user.id].includes(user.id)) reaction.users.remove(user.id);
 
-			return this.#emojis.moduleType.includes(reaction.emoji.name) && user.id === this.data.interaction.user.id;
+			return moduleTypeEmojiNames.includes(reaction.emoji.name) && user.id === this.data.interaction.user.id;
 		};
 
 		/// Create the collector
@@ -239,14 +240,18 @@ class InventoryEditModule {
 	}
 
 	async sell(cards = null) {
+		cards = _jsT.isArray(cards || this.cards_selected);
+		if (!cards.length) return;
+
+		// Validate the selected cards
+		cards = await this.#validateSelectedCards(cards);
+		if (!cards) return;
+
 		// Remove the user's reaction if possible
 		if (this.data.sent.sell.reactionRemove) {
 			this.data.sent.sell.canDelete = false;
 			this.data.sent.sell.reactionRemove();
 		}
-
-		cards = cards ? _jsT.isArray(cards) : this.data.selectedCards.sell;
-		if (!cards.length) return;
 
 		/* - - - - - { Await Confirmation } - - - - - */
 		let sellTotal = _jsT.sum(cards.map(c => c.sellPrice));
@@ -257,7 +262,7 @@ class InventoryEditModule {
 		// prettier-ignore
 		// Wait for the user to confirm
 		let confirmation = await awaitConfirmation({
-			user: this.data.interaction.user, message: this.data.messages.sellModule.msg, sendMethod: "edit",
+			user: this.interaction.user, message: this.data.sent.sell.message, sendMethod: "edit",
 			description: cards_f
 				? `**Are you sure you want to sell:**\n${cards_f.join("\n")}`
 				: `**Are you sure you want to sell \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"}?**`,
@@ -267,29 +272,23 @@ class InventoryEditModule {
 		if (!confirmation) return;
 
 		/* - - - - - { Sell the Cards } - - - - - */
-		// let { success } = await userManager.inventory.sell(interaction.user.id, cards);
-
-		// prettier-ignore
-		/* if (!success) return await error_ES.send({
-            interaction, description: "Cannot sell cards that are not in your inventory",
-            sendMethod: "channel"
-		}); */
+		// await userManager.inventory.sell(interaction.user.id, cards);
 
 		// Update the cards the user can select
-		let _selectedUIDs = this.data.selectedCards.map(c => c.uid);
-		this.data.cards = this.data.cards.filter(c => !_selectedUIDs.includes(c.uid));
+		let _selectedUIDs = this.cards_selected.map(c => c.uid);
+		this.cards = this.cards.filter(c => !_selectedUIDs.includes(c.uid));
 
 		// Create the embed :: { SELL }
-		let embed_sell = user_ES.sell(this.data.interaction.member, cards, sellTotal);
-		return await embed_sell.send({ interaction: this.data.interaction, sendMethod: "followUp" });
+		let embed_sell = user_ES.sell(this.interaction.member, cards, sellTotal);
+		return await embed_sell.send({ interaction: this.interaction, sendMethod: "followUp" });
 	}
 
 	async setFavorite(card = null) {
-		card ||= this.data.selected[0];
-		if (!card) return;
+		card ||= this.cards_selected[0];
+		if (!cards) return;
 
-		// Check if the card exists in the user's card_inventory
-		if (!(await this.#validateCard(card))) return;
+		// Validate the selected cards
+		if (!(await this.#validateSelectedCards(card))) return;
 
 		// Fetch the user from Mongo
 		let userData = await userManager.fetch(this.data.interaction.user.id, { type: "essential" });
@@ -316,11 +315,11 @@ class InventoryEditModule {
 	}
 
 	async setIdol(card = null) {
-		card ||= this.data.selected[0];
-		if (!card) return;
+		card ||= this.cards_selected[0];
+		if (!cards) return;
 
-		// Check if the card exists in the user's card_inventory
-		if (!(await this.#validateCard(card))) return;
+		// Validate the selected cards
+		if (!(await this.#validateSelectedCards(card))) return;
 
 		// Fetch the user from Mongo
 		let userData = await userManager.fetch(this.data.interaction.user.id, { type: "essential" });
@@ -347,11 +346,12 @@ class InventoryEditModule {
 	}
 
 	async vault(cards = null) {
-		cards ? _jsT.isArray(cards) : this.selected;
+		cards = _jsT.isArray(cards || this.cards_selected);
 		if (!cards.length) return;
 
-		// Check if the card exists in the user's card_inventory
-		if (!(await this.#validateCard(cards))) return;
+		// Validate the selected cards
+		cards = await this.#validateSelectedCards(cards);
+		if (!cards) return;
 
 		/// Check if the cards are already locked
 		cards = cards.filter(c => !c.locked);
