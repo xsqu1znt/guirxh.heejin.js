@@ -38,7 +38,7 @@ module.exports = {
 
 		// prettier-ignore
 		// Check if the user has the cards in the given set using Mongo
-		let cards_have = await userManager.inventory.has(target.id, card_set.map(c => c.globalID));
+		let cards_have = await userManager.inventory.has(target.id, { gids: card_set.map(c => c.globalID) });
 
 		// Create the embeds :: { USER MISSING }
 		// let embeds_missing = user_ES.missing(target, target.id === interaction.user.id, card_set, cards_have);

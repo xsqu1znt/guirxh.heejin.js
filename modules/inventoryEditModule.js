@@ -31,21 +31,25 @@ const moduleTypeEmojiNames = [
 ];
 
 class InventoryEditModule {
-	async #validateCard(cards) {
-		let card_uids = _jsT.isArray(cards).map(c => c?.uid);
+	async #validateSelected(cards = null || this.cards_selected) {
+		// prettier-ignore
+		let uids = _jsT.isArray(cards).map(c => c?.uid).filter(uid => uid);
+
+		// Check if the cards exists in the user's card_inventory
+		let has = await userManager.inventory.has(this.data.interaction.user.id, { uids });
+
+		// Filter out cards not found
+		cards = cards.filter((c, idx) => has[idx]);
 
 		// prettier-ignore
-		let exists = await userManager.inventory.exists(this.data.interaction.user.id, card_uids);
-
-		// prettier-ignore
-		// Check if the card exists in the user's card_inventory
-		if (!exists) await error_ES.send({
-			interaction: this.data.interaction,
-			description: `${card_uids.length ? "Those cards are" : "That card is"} not in your inventory`,
+		// Send an embed error message if the user doesn't have the required cards
+		if (!cards.length) await error_ES.send({
+			interaction: this.interaction,
+			description: `${uids.length ? "Those cards are" : "That card is"} not in your inventory`,
 			sendMethod: "channel"
 		});
 
-		return exists;
+		return cards.length ? cards : false;
 	}
 
 	async #collectReactions() {
@@ -70,7 +74,7 @@ class InventoryEditModule {
 		collector.on("collect", async (reaction, user) => {
 			// prettier-ignore
 			switch (reaction.emoji.name) {
-				case config.bot.emojis.editModule_sell.NAME: return await this.#sendSellModule(() => reaction.users.remove(user.id));
+				case config.bot.emojis.editModule_sell.NAME: return await this.#sendEmbed_sell(() => reaction.users.remove(user.id));
 
 				case config.bot.emojis.editModule_setFavorite.NAME: break;
 
@@ -111,7 +115,7 @@ class InventoryEditModule {
 	}
 
 	/** @param {Message} message  */
-	async #startMenuCollection(message, removeReaction = null) {
+	async #collectSelectMenu(message, removeReaction = null) {
 		if (this.data.collectors.selectMenu) this.data.collectors.selectMenu.stop();
 
 		// Create the collection filter
@@ -144,7 +148,7 @@ class InventoryEditModule {
 		});
 	}
 
-	/** @param {Client} client @param {options} options */
+	/** @param {Client} client @param {CommandInteraction} interaction @param {Message} message @param {options} options */
 	constructor(client, interaction, message, options) {
 		options = { cards: [], ...options };
 
@@ -158,6 +162,10 @@ class InventoryEditModule {
 
 		this.data = {
 			activeModule: ModuleType.inactive,
+
+			sent: {
+				sell: { message: null, canDelete: false, reactionRemove: null }
+			},
 
 			collectors: {
 				/** @type {ReactionCollector} */
@@ -193,45 +201,48 @@ class InventoryEditModule {
 		}
 	}
 
-	async #sendSellModule(removeReaction = null) {
+	async #sendEmbed_sell() {
 		// prettier-ignore
 		// Create the embed :: { SELL MODULE }
 		let embed_sellModule = new BetterEmbed({
-			interaction: this.data.interaction, author: { text: "$USERNAME | 🥕 sell", iconURL: true },
+			interaction: this.interaction, author: { text: "$USERNAME | 🥕 sell", iconURL: true },
 			description: "Choose which cards you want to sell"
 		});
 
 		/* - - - - - { Create the Select Menu } - - - - - */
-		let selectMenu_options = this.data.cards.map((c, idx) =>
+		let stringSelectMenuOptions = this.cards.map((c, idx) =>
 			new StringSelectMenuOptionBuilder()
 				.setValue(`card_${idx}`)
-				// .setEmoji("🃏")
 				.setLabel(`${c.emoji} ${c.single} [${c.group}] ${c.name}`)
 				.setDescription(`UID: ${c.uid} :: GID: ${c.globalID} :: 🗣️ ${c.setID}`)
 		);
 
 		// Create the select menu builder
-		let selectMenu = new StringSelectMenuBuilder()
+		let stringSelectMenu = new StringSelectMenuBuilder()
 			.setCustomId("ssm_cardSelect")
-			.setPlaceholder("Select what you want to sell")
-			.addOptions(...selectMenu_options)
+			.setPlaceholder("Choose which cards you want to sell")
+			.addOptions(...stringSelectMenuOptions)
 			.setMaxValues(this.data.cards.length);
 
 		// Create the action row builder
-		let actionRow = new ActionRowBuilder().addComponents(selectMenu);
+		let actionRow = new ActionRowBuilder().addComponents(stringSelectMenu);
 
-		/// Send the embed with components
-		let message = await embed_sellModule.send({ sendMethod: "followUp", components: actionRow /* , ephemeral: true */ });
-		this.data.messages.sellModule.msg = message;
-		this.data.messages.sellModule.canDelete = true;
+		/* - - - - - { Send the Embed with Components} - - - - - */
+		let message = await embed_sellModule.send({ sendMethod: "followUp", components: actionRow });
 
-		return await this.#startMenuCollection(message, removeReaction);
+		/// Cache
+		this.data.sent.sell.message = message;
+		this.data.sent.sell.canDelete = true;
+		this.data.activeModule = ModuleType.sell;
+
+		this.#collectSelectMenu(message);
 	}
 
-	async sell(cards = null, removeReaction = null) {
-		if (removeReaction) {
-			this.data.messages.sellModule.canDelete = false;
-			removeReaction();
+	async sell(cards = null) {
+		// Remove the user's reaction if possible
+		if (this.data.sent.sell.reactionRemove) {
+			this.data.sent.sell.canDelete = false;
+			this.data.sent.sell.reactionRemove();
 		}
 
 		cards = cards ? _jsT.isArray(cards) : this.data.selectedCards.sell;

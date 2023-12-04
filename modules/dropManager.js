@@ -28,7 +28,7 @@ async function drop(userID, dropType, cardPackOptions) {
 		let drop_globalIDs = cards.map(c => c.card.globalID);
 
 		// Check the user's card_inventory for dupes
-		let dupeIndex = await userManager.inventory.has(userID, drop_globalIDs);
+		let dupeIndex = await userManager.inventory.has(userID, { gids: drop_globalIDs });
 
 		// Check if the user got duplicates in the drop
 		for (let i = 0; i < dupeIndex.length; i++) {
@@ -53,7 +53,7 @@ async function drop(userID, dropType, cardPackOptions) {
 				if (!chanceForReroll[idx]) return null;
 
 				// Check which cards the user has in their card_inventory from the set
-				let _has = await userManager.inventory.has(userID, cards[idx].setGIDs);
+				let _has = await userManager.inventory.has(userID, { gids: cards[idx].setGIDs });
 
 				// Filter out global IDs the user already has of the set in there card_inventory
 				// also filters out cards already in the card array
@@ -244,7 +244,7 @@ async function drop(userID, dropType, cardPackOptions) {
 
 	// prettier-ignore
 	// Check if the user has duplicates of what was dropped already in their inventory
-	let dupeIndex = await userManager.inventory.has(userID, card_globalIDs);
+	let dupeIndex = await userManager.inventory.has(userID, { gids: card_globalIDs });
 
 	// Check if the user got duplicates in the drop
 	for (let i = 0; i < dupeIndex.length; i++) {
