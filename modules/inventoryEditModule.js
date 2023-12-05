@@ -53,17 +53,19 @@ class InventoryEditModule {
 			let sent = this.data.sent[key];
 			
 			// Delete the message :: { CAUTIOUS }
-			if (sent.message && !cautious) try {
-				sent.message.delete(); this.data.sent[key].message = null;
-			} catch { }
+			if (!cautious && sent.message) {
+				if (sent.message.deletable) sent.message.delete().catch(() => null);
+				this.data.sent[key].message = null;
+			}
 
 			// Delete the message :: { CARE-FREE }
-			if (cautious && sent.canDelete && sent.message) try {
-				sent.message.delete(); this.data.sent[key].message = null;
-			} catch { }
+			if (cautious && sent.message && sent.canDelete) {
+				if (sent.message.deletable) sent.message.delete().catch(() => null);
+				this.data.sent[key].message = null;
+			}
 
 			// Remove user reactions
-			if (sent.reactionRemove) sent.reactionRemove();
+			if (sent.removeReaction) sent.removeReaction();
 
 			// Reset other values
 			this.data.sent[key].canDelete = false;
@@ -85,7 +87,7 @@ class InventoryEditModule {
 		// Send an embed error message if the user doesn't have the required cards
 		if (!cards.length) await error_ES.send({
 			interaction: this.data.interaction,
-			description: `${uids.length ? "Those cards are" : "That card is"} not in your inventory`,
+			description: `${uids.length === 1 ? "That card is" : "Those cards are"} not in your inventory`,
 			sendMethod: "followUp",
 			ephemeral: true
 		});
@@ -101,11 +103,10 @@ class InventoryEditModule {
 
 		// Create the collection filter
 		let filter = (reaction, user) => {
+			// prettier-ignore
 			// Remove other user's reactions
 			if (![this.data.client.user.id, this.data.interaction.user.id].includes(user.id))
-				try {
-					reaction.users.remove(user.id);
-				} catch {}
+				try { reaction.users.remove(user.id); } catch {}
 
 			// Check if the reaction was relevant to this module
 			return user.id === this.data.interaction.user.id && moduleTypeEmojis.names.includes(reaction.emoji.name);
@@ -151,7 +152,26 @@ class InventoryEditModule {
 
 		/* - - - - - { Collector - REMOVE } - - - - - */
 		this.data.collectors.reaction.on("remove", async (reaction, user) => {
-			if (moduleTypeEmojis.names.includes(reaction.emoji.name)) this.#cleanUp(true);
+			// prettier-ignore
+			switch (reaction.emoji.name) {
+				case moduleTypeEmojis.sell.NAME:
+					if (this.data.activeModule === ModuleType.sell) this.#cleanUp(true);
+					return;
+
+				case moduleTypeEmojis.setFavorite.NAME:
+					if (this.data.activeModule === ModuleType.setFavorite) this.#cleanUp(true);
+					return;
+
+				case moduleTypeEmojis.setIdol.NAME:
+					if (this.data.activeModule === ModuleType.setIdol) this.#cleanUp(true);
+					return;
+
+				case moduleTypeEmojis.vault.NAME:
+					if (this.data.activeModule === ModuleType.vault) this.#cleanUp(true);
+					return;
+
+				default: return;
+			}
 		});
 
 		/* - - - - - { Collector - END } - - - - - */
@@ -168,7 +188,8 @@ class InventoryEditModule {
 		}
 
 		// Create the collection filter
-		let filter = i => {
+		let filter = async i => {
+			await i.deferUpdate().catch(() => null);
 			return i.user.id === this.data.interaction.user.id;
 		};
 
@@ -203,7 +224,7 @@ class InventoryEditModule {
 
 		/* - - - - - { Collector - END } - - - - - */
 		this.data.collectors.selectMenu.on("end", collected => {
-			this.#cleanUp();
+			this.#cleanUp(true);
 		});
 	}
 
@@ -314,14 +335,14 @@ class InventoryEditModule {
 		if (!cards.length) return;
 
 		/* - - - - - { Clean Up } - - - - - */
-		if (this.data.collectors.selectMenu) this.data.collectors.selectMenu.stop();
-
-		// Remove the user's reaction if possible
 		if (this.data.sent.sell.removeReaction) {
 			// this is set to false because this message is going to be edited
 			this.data.sent.sell.canDelete = false;
 			this.data.sent.sell.removeReaction();
 		}
+
+		// Stop select menu interaction collection
+		if (this.data.collectors.selectMenu) this.data.collectors.selectMenu.stop();
 
 		/* - - - - - { Validation } - - - - - */
 		cards = await this.#validateSelectedCards(cards);
@@ -337,7 +358,7 @@ class InventoryEditModule {
 		let confirmation = await awaitConfirmation({
 			user: this.data.interaction.user, message: this.data.sent.sell.message, sendMethod: "edit",
 			description: cards_f
-				? `**Are you sure you want to sell:**\n${cards_f.join("\n")}`
+				? `**Are you sure you want to sell:**\n>>> ${cards_f.join("\n")}`
 				: `**Are you sure you want to sell \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"}?**`,
 			footer: `you will get ${config.bot.emojis.currency_1.EMOJI} ${sellTotal}`
 		});
