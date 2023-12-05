@@ -177,6 +177,10 @@ class InventoryEditModule {
 		/* - - - - - { Collector - END } - - - - - */
 		this.data.collectors.reaction.on("end", collected => {
 			this.data.collectors.reaction = null;
+
+			// Remove any existing reactions
+			this.data.message.reactions.removeAll().catch(() => null);
+			this.#cleanUp();
 		});
 	}
 
@@ -270,7 +274,7 @@ class InventoryEditModule {
 		if (moduleType.length) this.data.modulesEnabled = _jsT.unique(moduleType);
 
 		// Remove any existing reactions
-		await this.data.message.reactions.removeAll();
+		await this.data.message.reactions.removeAll().catch(() => null);
 
 		this.#collectReactions();
 
