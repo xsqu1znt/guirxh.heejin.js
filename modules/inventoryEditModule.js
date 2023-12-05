@@ -68,7 +68,7 @@ class InventoryEditModule {
 			// Remove other user's reactions
 			if (![this.data.client.user.id, this.data.interaction.user.id].includes(user.id)) reaction.users.remove(user.id);
 			// Check if the reaction was relevant to this module
-			return moduleTypeEmojis.names.includes(reaction.emoji.name);
+			return user.id === this.data.interaction.user.id && moduleTypeEmojis.names.includes(reaction.emoji.name);
 		};
 
 		// prettier-ignore
