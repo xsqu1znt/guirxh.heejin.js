@@ -32,7 +32,6 @@ module.exports = {
 		});
 
 		let message = await embed.send();
-		message.activity = null;
 
 		// prettier-ignore
 		new InventoryEditModule(client, interaction, message, {
