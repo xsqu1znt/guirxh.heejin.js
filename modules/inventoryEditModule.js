@@ -99,11 +99,12 @@ class InventoryEditModule {
 					if (!this.data.sent.sell.canDelete) return;
 
 					try {
+						await this.data.sent.sell.message.delete();
 						this.data.sent.sell.message = null;
 						this.data.sent.sell.canDelete = false;
 						this.data.sent.sell.reactionRemove = null;
-						return await this.data.sent.sell.message.delete();
-					} catch { return; }
+					} catch {}
+					break;
 
 				case moduleTypeEmojis.setFavorite.NAME: break;
 
