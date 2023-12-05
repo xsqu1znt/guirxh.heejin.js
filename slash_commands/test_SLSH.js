@@ -33,9 +33,10 @@ module.exports = {
 
 		let message = await embed.send();
 
-		// let inventoryEditModule = new InventoryEditModule(client, { interaction, cards, message: msg });
-		let inventoryEditModule = new InventoryEditModule(client, interaction, message, { cards });
-		await inventoryEditModule.setModuleReactions("sell", "setFavorite", "setIdol", "vault");
+		// prettier-ignore
+		let inventoryEditModule = new InventoryEditModule(client, interaction, message, {
+			cards, modules: ["sell", "setFavorite", "setIdol", "vault"]
+		});
 
 		/* // Create the select menu
 		let selectMenu_options = cards.map((c, idx) =>
