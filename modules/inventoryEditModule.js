@@ -196,14 +196,6 @@ class InventoryEditModule {
 				reaction: null,
 				/** @type {InteractionCollector} */
 				selectMenu: null
-			},
-
-			/* - - - - - { Embeds } - - - - - */
-			embeds: {
-				set: new BetterEmbed({
-					interaction: this.data.interaction,
-					author: { text: "$USERNAME | set", iconURL: true }
-				})
 			}
 		};
 
