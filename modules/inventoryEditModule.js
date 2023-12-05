@@ -36,6 +36,25 @@ const moduleTypeEmojis = {
 };
 
 class InventoryEditModule {
+	#cleanUp() {
+		this.data.activeModule = ModuleType.inactive;
+
+		// Stop the select menu interaction collector
+		if (this.data.collectors.selectMenu) {
+			this.data.collectors.selectMenu.stop();
+			this.data.collectors.selectMenu = null;
+		}
+
+		// prettier-ignore
+		// Reset data and delete sent messages
+		for (let sent of Object.values(this.data.sent)) {
+			if (sent.message) try { sent.message.delete() } catch { }
+
+			sent.canDelete = false;
+			sent.reactionRemove = null;
+		}
+	}
+
 	async #validateSelectedCards(cards = null || this.data.cards_selected) {
 		// prettier-ignore
 		let uids = _jsT.isArray(cards).map(c => c?.uid).filter(uid => uid);
@@ -51,7 +70,7 @@ class InventoryEditModule {
 		if (!cards.length) await error_ES.send({
 			interaction: this.data.interaction,
 			description: `${uids.length ? "Those cards are" : "That card is"} not in your inventory`,
-			sendMethod: "channel"
+			sendMethod: "followUp"
 		});
 
 		return cards.length ? cards : false;
@@ -285,7 +304,7 @@ class InventoryEditModule {
 
 		/* - - - - - { Validation } - - - - - */
 		cards = await this.#validateSelectedCards(cards);
-		if (!cards) return;
+		if (!cards) return this.#cleanUp();
 
 		/* - - - - - { Await Confirmation } - - - - - */
 		let sellTotal = _jsT.sum(cards.map(c => c.sellPrice));
