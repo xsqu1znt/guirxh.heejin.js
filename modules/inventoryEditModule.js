@@ -36,7 +36,7 @@ const moduleTypeEmojis = {
 };
 
 class InventoryEditModule {
-	#cleanUp() {
+	#cleanUp(cautious = false) {
 		this.data.activeModule = ModuleType.inactive;
 
 		// Stop the select menu interaction collector
@@ -45,13 +45,29 @@ class InventoryEditModule {
 			this.data.collectors.selectMenu = null;
 		}
 
-		// prettier-ignore
 		// Reset data and delete sent messages
-		for (let sent of Object.values(this.data.sent)) {
-			if (sent.message) try { sent.message.delete() } catch { }
+		let _sentKeys = Object.keys(this.data.sent);
 
-			sent.canDelete = false;
-			sent.reactionRemove = null;
+		// prettier-ignore
+		for (let key of _sentKeys) {
+			let sent = this.data.sent[key];
+			
+			// Delete the message :: { CAUTIOUS }
+			if (sent.message && !cautious) try {
+				sent.message.delete(); this.data.sent[key].message = null;
+			} catch { }
+
+			// Delete the message :: { CARE-FREE }
+			if (cautious && sent.canDelete && sent.message) try {
+				sent.message.delete(); this.data.sent[key].message = null;
+			} catch { }
+
+			// Remove user reactions
+			if (sent.reactionRemove) sent.reactionRemove();
+
+			// Reset other values
+			this.data.sent[key].canDelete = false;
+			this.data.sent[key].reactionRemove = null;
 		}
 	}
 
@@ -112,7 +128,7 @@ class InventoryEditModule {
 
 		/* - - - - - { Collector - REMOVE } - - - - - */
 		this.data.collectors.reaction.on("remove", async (reaction, user) => {
-			if (moduleTypeEmojis.names.includes(reaction.emoji.name)) this.#cleanUp();
+			if (moduleTypeEmojis.names.includes(reaction.emoji.name)) this.#cleanUp(true);
 		});
 
 		/* - - - - - { Collector - END } - - - - - */
@@ -164,7 +180,7 @@ class InventoryEditModule {
 
 		/* - - - - - { Collector - END } - - - - - */
 		this.data.collectors.selectMenu.on("end", collected => {
-			this.data.collectors.selectMenu = null;
+			this.#cleanUp();
 		});
 	}
 
@@ -190,7 +206,7 @@ class InventoryEditModule {
 			},
 
 			sent: {
-				sell: { message: null, canDelete: false, reactionRemove: null }
+				sell: { message: null, canDelete: false, removeReaction: null }
 			},
 
 			collectors: {
@@ -263,7 +279,7 @@ class InventoryEditModule {
 		this.data.sent.sell.message = message;
 		this.data.sent.sell.canDelete = true;
 		// prettier-ignore
-		this.data.sent.sell.reactionRemove = async () => {
+		this.data.sent.sell.removeReaction = async () => {
 			try { await reaction.users.remove(this.data.interaction.user.id); } catch {}
 		};
 
@@ -278,10 +294,10 @@ class InventoryEditModule {
 		if (this.data.collectors.selectMenu) this.data.collectors.selectMenu.stop();
 
 		// Remove the user's reaction if possible
-		if (this.data.sent.sell.reactionRemove) {
+		if (this.data.sent.sell.removeReaction) {
 			// this is set to false because this message is going to be edited
 			this.data.sent.sell.canDelete = false;
-			this.data.sent.sell.reactionRemove();
+			this.data.sent.sell.removeReaction();
 		}
 
 		/* - - - - - { Validation } - - - - - */
