@@ -31,10 +31,11 @@ module.exports = {
 			description: `>>> ${cards_f.join("\n")}`
 		});
 
-		let msg = await embed.send();
+		let message = await embed.send();
 
-		let inventoryEditModule = new InventoryEditModule(client, { interaction, cards, message: msg });
-		await inventoryEditModule.addModuleReactions("sell", "setFavorite", "setIdol", "vault");
+		// let inventoryEditModule = new InventoryEditModule(client, { interaction, cards, message: msg });
+		let inventoryEditModule = new InventoryEditModule(client, interaction, message, { cards });
+		await inventoryEditModule.setModuleReactions("sell", "setFavorite", "setIdol", "vault");
 
 		/* // Create the select menu
 		let selectMenu_options = cards.map((c, idx) =>

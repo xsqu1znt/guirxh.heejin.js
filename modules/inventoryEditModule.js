@@ -1,10 +1,8 @@
 /** @typedef {"sell"|"setFavorite"|"setIdol"|"vault"} ModuleType */
 
 /** @typedef options
- * @property {Client} client
- * @property {CommandInteraction} interaction
  * @property {Cards[]|Cards} cards
- * @property {Message} message */
+ * @property {ModuleType[]|ModuleType} modules */
 
 // prettier-ignore
 const {
@@ -170,7 +168,7 @@ class InventoryEditModule {
 
 	/** @param {Client} client @param {CommandInteraction} interaction @param {Message} message @param {options} options */
 	constructor(client, interaction, message, options) {
-		options = { cards: [], ...options };
+		options = { cards: [], modules: [], ...options };
 
 		/* - - - - - { Variables } - - - - - */
 		this.data = {
@@ -182,6 +180,7 @@ class InventoryEditModule {
 			cards_selected: [],
 
 			activeModule: ModuleType.inactive,
+			modulesEnabled: _jsT.isArray(_jsT.unique(options.modules)),
 
 			timeouts: {
 				moduleReactions: _jsT.parseTime(config.bot.timeouts.INVENTORY_MODULE_REACTIONS),
@@ -199,23 +198,30 @@ class InventoryEditModule {
 				selectMenu: null
 			},
 
-			// messages: { sellModule: { msg: null, canDelete: false } },
-			// interactions: { sellModule: null },
-			// prettier-ignore
-
 			/* - - - - - { Embeds } - - - - - */
 			embeds: {
-				set: new BetterEmbed({ interaction: this.data.interaction, author: { text: "$USERNAME | set", iconURL: true } })
+				set: new BetterEmbed({
+					interaction: this.data.interaction,
+					author: { text: "$USERNAME | set", iconURL: true }
+				})
 			}
 		};
+
+		// Add any module reactions to the given message
+		if (this.data.modulesEnabled.length) this.setModuleReactions();
 	}
 
 	/** @param {...ModuleType} moduleType */
-	async addModuleReactions(...moduleType) {
+	async setModuleReactions(...moduleType) {
+		if (moduleType.length) this.data.modulesEnabled = _jsT.unique(moduleType);
+
+		// Remove any existing reactions
+		await this.data.message.reactions.removeAll();
+
 		this.#collectReactions();
 
 		// prettier-ignore
-		for (let type of moduleType) switch (type) {
+		for (let type of this.data.modulesEnabled) switch (type) {
 			case "sell": await this.data.message.react(moduleTypeEmojis.sell.EMOJI); break;
 
 			case "setFavorite": await this.data.message.react(moduleTypeEmojis.setFavorite.EMOJI); break;
