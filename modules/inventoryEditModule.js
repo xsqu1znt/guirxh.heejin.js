@@ -112,25 +112,7 @@ class InventoryEditModule {
 
 		/* - - - - - { Collector - REMOVE } - - - - - */
 		this.data.collectors.reaction.on("remove", async (reaction, user) => {
-			// prettier-ignore
-			switch (reaction.emoji.name) {
-				case moduleTypeEmojis.sell.NAME:
-					if (!this.data.sent.sell.canDelete) return;
-
-					try {
-						await this.data.sent.sell.message.delete();
-						this.data.sent.sell.message = null;
-						this.data.sent.sell.canDelete = false;
-						this.data.sent.sell.reactionRemove = null;
-					} catch {}
-					break;
-
-				case moduleTypeEmojis.setFavorite.NAME: break;
-
-				case moduleTypeEmojis.setIdol.NAME: break;
-
-				case moduleTypeEmojis.vault.NAME: break;
-			}
+			if (moduleTypeEmojis.names.includes(reaction.emoji.name)) this.#cleanUp();
 		});
 
 		/* - - - - - { Collector - END } - - - - - */
