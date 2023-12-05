@@ -38,7 +38,7 @@ const moduleTypeEmojis = {
 };
 
 class InventoryEditModule {
-	async #validateSelectedCards(cards = null || this.cards_selected) {
+	async #validateSelectedCards(cards = null || this.data.cards_selected) {
 		// prettier-ignore
 		let uids = _jsT.isArray(cards).map(c => c?.uid).filter(uid => uid);
 
@@ -145,7 +145,7 @@ class InventoryEditModule {
 			let card_idxs = i.values.map(val => Number(val.split("_")[1]));
 
 			// Add the selected cards to the array
-			this.cards_selected = card_idxs.map(idx => this.cards[idx]);
+			this.data.cards_selected = card_idxs.map(idx => this.data.cards[idx]);
 
 			// prettier-ignore
 			// Trigger the next action
@@ -173,13 +173,13 @@ class InventoryEditModule {
 		options = { cards: [], ...options };
 
 		/* - - - - - { Variables } - - - - - */
-		this.cards = options.cards;
-		this.cards_selected = [];
-
 		this.data = {
 			client: client,
 			interaction: interaction,
 			message: message,
+
+			cards: options.cards,
+			cards_selected: [],
 
 			activeModule: ModuleType.inactive,
 
@@ -228,6 +228,7 @@ class InventoryEditModule {
 		}
 	}
 
+	// TODO: Make a cardManager.toString method for this.
 	async #sendEmbed_sell(reaction = null) {
 		// prettier-ignore
 		// Create the embed :: { SELL MODULE }
@@ -237,7 +238,7 @@ class InventoryEditModule {
 		});
 
 		/* - - - - - { Create the Select Menu } - - - - - */
-		let stringSelectMenuOptions = this.cards.map((c, idx) =>
+		let stringSelectMenuOptions = this.data.cards.map((c, idx) =>
 			new StringSelectMenuOptionBuilder()
 				.setValue(`card_${idx}`)
 				.setLabel(`${c.emoji} ${c.single} [${c.group}] ${c.name}`)
@@ -261,28 +262,31 @@ class InventoryEditModule {
 		this.data.activeModule = ModuleType.sell;
 		this.data.sent.sell.message = message;
 		this.data.sent.sell.canDelete = true;
-		this.data.sent.sell.reactionRemove = async () => await reaction.users.remove(this.data.interaction.user.id);
+		// prettier-ignore
+		this.data.sent.sell.reactionRemove = async () => {
+			try { await reaction.users.remove(this.data.interaction.user.id); } catch {}
+		};
 
 		this.#collectSelectMenu(message);
 	}
 
 	async sell(cards = null) {
-		cards = _jsT.isArray(cards || this.cards_selected);
+		cards = _jsT.isArray(cards || this.data.cards_selected);
 		if (!cards.length) return;
-
-		// Validate the selected cards
-		cards = await this.#validateSelectedCards(cards);
-		if (!cards) return;
 
 		// Remove the user's reaction if possible
 		if (this.data.sent.sell.reactionRemove) {
+			// this is set to false because this message is going to be edited
 			this.data.sent.sell.canDelete = false;
 			this.data.sent.sell.reactionRemove();
 		}
 
+		/* - - - - - { Validation } - - - - - */
+		cards = await this.#validateSelectedCards(cards);
+		if (!cards) return;
+
 		/* - - - - - { Await Confirmation } - - - - - */
 		let sellTotal = _jsT.sum(cards.map(c => c.sellPrice));
-
 		// Parse the cards into strings
 		let cards_f = cards.length > 10 ? null : cards.map(c => cardManager.toString.basic(c));
 
@@ -302,8 +306,8 @@ class InventoryEditModule {
 		// await userManager.inventory.sell(interaction.user.id, cards);
 
 		// Update the cards the user can select
-		let _selectedUIDs = this.cards_selected.map(c => c.uid);
-		this.cards = this.cards.filter(c => !_selectedUIDs.includes(c.uid));
+		let _selectedUIDs = this.data.cards_selected.map(c => c.uid);
+		this.data.cards = this.data.cards.filter(c => !_selectedUIDs.includes(c.uid));
 
 		// Create the embed :: { SELL }
 		let embed_sell = user_ES.sell(this.data.interaction.member, cards, sellTotal);
@@ -311,7 +315,7 @@ class InventoryEditModule {
 	}
 
 	async setFavorite(card = null) {
-		card ||= this.cards_selected[0];
+		card ||= this.data.cards_selected[0];
 		if (!cards) return;
 
 		// Validate the selected cards
@@ -342,7 +346,7 @@ class InventoryEditModule {
 	}
 
 	async setIdol(card = null) {
-		card ||= this.cards_selected[0];
+		card ||= this.data.cards_selected[0];
 		if (!cards) return;
 
 		// Validate the selected cards
@@ -373,7 +377,7 @@ class InventoryEditModule {
 	}
 
 	async vault(cards = null) {
-		cards = _jsT.isArray(cards || this.cards_selected);
+		cards = _jsT.isArray(cards || this.data.cards_selected);
 		if (!cards.length) return;
 
 		// Validate the selected cards
