@@ -34,7 +34,7 @@ module.exports = {
 		let message = await embed.send();
 
 		// prettier-ignore
-		let inventoryEditModule = new InventoryEditModule(client, interaction, message, {
+		new InventoryEditModule(client, interaction, message, {
 			cards, modules: ["sell", "setFavorite", "setIdol", "vault"]
 		});
 
