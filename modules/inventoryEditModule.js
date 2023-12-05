@@ -23,12 +23,19 @@ const config = { bot: require("../configs/config_bot.json") };
 
 const ModuleType = { inactive: 0, sell: 1, setFavorite: 2, setIdolon: 3, vault: 4 };
 
-const moduleTypeEmojiNames = [
-	config.bot.emojis.editModule_sell.NAME,
-	config.bot.emojis.editModule_setFavorite.NAME,
-	config.bot.emojis.editModule_setIdol.NAME,
-	config.bot.emojis.editModule_vault.NAME
-];
+const moduleTypeEmojis = {
+	sell: config.bot.emojis.inventoryModule_sell,
+	setFavorite: config.bot.emojis.inventoryModule_setFavorite,
+	setIdol: config.bot.emojis.inventoryModule_setIdol,
+	vault: config.bot.emojis.inventoryModule_vault,
+
+	names: [
+		config.bot.emojis.inventoryModule_sell.NAME,
+		config.bot.emojis.inventoryModule_setFavorite.NAME,
+		config.bot.emojis.inventoryModule_setIdol.NAME,
+		config.bot.emojis.inventoryModule_vault.NAME
+	]
+};
 
 class InventoryEditModule {
 	async #validateSelectedCards(cards = null || this.cards_selected) {
@@ -52,66 +59,65 @@ class InventoryEditModule {
 		return cards.length ? cards : false;
 	}
 
-	// TODO: Up next to fix.
 	async #collectReactions() {
-		if (this.data.collectors.reaction || !this.data.message) {
+		if (this.data.collectors.reaction) {
 			this.data.collectors.reaction.resetTimer();
 			return;
 		}
 
 		// Create the collection filter
 		let filter = (reaction, user) => {
-			// Remove the user's reaction
-			if (![this.data.client.user.id, this.data.interaction.user.id].includes(user.id)) reaction.users.remove(user.id);
-
-			return moduleTypeEmojiNames.includes(reaction.emoji.name) && user.id === this.data.interaction.user.id;
+			// Remove other user's reactions
+			if (![this.client.user.id, this.interaction.user.id].includes(user.id)) reaction.users.remove(user.id);
+			// Check if the reaction was relevant to this module
+			return moduleTypeEmojis.names.includes(reaction.emoji.name);
 		};
 
-		/// Create the collector
-		let collector = this.data.message.createReactionCollector({ filter, idle: 60000, dispose: true });
-		this.data.reactionCollector = collector;
+		// prettier-ignore
+		// Create the collector
+		this.data.collectors.reaction = this.data.message.createReactionCollector({
+			filter, idle: this.data.timeouts.moduleReactions, dispose: true
+		});
 
 		/* - - - - - { Collector - COLLECT } - - - - - */
-		collector.on("collect", async (reaction, user) => {
+		this.data.collectors.reaction.on("collect", async (reaction, user) => {
 			// prettier-ignore
 			switch (reaction.emoji.name) {
-				case config.bot.emojis.editModule_sell.NAME: return await this.#sendEmbed_sell(() => reaction.users.remove(user.id));
+				case moduleTypeEmojis.sell.NAME: return await this.#sendEmbed_sell(reaction);
 
-				case config.bot.emojis.editModule_setFavorite.NAME: break;
+				case moduleTypeEmojis.setFavorite.NAME: break;
 
-				case config.bot.emojis.editModule_setIdol.NAME: break;
+				case moduleTypeEmojis.setIdol.NAME: break;
 
-				case config.bot.emojis.editModule_vault.NAME: break;
+				case moduleTypeEmojis.vault.NAME: break;
 			}
 		});
 
-		/* - - - - - { Collector - DISPOSE } - - - - - */
-		collector.on("remove", async (reaction, user) => {
+		/* - - - - - { Collector - REMOVE } - - - - - */
+		this.data.collectors.reaction.on("remove", async (reaction, user) => {
 			// prettier-ignore
 			switch (reaction.emoji.name) {
-				case config.bot.emojis.editModule_sell.NAME:
-					// Delete the sell module message
-					if (this.data.messages.sellModule.msg && this.data.messages.sellModule.canDelete) {
-						try {
-							await this.data.messages.sellModule.msg.delete();
-							this.data.messages.sellModule.msg = null;
-							this.data.messages.sellModule.canDelete = false;
-						} catch {}
-					}
+				case moduleTypeEmojis.sell.NAME:
+					if (!this.data.sent.sell.canDelete) return;
 
-					return;
+					try {
+						this.data.sent.sell.message = null;
+						this.data.sent.sell.canDelete = false;
+						this.data.sent.sell.reactionRemove = null;
+						return await this.data.sent.sell.message.delete();
+					} catch { return; }
 
-				case config.bot.emojis.editModule_setFavorite.NAME: break;
+				case moduleTypeEmojis.setFavorite.NAME: break;
 
-				case config.bot.emojis.editModule_setIdol.NAME: break;
+				case moduleTypeEmojis.setIdol.NAME: break;
 
-				case config.bot.emojis.editModule_vault.NAME: break;
+				case moduleTypeEmojis.vault.NAME: break;
 			}
 		});
 
 		/* - - - - - { Collector - END } - - - - - */
-		collector.on("end", collected => {
-			console.log(`Collected ${collected.size} items`);
+		this.data.collectors.reaction.on("end", collected => {
+			this.data.collectors.reaction = null;
 		});
 	}
 
@@ -164,6 +170,11 @@ class InventoryEditModule {
 		this.data = {
 			activeModule: ModuleType.inactive,
 
+			timeouts: {
+				moduleReactions: _jsT.parseTime(config.bot.timeouts.INVENTORY_MODULE_REACTIONS),
+				cardSelect: _jsT.parseTime(config.bot.timeouts.INVENTORY_MODULE_CARD_SELECT)
+			},
+
 			sent: {
 				sell: { message: null, canDelete: false, reactionRemove: null }
 			},
@@ -192,17 +203,17 @@ class InventoryEditModule {
 
 		// prettier-ignore
 		for (let type of moduleType) switch (type) {
-			case "sell": await this.data.message.react(config.bot.emojis.editModule_sell.EMOJI); break;
+			case "sell": await this.data.message.react(config.bot.emojis.inventoryModule_sell.EMOJI); break;
 
-			case "setFavorite": await this.data.message.react(config.bot.emojis.editModule_setFavorite.EMOJI); break;
+			case "setFavorite": await this.data.message.react(config.bot.emojis.inventoryModule_setFavorite.EMOJI); break;
 
-			case "setIdol": await this.data.message.react(config.bot.emojis.editModule_setIdol.EMOJI); break;
+			case "setIdol": await this.data.message.react(config.bot.emojis.inventoryModule_setIdol.EMOJI); break;
 
-			case "vault": await this.data.message.react(config.bot.emojis.editModule_vault.EMOJI); break;
+			case "vault": await this.data.message.react(config.bot.emojis.inventoryModule_vault.EMOJI); break;
 		}
 	}
 
-	async #sendEmbed_sell() {
+	async #sendEmbed_sell(reaction = null) {
 		// prettier-ignore
 		// Create the embed :: { SELL MODULE }
 		let embed_sellModule = new BetterEmbed({
@@ -232,9 +243,10 @@ class InventoryEditModule {
 		let message = await embed_sellModule.send({ sendMethod: "followUp", components: actionRow });
 
 		/// Cache
+		this.data.activeModule = ModuleType.sell;
 		this.data.sent.sell.message = message;
 		this.data.sent.sell.canDelete = true;
-		this.data.activeModule = ModuleType.sell;
+		this.data.sent.sell.reactionRemove = async () => await reaction.users.remove(this.interaction.user.id);
 
 		this.#collectSelectMenu(message);
 	}

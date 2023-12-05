@@ -25,10 +25,10 @@
 		"currency_2": { "NAME": "🎀", "EMOJI": "🎀" },
 		"confirm_sell": { "NAME": "✅", "EMOJI": "✅" },
 
-		"editModule_sell": { "NAME": "🥕", "EMOJI": "🥕" },
-		"editModule_setFavorite": { "NAME": "⭐", "EMOJI": "⭐" },
-		"editModule_setIdol": { "NAME": "🏃", "EMOJI": "🏃" },
-		"editModule_vault": { "NAME": "🔒", "EMOJI": "🔒" },
+		"inventoryModule_sell": { "NAME": "🥕", "EMOJI": "🥕" },
+		"inventoryModule_setFavorite": { "NAME": "⭐", "EMOJI": "⭐" },
+		"inventoryModule_setIdol": { "NAME": "🏃", "EMOJI": "🏃" },
+		"inventoryModule_vault": { "NAME": "🔒", "EMOJI": "🔒" },
 
 		"numbers": [
 			{ "NAME": "one", "EMOJI": "<:one:1103208748924813333>" },
