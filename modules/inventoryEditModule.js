@@ -21,7 +21,7 @@ const _jsT = require("./jsTools");
 
 const config = { bot: require("../configs/config_bot.json") };
 
-const ModuleType = { inactive: 0, sell: 1, setFavorite: 2, setIdolon: 3, vault: 4 };
+const ModuleType = { inactive: 0, sell: 1, setFavorite: 2, setIdol: 3, vault: 4 };
 
 const moduleTypeEmojis = {
 	sell: config.bot.emojis.inventoryModule_sell,
@@ -51,7 +51,7 @@ class InventoryEditModule {
 		// prettier-ignore
 		// Send an embed error message if the user doesn't have the required cards
 		if (!cards.length) await error_ES.send({
-			interaction: this.interaction,
+			interaction: this.data.interaction,
 			description: `${uids.length ? "Those cards are" : "That card is"} not in your inventory`,
 			sendMethod: "channel"
 		});
@@ -68,7 +68,7 @@ class InventoryEditModule {
 		// Create the collection filter
 		let filter = (reaction, user) => {
 			// Remove other user's reactions
-			if (![this.client.user.id, this.interaction.user.id].includes(user.id)) reaction.users.remove(user.id);
+			if (![this.data.client.user.id, this.data.interaction.user.id].includes(user.id)) reaction.users.remove(user.id);
 			// Check if the reaction was relevant to this module
 			return moduleTypeEmojis.names.includes(reaction.emoji.name);
 		};
@@ -122,36 +122,49 @@ class InventoryEditModule {
 	}
 
 	/** @param {Message} message  */
-	async #collectSelectMenu(message, removeReaction = null) {
-		if (this.data.collectors.selectMenu) this.data.collectors.selectMenu.stop();
+	async #collectSelectMenu(message) {
+		if (this.data.collectors.selectMenu) {
+			this.data.collectors.selectMenu.resetTimer();
+			return;
+		}
 
 		// Create the collection filter
-		let filter = async i => {
-			// prettier-ignore
-			try { await i.deferUpdate(); } catch {}
+		let filter = i => {
 			return i.user.id === this.data.interaction.user.id;
 		};
 
-		/// Create the collector
-		let collector = message.createMessageComponentCollector({ filter, idle: 30000 });
-		this.data.collectors.selectMenu = collector;
+		// Create the collector
+		this.data.collectors.selectMenu = message.createMessageComponentCollector({ filter, idle: 30000 });
 
 		/* - - - - - { Collector - COLLECT } - - - - - */
-		collector.on("collect", async i => {
-			switch (i.customId) {
-				case "ssm_cardSelect":
-					// Gather index numbers
-					let card_idxs = i.values.map(val => Number(val.split("_")[1]));
+		this.data.collectors.selectMenu.on("collect", async i => {
+			if (i.customId !== "ssm_cardSelect") return;
 
-					// Gather selected cards
-					this.data.selectedCards.sell = card_idxs.map(idx => this.data.cards[idx]);
-					return await this.sell(null, removeReaction);
+			// Get the indexes of the selected cards
+			// this is assuming select menu option values have a format of "card_1" and so on
+			let card_idxs = i.values.map(val => Number(val.split("_")[1]));
+
+			// Add the selected cards to the array
+			this.cards_selected = card_idxs.map(idx => this.cards[idx]);
+
+			// prettier-ignore
+			// Trigger the next action
+			switch (this.data.activeModule) {
+				case ModuleType.sell: return await this.sell();
+
+				case ModuleType.setFavorite: return;
+
+				case ModuleType.setIdol: return;
+
+				case ModuleType.vault: return;
+
+				default: return;
 			}
 		});
 
 		/* - - - - - { Collector - END } - - - - - */
-		collector.on("end", collected => {
-			console.log(`Collected ${collected.size} items`);
+		this.data.collectors.selectMenu.on("end", collected => {
+			this.data.collectors.selectMenu = null;
 		});
 	}
 
@@ -160,14 +173,14 @@ class InventoryEditModule {
 		options = { cards: [], ...options };
 
 		/* - - - - - { Variables } - - - - - */
-		this.client = client;
-		this.interaction = interaction;
-		this.message = message;
-
 		this.cards = options.cards;
 		this.cards_selected = [];
 
 		this.data = {
+			client: client,
+			interaction: interaction,
+			message: message,
+
 			activeModule: ModuleType.inactive,
 
 			timeouts: {
@@ -203,13 +216,15 @@ class InventoryEditModule {
 
 		// prettier-ignore
 		for (let type of moduleType) switch (type) {
-			case "sell": await this.data.message.react(config.bot.emojis.inventoryModule_sell.EMOJI); break;
+			case "sell": await this.data.message.react(moduleTypeEmojis.sell.EMOJI); break;
 
-			case "setFavorite": await this.data.message.react(config.bot.emojis.inventoryModule_setFavorite.EMOJI); break;
+			case "setFavorite": await this.data.message.react(moduleTypeEmojis.setFavorite.EMOJI); break;
 
-			case "setIdol": await this.data.message.react(config.bot.emojis.inventoryModule_setIdol.EMOJI); break;
+			case "setIdol": await this.data.message.react(moduleTypeEmojis.setIdol.EMOJI); break;
 
-			case "vault": await this.data.message.react(config.bot.emojis.inventoryModule_vault.EMOJI); break;
+			case "vault": await this.data.message.react(moduleTypeEmojis.vault.EMOJI); break;
+
+			default: continue;
 		}
 	}
 
@@ -217,7 +232,7 @@ class InventoryEditModule {
 		// prettier-ignore
 		// Create the embed :: { SELL MODULE }
 		let embed_sellModule = new BetterEmbed({
-			interaction: this.interaction, author: { text: "$USERNAME | 🥕 sell", iconURL: true },
+			interaction: this.data.interaction, author: { text: "$USERNAME | 🥕 sell", iconURL: true },
 			description: "Choose which cards you want to sell"
 		});
 
@@ -246,7 +261,7 @@ class InventoryEditModule {
 		this.data.activeModule = ModuleType.sell;
 		this.data.sent.sell.message = message;
 		this.data.sent.sell.canDelete = true;
-		this.data.sent.sell.reactionRemove = async () => await reaction.users.remove(this.interaction.user.id);
+		this.data.sent.sell.reactionRemove = async () => await reaction.users.remove(this.data.interaction.user.id);
 
 		this.#collectSelectMenu(message);
 	}
@@ -274,7 +289,7 @@ class InventoryEditModule {
 		// prettier-ignore
 		// Wait for the user to confirm
 		let confirmation = await awaitConfirmation({
-			user: this.interaction.user, message: this.data.sent.sell.message, sendMethod: "edit",
+			user: this.data.interaction.user, message: this.data.sent.sell.message, sendMethod: "edit",
 			description: cards_f
 				? `**Are you sure you want to sell:**\n${cards_f.join("\n")}`
 				: `**Are you sure you want to sell \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"}?**`,
@@ -291,8 +306,8 @@ class InventoryEditModule {
 		this.cards = this.cards.filter(c => !_selectedUIDs.includes(c.uid));
 
 		// Create the embed :: { SELL }
-		let embed_sell = user_ES.sell(this.interaction.member, cards, sellTotal);
-		return await embed_sell.send({ interaction: this.interaction, sendMethod: "followUp" });
+		let embed_sell = user_ES.sell(this.data.interaction.member, cards, sellTotal);
+		return await embed_sell.send({ interaction: this.data.interaction, sendMethod: "followUp" });
 	}
 
 	async setFavorite(card = null) {
