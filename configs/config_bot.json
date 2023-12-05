@@ -13,9 +13,11 @@
 	"timeouts": {
 		"STAGE_START": "3s",
 		"STAGE_TURN": "500ms",
+		
+		"INVENTORY_MODULE_REACTIONS": "30s",
+		"INVENTORY_MODULE_CARD_SELECT": "60s",
 
 		"PAGINATION": "1m",
-		"DROP_SELL_REACTION": "30s",
 		"CONFIRMATION": "15s",
 		"ERROR_MESSAGE": "5s"
 	},

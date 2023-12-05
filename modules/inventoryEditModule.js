@@ -272,6 +272,9 @@ class InventoryEditModule {
 		cards = _jsT.isArray(cards || this.data.cards_selected);
 		if (!cards.length) return;
 
+		/* - - - - - { Clean Up } - - - - - */
+		if (this.data.collectors.selectMenu) this.data.collectors.selectMenu.stop();
+
 		// Remove the user's reaction if possible
 		if (this.data.sent.sell.reactionRemove) {
 			// this is set to false because this message is going to be edited
