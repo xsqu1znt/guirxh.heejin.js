@@ -86,7 +86,8 @@ class InventoryEditModule {
 		if (!cards.length) await error_ES.send({
 			interaction: this.data.interaction,
 			description: `${uids.length ? "Those cards are" : "That card is"} not in your inventory`,
-			sendMethod: "followUp"
+			sendMethod: "followUp",
+			ephemeral: true
 		});
 
 		return cards.length ? cards : false;
@@ -101,7 +102,11 @@ class InventoryEditModule {
 		// Create the collection filter
 		let filter = (reaction, user) => {
 			// Remove other user's reactions
-			if (![this.data.client.user.id, this.data.interaction.user.id].includes(user.id)) reaction.users.remove(user.id);
+			if (![this.data.client.user.id, this.data.interaction.user.id].includes(user.id))
+				try {
+					reaction.users.remove(user.id);
+				} catch {}
+
 			// Check if the reaction was relevant to this module
 			return user.id === this.data.interaction.user.id && moduleTypeEmojis.names.includes(reaction.emoji.name);
 		};
@@ -114,6 +119,22 @@ class InventoryEditModule {
 
 		/* - - - - - { Collector - COLLECT } - - - - - */
 		this.data.collectors.reaction.on("collect", async (reaction, user) => {
+			if (!moduleTypeEmojis.names.includes(reaction.emoji.name)) return;
+
+			// Check if there's an active module
+			if (this.data.activeModule !== ModuleType.inactive) {
+				// prettier-ignore
+				try { reaction.users.remove(user.id); } catch {}
+
+				// Send an embed error message
+				return await error_ES.send({
+					interaction: this.data.interaction,
+					description: "You can only do `1` thing at a time, silly!",
+					sendMethod: "followUp",
+					ephemeral: true
+				});
+			}
+
 			// prettier-ignore
 			switch (reaction.emoji.name) {
 				case moduleTypeEmojis.sell.NAME: return await this.#sendEmbed_sell(reaction);
@@ -123,6 +144,8 @@ class InventoryEditModule {
 				case moduleTypeEmojis.setIdol.NAME: break;
 
 				case moduleTypeEmojis.vault.NAME: break;
+
+				default: return;
 			}
 		});
 
