@@ -22,7 +22,7 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-		let cards = dropManager.drop(interaction.user.id, "general", { count: 5 });
+		let { cards } = await dropManager.drop(interaction.user.id, "general", { count: 5 });
 		await userManager.inventory.add(interaction.user.id, cards);
 
 		let cards_f = cards.map(c => cardManager.toString.basic(c));

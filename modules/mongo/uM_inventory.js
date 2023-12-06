@@ -22,7 +22,7 @@ async function count(userID, uniqueOnly = false) {
 /** @param {string} userID @param {options_inventory_has} options */
 async function has(userID, options) {
 	options = { uids: [], gids: [], sum: false, ...options };
-	options.uids = _jsT.isArray(options.uids).map(uid => new RegExp(`^${uid.toUpperCase()}$`, "i"));
+	options.uids = _jsT.isArray(options.uids).map(uid => uid.toUpperCase());
 	options.gids = _jsT.isArray(options.gids);
 
 	if (!options.uids.length && !options.gids.length) return null;
@@ -185,15 +185,14 @@ async function update(userID, card) {
 }
 
 /** @param {string} userID */
-async function sell(userID, cards) {
+async function sell(userID, cards, validate = true) {
 	if (!cards || !cards.filter(c => c?.globalID && c?.sellPrice).length) return { success: false };
 
 	// Create an array if only a single card was passed
 	cards = _jsT.isArray(cards);
 
-	// prettier-ignore
 	// Check if the user still has the cards in their card_inventory
-	if (!(await exists(userID, cards.map(c => c.uid)))) return { success: false };
+	if (validate && !(await has(userID, { uids: cards.map(c => c.uid) }))) return { success: false };
 
 	// Calculate sell price sum
 	let sellPriceSum = _jsT.sum(cards.map(c => c.sellPrice));

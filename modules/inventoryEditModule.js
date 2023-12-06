@@ -80,7 +80,7 @@ class InventoryEditModule {
 		let uids = cards.map(c => c?.uid).filter(uid => uid);
 
 		// Check if the cards exists in the user's card_inventory
-		let has = await userManager.inventory.has(this.data.interaction.user.id, { uids });
+		let has = _jsT.isArray(await userManager.inventory.has(this.data.interaction.user.id, { uids }));
 
 		// Filter out cards not found
 		cards = cards.filter((c, idx) => has[idx]);
@@ -126,15 +126,27 @@ class InventoryEditModule {
 
 			// Check if there's an active module
 			if (this.data.activeModule !== ModuleType.inactive) {
-				// prettier-ignore
-				try { reaction.users.remove(user.id); } catch {}
+				reaction.users.remove(user.id).catch(() => null);
 
+				// prettier-ignore
 				// Send an embed error message
 				return await error_ES.send({
 					interaction: this.data.interaction,
 					description: "You can only do `1` thing at a time, silly!",
-					sendMethod: "followUp",
-					ephemeral: true
+					sendMethod: "followUp", ephemeral: true
+				});
+			}
+
+			// Check if there's any cards to edit
+			if (!this.data.cards.length) {
+				reaction.users.remove(user.id).catch(() => null);
+
+				// prettier-ignore
+				// Send an embed error message
+				return await error_ES.send({
+					interaction: this.data.interaction,
+					description: "There are no cards available to edit",
+					sendMethod: "followUp", ephemeral: true
 				});
 			}
 
@@ -199,8 +211,11 @@ class InventoryEditModule {
 			return i.user.id === this.data.interaction.user.id;
 		};
 
+		// prettier-ignore
 		// Create the collector
-		this.data.collectors.selectMenu = message.createMessageComponentCollector({ filter, idle: 30000 });
+		this.data.collectors.selectMenu = message.createMessageComponentCollector({
+			filter, idle: this.data.timeouts.cardSelect
+		});
 
 		/* - - - - - { Collector - COLLECT } - - - - - */
 		this.data.collectors.selectMenu.on("collect", async i => {
@@ -373,7 +388,7 @@ class InventoryEditModule {
 		if (!confirmation) return;
 
 		/* - - - - - { Sell the Cards } - - - - - */
-		// await userManager.inventory.sell(interaction.user.id, cards);
+		await userManager.inventory.sell(this.data.interaction.user.id, cards, false);
 
 		// Update the cards the user can select
 		let _selectedUIDs = this.data.cards_selected.map(c => c.uid);
@@ -381,7 +396,7 @@ class InventoryEditModule {
 
 		// Create the embed :: { SELL }
 		let embed_sell = user_ES.sell(this.data.interaction.member, cards, sellTotal);
-		return await embed_sell.send({ interaction: this.data.interaction, sendMethod: "followUp" });
+		await embed_sell.send({ interaction: this.data.interaction, sendMethod: "followUp" });
 	}
 
 	// TODO: Make a cardManager.toString method for this.
@@ -441,12 +456,10 @@ class InventoryEditModule {
 		if (this.data.collectors.selectMenu) this.data.collectors.selectMenu.stop();
 
 		/* - - - - - { Validation } - - - - - */
-		card = await this.#validateSelectedCards(card);
+		card = (await this.#validateSelectedCards(card))[0];
 		if (!card) return this.#cleanUp();
 
 		/* - - - - - { Favorite the Card } - - - - - */
-		this.#cleanUp();
-
 		let userData = await userManager.fetch(this.data.interaction.user.id, { type: "essential" });
 
 		// prettier-ignore
@@ -466,7 +479,7 @@ class InventoryEditModule {
 
 		// prettier-ignore
 		let embed_setFavorite = new BetterEmbed({
-			interaction: this.data.interaction, author: { text: "$USERNAME | set" },
+			interaction: this.data.interaction, author: { text: "$USERNAME | set", iconURL: true },
 			description: `Your \`⭐ favorite\` has been set to:\n> ${card_f}`,
 			imageURL: card.imageURL
 		});
