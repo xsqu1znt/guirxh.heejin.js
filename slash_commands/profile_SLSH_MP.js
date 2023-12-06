@@ -59,9 +59,12 @@ module.exports = {
 		/// Fetch user data from Mongo
 		let userData = await userManager.fetch(interaction.user.id, { type: "essential" });
 		let inventoryStats = await userManager.inventory.stats(interaction.user.id);
-		let [card_selected, card_favorite] = await userManager.inventory.get(interaction.user.id, {
+		let cards = await userManager.inventory.get(interaction.user.id, {
 			uids: [userData.card_selected_uid, userData.card_favorite_uid]
 		});
+
+		let card_selected = cards.find(c => c.uid === userData.card_selected_uid);
+		let card_favorite = cards.find(c => c.uid === userData.card_favorite_uid);
 
 		// Create the embed :: { PROFILE }
 		let embeds_profile = user_ES.profile(target, { userData, card_selected, card_favorite, inventoryStats });

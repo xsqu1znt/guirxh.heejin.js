@@ -303,7 +303,7 @@ function inventory(userData, options, stats) {
 	// prettier-ignore
 	// Return an embed :: { ERROR }
 	if (!cards.length) return new BetterEmbed({
-		author: { text: "$USERNAME | inventory", user: options.target },
+		author: { text: "$USERNAME | inventory", user: options.target, iconURL: true },
 		description: filtered ? dupeCheck
 			? `You do not have any dupes of ${options.globalID.length === 1 ? "that card" : "those cards"}`
 			: "No cards were found with that search filter"
