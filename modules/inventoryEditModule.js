@@ -235,7 +235,7 @@ class InventoryEditModule {
 
 				case ModuleType.setFavorite: return await this.setFavorite();
 
-				case ModuleType.setIdol: return;
+				case ModuleType.setIdol: return await this.setIdol();
 
 				case ModuleType.vault: return;
 
@@ -420,7 +420,7 @@ class InventoryEditModule {
 		// Create the select menu builder
 		let stringSelectMenu = new StringSelectMenuBuilder()
 			.setCustomId("ssm_cardSelect")
-			.setPlaceholder("Choose which cards you want as your favorite")
+			.setPlaceholder("Choose which card you want as your favorite")
 			.addOptions(...stringSelectMenuOptions)
 			.setMaxValues(1);
 
@@ -468,8 +468,7 @@ class InventoryEditModule {
 		if (userData.card_favorite_uid === card.uid) return await error_ES.send({
 			interaction: this.data.interaction,
 			description: `\`${card.uid}\` is already your \`⭐ favorite\``,
-			sendMethod: "followUp",
-			ephemeral: true
+			sendMethod: "followUp", ephemeral: true
 		});
 
 		// Set the card as the user's favorite in Mongo
@@ -508,7 +507,7 @@ class InventoryEditModule {
 		// Create the select menu builder
 		let stringSelectMenu = new StringSelectMenuBuilder()
 			.setCustomId("ssm_cardSelect")
-			.setPlaceholder("Choose which cards you want as your idol")
+			.setPlaceholder("Choose which card you want as your idol")
 			.addOptions(...stringSelectMenuOptions)
 			.setMaxValues(1);
 
@@ -556,24 +555,23 @@ class InventoryEditModule {
 		if (userData.card_selected_uid === card.uid) return await error_ES.send({
 			interaction: this.data.interaction,
 			description: `\`${card.uid}\` is already your \`🏃 idol\``,
-			sendMethod: "followUp",
-			ephemeral: true
+			sendMethod: "followUp", ephemeral: true
 		});
 
-		// Set the card as the user's favorite in Mongo
+		// Set the card as the user's idol in Mongo
 		await userManager.update(this.data.interaction.user.id, { card_selected_uid: card.uid });
 
-		/// Create the embed :: { SET FAVORITE }
+		/// Create the embed :: { SET IDOL }
 		let card_f = cardManager.toString.basic(card);
 
 		// prettier-ignore
-		let embed_setFavorite = new BetterEmbed({
+		let embed_setIdol = new BetterEmbed({
 			interaction: this.data.interaction, author: { text: "$USERNAME | set", iconURL: true },
 			description: `Your \`🏃 idol\` has been set to:\n> ${card_f}`,
 			imageURL: card.imageURL
 		});
 
-		await embed_setFavorite.send({ sendMethod: "followUp" });
+		await embed_setIdol.send({ sendMethod: "followUp" });
 	}
 
 	async vault(cards = null) {
