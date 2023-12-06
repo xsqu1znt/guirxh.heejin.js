@@ -156,7 +156,7 @@ class InventoryEditModule {
 
 				case moduleTypeEmojis.setFavorite.NAME: return await this.#sendEmbed_setFavorite(reaction);
 
-				case moduleTypeEmojis.setIdol.NAME: break;
+				case moduleTypeEmojis.setIdol.NAME: return await this.#sendEmbed_setIdol(reaction);
 
 				case moduleTypeEmojis.vault.NAME: break;
 
@@ -272,7 +272,8 @@ class InventoryEditModule {
 
 			sent: {
 				sell: { message: null, canDelete: false, removeReaction: null },
-				setFavorite: { message: null, canDelete: false, removeReaction: null }
+				setFavorite: { message: null, canDelete: false, removeReaction: null },
+				setIdol: { message: null, canDelete: false, removeReaction: null }
 			},
 
 			collectors: {
@@ -419,7 +420,7 @@ class InventoryEditModule {
 		// Create the select menu builder
 		let stringSelectMenu = new StringSelectMenuBuilder()
 			.setCustomId("ssm_cardSelect")
-			.setPlaceholder("Choose which cards you want to sell")
+			.setPlaceholder("Choose which cards you want as your favorite")
 			.addOptions(...stringSelectMenuOptions)
 			.setMaxValues(1);
 
@@ -446,10 +447,10 @@ class InventoryEditModule {
 		if (!card) return;
 
 		/* - - - - - { Clean Up } - - - - - */
-		if (this.data.sent.sell.removeReaction) {
+		if (this.data.sent.setFavorite.removeReaction) {
 			// this is set to false because this message is going to be edited
-			this.data.sent.sell.canDelete = false;
-			this.data.sent.sell.removeReaction();
+			this.data.sent.setFavorite.canDelete = false;
+			this.data.sent.setFavorite.removeReaction();
 		}
 
 		// Stop select menu interaction collection
@@ -487,35 +488,92 @@ class InventoryEditModule {
 		await embed_setFavorite.send({ sendMethod: "followUp" });
 	}
 
+	// TODO: Make a cardManager.toString method for this.
+	async #sendEmbed_setIdol(reaction = null) {
+		// prettier-ignore
+		// Create the embed :: { SELL MODULE }
+		let embed_setIdolModule = new BetterEmbed({
+			interaction: this.data.interaction, author: { text: "$USERNAME | 🏃 idol", iconURL: true },
+			description: "Choose which card you want to set as your `🏃 idol`"
+		});
+
+		/* - - - - - { Create the Select Menu } - - - - - */
+		let stringSelectMenuOptions = this.data.cards.map((c, idx) =>
+			new StringSelectMenuOptionBuilder()
+				.setValue(`card_${idx}`)
+				.setLabel(`${c.emoji} ${c.single} [${c.group}] ${c.name}`)
+				.setDescription(`UID: ${c.uid} :: GID: ${c.globalID} :: 🗣️ ${c.setID}`)
+		);
+
+		// Create the select menu builder
+		let stringSelectMenu = new StringSelectMenuBuilder()
+			.setCustomId("ssm_cardSelect")
+			.setPlaceholder("Choose which cards you want as your idol")
+			.addOptions(...stringSelectMenuOptions)
+			.setMaxValues(1);
+
+		// Create the action row builder
+		let actionRow = new ActionRowBuilder().addComponents(stringSelectMenu);
+
+		/* - - - - - { Send the Embed with Components} - - - - - */
+		let message = await embed_setIdolModule.send({ sendMethod: "followUp", components: actionRow });
+
+		/// Cache
+		this.data.activeModule = ModuleType.setIdol;
+		this.data.sent.setIdol.message = message;
+		this.data.sent.setIdol.canDelete = true;
+		// prettier-ignore
+		this.data.sent.setIdol.removeReaction = async () => {
+			try { await reaction.users.remove(this.data.interaction.user.id); } catch {}
+		};
+
+		this.#collectSelectMenu(message);
+	}
+
 	async setIdol(card = null) {
 		card ||= this.data.cards_selected[0];
-		if (!cards) return;
+		if (!card) return;
 
-		// Validate the selected cards
-		if (!(await this.#validateSelectedCards(card))) return;
+		/* - - - - - { Clean Up } - - - - - */
+		if (this.data.sent.setIdol.removeReaction) {
+			// this is set to false because this message is going to be edited
+			this.data.sent.setIdol.canDelete = false;
+			this.data.sent.setIdol.removeReaction();
+		}
 
-		// Fetch the user from Mongo
+		// Stop select menu interaction collection
+		if (this.data.collectors.selectMenu) this.data.collectors.selectMenu.stop();
+
+		/* - - - - - { Validation } - - - - - */
+		card = (await this.#validateSelectedCards(card))[0];
+		if (!card) return this.#cleanUp();
+
+		/* - - - - - { Favorite the Card } - - - - - */
 		let userData = await userManager.fetch(this.data.interaction.user.id, { type: "essential" });
 
 		// prettier-ignore
-		// Check if the card's already selected
-		if (card.uid === userData.card_selected_uid) return await error_ES.send({
-			interaction: this.data.interaction, description: `\`${card.uid}\` is already your \`🏃 idol\``,
-			sendMethod: "channel"
+		// Check if the card's already their idol
+		if (userData.card_selected_uid === card.uid) return await error_ES.send({
+			interaction: this.data.interaction,
+			description: `\`${card.uid}\` is already your \`🏃 idol\``,
+			sendMethod: "followUp",
+			ephemeral: true
 		});
 
-		// Set the card as the user's selected in Mongo
-		await userManager.update(this.data.interaction.user.id, { card_favorite_uid: card.uid });
+		// Set the card as the user's favorite in Mongo
+		await userManager.update(this.data.interaction.user.id, { card_selected_uid: card.uid });
 
-		/// Create the embed :: { SET IDOL }
+		/// Create the embed :: { SET FAVORITE }
 		let card_f = cardManager.toString.basic(card);
 
-		let embed_setIdol = this.embeds.set({
+		// prettier-ignore
+		let embed_setFavorite = new BetterEmbed({
+			interaction: this.data.interaction, author: { text: "$USERNAME | set", iconURL: true },
 			description: `Your \`🏃 idol\` has been set to:\n> ${card_f}`,
 			imageURL: card.imageURL
 		});
 
-		return await embed_setIdol.send({ sendMethod: "channel" });
+		await embed_setFavorite.send({ sendMethod: "followUp" });
 	}
 
 	async vault(cards = null) {
