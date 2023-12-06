@@ -36,6 +36,8 @@ const moduleTypeEmojis = {
 };
 
 class InventoryEditModule {
+	#embed_set = new BetterEmbed({ interaction: this.data.interaction, author: { text: "$USERNAME | set" } });
+
 	#cleanUp(cautious = false) {
 		this.data.activeModule = ModuleType.inactive;
 
@@ -383,20 +385,37 @@ class InventoryEditModule {
 
 	async setFavorite(card = null) {
 		card ||= this.data.cards_selected[0];
-		if (!cards) return;
+		if (!card) return;
 
-		// Validate the selected cards
-		if (!(await this.#validateSelectedCards(card))) return;
+		/* - - - - - { Clean Up } - - - - - */
+		if (this.data.sent.sell.removeReaction) {
+			// this is set to false because this message is going to be edited
+			this.data.sent.sell.canDelete = false;
+			this.data.sent.sell.removeReaction();
+		}
 
-		// Fetch the user from Mongo
+		// Stop select menu interaction collection
+		if (this.data.collectors.selectMenu) this.data.collectors.selectMenu.stop();
+
+		/* - - - - - { Validation } - - - - - */
+		card = await this.#validateSelectedCards(card);
+		if (!card) return this.#cleanUp();
+
+		/* - - - - - { Favorite the Card } - - - - - */
 		let userData = await userManager.fetch(this.data.interaction.user.id, { type: "essential" });
 
-		// prettier-ignore
 		// Check if the card's already favorited
-		if (card.uid === userData.card_favorite_uid) return await error_ES.send({
-			interaction: this.data.interaction, description: `\`${card.uid}\` is already your \`⭐ favorite\``,
-			sendMethod: "channel"
-		});
+		if (userData.card_favorite_uid === card.uid) {
+			this.#cleanUp();
+
+			// Send an embed error message
+			return await error_ES.send({
+				interaction: this.data.interaction,
+				description: `\`${card.uid}\` is already your \`⭐ favorite\``,
+				sendMethod: "followUp",
+				ephemeral: true
+			});
+		}
 
 		// Set the card as the user's favorite in Mongo
 		await userManager.update(this.data.interaction.user.id, { card_favorite_uid: card.uid });
@@ -404,12 +423,12 @@ class InventoryEditModule {
 		/// Create the embed :: { SET FAVORITE }
 		let card_f = cardManager.toString.basic(card);
 
-		let embed_setFavorite = this.embeds.set({
+		let embed_setFavorite = this.#embed_set.copy({
 			description: `Your \`⭐ favorite\` has been set to:\n> ${card_f}`,
 			imageURL: card.imageURL
 		});
 
-		return await embed_setFavorite.send({ sendMethod: "channel" });
+		return await embed_setFavorite.send({ sendMethod: "followUp" });
 	}
 
 	async setIdol(card = null) {
