@@ -11,6 +11,7 @@ const { BetterEmbed, markdown } = require("../modules/discordTools");
 const { userManager } = require("../modules/mongo/index");
 const InventoryEditModule = require("../modules/inventoryEditModule");
 const cardManager = require("../modules/cardManager");
+const dropManager = require("../modules/dropManager");
 
 module.exports = {
 	options: { deferReply: true },
@@ -21,7 +22,9 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-		let cards = cardManager.get.random({ type: "general", count: 5 });
+		let cards = dropManager.drop(interaction.user.id, "general", { count: 5 });
+		await userManager.inventory.add(interaction.user.id, cards);
+
 		let cards_f = cards.map(c => cardManager.toString.basic(c));
 
 		// prettier-ignore

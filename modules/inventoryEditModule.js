@@ -36,8 +36,6 @@ const moduleTypeEmojis = {
 };
 
 class InventoryEditModule {
-	#embed_set = new BetterEmbed({ interaction: this.data.interaction, author: { text: "$USERNAME | set" } });
-
 	#cleanUp(cautious = false) {
 		this.data.activeModule = ModuleType.inactive;
 
@@ -76,8 +74,10 @@ class InventoryEditModule {
 	}
 
 	async #validateSelectedCards(cards = null || this.data.cards_selected) {
+		cards = _jsT.isArray(cards);
+
 		// prettier-ignore
-		let uids = _jsT.isArray(cards).map(c => c?.uid).filter(uid => uid);
+		let uids = cards.map(c => c?.uid).filter(uid => uid);
 
 		// Check if the cards exists in the user's card_inventory
 		let has = await userManager.inventory.has(this.data.interaction.user.id, { uids });
@@ -464,7 +464,9 @@ class InventoryEditModule {
 		/// Create the embed :: { SET FAVORITE }
 		let card_f = cardManager.toString.basic(card);
 
-		let embed_setFavorite = this.#embed_set.copy({
+		// prettier-ignore
+		let embed_setFavorite = new BetterEmbed({
+			interaction: this.data.interaction, author: { text: "$USERNAME | set" },
 			description: `Your \`⭐ favorite\` has been set to:\n> ${card_f}`,
 			imageURL: card.imageURL
 		});
