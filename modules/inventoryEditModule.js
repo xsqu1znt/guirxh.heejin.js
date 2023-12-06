@@ -142,7 +142,7 @@ class InventoryEditModule {
 			switch (reaction.emoji.name) {
 				case moduleTypeEmojis.sell.NAME: return await this.#sendEmbed_sell(reaction);
 
-				case moduleTypeEmojis.setFavorite.NAME: break;
+				case moduleTypeEmojis.setFavorite.NAME: return await this.#sendEmbed_setFavorite(reaction);
 
 				case moduleTypeEmojis.setIdol.NAME: break;
 
@@ -218,7 +218,7 @@ class InventoryEditModule {
 			switch (this.data.activeModule) {
 				case ModuleType.sell: return await this.sell();
 
-				case ModuleType.setFavorite: return;
+				case ModuleType.setFavorite: return await this.setFavorite();
 
 				case ModuleType.setIdol: return;
 
@@ -256,7 +256,8 @@ class InventoryEditModule {
 			},
 
 			sent: {
-				sell: { message: null, canDelete: false, removeReaction: null }
+				sell: { message: null, canDelete: false, removeReaction: null },
+				setFavorite: { message: null, canDelete: false, removeReaction: null }
 			},
 
 			collectors: {
@@ -383,6 +384,48 @@ class InventoryEditModule {
 		return await embed_sell.send({ interaction: this.data.interaction, sendMethod: "followUp" });
 	}
 
+	// TODO: Make a cardManager.toString method for this.
+	async #sendEmbed_setFavorite(reaction = null) {
+		// prettier-ignore
+		// Create the embed :: { SELL MODULE }
+		let embed_setFavoriteModule = new BetterEmbed({
+			interaction: this.data.interaction, author: { text: "$USERNAME | ⭐ favorite", iconURL: true },
+			description: "Choose which card you want to set as your `⭐ favorite`"
+		});
+
+		/* - - - - - { Create the Select Menu } - - - - - */
+		let stringSelectMenuOptions = this.data.cards.map((c, idx) =>
+			new StringSelectMenuOptionBuilder()
+				.setValue(`card_${idx}`)
+				.setLabel(`${c.emoji} ${c.single} [${c.group}] ${c.name}`)
+				.setDescription(`UID: ${c.uid} :: GID: ${c.globalID} :: 🗣️ ${c.setID}`)
+		);
+
+		// Create the select menu builder
+		let stringSelectMenu = new StringSelectMenuBuilder()
+			.setCustomId("ssm_cardSelect")
+			.setPlaceholder("Choose which cards you want to sell")
+			.addOptions(...stringSelectMenuOptions)
+			.setMaxValues(1);
+
+		// Create the action row builder
+		let actionRow = new ActionRowBuilder().addComponents(stringSelectMenu);
+
+		/* - - - - - { Send the Embed with Components} - - - - - */
+		let message = await embed_setFavoriteModule.send({ sendMethod: "followUp", components: actionRow });
+
+		/// Cache
+		this.data.activeModule = ModuleType.setFavorite;
+		this.data.sent.setFavorite.message = message;
+		this.data.sent.setFavorite.canDelete = true;
+		// prettier-ignore
+		this.data.sent.setFavorite.removeReaction = async () => {
+			try { await reaction.users.remove(this.data.interaction.user.id); } catch {}
+		};
+
+		this.#collectSelectMenu(message);
+	}
+
 	async setFavorite(card = null) {
 		card ||= this.data.cards_selected[0];
 		if (!card) return;
@@ -402,20 +445,18 @@ class InventoryEditModule {
 		if (!card) return this.#cleanUp();
 
 		/* - - - - - { Favorite the Card } - - - - - */
+		this.#cleanUp();
+
 		let userData = await userManager.fetch(this.data.interaction.user.id, { type: "essential" });
 
+		// prettier-ignore
 		// Check if the card's already favorited
-		if (userData.card_favorite_uid === card.uid) {
-			this.#cleanUp();
-
-			// Send an embed error message
-			return await error_ES.send({
-				interaction: this.data.interaction,
-				description: `\`${card.uid}\` is already your \`⭐ favorite\``,
-				sendMethod: "followUp",
-				ephemeral: true
-			});
-		}
+		if (userData.card_favorite_uid === card.uid) return await error_ES.send({
+			interaction: this.data.interaction,
+			description: `\`${card.uid}\` is already your \`⭐ favorite\``,
+			sendMethod: "followUp",
+			ephemeral: true
+		});
 
 		// Set the card as the user's favorite in Mongo
 		await userManager.update(this.data.interaction.user.id, { card_favorite_uid: card.uid });
@@ -428,7 +469,7 @@ class InventoryEditModule {
 			imageURL: card.imageURL
 		});
 
-		return await embed_setFavorite.send({ sendMethod: "followUp" });
+		await embed_setFavorite.send({ sendMethod: "followUp" });
 	}
 
 	async setIdol(card = null) {
