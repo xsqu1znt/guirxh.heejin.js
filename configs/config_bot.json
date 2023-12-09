@@ -30,7 +30,7 @@
 		"inventoryModule_sell": { "NAME": "🥕", "EMOJI": "🥕" },
 		"inventoryModule_setFavorite": { "NAME": "⭐", "EMOJI": "⭐" },
 		"inventoryModule_setIdol": { "NAME": "🏃", "EMOJI": "🏃" },
-		"inventoryModule_vault": { "NAME": "🔒", "EMOJI": "🔒" },
+		"inventoryModule_addVault": { "NAME": "🔒", "EMOJI": "🔒" },
 
 		"numbers": [
 			{ "NAME": "one", "EMOJI": "<:one:1103208748924813333>" },

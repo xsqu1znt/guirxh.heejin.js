@@ -1,4 +1,4 @@
-/** @typedef {"sell"|"setFavorite"|"setIdol"|"vault"} ModuleType */
+/** @typedef {"sell"|"setFavorite"|"setIdol"|"addVault"} ModuleType */
 
 /** @typedef options
  * @property {Cards[]|Cards} cards
@@ -19,19 +19,19 @@ const _jsT = require("./jsTools");
 
 const config = { bot: require("../configs/config_bot.json") };
 
-const ModuleType = { inactive: 0, sell: 1, setFavorite: 2, setIdol: 3, vault: 4 };
+const ModuleType = { inactive: 0, sell: 1, setFavorite: 2, setIdol: 3, addVault: 4 };
 
 const moduleTypeEmojis = {
 	sell: config.bot.emojis.inventoryModule_sell,
 	setFavorite: config.bot.emojis.inventoryModule_setFavorite,
 	setIdol: config.bot.emojis.inventoryModule_setIdol,
-	vault: config.bot.emojis.inventoryModule_vault,
+	addVault: config.bot.emojis.inventoryModule_addVault,
 
 	names: [
 		config.bot.emojis.inventoryModule_sell.NAME,
 		config.bot.emojis.inventoryModule_setFavorite.NAME,
 		config.bot.emojis.inventoryModule_setIdol.NAME,
-		config.bot.emojis.inventoryModule_vault.NAME
+		config.bot.emojis.inventoryModule_addVault.NAME
 	]
 };
 
@@ -158,7 +158,7 @@ class InventoryEditModule {
 
 				case moduleTypeEmojis.setIdol.NAME: return await this.#sendEmbed_setIdol(reaction);
 
-				case moduleTypeEmojis.vault.NAME: break;
+				case moduleTypeEmojis.addVault.NAME: return await this.#sendEmbed_addVault(reaction);
 
 				default: return;
 			}
@@ -180,8 +180,8 @@ class InventoryEditModule {
 					if (this.data.activeModule === ModuleType.setIdol) this.#cleanUp(true);
 					return;
 
-				case moduleTypeEmojis.vault.NAME:
-					if (this.data.activeModule === ModuleType.vault) this.#cleanUp(true);
+				case moduleTypeEmojis.addVault.NAME:
+					if (this.data.activeModule === ModuleType.addVault) this.#cleanUp(true);
 					return;
 
 				default: return;
@@ -231,13 +231,13 @@ class InventoryEditModule {
 			// prettier-ignore
 			// Trigger the next action
 			switch (this.data.activeModule) {
-				case ModuleType.sell: return await this.sell();
+				case ModuleType.sell: return await this.sell().then(() => this.#cleanUp());
 
-				case ModuleType.setFavorite: return await this.setFavorite();
+				case ModuleType.setFavorite: return await this.setFavorite().then(() => this.#cleanUp());
 
-				case ModuleType.setIdol: return await this.setIdol();
+				case ModuleType.setIdol: return await this.setIdol().then(() => this.#cleanUp());
 
-				case ModuleType.vault: return;
+				case ModuleType.addVault: return await this.addVault().then(() => this.#cleanUp());
 
 				default: return;
 			}
@@ -273,7 +273,8 @@ class InventoryEditModule {
 			sent: {
 				sell: { message: null, canDelete: false, removeReaction: null },
 				setFavorite: { message: null, canDelete: false, removeReaction: null },
-				setIdol: { message: null, canDelete: false, removeReaction: null }
+				setIdol: { message: null, canDelete: false, removeReaction: null },
+				vault: { message: null, canDelete: false, removeReaction: null }
 			},
 
 			collectors: {
@@ -305,7 +306,7 @@ class InventoryEditModule {
 
 			case "setIdol": await this.data.message.react(moduleTypeEmojis.setIdol.EMOJI); break;
 
-			case "vault": await this.data.message.react(moduleTypeEmojis.vault.EMOJI); break;
+			case "vault": await this.data.message.react(moduleTypeEmojis.addVault.EMOJI); break;
 
 			default: continue;
 		}
@@ -574,28 +575,95 @@ class InventoryEditModule {
 		await embed_setIdol.send({ sendMethod: "followUp" });
 	}
 
-	async vault(cards = null) {
+	// TODO: Make a cardManager.toString method for this.
+	async #sendEmbed_addVault(reaction = null) {
+		// prettier-ignore
+		// Create the embed :: { SELL MODULE }
+		let embed_vaultModule = new BetterEmbed({
+			interaction: this.data.interaction, author: { text: "$USERNAME | 🔒 vault", iconURL: true },
+			description: "Choose which card you want to set as your `🔒 vault`"
+		});
+
+		/* - - - - - { Create the Select Menu } - - - - - */
+		let stringSelectMenuOptions = this.data.cards.map((c, idx) =>
+			new StringSelectMenuOptionBuilder()
+				.setValue(`card_${idx}`)
+				.setLabel(`${c.emoji} ${c.single} [${c.group}] ${c.name}`)
+				.setDescription(`UID: ${c.uid} :: GID: ${c.globalID} :: 🗣️ ${c.setID}`)
+		);
+
+		// Create the select menu builder
+		let stringSelectMenu = new StringSelectMenuBuilder()
+			.setCustomId("ssm_cardSelect")
+			.setPlaceholder("Choose which card you want to add to your vault")
+			.addOptions(...stringSelectMenuOptions)
+			.setMaxValues(this.data.cards.length);
+
+		// Create the action row builder
+		let actionRow = new ActionRowBuilder().addComponents(stringSelectMenu);
+
+		/* - - - - - { Send the Embed with Components} - - - - - */
+		let message = await embed_vaultModule.send({ sendMethod: "followUp", components: actionRow });
+
+		/// Cache
+		this.data.activeModule = ModuleType.addVault;
+		this.data.sent.vault.message = message;
+		this.data.sent.vault.canDelete = true;
+		// prettier-ignore
+		this.data.sent.vault.removeReaction = async () => {
+			try { await reaction.users.remove(this.data.interaction.user.id); } catch {}
+		};
+
+		this.#collectSelectMenu(message);
+	}
+
+	async addVault(cards = null) {
 		cards = _jsT.isArray(cards || this.data.cards_selected);
 		if (!cards.length) return;
 
-		// Validate the selected cards
+		/* - - - - - { Clean Up } - - - - - */
+		if (this.data.sent.sell.removeReaction) {
+			// this is set to false because this message is going to be edited
+			this.data.sent.sell.canDelete = false;
+			this.data.sent.sell.removeReaction();
+		}
+
+		// Stop select menu interaction collection
+		if (this.data.collectors.selectMenu) this.data.collectors.selectMenu.stop();
+
+		/* - - - - - { Validation } - - - - - */
 		cards = await this.#validateSelectedCards(cards);
-		if (!cards) return;
+		if (!cards) return this.#cleanUp();
 
 		/// Check if the cards are already locked
 		cards = cards.filter(c => !c.locked);
+		if (!cards.length) {
+			this.#cleanUp();
+
+			// prettier-ignore
+			return await error_ES.send({
+				interaction, description: `${uids.length === 1 ? `That card is` : "Those cards are"} already in your \`🔒 vault\``
+			});
+		}
+
+		/* - - - - - { Lock the Cards } - - - - - */
+		for (let i = 0; i < cards.length; i++) cards[i].locked = true;
+
+		// Update the cards in the user's card_inventory
+		await Promise.all(cards.map(c => userManager.inventory.update(this.data.interaction.user.id, c)));
+
+		// Create the embed :: { VAULT }
+		let cards_f = cards.length > 10 ? null : cards.map(c => cardManager.toString.basic(c));
 
 		// prettier-ignore
-		if (!cards.length) return await error_ES.send({
-			interaction, description: `${uids.length === 1 ? `That card is` : "Those cards are"} already in your \`🔒 vault\``
+		let embed_vault = new BetterEmbed({
+			interaction: this.data.interaction, author: { text: `$USERNAME | vault`, user, iconURL: true },
+			description: cards_f
+				? `You added to your \`🔒 vault\`:\n>>> ${cards_f.join("\n")}`
+				: `You addded \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"} to your \`🔒 vault\``
 		});
 
-		// Create the embed :: { SET VAULT }
-		let embed_setVault = this.embeds.set({
-			description: `\`${cards.length}\` ${cards.length === 1 ? "card" : "cards"} added to your \`🔒 vault\``
-		});
-
-		return await embed_setVault.send({ sendMethod: "channel" });
+		return await embed_vault.send();
 	}
 }
 
