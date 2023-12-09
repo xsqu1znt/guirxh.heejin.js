@@ -300,13 +300,13 @@ class InventoryEditModule {
 
 		// prettier-ignore
 		for (let type of this.data.modulesEnabled) switch (type) {
-			case "sell": await this.data.message.react(moduleTypeEmojis.sell.EMOJI); break;
+			case "sell": await this.data.message.react(moduleTypeEmojis.sell.EMOJI).catch(() => null); break;
 
-			case "setFavorite": await this.data.message.react(moduleTypeEmojis.setFavorite.EMOJI); break;
+			case "setFavorite": await this.data.message.react(moduleTypeEmojis.setFavorite.EMOJI).catch(() => null); break;
 
-			case "setIdol": await this.data.message.react(moduleTypeEmojis.setIdol.EMOJI); break;
+			case "setIdol": await this.data.message.react(moduleTypeEmojis.setIdol.EMOJI).catch(() => null); break;
 
-			case "addVault": await this.data.message.react(moduleTypeEmojis.addVault.EMOJI); break;
+			case "addVault": await this.data.message.react(moduleTypeEmojis.addVault.EMOJI).catch(() => null); break;
 
 			default: continue;
 		}
@@ -636,13 +636,17 @@ class InventoryEditModule {
 		if (!cards) return this.#cleanUp();
 
 		/// Check if the cards are already locked
+		let _uids = cards.map(c => c.uids);
+
 		cards = cards.filter(c => !c.locked);
 		if (!cards.length) {
 			this.#cleanUp();
 
 			// prettier-ignore
 			return await error_ES.send({
-				interaction, description: `${uids.length === 1 ? `That card is` : "Those cards are"} already in your \`🔒 vault\``
+				interaction: this.data.interaction,
+				description: `${_uids.length === 1 ? `That card is` : "Those cards are"} already in your \`🔒 vault\``,
+				sendMethod: "followUp", ephemeral: true
 			});
 		}
 
