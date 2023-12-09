@@ -107,15 +107,14 @@ async function get_vault(userID) {
 	let pipeline = [
 		{ $unwind: "$card_inventory" },
 		{ $match: { $and: [{ _id: userID }, { "card_inventory.locked": true }] } },
-		{ $group: { _id: "$_id", card_inventory: { $push: "$card_inventory" } } }
+		{ $group: { _id: "$_id", cards_locked: { $push: "$card_inventory" } } }
 	];
 
 	let userData = (await userManager.models.user.aggregate(pipeline))[0];
 
 	// Parse CardLike
-	let cards = userData.card_inventory.map(c => cardManager.parse.fromCardLike(c));
-
-	return cards;
+	if (userData?.cards_locked) return userData.cards_locked.map(c => cardManager.parse.fromCardLike(c));
+	return null;
 }
 
 /** @param {string} userID */

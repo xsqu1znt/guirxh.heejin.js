@@ -38,7 +38,7 @@ module.exports = {
 
 		// prettier-ignore
 		new InventoryEditModule(client, interaction, message, {
-			cards, modules: ["sell", "setFavorite", "setIdol", "vault"]
+			cards, modules: ["sell", "setFavorite", "setIdol", "addVault"]
 		});
 
 		/* // Create the select menu

@@ -306,7 +306,7 @@ class InventoryEditModule {
 
 			case "setIdol": await this.data.message.react(moduleTypeEmojis.setIdol.EMOJI); break;
 
-			case "vault": await this.data.message.react(moduleTypeEmojis.addVault.EMOJI); break;
+			case "addVault": await this.data.message.react(moduleTypeEmojis.addVault.EMOJI); break;
 
 			default: continue;
 		}
@@ -581,7 +581,7 @@ class InventoryEditModule {
 		// Create the embed :: { SELL MODULE }
 		let embed_vaultModule = new BetterEmbed({
 			interaction: this.data.interaction, author: { text: "$USERNAME | 🔒 vault", iconURL: true },
-			description: "Choose which card you want to set as your `🔒 vault`"
+			description: "Choose which cards you want to add to your `🔒 vault`"
 		});
 
 		/* - - - - - { Create the Select Menu } - - - - - */
@@ -595,7 +595,7 @@ class InventoryEditModule {
 		// Create the select menu builder
 		let stringSelectMenu = new StringSelectMenuBuilder()
 			.setCustomId("ssm_cardSelect")
-			.setPlaceholder("Choose which card you want to add to your vault")
+			.setPlaceholder("Choose which cards you want to add to your vault")
 			.addOptions(...stringSelectMenuOptions)
 			.setMaxValues(this.data.cards.length);
 
@@ -657,13 +657,13 @@ class InventoryEditModule {
 
 		// prettier-ignore
 		let embed_vault = new BetterEmbed({
-			interaction: this.data.interaction, author: { text: `$USERNAME | vault`, user, iconURL: true },
+			interaction: this.data.interaction, author: { text: `$USERNAME | vault`, iconURL: true },
 			description: cards_f
 				? `You added to your \`🔒 vault\`:\n>>> ${cards_f.join("\n")}`
 				: `You addded \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"} to your \`🔒 vault\``
 		});
 
-		return await embed_vault.send();
+		return await embed_vault.send({ sendMethod: "followUp" });
 	}
 }
 
