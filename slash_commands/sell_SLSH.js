@@ -4,7 +4,7 @@ const { BetterEmbed, awaitConfirmation, deleteMessageAfter } = require("../modul
 const { error_ES } = require("../modules/embedStyles/index");
 const { userManager } = require("../modules/mongo/index");
 const cardManager = require("../modules/cardManager");
-const _jsT = require("../modules/jsTools");
+const jt = require("../modules/jsTools");
 
 const config_bot = require("../configs/config_bot.json");
 
@@ -24,11 +24,11 @@ module.exports = {
 	execute: async (client, interaction) => {
 		/// Get interaction options
 		let uids = interaction.options.getString("uid");
-		uids &&= _jsT.isArray(uids.toLowerCase().replace(/ /g, "").split(","));
+		uids &&= jt.isArray(uids.toLowerCase().replace(/ /g, "").split(","));
 		uids ||= [];
 
 		let setIDs = interaction.options.getString("setid");
-		setIDs &&= _jsT.isArray(setIDs.toLowerCase().replace(/ /g, "").split(","));
+		setIDs &&= jt.isArray(setIDs.toLowerCase().replace(/ /g, "").split(","));
 		setIDs ||= [];
 
 		let dupesToKeep = interaction.options.getNumber("dupesleft") || 0;
@@ -50,7 +50,7 @@ module.exports = {
 
 		if (uids.length) {
 			// prettier-ignore
-			let _cards = _jsT
+			let _cards = jt
 				.isArray(await userManager.inventory.get(interaction.user.id, { uids }))
 				.filter(c => c);
 
@@ -83,7 +83,7 @@ module.exports = {
 			}
 
 			// prettier-ignore
-			let _cards = _jsT
+			let _cards = jt
 				.isArray(await userManager.inventory.get(interaction.user.id, { gids: _globalIDs }))
 				.filter(c => c);
 
@@ -106,7 +106,7 @@ module.exports = {
 			});
 
 			/// Filter out non-dupes
-			let _card_globalIDs = _jsT.unique(_cards.map(c => c.globalID));
+			let _card_globalIDs = jt.unique(_cards.map(c => c.globalID));
 			let _card_duplicates = [];
 
 			for (let gid of _card_globalIDs) {
@@ -134,7 +134,7 @@ module.exports = {
 		let cards_f = cards.length <= 10 ? cards.map(c => `> ${cardManager.toString.basic(c)}`) : "";
 
 		// Calculate how many carrots the user will get
-		let sell_total = _jsT.sum(cards.map(c => c.sellPrice));
+		let sell_total = jt.sum(cards.map(c => c.sellPrice));
 
 		// prettier-ignore
 		// Wait for the user to confirm

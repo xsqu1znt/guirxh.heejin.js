@@ -6,7 +6,7 @@
 
 const { userManager } = require("./mongo/index");
 const cardManager = require("./cardManager");
-const _jsT = require("./jsTools");
+const jt = require("./jsTools");
 
 const config = {
 	player: require("../configs/config_player.json"),
@@ -42,7 +42,7 @@ async function drop(userID, dropType, cardPackOptions) {
 		}
 
 		// Determine reroll chances
-		let chanceForReroll = dupeIndex.map(di => (di ? _jsT.chance(userCharms.dupeRepel.power) : false));
+		let chanceForReroll = dupeIndex.map(di => (di ? jt.chance(userCharms.dupeRepel.power) : false));
 		// Check for at least 1 case of reroll
 		if (!chanceForReroll.find(r => r)) return cards;
 
@@ -86,7 +86,7 @@ async function drop(userID, dropType, cardPackOptions) {
 
 			// Replace the cards
 			if (cleanRerollGIDPool.length) {
-				let _rerolledCard = cardManager.get.globalID(_jsT.choice(rerollGIDPool[i]));
+				let _rerolledCard = cardManager.get.globalID(jt.choice(rerollGIDPool[i]));
 
 				// for debugging purposes
 				console.log(
@@ -105,11 +105,11 @@ async function drop(userID, dropType, cardPackOptions) {
 		let cards = [];
 
 		for (let i = 0; i < config.drop.count.general; i++) {
-			let _category = _jsT.choiceWeighted(Object.values(config.drop.chance).map(c => ({ ...c, rarity: c.CHANCE })));
+			let _category = jt.choiceWeighted(Object.values(config.drop.chance).map(c => ({ ...c, rarity: c.CHANCE })));
 			let _cards = cardManager.cards.general.filter(card => card.rarity === _category.CARD_RARITY_FILTER);
 
 			cards.push({
-				card: _jsT.choice(_cards, true),
+				card: jt.choice(_cards, true),
 				// Used for getting possible global IDs of the same category to reroll
 				setGIDs: _cards.map(c => c.globalID)
 			});
@@ -130,7 +130,7 @@ async function drop(userID, dropType, cardPackOptions) {
 
 		for (let i = 0; i < config.drop.count.weekly; i++)
 			cards.push({
-				card: _jsT.choice(_cards, true),
+				card: jt.choice(_cards, true),
 				// Used for getting possible global IDs of the same category to reroll
 				setGIDs: _cards.map(c => c.globalID)
 			});
@@ -150,7 +150,7 @@ async function drop(userID, dropType, cardPackOptions) {
 
 		for (let i = 0; i < config.drop.count.season; i++)
 			cards.push({
-				card: _jsT.choice(_cards, true),
+				card: jt.choice(_cards, true),
 				// Used for getting possible global IDs of the same category to reroll
 				setGIDs: _cards.map(c => c.globalID)
 			});
@@ -185,7 +185,7 @@ async function drop(userID, dropType, cardPackOptions) {
 
 		for (let i = 0; i < _count; i++)
 			cards.push({
-				card: _jsT.choice(_cards, true),
+				card: jt.choice(_cards, true),
 				// Used for getting possible global IDs of the same category to reroll
 				setGIDs: _cards.map(c => c.globalID)
 			});
@@ -199,17 +199,17 @@ async function drop(userID, dropType, cardPackOptions) {
 	const drop_cardPack = async () => {
 		if (!cardPackOptions.sets) return null;
 
-		cardPackOptions.sets = _jsT.isArray(cardPackOptions.sets);
+		cardPackOptions.sets = jt.isArray(cardPackOptions.sets);
 
 		/// Randomly pick the cards
 		let cards = [];
 
 		for (let i = 0; i < cardPackOptions.count; i++) {
-			let { id: setID } = _jsT.choiceWeighted(cardPackOptions.sets);
+			let { id: setID } = jt.choiceWeighted(cardPackOptions.sets);
 			let _cards = cardManager.get.setID(setID);
 
 			cards.push({
-				card: _jsT.choice(_cards, true),
+				card: jt.choice(_cards, true),
 				// Used for getting possible global IDs of the same category to reroll
 				setGIDs: _cards.map(c => c.globalID)
 			});

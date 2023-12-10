@@ -8,7 +8,7 @@ const { CommandInteraction, User, GuildMember } = require("discord.js");
 const { BetterEmbed } = require("./discordTools");
 const { userManager } = require("./mongo/index");
 const cardManager = require("./cardManager");
-const _jsT = require("./jsTools");
+const jt = require("./jsTools");
 
 const config = {
 	player: require("../configs/config_player.json"),
@@ -19,7 +19,7 @@ class Stage {
 	#resolve = null;
 
 	async #sleep() {
-		return await _jsT.wait(this.data.timeout.turn);
+		return await jt.wait(this.data.timeout.turn);
 	}
 
 	async #refresh() {
@@ -33,7 +33,7 @@ class Stage {
 			// Refresh the embed
 			await this.#refresh();
 			// Wait 1 second
-			await _jsT.wait(1000);
+			await jt.wait(1000);
 		}
 	}
 
@@ -42,28 +42,28 @@ class Stage {
 		switch (teamToAttack) {
 			case "home":
 				// Calculate the resulting attack power :: { AWAY }
-				let attackPower_away = _jsT.randomNumber(
-					_jsT.percent(30, this.data.idol.away.stats.ability),
+				let attackPower_away = jt.randomNumber(
+					jt.percent(30, this.data.idol.away.stats.ability),
 					this.data.idol.away.stats.ability
 				);
 
 				// prettier-ignore
 				// Apply the new HP (reputation) :: { HOME }
-				this.data.idol.home.stats.reputation = _jsT.clamp(
+				this.data.idol.home.stats.reputation = jt.clamp(
 						this.data.idol.home.stats.reputation - attackPower_away, { min: 0 }
 				);
 				break;
 
 			case "away":
 				// Calculate the resulting attack power :: { HOME }
-				let attackPower_home = _jsT.randomNumber(
-					_jsT.percent(30, this.data.idol.away.stats.ability),
+				let attackPower_home = jt.randomNumber(
+					jt.percent(30, this.data.idol.away.stats.ability),
 					this.data.idol.away.stats.ability
 				);
 
 				// prettier-ignore
 				// Apply the new HP (reputation) :: { AWAY }
-				this.data.idol.away.stats.reputation = _jsT.clamp(
+				this.data.idol.away.stats.reputation = jt.clamp(
 						this.data.idol.away.stats.reputation - attackPower_home, { min: 0 }
 				);
 				break;
@@ -80,8 +80,8 @@ class Stage {
 			idol: options.idol,
 			turn: 0,
 			timeout: {
-				start: _jsT.parseTime(config.bot.timeouts.STAGE_START, { type: "s" }),
-				turn: _jsT.parseTime(config.bot.timeouts.STAGE_TURN, { type: "ms" })
+				start: jt.parseTime(config.bot.timeouts.STAGE_START, { type: "s" }),
+				turn: jt.parseTime(config.bot.timeouts.STAGE_TURN, { type: "ms" })
 			}
 		};
 
@@ -125,7 +125,7 @@ class Stage {
 			await this.#countdown();
 
 			// Choose who goes first
-			_jsT.chance() ? this.#attack_away() : this.#attack_home();
+			jt.chance() ? this.#attack_away() : this.#attack_home();
 		});
 	}
 
@@ -179,8 +179,8 @@ class Stage {
 	}
 
 	async #end(user, idol) {
-		let xp_user = _jsT.randomNumber(config.player.xp.user.rewards.stage.MIN, config.player.xp.user.rewards.stage.MAX);
-		let xp_idol = _jsT.randomNumber(config.player.xp.card.rewards.stage.MIN, config.player.xp.card.rewards.stage.MAX);
+		let xp_user = jt.randomNumber(config.player.xp.user.rewards.stage.MIN, config.player.xp.user.rewards.stage.MAX);
+		let xp_idol = jt.randomNumber(config.player.xp.card.rewards.stage.MIN, config.player.xp.card.rewards.stage.MAX);
 
 		idol.stats.xp += xp_idol;
 		let card_leveled = cardManager.levelUp(idol);

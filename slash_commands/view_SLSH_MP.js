@@ -4,7 +4,7 @@ const { EmbedNavigator } = require("../modules/discordTools");
 const { error_ES, general_ES } = require("../modules/embedStyles/index");
 const { userManager } = require("../modules/mongo/index");
 const cardManager = require("../modules/cardManager");
-const _jsT = require("../modules/jsTools");
+const jt = require("../modules/jsTools");
 
 module.exports = {
 	options: { icon: "👀", deferReply: false },

@@ -1,8 +1,8 @@
-const _jsT = require("./jsTools");
+const jt = require("./jsTools");
 
 class Job {
 	constructor(arr = []) {
-		this.work = _jsT.isArray(arr);
+		this.work = jt.isArray(arr);
 	}
 
 	add(...work) {

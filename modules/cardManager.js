@@ -13,7 +13,7 @@
  * @property {number} count */
 
 const { markdown } = require("./discordTools");
-const _jsT = require("./jsTools");
+const jt = require("./jsTools");
 const logger = require("./logger");
 
 const config = {
@@ -59,20 +59,20 @@ const cards_shop_special = cards_shop_all.filter(card => config.shop.stock.card_
 // Card category meta
 const cards_category_names = {
 	base: Object.keys(cards_base),
-	all: _jsT.unique(cards_all.map(c => c.category)),
-	general: _jsT.unique(cards_general.map(c => c.category))
+	all: jt.unique(cards_all.map(c => c.category)),
+	general: jt.unique(cards_general.map(c => c.category))
 };
 
 const cards_globalIDs = {
-	base: _jsT.toMap(Object.entries(cards_base), ([cat, c]) => ({ key: cat, value: c.map(c => c.globalID) })),
+	base: jt.toMap(Object.entries(cards_base), ([cat, c]) => ({ key: cat, value: c.map(c => c.globalID) })),
 
 	// prettier-ignore
-	all: _jsT.toMap(cards_category_names.all, cat =>
+	all: jt.toMap(cards_category_names.all, cat =>
 		({ key: cat, value: cards_all.filter(c => c.category === cat).map(c => c.globalID) })
 	),
 
 	// prettier-ignore
-	general: _jsT.toMap(cards_category_names.general, cat =>
+	general: jt.toMap(cards_category_names.general, cat =>
 		({ key: cat, value: cards_all.filter(c => c.category === cat).map(c => c.globalID) })
 	)
 };
@@ -191,7 +191,7 @@ function levelUp(card) {
 
 //! General
 function resetUID(card) {
-	card.uid = _jsT.alphaNumericString(6).toUpperCase();
+	card.uid = jt.alphaNumericString(6).toUpperCase();
 	return card;
 }
 
@@ -226,22 +226,22 @@ function get_imageURL(globalID) {
 /** @param {options_get_random} options */
 function get_random(options = {}) {
 	options = { type: "all", level: { min: 1, max: 100 }, count: 1, ...options };
-	options.level.min = _jsT.clamp(options.level.min, { min: 1, max: 100 });
-	options.level.max = _jsT.clamp(options.level.max, { min: 1, max: 100 });
+	options.level.min = jt.clamp(options.level.min, { min: 1, max: 100 });
+	options.level.max = jt.clamp(options.level.max, { min: 1, max: 100 });
 
 	let cards = [];
 
 	// prettier-ignore
 	switch (options.type) {
-		case "all": cards = [...Array(options.count)].map(() => _jsT.choice(cards_all, true)); break;
+		case "all": cards = [...Array(options.count)].map(() => jt.choice(cards_all, true)); break;
 		
-		case "general": cards = [...Array(options.count)].map(() => _jsT.choice(cards_general, true)); break;
+		case "general": cards = [...Array(options.count)].map(() => jt.choice(cards_general, true)); break;
 	}
 
 	// Parse cards
 	for (let i = 0; i < cards.length; i++) {
 		// Give it a random level
-		cards[i].stats.level = _jsT.randomNumber(options.level.min, options.level.max);
+		cards[i].stats.level = jt.randomNumber(options.level.min, options.level.max);
 
 		// Recalculate stats
 		recalculateStats(cards[i]);
@@ -259,34 +259,34 @@ function get_randomDrop(dropCategory) {
 	switch (dropCategory) {
 		case "general":
 			let categories = Object.values(config.drop.chance).map(c => ({ ...c, rarity: c.CHANCE }));
-			let category_picked = _jsT.choiceWeighted(categories);
+			let category_picked = jt.choiceWeighted(categories);
 
 			card_choices = cards_general.filter(card => card.rarity === category_picked.CARD_RARITY_FILTER);
 
 			// Return 5 random cards from the list
-			return [...new Array(5)].map(() => _jsT.choice(card_choices, true)) || null;
+			return [...new Array(5)].map(() => jt.choice(card_choices, true)) || null;
 
 		case "weekly":
 			card_choices = cards_base.shop.filter(card =>
 				config.shop.stock.card_set_ids.GENERAL.filter(id => id !== "100").includes(card.setID)
 			);
 			// Return a random card from the list
-			return [_jsT.choice(card_choices, true)] || null;
+			return [jt.choice(card_choices, true)] || null;
 
 		case "season":
 			card_choices = cards_base.seas.filter(card => config.event.season.CARD_RARITY_FILTER.includes(card.rarity));
 			// Return a random card from the list
-			return [_jsT.choice(card_choices, true)] || null;
+			return [jt.choice(card_choices, true)] || null;
 
 		case "event_1":
 			card_choices = cards_base.evnt.filter(card => config.event.event_1.CARD_RARITY_FILTER.includes(card.rarity));
 			// Return a random card from the list
-			return [_jsT.choice(card_choices, true)] || null;
+			return [jt.choice(card_choices, true)] || null;
 
 		case "event_2":
 			card_choices = cards_base.evnt.filter(card => config.event.event_2.CARD_RARITY_FILTER.includes(card.rarity));
 			// Return a random card from the list
-			return [_jsT.choice(card_choices, true)] || null;
+			return [jt.choice(card_choices, true)] || null;
 	}
 }
 

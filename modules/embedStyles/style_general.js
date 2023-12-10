@@ -13,7 +13,7 @@ const { GuildMember, User } = require("discord.js");
 const { BetterEmbed, markdown } = require("../discordTools");
 const itemManager = require("../itemManager");
 const cardManager = require("../cardManager");
-const _jsT = require("../jsTools");
+const jt = require("../jsTools");
 
 const config = { bot: require("../../configs/config_bot.json") };
 
@@ -96,7 +96,7 @@ function shop(user, userData) {
 
 		/// Split each set into multiple arrays with a max of 10 cards each
 		let card_sets_split = [];
-		for (let _set of card_sets_f) card_sets_split.push(_jsT.chunk(_set, 10));
+		for (let _set of card_sets_f) card_sets_split.push(jt.chunk(_set, 10));
 
 		/* - - - - - { Create the Embed Pages } - - - - - */
 		let embeds = [];
@@ -150,7 +150,7 @@ function shop(user, userData) {
 		let packs_f = items.card.map(pack => itemManager.toString.cardPacks.shopEntry(pack.id));
 
 		/* - - - - - { Split Large Card Packs (MAX=3) } - - - - - */
-		let pack_chunks_f = _jsT.chunk(packs_f, 3);
+		let pack_chunks_f = jt.chunk(packs_f, 3);
 
 		/* - - - - - { Create the Embed Pages } - - - - - */
 		let embeds = [];
@@ -174,7 +174,7 @@ function shop(user, userData) {
 		let _badges_f = badges.map(b => itemManager.toString.badges.shopEntry(b.id));
 
 		/* - - - - - { Split Large Badge Sets (MAX=10) } - - - - - */
-		let _badges_chunks_f = _jsT.chunk(_badges_f, 10);
+		let _badges_chunks_f = jt.chunk(_badges_f, 10);
 
 		/* - - - - - { Create the Embed Pages } - - - - - */
 		let _embeds = [];
@@ -198,7 +198,7 @@ function shop(user, userData) {
 		let _charms_f = items.charms.map(c => itemManager.toString.charms.shopEntry(c.id));
 
 		/* - - - - - { Split Large Charm Sets (MAX=10) } - - - - - */
-		let _charms_chunks_f = _jsT.chunk(_charms_f, 10);
+		let _charms_chunks_f = jt.chunk(_charms_f, 10);
 
 		/* - - - - - { Create the Embed Pages } - - - - - */
 		let _embeds = [];
@@ -248,8 +248,8 @@ function shop(user, userData) {
 	if (embeds.card_sets) navigationData.push(
 		...shop_cards_general.sets.map(set => ({
 			emoji: set.emoji,
-			label: _jsT.toTitleCase(set.name),
-			description: `View ${_jsT.toTitleCase(set.name)} cards`
+			label: jt.toTitleCase(set.name),
+			description: `View ${jt.toTitleCase(set.name)} cards`
 		}))
 	);
 	if (embeds.card_rewards) navigationData.push({ emoji: "🎀", label: "Rewards", description: "Buy a special card" });
@@ -292,7 +292,7 @@ function collections(user, options) {
 	options.group = options.group.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
 
 	// Fetch the cards from the bot
-	let cards = _jsT.unique(cardManager.cards.all, "setID");
+	let cards = jt.unique(cardManager.cards.all, "setID");
 
 	// prettier-ignore
 	let filtered = false;
@@ -400,7 +400,7 @@ function collections(user, options) {
 	/// Create the embeds :: { COLLECTION }
 	let embeds_collection = [];
 	// NOTE: 3 rows per page
-	let card_categories_split_chunk = _jsT.chunk(card_categories_split, 3);
+	let card_categories_split_chunk = jt.chunk(card_categories_split, 3);
 
 	for (let i = 0; i < card_categories_split_chunk.length; i++) {
 		let _embed = new BetterEmbed({
@@ -515,11 +515,11 @@ function view(user, userData, card, viewType) {
 
 	const embed_viewVault = () => {
 		// Sort the cards by set ID and global ID, then group them by 10 per embed
-		// let cards = _jsT.chunk(card.sort((a, b) => a.setID - b.setID || a.globalID - b.globalID), 15);
+		// let cards = jt.chunk(card.sort((a, b) => a.setID - b.setID || a.globalID - b.globalID), 15);
 		let cards = card.sort((a, b) => a.setID - b.setID || a.globalID - b.globalID);
 
 		// Parse the cards into strings, and group them by 15 per page
-		let cards_f = _jsT.chunk(
+		let cards_f = jt.chunk(
 			cards.map(c => {
 				// Whether or not this card is selected, favorited, or on the user's team
 				let selected = card.uid === userData.card_selected_uid;
@@ -558,8 +558,8 @@ function view(user, userData, card, viewType) {
 		// Sort the cards by global ID and split it
 		let cards = card.sort((a, b) => a.globalID - b.globalID);
 
-		let total_ability = _jsT.sum(cards, "stats.ability");
-		let total_reputation = _jsT.sum(cards, "stats.reputation");
+		let total_ability = jt.sum(cards, "stats.ability");
+		let total_reputation = jt.sum(cards, "stats.reputation");
 
 		/** @type {BetterEmbed[]} */
 		let embeds = [];

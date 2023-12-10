@@ -3,7 +3,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js"
 const { BetterEmbed } = require("../modules/discordTools");
 const { cooldown_ES } = require("../modules/embedStyles/index");
 const { userManager } = require("../modules/mongo/index");
-const _jsT = require("../modules/jsTools");
+const jt = require("../modules/jsTools");
 
 const config_player = require("../configs/config_player.json");
 const config_bot = require("../configs/config_bot.json");
@@ -33,7 +33,7 @@ module.exports = {
 
 		// prettier-ignore
 		// Determine if the user lost
-		if (!_jsT.chance(config_player.win_rate.RANDOM)) return await Promise.all([
+		if (!jt.chance(config_player.win_rate.RANDOM)) return await Promise.all([
 			// Set the user's cooldown
 			userManager.cooldowns.set(interaction.user.id, "random"),
 			// Set the user's reminder
@@ -44,9 +44,9 @@ module.exports = {
 
 		/// Calculate the user's reward
 		// prettier-ignore
-		let reward_carrots = _jsT.randomNumber(config_player.currency.rewards.random.MIN, config_player.currency.rewards.random.MAX);
+		let reward_carrots = jt.randomNumber(config_player.currency.rewards.random.MIN, config_player.currency.rewards.random.MAX);
 		// prettier-ignore
-		let reward_xp = _jsT.randomNumber(config_player.xp.user.rewards.random.MIN, config_player.xp.user.rewards.random.MAX);
+		let reward_xp = jt.randomNumber(config_player.xp.user.rewards.random.MIN, config_player.xp.user.rewards.random.MAX);
 
 		// Fetch the user's balance from Mongo
 		let userData = await userManager.fetch(interaction.user.id, { type: "balance" });

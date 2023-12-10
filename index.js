@@ -1,12 +1,12 @@
-/* Initializes the bot and gets everything up and running. */
+/** @file Initialize the bot and get everything up and functional */
 
 require("dotenv").config();
-const fs = require("fs");
 
 const { Client, Collection, GatewayIntentBits, Partials } = require("discord.js");
 const slashCommandManager = require("./modules/slashCommandManager");
 const logger = require("./modules/logger");
-const mongo = require("./modules/mongo/index");
+const mongo = require("./modules/mongo");
+const jt = require("./modules/jsTools");
 
 const TOKEN = process.env.TOKEN || require("./configs/config_client.json").TOKEN;
 
@@ -15,26 +15,24 @@ logger.log("initializing...");
 const client = new Client({
 	intents: [
 		GatewayIntentBits.Guilds,
-		GatewayIntentBits.GuildPresences,
+		GatewayIntentBits.GuildMembers,
 		GatewayIntentBits.GuildMessages,
 		GatewayIntentBits.GuildMessageReactions,
-		GatewayIntentBits.GuildMembers,
-		GatewayIntentBits.MessageContent,
-		GatewayIntentBits.GuildMembers
-		// GatewayIntentBits.DirectMessageReactions // Allows bot to see reactions in DMs
-		// GatewayIntentBits.DirectMessages // Allows bot to read DMs
+		GatewayIntentBits.GuildPresences, // Requires Presence intent in the dev portal
+		GatewayIntentBits.MessageContent, // Requires Message Content intent in the dev portal
+		GatewayIntentBits.DirectMessageReactions, // Allows bot to see reactions in DMs
+		GatewayIntentBits.DirectMessages // Allows bot to read DMs
 	],
 
 	partials: [Partials.Channel] // Allows bot to use non-guild channels
 });
 
-// Collections that hold valuable information for the client
-client.slashCommands_general = new Collection();
-client.slashCommands_admin = new Collection();
+/// Collections that hold valuable information for the client
 client.slashCommands = new Collection();
+client.prefixCommands = new Collection();
 
 // Run importers
-let importers_dir = fs.readdirSync("./modules/importers").filter(fn => fn.startsWith("import_") && fn.endsWith(".js"));
+let importers_dir = jt.readDir("./modules/importers").filter(fn => fn.startsWith("import_") && fn.endsWith(".js"));
 
 // prettier-ignore
 importers_dir.forEach(fn => {
@@ -59,4 +57,9 @@ client.login(TOKEN).then(async () => {
 	// await slashCommandManager.remove(client, { global: true });
 
 	await mongo.connect();
+});
+
+// Quick & dirty extra error handling
+client.on("error", err => {
+	return logger.error("Client error caught", "", err);
 });

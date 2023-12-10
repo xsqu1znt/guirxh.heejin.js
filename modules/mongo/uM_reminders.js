@@ -1,7 +1,7 @@
 /** @typedef {"dm"|"channel"} ReminderNotificationMode */
 
 const userManager = require("./uM_index");
-const _jsT = require("../jsTools");
+const jt = require("../jsTools");
 
 const config = { player: require("../../configs/config_player.json") };
 
@@ -41,7 +41,7 @@ async function set(userID, reminderType, channelID) {
 	let reminder = await upsert(userID, reminderType);
 
 	reminder.channelID = channelID;
-	reminder.timestamp = _jsT.parseTime(config.player.cooldowns[reminderType.toUpperCase()], { fromNow: true });
+	reminder.timestamp = jt.parseTime(config.player.cooldowns[reminderType.toUpperCase()], { fromNow: true });
 
 	// prettier-ignore
 	await userManager.update(
@@ -69,11 +69,11 @@ async function setMode(userID, reminderType, mode) {
 class UserReminder {
 	/** @param {ReminderType} reminderType @param {ReminderNotificationMode} mode @param {boolean} enabled */
 	constructor(reminderType, mode, enabled) {
-		let time = _jsT.parseTime(config.player.cooldowns[reminderType.toUpperCase()]);
-		let isLongDuration = time > _jsT.parseTime(config.player.COOLDOWN_LONG_THRESHOLD);
+		let time = jt.parseTime(config.player.cooldowns[reminderType.toUpperCase()]);
+		let isLongDuration = time > jt.parseTime(config.player.COOLDOWN_LONG_THRESHOLD);
 
 		this.type = reminderType;
-		this.timestamp = _jsT.parseTime(time, { fromNow: true });
+		this.timestamp = jt.parseTime(time, { fromNow: true });
 		this.channelID = "";
 		this.mode = mode || isLongDuration ? "dm" : "channel";
 		this.enabled = enabled || false;

@@ -3,7 +3,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js"
 const { BetterEmbed, markdown } = require("../modules/discordTools");
 const { cooldown_ES } = require("../modules/embedStyles/index");
 const { userManager } = require("../modules/mongo/index");
-const _jsT = require("../modules/jsTools");
+const jt = require("../modules/jsTools");
 
 const config = {
 	player: require("../configs/config_player.json"),
@@ -36,7 +36,7 @@ module.exports = {
 		if (streakReset) userData.daily_streak = 0;
 
 		// Update the user's daily streak expiration timestamp
-		userData.daily_streak_expires = _jsT.parseTime("7d", { fromNow: true });
+		userData.daily_streak_expires = jt.parseTime("7d", { fromNow: true });
 
 		/* - - - - - { Calculate Rewards } - - - - - */
 		let config_daily = config.player.currency.rewards.daily;
@@ -67,7 +67,7 @@ module.exports = {
 
 		/* - - - - - { Create the Embed } - - - - - */
 		/// Create the streak progress bar
-		let daily_streak_clamped = _jsT.clamp(userData.daily_streak + 1, { max: config_daily.MAX_STREAK_MULTIPLIER });
+		let daily_streak_clamped = jt.clamp(userData.daily_streak + 1, { max: config_daily.MAX_STREAK_MULTIPLIER });
 		let streakProgress = Array(config_daily.MAX_STREAK_MULTIPLIER).fill("▱");
 		streakProgress.splice(0, daily_streak_clamped, ...Array(daily_streak_clamped).fill("▰"));
 

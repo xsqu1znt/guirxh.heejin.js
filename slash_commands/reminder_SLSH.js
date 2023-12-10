@@ -3,7 +3,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js"
 const { error_ES, user_ES } = require("../modules/embedStyles/index");
 const { BetterEmbed } = require("../modules/discordTools");
 const { userManager } = require("../modules/mongo/index");
-const _jsT = require("../modules/jsTools");
+const jt = require("../modules/jsTools");
 
 module.exports = {
 	options: { icon: "⏰", deferReply: false },
@@ -38,7 +38,7 @@ module.exports = {
 			await interaction.deferReply();
 
 			let enabled = await userManager.reminders.toggle(interaction.user.id, edit);
-			let cooldown_f = _jsT.toTitleCase(edit.replace(/_/g, " "));
+			let cooldown_f = jt.toTitleCase(edit.replace(/_/g, " "));
 
 			// prettier-ignore
 			return await new BetterEmbed({

@@ -6,7 +6,7 @@
 			"const { Client, CommandInteraction, SlashCommandBuilder } = require(\"discord.js\");\n",
 
 			"const { BetterEmbed } = require(\"../modules/discordTools\");",
-			"const _jsT = require(\"../modules/jsTools\");\n",
+			"const jt = require(\"../modules/jsTools\");\n",
 
 			"module.exports = {",
 			"    options: { icon: \"🍪\", deferReply: false, botAdminOnly: false, guildAdminOnly: false },\n",
@@ -26,7 +26,7 @@
 			"        // prettier-ignore",
 			"        let embed_cookie = new BetterEmbed({",
 			"            interaction, author: { iconURL: true },",
-			"            description: _jsT.choice(choices), timestamp: true",
+			"            description: jt.choice(choices), timestamp: true",
 			"        });\n",
 
 			"        return await embed_cookie.send();$0",

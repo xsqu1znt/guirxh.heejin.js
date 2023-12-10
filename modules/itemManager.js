@@ -5,7 +5,7 @@ const { BetterEmbed } = require("./discordTools");
 const { userManager } = require("./mongo/index");
 const cardManager = require("./cardManager");
 const dropManager = require("./dropManager");
-const _jsT = require("./jsTools");
+const jt = require("./jsTools");
 
 const items = {
 	cardPacks: require("../items/itemPack_cards.json"),
@@ -330,7 +330,7 @@ async function charm_buy(userID, charmID) {
 	if (charm.price > userData.balance) return { balance: userData.balance };
 
 	// Set the charm's expiration date
-	charm.expiration = _jsT.parseTime(charm.duration, { fromNow: true });
+	charm.expiration = jt.parseTime(charm.duration, { fromNow: true });
 
 	await Promise.all([
 		// Subtract the badge's price from the user's balance
@@ -389,17 +389,17 @@ module.exports = {
 	items: {
 		cardPacks: {
 			general: items.cardPacks,
-			setIDs: { general: _jsT.unique(items.cardPacks.map(pack => pack.setID)) }
+			setIDs: { general: jt.unique(items.cardPacks.map(pack => pack.setID)) }
 		},
 
 		badges: {
 			general: items.badges,
-			setIDs: { general: _jsT.unique(items.badges.map(b => b.setID)) }
+			setIDs: { general: jt.unique(items.badges.map(b => b.setID)) }
 		},
 
 		charms: {
 			general: items.charms,
-			setIDs: { general: _jsT.unique(items.charms.map(c => c.setID)) }
+			setIDs: { general: jt.unique(items.charms.map(c => c.setID)) }
 		}
 	},
 

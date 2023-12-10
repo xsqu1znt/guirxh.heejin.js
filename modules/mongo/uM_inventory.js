@@ -4,7 +4,7 @@
 const cardManager = require("../cardManager");
 const userManager = require("./uM_index");
 const uM_balance = require("./uM_balance");
-const _jsT = require("../jsTools");
+const jt = require("../jsTools");
 
 async function count(userID, uniqueOnly = false) {
 	// Create an aggregation pipeline
@@ -22,8 +22,8 @@ async function count(userID, uniqueOnly = false) {
 /** @param {string} userID @param {options_inventory_has} options */
 async function has(userID, options) {
 	options = { uids: [], gids: [], sum: false, ...options };
-	options.uids = _jsT.isArray(options.uids).map(uid => uid.toUpperCase());
-	options.gids = _jsT.isArray(options.gids);
+	options.uids = jt.isArray(options.uids).map(uid => uid.toUpperCase());
+	options.gids = jt.isArray(options.gids);
 
 	if (!options.uids.length && !options.gids.length) return null;
 
@@ -67,8 +67,8 @@ async function has(userID, options) {
 /** @param {string} userID @param {options_inventory_get} options */
 async function get(userID, options) {
 	options = { uids: [], gids: [], filter: true, ...options };
-	options.uids = _jsT.isArray(options.uids).map(uid => new RegExp(`^${uid.toUpperCase()}$`, "i"));
-	options.gids = _jsT.isArray(options.gids);
+	options.uids = jt.isArray(options.uids).map(uid => new RegExp(`^${uid.toUpperCase()}$`, "i"));
+	options.gids = jt.isArray(options.gids);
 
 	if (!options.uids.length && !options.gids.length) return null;
 
@@ -122,7 +122,7 @@ async function add(userID, cards) {
 	if (!cards || (Array.isArray(cards) && !cards.length)) return;
 
 	// Create an array if only a single card object was passed
-	cards = _jsT.isArray(cards).filter(c => c?.globalID);
+	cards = jt.isArray(cards).filter(c => c?.globalID);
 
 	// Parse the given cards
 	let _cards = cards.map(c => {
@@ -172,7 +172,7 @@ async function remove(userID, uids) {
 	if (!uids || (Array.isArray(uids) && !uids.length)) return;
 
 	// Create an array if only a single card UID was passed
-	uids = _jsT.isArray(uids);
+	uids = jt.isArray(uids);
 
 	// Send a pull request to Mongo
 	await userManager.update(userID, { $pull: { card_inventory: { uid: { $in: uids } } } });
@@ -188,13 +188,13 @@ async function sell(userID, cards, validate = true) {
 	if (!cards || !cards.filter(c => c?.globalID && c?.sellPrice).length) return { success: false };
 
 	// Create an array if only a single card was passed
-	cards = _jsT.isArray(cards);
+	cards = jt.isArray(cards);
 
 	// Check if the user still has the cards in their card_inventory
 	if (validate && !(await has(userID, { uids: cards.map(c => c.uid) }))) return { success: false };
 
 	// Calculate sell price sum
-	let sellPriceSum = _jsT.sum(cards.map(c => c.sellPrice));
+	let sellPriceSum = jt.sum(cards.map(c => c.sellPrice));
 
 	// prettier-ignore
 	await Promise.all([
@@ -241,7 +241,7 @@ async function stats(userID) {
 
 	return {
 		count: {
-			has: _jsT.sum(cards_user_count.map(cat => cat.has)),
+			has: jt.sum(cards_user_count.map(cat => cat.has)),
 			outOf: cardManager.cards.all.length
 		},
 		categories: cards_user_count

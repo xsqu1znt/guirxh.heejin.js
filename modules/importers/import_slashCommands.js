@@ -1,42 +1,38 @@
-// Imports all slash commands found in ('../../slash_commands').
+/** @file Import slash commands from `./slash_commands` @author xsqu1znt */
 
-const { readdirSync } = require('fs');
+const { Client } = require("discord.js");
+const logger = require("../logger");
+const jt = require("../jsTools");
 
-const { Client } = require('discord.js');
-const logger = require('../logger');
+const config = { client: require("../../configs/config_client.json") };
+const hostMode = config.client.MODE === "HOST" ? true : false;
 
-function importSlashCommands(dir) {
-    let slash_commands = [];
-    let files = readdirSync(`.${dir}`);
-    // let files = readdirSync(`${dir}`);
+function importCommands(path, recursive = false) {
+	let dirEntries = jt.readDir(path, { recursive });
+	let commands = [];
 
-    for (let entry of files) if (entry.includes("SLSH") && entry.endsWith('.js')) {
-        try {
-            slash_commands.push(require(`${dir}/${entry}`));
-            // slash_commands.push(require(`../.${dir}/${entry}`));
+	for (let entry of dirEntries) {
+		let _path = hostMode ? `${path}/${entry}` : `../.${path}/${entry}`;
+
+		// prettier-ignore
+		if (entry.endsWith("SLSH.js")) try {
+            commands.push(require(_path));
         } catch (err) {
-            logger.error("Failed to import slash command", `at: \'${`${dir}/${entry}`}\'`, err);
+            logger.error("Failed to import slash command", `at: \'${_path}\'`, err);
         }
-    }
+	}
 
-    return slash_commands;
+	return commands;
 }
 
 module.exports = {
-    /** @param {Client} client */
-    init: (client) => {
-        let slash_commands_general = importSlashCommands('../../slash_commands');
-        // let slash_commands_general = importSlashCommands('./slash_commands');
-        let slash_commands_admin = importSlashCommands('../../slash_commands/admin');
-        // let slash_commands_admin = importSlashCommands('./slash_commands/admin');
+	/** @param {Client} client */
+	init: client => {
+		let _path = hostMode ? "../../slash_commands" : "./slash_commands";
+		let commands = importCommands(_path, false);
 
-        for (let slash_command_general of slash_commands_general)
-            client.slashCommands_general.set(slash_command_general.builder.name, slash_command_general);
-
-        for (let slash_command_admin of slash_commands_admin)
-            client.slashCommands_admin.set(slash_command_admin.builder.name, slash_command_admin);
-        
-        for (let slash_command of [...slash_commands_general, ...slash_commands_admin])
-            client.slashCommands.set(slash_command.builder.name, slash_command);
-    }
+		// prettier-ignore
+		for (let command of commands)
+			client.slashCommands.set(command.builder.name, command);
+	}
 };

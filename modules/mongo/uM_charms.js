@@ -1,7 +1,7 @@
 /** @typedef {"dupeRepel"} CharmType */
 
 const userManager = require("./uM_index");
-const _jsT = require("../jsTools");
+const jt = require("../jsTools");
 
 /** @param {string} userID @param {CharmType} charmType */
 async function get(userID, charmType) {
@@ -42,7 +42,7 @@ async function set(userID, charms) {
 	if (!charms || (Array.isArray(charms) && charms.filter(c => c?.id))) return;
 
 	// Create an array if only a single charm object was passed
-	charms = _jsT.isArray(charms).filter(c => c?.id);
+	charms = jt.isArray(charms).filter(c => c?.id);
 
 	let userData = await userManager.fetch(userID, { type: "charm", lean: false });
 	let _charms = userData.charms || new Map();

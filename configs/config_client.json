@@ -1,7 +1,7 @@
 {
 	"TOKEN": "",
 	"MONGO_URI": "",
-	"DEV_MODE": false,
+	"MODE": "DEV",
 
 	"OWNER_ID": "797233513136390175",
 	"ADMIN_IDS": ["842555247145779211"],

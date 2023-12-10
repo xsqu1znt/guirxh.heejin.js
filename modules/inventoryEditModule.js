@@ -15,7 +15,7 @@ const { BetterEmbed, awaitConfirmation } = require("./discordTools");
 const { error_ES, user_ES } = require("./embedStyles");
 const { userManager } = require("./mongo");
 const cardManager = require("./cardManager");
-const _jsT = require("./jsTools");
+const jt = require("./jsTools");
 
 const config = { bot: require("../configs/config_bot.json") };
 
@@ -74,13 +74,13 @@ class InventoryEditModule {
 	}
 
 	async #validateSelectedCards(cards = null || this.data.cards_selected) {
-		cards = _jsT.isArray(cards);
+		cards = jt.isArray(cards);
 
 		// prettier-ignore
 		let uids = cards.map(c => c?.uid).filter(uid => uid);
 
 		// Check if the cards exists in the user's card_inventory
-		let has = _jsT.isArray(await userManager.inventory.has(this.data.interaction.user.id, { uids }));
+		let has = jt.isArray(await userManager.inventory.has(this.data.interaction.user.id, { uids }));
 
 		// Filter out cards not found
 		cards = cards.filter((c, idx) => has[idx]);
@@ -263,11 +263,11 @@ class InventoryEditModule {
 			cards_selected: [],
 
 			activeModule: ModuleType.inactive,
-			modulesEnabled: _jsT.isArray(_jsT.unique(options.modules)),
+			modulesEnabled: jt.isArray(jt.unique(options.modules)),
 
 			timeouts: {
-				moduleReactions: _jsT.parseTime(config.bot.timeouts.INVENTORY_MODULE_REACTIONS),
-				cardSelect: _jsT.parseTime(config.bot.timeouts.INVENTORY_MODULE_CARD_SELECT)
+				moduleReactions: jt.parseTime(config.bot.timeouts.INVENTORY_MODULE_REACTIONS),
+				cardSelect: jt.parseTime(config.bot.timeouts.INVENTORY_MODULE_CARD_SELECT)
 			},
 
 			sent: {
@@ -291,7 +291,7 @@ class InventoryEditModule {
 
 	/** @param {...ModuleType} moduleType */
 	async setModuleReactions(...moduleType) {
-		if (moduleType.length) this.data.modulesEnabled = _jsT.unique(moduleType);
+		if (moduleType.length) this.data.modulesEnabled = jt.unique(moduleType);
 
 		// Remove any existing reactions
 		await this.data.message.reactions.removeAll().catch(() => null);
@@ -355,7 +355,7 @@ class InventoryEditModule {
 	}
 
 	async sell(cards = null) {
-		cards = _jsT.isArray(cards || this.data.cards_selected);
+		cards = jt.isArray(cards || this.data.cards_selected);
 		if (!cards.length) return;
 
 		/* - - - - - { Clean Up } - - - - - */
@@ -373,7 +373,7 @@ class InventoryEditModule {
 		if (!cards) return this.#cleanUp();
 
 		/* - - - - - { Await Confirmation } - - - - - */
-		let sellTotal = _jsT.sum(cards.map(c => c.sellPrice));
+		let sellTotal = jt.sum(cards.map(c => c.sellPrice));
 		// Parse the cards into strings
 		let cards_f = cards.length > 10 ? null : cards.map(c => cardManager.toString.basic(c));
 
@@ -618,7 +618,7 @@ class InventoryEditModule {
 	}
 
 	async addVault(cards = null) {
-		cards = _jsT.isArray(cards || this.data.cards_selected);
+		cards = jt.isArray(cards || this.data.cards_selected);
 		if (!cards.length) return;
 
 		/* - - - - - { Clean Up } - - - - - */

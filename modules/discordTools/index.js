@@ -8,11 +8,11 @@ const awaitConfirmation = require("./dsT_awaitConfirmation");
 const dynaSend = require("./dsT_dynaSend");
 const ansi = require("./dsT_ansi");
 
-const _jsT = require("../jsTools");
+const jt = require("../jsTools");
 
 /* Check config file for errors */
 // prettier-ignore
-if (isNaN(_jsT.parseTime(config.timeouts.PAGINATION)))
+if (isNaN(jt.parseTime(config.timeouts.PAGINATION)))
 	throw new Error("You must provide a valid time string/number for \`timeouts.PAGINATION\`. Fix this in '_dsT_config.json'");
 // prettier-ignore
 if (!config.timeouts.CONFIRMATION)

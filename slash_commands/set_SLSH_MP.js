@@ -4,7 +4,7 @@ const { BetterEmbed } = require("../modules/discordTools");
 const { error_ES } = require("../modules/embedStyles/index");
 const { userManager } = require("../modules/mongo/index");
 const cardManager = require("../modules/cardManager");
-const _jsT = require("../modules/jsTools");
+const jt = require("../modules/jsTools");
 
 const config = { player: require("../configs/config_player.json") };
 
@@ -171,7 +171,7 @@ module.exports = {
 			case "vault": switch (operation) {
 				case "add":
 					// Fetch the cards from the user's card_inventory
-					cards = _jsT.isArray(await userManager.inventory.get(interaction.user.id, { uids }));
+					cards = jt.isArray(await userManager.inventory.get(interaction.user.id, { uids }));
 
 					// prettier-ignore
 					// Check if the cards exists
@@ -205,7 +205,7 @@ module.exports = {
 
 				case "remove":
 					// Fetch the cards from the user's card_inventory
-					cards = _jsT.isArray(await userManager.inventory.get(interaction.user.id, { uids }));
+					cards = jt.isArray(await userManager.inventory.get(interaction.user.id, { uids }));
 
 					// prettier-ignore
 					// Check if the cards exists
@@ -240,10 +240,10 @@ module.exports = {
 			// prettier-ignore
 			case "team": switch (operation) {
 				case "add":
-					uids.length = _jsT.clamp(uids.length, { max: config.player.team.MAX_SIZE });
+					uids.length = jt.clamp(uids.length, { max: config.player.team.MAX_SIZE });
 
 					// Fetch the user's team cards from their card_inventory
-					let card_team_add = _jsT.isArray(await userManager.inventory.get(interaction.user.id, { uids: userData.card_team_uids }));
+					let card_team_add = jt.isArray(await userManager.inventory.get(interaction.user.id, { uids: userData.card_team_uids }));
 
 					// prettier-ignore
 					// Check if the user's team is full
@@ -252,7 +252,7 @@ module.exports = {
 					});
 
 					// Fetch the cards from the user's card_inventory
-					cards = _jsT.isArray(await userManager.inventory.get(interaction.user.id, { uids }));
+					cards = jt.isArray(await userManager.inventory.get(interaction.user.id, { uids }));
 
 					// prettier-ignore
 					// Check if the cards exists
@@ -274,11 +274,11 @@ module.exports = {
                     return await embed_set.send({ description: `\`👯 team edit\` You successfully added:\n>>> ${cards_f.join("\n")}` });
 
 				case "remove":
-					uids.length = _jsT.clamp(uids.length, { max: config.player.team.MAX_SIZE });
+					uids.length = jt.clamp(uids.length, { max: config.player.team.MAX_SIZE });
 
 					/// Check if the user gave valid UIDs
 					// Fetch the cards from the user's card_inventory
-					cards = _jsT.isArray(await userManager.inventory.get(interaction.user.id, { uids }));
+					cards = jt.isArray(await userManager.inventory.get(interaction.user.id, { uids }));
 
 					// prettier-ignore
 					// Check if the cards exists
@@ -287,7 +287,7 @@ module.exports = {
 					});
 
 					// Fetch the user's team cards from their card_inventory
-					let card_team_remove = _jsT.isArray(await userManager.inventory.get(interaction.user.id, { uids: userData.card_team_uids }));
+					let card_team_remove = jt.isArray(await userManager.inventory.get(interaction.user.id, { uids: userData.card_team_uids }));
 					
 					// Check if the user gave valid UIDs that are in their team
 					uids_remove_filter = uids.filter(uid => card_team_remove.filter(c => c).map(c => c.uid.toLowerCase()).includes(uid));

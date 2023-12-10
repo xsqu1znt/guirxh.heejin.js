@@ -18,7 +18,7 @@
 
 // const badgeManager = require('./badgeManager');
 const cardManager = require("../cardManager");
-const _jsT = require("../jsTools");
+const jt = require("../jsTools");
 
 const playerConfig = require("../../configs/config_player.json");
 
@@ -294,8 +294,8 @@ async function inventory_has(userID, globalIDs) {
 /** @param {string} userID @param {options_inventory_get} options */
 async function inventory_get(userID, options) {
 	options = { uids: [], gids: [], ...options };
-	options.uids = _jsT.isArray(options.uids).map(uid => new RegExp(`^${uid.toUpperCase()}$`, "i"));
-	options.gids = _jsT.isArray(options.gids);
+	options.uids = jt.isArray(options.uids).map(uid => new RegExp(`^${uid.toUpperCase()}$`, "i"));
+	options.gids = jt.isArray(options.gids);
 
 	// Create an array if only a single card UID was passed
 	if (!options.uids.length && !options.gids.length) return null;
@@ -413,7 +413,7 @@ async function inventory_sell(userID, cards) {
 
 	await Promise.all([
 		// Update the user's balance
-		userData_update(userID, { $inc: { balance: _jsT.sum(cards.map(c => c.sellPrice)) } }),
+		userData_update(userID, { $inc: { balance: jt.sum(cards.map(c => c.sellPrice)) } }),
 		// Remove the cards from the user's card_inventory
 		inventory_remove(
 			userID,

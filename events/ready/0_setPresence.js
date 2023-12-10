@@ -1,7 +1,8 @@
-/* Runs as soon as the bot's connected to discord. */
+/** @file Executed as soon as the bot's connected to Discord @author xsqu1znt */
 
 const { Client, ActivityType } = require("discord.js");
-const { DEV_MODE, client_presence } = require("../../configs/config_client.json");
+
+const config = { client: require("../../configs/config_client.json") };
 
 module.exports = {
 	name: "SET_PRESENCE",
@@ -9,10 +10,10 @@ module.exports = {
 
 	/** @param {Client} client  */
 	execute: async client => {
-		let presence = process.env.DEVMODE || DEV_MODE ? client_presence.dev : client_presence.default;
+		let presence = config.client.client_presence[config.client.MODE.toLowerCase()];
 
 		// prettier-ignore
-		// Replace presence.avtivity.TYPE with the proper ActivityType enum
+		// Replace presence.activity.TYPE with the proper ActivityType enum
 		switch (presence.activity.TYPE.toLowerCase()) {
             case "playing": presence.activity.TYPE = ActivityType.Playing; break;
             case "streaming": presence.activity.TYPE = ActivityType.Streaming; break;
@@ -22,11 +23,11 @@ module.exports = {
             case "competing": presence.activity.TYPE = ActivityType.Competing; break;
         }
 
+		client.user.setStatus(presence.STATUS);
 		client.user.setActivity({
 			name: presence.activity.NAME,
 			type: presence.activity.TYPE,
 			url: presence.activity.STREAM_URL ? presence.activity.STREAM_URL : null
 		});
-		client.user.setStatus(presence.STATUS);
 	}
 };

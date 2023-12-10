@@ -26,7 +26,7 @@ const { userManager, questManager } = require("../mongo/index");
 const cardManager = require("../cardManager");
 const itemManager = require("../itemManager");
 const userParser = require("../userParser");
-const _jsT = require("../jsTools");
+const jt = require("../jsTools");
 
 const config_player = require("../../configs/config_player.json");
 const config_bot = require("../../configs/config_bot.json");
@@ -179,7 +179,7 @@ function missing(user, target, cards, cards_has) {
 	// Format the user's cards into list entries, with a max of 10 per page
 	let cards_f = cards.map((c, idx) => cardManager.toString.missingEntry(c, cards_has[idx]));
 	// Limit to 9 cards per page
-	let cards_f_chunk = _jsT.chunk(cards_f, 9);
+	let cards_f_chunk = jt.chunk(cards_f, 9);
 
 	/* - - - - - { Create the Embeds } - - - - - */
 	let _has_count = cards_has.filter(b => b).length;
@@ -312,7 +312,7 @@ function inventory(userData, options, stats) {
 
 	// prettier-ignore
 	// Format the user's cards into list entries, with a max of 15 per page
-	let cards_f = _jsT.chunk(cards.map(c => c.card_f), 15);
+	let cards_f = jt.chunk(cards.map(c => c.card_f), 15);
 
 	/// Create the embeds :: { INVENTORY }
 	let embeds_inventory = [];
@@ -394,12 +394,12 @@ function cooldowns(user, userData) {
 
 	// Format the user's cooldowns into list entries
 	let cooldowns_f = cooldowns.map(cd => {
-		let _eta = _jsT.eta({ then: cd.timestamp, ignorePast: true });
+		let _eta = jt.eta({ then: cd.timestamp, ignorePast: true });
 
 		return "`$AVAILABILITY` **$TYPE** $TIME"
 			.replace("$AVAILABILITY", _eta ? "❌" : "✔️")
-			.replace("$TYPE", _jsT.toTitleCase(cd.type.replace(/_/g, " ")))
-			.replace("$TIME", _eta ? time(_jsT.msToSec(cd.timestamp), TimestampStyles.RelativeTime) : "`[Available]`");
+			.replace("$TYPE", jt.toTitleCase(cd.type.replace(/_/g, " ")))
+			.replace("$TIME", _eta ? time(jt.msToSec(cd.timestamp), TimestampStyles.RelativeTime) : "`[Available]`");
 	});
 
 	// Create the embed : { COOLDOWNS }
@@ -428,7 +428,7 @@ function reminders(user, userData) {
 			case "channel": notificationMode = "💬"; break;
 			case "dm": notificationMode = "📫"; break;
 			
-			default: _jsT.parseTime(config.player.cooldowns[cd]) > _jsT.parseTime(config.player.COOLDOWN_LONG_THRESHOLD)
+			default: jt.parseTime(config.player.cooldowns[cd]) > jt.parseTime(config.player.COOLDOWN_LONG_THRESHOLD)
 				? notificationMode = "📫"
 				: notificationMode = "💬";
 		}
@@ -437,7 +437,7 @@ function reminders(user, userData) {
 		return "$TOGGLE $NOTIFICATION_TYPE $COOLDOWN"
 			.replace("$TOGGLE", enabled ? "✔️ enabled " : "❌ disabled")
 			.replace("$NOTIFICATION_TYPE", notificationMode)
-			.replace("$COOLDOWN", _jsT.toTitleCase(cd.replace(/_/g, " ")));
+			.replace("$COOLDOWN", jt.toTitleCase(cd.replace(/_/g, " ")));
 	});
 
 	// Create the embed :: { REMINDERS }
@@ -458,8 +458,8 @@ function quest(user, userData) {
 		let _objectives = Object.keys(quest.objectives);
 
 		// Add quest info to the field's title
-		// let name = `\`📜\` **${quest.name}** :: ending ${_jsT.eta({ then: Date.parse(quest.date.end)})}`;
-		let name = `\`📜\` **${quest.name}** \`⏰\` *${_jsT.eta({ then: Date.parse(quest.date.end) })}*`;
+		// let name = `\`📜\` **${quest.name}** :: ending ${jt.eta({ then: Date.parse(quest.date.end)})}`;
+		let name = `\`📜\` **${quest.name}** \`⏰\` *${jt.eta({ then: Date.parse(quest.date.end) })}*`;
 
 		let value = [
 			// prettier-ignore

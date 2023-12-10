@@ -3,7 +3,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js"
 const { error_ES, general_ES } = require("../modules/embedStyles/index");
 const { userManager } = require("../modules/mongo/index");
 const messenger = require("../modules/messenger");
-const _jsT = require("../modules/jsTools");
+const jt = require("../modules/jsTools");
 
 module.exports = {
 	options: { icon: "🎁", deferReply: false },
@@ -18,7 +18,7 @@ module.exports = {
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
 		let recipient = interaction.options.getUser("player");
-		let uids = _jsT.isArray(interaction.options.getString("uids").replace(/ /g, "").split(","));
+		let uids = jt.isArray(interaction.options.getString("uids").replace(/ /g, "").split(","));
 
 		// prettier-ignore
 		// A player can't gift cards to themselves
@@ -39,7 +39,7 @@ module.exports = {
 		let userData = await userManager.fetch(interaction.user.id, { type: "essential" });
 
 		/// Fetch the cards from the user's card_inventory
-		let cards = _jsT.isArray(await userManager.inventory.get(interaction.user.id, { uids }));
+		let cards = jt.isArray(await userManager.inventory.get(interaction.user.id, { uids }));
 
 		// prettier-ignore
 		// Let the user know no cards were found using those UIDs

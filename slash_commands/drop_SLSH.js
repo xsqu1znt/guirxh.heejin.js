@@ -5,7 +5,7 @@ const { BetterEmbed } = require("../modules/discordTools");
 const { userManager } = require("../modules/mongo/index");
 const cardManager = require("../modules/cardManager");
 const dropManager = require("../modules/dropManager");
-const _jsT = require("../modules/jsTools");
+const jt = require("../modules/jsTools");
 
 const config = {
 	bot: require("../configs/config_bot.json"),
@@ -41,7 +41,7 @@ module.exports = {
 		// prettier-ignore
 		if (cooldown_drop) return await cooldown_ES.send({
 			interaction, ephemeral: true,
-			description: `Your \`${_jsT.toTitleCase(dropType.replace("_", " "))}\` will be ready **${cooldown_drop}**`
+			description: `Your \`${jt.toTitleCase(dropType.replace("_", " "))}\` will be ready **${cooldown_drop}**`
 		});
 
 		// Create the embed :: { DROP }
@@ -88,7 +88,7 @@ module.exports = {
 		let { cards, dupeIndex } = await dropManager.drop(interaction.user.id, choice);
 
 		/* - - - - - { Update User Data } - - - - - */
-		let xpGained = _jsT.randomNumber(config.player.xp.user.rewards.drop.MIN, config.player.xp.user.rewards.drop.MAX);
+		let xpGained = jt.randomNumber(config.player.xp.user.rewards.drop.MIN, config.player.xp.user.rewards.drop.MAX);
 		await Promise.all([
 			// Add the cards to the user's card_inventory
 			userManager.inventory.add(interaction.user.id, cards),

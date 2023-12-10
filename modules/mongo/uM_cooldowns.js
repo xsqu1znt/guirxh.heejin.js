@@ -1,7 +1,7 @@
 /** @typedef {"daily"|"stage"|"random"|"drop_general"|"drop_weekly"|"drop_season"|"drop_event_1"|"drop_event_2"} CooldownType */
 
 const userManager = require("./uM_index");
-const _jsT = require("../jsTools");
+const jt = require("../jsTools");
 
 const config = { player: require("../../configs/config_player.json") };
 
@@ -27,14 +27,14 @@ async function eta(userID, cooldownType) {
 	let userData = await userManager.fetch(userID, { type: "reminder" });
 
 	let cooldown_timestamp = userData.cooldowns.find(cd => cd.type === cooldownType)?.timestamp || 0;
-	return _jsT.eta({ then: cooldown_timestamp, ignorePast: true });
+	return jt.eta({ then: cooldown_timestamp, ignorePast: true });
 }
 
 /** @param {string} userID @param {CooldownType} cooldownType */
 async function set(userID, cooldownType) {
 	let cooldown = await upsert(userID, cooldownType);
 
-	cooldown.timestamp = _jsT.parseTime(config.player.cooldowns[cooldownType.toUpperCase()], { fromNow: true });
+	cooldown.timestamp = jt.parseTime(config.player.cooldowns[cooldownType.toUpperCase()], { fromNow: true });
 
 	// prettier-ignore
 	await userManager.update(
@@ -50,7 +50,7 @@ class UserCooldown {
 	/** @param {CooldownType} cooldownType */
 	constructor(cooldownType) {
 		this.type = cooldownType;
-		this.timestamp = _jsT.parseTime(config.player.cooldowns[cooldownType.toUpperCase()], { fromNow: true });
+		this.timestamp = jt.parseTime(config.player.cooldowns[cooldownType.toUpperCase()], { fromNow: true });
 	}
 }
 

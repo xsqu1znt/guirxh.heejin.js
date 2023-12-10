@@ -4,7 +4,7 @@ const { BetterEmbed, EmbedNavigator } = require("../modules/discordTools");
 const { error_ES, general_ES } = require("../modules/embedStyles/index");
 const { userManager } = require("../modules/mongo/index");
 const itemManager = require("../modules/itemManager");
-const _jsT = require("../modules/jsTools");
+const jt = require("../modules/jsTools");
 
 const config = { bot: require("../configs/config_bot.json") };
 

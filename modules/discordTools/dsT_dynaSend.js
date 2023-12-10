@@ -16,7 +16,7 @@ const { CommandInteraction, TextChannel, ActionRowBuilder, EmbedBuilder, Message
 const deleteMesssageAfter = require("./dsT_deleteMessageAfter");
 const BetterEmbed = require("./dsT_betterEmbed");
 
-const _jsT = require("../jsTools");
+const jt = require("../jsTools");
 const logger = require("../logger");
 
 /** @param {dS_sendOptions} options  */
@@ -29,7 +29,7 @@ async function dynaSend(options) {
 			...options
     };
 
-	options.deleteAfter = _jsT.parseTime(options.deleteAfter);
+	options.deleteAfter = jt.parseTime(options.deleteAfter);
 
 	let message = null;
 

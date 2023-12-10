@@ -1,5 +1,5 @@
 const { markdown } = require("./discordTools");
-const _jsT = require("./jsTools");
+const jt = require("./jsTools");
 
 const badges = require("../items/badges.json");
 
@@ -76,7 +76,7 @@ function toString_shopEntry(badge) {
 
 module.exports = {
 	badges,
-	setIDs: _jsT.unique(badges.map(badge => badge.setID)),
+	setIDs: jt.unique(badges.map(badge => badge.setID)),
 
 	get: {
 		badgeID: get_badgeID
