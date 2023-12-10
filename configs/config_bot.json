@@ -33,11 +33,11 @@
 		"inventoryModule_addVault": { "NAME": "🔒", "EMOJI": "🔒" },
 
 		"numbers": [
-			{ "NAME": "one", "EMOJI": "<:one:1103208748924813333>" },
-			{ "NAME": "two", "EMOJI": "<:two:1103208760639504465>" },
-			{ "NAME": "three", "EMOJI": "<:three:1103208757992902696>" },
-			{ "NAME": "four", "EMOJI": "<:four:1103208746362093659>" },
-			{ "NAME": "five", "EMOJI": "<:five:1103208750489280542>" }
+			{ "NAME": "1one", "EMOJI": "<:1one:1183407881140326462>" },
+			{ "NAME": "2two", "EMOJI": "<:2two:1183407902485119106>" },
+			{ "NAME": "3three", "EMOJI": "<:3three:1183407918545117255>" },
+			{ "NAME": "4four", "EMOJI": "<:4four:1183407933258747955>" },
+			{ "NAME": "5five", "EMOJI": "<:5five:1183407949255811102>" }
 		],
 
 		"pagination": {
