@@ -2,6 +2,7 @@
 
 /** @typedef options
  * @property {Cards[]|Cards} cards
+ * @property {boolean[]} dupeIndex
  * @property {ModuleType[]|ModuleType} modules */
 
 // prettier-ignore
@@ -251,7 +252,7 @@ class InventoryEditModule {
 
 	/** @param {Client} client @param {CommandInteraction} interaction @param {Message} message @param {options} options */
 	constructor(client, interaction, message, options) {
-		options = { cards: [], modules: [], ...options };
+		options = { cards: [], dupeIndex: [], modules: [], ...options };
 
 		/* - - - - - { Variables } - - - - - */
 		this.data = {
@@ -260,6 +261,7 @@ class InventoryEditModule {
 			message: message,
 
 			cards: options.cards,
+			dupeIndex: options.dupeIndex,
 			cards_selected: [],
 
 			activeModule: ModuleType.inactive,
@@ -322,12 +324,10 @@ class InventoryEditModule {
 		});
 
 		/* - - - - - { Create the Select Menu } - - - - - */
-		let stringSelectMenuOptions = this.data.cards.map((c, idx) =>
-			new StringSelectMenuOptionBuilder()
-				.setValue(`card_${idx}`)
-				.setLabel(`${c.emoji} ${c.single} [${c.group}] ${c.name}`)
-				.setDescription(`UID: ${c.uid} :: GID: ${c.globalID} :: 🗣️ ${c.setID}`)
-		);
+		let stringSelectMenuOptions = this.data.cards.map((c, idx) => {
+			let { label, description } = cardManager.toString.selectionEntry(c, this.data.dupeIndex[idx]);
+			return new StringSelectMenuOptionBuilder().setValue(`card_${idx}`).setLabel(label).setDescription(description);
+		});
 
 		// Create the select menu builder
 		let stringSelectMenu = new StringSelectMenuBuilder()
@@ -392,9 +392,16 @@ class InventoryEditModule {
 		/* - - - - - { Sell the Cards } - - - - - */
 		await userManager.inventory.sell(this.data.interaction.user.id, cards, false);
 
-		// Update the cards the user can select
+		/// Update the cards the user can select
 		let _selectedUIDs = this.data.cards_selected.map(c => c.uid);
-		this.data.cards = this.data.cards.filter(c => !_selectedUIDs.includes(c.uid));
+
+		for (let i = 0; i < _selectedUIDs.length; i++) {
+			let _idx = this.data.cards.findIndex(c => c.uid === _selectedUIDs[i]);
+			if (_idx === -1) continue;
+
+			this.data.cards.splice(_idx, 1);
+			this.data.dupeIndex.splice(_idx, 1);
+		}
 
 		// Create the embed :: { SELL }
 		let embed_sell = user_ES.sell(this.data.interaction.member, cards, sellTotal);
@@ -411,12 +418,10 @@ class InventoryEditModule {
 		});
 
 		/* - - - - - { Create the Select Menu } - - - - - */
-		let stringSelectMenuOptions = this.data.cards.map((c, idx) =>
-			new StringSelectMenuOptionBuilder()
-				.setValue(`card_${idx}`)
-				.setLabel(`${c.emoji} ${c.single} [${c.group}] ${c.name}`)
-				.setDescription(`UID: ${c.uid} :: GID: ${c.globalID} :: 🗣️ ${c.setID}`)
-		);
+		let stringSelectMenuOptions = this.data.cards.map((c, idx) => {
+			let { label, description } = cardManager.toString.selectionEntry(c, this.data.dupeIndex[idx]);
+			return new StringSelectMenuOptionBuilder().setValue(`card_${idx}`).setLabel(label).setDescription(description);
+		});
 
 		// Create the select menu builder
 		let stringSelectMenu = new StringSelectMenuBuilder()
@@ -498,12 +503,10 @@ class InventoryEditModule {
 		});
 
 		/* - - - - - { Create the Select Menu } - - - - - */
-		let stringSelectMenuOptions = this.data.cards.map((c, idx) =>
-			new StringSelectMenuOptionBuilder()
-				.setValue(`card_${idx}`)
-				.setLabel(`${c.emoji} ${c.single} [${c.group}] ${c.name}`)
-				.setDescription(`UID: ${c.uid} :: GID: ${c.globalID} :: 🗣️ ${c.setID}`)
-		);
+		let stringSelectMenuOptions = this.data.cards.map((c, idx) => {
+			let { label, description } = cardManager.toString.selectionEntry(c, this.data.dupeIndex[idx]);
+			return new StringSelectMenuOptionBuilder().setValue(`card_${idx}`).setLabel(label).setDescription(description);
+		});
 
 		// Create the select menu builder
 		let stringSelectMenu = new StringSelectMenuBuilder()
@@ -585,12 +588,10 @@ class InventoryEditModule {
 		});
 
 		/* - - - - - { Create the Select Menu } - - - - - */
-		let stringSelectMenuOptions = this.data.cards.map((c, idx) =>
-			new StringSelectMenuOptionBuilder()
-				.setValue(`card_${idx}`)
-				.setLabel(`${c.emoji} ${c.single} [${c.group}] ${c.name}`)
-				.setDescription(`UID: ${c.uid} :: GID: ${c.globalID} :: 🗣️ ${c.setID}`)
-		);
+		let stringSelectMenuOptions = this.data.cards.map((c, idx) => {
+			let { label, description } = cardManager.toString.selectionEntry(c, this.data.dupeIndex[idx]);
+			return new StringSelectMenuOptionBuilder().setValue(`card_${idx}`).setLabel(label).setDescription(description);
+		});
 
 		// Create the select menu builder
 		let stringSelectMenu = new StringSelectMenuBuilder()

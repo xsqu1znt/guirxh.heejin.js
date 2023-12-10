@@ -338,6 +338,22 @@ function toString_stage(card) {
 		.replace("$REP", card.stats.reputation);
 }
 
+function toString_selectionEntry(card, duplicate = false) {
+	let label = "$EMOJI $SINGLE [$GROUP] $NAME $DUPE"
+		.replace("$EMOJI", card.emoji)
+		.replace("$SINGLE", card.single)
+		.replace("$GROUP", card.group)
+		.replace("$NAME", card.name)
+		.replace(" $DUPE", duplicate ? ` ***${superscript.dupe}***` : "");
+
+	let description = "$UID :: GID: $GID :: 🗣️ $SET"
+		.replace("$UID", card.uid ? `UID: ${card.uid}` : "")
+		.replace("$GID", card.globalID)
+		.replace("$SET", card.setID);
+
+	return { label, description };
+}
+
 /** @param {options_toStr_inventory} options  */
 function toString_inventoryEntry(card, options) {
 	if (!card) return "n/a";
@@ -504,6 +520,7 @@ module.exports = {
 	toString: {
 		basic: toString_basic,
 		stage: toString_stage,
+		selectionEntry: toString_selectionEntry,
 		inventoryEntry: toString_inventoryEntry,
 		missingEntry: toString_missingEntry,
 		cardPackEntry: toString_cardPackEntry,

@@ -22,7 +22,7 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-		let { cards } = await dropManager.drop(interaction.user.id, "general", { count: 5 });
+		let { cards, dupeIndex } = await dropManager.drop(interaction.user.id, "general", { count: 5 });
 		await userManager.inventory.add(interaction.user.id, cards);
 
 		let cards_f = cards.map(c => cardManager.toString.basic(c));
@@ -38,7 +38,7 @@ module.exports = {
 
 		// prettier-ignore
 		new InventoryEditModule(client, interaction, message, {
-			cards, modules: ["sell", "setFavorite", "setIdol", "addVault"]
+			cards, dupeIndex, modules: ["sell", "setFavorite", "setIdol", "addVault"]
 		});
 
 		/* // Create the select menu
