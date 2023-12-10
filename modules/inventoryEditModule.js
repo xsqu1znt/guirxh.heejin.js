@@ -293,7 +293,8 @@ class InventoryEditModule {
 
 	/** @param {...ModuleType} moduleType */
 	async setModuleReactions(...moduleType) {
-		if (moduleType.length) this.data.modulesEnabled = jt.unique(moduleType);
+		if (moduleType.length) this.data.modulesEnabled = jt.isArray(jt.unique(moduleType));
+		if (!this.data.modulesEnabled.length) return;
 
 		// Remove any existing reactions
 		await this.data.message.reactions.removeAll().catch(() => null);

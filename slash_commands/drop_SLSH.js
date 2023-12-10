@@ -3,6 +3,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js"
 const { error_ES, cooldown_ES } = require("../modules/embedStyles/index");
 const { BetterEmbed } = require("../modules/discordTools");
 const { userManager } = require("../modules/mongo/index");
+const InventoryEditModule = require("../modules/inventoryEditModule");
 const cardManager = require("../modules/cardManager");
 const dropManager = require("../modules/dropManager");
 const jt = require("../modules/jsTools");
@@ -124,7 +125,7 @@ module.exports = {
 		// embed_drop.addFields(...cards_f.map(f => ({ name: "\u200b", value: f })));
 
 		// Send the embed
-		return await embed_drop.send({
+		let message = await embed_drop.send({
 			description: cards_f.join("\n\n"),
 			imageURL: cards_last.imageURL,
 			footer: {
@@ -132,5 +133,10 @@ module.exports = {
 				iconURL: "https://cdn.discordapp.com/attachments/1014199645750186044/1104414979798618243/carrot.png"
 			}
 		});
+
+		// Add inventory edit reactions
+		new InventoryEditModule(client, interaction, message, { cards, dupeIndex, modules: ["sell"] });
+
+		return message;
 	}
 };
