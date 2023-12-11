@@ -46,61 +46,13 @@ module.exports = {
 				let user = client.users.cache.get(userData._id) || (await client.users.fetch(userData._id).catch(() => null));
 				if (!user) return logger.error("Failed to check reminders", `User "${user.id}" could not be fetched`);
 
-				/* - - - - - { Parse Reminders } - - - - - */
-				/** @param {UserReminder} reminder */
-				const executeReminder = async (guilds, channels, reminder) => {
-					let channelMode = reminder.mode === "channel";
-
-					// Fetch the guild the reminder was set in
-					let guild = channelMode
-						? client.guilds.cache.get(reminder.guildID) ||
-						  (await client.guilds.fetch(reminder.guildID).catch(() => null))
-						: null;
-
-					// prettier-ignore
-					// Send an error message :: { GUILD NOT FOUND }
-					if (!guild && channelMode) return logger.error(
-						"Failed to send reminder",
-						"Guild could not be fetched",
-						`user: ${user.id} | type: ${reminder.type} | guild: ${reminder.guildID} | channel: ${reminder.channelID}`
-					);
-
-					// Fetch the channel the reminder was set in
-					let channel = channelMode
-						? guild.channels.cache.get(reminder.guildID) ||
-						  (await guild.channels.fetch(reminder.guildID).catch(() => null))
-						: null;
-
-					// prettier-ignore
-					// Send an error message :: { CHANNEL NOT FOUND }
-					if (!channel && channelMode) return logger.error(
-						"Failed to send reminder",
-						"Channel could not be fetched",
-						`user: ${user.id} | type: ${reminder.type} | guild: ${reminder.guildID} | channel: ${reminder.channelID}`
-					);
-
-					/* - - - - - { Send the Reminder } - - - - - */
-					// prettier-ignore
-					if (channelMode) return await channel.send({
-						content: `${userMention(user.id)} You have a reminder!`,
-						embeds: []
-					});
-
-					// prettier-ignore
-					// DM the user their reminder
-					return await user.send({
-						content: `${userMention(user.id)} You have a reminder!`,
-						embeds: []
-					})
-				};
-
 				/* - - - - - { Pre-Fetch Guilds } - - - - - */
 				let reminderGuilds = [];
 
 				// Iterate through and fetch each guild the reminder was set in if needed
 				for (let reminder of userReminders) {
 					if (!reminder.mode === "channel") continue;
-					if (reminderGuilds.find(g => g.id === reminder.guildID)) continue; // avoids duplicate guilds
+					if (reminderGuilds.find(g => g.id === reminder.guildID)) continue; // ignores duplicate guilds
 
 					// prettier-ignore
 					// Fetch the guild from the client
@@ -114,7 +66,7 @@ module.exports = {
 				// Iterate through and fetch each guild the reminder was set in if needed
 				for (let reminder of userReminders) {
 					if (!reminder.mode === "channel") continue;
-					if (reminderChannels.find(c => c.id === reminder.channelID)) continue; // avoids duplicate channels
+					if (reminderChannels.find(c => c.id === reminder.channelID)) continue; // ignores duplicate channels
 
 					// Get the pre-fetched guild from the array
 					let _guild = reminderGuilds.find(g => g.id === reminder.guildID);
@@ -122,21 +74,58 @@ module.exports = {
 
 					// prettier-ignore
 					// Fetch the channel from the guild
-					let channel = client.guilds.cache.get(r.guildID) || (await client.guilds.fetch(r.guildID).catch(() => null));
+					let channel = _guild.channels.cache.get(reminder.channelID) || (await _guild.channels.fetch(reminder.channelID).catch(() => null))
 					if (channel) reminderChannels.push(channel);
 				}
 
-				/* let _guilds = await Promise.all(userReminders.map(async r => {
-					if (!r.mode === "channel") return null;
+				/* - - - - - { Parse Reminders } - - - - - */
+				/** @param {UserReminder} reminder */
+				const executeReminder = async reminder => {
+					// Reset the reminder's timestamp
+					userManager.reminders.set0(user.id, reminder.type);
 
-					// Fetch the guild from the client
-					return client.guilds.cache.get(r.guildID) || (await client.guilds.fetch(r.guildID).catch(() => null)) || null;
-				})); */
+					/* - - - - - { Get the Required Guilds and Channels } - - - - - */
+					let channelMode = reminder.mode === "channel";
 
-				let _channels = [];
+					// Get the guild the reminder was set in
+					let guild = channelMode ? reminderGuilds.find(g => g.id === reminder.guildID) : null;
 
-				for (let reminder of userReminders) {
-				}
+					// prettier-ignore
+					// Send an error message :: { GUILD NOT FOUND }
+					if (!guild && channelMode) return logger.error(
+						"Failed to send reminder",
+						"Guild could not be fetched",
+						`user: ${user.id} | type: ${reminder.type} | guild: ${reminder.guildID} | channel: ${reminder.channelID}`
+					);
+
+					// Get the channel the reminder was set in
+					let channel = channelMode ? reminderChannels.find(c => c.id === reminder.channelID) : null;
+
+					// prettier-ignore
+					// Send an error message :: { CHANNEL NOT FOUND }
+					if (!channel && channelMode) return logger.error(
+						"Failed to send reminder",
+						"Channel could not be fetched",
+						`user: ${user.id} | type: ${reminder.type} | guild: ${reminder.guildID} | channel: ${reminder.channelID}`
+					);
+
+					/* - - - - - { Send the Reminder } - - - - - */
+					// prettier-ignore
+					// Send the reminder to the channel
+					if (channelMode) return await channel.send({
+						content: `${userMention(user.id)} You have a reminder!`,
+						embeds: []
+					});
+
+					// prettier-ignore
+					// DM the user their reminder
+					return await user.send({
+						content: `${userMention(user.id)} You have a reminder!`,
+						embeds: []
+					})
+				};
+
+				for (let reminder of userReminders) executeReminder(reminder);
 			}
 		};
 
