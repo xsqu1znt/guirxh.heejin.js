@@ -3,7 +3,7 @@
 const { Client, userMention } = require("discord.js");
 
 const { UserReminder } = require("../../modules/mongo/uM_reminders");
-const { BetterEmbed } = require("../../modules/discordTools");
+const { reminder_ES } = require("../../modules/embedStyles");
 const { userManager } = require("../../modules/mongo");
 const jt = require("../../modules/jsTools");
 const logger = require("../../modules/logger");
@@ -110,26 +110,29 @@ module.exports = {
 					);
 
 					/* - - - - - { Send the Reminder } - - - - - */
+					let embed_reminder = reminder_ES(reminder.type);
+
 					// prettier-ignore
 					// Send the reminder to the channel
 					if (channelMode) return await channel.send({
-						content: `${userMention(user.id)} You have a reminder!`,
-						embeds: []
+						content: `${userMention(user.id)} You've got a reminder!`,
+						embeds: [embed_reminder]
 					});
 
 					// prettier-ignore
 					// DM the user their reminder
 					return await user.send({
-						content: `${userMention(user.id)} You have a reminder!`,
-						embeds: []
-					})
+						content: `${userMention(user.id)} You've got a reminder!`,
+						embeds: [embed_reminder]
+					});
 				};
 
 				for (let reminder of userReminders) executeReminder(reminder);
 			}
 		};
 
+		// prettier-ignore
 		// Execute the function every (x) milliseconds
-		setInterval(doTheThing, jt.parseTime(config.bot.timeouts.USER_REMINDER_INTERVAL));
+		if (config.bot.SEND_USER_REMINDERS) setInterval(doTheThing, jt.parseTime(config.bot.timeouts.USER_REMINDER_INTERVAL));
 	}
 };
