@@ -6,7 +6,7 @@ const jt = require("../jsTools");
 const config = { player: require("../../configs/config_player.json") };
 
 /** @param {string} userID @param {import("./uM_cooldowns").CooldownType} reminderType @param {string} channelID */
-async function upsert(userID, reminderType, channelID) {
+async function upsert(userID, reminderType, guildID, channelID) {
 	// Fetch the user from Mongo
 	let userData = await userManager.fetch(userID, { type: "reminder" });
 
@@ -16,7 +16,7 @@ async function upsert(userID, reminderType, channelID) {
 	if (reminder) return { reminder: reminder, exists: true };
 
 	/* - - - - - { Add a New Reminder } - - - - - */
-	reminder = new UserReminder(reminderType, null, false, channelID);
+	reminder = new UserReminder(reminderType, null, false, guildID, channelID);
 	await userManager.update(userID, { $addToSet: { reminders: reminder } });
 
 	return { reminder: reminder, exists: false };
@@ -37,10 +37,11 @@ async function toggle(userID, reminderType) {
 }
 
 /** @param {string} userID @param {import("./uM_cooldowns").CooldownType} reminderType @param {string} channelID */
-async function set(userID, reminderType, channelID) {
-	let { reminder, exists } = await upsert(userID, reminderType, channelID);
+async function set(userID, reminderType, guildID, channelID) {
+	let { reminder, exists } = await upsert(userID, reminderType, guildID, channelID);
 	if (!exists) return reminder;
 
+	reminder.guildID = guildID;
 	reminder.channelID = channelID;
 	reminder.timestamp = jt.parseTime(config.player.cooldowns[reminderType.toUpperCase()], { fromNow: true });
 
@@ -88,12 +89,13 @@ async function setMode(userID, reminderType, mode) {
 /// Classes
 class UserReminder {
 	/** @param {ReminderType} reminderType @param {ReminderNotificationMode} mode @param {boolean} enabled */
-	constructor(reminderType, mode, enabled, channelID) {
+	constructor(reminderType, mode, enabled, guildID, channelID) {
 		let time = jt.parseTime(config.player.cooldowns[reminderType.toUpperCase()]);
 		let isLongDuration = time > jt.parseTime(config.player.COOLDOWN_LONG_THRESHOLD);
 
 		this.type = reminderType;
 		this.timestamp = jt.parseTime(time, { fromNow: true });
+		this.guildID = guildID;
 		this.channelID = channelID;
 		this.mode = mode || isLongDuration ? "dm" : "channel";
 		this.enabled = enabled || false;
