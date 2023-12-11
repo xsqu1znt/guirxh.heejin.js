@@ -110,7 +110,7 @@ module.exports = {
 					);
 
 					/* - - - - - { Send the Reminder } - - - - - */
-					let embed_reminder = reminder_ES(reminder.type);
+					let embed_reminder = reminder_ES(user, reminder.type);
 
 					// prettier-ignore
 					// Send the reminder to the channel

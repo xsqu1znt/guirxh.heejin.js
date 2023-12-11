@@ -56,7 +56,7 @@ module.exports = {
 		if (edit && notify) {
 			await interaction.deferReply();
 
-			await userManager.reminders.setMode(interaction.user.id, notify);
+			await userManager.reminders.setMode(interaction.user.id, edit, notify);
 
 			let mode_f = "";
 			let cooldown_f = jt.toTitleCase(edit.replace(/_/g, " "));
