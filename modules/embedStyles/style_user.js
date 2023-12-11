@@ -424,7 +424,7 @@ function reminders(user, userData) {
 		let notificationMode = "";
 
 		// prettier-ignore
-		switch (reminder.notificationMode) {
+		switch (reminder.mode) {
 			case "channel": notificationMode = "💬"; break;
 			case "dm": notificationMode = "📫"; break;
 			

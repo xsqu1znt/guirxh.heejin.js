@@ -56,8 +56,8 @@ module.exports = {
 
 					// prettier-ignore
 					// Fetch the guild from the client
-					let channel = client.guilds.cache.get(r.guildID) || (await client.guilds.fetch(r.guildID).catch(() => null));
-					if (channel) reminderGuilds.push(channel);
+					let guild = client.guilds.cache.get(reminder.guildID) /* || (await client.guilds.fetch(reminder.guildID).catch(() => null)) */;
+					if (guild) reminderGuilds.push(await guild.fetch().catch(() => null));
 				}
 
 				/* - - - - - { Pre-Fetch Channels } - - - - - */
@@ -74,8 +74,8 @@ module.exports = {
 
 					// prettier-ignore
 					// Fetch the channel from the guild
-					let channel = _guild.channels.cache.get(reminder.channelID) || (await _guild.channels.fetch(reminder.channelID).catch(() => null))
-					if (channel) reminderChannels.push(channel);
+					let channel = _guild.channels.cache.get(reminder.channelID) /* || (await _guild.channels.fetch(reminder.channelID).catch(() => null)) */;
+					if (channel) reminderChannels.push(await channel.fetch().catch(() => null));
 				}
 
 				/* - - - - - { Parse Reminders } - - - - - */

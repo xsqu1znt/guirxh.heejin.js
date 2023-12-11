@@ -59,10 +59,12 @@ module.exports = {
 			await userManager.reminders.setMode(interaction.user.id, notify);
 
 			let mode_f = "";
+			let cooldown_f = jt.toTitleCase(edit.replace(/_/g, " "));
+
 			// prettier-ignore
 			switch (notify) {
 				case "dm": mode_f = "DM your reminder"; break;
-				case "channel": mode_f = "send your reminder in the channel you ran the command"; break;
+				case "channel": mode_f = "be sent to the channel you last did it"; break;
 			}
 
 			// prettier-ignore

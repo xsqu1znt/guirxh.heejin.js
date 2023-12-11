@@ -11,7 +11,7 @@
 	},
 
 	"timeouts": {
-		"USER_REMINDER_INTERVAL": "10s",
+		"USER_REMINDER_INTERVAL": "5s",
 
 		"STAGE_START": "3s",
 		"STAGE_TURN": "500ms",

@@ -61,7 +61,7 @@ module.exports = {
 			userManager.quests.increment.balance(interaction.user.id, reward_carrots, "carrot"),
 			// Set the user's cooldown/reminder
 			userManager.cooldowns.set(interaction.user.id, "random"),
-			userManager.reminders.set(interaction.user.id, "random", interaction.channel.id),
+			userManager.reminders.set(interaction.user.id, "random", interaction.guildId, interaction.channelId),
 			// Send the embed
 			embed_random.send({
 				description: "You tried your luck and won `$REWARD_CARROTS` `$REWARD_XP`"
