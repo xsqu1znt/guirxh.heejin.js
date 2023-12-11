@@ -98,7 +98,7 @@ module.exports = {
 			// Reset the user's cooldown :: { DROP }
 			userManager.cooldowns.set(interaction.user.id, dropType),
 			// Set the user's next reminder :: { DROP }
-			userManager.reminders.set(interaction.user.id, dropType, interaction.channel.id),
+			userManager.reminders.set(interaction.user.id, dropType, interaction.guildId, interaction.channelId),
 
 			// Update the user's quest progress
 			userManager.quests.increment.inventory(interaction.user.id, cards.length),

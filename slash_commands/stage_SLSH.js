@@ -43,7 +43,7 @@ module.exports = {
 			let cooldown_stage_rival = await userManager.cooldowns.eta(rival?.id, "stage");
 			// prettier-ignore
 			if (cooldown_stage_rival) return await cooldown_ES.send({
-            	interaction, description: `Your stage will be ready **${cooldown_stage_rival}**`
+            	interaction, description: `Your rival can use stage **${cooldown_stage_rival}**`
 			});
 		}
 
@@ -74,7 +74,7 @@ module.exports = {
 		// Set the user's cooldown and reminder
 		await Promise.all([
 			userManager.cooldowns.set(interaction.user.id, "stage"),
-			userManager.reminders.set(interaction.user.id, "stage"),
+			userManager.reminders.set(interaction.user.id, "stage", interaction.guildId, interaction.channelId),
 			// Set the rival's cooldown and reminder
 			rival ? userManager.cooldowns.set(rival.id, "stage") : true,
 			rival ? userManager.reminders.set(rival.id, "stage") : true

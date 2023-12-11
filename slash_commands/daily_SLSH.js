@@ -57,7 +57,7 @@ module.exports = {
 			// Set the user's cooldown
 			userManager.cooldowns.set(interaction.user.id, "daily"),
 			// Set the user's reminder
-			userManager.reminders.set(interaction.user.id, "daily"),
+			userManager.reminders.set(interaction.user.id, "daily", interaction.guildId, interaction.channelId),
 
 			// Update the user's quest progress
 			userManager.quests.increment.balance(interaction.user.id, reward_carrots, "carrot"),
