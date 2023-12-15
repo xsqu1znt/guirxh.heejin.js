@@ -1,8 +1,8 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { error_ES, user_ES } = require("../modules/embedStyles/index");
+const { BetterEmbed, EmbedNavigator } = require("../modules/discordTools");
 const { userManager, questManager } = require("../modules/mongo/index");
-const { BetterEmbed } = require("../modules/discordTools");
+const { error_ES, user_ES } = require("../modules/embedStyles/index");
 // const jt = require("../modules/jsTools");
 
 module.exports = {
@@ -31,10 +31,16 @@ module.exports = {
 		// Fetch the user from Mongo
 		let userData = await userManager.fetch(interaction.user.id, { type: "quest" });
 
-		// Create the embed :: { QUEST }
-		let embed_quest = user_ES.quest(interaction.member, userData);
+		// Create the embeds:: { QUEST }
+		let embeds_quest = user_ES.quest(interaction.member, userData);
 
-		// Send the embed
-		return await embed_quest.send({ interaction });
+		// prettier-ignore
+		// Set up page navigation
+		let embedNav = new EmbedNavigator({
+			interaction, embeds: [embeds_quest],
+			pagination: { type: "short", useReactions: false }
+        });
+
+		return await embedNav.send();
 	}
 };

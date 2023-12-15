@@ -2,7 +2,6 @@
 	{
 		"id": "q1",
 		"name": "Un Poco Loco",
-		"description": "",
 		"ending": 1703251261231,
 		"objectives": {
 			"balance": 100,
@@ -15,7 +14,7 @@
 			"card_sets_complete": ["101"],
 			"card_duplicates": [
 				{
-					"globalID": "1001 ",
+					"globalID": "1001",
 					"count": 2
 				}
 			]

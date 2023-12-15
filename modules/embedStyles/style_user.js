@@ -451,56 +451,47 @@ function reminders(user, userData) {
 
 /** @param {GuildMember|User} user, @param {UserData} userData */
 function quest(user, userData) {
-	let quests_f = [];
+	let embeds = [];
 
 	// Iterate through each available quest
-	for (let quest of questManager.quests_active) {
-		let _objectives = Object.keys(quest.objectives);
+	for (let i = 0; i < questManager.quests_active; i++) {
+		let _quest = questManager.quests_active[i];
+
+		// Create the embed :: { QUEST }
+		let embed_quest = new BetterEmbed({
+			author: { text: "$USERNAME | quest", user, iconURL: true },
+			footer: `Page ${i + 1}/${questManager.quests_active.length}`
+		});
+
+		/* - - - - - { Format Quest Data } - - - - - */
+		let _objectives = Object.keys(_quest.objectives);
 
 		// Field title
-		let name = `\`📜\` **${quest.name}** \`⏰\` *ending ${jt.eta({ then: quest.ending })}*`;
+		let _fieldTitle = `\`📜\` **${_quest.name}** \`⏰\` *ending ${jt.eta({ then: _quest.ending })}*`;
 
 		// Field description
-		let value = [
-			// prettier-ignore
+		let _fieldDescription = [
 			markdown.ansi(
-				"🏆 Rewards: $OVERVIEW\n$COMPLETE :: 📈 $OBJECTIVE_PROGRESS objectives\n\n$DESCRIPTION"
-					.replace("$OVERVIEW", questManager.toString.rewards(quest.rewards))
+				"🏆 Rewards: $OVERVIEW\n$COMPLETE :: 📈 $OBJECTIVE_PROGRESS objectives"
+					.replace("$OVERVIEW", questManager.toString.rewards(_quest.rewards))
 
 					.replace("$COMPLETE", "🚫 incomplete")
-					.replace("$OBJECTIVE_PROGRESS", `0/${_objectives.length}`)
-
-					.replace("\n\n$DESCRIPTION", quest.description ? `> ${quest.description}` : ""),
+					.replace("$OBJECTIVE_PROGRESS", `0/${_objectives.length}`),
 				{ text_color: "yellow", format: "bold", codeblock: true }
 			),
 
-			_objectives.map((obj, idx) => `- ${questManager.toString.objectiveDetails(quest.id, obj)}`).join("\n")
+			_objectives.map((obj, idx) => `- ${questManager.toString.objectiveDetails(_quest, obj)}`).join("\n")
 		];
 
-		// prettier-ignore
-		// Add formatted quest info to the field's description property
-		/* let value = "`$COMPLETE` `📈 $OBJECTIVE_PROGRESS objectives`\n> *Rewards* :: $OVERVIEW\n\n***objectives:***\n$OBJECTIVES\n$DESCRIPTION"
-			.replace("$COMPLETE", "🚫 incomplete")
-			.replace("$OBJECTIVE_PROGRESS", `0/${_objectives.length}`)
-			
-			.replace("$OVERVIEW", quest.reward_overview)
+		// Add the fields to the embed
+		embed_quest.addFields({ name: _fieldTitle, value: _fieldDescription.join("\n"), inline: true });
 
-			.replace("$OBJECTIVES", _objectives.map((obj, idx) => `> \`🚫\` ${questManager.toString.objectiveDetails(quest.id, obj)}`).join("\n"))
-
-			.replace("$DESCRIPTION", quest.description ? `> ${quest.description}` : ""); */
-
-		// Add the field data to the array
-		quests_f.push({ name, value: value.join("\n"), inline: true });
+		// Add the embed to the array
+		embeds.push(embed_quest);
 	}
 
-	// Create the embed :: { QUEST }
-	let embed_quests = new BetterEmbed({ author: { text: "$USERNAME | quest", user, iconURL: true } });
-
-	// Add the fields
-	embed_quests.addFields(...quest_fields_f);
-
-	// Return the embed
-	return embed_quests;
+	// Return the embeds
+	return embeds;
 }
 
 /** @param {GuildMember|User} user, @param {Cards[]} cards, @param {number} sellTotal */

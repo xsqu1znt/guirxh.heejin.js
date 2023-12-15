@@ -10,7 +10,6 @@ const logger = require("../logger");
 const jt = require("../jsTools");
 
 const quests = require("../../configs/quests.json");
-const quests_active = quests.filter(q => q.ending < Date.now());
 
 const configs = { bot: require("../../configs/config_bot.json") };
 
@@ -80,27 +79,27 @@ function toString_objectiveDetails(quest, objectiveType) {
 	// prettier-ignore
 	switch (objectiveType) {
         case "balance": return quest.objectives?.balance
-            ? `\`🥕 Balance\` get ${quest.objectives.balance} new ${quest.objectives.balance === 1 ? "carrot" : "carrots"}`
+            ? `\`🥕 Balance\` get \`${quest.objectives.balance}\` new ${quest.objectives.balance === 1 ? "carrot" : "carrots"}`
             : "n/a";
 
         case "ribbons": return quest.objectives?.ribbons
-            ? `\`🎀 Ribbons\` get ${quest.objectives.ribbons} new ${quest.objectives.ribbons === 1 ? "ribbon" : "ribbons"}`
+            ? `\`🎀 Ribbons\` get \`${quest.objectives.ribbons}\` new ${quest.objectives.ribbons === 1 ? "ribbon" : "ribbons"}`
             : "n/a";
 
-        case "cards_new": return quest.objectives?.cards_in_inventory
-            ? `\`🃏 Inventory\` drop ${quest.objectives.cards_in_inventory} new ${quest.objectives.cards_new === 1 ? "card" : "cards"}`
+        case "cards_new": return quest.objectives?.cards_new
+            ? `\`🃏 Inventory\` drop \`${quest.objectives.cards_new}\` new ${quest.objectives.cards_new === 1 ? "card" : "cards"}`
             : "n/a";
 
         case "level_user": return quest.objectives?.level_user
-            ? `\`📈 User LV.\` reach LV. ${quest.objectives.level_user}`
+            ? `\`📈 User LV.\` reach LV. \`${quest.objectives.level_user}\``
             : "n/a";
 
         case "level_idol": return quest.objectives?.level_idol
-            ? `\`📈 Idol LV.\` reach LV. ${quest.objectives.level_idol}`
+            ? `\`📈 Idol LV.\` reach LV. \`${quest.objectives.level_idol}\``
             : "n/a";
 
         case "team_power": return quest.objectives?.team_power
-            ? `\`👯‍♀️ ABI REP\` reach ${quest.objectives.team_ability_reputation} in ABI. REP. stats`
+            ? `\`👯‍♀️ ABI REP\` reach \`${quest.objectives.team_power}\` in ABI. REP. stats`
             : "n/a";
 
         case "card_global_ids": return quest.objectives?.card_global_ids
@@ -113,7 +112,7 @@ function toString_objectiveDetails(quest, objectiveType) {
             : "n/a";
 
         case "card_sets_complete": return quest.objectives?.card_sets_complete
-            ? `\`🗣️ Set\` complete ${quest.objectives.card_sets_complete.length === 1 ? "set" : "sets"}:\n${quest.objectives.card_sets_complete.map(str => ` - \`🚫\` ${str}`).join("\n")}`
+            ? `\`🗣️ Set\` complete ${quest.objectives.card_sets_complete.length === 1 ? "set" : "sets"}:\n${quest.objectives.card_sets_complete.map(str => ` - \`🚫 ${str}\``).join("\n")}`
             : "n/a";
 
         case "card_duplicates": return quest.objectives?.card_duplicates
@@ -121,7 +120,7 @@ function toString_objectiveDetails(quest, objectiveType) {
                 let card = cardManager.get.globalID(d.globalID);
                 if (!card) return "invalid global ID";
 
-                return ` - \`🚫\` ${d.count} ${d.count === 1 ? "dupe" : "dupes"} of ${markdown.link(d.globalID, card.imageURL, `${card.single} - ${card.name}`)}`;
+                return ` - \`🚫 ${d.count} ${d.count === 1 ? "dupe" : "dupes"}\` of ${markdown.link(d.globalID, card.imageURL, `${card.single} - ${card.name}`)}`;
             }).join("\n")}`
             : "n/a";
 
@@ -131,7 +130,7 @@ function toString_objectiveDetails(quest, objectiveType) {
 
 module.exports = {
 	quests,
-	quests_active,
+	quests_active: quests.filter(q => q.ending > Date.now()),
 
 	toString: {
 		rewards: toString_rewards,
