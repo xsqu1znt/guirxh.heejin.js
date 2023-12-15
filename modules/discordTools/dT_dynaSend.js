@@ -13,8 +13,8 @@
  * @property {number|string} deleteAfter amount of time to wait in milliseconds */
 
 const { CommandInteraction, TextChannel, ActionRowBuilder, EmbedBuilder, Message } = require("discord.js");
-const deleteMesssageAfter = require("./dsT_deleteMessageAfter");
-const BetterEmbed = require("./dsT_betterEmbed");
+const deleteMesssageAfter = require("./dT_deleteMessageAfter");
+const BetterEmbed = require("./dT_betterEmbed");
 
 const jt = require("../jsTools");
 const logger = require("../logger");
