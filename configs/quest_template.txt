@@ -1,0 +1,25 @@
+[
+	{
+		"id": "q1",
+		"name": "Quest Name",
+		"ending": "7d",
+
+		"objectives": {
+			"balance": 100,
+			"ribbons": 100,
+			"cards_new": 10,
+			"level_user": 10,
+			"level_idol": 25,
+			"team_power": 999,
+			"card_global_ids": ["globalID"],
+			"card_sets_complete": ["setID"],
+			"card_duplicates": [{ "globalID": "globalID", "count": 1 }]
+		},
+
+		"rewards": {
+			"xp": 5000,
+			"carrots": 1000,
+			"ribbons": 500
+		}
+	}
+]

@@ -2,27 +2,36 @@
 	{
 		"id": "q1",
 		"name": "Un Poco Loco",
-		"ending": 1703251261231,
+		"ending": "7d",
+
 		"objectives": {
 			"balance": 100,
 			"ribbons": 100,
-			"cards_new": 10,
-			"level_user": 10,
-			"level_idol": 25,
-			"team_power": 999,
-			"card_global_ids": ["1097"],
-			"card_sets_complete": ["101"],
-			"card_duplicates": [
-				{
-					"globalID": "1001",
-					"count": 2
-				}
-			]
+			"cards_new": 10
 		},
+
 		"rewards": {
-			"xp": 5000,
+			"xp": 2500,
 			"carrots": 1000,
-			"ribbons": 500
+			"ribbons": 100
+		}
+	},
+
+	{
+		"id": "q2",
+		"name": "Mi Amor",
+		"ending": "4d",
+
+		"objectives": {
+			"level_user": 10,
+			"cards_new": 25,
+			"card_duplicates": [{ "globalID": "1001", "count": 5 }]
+		},
+
+		"rewards": {
+			"xp": 2500,
+			"carrots": 1000,
+			"ribbons": 100
 		}
 	}
 ]
