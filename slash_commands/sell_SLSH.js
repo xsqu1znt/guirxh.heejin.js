@@ -139,7 +139,7 @@ module.exports = {
 		// prettier-ignore
 		// Wait for the user to confirm
 		let confirmation_sell = await awaitConfirm({
-			interaction, deleteOnConfirmation: false,
+			interaction,
 			description: cards_f
 				? `**Are you sure you want to sell:**\n${cards_f.join("\n")}`
 				: `**Are you sure you want to sell \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"}?**\n${setIDs.length ? `*\`${dupesToKeep}\` ${dupesToKeep === 1 ? "dupe" : "dupes"} will be kept of each GID in ${setIDs.length === 1 ? "that set" : "those sets"}*` : ""}`,
