@@ -12,7 +12,7 @@ const {
 	StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, Client
 } = require("discord.js");
 
-const { BetterEmbed, awaitConfirmation } = require("./discordTools");
+const { BetterEmbed, awaitConfirm } = require("./discordTools");
 const { error_ES, user_ES } = require("./embedStyles");
 const { userManager } = require("./mongo");
 const cardManager = require("./cardManager");
@@ -380,7 +380,7 @@ class InventoryEditModule {
 
 		// prettier-ignore
 		// Wait for the user to confirm
-		let confirmation = await awaitConfirmation({
+		let confirmation = await awaitConfirm({
 			user: this.data.interaction.user, message: this.data.sent.sell.message, sendMethod: "edit",
 			description: cards_f
 				? `**Are you sure you want to sell:**\n>>> ${cards_f.join("\n")}`

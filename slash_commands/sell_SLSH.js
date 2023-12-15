@@ -1,6 +1,6 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { BetterEmbed, awaitConfirmation, deleteMessageAfter } = require("../modules/discordTools");
+const { BetterEmbed, awaitConfirm, deleteMessageAfter } = require("../modules/discordTools");
 const { error_ES } = require("../modules/embedStyles/index");
 const { userManager } = require("../modules/mongo/index");
 const cardManager = require("../modules/cardManager");
@@ -138,7 +138,7 @@ module.exports = {
 
 		// prettier-ignore
 		// Wait for the user to confirm
-		let confirmation_sell = await awaitConfirmation({
+		let confirmation_sell = await awaitConfirm({
 			interaction, deleteOnConfirmation: false,
 			description: cards_f
 				? `**Are you sure you want to sell:**\n${cards_f.join("\n")}`
