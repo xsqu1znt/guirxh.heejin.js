@@ -19,8 +19,8 @@ function toString_rewards(rewards) {
 	let rewards_f = [];
 
 	if (rewards?.xp) rewards_f.push(`☝️ ${rewards.xp}xp`);
-	if (rewards?.carrot) rewards_f.push(`${configs.bot.emojis.currency_1.EMOJI} ${rewards.xp}`);
-	if (rewards?.ribbon) rewards_f.push(`${configs.bot.emojis.currency_2.EMOJI} ${rewards.xp}`);
+	if (rewards?.carrots) rewards_f.push(`${configs.bot.emojis.currency_1.EMOJI} ${rewards.carrots}`);
+	if (rewards?.ribbons) rewards_f.push(`${configs.bot.emojis.currency_2.EMOJI} ${rewards.ribbons}`);
 
 	return rewards_f.join(" ");
 }

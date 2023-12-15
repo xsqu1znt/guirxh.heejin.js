@@ -459,7 +459,7 @@ function quest(user, userData) {
 
 		// Add quest info to the field's title
 		// let name = `\`📜\` **${quest.name}** :: ending ${jt.eta({ then: Date.parse(quest.date.end)})}`;
-		let name = `\`📜\` **${quest.name}** \`⏰\` *${jt.eta({ then: Date.parse(quest.date.end) })}*`;
+		let name = `\`📜\` **${quest.name}** \`⏰\` *ending ${jt.eta({ then: Date.parse(quest.date.end) })}*`;
 
 		let value = [
 			// prettier-ignore
