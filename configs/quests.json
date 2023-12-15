@@ -1,12 +1,11 @@
 [
 	{
-		"id": "q25",
+		"id": "q1",
 		"name": "Crazy Mini Teen Butterfly",
-		"reward_overview": ["☝️ 5000XP", "🎀 500", "🥕 1000"],
 		"description": "",
 		"date": {
-			"start": "2023-10-01",
-			"end": "2023-10-14"
+			"start": "2023-12-14",
+			"end": "2023-12-21"
 		},
 
 		"objectives": {
@@ -20,8 +19,8 @@
 
 		"rewards": {
 			"xp": 5000,
-			"ribbons": 500,
-			"carrots": 1000
+			"carrots": 1000,
+			"ribbons": 500
 		}
 	}
 ]

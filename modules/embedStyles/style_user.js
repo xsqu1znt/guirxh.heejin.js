@@ -465,7 +465,7 @@ function quest(user, userData) {
 			// prettier-ignore
 			markdown.ansi(
 				"🏆 Rewards: $OVERVIEW\n$COMPLETE :: 📈 $OBJECTIVE_PROGRESS objectives\n\n$DESCRIPTION"
-					.replace("$OVERVIEW", quest.reward_overview.join(" • "))
+					.replace("$OVERVIEW", questManager.toString.rewards(quest.rewards))
 
 					.replace("$COMPLETE", "🚫 incomplete")
 					.replace("$OBJECTIVE_PROGRESS", `0/${_objectives.length}`)

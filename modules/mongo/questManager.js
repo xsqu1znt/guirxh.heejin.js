@@ -5,14 +5,26 @@ const cardManager = require("../cardManager");
 // const userParser = require("../userParser");
 // const userManager = require("./uM_index");
 
-const quests = require("../../items/quests.json");
+const quests = require("../../configs/quests.json");
+
+const configs = { bot: require("../../configs/config_bot.json") };
 
 /** @param {string} id */
 function get(id) {
 	return quests.find(quest => quest.id === id) || null;
 }
 
-/// .toString
+/* - - - - - { toString } - - - - - */
+function toString_rewards(rewards) {
+	let rewards_f = [];
+
+	if (rewards?.xp) rewards_f.push(`☝️ ${rewards.xp}xp`);
+	if (rewards?.carrot) rewards_f.push(`${configs.bot.emojis.currency_1.EMOJI} ${rewards.xp}`);
+	if (rewards?.ribbon) rewards_f.push(`${configs.bot.emojis.currency_2.EMOJI} ${rewards.xp}`);
+
+	return rewards_f.join(" ");
+}
+
 /** @param {ObjectiveType} objectiveType */
 function toString_objective(objectiveType) {
 	// prettier-ignore
@@ -89,10 +101,11 @@ function toString_objectiveDetails(id, objectiveType) {
 }
 
 module.exports = {
-    quests,
-    
+	quests,
+
     toString: {
-        objective: toString_objective,
-        objectiveDetails: toString_objectiveDetails
-    }
+        rewards: toString_rewards,
+		objective: toString_objective,
+		objectiveDetails: toString_objectiveDetails
+	}
 };
