@@ -6,7 +6,7 @@ const { BetterEmbed } = require("../modules/discordTools");
 // const jt = require("../modules/jsTools");
 
 module.exports = {
-	options: { icon: "📜", deferReply: true },
+	options: { icon: "📜", deferReply: false },
 
 	// prettier-ignore
 	builder: new SlashCommandBuilder().setName("quest")
@@ -16,14 +16,17 @@ module.exports = {
 	execute: async (client, interaction) => {
 		// Check if there's any active quests currently
 		if (!questManager.quests_active.length) {
+			// prettier-ignore
 			// Create the embed :: { NO QUESTS }
-			let embed_noQuests = new BetterEmbed({ author: "📜 Quest", description: "There are no quests right now" });
+			let embed_noQuests = new BetterEmbed({
+				interaction, author: "📜 Quest",
+				description: "There are no quests right now"
+			});
+
 			return await embed_noQuests.send({ ephemeral: true });
 		}
 
-		/* return await error_ES.send({
-            interaction, description: "There are no quests right now"
-        }); */
+		await interaction.deferReply();
 
 		// Fetch the user from Mongo
 		let userData = await userManager.fetch(interaction.user.id, { type: "quest" });
