@@ -91,11 +91,11 @@ function toString_objectiveDetails(quest, objectiveType) {
             : "n/a";
 
         case "level_user": return quest.objectives?.level_user
-            ? `\`📈 User LV.\` reach LV. \`${quest.objectives.level_user}\``
+            ? `\`📈 User LV.\` reach \`LV. ${quest.objectives.level_user}\``
             : "n/a";
 
         case "level_idol": return quest.objectives?.level_idol
-            ? `\`📈 Idol LV.\` reach LV. \`${quest.objectives.level_idol}\``
+            ? `\`📈 Idol LV.\` reach \`LV. ${quest.objectives.level_idol}\``
             : "n/a";
 
         case "team_power": return quest.objectives?.team_power
