@@ -2,6 +2,7 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js"
 
 const { error_ES, user_ES } = require("../modules/embedStyles/index");
 const { userManager, questManager } = require("../modules/mongo/index");
+const { BetterEmbed } = require("../modules/discordTools");
 // const jt = require("../modules/jsTools");
 
 module.exports = {
@@ -13,11 +14,16 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-		// prettier-ignore
-		// Check if there's any quests currently
-		if (!questManager.quests.length) return await error_ES.send({
+		// Check if there's any active quests currently
+		if (!questManager.quests_active.length) {
+			// Create the embed :: { NO QUESTS }
+			let embed_noQuests = new BetterEmbed({ author: "📜 Quest", description: "There are no quests right now" });
+			return await embed_noQuests.send({ ephemeral: true });
+		}
+
+		/* return await error_ES.send({
             interaction, description: "There are no quests right now"
-        });
+        }); */
 
 		// Fetch the user from Mongo
 		let userData = await userManager.fetch(interaction.user.id, { type: "quest" });

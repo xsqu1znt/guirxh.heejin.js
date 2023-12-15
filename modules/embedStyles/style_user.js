@@ -451,16 +451,16 @@ function reminders(user, userData) {
 
 /** @param {GuildMember|User} user, @param {UserData} userData */
 function quest(user, userData) {
-	let quest_fields_f = [];
+	let quests_f = [];
 
 	// Iterate through each available quest
-	for (let quest of questManager.quests) {
+	for (let quest of questManager.quests_active) {
 		let _objectives = Object.keys(quest.objectives);
 
-		// Add quest info to the field's title
-		// let name = `\`📜\` **${quest.name}** :: ending ${jt.eta({ then: Date.parse(quest.date.end)})}`;
-		let name = `\`📜\` **${quest.name}** \`⏰\` *ending ${jt.eta({ then: Date.parse(quest.date.end) })}*`;
+		// Field title
+		let name = `\`📜\` **${quest.name}** \`⏰\` *ending ${jt.eta({ then: quest.ending })}*`;
 
+		// Field description
 		let value = [
 			// prettier-ignore
 			markdown.ansi(
@@ -490,20 +490,17 @@ function quest(user, userData) {
 			.replace("$DESCRIPTION", quest.description ? `> ${quest.description}` : ""); */
 
 		// Add the field data to the array
-		quest_fields_f.push({ name, value: value.join("\n"), inline: true });
+		quests_f.push({ name, value: value.join("\n"), inline: true });
 	}
 
 	// Create the embed :: { QUEST }
-	let embed = new BetterEmbed({
-		author: { text: "$USERNAME | quest", user, iconURL: true },
-		description: quest_fields_f.length ? "" : "There are no quests right now"
-	});
+	let embed_quests = new BetterEmbed({ author: { text: "$USERNAME | quest", user, iconURL: true } });
 
 	// Add the fields
-	embed.addFields(...quest_fields_f);
+	embed_quests.addFields(...quest_fields_f);
 
 	// Return the embed
-	return embed;
+	return embed_quests;
 }
 
 /** @param {GuildMember|User} user, @param {Cards[]} cards, @param {number} sellTotal */

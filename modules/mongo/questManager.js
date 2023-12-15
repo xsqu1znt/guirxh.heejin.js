@@ -1,4 +1,4 @@
-/** @typedef {"balance"|"ribbons"|"cards_in_inventory"|"level_user"|"level_idol"|"team_ability_reputation"|"card_global_ids"|"card_sets_complete"|"card_duplicates"} ObjectiveType */
+/** @typedef {"balance"|"ribbons"|"cards_new"|"level_user"|"level_idol"|"team_power"|"card_global_ids"|"card_sets_complete"|"card_duplicates"} ObjectiveType */
 
 const fs = require("fs");
 
@@ -10,6 +10,7 @@ const logger = require("../logger");
 const jt = require("../jsTools");
 
 const quests = require("../../configs/quests.json");
+const quests_active = quests.filter(q => q.ending < Date.now());
 
 const configs = { bot: require("../../configs/config_bot.json") };
 
@@ -62,10 +63,10 @@ function toString_objective(objectiveType) {
 	switch (objectiveType) {
 		case "balance": return `🥕 Balance`;
 		case "ribbons": return `🎀 Ribbons`;
-		case "cards_in_inventory": return `🃏 Inventory`;
+		case "cards_new": return `🃏 Inventory`;
 		case "level_user": return `📈 User LV.`;
 		case "level_idol": return `📈 Idol LV.`;
-		case "team_ability_reputation": return `👯‍♀️ ABI REP`;
+		case "team_power": return `👯‍♀️ ABI REP`;
 		case "card_global_ids": return `🃏 GID`;
 		case "card_sets_complete": return `🗣️ Set`;
 		case "card_duplicates": return `🃏 Dupes`;
@@ -75,10 +76,7 @@ function toString_objective(objectiveType) {
 }
 
 /** @param {string} id @param {ObjectiveType} objectiveType */
-function toString_objectiveDetails(id, objectiveType) {
-	let quest = get(id);
-	if (!quest) return "invalid quest ID";
-
+function toString_objectiveDetails(quest, objectiveType) {
 	// prettier-ignore
 	switch (objectiveType) {
         case "balance": return quest.objectives?.balance
@@ -89,8 +87,8 @@ function toString_objectiveDetails(id, objectiveType) {
             ? `\`🎀 Ribbons\` get ${quest.objectives.ribbons} new ${quest.objectives.ribbons === 1 ? "ribbon" : "ribbons"}`
             : "n/a";
 
-        case "cards_in_inventory": return quest.objectives?.cards_in_inventory
-            ? `\`🃏 Inventory\` drop ${quest.objectives.cards_in_inventory} new ${quest.objectives.cards_in_inventory === 1 ? "card" : "cards"}`
+        case "cards_new": return quest.objectives?.cards_in_inventory
+            ? `\`🃏 Inventory\` drop ${quest.objectives.cards_in_inventory} new ${quest.objectives.cards_new === 1 ? "card" : "cards"}`
             : "n/a";
 
         case "level_user": return quest.objectives?.level_user
@@ -101,7 +99,7 @@ function toString_objectiveDetails(id, objectiveType) {
             ? `\`📈 Idol LV.\` reach LV. ${quest.objectives.level_idol}`
             : "n/a";
 
-        case "team_ability_reputation": return quest.objectives?.team_ability_reputation
+        case "team_power": return quest.objectives?.team_power
             ? `\`👯‍♀️ ABI REP\` reach ${quest.objectives.team_ability_reputation} in ABI. REP. stats`
             : "n/a";
 
@@ -133,6 +131,7 @@ function toString_objectiveDetails(id, objectiveType) {
 
 module.exports = {
 	quests,
+	quests_active,
 
 	toString: {
 		rewards: toString_rewards,
