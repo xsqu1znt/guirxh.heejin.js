@@ -1,22 +1,25 @@
 [
 	{
 		"id": "q1",
-		"name": "Crazy Mini Teen Butterfly",
+		"name": "Un Poco Loco",
 		"description": "",
-		"date": {
-			"start": "2023-12-14",
-			"end": "2023-12-21"
-		},
-
+		"ending": 1703251261231,
 		"objectives": {
-			"card_sets_complete": ["551"],
+			"balance": 100,
+			"ribbons": 100,
+			"cards_new": 10,
+			"level_user": 10,
+			"level_idol": 25,
+			"team_power": 999,
+			"card_global_ids": ["1097"],
+			"card_sets_complete": ["101"],
 			"card_duplicates": [
-				{ "globalID": "7091", "count": 3 },
-				{ "globalID": "8829", "count": 3 },
-				{ "globalID": "2639", "count": 6 }
+				{
+					"globalID": "1001 ",
+					"count": 2
+				}
 			]
 		},
-
 		"rewards": {
 			"xp": 5000,
 			"carrots": 1000,

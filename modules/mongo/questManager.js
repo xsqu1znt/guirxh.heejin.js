@@ -1,14 +1,45 @@
 /** @typedef {"balance"|"ribbons"|"cards_in_inventory"|"level_user"|"level_idol"|"team_ability_reputation"|"card_global_ids"|"card_sets_complete"|"card_duplicates"} ObjectiveType */
 
+const fs = require("fs");
+
 const { markdown } = require("../discordTools");
 const cardManager = require("../cardManager");
 // const userParser = require("../userParser");
 // const userManager = require("./uM_index");
+const logger = require("../logger");
+const jt = require("../jsTools");
 
 const quests = require("../../configs/quests.json");
 
 const configs = { bot: require("../../configs/config_bot.json") };
 
+/* - - - - - { Parse Quest Config Data } - - - - - */
+function parseQuestConfig() {
+	let edited = false;
+
+	// Iterate through each quest
+	for (let quest of quests) {
+		// Parse quest end timestamp
+		if (typeof quest.ending === "string") {
+			quest.ending = jt.parseTime(quest.ending, { fromNow: true });
+			edited = true;
+		}
+	}
+
+	// Save the edited file
+	if (edited) {
+		// Convert into JSON
+		let jsonData = JSON.stringify(quests, null, 4);
+
+		// Write the file
+		fs.writeFileSync("./configs/quests.json", jsonData);
+		logger.debug("quests.json config file has been updated");
+	}
+}
+
+parseQuestConfig();
+
+/* - - - - - { Parsing / Database } - - - - - */
 /** @param {string} id */
 function get(id) {
 	return quests.find(quest => quest.id === id) || null;
@@ -103,8 +134,8 @@ function toString_objectiveDetails(id, objectiveType) {
 module.exports = {
 	quests,
 
-    toString: {
-        rewards: toString_rewards,
+	toString: {
+		rewards: toString_rewards,
 		objective: toString_objective,
 		objectiveDetails: toString_objectiveDetails
 	}
