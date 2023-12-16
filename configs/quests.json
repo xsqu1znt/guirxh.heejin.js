@@ -19,7 +19,7 @@
 		"ending": 1702995724940,
 		"objectives": {
 			"level_user": 25,
-			"card_duplicates": [
+			"cards_have_dupes": [
 				{
 					"globalID": "1001",
 					"count": 5

@@ -1,3 +1,5 @@
+/** @typedef {"user"|"idol"|"xp_user"|"xp_idol"} LevelType */
+
 const userManager = require("./uM_index");
 
 /** @param {string} userID @param {boolean} upsert */
@@ -31,13 +33,14 @@ async function update(userID, query) {
 }
 
 /* - - - - - { Increment } - - - - - */
-/** @param {string} userID @param {number} amount @param {import("./uM_levels").levelType} levelType  */
+/** @param {string} userID @param {number} amount @param {LevelType} levelType  */
 async function increment_level(userID, amount, levelType) {
 	// prettier-ignore
 	switch (levelType) {
-		case "user": await update(userID, { $inc: { user_level: amount } }); break;
-		case "idol": await update(userID, { $inc: { idol_level: amount } }); break;
-		case "xp": await update(userID, { $inc: { xp: amount } }); break;
+		case "user": await update(userID, { $inc: { level_user: amount } }); break;
+		case "idol": await update(userID, { $inc: { level_idol: amount } }); break;
+		case "xp_user": await update(userID, { $inc: { xp_user: amount } }); break;
+		case "xp_idol": await update(userID, { $inc: { xp_idol: amount } }); break;
 	}
 }
 
@@ -51,7 +54,7 @@ async function increment_balance(userID, amount, currencyType) {
 }
 
 /** @param {string} userID @param {number} amount */
-async function increment_inventory(userID, amount) {
+async function increment_cardsNew(userID, amount) {
 	await update(userID, { $inc: { inventory_count: amount } });
 }
 
@@ -74,8 +77,8 @@ module.exports = {
 	increment: {
 		level: increment_level,
 		balance: increment_balance,
-		inventory: increment_inventory,
-		team_power: increment_teamPower,
+		cardsNew: increment_cardsNew,
+		teamPower: increment_teamPower,
 		dailyStreak: increment_dailyStreak
 	}
 };

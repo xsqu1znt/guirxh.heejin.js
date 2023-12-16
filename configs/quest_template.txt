@@ -7,6 +7,9 @@
 		"objectives": {
 			"balance": 100,
 			"ribbons": 100,
+			"daily_streak": 100,
+			"xp_user": 10,
+			"xp_idol": 10,
 			"level_user": 10,
 			"level_idol": 25,
 			"team_power": 999,

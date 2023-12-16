@@ -1,4 +1,4 @@
-/** @typedef {"balance"|"ribbons"|"cards_new"|"level_user"|"level_idol"|"team_power"|"card_global_ids"|"card_sets_complete"|"card_duplicates"} ObjectiveType */
+/** @typedef {"balance"|"ribbons"|"daily_streak"|"level_user"|"level_idol"|"team_power"|"cards_new"|"cards_have_gids"|"cards_have_sets"|"cards_have_dupes"} ObjectiveType */
 
 const fs = require("fs");
 
@@ -48,9 +48,10 @@ async function checkUserQuest(userID, questID) {
 	let _objectives = Object.values(quest.objectives);
 	let parsedObjectives = {};
 
+	// Fetch the user from Mongo
+	let userData = await userManager.fetch(userID, { type: "quest" });
 	// Fetch the user's quest data from Mongo
 	let userQuestData = await userManager.models.userQuestData.findById(userID);
-	if (!userQuestData) return null;
 
 	/* - - - - - { Validation Functions } - - - - - */
 	const checkIntBasedObjective = (objective, userProperty) => {
@@ -103,14 +104,23 @@ async function checkUserQuest(userID, questID) {
 	
 			// ObjectiveType :: { RIBBONS }
 			case "ribbons": parsedObjectives.ribbons = checkIntBasedObjective(objectiveValue, userQuestData.ribbons); break;
-	
+
+			// ObjectiveType :: { DAILY STREAK }
+			case "daily_streak": parsedObjectives.daily_streak = checkIntBasedObjective(objectiveValue, userData.daily_streak); break;
+
+			// ObjectiveType :: { USER XP }
+			case "xp_user": parsedObjectives.xp_user = checkIntBasedObjective(objectiveValue, userQuestData.xp_user); break;
+
+			// ObjectiveType :: { IDOL XP }
+			case "xp_idol": parsedObjectives.xp_idol = checkIntBasedObjective(objectiveValue, userQuestData.xp_idol); break;
+
 			// ObjectiveType :: { USER LVL }
-			case "level_user": parsedObjectives.level_uer = checkIntBasedObjective(objectiveValue, userQuestData.level_user); break;
+			case "level_user": parsedObjectives.level_user = checkIntBasedObjective(objectiveValue, userQuestData.level_user); break;
 	
 			// ObjectiveType :: { IDOL LVL }
 			case "level_idol": parsedObjectives.level_idol = checkIntBasedObjective(objectiveValue, userQuestData.level_idol); break;
 	
-			// ObjectiveType :: { IDOL LVL }
+			// ObjectiveType :: { TEAM POWER }
 			case "team_power": parsedObjectives.team_power = checkIntBasedObjective(objectiveValue, userQuestData.team_power); break;
 	
 			// ObjectiveType :: { CARDS NEW }
@@ -145,15 +155,18 @@ function toString_rewards(rewards) {
 function toString_objective(objectiveType) {
 	// prettier-ignore
 	switch (objectiveType) {
-		case "balance": return `🥕 Balance`;
-		case "ribbons": return `🎀 Ribbons`;
-		case "cards_new": return `🃏 Inventory`;
-		case "level_user": return `📈 User LV.`;
-		case "level_idol": return `📈 Idol LV.`;
-		case "team_power": return `👯‍♀️ ABI REP`;
-		case "cards_have_gids": return `🃏 GID`;
-		case "cards_have_sets": return `🗣️ Set`;
-		case "cards_have_dupes": return `🃏 Dupes`;
+		case "balance": return "🥕 Balance";
+		case "ribbons": return "🎀 Ribbons";
+		case "daily_streak": return "📆 Daily Streak";
+		case "xp_user": return "👆 User XP";
+		case "xp_idol": return "👆 Idol XP";
+		case "level_user": return "📈 User LV.";
+		case "level_idol": return "📈 Idol LV.";
+		case "team_power": return "👯‍♀️ ABI REP";
+		case "cards_new": return "🃏 Inventory";
+		case "cards_have_gids": return "🃏 GID";
+		case "cards_have_sets": return "🗣️ Set";
+		case "cards_have_dupes": return "🃏 Dupes";
 
 		default: return "invalid objective type";
 	}
@@ -171,8 +184,16 @@ function toString_objectiveDetails(quest, objectiveType) {
             ? `\`🎀 Ribbons\` get \`${quest.objectives.ribbons}\` new ${quest.objectives.ribbons === 1 ? "ribbon" : "ribbons"}`
             : "n/a";
 
-        case "cards_new": return quest.objectives?.cards_new
-            ? `\`🃏 Inventory\` drop \`${quest.objectives.cards_new}\` new ${quest.objectives.cards_new === 1 ? "card" : "cards"}`
+        case "daily_streak": return quest.objectives?.daily_streak
+            ? `\`📆 Daily Streak\` reach a \`${quest.objectives.daily_streak}\` streak`
+			: "n/a";
+
+		case "xp_user": return quest.objectives?.xp_user
+            ? `\`👆 User XP\` get \`${quest.objectives.xp_user}\` XP`
+            : "n/a";
+
+        case "xp_idol": return quest.objectives?.xp_idol
+            ? `\`👆 Idol XP\` get \`${quest.objectives.xp_idol}\` XP for your idol`
             : "n/a";
 
         case "level_user": return quest.objectives?.level_user
@@ -185,9 +206,13 @@ function toString_objectiveDetails(quest, objectiveType) {
 
         case "team_power": return quest.objectives?.team_power
             ? `\`👯‍♀️ ABI REP\` reach \`${quest.objectives.team_power}\` in ABI. REP. stats`
+			: "n/a";
+		
+		case "cards_new": return quest.objectives?.cards_new
+            ? `\`🃏 Inventory\` drop \`${quest.objectives.cards_new}\` new ${quest.objectives.cards_new === 1 ? "card" : "cards"}`
             : "n/a";
 
-        case "card_global_ids": return quest.objectives?.cards_have_gids
+        case "cards_have_gids": return quest.objectives?.cards_have_gids
             ? `\`🃏 GID\` own ${quest.objectives.cards_have_gids.length === 1 ? "a card" : "cards"} with ${quest.objectives.cards_have_gids.map(gid => {
                 let card = cardManager.get.globalID(gid);
                 if (!card) return "invalid global ID";
@@ -196,11 +221,11 @@ function toString_objectiveDetails(quest, objectiveType) {
             }).join(", ")}`
             : "n/a";
 
-        case "card_sets_complete": return quest.objectives?.cards_have_sets
+        case "cards_have_sets": return quest.objectives?.cards_have_sets
             ? `\`🗣️ Set\` complete ${quest.objectives.cards_have_sets.length === 1 ? "set" : "sets"}:\n${quest.objectives.cards_have_sets.map(str => ` - \`🚫 ${str}\``).join("\n")}`
             : "n/a";
 
-        case "card_duplicates": return quest.objectives?.cards_have_dupes
+        case "cards_have_dupes": return quest.objectives?.cards_have_dupes
             ? `\`🃏 Dupes\` owned:\n${quest.objectives.cards_have_dupes.map(d => {
                 let card = cardManager.get.globalID(d.globalID);
                 if (!card) return "invalid global ID";

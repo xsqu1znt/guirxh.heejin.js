@@ -1,5 +1,3 @@
-/** @typedef {"user"|"idol"|"xp"} levelType */
-
 const userManager = require("./uM_index");
 const uM_statistics = require("./uM_statistics");
 

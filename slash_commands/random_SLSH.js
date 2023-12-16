@@ -57,7 +57,7 @@ module.exports = {
 			// Update the user's XP in Mongo
 			userManager.levels.increment.xp(interaction.user.id, reward_xp, "random"),
 			/// Update the user's quest progress
-			userManager.quests.increment.level(interaction.user.id, reward_xp, "xp"),
+			userManager.quests.increment.level(interaction.user.id, reward_xp, "xp_user"),
 			userManager.quests.increment.balance(interaction.user.id, reward_carrots, "carrot"),
 			// Set the user's cooldown/reminder
 			userManager.cooldowns.set(interaction.user.id, "random"),
