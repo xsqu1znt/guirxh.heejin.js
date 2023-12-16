@@ -65,38 +65,69 @@ async function checkUserQuest(userID, questID) {
 	const checkHasSets = async setIDs => {
 		// Get the cards in the set
 		let sets = setIDs.map(setID => cardManager.get.setID(setID));
-
 		// Iterate through each set and check if the user has all the cards
 		let has = await Promise.all(sets.map(gids => uM_inventory.has(userID, { gids, sum: true })));
+
+		return { complete: has.filter(b => b).length === setIDs.length, has, outOf: setIDs.length };
+	};
+
+	const checkHasDupes = async requiredDupes => {
+		// Iterate through each globalID and fetch the matching cards in the user's card_inventory
+		let userCards = await Promise.all(requiredDupes.map(data => uM_inventory.get(userID, { gids: data.globalID })));
+		let has = [];
+
+		// Iterate through the fetched cards and check if the user has the required dupes
+		for (let i = 0; i < userCards.length; i++) {
+			let _cards = userCards[i];
+			let _dupeData = requiredDupes[i];
+
+			// prettier-ignore
+			if (!_cards || !_cards?.length) { has.push(false); continue; }
+			// prettier-ignore
+			// we're subtracting 1 here because the main (non-dupe) card doesn't count
+			if ((_cards.length - 1) >= _dupeData.count) { has.push(true); continue; }
+
+			// Fail-safe
+			has.push(false);
+		}
+
+		return { complete: has.filter(b => b).length === requiredDupes.length, has, outOf: setIDs.length };
 	};
 
 	// prettier-ignore
 	// Iterate through each objective and check if they are done
-	for (let [objectiveKey, objectiveValue] of _objectives) switch (objectiveKey) {
-		// ObjectiveType :: { BALANCE }
-		case "balance": parsedObjectives.balance = checkIntBasedObjective(objectiveValue, userQuestData.balance); break;
+	await Promise.all(_objectives.map(async ([objectiveKey, objectiveValue]) => {
+		switch (objectiveKey) {
+			// ObjectiveType :: { BALANCE }
+			case "balance": parsedObjectives.balance = checkIntBasedObjective(objectiveValue, userQuestData.balance); break;
+	
+			// ObjectiveType :: { RIBBONS }
+			case "ribbons": parsedObjectives.ribbons = checkIntBasedObjective(objectiveValue, userQuestData.ribbons); break;
+	
+			// ObjectiveType :: { USER LVL }
+			case "level_user": parsedObjectives.level_uer = checkIntBasedObjective(objectiveValue, userQuestData.level_user); break;
+	
+			// ObjectiveType :: { IDOL LVL }
+			case "level_idol": parsedObjectives.level_idol = checkIntBasedObjective(objectiveValue, userQuestData.level_idol); break;
+	
+			// ObjectiveType :: { IDOL LVL }
+			case "team_power": parsedObjectives.team_power = checkIntBasedObjective(objectiveValue, userQuestData.team_power); break;
+	
+			// ObjectiveType :: { CARDS NEW }
+			case "cards_new": parsedObjectives.cards_new = checkIntBasedObjective(objectiveValue, userQuestData.cards_new); break;
+	
+			// ObjectiveType :: { CARDS have GIDS }
+			case "cards_have_gids": parsedObjectives.cards_have_gids = await checkHasGIDs(objectiveValue); break;
+	
+			// ObjectiveType :: { CARDS have SETS }
+			case "cards_have_sets": parsedObjectives.cards_have_sets = await checkHasSets(objectiveValue); break;
+	
+			// ObjectiveType :: { CARDS have DUPES }
+			case "cards_have_dupes": parsedObjectives.cards_have_dupes = await checkHasDupes(objectiveValue); break; 
+		}
+	}));
 
-		// ObjectiveType :: { RIBBONS }
-		case "ribbons": parsedObjectives.ribbons = checkIntBasedObjective(objectiveValue, userQuestData.ribbons); break;
-
-		// ObjectiveType :: { USER LVL }
-		case "level_user": parsedObjectives.level_uer = checkIntBasedObjective(objectiveValue, userQuestData.level_user); break;
-
-		// ObjectiveType :: { IDOL LVL }
-		case "level_idol": parsedObjectives.level_idol = checkIntBasedObjective(objectiveValue, userQuestData.level_idol); break;
-
-		// ObjectiveType :: { IDOL LVL }
-		case "team_power": parsedObjectives.team_power = checkIntBasedObjective(objectiveValue, userQuestData.team_power); break;
-
-		// ObjectiveType :: { CARDS NEW }
-		case "cards_new": parsedObjectives.cards_new = checkIntBasedObjective(objectiveValue, userQuestData.cards_new); break;
-
-		// ObjectiveType :: { CARDS HAVE GIDS }
-		case "cards_have_gids": parsedObjectives.cards_have_gids = await checkHasGIDs(objectiveValue); break;
-
-		// ObjectiveType :: { CARDS HAVE SETS }
-		case "cards_have_sets": parsedObjectives.cards_have_sets = await checkHasSets(objectiveValue); break;
-	}
+	return parsedObjectives;
 }
 
 /* - - - - - { toString } - - - - - */
