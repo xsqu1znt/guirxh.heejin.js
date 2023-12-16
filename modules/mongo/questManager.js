@@ -151,9 +151,9 @@ function toString_objective(objectiveType) {
 		case "level_user": return `📈 User LV.`;
 		case "level_idol": return `📈 Idol LV.`;
 		case "team_power": return `👯‍♀️ ABI REP`;
-		case "card_global_ids": return `🃏 GID`;
-		case "card_sets_complete": return `🗣️ Set`;
-		case "card_duplicates": return `🃏 Dupes`;
+		case "cards_have_gids": return `🃏 GID`;
+		case "cards_have_sets": return `🗣️ Set`;
+		case "cards_have_dupes": return `🃏 Dupes`;
 
 		default: return "invalid objective type";
 	}
@@ -187,8 +187,8 @@ function toString_objectiveDetails(quest, objectiveType) {
             ? `\`👯‍♀️ ABI REP\` reach \`${quest.objectives.team_power}\` in ABI. REP. stats`
             : "n/a";
 
-        case "card_global_ids": return quest.objectives?.card_global_ids
-            ? `\`🃏 GID\` own ${quest.objectives.card_global_ids.length === 1 ? "a card" : "cards"} with ${quest.objectives.card_global_ids.map(gid => {
+        case "card_global_ids": return quest.objectives?.cards_have_gids
+            ? `\`🃏 GID\` own ${quest.objectives.cards_have_gids.length === 1 ? "a card" : "cards"} with ${quest.objectives.cards_have_gids.map(gid => {
                 let card = cardManager.get.globalID(gid);
                 if (!card) return "invalid global ID";
 
@@ -196,12 +196,12 @@ function toString_objectiveDetails(quest, objectiveType) {
             }).join(", ")}`
             : "n/a";
 
-        case "card_sets_complete": return quest.objectives?.card_sets_complete
-            ? `\`🗣️ Set\` complete ${quest.objectives.card_sets_complete.length === 1 ? "set" : "sets"}:\n${quest.objectives.card_sets_complete.map(str => ` - \`🚫 ${str}\``).join("\n")}`
+        case "card_sets_complete": return quest.objectives?.cards_have_sets
+            ? `\`🗣️ Set\` complete ${quest.objectives.cards_have_sets.length === 1 ? "set" : "sets"}:\n${quest.objectives.cards_have_sets.map(str => ` - \`🚫 ${str}\``).join("\n")}`
             : "n/a";
 
-        case "card_duplicates": return quest.objectives?.card_duplicates
-            ? `\`🃏 Dupes\` owned:\n${quest.objectives.card_duplicates.map(d => {
+        case "card_duplicates": return quest.objectives?.cards_have_dupes
+            ? `\`🃏 Dupes\` owned:\n${quest.objectives.cards_have_dupes.map(d => {
                 let card = cardManager.get.globalID(d.globalID);
                 if (!card) return "invalid global ID";
 
@@ -216,6 +216,8 @@ function toString_objectiveDetails(quest, objectiveType) {
 module.exports = {
 	quests,
 	quests_active: quests.filter(q => q.ending > Date.now()),
+
+	checkUserQuest,
 
 	toString: {
 		rewards: toString_rewards,

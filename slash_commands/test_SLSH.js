@@ -1,17 +1,8 @@
-const {
-	Client,
-	CommandInteraction,
-	SlashCommandBuilder,
-	StringSelectMenuBuilder,
-	StringSelectMenuOptionBuilder,
-	ActionRowBuilder
-} = require("discord.js");
+const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
 const { BetterEmbed, markdown } = require("../modules/discordTools");
-const { userManager } = require("../modules/mongo/index");
-const InventoryEditModule = require("../modules/inventoryEditModule");
-const cardManager = require("../modules/cardManager");
-const dropManager = require("../modules/dropManager");
+const { userManager, questManager } = require("../modules/mongo/index");
+const jt = require("../modules/jsTools");
 
 module.exports = {
 	options: { deferReply: true },
@@ -22,43 +13,16 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-		let { cards, dupeIndex } = await dropManager.drop(interaction.user.id, "general", { count: 5 });
-		await userManager.inventory.add(interaction.user.id, cards);
+		let debugTime = Date.now();
 
-		let cards_f = cards.map(c => cardManager.toString.basic(c));
-
-		// prettier-ignore
-		// Create the embed :: { SELL MOCKUP }
-		let embed = new BetterEmbed({
-			interaction, author: { text: "$USERNAME | card test", iconURL: true },
-			description: `>>> ${cards_f.join("\n")}`
-		});
-
-		let message = await embed.send();
-
-		// prettier-ignore
-		new InventoryEditModule(client, interaction, message, {
-			cards, dupeIndex, modules: ["sell", "setFavorite", "setIdol", "addVault"]
-		});
-
-		/* // Create the select menu
-		let selectMenu_options = cards.map((c, idx) =>
-			new StringSelectMenuOptionBuilder()
-				.setValue(`card_${idx}`)
-				// .setEmoji("🃏")
-				.setLabel(`${c.emoji} ${c.single} [${c.group}] ${c.name}`)
-				.setDescription(`UID: ${c.uid} :: GID: ${c.globalID} :: 🗣️ ${c.setID}`)
+		let userQuestData = await Promise.all(
+			questManager.quests_active.map(q => questManager.checkUserQuest(userID, q.id))
 		);
 
-		let selectMenu = new StringSelectMenuBuilder()
-			.setCustomId("test")
-			.setPlaceholder("Select what you want to sell")
-			.addOptions(...selectMenu_options)
-			.setMaxValues(cards.length);
+		console.log(userQuestData);
 
-		let actionRow = new ActionRowBuilder().addComponents(selectMenu);
-
-		// Send the embed with components
-		return await embed.send({ components: actionRow }); */
+		return await interaction.editReply({
+			content: `completed \`${jt.eta({ now: debugTime, then: Date.now() })}\``
+		});
 	}
 };
