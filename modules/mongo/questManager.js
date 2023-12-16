@@ -4,10 +4,11 @@ const fs = require("fs");
 
 const { markdown } = require("../discordTools");
 const cardManager = require("../cardManager");
-const userManager = require("./uM_index");
-// const userParser = require("../userParser");
 const logger = require("../logger");
 const jt = require("../jsTools");
+
+const userManager = require("./uM_index");
+const uM_inventory = require("./uM_inventory");
 
 const quests = require("../../configs/quests.json");
 
@@ -49,14 +50,24 @@ async function checkUserQuest(userID, questID) {
 
 	// Fetch the user's quest data from Mongo
 	let userQuestData = await userManager.models.userQuestData.findById(userID);
+	if (!userQuestData) return null;
 
 	/* - - - - - { Validation Functions } - - - - - */
 	const checkIntBasedObjective = (objective, userProperty) => {
-		return { completed: objective <= userProperty, has: jt.clamp(userProperty, { max: objective }), outOf: objective };
+		return { complete: objective <= userProperty, has: jt.clamp(userProperty, { max: objective }), outOf: objective };
 	};
 
-	const checkHasGlobalIDs = () => {
+	const checkHasGIDs = async globalIDs => {
+		let has = await uM_inventory.has(userID, { gids: globalIDs });
+		return { complete: has.length === globalIDs.length, has, outOf: globalIDs.length };
+	};
 
+	const checkHasSets = async setIDs => {
+		// Get the cards in the set
+		let sets = setIDs.map(setID => cardManager.get.setID(setID));
+
+		// Iterate through each set and check if the user has all the cards
+		let has = await Promise.all(sets.map(gids => uM_inventory.has(userID, { gids, sum: true })));
 	};
 
 	// prettier-ignore
@@ -80,8 +91,11 @@ async function checkUserQuest(userID, questID) {
 		// ObjectiveType :: { CARDS NEW }
 		case "cards_new": parsedObjectives.cards_new = checkIntBasedObjective(objectiveValue, userQuestData.cards_new); break;
 
-		// ObjectiveType :: { CARDS NEW }
-		case "card_global_ids": parsedObjectives.card_global_ids = checkHasGlobalIDs(); break;
+		// ObjectiveType :: { CARDS HAVE GIDS }
+		case "cards_have_gids": parsedObjectives.cards_have_gids = await checkHasGIDs(objectiveValue); break;
+
+		// ObjectiveType :: { CARDS HAVE SETS }
+		case "cards_have_sets": parsedObjectives.cards_have_sets = await checkHasSets(objectiveValue); break;
 	}
 }
 

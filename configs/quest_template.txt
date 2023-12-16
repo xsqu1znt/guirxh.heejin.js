@@ -11,9 +11,9 @@
 			"level_idol": 25,
 			"team_power": 999,
 			"cards_new": 10,
-			"card_global_ids": ["globalID"],
-			"card_sets_complete": ["setID"],
-			"card_duplicates": [{ "globalID": "globalID", "count": 1 }]
+			"cards_have_gids": ["globalID"],
+			"cards_have_sets": ["setID"],
+			"cards_have_dupes": [{ "globalID": "globalID", "count": 1 }]
 		},
 
 		"rewards": {
