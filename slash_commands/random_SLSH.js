@@ -58,7 +58,7 @@ module.exports = {
 			userManager.levels.increment.xp(interaction.user.id, reward_xp, "random"),
 			/// Update the user's quest progress
 			userManager.quests.increment.level(interaction.user.id, reward_xp, "xp_user"),
-			userManager.quests.increment.balance(interaction.user.id, reward_carrots, "carrot"),
+			userManager.quests.increment.balance(interaction.user.id, reward_carrots, "balance"),
 			// Set the user's cooldown/reminder
 			userManager.cooldowns.set(interaction.user.id, "random"),
 			userManager.reminders.set(interaction.user.id, "random", interaction.guildId, interaction.channelId),

@@ -48,8 +48,8 @@ async function increment_level(userID, amount, levelType) {
 async function increment_balance(userID, amount, currencyType) {
 	// prettier-ignore
 	switch (currencyType) {
-        case "carrot": await update(userID, { $inc: { balance: amount } }); break;
-        case "ribbon": await update(userID, { $inc: { ribbons: amount } }); break;
+        case "balance": await update(userID, { $inc: { balance: amount } }); break;
+        case "ribbons": await update(userID, { $inc: { ribbons: amount } }); break;
 	}
 }
 

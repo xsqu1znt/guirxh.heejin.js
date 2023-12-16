@@ -45,7 +45,7 @@ async function checkUserQuest(userID, questID) {
 	let quest = quests.find(q => q.id === questID);
 	if (!quest) return null;
 
-	let _objectives = Object.values(quest.objectives);
+	let _objectives = Object.entries(quest.objectives);
 	let parsedObjectives = {};
 
 	// Fetch the user from Mongo
@@ -93,7 +93,7 @@ async function checkUserQuest(userID, questID) {
 			has.push(false);
 		}
 
-		return { complete: has.filter(b => b).length === requiredDupes.length, has, outOf: setIDs.length };
+		return { complete: has.filter(b => b).length === requiredDupes.length, has, outOf: requiredDupes.length };
 	};
 
 	// prettier-ignore

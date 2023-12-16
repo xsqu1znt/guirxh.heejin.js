@@ -16,13 +16,13 @@ module.exports = {
 		let debugTime = Date.now();
 
 		let userQuestData = await Promise.all(
-			questManager.quests_active.map(q => questManager.checkUserQuest(userID, q.id))
+			questManager.quests_active.map(q => questManager.checkUserQuest(interaction.user.id, q.id))
 		);
 
 		console.log(userQuestData);
 
 		return await interaction.editReply({
-			content: `completed \`${jt.eta({ now: debugTime, then: Date.now() })}\``
+			content: `completed ${jt.eta({ now: debugTime, then: Date.now() })}`
 		});
 	}
 };
