@@ -4,8 +4,8 @@ const fs = require("fs");
 
 const { markdown } = require("../discordTools");
 const cardManager = require("../cardManager");
+const userManager = require("./uM_index");
 // const userParser = require("../userParser");
-// const userManager = require("./uM_index");
 const logger = require("../logger");
 const jt = require("../jsTools");
 
@@ -40,9 +40,49 @@ function parseQuestConfig() {
 parseQuestConfig();
 
 /* - - - - - { Parsing / Database } - - - - - */
-/** @param {string} id */
-function get(id) {
-	return quests.find(quest => quest.id === id) || null;
+async function checkUserQuest(userID, questID) {
+	let quest = quests.find(q => q.id === questID);
+	if (!quest) return null;
+
+	let _objectives = Object.values(quest.objectives);
+	let parsedObjectives = {};
+
+	// Fetch the user's quest data from Mongo
+	let userQuestData = await userManager.models.userQuestData.findById(userID);
+
+	/* - - - - - { Validation Functions } - - - - - */
+	const checkIntBasedObjective = (objective, userProperty) => {
+		return { completed: objective <= userProperty, has: jt.clamp(userProperty, { max: objective }), outOf: objective };
+	};
+
+	const checkHasGlobalIDs = () => {
+
+	};
+
+	// prettier-ignore
+	// Iterate through each objective and check if they are done
+	for (let [objectiveKey, objectiveValue] of _objectives) switch (objectiveKey) {
+		// ObjectiveType :: { BALANCE }
+		case "balance": parsedObjectives.balance = checkIntBasedObjective(objectiveValue, userQuestData.balance); break;
+
+		// ObjectiveType :: { RIBBONS }
+		case "ribbons": parsedObjectives.ribbons = checkIntBasedObjective(objectiveValue, userQuestData.ribbons); break;
+
+		// ObjectiveType :: { USER LVL }
+		case "level_user": parsedObjectives.level_uer = checkIntBasedObjective(objectiveValue, userQuestData.level_user); break;
+
+		// ObjectiveType :: { IDOL LVL }
+		case "level_idol": parsedObjectives.level_idol = checkIntBasedObjective(objectiveValue, userQuestData.level_idol); break;
+
+		// ObjectiveType :: { IDOL LVL }
+		case "team_power": parsedObjectives.team_power = checkIntBasedObjective(objectiveValue, userQuestData.team_power); break;
+
+		// ObjectiveType :: { CARDS NEW }
+		case "cards_new": parsedObjectives.cards_new = checkIntBasedObjective(objectiveValue, userQuestData.cards_new); break;
+
+		// ObjectiveType :: { CARDS NEW }
+		case "card_global_ids": parsedObjectives.card_global_ids = checkHasGlobalIDs(); break;
+	}
 }
 
 /* - - - - - { toString } - - - - - */
