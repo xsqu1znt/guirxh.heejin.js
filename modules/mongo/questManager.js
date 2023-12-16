@@ -52,6 +52,7 @@ async function checkUserQuest(userID, questID) {
 	let userData = await userManager.fetch(userID, { type: "quest" });
 	// Fetch the user's quest data from Mongo
 	let userQuestData = await userManager.models.userQuestData.findById(userID);
+	if (!userQuestData) return null;
 
 	/* - - - - - { Validation Functions } - - - - - */
 	const checkIntBasedObjective = (objective, userProperty) => {
