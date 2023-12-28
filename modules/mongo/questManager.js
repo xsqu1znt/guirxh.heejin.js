@@ -11,6 +11,7 @@ const userManager = require("./uM_index");
 const uM_inventory = require("./uM_inventory");
 
 const quests = require("../../configs/quests.json");
+const quests_active = quests.filter(q => q.ending > Date.now());
 
 const configs = { bot: require("../../configs/config_bot.json") };
 
@@ -141,6 +142,22 @@ async function checkUserQuest(userID, questID) {
 	return parsedObjectives;
 }
 
+async function updateQuestProgress(userID) {
+	if (!quests_active.length) return;
+
+	// Fetch the user's quest data
+	let userQuestData = await userManager.models.userQuestData.findById(userID);
+	if (!userQuestData) return;
+
+	// Filter out quests the user already completed
+	let _quests = quests_active.filter(q => !userQuestData.completed.includes(q.id));
+	if (_quests.length) return;
+
+	// Get the user's quest progress
+	let questProgress = await Promise.all(_quests.map(q => checkUserQuest(userID, q.id)));
+	console.log(questProgress);
+}
+
 /* - - - - - { toString } - - - - - */
 function toString_rewards(rewards) {
 	let rewards_f = [];
@@ -241,7 +258,7 @@ function toString_objectiveDetails(quest, objectiveType) {
 
 module.exports = {
 	quests,
-	quests_active: quests.filter(q => q.ending > Date.now()),
+	quests_active,
 
 	checkUserQuest,
 

@@ -4,6 +4,8 @@ const schema_questData = new Schema(
 	{
 		_id: { type: String, require: true },
 
+		completed: { type: Array, default: [] },
+
 		balance: { type: Number, default: 0 },
 		ribbons: { type: Number, default: 0 },
 		daily_streak: { type: Number, default: 0 },
