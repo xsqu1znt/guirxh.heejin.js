@@ -261,6 +261,7 @@ module.exports = {
 	quests_active,
 
 	checkUserQuest,
+	updateQuestProgress,
 
 	toString: {
 		rewards: toString_rewards,
