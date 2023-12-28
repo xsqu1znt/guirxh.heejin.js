@@ -75,6 +75,6 @@ module.exports = {
 			embed_gift.send({ interaction })
 		])
 			// Trigger the recipient quest progress update
-			.then(async () => questManager.updateQuestProgress(recipient.id));
+			.then(async () => questManager.updateQuestProgress(recipient));
 	}
 };

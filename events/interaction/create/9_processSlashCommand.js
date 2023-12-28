@@ -114,7 +114,7 @@ module.exports = {
 				userManager.statistics.commands.executed.increment(args.interaction.user.id);
 
 				// Trigger quest progress update
-				questManager.updateQuestProgress(args.interaction.user.id);
+				questManager.updateQuestProgress(args.interaction.user);
 			});
 		} catch (err) {
 			return logger.error(

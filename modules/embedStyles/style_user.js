@@ -467,7 +467,7 @@ function quest(user, userData) {
 		let _objectives = Object.keys(_quest.objectives);
 
 		// Field title
-		let _fieldTitle = `\`📜\` **${_quest.name}** \`⏰\` *ending ${jt.eta({ then: _quest.ending })}*`;
+		let _fieldTitle = `\`📜\` **${_quest.name}** \`⏰\` *ending in ${jt.eta(_quest.ending)}*`;
 
 		// Field description
 		let _fieldDescription = [

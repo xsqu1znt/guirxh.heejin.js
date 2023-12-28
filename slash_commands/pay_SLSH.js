@@ -66,6 +66,6 @@ module.exports = {
 			general_ES.pay(interaction.member, recipient, amount, "carrots").send({ interaction })
 		])
 			// Trigger the recipient quest progress update
-			.then(async () => questManager.updateQuestProgress(recipient.id));
+			.then(async () => questManager.updateQuestProgress(recipient));
 	}
 };

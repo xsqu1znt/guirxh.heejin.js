@@ -2,13 +2,16 @@
 
 const fs = require("fs");
 
-const { markdown } = require("../discordTools");
+const { markdown, BetterEmbed } = require("../discordTools");
 const cardManager = require("../cardManager");
 const logger = require("../logger");
 const jt = require("../jsTools");
 
 const userManager = require("./uM_index");
 const uM_inventory = require("./uM_inventory");
+const uM_balance = require("./uM_balance");
+const uM_levels = require("./uM_levels");
+const uM_quests = require("./uM_quests");
 
 const quests = require("../../configs/quests.json");
 const quests_active = quests.filter(q => q.ending > Date.now());
@@ -139,23 +142,73 @@ async function checkUserQuest(userID, questID) {
 		}
 	}));
 
-	return parsedObjectives;
+	return {
+		...parsedObjectives,
+		quest_complete: Object.values(parsedObjectives).filter(o => o.complete).length === _objectives.length,
+		quest_id: questID
+	};
 }
 
-async function updateQuestProgress(userID) {
+async function completeQuest(user, questID) {
+	let quest = quests_active.find(q => q.id === questID);
+	if (!quest) return;
+
+	// Update the user's completed quests in the Mongo
+	uM_quests.update(user.id, { $push: { completed: questID } });
+
+	// prettier-ignore
+	// Give the user rewards
+	if (quest?.rewards) await Promise.all(Object.entries(quest.rewards).map(([rewardType, value]) => {
+		// Determine reward type
+		switch (rewardType) {
+			case "xp":
+				uM_levels.increment.xp(user.id, value, "quest");
+				break;
+
+			case "carrots":
+				uM_balance.increment(user.id, value, "balance", "quest");
+				break;
+
+			case "ribbons":
+				uM_balance.increment(user.id, value, "ribbons", "quest");
+				break;
+		}
+	}));
+
+	/* - - - - - { DM the User } - - - - - */
+	let embed_questComplete = new BetterEmbed({
+		author: `\`📜\` Good job! You completed '${quest.name}'`,
+		description: `**You were rewarded with**: \`${toString_rewards(quest.rewards)}\`!`,
+		timestamp: true
+	});
+
+	// Send the embed to the user
+	await user.send({ embeds: [embed_questComplete] }).catch(() => null);
+}
+
+async function updateQuestProgress(user) {
 	if (!quests_active.length) return;
 
 	// Fetch the user's quest data
-	let userQuestData = await userManager.models.userQuestData.findById(userID);
+	let userQuestData = await userManager.models.userQuestData.findById(user.id);
 	if (!userQuestData) return;
 
 	// Filter out quests the user already completed
 	let _quests = quests_active.filter(q => !userQuestData.completed.includes(q.id));
-	if (_quests.length) return;
+	if (!_quests.length) return;
 
 	// Get the user's quest progress
-	let questProgress = await Promise.all(_quests.map(q => checkUserQuest(userID, q.id)));
-	console.log(questProgress);
+	let questProgress = await Promise.all(_quests.map(q => checkUserQuest(user.id, q.id)));
+
+	let questsCompleted = questProgress.filter(p => p.quest_complete);
+
+	// Iterate through completed quests
+	for (let _quest of questsCompleted) {
+		// Call the quest complete function
+		completeQuest(user, _quest.quest_id);
+	}
+
+	return { completed: questsCompleted.map(q => q.quest_id) };
 }
 
 /* - - - - - { toString } - - - - - */
