@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
 const { error_ES, general_ES } = require("../modules/embedStyles/index");
-const { userManager } = require("../modules/mongo/index");
+const { userManager, questManager } = require("../modules/mongo/index");
 const messenger = require("../modules/messenger");
 const jt = require("../modules/jsTools");
 
@@ -64,6 +64,8 @@ module.exports = {
 			userManager.balance.increment(recipient.id, amount, "balance", "pay"),
 			// Send the embed :: { PAY }
 			general_ES.pay(interaction.member, recipient, amount, "carrots").send({ interaction })
-		]);
+		])
+			// Trigger the recipient quest progress update
+			.then(async () => questManager.updateQuestProgress(recipient.id));
 	}
 };

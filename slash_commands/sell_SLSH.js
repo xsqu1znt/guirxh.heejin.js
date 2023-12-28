@@ -139,7 +139,7 @@ module.exports = {
 		// prettier-ignore
 		// Wait for the user to confirm
 		let confirmation_sell = await awaitConfirm({
-			interaction,
+			interaction, author: "⚠️ Are you sure you want to sell?",
 			description: cards_f
 				? `**Are you sure you want to sell:**\n${cards_f.join("\n")}`
 				: `**Are you sure you want to sell \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"}?**\n${setIDs.length ? `*\`${dupesToKeep}\` ${dupesToKeep === 1 ? "dupe" : "dupes"} will be kept of each GID in ${setIDs.length === 1 ? "that set" : "those sets"}*` : ""}`,
@@ -163,14 +163,6 @@ module.exports = {
 					: `You sold \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"}`,
 				footer: `and got ${config_bot.emojis.currency_1.EMOJI} ${sell_total}`
 			});
-		} else {
-			return await deleteMessageAfter(
-				await embed_sell.send({
-					author: {},
-					components: [],
-					description: `> Cancelled selling \`${cards.length}\` ${cards.length === 1 ? "card" : "cards"}`
-				})
-			);
 		}
 	}
 };

@@ -4,6 +4,7 @@
 const cardManager = require("../cardManager");
 const userManager = require("./uM_index");
 const uM_balance = require("./uM_balance");
+const uM_quests = require("./uM_quests");
 const jt = require("../jsTools");
 
 async function count(userID, uniqueOnly = false) {
@@ -200,6 +201,7 @@ async function sell(userID, cards, validate = true) {
 	await Promise.all([
 		// Update the user's balance
 		uM_balance.increment(userID, sellPriceSum, "balance", "sell"),
+		uM_quests.increment.balance(userID, sellPriceSum, "balance"),
 		// Remove the cards from the user's card_inventory
 		remove(userID, cards.map(card => card.uid))
     ]);

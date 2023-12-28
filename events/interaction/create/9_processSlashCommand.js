@@ -1,6 +1,7 @@
 /** @file Execute commands requested by a command interaction @author xsqu1znt */
 
 const { Client, PermissionsBitField, BaseInteraction } = require("discord.js");
+const { userManager, questManager } = require("../../../modules/mongo");
 const { BetterEmbed } = require("../../../modules/discordTools");
 const logger = require("../../../modules/logger");
 
@@ -64,7 +65,7 @@ module.exports = {
 		try {
 			// Check for command options
 			if (slashCommand?.options) {
-				let { community_server } = config_bot;
+				let { community_server } = config.bot;
 
 				let _botAdminOnly = slashCommand.options?.botAdminOnly;
 				let _guildAdminOnly = slashCommand.options?.guildAdminOnly;
@@ -111,6 +112,9 @@ module.exports = {
 
 				// Increment commands used
 				userManager.statistics.commands.executed.increment(args.interaction.user.id);
+
+				// Trigger quest progress update
+				questManager.updateQuestProgress(args.interaction.user.id);
 			});
 		} catch (err) {
 			return logger.error(

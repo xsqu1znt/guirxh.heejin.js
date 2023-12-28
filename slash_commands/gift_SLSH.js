@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
 const { error_ES, general_ES } = require("../modules/embedStyles/index");
-const { userManager } = require("../modules/mongo/index");
+const { userManager, questManager } = require("../modules/mongo/index");
 const messenger = require("../modules/messenger");
 const jt = require("../modules/jsTools");
 
@@ -68,11 +68,13 @@ module.exports = {
 			// Add the cards to the recipient card_inventory
 			userManager.inventory.add(recipient.id, uids),
 			// Update the recipient's quest progress
-			userManager.quests.increment.inventory(recipient.id, cards.length),
+			// userManager.quests.increment.cardsNew(recipient.id, cards.length),
 			// Send a DM to the recipient
 			messenger.gift.cards(interaction.user, recipient, cards),
 			// Send the embed :: { GIFT }
 			embed_gift.send({ interaction })
-		]);
+		])
+			// Trigger the recipient quest progress update
+			.then(async () => questManager.updateQuestProgress(recipient.id));
 	}
 };
