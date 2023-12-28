@@ -230,6 +230,7 @@ async function updateQuestProgress(user) {
 	for (let quest of questsCompleted) completeQuest(user, quest.quest_id);
 
 	return {
+		data: questProgress,
 		questsComplete: questsCompleted.map(q => q.quest_id),
 		newObjectivesComplete
 	};

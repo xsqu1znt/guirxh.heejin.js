@@ -122,10 +122,25 @@ module.exports = {
 						let quest = questManager.getActive(completedObjectives.questID);
 						if (!quest) continue;
 
+						// Get the QuestProgressData for the current quest ID
+						let _userQuestProgressData = userQuestProgress.data.find(d => d.quest_id === completedObjectives.questID);
+
+						// Get objective count
+						let objectiveCount = {
+							has: _userQuestProgressData.objectives.filter(o => o.complete).length,
+							outOf: _userQuestProgressData.objectives.length,
+						};
+
+						// Format objectives into strings
+						let objectives_f = completedObjectives.objectives.map(o => ` - \`${questManager.toString.objective(o)}\``);
+
 						let embed = new BetterEmbed({
 							author: `\`📜\` Good job! ${args.interaction.member.displayName} completed ${completedObjectives.objectives.length === 1 ? "some objectives" : "an objective"}!`,
-							footer: `objectives ${completedObjectives.objectiveProgress.has}/${completedObjectives.objectiveProgress.outOf}`
-						})
+							description: `- **${quest.name} \`📈\` ${objectiveCount.has}/${objectiveCount.outOf}**\n${objectives_f.join("\n")}`,
+						});
+
+						// Push to the embed array
+						embeds_completedObjectives.push(embed);
 					}
 				});
 			});
