@@ -205,18 +205,23 @@ async function updateQuestProgress(user) {
 	for (let progress of questProgress) {
 		let _objectives = Object.keys(progress.objectives);
 
+		let _objectivesCompleteData = [];
+
 		for (let objectiveType of _objectives) {
 			if (userQuestData.completed_objective_cache.find(o => o.id === progress.quest_id && o.type === objectiveType))
 				continue;
 
 			// Push the objective to the array so we can let the user know they completed a quest objective
-			newObjectivesComplete.push({ id: progress.quest_id, type: objectiveType });
+			_objectivesCompleteData.push(objectiveType);
 
 			// Add to the objective cache in Mongo
 			uM_quests.update(user.id, {
 				$push: { completed_objective_cache: { id: progress.quest_id, type: objectiveType } }
 			});
 		}
+
+		// Push the completed objectives to the main array
+		newObjectivesComplete.push({ questID: progress.quest_id, objectives: _objectivesCompleteData });
 	}
 
 	let questsCompleted = questProgress.filter(p => p.quest_complete);
@@ -228,6 +233,11 @@ async function updateQuestProgress(user) {
 		questsComplete: questsCompleted.map(q => q.quest_id),
 		newObjectivesComplete
 	};
+}
+
+/* - - - - - { File System } - - - - - */
+function getActive(questID) {
+	return quests_active.find(q => q.quest_id === questID) || null;
 }
 
 /* - - - - - { toString } - - - - - */
@@ -334,6 +344,8 @@ module.exports = {
 
 	checkUserQuest,
 	updateQuestProgress,
+
+	getActive,
 
 	toString: {
 		rewards: toString_rewards,

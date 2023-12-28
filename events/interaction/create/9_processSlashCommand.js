@@ -114,7 +114,20 @@ module.exports = {
 				userManager.statistics.commands.executed.increment(args.interaction.user.id);
 
 				// Trigger quest progress update
-				questManager.updateQuestProgress(args.interaction.user);
+				questManager.updateQuestProgress(args.interaction.user).then(async userQuestProgress => {
+					let embeds_completedObjectives = [];
+
+					// Make an embed for each group of completed quest objectives
+					for (let completedObjectives of userQuestProgress.newObjectivesComplete) {
+						let quest = questManager.getActive(completedObjectives.questID);
+						if (!quest) continue;
+
+						let embed = new BetterEmbed({
+							author: `\`📜\` Good job! ${args.interaction.member.displayName} completed ${completedObjectives.objectives.length === 1 ? "some objectives" : "an objective"}!`,
+							footer: `objectives ${completedObjectives.objectiveProgress.has}/${completedObjectives.objectiveProgress.outOf}`
+						})
+					}
+				});
 			});
 		} catch (err) {
 			return logger.error(
