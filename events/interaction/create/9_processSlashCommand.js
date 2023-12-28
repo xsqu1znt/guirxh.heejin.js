@@ -134,9 +134,10 @@ module.exports = {
 						// Format objectives into strings
 						let objectives_f = completedObjectives.objectives.map(o => ` - \`${questManager.toString.objective(o)}\``);
 
+						// Create the embed :: { Reminder Objectives }
 						let embed = new BetterEmbed({
 							author: `\`📜\` Good job! ${args.interaction.member.displayName} completed ${completedObjectives.objectives.length === 1 ? "some objectives" : "an objective"}!`,
-							description: `- **${quest.name} \`📈\` ${objectiveCount.has}/${objectiveCount.outOf}**\n${objectives_f.join("\n")}`,
+							description: `- **${quest.name}** \`📈 ${objectiveCount.has}/${objectiveCount.outOf}\`\n${objectives_f.join("\n")}`,
 						});
 
 						// Push to the embed array
