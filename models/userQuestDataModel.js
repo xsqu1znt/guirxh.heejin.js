@@ -5,6 +5,7 @@ const schema_questData = new Schema(
 		_id: { type: String, require: true },
 
 		completed: { type: Array, default: [] },
+		completed_objective_cache: { type: Array, default: [] },
 
 		balance: { type: Number, default: 0 },
 		ribbons: { type: Number, default: 0 },

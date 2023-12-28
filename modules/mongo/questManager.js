@@ -143,9 +143,9 @@ async function checkUserQuest(userID, questID) {
 	}));
 
 	return {
-		...parsedObjectives,
+		quest_id: questID,
 		quest_complete: Object.values(parsedObjectives).filter(o => o.complete).length === _objectives.length,
-		quest_id: questID
+		objectives: parsedObjectives
 	};
 }
 
@@ -199,16 +199,35 @@ async function updateQuestProgress(user) {
 
 	// Get the user's quest progress
 	let questProgress = await Promise.all(_quests.map(q => checkUserQuest(user.id, q.id)));
+	let newObjectivesComplete = [];
+
+	// Iterate through quest progress
+	for (let progress of questProgress) {
+		let _objectives = Object.keys(progress.objectives);
+
+		for (let objectiveType of _objectives) {
+			if (userQuestData.completed_objective_cache.find(o => o.id === progress.quest_id && o.type === objectiveType))
+				continue;
+
+			// Push the objective to the array so we can let the user know they completed a quest objective
+			newObjectivesComplete.push({ id: progress.quest_id, type: objectiveType });
+
+			// Add to the objective cache in Mongo
+			uM_quests.update(user.id, {
+				$push: { completed_objective_cache: { id: progress.quest_id, type: objectiveType } }
+			});
+		}
+	}
 
 	let questsCompleted = questProgress.filter(p => p.quest_complete);
 
-	// Iterate through completed quests
-	for (let _quest of questsCompleted) {
-		// Call the quest complete function
-		completeQuest(user, _quest.quest_id);
-	}
+	// Call the completeQuest function on completed quests
+	for (let quest of questsCompleted) completeQuest(user, quest.quest_id);
 
-	return { completed: questsCompleted.map(q => q.quest_id) };
+	return {
+		questsComplete: questsCompleted.map(q => q.quest_id),
+		newObjectivesComplete
+	};
 }
 
 /* - - - - - { toString } - - - - - */
