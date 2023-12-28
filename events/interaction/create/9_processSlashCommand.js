@@ -1,19 +1,20 @@
-/* Executes commands requested by a command interaction. */
+/** @file Execute commands requested by a command interaction @author xsqu1znt */
 
-const { Client, BaseInteraction, PermissionsBitField } = require("discord.js");
-
+const { Client, PermissionsBitField, BaseInteraction } = require("discord.js");
 const { BetterEmbed } = require("../../../modules/discordTools");
-const { userManager } = require("../../../modules/mongo/index");
-const { error_ES } = require("../../../modules/embedStyles/index");
-// const jt = require("../../../modules/jsTools");
 const logger = require("../../../modules/logger");
 
-const config_client = require("../../../configs/config_client.json");
-const config_bot = require("../../../configs/config_bot.json");
+const config = {
+	client: require("../../../configs/config_client.json"),
+	bot: require("../../../configs/config_bot.json")
+};
 
 function userIsBotAdminOrBypass(interaction) {
-	let { OWNER_ID, ADMIN_IDS, admin_bypass_ids } = config_client;
-	return [OWNER_ID, ...ADMIN_IDS, ...(admin_bypass_ids[interaction.commandName] || [])].includes(interaction.user.id);
+	return [
+		config.client.OWNER_ID,
+		...config.client.ADMIN_IDS,
+		...(config.client.admin_bypass_ids[interaction.commandName] || [])
+	].includes(interaction.user.id);
 }
 
 function userIsGuildAdminOrBypass(interaction) {
@@ -24,21 +25,21 @@ function userIsGuildAdminOrBypass(interaction) {
 }
 
 module.exports = {
-	name: "process_slashCommand",
+	name: "processSlashCommand",
 	event: "interaction_create",
 
-	/** @param {Client} client @param {{ interaction: BaseInteraction }} args */
+	/** @param {Client} client @param {{interaction:BaseInteraction}} args */
 	execute: async (client, args) => {
 		// prettier-ignore
-		// Filter out non-guild interactions
-		if (!args.interaction.guildId) return await error_ES.send({
-			interaction: args.interaction, description: "You can't use commands in DMs, silly!"
+		// Filter out DM interactions
+		if (!args.interaction.guildId) return args.interaction.reply({
+			content: "You cannot use commands in DMs, silly!", ephemeral: true
 		});
 
-		// Filter out non-command interactions
-		if (!args.interaction.isCommand()) return;
+		// Filter out non-guild and non-command interactions
+		if (!args.interaction.guild || !args.interaction.isCommand()) return;
 
-		/// Misc. embeds
+		/* - - - - - { Misc. Embeds } - - - - - */
 		// prettier-ignore
 		let embed_error = new BetterEmbed({
 			interaction: args.interaction, author: { text: "⛔ Something is wrong" }
@@ -59,9 +60,9 @@ module.exports = {
 			interaction: args.interaction, description: `\`/${args.interaction.commandName}\` is not a command`, ephemeral: true
         });
 
-		// Execute the command
+		/* - - - - - { Parse Prefix Command } - - - - - */
 		try {
-			// Parse slash command options
+			// Check for command options
 			if (slashCommand?.options) {
 				let { community_server } = config_bot;
 
@@ -70,17 +71,17 @@ module.exports = {
 				let _isCommunityServer = args.interaction.guildId === community_server.ID;
 				let _isCommunityServerAdminChannel = args.interaction.channelId === community_server.channel_ids.ADMIN;
 
-				// Check if the command requires the user to be an admin for the bot
 				// prettier-ignore
-				if (_botAdminOnly && !userIsBotAdminOrBypass(args.interaction)) return await embed_error.send({
-					description: "Only bot staff can use this command", ephemeral: true
+				// Check if the command requires the user to be an admin for the bot
+				if (_botAdminOnly && !userIsBotAdminOrBypass(args.interaction)) return await args.interaction.reply({
+					content: "Only admins of this bot can use that command.", ephemeral: true
 				});
 
-				// Check if the command requires the user to have admin in the current guild
 				// prettier-ignore
-				if (_guildAdminOnly && !userIsGuildAdminOrBypass(args.interaction)) return await embed_error.send({
-					description: "You need admin to use this command", ephemeral: true
-                });
+				// Check if the command requires the user to have admin in the current guild
+				if (_guildAdminOnly && !userIsGuildAdminOrBypass(args.interaction)) return await args.interaction.reply({
+					content: "You need admin to use that command.", ephemeral: true
+				});
 
 				// Check if a botAdminOnly/guildAdminOnly command was ran in the community server
 				if (_isCommunityServer && !_isCommunityServerAdminChannel && (_botAdminOnly || _guildAdminOnly))
@@ -88,37 +89,35 @@ module.exports = {
 						description: `You can only use that command in <#${community_server.channel_ids.ADMIN}>`,
 						ephemeral: true
 					});
+
+				// prettier-ignore
+				if (slashCommand.options?.deferReply)
+					await args.interaction.deferReply().catch(() => null);
 			}
+
+			/* - - - - - { Execute } - - - - - */
+			/// Check if the user's in our Mongo database
+			let _userDataExists = await userManager.exists(args.interaction.user.id);
+			let _dontRequireUserData = slashCommand?.options?.dontRequireUserData || false;
+
+			// prettier-ignore
+			if (!_userDataExists && !_dontRequireUserData) return await embed_error.send({
+				description: "**You have not started yet!** Use \`/start\` first!"
+			});
+
+			// prettier-ignore
+			return await slashCommand.execute(client, args.interaction).then(async message => {
+				// TODO: run code here after the command is finished
+
+				// Increment commands used
+				userManager.statistics.commands.executed.increment(args.interaction.user.id);
+			});
 		} catch (err) {
-			logger.error(
-				"An error occurred: SLSH_CMD",
-				`cmd: /${args.interaction.commandName} | guildID: ${args.interaction.guild.id} | userID: ${args.interaction.user.id}`,
+			return logger.error(
+				"Could not execute command",
+				`SLSH_CMD: /${args.interaction.commandName} | guildID: ${args.interaction.guild.id} | userID: ${args.interaction.user.id}`,
 				err
 			);
 		}
-
-		/// Check if the user's in our Mongo database
-		let _userDataExists = await userManager.exists(args.interaction.user.id);
-		let _dontRequireUserData = slashCommand?.options?.dontRequireUserData || false;
-
-		// prettier-ignore
-		if (!_userDataExists && !_dontRequireUserData) return await embed_error.send({
-			description: "**You have not started yet!** Use \`/start\` first!", ephemeral: true
-		});
-
-		// prettier-ignore
-		if (slashCommand?.options?.deferReply)
-            try { await args.interaction.deferReply(); } catch {}
-
-		// Execute the slash command's function
-		return await slashCommand.execute(client, args.interaction).then(async message => {
-			// TODO: run code here after the command is finished
-
-			/// Update the user's statistics
-			await Promise.all([
-				// Commands used
-				userManager.statistics.commands.executed.increment(args.interaction.user.id)
-			]);
-		});
 	}
 };
