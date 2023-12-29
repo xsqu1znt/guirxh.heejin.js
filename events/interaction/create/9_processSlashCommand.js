@@ -133,9 +133,7 @@ module.exports = {
 						author: `📜 Good job! ${args.interaction.member.displayName} completed ${multipleObjectivesComplete ? "an objective" : "some objectives"}!`
 					});
 
-					let embeds_completedObjectives = [];
-
-					// Make an embed for each group of completed quest objectives
+					// Iterate through each quest with completed objectives and add them as fields to the embed
 					for (let completedObjectives of userQuestProgress.newObjectivesComplete) {
 						let quest = questManager.getActive(completedObjectives.quest_id);
 						if (!quest) continue;
@@ -152,20 +150,17 @@ module.exports = {
 						// Format objectives into strings
 						let objectives_f = completedObjectives.objectives.map(o => ` - \`${questManager.toString.objective(o)}\``);
 
-						// Create the embed :: { REMINDER OBJECTIVES }
-						let embed = new BetterEmbed({
-							author: `📜 Good job! ${args.interaction.member.displayName} completed ${completedObjectives.objectives.length === 1 ? "an objective" : "some objectives"}!`,
-							description: `- **${quest.name}** \`📈 ${objectiveCount.has}/${objectiveCount.outOf}\`\n${objectives_f.join("\n")}`,
+						// Add the objectives to the embed as a field
+						embed_completedObjectives.addFields({
+							name: `**${quest.name}** \`📈 ${objectiveCount.has}/${objectiveCount.outOf}\``,
+							value: objectives_f.join("\n")
 						});
-
-						// Push to the embed array
-						embeds_completedObjectives.push(embed);
 					}
 
-					// Send the embeds to the channel
-					embeds_completedObjectives.forEach(e =>
-						e.send({ channel: args.interaction.channel, sendMethod: "channel" }).catch(() => null)
-					);
+					// Check if the embed has fields before sending
+					if (embed_completedObjectives.data?.fields?.length) return await embed_completedObjectives.send({
+						channel: args.interaction.channel, sendMethod: "channel"
+					}).catch(() => null);
 				});
 			});
 		} catch (err) {
