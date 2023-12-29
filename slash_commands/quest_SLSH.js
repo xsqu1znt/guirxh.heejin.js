@@ -28,11 +28,14 @@ module.exports = {
 
 		await interaction.deferReply();
 
-		// Fetch the user from Mongo
-		let userData = await userManager.fetch(interaction.user.id, { type: "quest" });
+		// Fetch the user's quest cache from Mongo
+		let userQuestCache = await userManager.quests.fetch(interaction.user.id);
+
+		// Get the user's quest progress
+		let userQuestProgress = await questManager.updateQuestProgress(interaction.user);
 
 		// Create the embeds:: { QUEST }
-		let embeds_quest = user_ES.quest(interaction.member, userData);
+		let embeds_quest = user_ES.quest(interaction.member, userQuestCache, userQuestProgress.progress);
 
 		// prettier-ignore
 		// Set up page navigation

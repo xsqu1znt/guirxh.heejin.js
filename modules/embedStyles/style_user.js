@@ -36,7 +36,7 @@ const config = {
 	player: require("../../configs/config_player.json")
 };
 
-/** @param {GuildMember|User} user, @param {options_profile} options */
+/** @param {GuildMember|User} user @param {options_profile} options */
 function profile(user, options) {
 	options = { userData: null, card_selected: null, card_favorite: null, inventoryStats: null, ...options };
 
@@ -172,7 +172,7 @@ function profile(user, options) {
 	};
 }
 
-/** @param {GuildMember|User} user, @param {options_missing} options */
+/** @param {GuildMember|User} user @param {options_missing} options */
 function missing(user, target, cards, cards_has) {
 	// Sort the cards by set ID then global ID :: { DESCENDING }
 	cards.sort((a, b) => a.setID - b.setID || a.globalID - b.globalID);
@@ -379,7 +379,7 @@ function inventory(userData, options, stats) {
 	return embeds_inventory;
 }
 
-/** @param {GuildMember|User} user, @param {UserData} userData */
+/** @param {GuildMember|User} user @param {UserData} userData */
 function cooldowns(user, userData) {
 	// Get the enabled cooldowns from config_player
 	let cooldown_types = Object.entries(config_player.cooldowns)
@@ -411,7 +411,7 @@ function cooldowns(user, userData) {
 	return embed_cooldowns;
 }
 
-/** @param {GuildMember|User} user, @param {UserData} userData */
+/** @param {GuildMember|User} user @param {UserData} userData */
 function reminders(user, userData) {
 	// Get the cooldown names from the player config
 	let cooldowns = Object.keys(config_player.cooldowns);
@@ -449,13 +449,24 @@ function reminders(user, userData) {
 	return embed_reminders;
 }
 
-/** @param {GuildMember|User} user, @param {UserData} userData */
-function quest(user, userData) {
+/** @param {GuildMember|User} user @param {UserQuestCache} userQuestCache  @param {UserQuestProgress} userQuestProgress */
+function quest(user, userQuestCache, userQuestProgress) {
 	let embeds = [];
+
+	/* 
+	progress: [
+    	{ quest_id: 'q1', quest_complete: false, objectives: [Array] },
+    	{ quest_id: 'q2', quest_complete: false, objectives: [Array] }
+  	]
+	*/
 
 	// Iterate through each available quest
 	for (let i = 0; i < questManager.quests_active.length; i++) {
 		let _quest = questManager.quests_active[i];
+		let _progress = userQuestProgress.find(p => p.quest_id === _quest.id);
+
+		/* - - - - - { Variables } - - - - - */
+		let isComplete = _progress?.quest_complete || userQuestCache.completed.find(c => c === _quest.id) ? true : false;
 
 		// Create the embed :: { QUEST }
 		let embed_quest = new BetterEmbed({
@@ -464,10 +475,7 @@ function quest(user, userData) {
 		});
 
 		/* - - - - - { Format Quest Data } - - - - - */
-		let _objectives = Object.keys(_quest.objectives);
-
-		// Field title
-		let _fieldTitle = `\`📜\` **${_quest.name}** \`⏰\` *ending in ${jt.eta(_quest.ending)}*`;
+		let _objectiveTypes = Object.keys(_quest.objectives);
 
 		// Field description
 		let _fieldDescription = [
@@ -475,16 +483,28 @@ function quest(user, userData) {
 				"🏆 Rewards: $OVERVIEW\n$COMPLETE :: 📈 $OBJECTIVE_PROGRESS objectives"
 					.replace("$OVERVIEW", questManager.toString.rewards(_quest.rewards))
 
-					.replace("$COMPLETE", "🚫 incomplete")
-					.replace("$OBJECTIVE_PROGRESS", `0/${_objectives.length}`),
+					.replace("$COMPLETE", isComplete ? "✅ complete" : "🚫 incomplete")
+					.replace(
+						"$OBJECTIVE_PROGRESS",
+						`${_progress.objectives.filter(o => o.complete).length || 0}/${_progress.objectives.length}`
+					),
 				{ text_color: "yellow", format: "bold", codeblock: true }
 			),
 
-			_objectives.map((obj, idx) => `- ${questManager.toString.objectiveDetails(_quest, obj)}`).join("\n")
+			// prettier-ignore
+			_objectiveTypes.map(type =>
+				`- ${questManager.toString.objectiveDetails(_quest, type, _progress.objectives.find(p => p.type === type)) || null}`
+			).join("\n")
 		];
 
 		// Add the fields to the embed
-		embed_quest.addFields({ name: _fieldTitle, value: _fieldDescription.join("\n"), inline: true });
+		embed_quest.addFields({
+			name: `\`📜\` **${_quest.name}** \`⏰\` *ending in ${jt.eta(_quest.ending)}*`,
+
+			value: _fieldDescription.join("\n"),
+
+			inline: true
+		});
 
 		// Add the embed to the array
 		embeds.push(embed_quest);
@@ -494,7 +514,7 @@ function quest(user, userData) {
 	return embeds;
 }
 
-/** @param {GuildMember|User} user, @param {Cards[]} cards, @param {number} sellTotal */
+/** @param {GuildMember|User} user @param {Cards[]} cards @param {number} sellTotal */
 function sell(user, cards, sellTotal) {
 	// Parse the cards into strings
 	let cards_f = cards.length > 10 ? null : cards.map(c => cardManager.toString.basic(c));
