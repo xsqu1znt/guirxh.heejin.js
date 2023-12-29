@@ -210,7 +210,11 @@ async function updateQuestProgress(user) {
 			// Ignore objectives that aren't complete
 			if (!objective.complete) continue;
 
-			if (userQuestData.completed_objective_cache.find(o => o.quest_id === progress.quest_id && o.type === objective.type))
+			if (
+				userQuestData.completed_objective_cache.find(
+					o => o.quest_id === progress.quest_id && o.type === objective.type
+				)
+			)
 				continue;
 
 			// Push the objective to the array so we can let the user know they completed a quest objective
@@ -276,8 +280,8 @@ function toString_objective(objectiveType) {
 	}
 }
 
-/** @param {string} id @param {ObjectiveType} objectiveType */
-function toString_objectiveDetails(quest, objectiveType) {
+/** @param {string} id @param {ObjectiveType} objectiveType @param {ObjectiveProgress} objectiveProgress */
+function toString_objectiveDetails(quest, objectiveType, objectiveProgress) {
 	// prettier-ignore
 	switch (objectiveType) {
         case "balance": return quest.objectives?.balance
