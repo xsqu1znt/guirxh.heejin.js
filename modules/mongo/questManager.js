@@ -78,8 +78,9 @@ async function checkUserQuest(userID, questID) {
 	};
 
 	const checkHasDupes = async requiredDupes => {
+		// TODO: FIX NOT RETURNING ALL CARDS OF THE SAME GID
 		// Iterate through each globalID and fetch the matching cards in the user's card_inventory
-		let userCards = await Promise.all(requiredDupes.map(data => uM_inventory.get(userID, { gids: data.globalID })));
+		let userCards = await Promise.all(requiredDupes.map(data => uM_inventory.get(userID, { gids: data.globalID, filter: false })));
 		let has = [];
 
 		// Iterate through the fetched cards and check if the user has the required dupes
@@ -96,6 +97,8 @@ async function checkUserQuest(userID, questID) {
 			// Fail-safe
 			has.push(false);
 		}
+
+		console.log(userCards);
 
 		return { complete: has.filter(b => b).length === requiredDupes.length, has, outOf: requiredDupes.length };
 	};

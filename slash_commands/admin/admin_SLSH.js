@@ -12,7 +12,7 @@ const config = { bot: require("../../configs/config_bot.json") };
 /** @param {Client} client @param {CommandInteraction} interaction */
 async function subcommand_summon(client, interaction) {
 	// Interaction options
-	let userID = interaction.options.getString("userid");
+	let user = interaction.options.getUser("user") || null;
 	let globalIDs = interaction.options.getString("gid")?.replace(/ /g, "").split(",");
 	if (!Array.isArray(globalIDs)) globalIDs = [globalIDs];
 
@@ -23,10 +23,10 @@ async function subcommand_summon(client, interaction) {
 	});
 
 	// Fallback
-	if (!userID) return await embed_summon.send({ description: "You need to give a user ID" });
+	if (!user) return await embed_summon.send({ description: "You need to give a user ID" });
 
 	// Check if the user exists in the database
-	if (!(await userManager.exists(userID)))
+	if (!(await userManager.exists(user.id)))
 		return await embed_summon.send({
 			description: "That user has not started yet"
 		});
@@ -39,10 +39,10 @@ async function subcommand_summon(client, interaction) {
 	});
 
 	// Add the cards to the user's card_inventory
-	await userManager.inventory.add(userID, cards);
+	await userManager.inventory.add(user.id, cards);
 
 	/// Create and send the embeds
-	let recipient = await client.users.fetch(userID);
+	let recipient = await client.users.fetch(user.id);
 
 	let card_last = cards.slice(-1)[0] || cards[0];
 	let cards_f = cards.map(card => cardManager.toString.basic(card));
@@ -126,7 +126,7 @@ module.exports = {
 
 		// prettier-ignore
 		switch (command) {
-            case "summon": return await subcommand_summon(interaction);
+            case "summon": return await subcommand_summon(client, interaction);
             case "pay_carrot": return await subcommand_payUser(interaction, "balance");
             case "pay_ribbon": return await subcommand_payUser(interaction, "ribbons");
 		}
