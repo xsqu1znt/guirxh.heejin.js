@@ -1,20 +1,6 @@
 [
     {
         "id": "q1",
-        "name": "Un Poco Loco",
-        "ending": 1704372851000,
-        "objectives": {
-            "balance": 420,
-            "cards_new": 50
-        },
-        "rewards": {
-            "xp": 2500,
-            "carrots": 1000,
-            "ribbons": 100
-        }
-    },
-    {
-        "id": "q2",
         "name": "Mi Amor",
         "ending": 1704372851000,
         "objectives": {
@@ -25,6 +11,20 @@
                     "count": 5
                 }
             ]
+        },
+        "rewards": {
+            "xp": 2500,
+            "carrots": 1000,
+            "ribbons": 100
+        }
+    },
+    {
+        "id": "q2",
+        "name": "Un Poco Loco",
+        "ending": 1704372851000,
+        "objectives": {
+            "balance": 420,
+            "cards_new": 50
         },
         "rewards": {
             "xp": 2500,
