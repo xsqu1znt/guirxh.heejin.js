@@ -3,13 +3,65 @@ const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js"
 const { BetterEmbed } = require("../../modules/discordTools");
 const { error_ES } = require("../../modules/embedStyles/index");
 const { userManager } = require("../../modules/mongo/index");
+const cardManager = require("../../modules/cardManager");
 const messenger = require("../../modules/messenger");
 const jt = require("../../modules/jsTools");
 
 const config = { bot: require("../../configs/config_bot.json") };
 
+/** @param {Client} client @param {CommandInteraction} interaction */
+async function subcommand_summon(client, interaction) {
+	// Interaction options
+	let userID = interaction.options.getString("userid");
+	let globalIDs = interaction.options.getString("gid")?.replace(/ /g, "").split(",");
+	if (!Array.isArray(globalIDs)) globalIDs = [globalIDs];
+
+	// prettier-ignore
+	// Create a base embed
+	let embed_summon = new BetterEmbed({
+		interaction, author: { text: "$USERNAME | summon", iconURL: true }
+	});
+
+	// Fallback
+	if (!userID) return await embed_summon.send({ description: "You need to give a user ID" });
+
+	// Check if the user exists in the database
+	if (!(await userManager.exists(userID)))
+		return await embed_summon.send({
+			description: "That user has not started yet"
+		});
+
+	// Fetch the cards from our collection
+	let cards = globalIDs.map(globalID => cardManager.get.globalID(globalID)).filter(card => card);
+	// prettier-ignore
+	if (!cards.length) return await embed_summon.send({
+		description: "You need to give a valid card ID"
+	});
+
+	// Add the cards to the user's card_inventory
+	await userManager.inventory.add(userID, cards);
+
+	/// Create and send the embeds
+	let recipient = await client.users.fetch(userID);
+
+	let card_last = cards.slice(-1)[0] || cards[0];
+	let cards_f = cards.map(card => cardManager.toString.basic(card));
+
+	return await Promise.all([
+		// Let the user know the result
+		embed_summon.send({
+			description: `You summoned ${cards.length === 1 ? "`1 card`" : `\`${cards.length} cards\``} for **${
+				recipient.username
+			}**\n>>> ${cards_f.join("\n")}`,
+			imageURL: card_last.imageURL
+		}),
+		// Send a DM to the recipient
+		messenger.gift.cards(recipient, interaction.user, cards)
+	]);
+}
+
 /** @param {CommandInteraction} interaction @param {"balance"|"ribbons"} currencyType */
-async function payUser(interaction, currencyType) {
+async function subcommand_payUser(interaction, currencyType) {
 	let user = interaction.options.getUser("user");
 	let amount = interaction.options.getNumber("amount");
 
@@ -58,12 +110,13 @@ module.exports = {
             .setRequired(true)
             .addChoices(
                 // { name: "💻 server", value: "server" },
-                // { name: "🪶 summon", value: "summon" },
+                { name: "🪶 summon", value: "summon" },
                 { name: "🥕 pay", value: "pay_carrot" },
                 { name: "🎀 pay", value: "pay_ribbon" },
             )
         )
 
+		.addStringOption(options => options.setName("gid").setDescription("GID of the card (separate by comma)"))
         .addUserOption(options => options.setName("user").setDescription("The user"))
         .addNumberOption(options => options.setName("amount").setDescription("Amount to pay (use negative to withdraw)")),
 
@@ -73,8 +126,9 @@ module.exports = {
 
 		// prettier-ignore
 		switch (command) {
-            case "pay_carrot": return await payUser(interaction, "balance");
-            case "pay_ribbon": return await payUser(interaction, "ribbons");
+            case "summon": return await subcommand_summon(interaction);
+            case "pay_carrot": return await subcommand_payUser(interaction, "balance");
+            case "pay_ribbon": return await subcommand_payUser(interaction, "ribbons");
 		}
 	}
 };
