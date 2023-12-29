@@ -345,7 +345,7 @@ function toString_objectiveDetails(quest, objectiveType, objectiveProgress, ques
             	.replace("$COMPLETE", questIsComplete || objectiveProgress.complete ? "✔️" : "🚫")
 			: "n/a";
 
-		case "cards_have_dupes": console.log(objectiveProgress); return quest.objectives?.cards_have_dupes
+		case "cards_have_dupes": return quest.objectives?.cards_have_dupes
             ? `\`$COMPLETE\` \`🃏 Dupes\` owned:\n${quest.objectives.cards_have_dupes.map((d, idx) => {
                 let card = cardManager.get.globalID(d.globalID);
                 if (!card) return "invalid global ID";

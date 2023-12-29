@@ -6,10 +6,8 @@
         "objectives": {
             "level_user": 25,
             "cards_have_dupes": [
-                {
-                    "globalID": "1001",
-                    "count": 5
-                }
+                { "globalID": "1001", "count": 5 },
+                { "globalID": "1002", "count": 5 }
             ]
         },
         "rewards": {
