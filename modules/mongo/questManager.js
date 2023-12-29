@@ -281,43 +281,52 @@ function toString_objectiveDetails(quest, objectiveType) {
 	// prettier-ignore
 	switch (objectiveType) {
         case "balance": return quest.objectives?.balance
-            ? `\`${objectiveProgress?.complete ? "✅" : "🚫"} 🥕 Balance\` get \`${quest.objectives.balance}\` new ${quest.objectives.balance === 1 ? "carrot" : "carrots"}`
-            : "n/a";
+            ? `\`$COMPLETE 🥕 Balance\` get \`${quest.objectives.balance}\` new ${quest.objectives.balance === 1 ? "carrot" : "carrots"}`
+            	.replace("$COMPLETE", objectiveProgress?.complete ? "✅" : "🚫")
+			: "n/a";
 
         case "ribbons": return quest.objectives?.ribbons
-            ? `\`${objectiveProgress?.complete ? "✅" : "🚫"} 🎀 Ribbons\` get \`${quest.objectives.ribbons}\` new ${quest.objectives.ribbons === 1 ? "ribbon" : "ribbons"}`
-            : "n/a";
+            ? `\`$COMPLETE 🎀 Ribbons\` get \`${quest.objectives.ribbons}\` new ${quest.objectives.ribbons === 1 ? "ribbon" : "ribbons"}`
+            	.replace("$COMPLETE", objectiveProgress?.complete ? "✅" : "🚫")
+			: "n/a";
 
         case "daily_streak": return quest.objectives?.daily_streak
-            ? `\`${objectiveProgress?.complete ? "✅" : "🚫"} 📆 Daily Streak\` reach a \`${quest.objectives.daily_streak}\` streak`
+            ? `\`$COMPLETE 📆 Daily Streak\` reach a \`${quest.objectives.daily_streak}\` streak`
+				.replace("$COMPLETE", objectiveProgress?.complete ? "✅" : "🚫")
 			: "n/a";
 
 		case "xp_user": return quest.objectives?.xp_user
-            ? `\`${objectiveProgress?.complete ? "✅" : "🚫"} 👆 User XP\` get \`${quest.objectives.xp_user}\` XP`
-            : "n/a";
+            ? `\`$COMPLETE 👆 User XP\` get \`${quest.objectives.xp_user}\` XP`
+            	.replace("$COMPLETE", objectiveProgress?.complete ? "✅" : "🚫")
+			: "n/a";
 
         case "xp_idol": return quest.objectives?.xp_idol
-            ? `\`${objectiveProgress?.complete ? "✅" : "🚫"} 👆 Idol XP\` get \`${quest.objectives.xp_idol}\` XP for your idol`
-            : "n/a";
+            ? `\`$COMPLETE 👆 Idol XP\` get \`${quest.objectives.xp_idol}\` XP for your idol`
+            	.replace("$COMPLETE", objectiveProgress?.complete ? "✅" : "🚫")
+			: "n/a";
 
         case "level_user": return quest.objectives?.level_user
-            ? `\`${objectiveProgress?.complete ? "✅" : "🚫"} 📈 User LV.\` reach \`LV. ${quest.objectives.level_user}\``
-            : "n/a";
+            ? `\`$COMPLETE 📈 User LV.\` reach \`LV. ${quest.objectives.level_user}\``
+            	.replace("$COMPLETE", objectiveProgress?.complete ? "✅" : "🚫")
+			: "n/a";
 
         case "level_idol": return quest.objectives?.level_idol
-            ? `\`${objectiveProgress?.complete ? "✅" : "🚫"} 📈 Idol LV.\` reach \`LV. ${quest.objectives.level_idol}\``
-            : "n/a";
+            ? `\`$COMPLETE 📈 Idol LV.\` reach \`LV. ${quest.objectives.level_idol}\``
+            	.replace("$COMPLETE", objectiveProgress?.complete ? "✅" : "🚫")
+			: "n/a";
 
         case "team_power": return quest.objectives?.team_power
-            ? `\`${objectiveProgress?.complete ? "✅" : "🚫"} 👯‍♀️ ABI REP\` reach \`${quest.objectives.team_power}\` in ABI. REP. stats`
+            ? `\`$COMPLETE 👯‍♀️ ABI REP\` reach \`${quest.objectives.team_power}\` in ABI. REP. stats`
+				.replace("$COMPLETE", objectiveProgress?.complete ? "✅" : "🚫")
 			: "n/a";
 		
 		case "cards_new": return quest.objectives?.cards_new
-            ? `\`${objectiveProgress?.complete ? "✅" : "🚫"} 🃏 Inventory\` drop \`${quest.objectives.cards_new}\` new ${quest.objectives.cards_new === 1 ? "card" : "cards"}`
-            : "n/a";
+            ? `\`$COMPLETE 🃏 Inventory\` drop \`${quest.objectives.cards_new}\` new ${quest.objectives.cards_new === 1 ? "card" : "cards"}`
+            	.replace("$COMPLETE", objectiveProgress?.complete ? "✅" : "🚫")
+			: "n/a";
 
         case "cards_have_gids": return quest.objectives?.cards_have_gids
-            ? `\`${objectiveProgress?.complete ? "✅" : "🚫"} 🃏 GID\` own ${quest.objectives.cards_have_gids.length === 1 ? "a card" : "cards"} with ${quest.objectives.cards_have_gids.map(gid => {
+            ? `\`$COMPLETE 🃏 GID\` own ${quest.objectives.cards_have_gids.length === 1 ? "a card" : "cards"} with ${quest.objectives.cards_have_gids.map(gid => {
                 let card = cardManager.get.globalID(gid);
                 if (!card) return "invalid global ID";
 
@@ -326,11 +335,12 @@ function toString_objectiveDetails(quest, objectiveType) {
             : "n/a";
 
         case "cards_have_sets": return quest.objectives?.cards_have_sets
-            ? `\`${objectiveProgress?.complete ? "✅" : "🚫"} 🗣️ Set\` complete ${quest.objectives.cards_have_sets.length === 1 ? "set" : "sets"}:\n${quest.objectives.cards_have_sets.map(str => ` - \`🚫 ${str}\``).join("\n")}`
-            : "n/a";
+            ? `\`$COMPLETE 🗣️ Set\` complete ${quest.objectives.cards_have_sets.length === 1 ? "set" : "sets"}:\n${quest.objectives.cards_have_sets.map(str => ` - \`🚫 ${str}\``).join("\n")}`
+            	.replace("$COMPLETE", objectiveProgress?.complete ? "✅" : "🚫")
+			: "n/a";
 
         case "cards_have_dupes": return quest.objectives?.cards_have_dupes
-            ? `\`${objectiveProgress?.complete ? "✅" : "🚫"} 🃏 Dupes\` owned:\n${quest.objectives.cards_have_dupes.map(d => {
+            ? `\`$COMPLETE 🃏 Dupes\` owned:\n${quest.objectives.cards_have_dupes.map(d => {
                 let card = cardManager.get.globalID(d.globalID);
                 if (!card) return "invalid global ID";
 
