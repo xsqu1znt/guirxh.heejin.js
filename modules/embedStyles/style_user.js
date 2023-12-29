@@ -477,23 +477,23 @@ function quest(user, userQuestCache, userQuestProgress) {
 		/* - - - - - { Format Quest Data } - - - - - */
 		let _objectiveTypes = Object.keys(_quest.objectives);
 
+		// prettier-ignore
 		// Field description
 		let _fieldDescription = [
 			markdown.ansi(
 				"🏆 Rewards: $OVERVIEW\n$COMPLETE :: 📈 $OBJECTIVE_PROGRESS objectives"
 					.replace("$OVERVIEW", questManager.toString.rewards(_quest.rewards))
 
-					.replace("$COMPLETE", isComplete ? "✅ complete" : "🚫 incomplete")
+					.replace("$COMPLETE", isComplete ? "✔️ complete" : "🚫 incomplete")
 					.replace(
 						"$OBJECTIVE_PROGRESS",
-						`${_progress.objectives.filter(o => o.complete).length || 0}/${_progress.objectives.length}`
+						`${_progress ? _progress.objectives.filter(o => o.complete).length : 0}/${_objectiveTypes.length}`
 					),
 				{ text_color: "yellow", format: "bold", codeblock: true }
 			),
 
-			// prettier-ignore
 			_objectiveTypes.map(type =>
-				`- ${questManager.toString.objectiveDetails(_quest, type, _progress.objectives.find(p => p.type === type)) || null}`
+				`- ${questManager.toString.objectiveDetails(_quest, type, _progress ? _progress.objectives.find(p => p.type === type) : null, isComplete) || null}`
 			).join("\n")
 		];
 
