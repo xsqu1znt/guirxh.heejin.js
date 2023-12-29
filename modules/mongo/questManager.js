@@ -50,7 +50,7 @@ async function checkUserQuest(userID, questID) {
 	if (!quest) return null;
 
 	let _objectives = Object.entries(quest.objectives);
-	let parsedObjectives = {};
+	let parsedObjectives = [];
 
 	// Fetch the user from Mongo
 	let userData = await userManager.fetch(userID, { type: "quest" });
@@ -105,40 +105,40 @@ async function checkUserQuest(userID, questID) {
 	await Promise.all(_objectives.map(async ([objectiveKey, objectiveValue]) => {
 		switch (objectiveKey) {
 			// ObjectiveType :: { BALANCE }
-			case "balance": parsedObjectives.balance = checkIntBasedObjective(objectiveValue, userQuestData.balance); break;
+			case "balance": parsedObjectives.push({ type: "balance", ...checkIntBasedObjective(objectiveValue, userQuestData.balance) }); break;
 	
 			// ObjectiveType :: { RIBBONS }
-			case "ribbons": parsedObjectives.ribbons = checkIntBasedObjective(objectiveValue, userQuestData.ribbons); break;
+			case "ribbons": parsedObjectives.push({ type: "ribbons", ...checkIntBasedObjective(objectiveValue, userQuestData.ribbons) }); break;
 
 			// ObjectiveType :: { DAILY STREAK }
-			case "daily_streak": parsedObjectives.daily_streak = checkIntBasedObjective(objectiveValue, userData.daily_streak); break;
+			case "daily_streak": parsedObjectives.push({ type: "daily_streak", ...checkIntBasedObjective(objectiveValue, userData.daily_streak) }); break;
 
 			// ObjectiveType :: { USER XP }
-			case "xp_user": parsedObjectives.xp_user = checkIntBasedObjective(objectiveValue, userQuestData.xp_user); break;
+			case "xp_user": parsedObjectives.push({ type: "xp_user", ...checkIntBasedObjective(objectiveValue, userQuestData.xp_user) }); break;
 
 			// ObjectiveType :: { IDOL XP }
-			case "xp_idol": parsedObjectives.xp_idol = checkIntBasedObjective(objectiveValue, userQuestData.xp_idol); break;
+			case "xp_idol": parsedObjectives.push({ type: "xp_idol", ...checkIntBasedObjective(objectiveValue, userQuestData.xp_idol) }); break;
 
 			// ObjectiveType :: { USER LVL }
-			case "level_user": parsedObjectives.level_user = checkIntBasedObjective(objectiveValue, userQuestData.level_user); break;
+			case "level_user": parsedObjectives.push({ type: "level_user", ...checkIntBasedObjective(objectiveValue, userQuestData.level_user) }); break;
 	
 			// ObjectiveType :: { IDOL LVL }
-			case "level_idol": parsedObjectives.level_idol = checkIntBasedObjective(objectiveValue, userQuestData.level_idol); break;
+			case "level_idol": parsedObjectives.push({ type: "level_idol", ...checkIntBasedObjective(objectiveValue, userQuestData.level_idol) }); break;
 	
 			// ObjectiveType :: { TEAM POWER }
-			case "team_power": parsedObjectives.team_power = checkIntBasedObjective(objectiveValue, userQuestData.team_power); break;
+			case "team_power": parsedObjectives.push({ type: "team_power", ...checkIntBasedObjective(objectiveValue, userQuestData.team_power) }); break;
 	
 			// ObjectiveType :: { CARDS NEW }
-			case "cards_new": parsedObjectives.cards_new = checkIntBasedObjective(objectiveValue, userQuestData.cards_new); break;
+			case "cards_new": parsedObjectives.push({ type: "cards_new", ...checkIntBasedObjective(objectiveValue, userQuestData.cards_new) }); break;
 	
 			// ObjectiveType :: { CARDS have GIDS }
-			case "cards_have_gids": parsedObjectives.cards_have_gids = await checkHasGIDs(objectiveValue); break;
+			case "cards_have_gids": parsedObjectives.push({ type: "cards_have_gids", ...(await checkHasGIDs(objectiveValue)) }); break;
 	
 			// ObjectiveType :: { CARDS have SETS }
-			case "cards_have_sets": parsedObjectives.cards_have_sets = await checkHasSets(objectiveValue); break;
+			case "cards_have_sets": parsedObjectives.push({ type: "cards_have_sets", ...(await checkHasSets(objectiveValue)) }); break;
 	
 			// ObjectiveType :: { CARDS have DUPES }
-			case "cards_have_dupes": parsedObjectives.cards_have_dupes = await checkHasDupes(objectiveValue); break; 
+			case "cards_have_dupes": parsedObjectives.push({ type: "cards_have_dupes", ...(await checkHasDupes(objectiveValue)) }); break;
 		}
 	}));
 
@@ -199,29 +199,34 @@ async function updateQuestProgress(user) {
 
 	// Get the user's quest progress
 	let questProgress = await Promise.all(_quests.map(q => checkUserQuest(user.id, q.id)));
+	console.log(questProgress);
+
 	let newObjectivesComplete = [];
 
 	// Iterate through quest progress
 	for (let progress of questProgress) {
-		let _objectives = Object.keys(progress.objectives);
+		let _objectivesComplete = [];
 
-		let _objectivesCompleteData = [];
+		// Iterate through quest objectives
+		for (let objective of questProgress.objectives) {
+			// Ignore objectives that aren't complete
+			if (!objective.complete) continue;
 
-		for (let objectiveType of _objectives) {
-			if (userQuestData.completed_objective_cache.find(o => o.id === progress.quest_id && o.type === objectiveType))
+			if (userQuestData.completed_objective_cache.find(o => o.quest_id === progress.quest_id && o.type === objective.type))
 				continue;
 
 			// Push the objective to the array so we can let the user know they completed a quest objective
-			_objectivesCompleteData.push(objectiveType);
+			_objectivesComplete.push(objective.type);
 
 			// Add to the objective cache in Mongo
 			uM_quests.update(user.id, {
-				$push: { completed_objective_cache: { id: progress.quest_id, type: objectiveType } }
+				$push: { completed_objective_cache: { quest_id: progress.quest_id, type: objective.type } }
 			});
 		}
 
 		// Push the completed objectives to the main array
-		newObjectivesComplete.push({ questID: progress.quest_id, objectives: _objectivesCompleteData });
+		if (_objectivesComplete.length)
+			newObjectivesComplete.push({ quest_id: progress.quest_id, objectives: _objectivesComplete });
 	}
 
 	let questsCompleted = questProgress.filter(p => p.quest_complete);
@@ -230,9 +235,9 @@ async function updateQuestProgress(user) {
 	for (let quest of questsCompleted) completeQuest(user, quest.quest_id);
 
 	return {
-		data: questProgress,
+		progress: questProgress,
 		questsComplete: questsCompleted.map(q => q.quest_id),
-		newObjectivesComplete
+		newObjectivesComplete: newObjectivesComplete || []
 	};
 }
 

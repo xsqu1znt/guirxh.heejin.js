@@ -27,7 +27,7 @@ async function eta(userID, cooldownType) {
 	let userData = await userManager.fetch(userID, { type: "reminder" });
 
 	let cooldown_timestamp = userData.cooldowns.find(cd => cd.type === cooldownType)?.timestamp || 0;
-	return jt.eta({ then: cooldown_timestamp, ignorePast: true });
+	return jt.eta(cooldown_timestamp, { nullIfPast: true });
 }
 
 /** @param {string} userID @param {CooldownType} cooldownType */

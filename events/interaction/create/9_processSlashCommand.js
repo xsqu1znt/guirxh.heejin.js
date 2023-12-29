@@ -115,6 +115,10 @@ module.exports = {
 
 				// Trigger quest progress update
 				questManager.updateQuestProgress(args.interaction.user).then(async userQuestProgress => {
+					if (!userQuestProgress) return;
+
+					// console.log(userQuestProgress);
+
 					let embeds_completedObjectives = [];
 
 					// Make an embed for each group of completed quest objectives
