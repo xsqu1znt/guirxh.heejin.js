@@ -116,23 +116,37 @@ module.exports = {
 				// Trigger quest progress update
 				questManager.updateQuestProgress(args.interaction.user).then(async userQuestProgress => {
 					if (!userQuestProgress) return;
+					console.log(userQuestProgress);
 
-					// console.log(userQuestProgress);
+					/* - - - - - { Completed Quest Objectives } - - - - - */
+					if (!userQuestProgress.newObjectivesComplete.length) return;
+
+					/// Check if there were multiple objectives complete
+					let multipleObjectivesComplete = userQuestProgress.newObjectivesComplete.length > 1;
+					if (!multipleObjectivesComplete) userQuestProgress.newObjectivesComplete.forEach(q =>
+						multipleObjectivesComplete = q.objectives.length > 1
+					);
+
+					// Create the embed :: { COMPLETED QUEST OBJECTIVES }
+					let embed_completedObjectives = new BetterEmbed({
+						interaction: args.interaction,
+						author: `📜 Good job! ${args.interaction.member.displayName} completed ${multipleObjectivesComplete ? "an objective" : "some objectives"}!`
+					});
 
 					let embeds_completedObjectives = [];
 
 					// Make an embed for each group of completed quest objectives
 					for (let completedObjectives of userQuestProgress.newObjectivesComplete) {
-						let quest = questManager.getActive(completedObjectives.questID);
+						let quest = questManager.getActive(completedObjectives.quest_id);
 						if (!quest) continue;
 
 						// Get the QuestProgressData for the current quest ID
-						let _userQuestProgressData = userQuestProgress.data.find(d => d.quest_id === completedObjectives.questID);
+						let _questProgress = userQuestProgress.progress.find(d => d.quest_id === completedObjectives.quest_id);
 
 						// Get objective count
 						let objectiveCount = {
-							has: _userQuestProgressData.objectives.filter(o => o.complete).length,
-							outOf: _userQuestProgressData.objectives.length,
+							has: _questProgress.objectives.filter(o => o.complete).length,
+							outOf: _questProgress.objectives.length,
 						};
 
 						// Format objectives into strings
@@ -140,7 +154,7 @@ module.exports = {
 
 						// Create the embed :: { REMINDER OBJECTIVES }
 						let embed = new BetterEmbed({
-							author: `\`📜\` Good job! ${args.interaction.member.displayName} completed ${completedObjectives.objectives.length === 1 ? "some objectives" : "an objective"}!`,
+							author: `📜 Good job! ${args.interaction.member.displayName} completed ${completedObjectives.objectives.length === 1 ? "an objective" : "some objectives"}!`,
 							description: `- **${quest.name}** \`📈 ${objectiveCount.has}/${objectiveCount.outOf}\`\n${objectives_f.join("\n")}`,
 						});
 
