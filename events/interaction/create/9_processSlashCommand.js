@@ -124,13 +124,13 @@ module.exports = {
 					/// Check if there were multiple objectives complete
 					let multipleObjectivesComplete = userQuestProgress.newObjectivesComplete.length > 1;
 					if (!multipleObjectivesComplete) userQuestProgress.newObjectivesComplete.forEach(q =>
-						multipleObjectivesComplete = q.objectives.length > 1
+						multipleObjectivesComplete = q.objectives.length > 1 ? true : false
 					);
 
 					// Create the embed :: { COMPLETED QUEST OBJECTIVES }
 					let embed_completedObjectives = new BetterEmbed({
 						interaction: args.interaction,
-						author: `📜 Good job! ${args.interaction.member.displayName} completed ${multipleObjectivesComplete ? "an objective" : "some objectives"}!`
+						author: `📜 Good job! ${args.interaction.member.displayName} completed ${multipleObjectivesComplete ? "some objectives" : "an objective"}!`
 					});
 
 					// Iterate through each quest with completed objectives and add them as fields to the embed
@@ -148,19 +148,19 @@ module.exports = {
 						};
 
 						// Format objectives into strings
-						let objectives_f = completedObjectives.objectives.map(o => ` - \`${questManager.toString.objective(o)}\``);
+						let objectives_f = completedObjectives.objectives.map(o => `\`${questManager.toString.objective(o)}\``);
 
 						// Add the objectives to the embed as a field
 						embed_completedObjectives.addFields({
 							name: `**${quest.name}** \`📈 ${objectiveCount.has}/${objectiveCount.outOf}\``,
-							value: objectives_f.join("\n")
+							value: `>>> ${objectives_f.join("\n")}`,
+							inline: true
 						});
 					}
 
 					// Check if the embed has fields before sending
-					if (embed_completedObjectives.data?.fields?.length) return await embed_completedObjectives.send({
-						channel: args.interaction.channel, sendMethod: "channel"
-					}).catch(() => null);
+					if (embed_completedObjectives.data?.fields?.length)
+						return await embed_completedObjectives.send({ sendMethod: "followUp" }).catch(() => null);
 				});
 			});
 		} catch (err) {
