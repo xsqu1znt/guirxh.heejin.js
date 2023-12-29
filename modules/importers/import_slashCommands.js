@@ -29,7 +29,7 @@ module.exports = {
 	/** @param {Client} client */
 	init: client => {
 		let _path = hostMode ? "../../slash_commands" : "./slash_commands";
-		let commands = importCommands(_path, false);
+		let commands = importCommands(_path, true);
 
 		// prettier-ignore
 		for (let command of commands)
