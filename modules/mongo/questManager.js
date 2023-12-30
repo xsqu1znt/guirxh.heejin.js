@@ -363,41 +363,89 @@ function toString_objectiveDetails(quest, objectiveType, objectiveProgress, ques
 			return "- \`$COMPLETE\` \`🃏 Inventory\` drop \`$REQUIRED\` new $DYNAMIC :: \`[$PROGRESS]\`"
 				.replace("$COMPLETE", objectiveComplete_f)
 				.replace("$REQUIRED", quest.objectives.cards_new)
-				.replace("$DYNAMIC", quest.objectives.ribbon === 1 ? "card" : "cards")
+				.replace("$DYNAMIC", quest.objectives.cards_new === 1 ? "card" : "cards")
 				.replace("$PROGRESS", `${objectiveComplete ? quest.objectives.cards_new : objectiveProgress.has}/${quest.objectives.cards_new}`);
 
 		case "cards_have_gids":
 			if (!quest.objectives?.cards_have_gids) return "n/a";
 
-			let result = "- \`$COMPLETE\` \`🃏 GID\` own \`$REQUIRED\` $DYNAMIC: $SINGLE_CARD\n$MULTI_CARD"
+			let result_chg = "- \`$COMPLETE\` \`🃏 GID\` own \`$REQUIRED\` $DYNAMIC: $SINGLE_CARD\n$MULTI_CARD"
 				.replace("$COMPLETE", objectiveComplete_f)
 				.replace("$REQUIRED", quest.objectives.cards_have_gids.length)
-				.replace("$DYNAMIC", quest.objectives.ribbon === 1 ? "card" : "cards");
+				.replace("$DYNAMIC", quest.objectives.cards_have_gids.length === 1 ? "card" : "cards");
 		
 			// Dynamic format
 			if (quest.objectives.cards_have_gids.length === 1)
-				result = result.replace("\n$MULTI_CARD", "");
+				result_chg = result_chg.replace("\n$MULTI_CARD", "");
 			else
-				result = result.replace(" $SINGLE_CARD", "");
+				result_chg = result_chg.replace(" $SINGLE_CARD", "");
 
 			// Continue building the format
-			result = result
+			result_chg = result_chg
 				.replace("$SINGLE_CARD", `\`${objectiveComplete || objectiveProgress.has[0] ? "✔️" : "🚫"}\` ${cardManager.toString.gidPeak(quest.objectives.cards_have_gids[0])}`)
 				.replace("$MULTI_CARD", quest.objectives.cards_have_gids.map((gid, idx) => 
 					` - \`${objectiveComplete || objectiveProgress.has[idx] ? "✔️" : "🚫"}\` ${cardManager.toString.gidPeak(gid)}`
-				));
+				).join("\n"));
 
-			return result;
+			return result_chg;
 
-        case "cards_have_sets": return quest.objectives?.cards_have_sets
-            ? `\`$COMPLETE\` \`🗣️ Set\` complete ${quest.objectives.cards_have_sets.length === 1 ? "set" : "sets"}:\n${quest.objectives.cards_have_sets.map((str, idx) => ` - \`$COMPLETE\` \`${str}\``.replace("$COMPLETE", questIsComplete || objectiveProgress.complete || objectiveProgress.has[idx] ? "✔️" : "🚫")).join("\n")}`
-            	.replace("$COMPLETE", questIsComplete || objectiveProgress.complete ? "✔️" : "🚫")
-			: "n/a";
+		case "cards_have_sets":
+			if (!quest.objectives?.cards_have_sets) return "n/a";
 
-		case "cards_have_dupes": return quest.objectives?.cards_have_dupes
-            ? `\`$COMPLETE\` \`🃏 Dupes\` owned:\n${quest.objectives.cards_have_dupes.map((d, idx) => ` - \`$COMPLETE\` \`${d.count} ${d.count === 1 ? "dupe" : "dupes"}\` of ${cardManager.toString.gidPeak(d.globalID)}`.replace("$COMPLETE", questIsComplete || objectiveProgress.complete || objectiveProgress.has[idx] ? "✔️" : "🚫")).join("\n")}`
-				.replace("$COMPLETE", questIsComplete || objectiveProgress.complete ? "✔️" : "🚫")
-            : "n/a";
+			let result_chs = "- \`$COMPLETE\` \`🗣️ Set\` complete \`$REQUIRED\` $DYNAMIC: $SINGLE_CARD\n$MULTI_CARD"
+				.replace("$COMPLETE", objectiveComplete_f)
+				.replace("$REQUIRED", quest.objectives.cards_have_sets.length)
+				.replace("$DYNAMIC", quest.objectives.cards_have_sets.length === 1 ? "set" : "sets");
+		
+			// Dynamic format
+			if (quest.objectives.cards_have_sets.length === 1)
+				result_chs = result_chs.replace("\n$MULTI_CARD", "");
+			else
+				result_chs = result_chs.replace(" $SINGLE_CARD", "");
+
+			// Continue building the format
+			result_chs = result_chs
+				.replace("$SINGLE_CARD", `\`${objectiveComplete || objectiveProgress.has[0] ? "✔️" : "🚫"}\` ${quest.objectives.cards_have_sets[0]}`)
+				.replace("$MULTI_CARD", quest.objectives.cards_have_sets.map((setID, idx) =>
+					` - \`${objectiveComplete || objectiveProgress.has[idx] ? "✔️" : "🚫"}\` ${setID}`
+				).join("\n"));
+
+			return result_chs;
+
+		case "cards_have_dupes":
+			if (!quest.objectives?.cards_have_dupes) return "n/a";
+
+			let result_chd = "- \`$COMPLETE\` \`🃏 Dupes\` own: $SINGLE_CARD\n$MULTI_CARD"
+				.replace("$COMPLETE", objectiveComplete_f);
+		
+			// Dynamic format
+			if (quest.objectives.cards_have_dupes.length === 1)
+				result_chd = result_chd.replace("\n$MULTI_CARD", "");
+			else
+				result_chd = result_chd.replace(" $SINGLE_CARD", "");
+
+			// Continue building the format
+			result_chd = result_chd
+				.replace(
+					"$SINGLE_CARD",
+					"\`$COMPLETE\` \`$DUPE_COUNT $DYNAMIC\` of $GID_PEAK"
+						.replace("COMPLETE", objectiveComplete || objectiveProgress.has[0] ? "✔️" : "🚫")
+						.replace("DUPE_COUNT", quest.objectives.cards_have_dupes[0].count)
+						.replace("DYNAMIC", quest.objectives.cards_have_dupes.count === 1 ? "dupe" : "dupes")
+						.replace("GID_PEAK", cardManager.toString.gidPeak(quest.objectives.cards_have_dupes[0].globalID))
+				)
+				.replace(
+					"$MULTI_CARD",
+					quest.objectives.cards_have_dupes.map((dupe, idx) => 
+						" - \`$COMPLETE\` \`$DUPE_COUNT $DYNAMIC\` of $GID_PEAK"
+							.replace("COMPLETE", objectiveComplete || objectiveProgress.has[idx] ? "✔️" : "🚫")
+							.replace("DUPE_COUNT", dupe.count)
+							.replace("DYNAMIC", dupe.count === 1 ? "dupe" : "dupes")
+							.replace("GID_PEAK", cardManager.toString.gidPeak(dupe.globalID))
+					).join("\n")
+				);
+
+			return result_chd;
 
         default: return "invalid objective type";
     }
