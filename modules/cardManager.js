@@ -316,15 +316,13 @@ function toString_gidPeak(globalID) {
 	if (!card) return "n/a";
 
 	return markdown.link(
-		card.name,
+		card.globalID,
 		card.imageURL,
-		"$EMOJI $SINGLE [$GROUP] $NAME"
-			.replace("$UID", card.uid)
-			.replace("$EMOJI", card.emoji)
-			.replace("$GROUP", card.group)
+		"$SET_ID $SINGLE [$GROUP] $NAME"
+			.replace("$SET_ID", card.setID)
 			.replace("$SINGLE", card.single)
-			.replace("$NAME", markdown.link(card.name, card.imageURL))
-			.replace("$SELL_PRICE", card.sellPrice)
+			.replace("$GROUP", card.group)
+			.replace("$NAME", card.name)
 	);
 }
 
