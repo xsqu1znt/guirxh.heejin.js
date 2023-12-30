@@ -286,22 +286,36 @@ function toString_objective(objectiveType) {
 
 /** @param {string} id @param {ObjectiveType} objectiveType @param {ObjectiveProgress} objectiveProgress */
 function toString_objectiveDetails(quest, objectiveType, objectiveProgress, questIsComplete = false) {
+	let objectiveComplete = questIsComplete || objectiveProgress?.complete || false;
+	let objectiveComplete_f = objectiveComplete ? "✔️" : "🚫";
+
 	// prettier-ignore
 	switch (objectiveType) {
-        case "balance": return quest.objectives?.balance
-            ? `\`$COMPLETE\` \`🥕 Balance\` get \`${questIsComplete || objectiveProgress?.complete ? quest.objectives.balance : objectiveProgress?.has || quest.objectives.balance}/${quest.objectives.balance}\` new ${quest.objectives.balance === 1 ? "carrot" : "carrots"}`
-            	.replace("$COMPLETE", questIsComplete || objectiveProgress.complete ? "✔️" : "🚫")
-			: "n/a";
+		case "balance":
+			if (!quest.objectives?.balance) return "n/a";
 
-        case "ribbons": return quest.objectives?.ribbons
-            ? `\`$COMPLETE\` \`🎀 Ribbons\` get \`${questIsComplete || objectiveProgress?.complete ? quest.objectives.ribbons : objectiveProgress?.has || quest.objectives.ribbons}/${quest.objectives.ribbons}\` new ${quest.objectives.ribbons === 1 ? "ribbon" : "ribbons"}`
-            	.replace("$COMPLETE", questIsComplete || objectiveProgress.complete ? "✔️" : "🚫")
-			: "n/a";
+			return "\`$COMPLETE\` \`🥕 Balance\` get \`$REQUIRED\` new $DYNAMIC :: \`[$PROGRESS]\`"
+				.replace("$COMPLETE", objectiveComplete_f)
+				.replace("$REQUIRED", quest.objectives.balance)
+				.replace("$DYNAMIC", quest.objectives.balance === 1 ? "carrot" : "carrots")
+				.replace("$PROGRESS", `${objectiveComplete ? quest.objectives.balance : objectiveProgress.has}/${quest.objectives.balance}`);
 
-        case "daily_streak": return quest.objectives?.daily_streak
-            ? `\`$COMPLETE\` \`📆 Daily Streak\` reach a \`${questIsComplete || objectiveProgress?.complete ? quest.objectives.daily_streak : objectiveProgress?.has || quest.objectives.daily_streak}/${quest.objectives.daily_streak}\` streak`
-				.replace("$COMPLETE", questIsComplete || objectiveProgress.complete ? "✔️" : "🚫")
-			: "n/a";
+		case "ribbons":
+			if (!quest.objectives?.ribbons) return "n/a";
+
+			return "\`$COMPLETE\` \`🎀 Ribbons\` get \`$REQUIRED\` new $DYNAMIC :: \`[$PROGRESS]\`"
+				.replace("$COMPLETE", objectiveComplete_f)
+				.replace("$REQUIRED", quest.objectives.ribbon)
+				.replace("$DYNAMIC", quest.objectives.ribbon === 1 ? "ribbon" : "ribbons")
+				.replace("$PROGRESS", `${objectiveComplete ? quest.objectives.ribbon : objectiveProgress.has}/${quest.objectives.ribbons}`);
+
+		case "daily_streak":
+			if (!quest.objectives?.daily_streak) return "n/a";
+
+			return "\`$COMPLETE\` \`📆 Daily Streak\` reach a \`$REQUIRED\` streak :: \`[$PROGRESS]\`"
+				.replace("$COMPLETE", objectiveComplete_f)
+				.replace("$REQUIRED", quest.objectives.daily_streak)
+				.replace("$PROGRESS", `${objectiveComplete ? quest.objectives.daily_streak : objectiveProgress.has}/${quest.objectives.daily_streak}`);
 
 		case "xp_user": return quest.objectives?.xp_user
             ? `\`$COMPLETE\` \`👆 User XP\` get \`${questIsComplete || objectiveProgress?.complete ? quest.objectives.xp_user : objectiveProgress?.has || quest.objectives.xp_user}/${quest.objectives.xp_user}\` XP`
