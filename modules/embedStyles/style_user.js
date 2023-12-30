@@ -493,7 +493,7 @@ function quest(user, userQuestCache, userQuestProgress) {
 			),
 
 			_objectiveTypes.map(type =>
-				`- ${questManager.toString.objectiveDetails(_quest, type, _progress ? _progress.objectives.find(p => p.type === type) : null, isComplete) || null}`
+				questManager.toString.objectiveDetails(_quest, type, _progress ? _progress.objectives.find(p => p.type === type) : null, isComplete)
 			).join("\n")
 		];
 
