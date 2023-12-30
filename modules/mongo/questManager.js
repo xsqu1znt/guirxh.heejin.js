@@ -429,19 +429,19 @@ function toString_objectiveDetails(quest, objectiveType, objectiveProgress, ques
 				.replace(
 					"$SINGLE_CARD",
 					"\`$COMPLETE\` \`$DUPE_COUNT $DYNAMIC\` of $GID_PEAK"
-						.replace("COMPLETE", objectiveComplete || objectiveProgress.has[0] ? "✔️" : "🚫")
-						.replace("DUPE_COUNT", quest.objectives.cards_have_dupes[0].count)
-						.replace("DYNAMIC", quest.objectives.cards_have_dupes[0].count === 1 ? "dupe" : "dupes")
-						.replace("GID_PEAK", cardManager.toString.gidPeak(quest.objectives.cards_have_dupes[0].globalID))
+						.replace("$COMPLETE", objectiveComplete || objectiveProgress.has[0] ? "✔️" : "🚫")
+						.replace("$DUPE_COUNT", quest.objectives.cards_have_dupes[0].count)
+						.replace("$DYNAMIC", quest.objectives.cards_have_dupes[0].count === 1 ? "dupe" : "dupes")
+						.replace("$GID_PEAK", cardManager.toString.gidPeak(quest.objectives.cards_have_dupes[0].globalID))
 				)
 				.replace(
 					"$MULTI_CARD",
 					quest.objectives.cards_have_dupes.map((dupe, idx) => 
 						" - \`$COMPLETE\` \`$DUPE_COUNT $DYNAMIC\` of $GID_PEAK"
-							.replace("COMPLETE", objectiveComplete || objectiveProgress.has[idx] ? "✔️" : "🚫")
-							.replace("DUPE_COUNT", dupe.count)
-							.replace("DYNAMIC", dupe.count === 1 ? "dupe" : "dupes")
-							.replace("GID_PEAK", cardManager.toString.gidPeak(dupe.globalID))
+							.replace("$COMPLETE", objectiveComplete || objectiveProgress.has[idx] ? "✔️" : "🚫")
+							.replace("$DUPE_COUNT", dupe.count)
+							.replace("$DYNAMIC", dupe.count === 1 ? "dupe" : "dupes")
+							.replace("$GID_PEAK", cardManager.toString.gidPeak(dupe.globalID))
 					).join("\n")
 				);
 
