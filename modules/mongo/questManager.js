@@ -317,35 +317,54 @@ function toString_objectiveDetails(quest, objectiveType, objectiveProgress, ques
 				.replace("$REQUIRED", quest.objectives.daily_streak)
 				.replace("$PROGRESS", `${objectiveComplete ? quest.objectives.daily_streak : objectiveProgress.has}/${quest.objectives.daily_streak}`);
 
-		case "xp_user": return quest.objectives?.xp_user
-            ? `\`$COMPLETE\` \`👆 User XP\` get \`${questIsComplete || objectiveProgress?.complete ? quest.objectives.xp_user : objectiveProgress?.has || quest.objectives.xp_user}/${quest.objectives.xp_user}\` XP`
-            	.replace("$COMPLETE", questIsComplete || objectiveProgress.complete ? "✔️" : "🚫")
-			: "n/a";
+		case "xp_user":
+			if (!quest.objectives?.xp_user) return "n/a";
 
-        case "xp_idol": return quest.objectives?.xp_idol
-            ? `\`$COMPLETE\` \`👆 Idol XP\` get \`${questIsComplete || objectiveProgress?.complete ? quest.objectives.xp_idol : objectiveProgress?.has || quest.objectives.xp_idol}/${quest.objectives.xp_idol}\` XP for your idol`
-            	.replace("$COMPLETE", questIsComplete || objectiveProgress.complete ? "✔️" : "🚫")
-			: "n/a";
+			return "\`$COMPLETE\` \`👆 User XP\` get \`$REQUIRED\` user XP :: \`[$PROGRESS]\`"
+				.replace("$COMPLETE", objectiveComplete_f)
+				.replace("$REQUIRED", quest.objectives.xp_user)
+				.replace("$PROGRESS", `${objectiveComplete ? quest.objectives.xp_user : objectiveProgress.has}/${quest.objectives.xp_user}`);
 
-        case "level_user": return quest.objectives?.level_user
-            ? `\`$COMPLETE\` \`📈 User LV.\` reach \`LV. ${questIsComplete || objectiveProgress?.complete ? quest.objectives.level_user : objectiveProgress?.has || quest.objectives.level_user}/${quest.objectives.level_user}\``
-            	.replace("$COMPLETE", questIsComplete || objectiveProgress.complete ? "✔️" : "🚫")
-			: "n/a";
+		case "xp_idol":
+			if (!quest.objectives?.xp_idol) return "n/a";
 
-        case "level_idol": return quest.objectives?.level_idol
-            ? `\`$COMPLETE\` \`📈 Idol LV.\` reach \`LV. ${questIsComplete || objectiveProgress?.complete ? quest.objectives.level_idol : objectiveProgress?.has || quest.objectives.level_idol}/${quest.objectives.level_idol}\``
-            	.replace("$COMPLETE", questIsComplete || objectiveProgress.complete ? "✔️" : "🚫")
-			: "n/a";
+			return "\`$COMPLETE\` \`👆 Idol XP\` get \`$REQUIRED\` idol XP :: \`[$PROGRESS]\`"
+				.replace("$COMPLETE", objectiveComplete_f)
+				.replace("$REQUIRED", quest.objectives.xp_idol)
+				.replace("$PROGRESS", `${objectiveComplete ? quest.objectives.xp_idol : objectiveProgress.has}/${quest.objectives.xp_idol}`);
 
-        case "team_power": return quest.objectives?.team_power
-            ? `\`$COMPLETE\` \`👯‍♀️ ABI REP\` reach \`${questIsComplete || objectiveProgress?.complete ? quest.objectives.team_power : objectiveProgress?.has || quest.objectives.team_power}/${quest.objectives.team_power}\` in ABI. REP. stats`
-				.replace("$COMPLETE", questIsComplete || objectiveProgress.complete ? "✔️" : "🚫")
-			: "n/a";
+		case "level_user":
+			if (!quest.objectives?.level_user) return "n/a";
+
+			return "\`$COMPLETE\` \`📈 User LV.\` reach user level \`$REQUIRED\` :: \`[$PROGRESS]\`"
+				.replace("$COMPLETE", objectiveComplete_f)
+				.replace("$REQUIRED", quest.objectives.level_user)
+				.replace("$PROGRESS", `${objectiveComplete ? quest.objectives.level_user : objectiveProgress.has}/${quest.objectives.level_user}`);
+
+		case "level_idol":
+			if (!quest.objectives?.level_idol) return "n/a";
+
+			return "\`$COMPLETE\` \`📈 Idol LV.\` reach idol level \`$REQUIRED\` :: \`[$PROGRESS]\`"
+				.replace("$COMPLETE", objectiveComplete_f)
+				.replace("$REQUIRED", quest.objectives.level_idol)
+				.replace("$PROGRESS", `${objectiveComplete ? quest.objectives.level_idol : objectiveProgress.has}/${quest.objectives.level_idol}`);
+
+		case "team_power":
+			if (!quest.objectives?.team_power) return "n/a";
+
+			return "\`$COMPLETE\` \`👯‍♀️ ABI REP\` reach \`$REQUIRED\` in ABI. and REP. stats :: \`[$PROGRESS]\`"
+				.replace("$COMPLETE", objectiveComplete_f)
+				.replace("$REQUIRED", quest.objectives.team_power)
+				.replace("$PROGRESS", `${objectiveComplete ? quest.objectives.team_power : objectiveProgress.has}/${quest.objectives.team_power}`);
 		
-		case "cards_new": return quest.objectives?.cards_new
-            ? `\`$COMPLETE\` \`🃏 Inventory\` drop \`${questIsComplete || objectiveProgress?.complete ? quest.objectives.cards_new : objectiveProgress?.has || quest.objectives.cards_new}/${quest.objectives.cards_new}\` new ${quest.objectives.cards_new === 1 ? "card" : "cards"}`
-            	.replace("$COMPLETE", questIsComplete || objectiveProgress.complete ? "✔️" : "🚫")
-			: "n/a";
+		case "cards_new":
+			if (!quest.objectives?.cards_new) return "n/a";
+
+			return "\`$COMPLETE\` \`🃏 Inventory\` drop \`$REQUIRED\` new $DYNAMIC :: \`[$PROGRESS]\`"
+				.replace("$COMPLETE", objectiveComplete_f)
+				.replace("$REQUIRED", quest.objectives.cards_new)
+				.replace("$DYNAMIC", quest.objectives.ribbon === 1 ? "card" : "cards")
+				.replace("$PROGRESS", `${objectiveComplete ? quest.objectives.cards_new : objectiveProgress.has}/${quest.objectives.cards_new}`);
 
         case "cards_have_gids": return quest.objectives?.cards_have_gids
             ? `\`$COMPLETE\` \`🃏 GID\` own ${quest.objectives.cards_have_gids.length === 1 ? "a card" : "cards"}:\n${quest.objectives.cards_have_gids.map((gid, idx) => ` - \`$COMPLETE\` gid ${cardManager.toString.gidPeak(gid)}`.replace("$COMPLETE", questIsComplete || objectiveProgress.complete || objectiveProgress.has[idx] ? "✔️" : "🚫")).join("\n")}`
