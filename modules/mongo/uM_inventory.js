@@ -1,5 +1,5 @@
 /** @typedef {{uids: string|string[], gids:string|string[], sum:boolean}} options_inventory_has */
-/** @typedef {{uids: string|string[], gids:string|string[], filter:boolean}} options_inventory_get */
+/** @typedef {{uids: string|string[], gids:string|string[]}} options_inventory_get */
 
 const cardManager = require("../cardManager");
 const userManager = require("./uM_index");
@@ -67,7 +67,7 @@ async function has(userID, options) {
 
 /** @param {string} userID @param {options_inventory_get} options */
 async function get(userID, options) {
-	options = { uids: [], gids: [], filter: true, ...options };
+	options = { uids: [], gids: [], ...options };
 	options.uids = jt.isArray(options.uids).map(uid => new RegExp(`^${uid.toUpperCase()}$`, "i"));
 	options.gids = jt.isArray(options.gids);
 
@@ -85,22 +85,16 @@ async function get(userID, options) {
 				]
 			}
 		},
-		{ $group: { _id: "$_id", card_inventory: { $push: "$card_inventory" } } }
+		{ $group: { _id: "$_id", cards: { $push: "$card_inventory" } } }
 	];
 
 	let userData = (await userManager.models.user.aggregate(pipeline))[0];
-
-	let cards = [...Array(options.uids.length + options.gids.length)].fill(null);
-	// prettier-ignore
-	for (let i = 0; i < userData?.card_inventory?.length || 0; i++)
-		cards[i] = userData.card_inventory[i];
+	if (!userData?.cards?.length) return [];
 
 	// Parse CardLike
-	cards = cards.map(c => cardManager.parse.fromCardLike(c));
+	let cards = userData.cards.map(c => cardManager.parse.fromCardLike(c));
 
-	if (options.filter) cards = cards.filter(c => c);
-
-	return options.uids.length + options.gids.length > 1 ? cards : cards[0] || null;
+	return cards || [];
 }
 
 async function get_vault(userID) {
