@@ -65,7 +65,7 @@ async function checkUserQuest(userID, questID) {
 
 	const checkHasGIDs = async globalIDs => {
 		let has = await uM_inventory.has(userID, { gids: globalIDs });
-		return { complete: has.length === globalIDs.length, has, outOf: globalIDs.length };
+		return { complete: has.filter(b => b).length === globalIDs.length, has, outOf: globalIDs.length };
 	};
 
 	const checkHasSets = async setIDs => {
@@ -334,29 +334,17 @@ function toString_objectiveDetails(quest, objectiveType, objectiveProgress, ques
 			: "n/a";
 
         case "cards_have_gids": return quest.objectives?.cards_have_gids
-            ? `\`$COMPLETE\` \`🃏 GID\` own ${quest.objectives.cards_have_gids.length === 1 ? "a card" : "cards"}:\n${quest.objectives.cards_have_gids.map((gid, idx) => {
-                let card = cardManager.get.globalID(gid);
-                if (!card) return "invalid global ID";
-
-				return ` - \`$COMPLETE\` gid ${markdown.link(gid, card.imageURL, `${card.single} - ${card.name}`)}`
-					.replace("$COMPLETE", objectiveProgress.complete || objectiveProgress.has[idx] ? "✔️" : "🚫");
-			}).join("\n")}`
+            ? `\`$COMPLETE\` \`🃏 GID\` own ${quest.objectives.cards_have_gids.length === 1 ? "a card" : "cards"}:\n${quest.objectives.cards_have_gids.map((gid, idx) => ` - \`$COMPLETE\` gid ${cardManager.toString.gidPeak(gid)}`.replace("$COMPLETE", questIsComplete || objectiveProgress.complete || objectiveProgress.has[idx] ? "✔️" : "🚫")).join("\n")}`
 				.replace("$COMPLETE", questIsComplete || objectiveProgress.complete ? "✔️" : "🚫")
             : "n/a";
 
         case "cards_have_sets": return quest.objectives?.cards_have_sets
-            ? `\`$COMPLETE\` \`🗣️ Set\` complete ${quest.objectives.cards_have_sets.length === 1 ? "set" : "sets"}:\n${quest.objectives.cards_have_sets.map((str, idx) => ` - \`$COMPLETE\` \`${str}\``.replace("$COMPLETE", objectiveProgress.complete || objectiveProgress.has[idx] ? "✔️" : "🚫")).join("\n")}`
+            ? `\`$COMPLETE\` \`🗣️ Set\` complete ${quest.objectives.cards_have_sets.length === 1 ? "set" : "sets"}:\n${quest.objectives.cards_have_sets.map((str, idx) => ` - \`$COMPLETE\` \`${str}\``.replace("$COMPLETE", questIsComplete || objectiveProgress.complete || objectiveProgress.has[idx] ? "✔️" : "🚫")).join("\n")}`
             	.replace("$COMPLETE", questIsComplete || objectiveProgress.complete ? "✔️" : "🚫")
 			: "n/a";
 
 		case "cards_have_dupes": return quest.objectives?.cards_have_dupes
-            ? `\`$COMPLETE\` \`🃏 Dupes\` owned:\n${quest.objectives.cards_have_dupes.map((d, idx) => {
-                let card = cardManager.get.globalID(d.globalID);
-                if (!card) return "invalid global ID";
-
-				return ` - \`$COMPLETE\` \`${d.count} ${d.count === 1 ? "dupe" : "dupes"}\` of ${markdown.link(d.globalID, card.imageURL, `${card.single} - ${card.name}`)}`
-					.replace("$COMPLETE", questIsComplete || objectiveProgress.has[idx] ? "✔️" : "🚫");
-			}).join("\n")}`
+            ? `\`$COMPLETE\` \`🃏 Dupes\` owned:\n${quest.objectives.cards_have_dupes.map((d, idx) => ` - \`$COMPLETE\` \`${d.count} ${d.count === 1 ? "dupe" : "dupes"}\` of ${cardManager.toString.gidPeak(d.globalID)}`.replace("$COMPLETE", questIsComplete || objectiveProgress.complete || objectiveProgress.has[idx] ? "✔️" : "🚫")).join("\n")}`
 				.replace("$COMPLETE", questIsComplete || objectiveProgress.complete ? "✔️" : "🚫")
             : "n/a";
 

@@ -14,7 +14,7 @@ async function subcommand_summon(client, interaction) {
 	// Interaction options
 	let user = interaction.options.getUser("user") || null;
 	let globalIDs = interaction.options.getString("gid")?.replace(/ /g, "").split(",");
-	if (!Array.isArray(globalIDs)) globalIDs = [globalIDs];
+	globalIDs = jt.isArray(globalIDs);
 
 	// prettier-ignore
 	// Create a base embed

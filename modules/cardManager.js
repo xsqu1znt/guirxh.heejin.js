@@ -311,6 +311,23 @@ function parse_fromCardLike(cardLike) {
 }
 
 //! To String
+function toString_gidPeak(globalID) {
+	let card = get_globalID(globalID);
+	if (!card) return "n/a";
+
+	return markdown.link(
+		card.name,
+		card.imageURL,
+		"$EMOJI $SINGLE [$GROUP] $NAME"
+			.replace("$UID", card.uid)
+			.replace("$EMOJI", card.emoji)
+			.replace("$GROUP", card.group)
+			.replace("$SINGLE", card.single)
+			.replace("$NAME", markdown.link(card.name, card.imageURL))
+			.replace("$SELL_PRICE", card.sellPrice)
+	);
+}
+
 function toString_basic(card) {
 	// return "**`$UID`** `$EMOJI` **$GROUP** *`$SINGLE`* $NAME `💰 $SELL_PRICE`"
 	return "**`$UID`** `$EMOJI` **$SINGLE** `[$GROUP]` $NAME"
@@ -518,6 +535,7 @@ module.exports = {
 	},
 
 	toString: {
+		gidPeak: toString_gidPeak,
 		basic: toString_basic,
 		stage: toString_stage,
 		selectionEntry: toString_selectionEntry,
