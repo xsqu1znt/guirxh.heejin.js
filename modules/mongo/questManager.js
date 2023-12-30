@@ -256,7 +256,7 @@ function getActive(questID) {
 function toString_rewards(rewards) {
 	let rewards_f = [];
 
-	if (rewards?.xp) rewards_f.push(`☝️ ${rewards.xp}xp`);
+	if (rewards?.xp) rewards_f.push(`☝️ ${rewards.xp}XP`);
 	if (rewards?.carrots) rewards_f.push(`${configs.bot.emojis.currency_1.EMOJI} ${rewards.carrots}`);
 	if (rewards?.ribbons) rewards_f.push(`${configs.bot.emojis.currency_2.EMOJI} ${rewards.ribbons}`);
 
@@ -334,18 +334,18 @@ function toString_objectiveDetails(quest, objectiveType, objectiveProgress, ques
 			: "n/a";
 
         case "cards_have_gids": return quest.objectives?.cards_have_gids
-            ? `\`$COMPLETE\` \`🃏 GID\` own ${quest.objectives.cards_have_gids.length === 1 ? "a card" : "cards"} with ${quest.objectives.cards_have_gids.map((gid, idx) => {
+            ? `\`$COMPLETE\` \`🃏 GID\` own ${quest.objectives.cards_have_gids.length === 1 ? "a card" : "cards"}:\n${quest.objectives.cards_have_gids.map((gid, idx) => {
                 let card = cardManager.get.globalID(gid);
                 if (!card) return "invalid global ID";
 
-				return `\`$COMPLETE\` gid ${markdown.link(gid, card.imageURL, `${card.single} - ${card.name}`)}`
-					.replace("$COMPLETE", questIsComplete || objectiveProgress.complete ? "✔️" : "🚫");
-			}).join(", ")}`
+				return ` - \`$COMPLETE\` gid ${markdown.link(gid, card.imageURL, `${card.single} - ${card.name}`)}`
+					.replace("$COMPLETE", objectiveProgress.complete || objectiveProgress.has[idx] ? "✔️" : "🚫");
+			}).join("\n")}`
 				.replace("$COMPLETE", questIsComplete || objectiveProgress.complete ? "✔️" : "🚫")
             : "n/a";
 
         case "cards_have_sets": return quest.objectives?.cards_have_sets
-            ? `\`$COMPLETE\` \`🗣️ Set\` complete ${quest.objectives.cards_have_sets.length === 1 ? "set" : "sets"}:\n${quest.objectives.cards_have_sets.map((str, idx) => ` - \`$COMPLETE\` \`${str}\``.replace("$COMPLETE", questIsComplete || objectiveProgress.complete ? "✔️" : "🚫")).join("\n")}`
+            ? `\`$COMPLETE\` \`🗣️ Set\` complete ${quest.objectives.cards_have_sets.length === 1 ? "set" : "sets"}:\n${quest.objectives.cards_have_sets.map((str, idx) => ` - \`$COMPLETE\` \`${str}\``.replace("$COMPLETE", objectiveProgress.complete || objectiveProgress.has[idx] ? "✔️" : "🚫")).join("\n")}`
             	.replace("$COMPLETE", questIsComplete || objectiveProgress.complete ? "✔️" : "🚫")
 			: "n/a";
 

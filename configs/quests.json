@@ -1,34 +1,48 @@
 [
-    {
-        "id": "q1",
-        "name": "Un Poco Loco",
-        "ending": 1704372851000,
-        "objectives": {
-            "balance": 420,
-            "cards_new": 50,
-            "cards_have_sets": ["100", "298"]
-        },
-        "rewards": {
-            "xp": 2500,
-            "carrots": 1000,
-            "ribbons": 100
-        }
-    },
-    {
-        "id": "q2",
-        "name": "Mi Amor",
-        "ending": 1704372851000,
-        "objectives": {
-            "level_user": 25,
-            "cards_have_dupes": [
-                { "globalID": "1001", "count": 5 },
-                { "globalID": "1002", "count": 5 }
-            ]
-        },
-        "rewards": {
-            "xp": 2500,
-            "carrots": 1000,
-            "ribbons": 100
-        }
-    }
+	{
+		"id": "q1",
+		"name": "Un Poco Loco",
+		"ending": 1704372851000,
+		"objectives": {
+			"balance": 420,
+			"cards_new": 50,
+			"cards_have_sets": ["100", "298"]
+		},
+		"rewards": {
+			"xp": 2500,
+			"carrots": 1000,
+			"ribbons": 100
+		}
+	},
+	{
+		"id": "q2",
+		"name": "Mi Amor",
+		"ending": 1704372851000,
+		"objectives": {
+			"level_user": 25,
+			"cards_have_dupes": [
+				{ "globalID": "1001", "count": 5 },
+				{ "globalID": "1002", "count": 5 }
+			]
+		},
+		"rewards": {
+			"xp": 2500,
+			"carrots": 1000,
+			"ribbons": 100
+		}
+	},
+	{
+		"id": "q3",
+		"name": "Te Amo",
+		"ending": 1704372851000,
+		"objectives": {
+			"level_user": 25,
+			"cards_have_gids": ["1090", "1091", "1092", "1093"]
+		},
+		"rewards": {
+			"xp": 2500,
+			"carrots": 1000,
+			"ribbons": 100
+		}
+	}
 ]

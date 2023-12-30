@@ -52,8 +52,9 @@ async function has(userID, options) {
 		: [...Array(options.gids.length)].fill(false);
 
 	// prettier-ignore
-	if (!userData || (!userData.uids && !userData.gids))
+	if (!userData || (!userData.uids && !userData.gids)) {
 		if (options.sum) return false; else return boolArray;
+	}
 
 	if (isUIDOperation) {
 		for (let i = 0; i < options.uids.length; i++) if (userData.uids.includes(options.uids[i])) boolArray[i] = true;
