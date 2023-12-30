@@ -1,14 +1,12 @@
 [
     {
         "id": "q1",
-        "name": "Mi Amor",
+        "name": "Un Poco Loco",
         "ending": 1704372851000,
         "objectives": {
-            "level_user": 25,
-            "cards_have_dupes": [
-                { "globalID": "1001", "count": 5 },
-                { "globalID": "1002", "count": 5 }
-            ]
+            "balance": 420,
+            "cards_new": 50,
+            "cards_have_sets": ["100", "298"]
         },
         "rewards": {
             "xp": 2500,
@@ -18,11 +16,14 @@
     },
     {
         "id": "q2",
-        "name": "Un Poco Loco",
+        "name": "Mi Amor",
         "ending": 1704372851000,
         "objectives": {
-            "balance": 420,
-            "cards_new": 50
+            "level_user": 25,
+            "cards_have_dupes": [
+                { "globalID": "1001", "count": 5 },
+                { "globalID": "1002", "count": 5 }
+            ]
         },
         "rewards": {
             "xp": 2500,

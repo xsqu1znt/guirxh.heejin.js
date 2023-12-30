@@ -72,7 +72,9 @@ async function checkUserQuest(userID, questID) {
 		// Get the cards in the set
 		let sets = setIDs.map(setID => cardManager.get.setID(setID));
 		// Iterate through each set and check if the user has all the cards
-		let has = await Promise.all(sets.map(gids => uM_inventory.has(userID, { gids })));
+		let has = await Promise.all(
+			sets.map(set => uM_inventory.has(userID, { gids: set.map(c => c.globalID), sum: true }))
+		);
 
 		return { complete: has.filter(b => b).length === setIDs.length, has, outOf: setIDs.length };
 	};
