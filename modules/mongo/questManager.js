@@ -431,7 +431,7 @@ function toString_objectiveDetails(quest, objectiveType, objectiveProgress, ques
 					"\`$COMPLETE\` \`$DUPE_COUNT $DYNAMIC\` of $GID_PEAK"
 						.replace("COMPLETE", objectiveComplete || objectiveProgress.has[0] ? "✔️" : "🚫")
 						.replace("DUPE_COUNT", quest.objectives.cards_have_dupes[0].count)
-						.replace("DYNAMIC", quest.objectives.cards_have_dupes.count === 1 ? "dupe" : "dupes")
+						.replace("DYNAMIC", quest.objectives.cards_have_dupes[0].count === 1 ? "dupe" : "dupes")
 						.replace("GID_PEAK", cardManager.toString.gidPeak(quest.objectives.cards_have_dupes[0].globalID))
 				)
 				.replace(
