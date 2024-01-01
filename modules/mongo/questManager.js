@@ -214,20 +214,17 @@ async function updateQuestProgress(user) {
 			// Ignore objectives that aren't complete
 			if (!objective.complete) continue;
 
-			if (
-				userQuestData.completed_objective_cache.find(
-					o => o.quest_id === progress.quest_id && o.type === objective.type
-				)
-			)
+			// prettier-ignore
+			if (userQuestData.completed_objective_cache.find(o => o.quest_id === progress.quest_id && o.type === objective.type))
 				continue;
 
 			// Push the objective to the array so we can let the user know they completed a quest objective
-			_objectivesComplete.push(objective.type);
+			_objectivesComplete.push(objective);
 
 			// Add to the objective cache in Mongo
-			uM_quests.update(user.id, {
+			/* uM_quests.update(user.id, {
 				$push: { completed_objective_cache: { quest_id: progress.quest_id, type: objective.type } }
-			});
+			}); */
 		}
 
 		// Push the completed objectives to the main array

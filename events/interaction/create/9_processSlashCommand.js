@@ -116,7 +116,7 @@ module.exports = {
 				// Trigger quest progress update
 				questManager.updateQuestProgress(args.interaction.user).then(async userQuestProgress => {
 					if (!userQuestProgress) return;
-
+					
 					/* - - - - - { Completed Quest Objectives } - - - - - */
 					if (!userQuestProgress.newObjectivesComplete.length) return;
 
@@ -147,13 +147,14 @@ module.exports = {
 						};
 
 						// Format objectives into strings
-						let objectives_f = completedObjectives.objectives.map(o => `\`${questManager.toString.objective(o)}\``);
+						let objectives_f = completedObjectives.objectives.map(o =>
+							`- ${questManager.toString.objectiveDetails(quest, o.type, o).slice(6)}`
+						);
 
 						// Add the objectives to the embed as a field
 						embed_completedObjectives.addFields({
 							name: `**${quest.name}** \`📈 ${objectiveCount.has}/${objectiveCount.outOf}\``,
-							value: `>>> ${objectives_f.join("\n")}`,
-							inline: true
+							value: `>>> ${objectives_f.join("\n")}`
 						});
 					}
 
