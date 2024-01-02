@@ -222,9 +222,9 @@ async function updateQuestProgress(user) {
 			_objectivesComplete.push(objective);
 
 			// Add to the objective cache in Mongo
-			/* uM_quests.update(user.id, {
+			uM_quests.update(user.id, {
 				$push: { completed_objective_cache: { quest_id: progress.quest_id, type: objective.type } }
-			}); */
+			});
 		}
 
 		// Push the completed objectives to the main array

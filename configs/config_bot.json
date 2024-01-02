@@ -1,5 +1,5 @@
 {
-	"SEND_USER_REMINDERS": false,
+	"SEND_USER_REMINDERS": true,
 	"TIP_CHANCE": 5,
 
 	"community_server": {

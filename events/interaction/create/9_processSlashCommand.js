@@ -116,8 +116,7 @@ module.exports = {
 				// Trigger quest progress update
 				questManager.updateQuestProgress(args.interaction.user).then(async userQuestProgress => {
 					if (!userQuestProgress) return;
-					return;
-					
+
 					/* - - - - - { Completed Quest Objectives } - - - - - */
 					if (!userQuestProgress.newObjectivesComplete.length) return;
 
