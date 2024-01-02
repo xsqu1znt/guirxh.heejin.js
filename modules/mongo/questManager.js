@@ -81,7 +81,7 @@ async function checkUserQuest(userID, questID) {
 
 	const checkHasDupes = async requiredDupes => {
 		// Iterate through each globalID and fetch the matching cards in the user's card_inventory
-		let userCards = await Promise.all(requiredDupes.map(data => uM_inventory.get(userID, { gids: data.globalID })));
+		let userCards = await Promise.all(requiredDupes.map(data => uM_inventory.getMultiple(userID, { gids: data.globalID })));
 		let has = [];
 
 		// Iterate through the fetched cards and check if the user has the required dupes
@@ -90,7 +90,7 @@ async function checkUserQuest(userID, questID) {
 			let _dupeData = requiredDupes[i];
 
 			// prettier-ignore
-			if (!_cards || !_cards?.length) { has.push(false); continue; }
+			if (!_cards?.length) { has.push(false); continue; }
 			// prettier-ignore
 			// we're subtracting 1 here because the main (non-dupe) card doesn't count
 			if ((_cards.length - 1) >= _dupeData.count) { has.push(true); continue; }

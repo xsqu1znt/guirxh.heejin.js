@@ -15,14 +15,14 @@ module.exports = {
 	execute: async (client, interaction) => {
 		let debugTime = Date.now();
 
-		let userQuestData = await Promise.all(
-			questManager.quests_active.map(q => questManager.checkUserQuest(interaction.user.id, q.id))
-		);
+		let card = await userManager.inventory.get(interaction.user.id, { uid: "hpr537" });
+		let cards = await userManager.inventory.getMultiple(interaction.user.id, { uids: ["hpr537", "203d1g"] });
 
-		console.log(userQuestData);
+		console.log(card);
+		console.log(cards);
 
 		return await interaction.editReply({
-			content: `completed ${jt.eta({ now: debugTime, then: Date.now() })}`
+			content: `completed in ${jt.eta(Date.now(), { since: debugTime })}`
 		});
 	}
 };

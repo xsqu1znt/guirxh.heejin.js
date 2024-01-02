@@ -40,7 +40,7 @@ module.exports = {
 			await interaction.deferReply();
 
 			// Fetch the card from the user's card_inventory
-			let card = await userManager.inventory.get(interaction.user.id, { uids: uid });
+			let card = await userManager.inventory.get(interaction.user.id, { uid });
 			if (!card) return await error_ES.send({ interaction, description: "You need to give a valid UID" });
 
 			// Fetch the user from Mongo
@@ -90,13 +90,13 @@ module.exports = {
 			switch (section) {
 				// Fetch a card from the user's card_inventory :: { IDOL }
 				case "idol":
-					card = await userManager.inventory.get(interaction.user.id, { uids: userData.card_selected_uid });
+					card = await userManager.inventory.get(interaction.user.id, { uid: userData.card_selected_uid });
 					if (!card) return await error_ES.send({ interaction, description: "You do not have an idol set\n> *Use \`/set\` \`edit:🏃 idol\` to set one*" });
 					break;
 
 				// Fetch a card from the user's card_inventory :: { FAVORITE }
 				case "favorite":
-					card = await userManager.inventory.get(interaction.user.id, { uids: userData.card_favorite_uid });
+					card = await userManager.inventory.get(interaction.user.id, { uid: userData.card_favorite_uid });
 					if (!card) return await error_ES.send({ interaction, description: "You do not have a favorite card\n> *Use \`/set\` \`edit:⭐ favorite\` to set one*" });
 					break;
 
@@ -122,9 +122,9 @@ module.exports = {
 
 				// Fetch cards from the user's card_inventory :: { TEAM }
 				case "team":
-					let cards_team = await userManager.inventory.get(interaction.user.id, { uids: userData.card_team_uids });
+					let cards_team = await userManager.inventory.getMultiple(interaction.user.id, { uids: userData.card_team_uids });
 					// prettier-ignore
-					if (!cards_team || !cards_team.length) return await error_ES.send({
+					if (!cards_team.length) return await error_ES.send({
 						interaction, description: "You do not have a team set\n> *Use \`/set\` \`edit:👯 team\` to set one*"
 					});
 

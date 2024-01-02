@@ -68,39 +68,53 @@ async function has(userID, options) {
 	return boolArray.length > 1 ? boolArray : boolArray[0];
 }
 
-/** @param {string} userID @param {options_inventory_get} options */
-async function get(userID, options) {
-	options = { uids: [], gids: [], ...options };
-	options.uids = jt.isArray(options.uids).map(uid => new RegExp(`^${uid.toUpperCase()}$`, "i"));
-	options.gids = jt.isArray(options.gids);
+/** @param {string} userID @param {{uid:string}|{gid:string}} query */
+async function get(userID, query) {
+	let uid = query?.uid || null;
+	let gid = query?.gid || null;
 
-	if (!options.uids.length && !options.gids.length) return null;
+	/* - - - - - { Aggregation Pipeline } - - - - - */
+	let pipeline = [{ $unwind: "$card_inventory" }];
 
-	// prettier-ignore
-	// Create an aggregation pipeline
-	let pipeline = [
-		{ $unwind: "$card_inventory" },
-		{
-			$match: {
-				_id: userID, $or: [
-					{ "card_inventory.uid": { $in: options.uids } },
-					{ "card_inventory.globalID": { $in: options.gids } }
-				]
-			}
-		},
-		{ $group: { _id: "$_id", cards: { $push: "$card_inventory" } } }
-	];
+	// Determine match operation
+	if (uid) pipeline.push({ $match: { _id: userID, "card_inventory.uid": uid.toUpperCase() } });
+	if (gid) pipeline.push({ $match: { _id: userID, "card_inventory.globalID": gid } });
 
+	// Append the grouping operation
+	pipeline.push({ $group: { _id: "$_id", card: { $push: "$card_inventory" } } });
+
+	// Aggregate the collection
+	let userData = (await userManager.models.user.aggregate(pipeline))[0];
+	if (!userData?.card[0]) return null;
+
+	// Return the parsed card
+	return cardManager.parse.fromCardLike(userData.card[0]);
+}
+
+/** @param {string} userID @param {{uids:string[]}|{gids:string[]}} query */
+async function getMultiple(userID, query) {
+	let uids = query?.uids ? jt.isArray(query?.uids).map(uid => uid.toUpperCase()) : null;
+	let gids = query?.gids ? jt.isArray(query?.gids) : null;
+
+	/* - - - - - { Aggregation Pipeline } - - - - - */
+	let pipeline = [{ $unwind: "$card_inventory" }];
+
+	// Determine match operation
+	if (uids) pipeline.push({ $match: { _id: userID, "card_inventory.uid": { $in: uids } } });
+	if (gids) pipeline.push({ $match: { _id: userID, "card_inventory.globalID": { $in: gids } } });
+
+	// Append the grouping operation
+	pipeline.push({ $group: { _id: "$_id", cards: { $push: "$card_inventory" } } });
+
+	// Aggregate the collection
 	let userData = (await userManager.models.user.aggregate(pipeline))[0];
 	if (!userData?.cards?.length) return [];
 
-	// Parse CardLike
-	let cards = userData.cards.map(c => cardManager.parse.fromCardLike(c));
-
-	return cards || [];
+	// Return parsed cards
+	return userData.cards.map(c => cardManager.parse.fromCardLike(c));
 }
 
-async function get_vault(userID) {
+async function getVault(userID) {
 	// Create an aggregation pipeline
 	let pipeline = [
 		{ $unwind: "$card_inventory" },
@@ -247,4 +261,4 @@ async function stats(userID) {
 	};
 }
 
-module.exports = { count, has, get, getVault: get_vault, add, remove, update, sell, stats };
+module.exports = { count, has, get, getMultiple, getVault, add, remove, update, sell, stats };
