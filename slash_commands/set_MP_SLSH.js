@@ -65,7 +65,7 @@ module.exports = {
 					uids.length = 1;
 
 					// Fetch the card from the user's card_inventory
-					cards = await userManager.inventory.get(interaction.user.id, { uids });
+					cards = await userManager.inventory.get(interaction.user.id, { uid: uids });
 
 					// prettier-ignore
 					// Check if the card exists
@@ -94,7 +94,7 @@ module.exports = {
 					uids.length = 1;
 
 					// Fetch the card from the user's card_inventory
-					cards = await userManager.inventory.get(interaction.user.id, { uids });
+					cards = await userManager.inventory.get(interaction.user.id, { uid: uids });
 
 					// prettier-ignore
 					// Check if the card exists
@@ -119,7 +119,7 @@ module.exports = {
 					uids.length = 1;
 
 					// Fetch the card from the user's card_inventory
-					cards = await userManager.inventory.get(interaction.user.id, { uids });
+					cards = await userManager.inventory.get(interaction.user.id, { uid: uids });
 
 					// prettier-ignore
 					// Check if the card exists
@@ -148,7 +148,7 @@ module.exports = {
 					uids.length = 1;
 
 					// Fetch the card from the user's card_inventory
-					cards = await userManager.inventory.get(interaction.user.id, { uids });
+					cards = await userManager.inventory.get(interaction.user.id, { uid: uids });
 
 					// prettier-ignore
 					// Check if the card exists
@@ -171,7 +171,7 @@ module.exports = {
 			case "vault": switch (operation) {
 				case "add":
 					// Fetch the cards from the user's card_inventory
-					cards = jt.isArray(await userManager.inventory.get(interaction.user.id, { uids }));
+					cards = await userManager.inventory.getMultiple(interaction.user.id, { uids });
 
 					// prettier-ignore
 					// Check if the cards exists
@@ -205,7 +205,7 @@ module.exports = {
 
 				case "remove":
 					// Fetch the cards from the user's card_inventory
-					cards = jt.isArray(await userManager.inventory.get(interaction.user.id, { uids }));
+					cards = await userManager.inventory.getMultiple(interaction.user.id, { uids });
 
 					// prettier-ignore
 					// Check if the cards exists
@@ -243,7 +243,7 @@ module.exports = {
 					uids.length = jt.clamp(uids.length, { max: config.player.team.MAX_SIZE });
 
 					// Fetch the user's team cards from their card_inventory
-					let card_team_add = jt.isArray(await userManager.inventory.get(interaction.user.id, { uids: userData.card_team_uids }));
+					let card_team_add = await userManager.inventory.getMultiple(interaction.user.id, { uids: userData.card_team_uids });
 
 					// prettier-ignore
 					// Check if the user's team is full
@@ -252,7 +252,7 @@ module.exports = {
 					});
 
 					// Fetch the cards from the user's card_inventory
-					cards = jt.isArray(await userManager.inventory.get(interaction.user.id, { uids }));
+					cards = await userManager.inventory.getMultiple(interaction.user.id, { uids });
 
 					// prettier-ignore
 					// Check if the cards exists
@@ -278,7 +278,7 @@ module.exports = {
 
 					/// Check if the user gave valid UIDs
 					// Fetch the cards from the user's card_inventory
-					cards = jt.isArray(await userManager.inventory.get(interaction.user.id, { uids }));
+					cards = await userManager.inventory.getMultiple(interaction.user.id, { uids });
 
 					// prettier-ignore
 					// Check if the cards exists
@@ -287,7 +287,7 @@ module.exports = {
 					});
 
 					// Fetch the user's team cards from their card_inventory
-					let card_team_remove = jt.isArray(await userManager.inventory.get(interaction.user.id, { uids: userData.card_team_uids }));
+					let card_team_remove = await userManager.inventory.getMultiple(interaction.user.id, { uids: userData.card_team_uids });
 					
 					// Check if the user gave valid UIDs that are in their team
 					uids_remove_filter = uids.filter(uid => card_team_remove.filter(c => c).map(c => c.uid.toLowerCase()).includes(uid));

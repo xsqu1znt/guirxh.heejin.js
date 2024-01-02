@@ -49,10 +49,7 @@ module.exports = {
 		let cards = [];
 
 		if (uids.length) {
-			// prettier-ignore
-			let _cards = jt
-				.isArray(await userManager.inventory.get(interaction.user.id, { uids }))
-				.filter(c => c);
+			let _cards = (await userManager.inventory.get(interaction.user.id, { uids })).filter(c => c);
 
 			// prettier-ignore
 			// Let the user know no cards were found using those UIDs
@@ -82,10 +79,7 @@ module.exports = {
 				if (_card_set.length) _globalIDs.push(..._card_set.map(c => c.globalID));
 			}
 
-			// prettier-ignore
-			let _cards = jt
-				.isArray(await userManager.inventory.get(interaction.user.id, { gids: _globalIDs }))
-				.filter(c => c);
+			let _cards = (await userManager.inventory.get(interaction.user.id, { gids: _globalIDs })).filter(c => c);
 
 			// prettier-ignore
 			// Let the user know no cards were found using those UIDs

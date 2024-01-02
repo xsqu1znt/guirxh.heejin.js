@@ -56,8 +56,8 @@ module.exports = {
 
 		// Get the player's idol from their card_inventory
 		let card_idol = {
-			user: await userManager.inventory.get(interaction.user.id, { uids: userData.user.card_selected_uid }),
-			rival: rival ? await userManager.inventory.get(rival?.id, { uids: userData.rival?.card_selected_uid }) : null
+			user: await userManager.inventory.get(interaction.user.id, { uid: userData.user.card_selected_uid }),
+			rival: rival ? await userManager.inventory.get(rival?.id, { uid: userData.rival?.card_selected_uid }) : null
 		};
 
 		/* - - - - - { USER & RIVAL IDOL } - - - - - */
