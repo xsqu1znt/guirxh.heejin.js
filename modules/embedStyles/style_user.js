@@ -195,7 +195,7 @@ function missing(user, target, cards, cards_has) {
 				.replace("$HAS", _has_count)
 				.replace("$OUT_OF", cards_has.length)
 				.replace("$TARGET_USERNAME", target.id !== user.id ? `| 🔎 ${target.username}` : ""),
-			footer: `Page ${i + 1}/${cards_f.length || 1}`
+			footer: `Page ${i + 1}/${cards_f_chunk.length || 1}`
 		});
 
 		// Add the missing entries as fields
@@ -452,13 +452,6 @@ function reminders(user, userData) {
 /** @param {GuildMember|User} user @param {UserQuestCache} userQuestCache  @param {UserQuestProgress} userQuestProgress */
 function quest(user, userQuestCache, userQuestProgress) {
 	let embeds = [];
-
-	/* 
-	progress: [
-    	{ quest_id: 'q1', quest_complete: false, objectives: [Array] },
-    	{ quest_id: 'q2', quest_complete: false, objectives: [Array] }
-  	]
-	*/
 
 	// Iterate through each available quest
 	for (let i = 0; i < questManager.quests_active.length; i++) {

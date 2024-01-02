@@ -48,7 +48,7 @@ module.exports = {
 		// Set up page navigation
 		let embedNav = new EmbedNavigator({
 			interaction, embeds: [embeds_missing],
-			pagination: { type: "shortJump", useReactions: true }
+			pagination: { type: "short", useReactions: true }
         });
 
 		return await embedNav.send();
