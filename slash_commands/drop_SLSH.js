@@ -42,7 +42,7 @@ module.exports = {
 		// prettier-ignore
 		if (cooldown_drop) return await cooldown_ES.send({
 			interaction, ephemeral: true,
-			description: `Your \`${jt.toTitleCase(dropType.replace("_", " "))}\` will be ready **${cooldown_drop}**`
+			description: `Your \`${jt.toTitleCase(dropType.replace("_", " "))}\` will be ready in **${cooldown_drop}**`
 		});
 
 		// Create the embed :: { DROP }

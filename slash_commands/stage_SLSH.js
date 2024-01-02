@@ -21,7 +21,7 @@ module.exports = {
 		let cooldown_stage_user = await userManager.cooldowns.eta(interaction.user.id, "stage");
 		// prettier-ignore
 		if (cooldown_stage_user) return await cooldown_ES.send({
-            interaction, description: `Your stage will be ready **${cooldown_stage_user}**`
+            interaction, description: `Your stage will be ready in **${cooldown_stage_user}**`
 		});
 
 		/* - - - - - { RIVAL } - - - - - */
@@ -43,7 +43,7 @@ module.exports = {
 			let cooldown_stage_rival = await userManager.cooldowns.eta(rival?.id, "stage");
 			// prettier-ignore
 			if (cooldown_stage_rival) return await cooldown_ES.send({
-            	interaction, description: `Your rival can use stage **${cooldown_stage_rival}**`
+            	interaction, description: `Your rival can use stage in **${cooldown_stage_rival}**`
 			});
 		}
 

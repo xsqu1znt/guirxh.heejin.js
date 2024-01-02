@@ -63,6 +63,7 @@ async function commandsExecuted_increment(userID, amount = 1) {
 /* - - - - - { Push } - - - - - */
 /** @param {string} userID @param {number} amount @param {StatisticType} statType */
 async function push_xp(userID, amount, statType) {
+	return;
 	let data = { name: statType || "n/a", amount };
 	await update(userID, { $push: { xp: data } });
 }
@@ -73,6 +74,7 @@ async function push_xp(userID, amount, statType) {
  * @param {import("./uM_balance").CurrencyType} currencyType
  * @param {StatisticType} statType */
 async function push_balance(userID, amount, currencyType, statType) {
+	return;
 	let data = { name: statType || "n/a", amount };
 
 	// prettier-ignore
