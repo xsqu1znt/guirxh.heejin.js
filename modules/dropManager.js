@@ -128,8 +128,15 @@ async function drop(userID, dropType, cardPackOptions) {
 				/* - - - - - { Card Category } - - - - - */
 				// Pick a random category by rarity
 				let card_category = jt.choiceWeighted(dropCategories);
-
+				// Create an array of cards with only the chosen category's card rarity
+				let card_pool = cardManager.cards.general.filter(c => c.rarity === card_category.filter);
 				// Check if the user has any of the cards in the category
+				let has_category = await userManager.inventory.has(userID, { gids: card_pool.map(c => c.globalID) });
+
+				if (has_category.filter(b => b).length === card_pool.length) {
+					// Cross-out the category option
+					_dropCategories.splice(_dropCategories.indexOf(c => c.type === card_category.type), 1);
+				}
 			}
 		};
 
