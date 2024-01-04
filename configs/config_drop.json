@@ -1,17 +1,17 @@
 {
 	"count": {
-		"general": 5,
-		"weekly": 1,
-		"season": 1,
-		"event_1": 1,
-		"event_2": 1
+		"GENERAL": 5,
+		"WEEKLY": 1,
+		"SEASON": 1,
+		"EVENT_1": 1,
+		"EVENT_2": 1
 	},
 
 	"chance": {
-		"common": { "CHANCE": 100, "CARD_RARITY_FILTER": 70 },
-		"uncommon": { "CHANCE": 25, "CARD_RARITY_FILTER": 60 },
-		"rare": { "CHANCE": 15, "CARD_RARITY_FILTER": 50 },
-		"epic": { "CHANCE": 10, "CARD_RARITY_FILTER": 40 },
-		"mint": { "CHANCE": 5, "CARD_RARITY_FILTER": 30 }
+		"common": { "rarity": 100, "CARD_RARITY_FILTER": 70 },
+		"uncommon": { "rarity": 25, "CARD_RARITY_FILTER": 60 },
+		"rare": { "rarity": 15, "CARD_RARITY_FILTER": 50 },
+		"epic": { "rarity": 10, "CARD_RARITY_FILTER": 40 },
+		"mint": { "rarity": 5, "CARD_RARITY_FILTER": 30 }
 	}
 }

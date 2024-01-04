@@ -1,6 +1,7 @@
 /** @typedef {"user"|"idol"|"xp_user"|"xp_idol"} LevelType */
 
 const userManager = require("./uM_index");
+const questManager = require("./questManager");
 
 /** @param {string} userID @param {boolean} upsert */
 async function exists(userID, upsert = false) {
@@ -28,6 +29,8 @@ async function fetch(userID) {
 
 /** @param {string} userID @param {{}} query */
 async function update(userID, query) {
+	if (!questManager.quests_active.length) return;
+	
 	await insertNew(userID);
 	return userManager.models.userQuestData.findByIdAndUpdate(userID, query);
 }

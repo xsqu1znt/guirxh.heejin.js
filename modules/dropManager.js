@@ -16,6 +16,12 @@ const config = {
 	bot: require("../configs/config_bot.json")
 };
 
+const dropCategories = Object.entries(config.drop.chance).map(e => ({
+	type: e[0],
+	rarity: e[1].rarity,
+	filter: e[1].CARD_RARITY_FILTER
+}));
+
 /** @param {DropType} dropType @param {number} count @param {CardPackOptions} cardPackOptions  */
 async function drop(userID, dropType, cardPackOptions) {
 	cardPackOptions = { cardRarity: null, count: null, ...cardPackOptions };
@@ -101,19 +107,24 @@ async function drop(userID, dropType, cardPackOptions) {
 	};
 
 	const drop_general = async () => {
-		/// Randomly pick the cards
-		let cards = [];
+		const pickCards = count => {
+			let _cards = [];
 
-		for (let i = 0; i < config.drop.count.general; i++) {
-			let _category = jt.choiceWeighted(Object.values(config.drop.chance).map(c => ({ ...c, rarity: c.CHANCE })));
-			let _cards = cardManager.cards.general.filter(card => card.rarity === _category.CARD_RARITY_FILTER);
+			for (let i = 0; i < count; i++) {
+				// Pick the category
+				let card_category = jt.choiceWeighted(dropCategories);
+				// Create an array of cards with only the chosen category's card rarity
+				let card_pool = cardManager.cards.general.filter(c => c.rarity === card_category.filter);
+				// Push a random card to the array
+				_cards.push(jt.choice(card_pool, true));
+			}
 
-			cards.push({
-				card: jt.choice(_cards, true),
-				// Used for getting possible global IDs of the same category to reroll
-				setGIDs: _cards.map(c => c.globalID)
-			});
-		}
+			// Return the array
+			return _cards;
+		};
+
+		// Randomly pick the cards
+		let cards = pickCards(config.drop.count.GENERAL);
 
 		// Put the user's charm to good use
 		if (userCharms.dupeRepel) await reroll(cards);
