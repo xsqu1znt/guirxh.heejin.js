@@ -125,18 +125,33 @@ async function drop(userID, dropType, cardPackOptions) {
 				let _card = cards[i];
 				if (!_card) continue; // In case this is somehow null?
 
-				/* - - - - - { Card Category } - - - - - */
-				// Pick a random category by rarity
-				let card_category = jt.choiceWeighted(dropCategories);
-				// Create an array of cards with only the chosen category's card rarity
-				let card_pool = cardManager.cards.general.filter(c => c.rarity === card_category.filter);
-				// Check if the user has any of the cards in the category
-				let has_category = await userManager.inventory.has(userID, { gids: card_pool.map(c => c.globalID) });
+				// Determine if we even want to put up with this bullshit
+				// just kidding, this charm only has a chance of working, remember?
+				if (!jt.chance(userCharms.dupeRepel.chance_of_working)) continue;
 
-				if (has_category.filter(b => b).length === card_pool.length) {
-					// Cross-out the category option
-					_dropCategories.splice(_dropCategories.indexOf(c => c.type === card_category.type), 1);
-				}
+				/* - - - - - { Card Category } - - - - - */
+				const chooseCategory = async () => {
+					// Pick a random category by rarity
+					let card_category = jt.choiceWeighted(dropCategories);
+					// Create an array of cards with only the chosen category's card rarity
+					let card_pool = cardManager.cards.general.filter(c => c.rarity === card_category.filter);
+					// Check if the user has any of the cards in the category
+					let has_category = await userManager.inventory.has(userID, { gids: card_pool.map(c => c.globalID) });
+
+					// prettier-ignore
+					if (has_category.filter(b => b).length === card_pool.length) {
+						// Cross-out the category option
+						_dropCategories.splice(_dropCategories.indexOf(c => c.type === card_category.type), 1);
+						// Run it back, baby!
+						return await chooseCategory();
+					}
+
+					// Filter out cards the user has
+					card_pool = card_pool.filter((c, idx) => has_category[idx]);
+
+					// Return the result
+					return { card_category, card_pool };
+				};
 			}
 		};
 
