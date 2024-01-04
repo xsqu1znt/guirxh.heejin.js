@@ -59,7 +59,7 @@ module.exports = {
 		/// Fetch user data from Mongo
 		let userData = await userManager.fetch(interaction.user.id, { type: "essential" });
 		let inventoryStats = await userManager.inventory.stats(interaction.user.id);
-		let cards = await userManager.inventory.get(interaction.user.id, {
+		let cards = await userManager.inventory.getMultiple(interaction.user.id, {
 			uids: [userData.card_selected_uid, userData.card_favorite_uid]
 		});
 
