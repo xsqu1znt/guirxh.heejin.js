@@ -130,7 +130,7 @@ async function drop(userID, dropType, cardPackOptions) {
 				if (!jt.chance(userCharms.dupeRepel.chance_of_working)) continue;
 
 				/* - - - - - { Card Category } - - - - - */
-				const chooseCategory = async () => {
+				const chooseCardCategory = async () => {
 					// Pick a random category by rarity
 					let card_category = jt.choiceWeighted(dropCategories);
 					// Create an array of cards with only the chosen category's card rarity
@@ -143,7 +143,7 @@ async function drop(userID, dropType, cardPackOptions) {
 						// Cross-out the category option
 						_dropCategories.splice(_dropCategories.indexOf(c => c.type === card_category.type), 1);
 						// Run it back, baby!
-						return await chooseCategory();
+						return await chooseCardCategory();
 					}
 
 					// Filter out cards the user has
@@ -152,6 +152,12 @@ async function drop(userID, dropType, cardPackOptions) {
 					// Return the result
 					return { card_category, card_pool };
 				};
+
+				// Get the new card pool
+				let { card_pool } = await chooseCardCategory();
+
+				// Push a random card to the array
+				cards.splice(i, 1, jt.choice(card_pool, true));
 			}
 		};
 
