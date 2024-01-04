@@ -107,29 +107,46 @@ async function drop(userID, dropType, cardPackOptions) {
 	};
 
 	const drop_general = async () => {
-		const pickCards = count => {
-			let _cards = [];
+		let cards = [];
 
-			for (let i = 0; i < count; i++) {
-				// Pick the category
+		const dupeRepelReroll = async () => {
+			// Check if the user has any of the chosen cards
+			let has = await userManager.inventory.has(userID, { gids: cards.map(c => c.globalID) });
+			if (has.filter(b => b).length === cards.length) return; // Ignore this extra processing if not needed
+
+			// Create a duplicate of dropCategories so we can "cross-out" categories the user completed
+			let _dropCategories = structuredClone(dropCategories);
+
+			// Iterate through the cards the user already has
+			for (let i = 0; i < has.length; i++) {
+				let _exists = has[i];
+				if (!_exists) continue; // Skip processing cards they user doesn't have
+
+				let _card = cards[i];
+				if (!_card) continue; // In case this is somehow null?
+
+				/* - - - - - { Card Category } - - - - - */
+				// Pick a random category by rarity
 				let card_category = jt.choiceWeighted(dropCategories);
-				// Create an array of cards with only the chosen category's card rarity
-				let card_pool = cardManager.cards.general.filter(c => c.rarity === card_category.filter);
-				// Push a random card to the array
-				_cards.push(jt.choice(card_pool, true));
-			}
 
-			// Return the array
-			return _cards;
+				// Check if the user has any of the cards in the category
+			}
 		};
 
 		// Randomly pick the cards
-		let cards = pickCards(config.drop.count.GENERAL);
+		for (let i = 0; i < config.drop.count.GENERAL; i++) {
+			// Pick the category
+			let card_category = jt.choiceWeighted(dropCategories);
+			// Create an array of cards with only the chosen category's card rarity
+			let card_pool = cardManager.cards.general.filter(c => c.rarity === card_category.filter);
+			// Push a random card to the array
+			cards.push(jt.choice(card_pool, true));
+		}
 
-		// Put the user's charm to good use
-		if (userCharms.dupeRepel) await reroll(cards);
+		/* - - - - - { User Charms } - - - - - */
+		if (userCharms.dupeRepel) await dupeRepelReroll();
 
-		return cards.map(c => c.card);
+		return cards;
 	};
 
 	const drop_weekly = async () => {
