@@ -112,7 +112,7 @@ async function drop(userID, dropType, cardPackOptions) {
 		const dupeRepelReroll = async () => {
 			// Check if the user has any of the chosen cards
 			let has = await userManager.inventory.has(userID, { gids: cards.map(c => c.globalID) });
-			if (has.filter(b => b).length === cards.length) return; // Ignore this extra processing if not needed
+			if (has.filter(b => !b).length === cards.length) return; // Ignore this extra processing if not needed
 
 			// Create a duplicate of dropCategories so we can "cross-out" categories the user completed
 			let _dropCategories = structuredClone(dropCategories);
@@ -120,22 +120,22 @@ async function drop(userID, dropType, cardPackOptions) {
 			// Iterate through the cards the user already has
 			for (let i = 0; i < has.length; i++) {
 				let _exists = has[i];
-				if (!_exists) continue; // Skip processing cards they user doesn't have
+				if (!_exists) continue; // Skip processing non-dupe cards
 
 				let _card = cards[i];
 				if (!_card) continue; // In case this is somehow null?
 
 				// Determine if we even want to put up with this bullshit
 				// just kidding, this charm only has a chance of working, remember?
-				if (!jt.chance(userCharms.dupeRepel.chance_of_working)) {
-					console.log(`failed for card: ${_card.globalID}`);
-					continue;
-				}
+				if (!jt.chance(userCharms.dupeRepel.chance_of_working)) continue;
 
 				/* - - - - - { Card Category } - - - - - */
 				const chooseCardCategory = async () => {
+					// Return if we're out of choices
+					if (!_dropCategories.length) return null;
+
 					// Pick a random category by rarity
-					let card_category = jt.choiceWeighted(dropCategories);
+					let card_category = jt.choiceWeighted(_dropCategories);
 					// Create an array of cards with only the chosen category's card rarity
 					let card_pool = cardManager.cards.general.filter(c => c.rarity === card_category.filter);
 					// Check if the user has any of the cards in the category
@@ -144,23 +144,22 @@ async function drop(userID, dropType, cardPackOptions) {
 					// prettier-ignore
 					if (has_category.filter(b => b).length === card_pool.length) {
 						// Cross-out the category option
-						_dropCategories.splice(_dropCategories.indexOf(c => c.type === card_category.type), 1);
+						_dropCategories.splice(_dropCategories.findIndex(c => c.type === card_category.type), 1);
 						// Run it back, baby!
 						return await chooseCardCategory();
 					}
 
 					// Filter out cards the user has
-					card_pool = card_pool.filter((c, idx) => has_category[idx]);
+					card_pool = card_pool.filter((c, idx) => !has_category[idx]);
 
 					// Return the result
 					return { card_category, card_pool };
 				};
 
 				// Get the new card pool
-				let { card_pool } = await chooseCardCategory();
-
+				let reroll = await chooseCardCategory();
 				// Push a random card to the array
-				cards.splice(i, 1, jt.choice(card_pool, true));
+				if (reroll?.card_pool) cards.splice(i, 1, jt.choice(reroll.card_pool, true));
 			}
 		};
 
