@@ -75,13 +75,13 @@ module.exports = {
 				// prettier-ignore
 				// Check if the command requires the user to be an admin for the bot
 				if (_botAdminOnly && !userIsBotAdminOrBypass(args.interaction)) return await args.interaction.reply({
-					content: "Only admins of this bot can use that command.", ephemeral: true
+					content: "Only admins of this bot can use that command", ephemeral: true
 				});
 
 				// prettier-ignore
 				// Check if the command requires the user to have admin in the current guild
 				if (_guildAdminOnly && !userIsGuildAdminOrBypass(args.interaction)) return await args.interaction.reply({
-					content: "You need admin to use that command.", ephemeral: true
+					content: "You need admin to use that command", ephemeral: true
 				});
 
 				// Check if a botAdminOnly/guildAdminOnly command was ran in the community server
@@ -164,6 +164,13 @@ module.exports = {
 				});
 			});
 		} catch (err) {
+			// prettier-ignore
+			// Let the user know an error occurred
+			embed_error.send({
+				description: `Uh-oh! Something broke while using that command`,
+				ephemeral: true
+			}).catch(() => null);
+
 			return logger.error(
 				"Could not execute command",
 				`SLSH_CMD: /${args.interaction.commandName} | guildID: ${args.interaction.guild.id} | userID: ${args.interaction.user.id}`,

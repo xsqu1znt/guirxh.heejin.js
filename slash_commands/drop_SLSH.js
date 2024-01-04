@@ -101,7 +101,7 @@ module.exports = {
 			userManager.reminders.set(interaction.user.id, dropType, interaction.guildId, interaction.channelId),
 
 			// Update the user's quest progress
-			userManager.quests.increment.inventory(interaction.user.id, cards.length),
+			userManager.quests.increment.cardsNew(interaction.user.id, cards.length),
 			userManager.quests.increment.level(interaction.user.id, xpGained, "xp"),
 			// Update the user's statistics
 			userManager.statistics.increment.cardsDropped(interaction.user.id, cards.length)

@@ -127,7 +127,10 @@ async function drop(userID, dropType, cardPackOptions) {
 
 				// Determine if we even want to put up with this bullshit
 				// just kidding, this charm only has a chance of working, remember?
-				if (!jt.chance(userCharms.dupeRepel.chance_of_working)) continue;
+				if (!jt.chance(userCharms.dupeRepel.chance_of_working)) {
+					console.log(`failed for card: ${_card.globalID}`);
+					continue;
+				}
 
 				/* - - - - - { Card Category } - - - - - */
 				const chooseCardCategory = async () => {
