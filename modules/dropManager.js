@@ -130,7 +130,7 @@ async function drop(userID, dropType, options) {
 		return cards;
 	};
 
-	const dupeRepelReroll = async (cards, card_pool) => {
+	const dupeRepelReroll_cardPool = async (cards, card_pool) => {
 		// Check if the user has any of the chosen cards
 		let has = await userManager.inventory.has(userID, { gids: cards.map(c => c.globalID) });
 		// Ignore processing if the user didn't get dupes of any of the cards
@@ -171,6 +171,8 @@ async function drop(userID, dropType, options) {
 		return cards;
 	};
 
+	const dupeRepelReroll_cardPack = async cards => {};
+
 	const drop_general = async () => {
 		let cards = [];
 
@@ -202,7 +204,7 @@ async function drop(userID, dropType, options) {
 		}
 
 		/* - - - - - { User Charms } - - - - - */
-		if (userCharms.dupeRepel) await dupeRepelReroll(cards, card_pool);
+		if (userCharms.dupeRepel) await dupeRepelReroll_cardPool(cards, card_pool);
 
 		return cards;
 	};
@@ -218,7 +220,7 @@ async function drop(userID, dropType, options) {
 		}
 
 		/* - - - - - { User Charms } - - - - - */
-		if (userCharms.dupeRepel) await dupeRepelReroll(cards, card_pool);
+		if (userCharms.dupeRepel) await dupeRepelReroll_cardPool(cards, card_pool);
 
 		return cards;
 	};
@@ -251,13 +253,33 @@ async function drop(userID, dropType, options) {
 		}
 
 		/* - - - - - { User Charms } - - - - - */
-		if (userCharms.dupeRepel) await dupeRepelReroll(cards, card_pool);
+		if (userCharms.dupeRepel) await dupeRepelReroll_cardPool(cards, card_pool);
 
 		return cards;
 	};
 
 	const drop_cardPack = async () => {
-		if (!options.sets) return null;
+		if (!options.sets) return [];
+		options.sets = jt.isArray(options.sets);
+
+		let cards = [];
+
+		// Randomly pick the cards
+		for (let i = 0; i < options?.count || config.drop.count.SEASON; i++) {
+			// Pick the category
+			let card_set = jt.choiceWeighted(options.sets);
+			// Create an array of cards of only the chosen set
+			let card_pool = cardManager.get.setID(card_set.id);
+			// Push a random card from the shop to the array
+			cards.push(jt.choice(card_pool, true));
+		}
+
+		/* - - - - - { User Charms } - - - - - */
+		if (userCharms.dupeRepel) await dupeRepelReroll_cardPack(cards);
+
+		return cards;
+
+		/* if (!options.sets) return null;
 
 		options.sets = jt.isArray(options.sets);
 
@@ -278,7 +300,7 @@ async function drop(userID, dropType, options) {
 		// Put the user's charm to good use
 		if (userCharms.dupeRepel) await reroll(cards);
 
-		return cards.map(c => c.card);
+		return cards.map(c => c.card); */
 	};
 
 	let cards = null;
