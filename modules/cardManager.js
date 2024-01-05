@@ -55,6 +55,7 @@ const cards_shop_all = cards_all.filter(card =>
 ).filter(c => c.price !== null);
 const cards_shop_general = cards_shop_all.filter(card => config.shop.stock.card_set_ids.GENERAL.includes(card.setID));
 const cards_shop_special = cards_shop_all.filter(card => config.shop.stock.card_set_ids.SPECIAL.includes(card.setID));
+const cards_shop_general_clean = cards_shop_general.filter(card => card.setID !== "100"); // filters out custom cards
 
 // Card category meta
 const cards_category_names = {
@@ -497,12 +498,14 @@ module.exports = {
 		shop: {
 			all: cards_shop_all,
 			general: cards_shop_general,
+			generalClean: cards_shop_general_clean,
 			special: cards_shop_special,
 			count: cards_shop_all.length,
 
 			setIDs: {
 				all: [].concat(...Object.values(config.shop.stock.card_set_ids)),
 				general: config.shop.stock.card_set_ids.GENERAL,
+				generalClean: config.shop.stock.card_set_ids.GENERAL.filter(setID => setID !== "100"),
 				special: config.shop.stock.card_set_ids.SPECIAL
 			}
 		},

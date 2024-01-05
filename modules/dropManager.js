@@ -1,6 +1,6 @@
 /** @typedef {"general"|"weekly"|"season"|"event_1"|"event_2"|"cardPack"} DropType */
 
-/** @typedef CardPackOptions
+/** @typedef DropOptions
  * @property {{id:number, rarity:number}[]} sets
  * @property {number} count */
 
@@ -22,9 +22,9 @@ const dropCategories = Object.entries(config.drop.chance).map(e => ({
 	filter: e[1].CARD_RARITY_FILTER
 }));
 
-/** @param {DropType} dropType @param {number} count @param {CardPackOptions} cardPackOptions  */
-async function drop(userID, dropType, cardPackOptions) {
-	cardPackOptions = { cardRarity: null, count: null, ...cardPackOptions };
+/** @param {DropType} dropType @param {number} count @param {DropOptions} options  */
+async function drop(userID, dropType, options) {
+	options = { sets: null, count: null, ...options };
 
 	let userCharms = {
 		dupeRepel: await userManager.charms.get(userID, "dupeRepel")
@@ -134,8 +134,8 @@ async function drop(userID, dropType, cardPackOptions) {
 	const drop_general = async () => {
 		let cards = [];
 
-		// Randomly pick the cards
-		for (let i = 0; i < config.drop.count.GENERAL; i++) {
+		// Randomly pick the cards based on weighted category chance
+		for (let i = 0; i < options?.count || config.drop.count.GENERAL; i++) {
 			// Pick the category
 			let card_category = jt.choiceWeighted(dropCategories);
 			// Create an array of cards with only the chosen category's card rarity
@@ -151,7 +151,15 @@ async function drop(userID, dropType, cardPackOptions) {
 	};
 
 	const drop_weekly = async () => {
-		/// Randomly pick the cards
+		let cards = [];
+
+		// Randomly pick the cards
+		for (let i = 0; i < options?.count || config.drop.count.WEEKLY; i++) {
+			// Push a random card from the shop to the array
+			cards.push(jt.choice(cardManager.cards.shop.generalClean, true));
+		}
+
+		/* /// Randomly pick the cards
 		let cards = [];
 		let _cards = cardManager.cards.shop.general.filter(card =>
 			config.shop.stock.card_set_ids.GENERAL.filter(id => id !== "100").includes(card.setID)
@@ -167,7 +175,7 @@ async function drop(userID, dropType, cardPackOptions) {
 		// Put the user's charm to good use
 		if (userCharms.dupeRepel) await reroll(cards);
 
-		return cards.map(c => c.card);
+		return cards.map(c => c.card); */
 	};
 
 	const drop_season = async () => {
@@ -226,15 +234,15 @@ async function drop(userID, dropType, cardPackOptions) {
 	};
 
 	const drop_cardPack = async () => {
-		if (!cardPackOptions.sets) return null;
+		if (!options.sets) return null;
 
-		cardPackOptions.sets = jt.isArray(cardPackOptions.sets);
+		options.sets = jt.isArray(options.sets);
 
 		/// Randomly pick the cards
 		let cards = [];
 
-		for (let i = 0; i < cardPackOptions.count; i++) {
-			let { id: setID } = jt.choiceWeighted(cardPackOptions.sets);
+		for (let i = 0; i < options.count; i++) {
+			let { id: setID } = jt.choiceWeighted(options.sets);
 			let _cards = cardManager.get.setID(setID);
 
 			cards.push({
