@@ -1,6 +1,6 @@
 /** @file Execute commands requested by a command interaction @author xsqu1znt */
 
-const { Client, PermissionsBitField, BaseInteraction } = require("discord.js");
+const { Client, PermissionsBitField, BaseInteraction, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require("discord.js");
 const { userManager, questManager } = require("../../../modules/mongo");
 const { BetterEmbed } = require("../../../modules/discordTools");
 const logger = require("../../../modules/logger");
@@ -194,13 +194,25 @@ module.exports = {
 					.catch(() => null);
 			});
 		} catch (err) {
+			/* - - - - - { Let the User Know an Error Occurred } - - - - - */
+			// Create the button
+			let btn_supportServer = new ButtonBuilder()
+				.setStyle(ButtonStyle.Link)
+				.setLabel("Support Server")
+				.setURL(config.bot.community_server.INVITE_URL);
+
+			// Create the action row
+			let aR_support = new ActionRowBuilder().setComponents(btn_supportServer);
+
 			// prettier-ignore
-			// Let the user know an error occurred
+			// Send the embed with components
 			embed_fatalError.send({
-				description: `Something went wrong while using **\`/${args.interaction.commandName}\`**.\nFeel free to report this in our [support server](${config.bot.community_server.INVITE_URL})!`,
+				description: `Something went wrong while using **\`/${args.interaction.commandName}\`** <:sip2:1114692574616236163>\nFeel free to report this error in our support server!\n> **Report channel**: <#${config.bot.community_server.channel_ids.REPORT}>`,
+				components: aR_support,
 				ephemeral: true
 			}).catch(() => null);
 
+			// Log the error
 			return logger.error(
 				"Could not execute command",
 				`SLSH_CMD: /${args.interaction.commandName} | guildID: ${args.interaction.guild.id} | userID: ${args.interaction.user.id}`,
