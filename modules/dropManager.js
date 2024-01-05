@@ -397,13 +397,11 @@ async function drop(userID, dropType, options) {
 
 	/* - - - - - { Check for Dupes } - - - - - */
 	let card_globalIDs = cards.map(c => c.globalID);
-	// console.log(card_globalIDs);
 
-	// prettier-ignore
-	// Check if the user has duplicates of what was dropped already in their inventory
+	// Check if the user has duplicates their card_inventory
 	let dupeIndex = await userManager.inventory.has(userID, { gids: card_globalIDs });
 
-	// Check if the user got duplicates in the drop
+	// Check if the user got duplicates inside the drop itself
 	for (let i = 0; i < dupeIndex.length; i++) {
 		let previousGlobalIDs = card_globalIDs.slice(0, i);
 		if (previousGlobalIDs.includes(card_globalIDs[i])) dupeIndex[i] = true;
