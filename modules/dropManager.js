@@ -48,7 +48,7 @@ async function drop(userID, dropType, options) {
 			if (!_exists) continue; // Skip processing non-dupe cards
 
 			let _card = cards[i];
-			if (!_card) continue; // In case this is somehow null?
+			if (!_card) continue; // Incase this is somehow null?
 
 			// Determine if we even want to put up with this bullshit
 			// just kidding, this charm only has a **chance** of working, remember?
@@ -80,7 +80,7 @@ async function drop(userID, dropType, options) {
 						return await chooseCardCategory();
 					}
 				} else {
-					/// NOTE: or operators or used here incase we already have this data from the cache
+					/// NOTE: OR operators are used here incase we already have this data from the cache
 					// Create an array of cards with only the chosen category's card rarity
 					card_pool ||= cardManager.cards.general.filter(c => c.rarity === card_category.filter);
 					// Check if the user has any of the cards in the category
@@ -150,7 +150,7 @@ async function drop(userID, dropType, options) {
 			if (!_exists) continue; // Skip processing non-dupe cards
 
 			let _card = cards[i];
-			if (!_card) continue; // In case this is somehow null?
+			if (!_card) continue; // Incase this is somehow null?
 
 			// Determine if we even want to put up with this bullshit
 			// just kidding, this charm only has a **chance** of working, remember?
@@ -171,7 +171,105 @@ async function drop(userID, dropType, options) {
 		return cards;
 	};
 
-	const dupeRepelReroll_cardPack = async cards => {};
+	const dupeRepelReroll_cardPack = async cards => {
+		// Check if the user has any of the chosen cards
+		let has = await userManager.inventory.has(userID, { gids: cards.map(c => c.globalID) });
+		// Ignore processing if the user didn't get dupes of any of the cards
+		if (has.filter(b => !b).length === cards.length) return;
+
+		// Create a duplicate of the sets options so we can "cross-out" sets the user completed
+		let _cardSets = structuredClone(options.sets);
+
+		// Keep a cache array of what the user's missing in which category so we don't have to reload every time
+		let _cardSets_cache = new Map();
+
+		// Iterate through the cards the user already has
+		for (let i = 0; i < has.length; i++) {
+			let _exists = has[i];
+			if (!_exists) continue; // Skip processing non-dupe cards
+
+			let _card = cards[i];
+			if (!_card) continue; // Incase this is somehow null?
+
+			// Determine if we even want to put up with this bullshit
+			// just kidding, this charm only has a **chance** of working, remember?
+			if (!jt.chance(userCharms.dupeRepel.chance_of_working)) continue;
+
+			/* - - - - - { Card Sets } - - - - - */
+			const chooseCardSet = async () => {
+				// Return if we're out of choices
+				if (!_cardSets.length) return null;
+
+				let card_pool, has_set;
+
+				// Pick a random card set by rarity
+				let card_set = jt.choiceWeighted(_cardSets);
+				// Check if the chosen card set was crossed out already
+				// saves time and less load on database queries
+				if (!_cardSets.find(c => c.id === card_set.id)) return await chooseCardSet();
+				// Check if the chosen card set was queried already
+				let _cachedSet = _cardSets_cache.get(card_set.id);
+				// saves time and less load on database queries
+				if (_cachedSet) {
+					card_pool = _cachedSet.card_pool;
+
+					// prettier-ignore
+					if (!card_pool.length) {
+						// Cross-out the card set option
+						_cardSets.splice(_cardSets.findIndex(c => c.id === card_set.id), 1);
+						// Run it back, baby!
+						return await chooseCardSet();
+					}
+				} else {
+					/// NOTE: OR operators are used here incase we already have this data from the cache
+					// Create an array of cards of only the chosen set
+					card_pool ||= cardManager.get.setID(card_set.id);
+					// Check if the user has any of the cards in the set
+					has_set ||= await userManager.inventory.has(userID, { gids: card_pool.map(c => c.globalID) });
+
+					// prettier-ignore
+					if (has_set.filter(b => b).length === card_pool.length) {
+						// Cross-out the card set option
+						_cardSets.splice(_cardSets.findIndex(c => c.id === card_set.id), 1);
+						// Run it back, baby!
+						return await chooseCardSet();
+					}
+				}
+
+				if (!_cachedSet) {
+					// Filter out cards the user has if we're not using a cached version
+					card_pool = card_pool.filter((c, idx) => !has_set[idx]);
+					// Update the card set cache
+					_cardSets_cache.set(card_set.id, { card_pool });
+				}
+
+				// Return the result
+				return { card_set, card_pool };
+			};
+
+			// Get the new card pool and category
+			let reroll = await chooseCardSet();
+
+			if (reroll?.card_pool) {
+				// Pick a random card from the card pool
+				let _card_reroll = jt.choice(reroll.card_pool, true);
+
+				// Get the chosen category's card pool from cache
+				let _cachedSet = _cardSets_cache.get(reroll.card_set.id);
+				// prettier-ignore
+				// Remove the chosen card as an option from the selected category card pool
+				_cachedSet.card_pool.splice(_cachedSet.card_pool.findIndex(c => c.globalID === _card_reroll.globalID), 1);
+				// Update the cache
+				_cardSets_cache.set(reroll.card_set.id, _cachedSet);
+
+				// Replace the dupe card in the array
+				cards.splice(i, 1, _card_reroll);
+			}
+		}
+
+		// Return the card array
+		return cards;
+	};
 
 	const drop_general = async () => {
 		let cards = [];
@@ -278,29 +376,6 @@ async function drop(userID, dropType, options) {
 		if (userCharms.dupeRepel) await dupeRepelReroll_cardPack(cards);
 
 		return cards;
-
-		/* if (!options.sets) return null;
-
-		options.sets = jt.isArray(options.sets);
-
-		/// Randomly pick the cards
-		let cards = [];
-
-		for (let i = 0; i < options.count; i++) {
-			let { id: setID } = jt.choiceWeighted(options.sets);
-			let _cards = cardManager.get.setID(setID);
-
-			cards.push({
-				card: jt.choice(_cards, true),
-				// Used for getting possible global IDs of the same category to reroll
-				setGIDs: _cards.map(c => c.globalID)
-			});
-		}
-
-		// Put the user's charm to good use
-		if (userCharms.dupeRepel) await reroll(cards);
-
-		return cards.map(c => c.card); */
 	};
 
 	let cards = null;
