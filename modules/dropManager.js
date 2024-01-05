@@ -1,7 +1,7 @@
 /** @typedef {"general"|"weekly"|"season"|"event_1"|"event_2"|"cardPack"} DropType */
 
 /** @typedef DropOptions
- * @property {{id:number, rarity:number}[]} sets
+ * @property {{id:string, rarity:number}[]} sets
  * @property {number} count */
 
 const { userManager } = require("./mongo/index");
@@ -115,11 +115,9 @@ async function drop(userID, dropType, options) {
 
 				// Get the chosen category's card pool from cache
 				let _cachedCategory = _dropCategories_cache.get(reroll.card_category.type);
+				// prettier-ignore
 				// Remove the chosen card as an option from the selected category card pool
-				_cachedCategory.card_pool.splice(
-					_cachedCategory.card_pool.findIndex(c => c.globalID === _card_reroll.globalID),
-					1
-				);
+				_cachedCategory.card_pool.splice(_cachedCategory.card_pool.findIndex(c => c.globalID === _card_reroll.globalID), 1);
 				// Update the cache
 				_dropCategories_cache.set(reroll.card_category.type, _cachedCategory);
 
@@ -144,7 +142,7 @@ async function drop(userID, dropType, options) {
 		if (has_cardPool.filter(b => !b).length === card_pool.length) return;
 
 		// Filter out cards the user has in the card_pool
-		card_pool = card_pool.filter((c, idx) => !has_cardPool[idx]);
+		let card_pool_filtered = card_pool.filter((c, idx) => !has_cardPool[idx]);
 
 		// Iterate through the cards the user already has
 		for (let i = 0; i < has.length; i++) {
@@ -157,6 +155,16 @@ async function drop(userID, dropType, options) {
 			// Determine if we even want to put up with this bullshit
 			// just kidding, this charm only has a **chance** of working, remember?
 			if (!jt.chance(userCharms.dupeRepel.chance_of_working)) continue;
+
+			// Pick a random card from the card pool
+			let _card_reroll = jt.choice(card_pool_filtered, true);
+
+			// prettier-ignore
+			// Remove the chosen card as an option from the filtered card pool
+			card_pool_filtered.splice(card_pool_filtered.findIndex(c => c.globalID === _card_reroll.globalID), 1);
+
+			// Replace the dupe card in the array
+			cards.splice(i, 1, _card_reroll);
 		}
 
 		// Return the card array
@@ -183,38 +191,36 @@ async function drop(userID, dropType, options) {
 	};
 
 	const drop_weekly = async () => {
+		// filters out custom cards
+		let card_pool = cardManager.cards.shop.general.filter(c => c.setID !== "100");
 		let cards = [];
 
 		// Randomly pick the cards
 		for (let i = 0; i < options?.count || config.drop.count.WEEKLY; i++) {
 			// Push a random card from the shop to the array
-			cards.push(jt.choice(cardManager.cards.shop.generalClean, true));
+			cards.push(jt.choice(card_pool, true));
 		}
 
 		/* - - - - - { User Charms } - - - - - */
-		if (userCharms.dupeRepel) await dupeRepelReroll(cards, cardManager.cards.shop.generalClean);
+		if (userCharms.dupeRepel) await dupeRepelReroll(cards, card_pool);
 
 		return cards;
 	};
 
 	const drop_season = async () => {
-		/// Randomly pick the cards
+		let card_pool = cardManager.cards.base.seas.filter(c => config.event.season.CARD_RARITY_FILTER.includes(c.rarity));
 		let cards = [];
-		let _cards = cardManager.cards.base.seas.filter(card =>
-			config.event.season.CARD_RARITY_FILTER.includes(card.rarity)
-		);
 
-		for (let i = 0; i < config.drop.count.season; i++)
-			cards.push({
-				card: jt.choice(_cards, true),
-				// Used for getting possible global IDs of the same category to reroll
-				setGIDs: _cards.map(c => c.globalID)
-			});
+		// Randomly pick the cards
+		for (let i = 0; i < options?.count || config.drop.count.SEASON; i++) {
+			// Push a random card from the shop to the array
+			cards.push(jt.choice(card_pool, true));
+		}
 
-		// Put the user's charm to good use
-		if (userCharms.dupeRepel) await reroll(cards);
+		/* - - - - - { User Charms } - - - - - */
+		if (userCharms.dupeRepel) await dupeRepelReroll(cards, card_pool);
 
-		return cards.map(c => c.card);
+		return cards;
 	};
 
 	const drop_event = async eventType => {
@@ -235,21 +241,19 @@ async function drop(userID, dropType, options) {
 				return null;
 		}
 
-		/// Randomly pick the cards
+		let card_pool = cardManager.cards.event.filter(c => _CARD_RARITY_FILTER.includes(c.rarity));
 		let cards = [];
-		let _cards = cardManager.cards.event.filter(card => _CARD_RARITY_FILTER.includes(card.rarity));
 
-		for (let i = 0; i < _count; i++)
-			cards.push({
-				card: jt.choice(_cards, true),
-				// Used for getting possible global IDs of the same category to reroll
-				setGIDs: _cards.map(c => c.globalID)
-			});
+		// Randomly pick the cards
+		for (let i = 0; i < options?.count || _count; i++) {
+			// Push a random card from the shop to the array
+			cards.push(jt.choice(card_pool, true));
+		}
 
-		// Put the user's charm to good use
-		if (userCharms.dupeRepel) await reroll(cards);
+		/* - - - - - { User Charms } - - - - - */
+		if (userCharms.dupeRepel) await dupeRepelReroll(cards, card_pool);
 
-		return cards.map(c => c.card);
+		return cards;
 	};
 
 	const drop_cardPack = async () => {
