@@ -106,7 +106,7 @@ async function drop(userID, dropType, cardPackOptions) {
 		return cards;
 	};
 
-	const rerollGeneral = async cards => {
+	const dupeRepelReroll_general = async cards => {
 		// Check if the user has any of the chosen cards
 		let has = await userManager.inventory.has(userID, { gids: cards.map(c => c.globalID) });
 		if (has.filter(b => !b).length === cards.length) return; // Ignore this extra processing if not needed
@@ -191,73 +191,28 @@ async function drop(userID, dropType, cardPackOptions) {
 			if (reroll?.card_pool) {
 				// Pick a random card from the card pool
 				let _card_reroll = jt.choice(reroll.card_pool, true);
-				// Remove the chosen card as an option from the selected category card pool
-				
 
-				// _dropCategories.splice(_dropCategories.findIndex(c => c.type === card_category.type), 1);
+				// Get the chosen category's card pool from cache
+				let _cachedCategory = _dropCategories_cache.get(reroll.card_category.type);
+				// Remove the chosen card as an option from the selected category card pool
+				_cachedCategory.card_pool.splice(
+					_dropCategories_cache.card_pool.findIndex(c => c.globalID === _card_reroll.globalID),
+					1
+				);
+				// Update the cache
+				_dropCategories_cache.set(reroll.card_category.type, _cachedCategory);
 
 				// Replace the dupe card in the array
 				cards.splice(i, 1, _card_reroll);
 			}
 		}
+
+		// Return the card array
+		return cards;
 	};
 
 	const drop_general = async () => {
 		let cards = [];
-
-		const dupeRepelReroll = async () => {
-			// Check if the user has any of the chosen cards
-			let has = await userManager.inventory.has(userID, { gids: cards.map(c => c.globalID) });
-			if (has.filter(b => !b).length === cards.length) return; // Ignore this extra processing if not needed
-
-			// Create a duplicate of dropCategories so we can "cross-out" categories the user completed
-			let _dropCategories = structuredClone(dropCategories);
-
-			// Iterate through the cards the user already has
-			for (let i = 0; i < has.length; i++) {
-				let _exists = has[i];
-				if (!_exists) continue; // Skip processing non-dupe cards
-
-				let _card = cards[i];
-				if (!_card) continue; // In case this is somehow null?
-
-				// Determine if we even want to put up with this bullshit
-				// just kidding, this charm only has a chance of working, remember?
-				if (!jt.chance(userCharms.dupeRepel.chance_of_working)) continue;
-
-				/* - - - - - { Card Category } - - - - - */
-				const chooseCardCategory = async () => {
-					// Return if we're out of choices
-					if (!_dropCategories.length) return null;
-
-					// Pick a random category by rarity
-					let card_category = jt.choiceWeighted(_dropCategories);
-					// Create an array of cards with only the chosen category's card rarity
-					let card_pool = cardManager.cards.general.filter(c => c.rarity === card_category.filter);
-					// Check if the user has any of the cards in the category
-					let has_category = await userManager.inventory.has(userID, { gids: card_pool.map(c => c.globalID) });
-
-					// prettier-ignore
-					if (has_category.filter(b => b).length === card_pool.length) {
-						// Cross-out the category option
-						_dropCategories.splice(_dropCategories.findIndex(c => c.type === card_category.type), 1);
-						// Run it back, baby!
-						return await chooseCardCategory();
-					}
-
-					// Filter out cards the user has
-					card_pool = card_pool.filter((c, idx) => !has_category[idx]);
-
-					// Return the result
-					return { card_category, card_pool };
-				};
-
-				// Get the new card pool
-				let reroll = await chooseCardCategory();
-				// Push a random card to the array
-				if (reroll?.card_pool) cards.splice(i, 1, jt.choice(reroll.card_pool, true));
-			}
-		};
 
 		// Randomly pick the cards
 		for (let i = 0; i < config.drop.count.GENERAL; i++) {
@@ -270,7 +225,7 @@ async function drop(userID, dropType, cardPackOptions) {
 		}
 
 		/* - - - - - { User Charms } - - - - - */
-		if (userCharms.dupeRepel) await dupeRepelReroll();
+		if (userCharms.dupeRepel) await dupeRepelReroll_general();
 
 		return cards;
 	};
