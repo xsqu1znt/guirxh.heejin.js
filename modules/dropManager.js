@@ -337,12 +337,12 @@ async function drop(userID, dropType, options) {
 		switch (eventType) {
 			case 1:
 				_CARD_RARITY_FILTER = config.event.event_1.CARD_RARITY_FILTER;
-				_count = options.count > 0 ? options.count : config.drop.count.event_1;
+				_count = options.count > 0 ? options.count : config.drop.count.EVENT_1;
 				break;
 
 			case 2:
 				_CARD_RARITY_FILTER = config.event.event_1.CARD_RARITY_FILTER;
-				_count = options.count > 0 ? options.count : config.drop.count.event_2;
+				_count = options.count > 0 ? options.count : config.drop.count.EVENT_2;
 				break;
 
 			default:
