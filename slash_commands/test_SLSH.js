@@ -13,16 +13,6 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-		let debugTime = Date.now();
-
-		let card = await userManager.inventory.get(interaction.user.id, { uid: "hpr537" });
-		let cards = await userManager.inventory.getMultiple(interaction.user.id, { uids: ["hpr537", "203d1g"] });
-
-		console.log(card);
-		console.log(cards);
-
-		return await interaction.editReply({
-			content: `completed in ${jt.eta(Date.now(), { since: debugTime })}`
-		});
+		throw new Error("hah, gotcha!");
 	}
 };

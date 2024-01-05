@@ -46,6 +46,10 @@ module.exports = {
 			interaction: args.interaction, author: "⛔ Something is wrong"
 		});
 		// prettier-ignore
+		let embed_fatalError = new BetterEmbed({
+			interaction: args.interaction, author: "⛔ Uh-oh! That's not good"
+		});
+		// prettier-ignore
 		let embed_tip = new BetterEmbed({
 			interaction: args.interaction, author: "⚠️ Did You Know?"
 		});
@@ -169,27 +173,31 @@ module.exports = {
 					.then(async levelUpData => {
 						if (!levelUpData.leveled) return;
 
+						const sendSeparateEmbed = async () => {
+							return await embed_userLevelUp.send({
+								description: `You are now LV. ${levelUpData.level_current}`,
+								sendMethod: "followUp"
+							}).catch(() => null);
+						};
+
 						// Let the user know they leveled up
-						// First, try to edit the message
+						// but first, try to edit the message
 						if (message?.editable) return await message.edit({
 							content: "🎉 Congratulations, $USER! You leveled up!\nYou are now LV. $LEVEL"
 								.replace("$USER", args.interaction.user.id)
 								.replace("$LEVEL", levelUpData.level_current)
-						}).catch(err => logger.error("Could not append level-up message", `SLSH_CMD: /${args.interaction.commandName} | guildID: ${args.interaction.guild.id} | userID: ${args.interaction.user.id}`, err));
+						}).catch(async () => await sendSeparateEmbed());
 
 						// If that failed, send a separate embed
-						return await embed_userLevelUp.send({
-							description: `You are now LV. ${levelUpData.level_current}`,
-							sendMethod: "followUp"
-						}).catch(err => logger.error("Could not send level-up message", `SLSH_CMD: /${args.interaction.commandName} | guildID: ${args.interaction.guild.id} | userID: ${args.interaction.user.id}`, err));
+						return await sendSeparateEmbed()
 					})
 					.catch(() => null);
 			});
 		} catch (err) {
 			// prettier-ignore
 			// Let the user know an error occurred
-			embed_error.send({
-				description: `Uh-oh! Something broke while using that command!`,
+			embed_fatalError.send({
+				description: `Something went wrong while using **\`/${args.interaction.commandName}\`**.\nFeel free to report this in our [support server](${config.bot.community_server.INVITE_URL})!`,
 				ephemeral: true
 			}).catch(() => null);
 
