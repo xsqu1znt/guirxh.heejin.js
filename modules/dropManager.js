@@ -411,7 +411,7 @@ async function drop(userID, dropType, options) {
 	let card_globalIDs = cards.map(c => c.globalID);
 
 	// Check if the user has duplicates their card_inventory
-	let dupeIndex = await userManager.inventory.has(userID, { gids: card_globalIDs });
+	let dupeIndex = jt.isArray(await userManager.inventory.has(userID, { gids: card_globalIDs }));
 
 	// Check if the user got duplicates inside the drop itself
 	for (let i = 0; i < dupeIndex.length; i++) {
