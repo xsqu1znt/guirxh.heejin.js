@@ -106,6 +106,85 @@ async function drop(userID, dropType, cardPackOptions) {
 		return cards;
 	};
 
+	const rerollGeneral = async cards => {
+		// Check if the user has any of the chosen cards
+		let has = await userManager.inventory.has(userID, { gids: cards.map(c => c.globalID) });
+		if (has.filter(b => !b).length === cards.length) return; // Ignore this extra processing if not needed
+
+		// Create a duplicate of dropCategories so we can "cross-out" categories the user completed
+		let _dropCategories = structuredClone(dropCategories);
+
+		// Keep a cache array of what the user's missing in which category so we don't have to reload every time
+		let _dropCategories_cache = [];
+
+		// Iterate through the cards the user already has
+		for (let i = 0; i < has.length; i++) {
+			let _exists = has[i];
+			if (!_exists) continue; // Skip processing non-dupe cards
+
+			let _card = cards[i];
+			if (!_card) continue; // In case this is somehow null?
+
+			// Determine if we even want to put up with this bullshit
+			// just kidding, this charm only has a chance of working, remember?
+			if (!jt.chance(userCharms.dupeRepel.chance_of_working)) continue;
+
+			/* - - - - - { Card Category } - - - - - */
+			const chooseCardCategory = async () => {
+				// Return if we're out of choices
+				if (!_dropCategories.length) return null;
+
+				let card_pool, has_category;
+
+				// Pick a random category by rarity
+				let card_category = jt.choiceWeighted(_dropCategories);
+				// Check if the chosen category was crossed out already
+				// saves time and less load on database queries
+				if (!_dropCategories.find(c => c.type === card_category.type)) return await chooseCardCategory();
+				// Check if the chosen category was queried already
+				let _cachedCategory = _dropCategories_cache.find(c => c.type === card_category.type);
+				// saves time and less load on database queries
+				if (_cachedCategory) {
+					card_pool = _cachedCategory.card_pool;
+					has_category = _cachedCategory.has_category;
+				}
+
+				/// NOTE: or operators or used here incase we already have this data from the cache
+				// Create an array of cards with only the chosen category's card rarity
+				card_pool ||= cardManager.cards.general.filter(c => c.rarity === card_category.filter);
+				// Check if the user has any of the cards in the category
+				has_category ||= await userManager.inventory.has(userID, { gids: card_pool.map(c => c.globalID) });
+
+				// prettier-ignore
+				if (has_category.filter(b => b).length === card_pool.length) {
+					// Cross-out the category option
+					_dropCategories.splice(_dropCategories.findIndex(c => c.type === card_category.type), 1);
+					// Run it back, baby!
+					return await chooseCardCategory();
+				}
+
+				if (!_cachedCategory) {
+					// Filter out cards the user has if we're not using a cached version
+					card_pool = card_pool.filter((c, idx) => !has_category[idx]);
+					// Update the category cache
+					// n/a is used for has_category because we don't need it
+					_cachedCategory.push({ card_category, card_pool, has_category: "n/a" });
+				}
+
+				// Return the result
+				return { card_category, card_pool };
+			};
+
+			// Get the new card pool and category
+			let reroll = await chooseCardCategory();
+
+			if (reroll?.card_pool) {
+				// Push a random card to the array
+				cards.splice(i, 1, jt.choice(reroll.card_pool, true));
+			}
+		}
+	};
+
 	const drop_general = async () => {
 		let cards = [];
 
