@@ -394,7 +394,7 @@ function cooldowns(user, userData) {
 
 	// Format the user's cooldowns into list entries
 	let cooldowns_f = cooldowns.map(cd => {
-		let _eta = jt.eta({ then: cd.timestamp, ignorePast: true });
+		let _eta = jt.eta(cd.timestamp, { nullIfPast: true });
 
 		return "`$AVAILABILITY` **$TYPE** $TIME"
 			.replace("$AVAILABILITY", _eta ? "❌" : "✔️")

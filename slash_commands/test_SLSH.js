@@ -1,9 +1,5 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { BetterEmbed, markdown } = require("../modules/discordTools");
-const { userManager, questManager } = require("../modules/mongo/index");
-const jt = require("../modules/jsTools");
-
 module.exports = {
 	options: { deferReply: true },
 
