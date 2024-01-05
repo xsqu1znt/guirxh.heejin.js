@@ -190,7 +190,9 @@ class Stage {
 		// Give the winning user/idol XP
 		if (user) await Promise.all([
 			userManager.inventory.update(user.id, card),
-			userManager.levels.increment.xp(user.id, xp_user, "stage")
+			userManager.levels.increment.xp(user.id, xp_user, "stage"),
+			userManager.quests.increment.level(user.id, xp_user, "xp_user"),
+			userManager.quests.increment.level(user.id, xp_idol, "xp_idol")
 		]);
 
 		/* - - - - - { Update the Embed } - - - - - */
