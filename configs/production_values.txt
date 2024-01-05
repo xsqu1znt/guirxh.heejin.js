@@ -44,7 +44,7 @@
 	"COOLDOWN_LONG_THRESHOLD": "6h",
 
 	"win_rate": {
-		"RANDOM": 100
+		"RANDOM": 40
 	},
 
 	"currency": {

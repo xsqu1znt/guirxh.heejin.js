@@ -43,15 +43,15 @@ module.exports = {
 		/* - - - - - { Misc. Embeds } - - - - - */
 		// prettier-ignore
 		let embed_error = new BetterEmbed({
-			interaction: args.interaction, author: { text: "⛔ Something is wrong" }
+			interaction: args.interaction, author: "⛔ Something is wrong"
 		});
 		// prettier-ignore
 		let embed_tip = new BetterEmbed({
-			interaction: args.interaction, author: { text: "⚠️ Did You Know?" }
+			interaction: args.interaction, author: "⚠️ Did You Know?"
 		});
 		// prettier-ignore
 		let embed_userLevelUp = new BetterEmbed({
-			interaction: args.interaction, author: { text: `🎉 Congratulations, ${args.interaction.user}!` }
+			interaction: args.interaction, author: "🎉 Congratulations, $USER! You leveled up!"
 		});
 
 		// Get the slash command function from the client if it exists
@@ -162,12 +162,34 @@ module.exports = {
 					if (embed_completedObjectives.data?.fields?.length)
 						return await embed_completedObjectives.send({ sendMethod: "followUp" }).catch(() => null);
 				});
+
+				// Check if the user leveled up
+				userManager.levels.xp
+					.levelUp(args.interaction.user.id)
+					.then(async levelUpData => {
+						if (!levelUpData.leveled) return;
+
+						// Let the user know they leveled up
+						// First, try to edit the message
+						if (message?.editable) return await message.edit({
+							content: "🎉 Congratulations, $USER! You leveled up!\nYou are now LV. $LEVEL"
+								.replace("$USER", args.interaction.user.id)
+								.replace("$LEVEL", levelUpData.level_current)
+						}).catch(err => logger.error("Could not append level-up message", `SLSH_CMD: /${args.interaction.commandName} | guildID: ${args.interaction.guild.id} | userID: ${args.interaction.user.id}`, err));
+
+						// If that failed, send a separate embed
+						return await embed_userLevelUp.send({
+							description: `You are now LV. ${levelUpData.level_current}`,
+							sendMethod: "followUp"
+						}).catch(err => logger.error("Could not send level-up message", `SLSH_CMD: /${args.interaction.commandName} | guildID: ${args.interaction.guild.id} | userID: ${args.interaction.user.id}`, err));
+					})
+					.catch(() => null);
 			});
 		} catch (err) {
 			// prettier-ignore
 			// Let the user know an error occurred
 			embed_error.send({
-				description: `Uh-oh! Something broke while using that command`,
+				description: `Uh-oh! Something broke while using that command!`,
 				ephemeral: true
 			}).catch(() => null);
 
