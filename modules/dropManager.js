@@ -192,6 +192,9 @@ async function drop(userID, dropType, cardPackOptions) {
 				// Pick a random card from the card pool
 				let _card_reroll = jt.choice(reroll.card_pool, true);
 				// Remove the chosen card as an option from the selected category card pool
+				
+
+				// _dropCategories.splice(_dropCategories.findIndex(c => c.type === card_category.type), 1);
 
 				// Replace the dupe card in the array
 				cards.splice(i, 1, _card_reroll);
