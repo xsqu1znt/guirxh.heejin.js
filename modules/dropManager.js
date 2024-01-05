@@ -31,7 +31,7 @@ async function drop(userID, dropType, options) {
 
 	const dupeRepelReroll_general = async cards => {
 		// Check if the user has any of the chosen cards
-		let has = await userManager.inventory.has(userID, { gids: cards.map(c => c.globalID) });
+		let has = jt.isArray(await userManager.inventory.has(userID, { gids: cards.map(c => c.globalID) }));
 		// Ignore processing if the user didn't get dupes of any of the cards
 		if (has.filter(b => !b).length === cards.length) return;
 
@@ -131,14 +131,14 @@ async function drop(userID, dropType, options) {
 
 	const dupeRepelReroll_cardPool = async (cards, card_pool) => {
 		// Check if the user has any of the chosen cards
-		let has = await userManager.inventory.has(userID, { gids: cards.map(c => c.globalID) });
+		let has = jt.isArray(await userManager.inventory.has(userID, { gids: cards.map(c => c.globalID) }));
 		// Ignore processing if the user didn't get dupes of any of the cards
 		if (has.filter(b => !b).length === cards.length) return;
 
 		// Get a list of what cards the user already has out of the card_pool
 		let has_cardPool = await userManager.inventory.has(userID, { gids: card_pool.map(c => c.globalID) });
 		// Ignore processing if the user already has every card in the card_pool
-		if (has_cardPool.filter(b => !b).length === card_pool.length) return;
+		if (has_cardPool.filter(b => b).length === card_pool.length) return;
 
 		// Filter out cards the user has in the card_pool
 		let card_pool_filtered = card_pool.filter((c, idx) => !has_cardPool[idx]);
@@ -172,7 +172,7 @@ async function drop(userID, dropType, options) {
 
 	const dupeRepelReroll_cardPack = async cards => {
 		// Check if the user has any of the chosen cards
-		let has = await userManager.inventory.has(userID, { gids: cards.map(c => c.globalID) });
+		let has = jt.isArray(await userManager.inventory.has(userID, { gids: cards.map(c => c.globalID) }));
 		// Ignore processing if the user didn't get dupes of any of the cards
 		if (has.filter(b => !b).length === cards.length) return;
 
