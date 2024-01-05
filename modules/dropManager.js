@@ -30,82 +30,6 @@ async function drop(userID, dropType, cardPackOptions) {
 		dupeRepel: await userManager.charms.get(userID, "dupeRepel")
 	};
 
-	const reroll = async cards => {
-		let drop_globalIDs = cards.map(c => c.card.globalID);
-
-		// Check the user's card_inventory for dupes
-		let dupeIndex = await userManager.inventory.has(userID, { gids: drop_globalIDs });
-
-		// Check if the user got duplicates in the drop
-		for (let i = 0; i < dupeIndex.length; i++) {
-			// Filter out the current global ID from the array so we aren't falsly assuming it's a dupe
-			let cleanGlobalIDs = drop_globalIDs.filter(gid => gid !== drop_globalIDs[i]);
-			// Add back the GID if there's more than 1 instance which counts as an actual dupe
-			if (drop_globalIDs.filter(gid => gid === drop_globalIDs[i]).length > 1) cleanGlobalIDs.push(drop_globalIDs[i]);
-
-			// Call dupe if the current global ID already exists in the card array
-			if (cleanGlobalIDs.includes(drop_globalIDs[i])) dupeIndex[i] = true;
-		}
-
-		// Determine reroll chances
-		let chanceForReroll = dupeIndex.map(di => (di ? jt.chance(userCharms.dupeRepel.power) : false));
-		// Check for at least 1 case of reroll
-		if (!chanceForReroll.find(r => r)) return cards;
-
-		/* - - - - - { User Inventory Processing } - - - - - */
-		// Gather possible global IDs we can use in the reroll
-		let rerollGIDPool = await Promise.all(
-			drop_globalIDs.map(async (gid, idx) => {
-				if (!chanceForReroll[idx]) return null;
-
-				// Check which cards the user has in their card_inventory from the set
-				let _has = await userManager.inventory.has(userID, { gids: cards[idx].setGIDs });
-
-				// Filter out global IDs the user already has of the set in there card_inventory
-				// also filters out cards already in the card array
-				let possibleGIDs = cards[idx].setGIDs.filter((gid, idx) => !_has[idx] && !drop_globalIDs.includes(gid));
-
-				// prettier-ignore
-				// for debugging purposes
-				if (!possibleGIDs.length)
-					console.log(`trigger: \"${gid}\" | user completed set \"${cards[idx].card.setID}\"`);
-				else
-					console.log(`trigger: \"${gid}\" | possible global IDs: [${possibleGIDs.join(", ")}]`);
-
-				return possibleGIDs.length ? possibleGIDs : null;
-			})
-		);
-
-		// Iterate through each reroll chance
-		for (let i = 0; i < rerollGIDPool.length; i++) {
-			// Skip nulls
-			if (!rerollGIDPool[i]) continue;
-
-			// Filter out global IDs of cards already in the card drop array
-			let cleanRerollGIDPool = rerollGIDPool[i].filter(gid => !cards.map(c => c.card.globalID).includes(gid));
-
-			// for debugging purposes
-			if (!cleanRerollGIDPool.length)
-				console.log(
-					`trigger: \"${cards[i].card.globalID}\" | idx[${i}] | can't be replaced; it would've been a dupe`
-				);
-
-			// Replace the cards
-			if (cleanRerollGIDPool.length) {
-				let _rerolledCard = cardManager.get.globalID(jt.choice(rerollGIDPool[i]));
-
-				// for debugging purposes
-				console.log(
-					`trigger: \"${cards[i].card.globalID}\" | idx[${i}] | replaced with: \"${_rerolledCard.globalID}\"`
-				);
-
-				cards[i].card = _rerolledCard;
-			}
-		}
-
-		return cards;
-	};
-
 	const dupeRepelReroll_general = async cards => {
 		// Check if the user has any of the chosen cards
 		let has = await userManager.inventory.has(userID, { gids: cards.map(c => c.globalID) });
@@ -149,15 +73,11 @@ async function drop(userID, dropType, cardPackOptions) {
 
 					// prettier-ignore
 					if (!card_pool.length) {
-						console.log(`crossing out cached category '${card_category.type}'!!`); // DEBUG
-
 						// Cross-out the category option
 						_dropCategories.splice(_dropCategories.findIndex(c => c.type === card_category.type), 1);
 						// Run it back, baby!
 						return await chooseCardCategory();
 					}
-
-					console.log(`using cached category '${card_category.type}'!!`); // DEBUG
 				} else {
 					/// NOTE: or operators or used here incase we already have this data from the cache
 					// Create an array of cards with only the chosen category's card rarity
@@ -178,7 +98,7 @@ async function drop(userID, dropType, cardPackOptions) {
 					// Filter out cards the user has if we're not using a cached version
 					card_pool = card_pool.filter((c, idx) => !has_category[idx]);
 					// Update the category cache
-					_cachedCategory.set(card_category.type, { card_pool });
+					_dropCategories_cache.set(card_category.type, { card_pool });
 				}
 
 				// Return the result
@@ -196,7 +116,7 @@ async function drop(userID, dropType, cardPackOptions) {
 				let _cachedCategory = _dropCategories_cache.get(reroll.card_category.type);
 				// Remove the chosen card as an option from the selected category card pool
 				_cachedCategory.card_pool.splice(
-					_dropCategories_cache.card_pool.findIndex(c => c.globalID === _card_reroll.globalID),
+					_cachedCategory.card_pool.findIndex(c => c.globalID === _card_reroll.globalID),
 					1
 				);
 				// Update the cache
@@ -225,7 +145,7 @@ async function drop(userID, dropType, cardPackOptions) {
 		}
 
 		/* - - - - - { User Charms } - - - - - */
-		if (userCharms.dupeRepel) await dupeRepelReroll_general();
+		if (userCharms.dupeRepel) await dupeRepelReroll_general(cards);
 
 		return cards;
 	};
