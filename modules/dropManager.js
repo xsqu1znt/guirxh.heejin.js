@@ -33,7 +33,8 @@ async function drop(userID, dropType, options) {
 	const dupeRepelReroll_general = async cards => {
 		// Check if the user has any of the chosen cards
 		let has = await userManager.inventory.has(userID, { gids: cards.map(c => c.globalID) });
-		if (has.filter(b => !b).length === cards.length) return; // Ignore this extra processing if not needed
+		// Ignore processing if the user didn't get dupes of any of the cards
+		if (has.filter(b => !b).length === cards.length) return;
 
 		// Create a duplicate of dropCategories so we can "cross-out" categories the user completed
 		let _dropCategories = structuredClone(dropCategories);
@@ -50,7 +51,7 @@ async function drop(userID, dropType, options) {
 			if (!_card) continue; // In case this is somehow null?
 
 			// Determine if we even want to put up with this bullshit
-			// just kidding, this charm only has a chance of working, remember?
+			// just kidding, this charm only has a **chance** of working, remember?
 			if (!jt.chance(userCharms.dupeRepel.chance_of_working)) continue;
 
 			/* - - - - - { Card Category } - - - - - */
@@ -131,6 +132,37 @@ async function drop(userID, dropType, options) {
 		return cards;
 	};
 
+	const dupeRepelReroll = async (cards, card_pool) => {
+		// Check if the user has any of the chosen cards
+		let has = await userManager.inventory.has(userID, { gids: cards.map(c => c.globalID) });
+		// Ignore processing if the user didn't get dupes of any of the cards
+		if (has.filter(b => !b).length === cards.length) return;
+
+		// Get a list of what cards the user already has out of the card_pool
+		let has_cardPool = await userManager.inventory.has(userID, { gids: card_pool.map(c => c.globalID) });
+		// Ignore processing if the user already has every card in the card_pool
+		if (has_cardPool.filter(b => !b).length === card_pool.length) return;
+
+		// Filter out cards the user has in the card_pool
+		card_pool = card_pool.filter((c, idx) => !has_cardPool[idx]);
+
+		// Iterate through the cards the user already has
+		for (let i = 0; i < has.length; i++) {
+			let _exists = has[i];
+			if (!_exists) continue; // Skip processing non-dupe cards
+
+			let _card = cards[i];
+			if (!_card) continue; // In case this is somehow null?
+
+			// Determine if we even want to put up with this bullshit
+			// just kidding, this charm only has a **chance** of working, remember?
+			if (!jt.chance(userCharms.dupeRepel.chance_of_working)) continue;
+		}
+
+		// Return the card array
+		return cards;
+	};
+
 	const drop_general = async () => {
 		let cards = [];
 
@@ -159,23 +191,10 @@ async function drop(userID, dropType, options) {
 			cards.push(jt.choice(cardManager.cards.shop.generalClean, true));
 		}
 
-		/* /// Randomly pick the cards
-		let cards = [];
-		let _cards = cardManager.cards.shop.general.filter(card =>
-			config.shop.stock.card_set_ids.GENERAL.filter(id => id !== "100").includes(card.setID)
-		);
+		/* - - - - - { User Charms } - - - - - */
+		if (userCharms.dupeRepel) await dupeRepelReroll(cards, cardManager.cards.shop.generalClean);
 
-		for (let i = 0; i < config.drop.count.weekly; i++)
-			cards.push({
-				card: jt.choice(_cards, true),
-				// Used for getting possible global IDs of the same category to reroll
-				setGIDs: _cards.map(c => c.globalID)
-			});
-
-		// Put the user's charm to good use
-		if (userCharms.dupeRepel) await reroll(cards);
-
-		return cards.map(c => c.card); */
+		return cards;
 	};
 
 	const drop_season = async () => {
