@@ -57,15 +57,18 @@ module.exports = {
         });
 
 		// Update the user and recipient's balance in Mongo
-		return await Promise.all([
+		await Promise.all([
 			// Subtract carrots from the user
 			userManager.balance.increment(interaction.user.id, -amount, "balance", "pay"),
 			// Add carrots to the recipient
 			userManager.balance.increment(recipient.id, amount, "balance", "pay"),
-			// Send the embed :: { PAY }
-			general_ES.pay(interaction.member, recipient, userData, amount, "carrots").send({ interaction })
+			// DM the user
+			messenger.gift.currency(recipient, interaction.user, amount, userData.recipient.balance + amount)
 		])
 			// Trigger the recipient quest progress update
 			.then(async () => questManager.updateQuestProgress(recipient));
+
+		// Send the embed :: { PAY }
+		return await general_ES.pay(interaction.member, recipient, userData, amount, "balance").send({ interaction });
 	}
 };

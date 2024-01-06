@@ -625,15 +625,15 @@ function pay(user, recipient, userData, amount, currencyType) {
 
 	// prettier-ignore
 	switch (currencyType) {
-		case "balance": currencyEmoji = config.bot.emojis.currency_1; break;
-		case "ribbon": currencyEmoji = config.bot.emojis.currency_2; break;
+		case "balance": currencyEmoji = config.bot.emojis.currency_1.EMOJI; break;
+		case "ribbon": currencyEmoji = config.bot.emojis.currency_2.EMOJI; break;
 	}
 
 	// prettier-ignore
 	// Create the embed :: { PAY }
 	let embed_pay = new BetterEmbed({
-		author: { text: "$USERNAME | pay", iconURL: true },
-		description: `\`${currencyEmoji} ${amount}\` given to **${user.username}**`,
+		author: { text: "$USERNAME | pay", user, iconURL: true },
+		description: `\`${currencyEmoji} ${amount}\` given to **${recipient}**`,
 		footer: `your balance: ${currencyEmoji} ${userData.user.balance - amount} | their balance: ${currencyEmoji} ${userData.recipient.balance + amount}`
 	});
 
