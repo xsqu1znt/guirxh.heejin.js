@@ -112,6 +112,8 @@ module.exports = {
 
 			// prettier-ignore
 			return await slashCommand.execute(client, args.interaction).then(async message => {
+				if (!message?.guild) message = await args.interaction.fetchReply().catch(() => null);
+
 				// TODO: run code here after the command is finished
 
 				// Increment commands used

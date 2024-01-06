@@ -38,14 +38,14 @@ async function xp_levelUp(userID) {
 	};
 
 	// Level up the user until they can't anymore
-	while (userData.xp >= userData.xp_for_next_level) levelUp();
+	while (userData.xp >= userData.xp_for_next_level && userData.level < config.player.xp.user.LEVEL_MAX) levelUp();
 
 	// prettier-ignore
 	// Push the update to Mongo
 	if (session.leveled) await userManager.update(userID, {
 		level: userData.level,
-		xp: userData.xp,
-		xp_for_next_level: userData.xp_for_next
+		xp: userData.level === config.player.xp.user.LEVEL_MAX ? 0 : userData.xp,
+		xp_for_next_level: userData.level === config.player.xp.user.LEVEL_MAX ? 0 : userData.xp_for_next_level
 	});
 
 	return session;

@@ -51,7 +51,7 @@ module.exports = {
 		// Fetch the user's balance from Mongo
 		let userData = await userManager.fetch(interaction.user.id, { type: "balance" });
 
-		return await Promise.all([
+		await Promise.all([
 			// Update the user's balance in Mongo
 			userManager.balance.increment(interaction.user.id, reward_carrots, "balance", "random"),
 			// Update the user's XP in Mongo
