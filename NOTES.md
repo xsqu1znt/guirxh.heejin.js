@@ -12,3 +12,4 @@
  - /profile
  - /shop
  - /sell
+ - /daily

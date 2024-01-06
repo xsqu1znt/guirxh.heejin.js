@@ -82,7 +82,7 @@ module.exports = {
             interaction, author: { text: "$USERNAME | daily", iconURL: true },
 			description: "```ansi\n$HEADER\n\n$REWARDS\n```"
 				.replace("$HEADER", markdown.ansi(`${_description}\nMultiplier: ${streakProgress.join("")}`, { format: "bold", text_color: streakReset ? "red" : "yellow" }))
-				.replace("$REWARDS", markdown.ansi(`You got ${config.bot.emojis.currency_1.EMOJI} ${reward_carrots}`, { text_color: "white" }))
+				.replace("$REWARDS", markdown.ansi(`You got: ${config.bot.emojis.currency_1.EMOJI} ${reward_carrots}`, { text_color: "white" }))
 		});
 
 		return await embed_daily.send();
