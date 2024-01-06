@@ -4,6 +4,7 @@
  - fix duplicate user quest data inserts
  - /admin reset-quest-data
  - auto reset user stats when there's no active quests
+ - add a charm section to the user's profile
 
 - **Tested Commands**
  - /help

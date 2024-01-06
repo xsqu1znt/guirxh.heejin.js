@@ -60,7 +60,7 @@ async function subcommand_summon(client, interaction) {
 	]);
 }
 
-/** @param {CommandInteraction} interaction @param {"balance"|"ribbons"} currencyType */
+/** @param {CommandInteraction} interaction @param {"balance"|"ribbon"} currencyType */
 async function subcommand_payUser(interaction, currencyType) {
 	let user = interaction.options.getUser("user");
 	let amount = interaction.options.getNumber("amount");
@@ -81,7 +81,7 @@ async function subcommand_payUser(interaction, currencyType) {
 
 	// prettier-ignore
 	switch (currencyType) {
-        case "carrot": currencyEmoji = config.bot.emojis.currency_1.EMOJI; balance = userData.balance; break;
+        case "balance": currencyEmoji = config.bot.emojis.currency_1.EMOJI; balance = userData.balance; break;
         case "ribbon": currencyEmoji = config.bot.emojis.currency_2.EMOJI; balance = userData.ribbons; break;
     }
 
@@ -128,7 +128,7 @@ module.exports = {
 		switch (command) {
             case "summon": return await subcommand_summon(client, interaction);
             case "pay_carrot": return await subcommand_payUser(interaction, "balance");
-            case "pay_ribbon": return await subcommand_payUser(interaction, "ribbons");
+            case "pay_ribbon": return await subcommand_payUser(interaction, "ribbon");
 		}
 	}
 };

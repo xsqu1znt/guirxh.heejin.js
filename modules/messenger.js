@@ -41,7 +41,7 @@ async function gift_currency(recipient, gifter, amount, balance, currencyType) {
 	let currencyEmoji = "";
 	// prettier-ignore
 	switch (currencyType) {
-        case "carrot": currencyEmoji = config.bot.emojis.currency_1.EMOJI; break;
+        case "balance": currencyEmoji = config.bot.emojis.currency_1.EMOJI; break;
         case "ribbon": currencyEmoji = config.bot.emojis.currency_2.EMOJI; break;
 	}
 

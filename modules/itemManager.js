@@ -197,14 +197,16 @@ async function cardPack_buy(userID, packID) {
 	// prettier-ignore
 	// Choose which cards the user gets
 	let { cards, dupeIndex } = await dropManager.drop(userID, "cardPack", {
-		count: cardPack.content.count, sets: cardPack.content.sets
+		sets: cardPack.content.sets, count: cardPack.content.count
 	});
 
 	await Promise.all([
 		// Subtract the card pack's price from the user's balance
 		userManager.balance.increment(userID, -cardPack.price, "carrot"),
 		// Give the cards to the user
-		userManager.inventory.add(userID, cards)
+		userManager.inventory.add(userID, cards),
+		// Update quest stats
+		userManager.quests.increment.cardsNew(userID, cards.length)
 	]);
 
 	// Format the cards into strings
@@ -346,11 +348,11 @@ function charm_toString_basic(charmID) {
 	let { item: charm, type: _itemType } = getItem(charmID);
 	if (_itemType !== ItemType.charm) return null;
 
-	return "`$ID` `$EMOJI` **$NAME** `🌟 $POWER` `⏰ $DURATION`"
+	return "`$ID` `$EMOJI` **$NAME** `🌟 $CHANCE%` `⏰ $DURATION`"
 		.replace("$ID", charm.id)
 		.replace("$EMOJI", charm.emoji)
 		.replace("$NAME", charm.name)
-		.replace("$POWER", charm.power)
+		.replace("$CHANCE", charm.chance_of_working)
 		.replace("$DURATION", charm.duration);
 }
 
@@ -374,13 +376,13 @@ function charm_toString_shopEntry(charmID) {
 	let { item: charm, type: _itemType } = getItem(charmID);
 	if (_itemType !== ItemType.charm) return null;
 
-	return "`$ID` `🗣️ $SET_ID` `$EMOJI` *`$TYPE`* $NAME `☀️ $POWER` `⏰ $DURATION` `💰 $PRICE`"
+	return "`$ID` `🗣️ $SET_ID` `$EMOJI` *`$TYPE`* $NAME `☀️ $CHANCE%` `⏰ $DURATION` `💰 $PRICE`"
 		.replace("$ID", charm.id)
 		.replace("$SET_ID", charm.setID)
 		.replace("$EMOJI", charm.emoji)
 		.replace("$TYPE", charm.type)
 		.replace("$NAME", charm.name)
-		.replace("$POWER", charm.power)
+		.replace("$CHANCE", charm.chance_of_working)
 		.replace("$DURATION", charm.duration)
 		.replace("$PRICE", charm.price);
 }

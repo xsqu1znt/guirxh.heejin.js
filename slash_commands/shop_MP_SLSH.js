@@ -43,6 +43,8 @@ module.exports = {
 		}
 
 		/* - - - - - { Buy an Item } - - - - - */
+		await interaction.deferReply();
+
 		let item = await itemManager.buyItem(interaction.member, itemID);
 
 		if (item?.embed) return await item.embed.send({ interaction });

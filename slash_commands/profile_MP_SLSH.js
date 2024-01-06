@@ -49,17 +49,17 @@ module.exports = {
 		/* - - - - - { Show the User's Profile } - - - - - */
 		// prettier-ignore
 		// Check if the target user started the bot
-		if (!(await userManager.exists(interaction.user.id))) return await error_ES.send({
-			description: "That user has not started yet", ephemeral: true
+		if (!(await userManager.exists(target.id))) return await error_ES.send({
+			interaction, description: "That user has not started yet", ephemeral: true
 		});
 
 		// Defer the reply
 		await interaction.deferReply();
 
 		/// Fetch user data from Mongo
-		let userData = await userManager.fetch(interaction.user.id, { type: "essential" });
-		let inventoryStats = await userManager.inventory.stats(interaction.user.id);
-		let cards = await userManager.inventory.getMultiple(interaction.user.id, {
+		let userData = await userManager.fetch(target.id, { type: "essential" });
+		let inventoryStats = await userManager.inventory.stats(target.id);
+		let cards = await userManager.inventory.getMultiple(target.id, {
 			uids: [userData.card_selected_uid, userData.card_favorite_uid]
 		});
 
