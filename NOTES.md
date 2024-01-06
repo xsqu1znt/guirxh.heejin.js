@@ -10,3 +10,4 @@
  - /help
  - /start
  - /profile
+ - /shop
