@@ -11,3 +11,4 @@
  - /start
  - /profile
  - /shop
+ - /sell
