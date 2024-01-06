@@ -82,7 +82,7 @@ function profile(user, options) {
 
 	const profile_badges = () => {
 		let badges_f = options.userData.badges.map(b => itemManager.toString.badges.profile(b));
-		return embed_profile.copy({ description: `>>> ${badges_f.join("\n")}` });
+		return badges_f.length ? embed_profile.copy({ description: `>>> ${badges_f.join("\n")}` }) : null;
 	};
 
 	const profile_cardView = card => {

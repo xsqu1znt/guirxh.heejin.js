@@ -7,4 +7,5 @@
 
 - **Tested Commands**
  - /help
- - /
+ - /start
+ - /profile
