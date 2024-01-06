@@ -63,7 +63,7 @@ module.exports = {
 			// Add carrots to the recipient
 			userManager.balance.increment(recipient.id, amount, "balance", "pay"),
 			// Send the embed :: { PAY }
-			general_ES.pay(interaction.member, recipient, amount, "carrots").send({ interaction })
+			general_ES.pay(interaction.member, recipient, userData, amount, "carrots").send({ interaction })
 		])
 			// Trigger the recipient quest progress update
 			.then(async () => questManager.updateQuestProgress(recipient));

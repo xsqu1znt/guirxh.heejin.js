@@ -93,7 +93,7 @@ async function subcommand_payUser(interaction, currencyType) {
 	let embed_pay = new BetterEmbed({
         interaction, author: { text: "$USERNAME | admin", iconURL: true },
         description: `\`${currencyEmoji} ${amount}\` ${amount > 0 ? "given to" : "withdrawn from"} **${user.username}**`,
-        footer: `balance: ${currencyEmoji} ${balance}`
+        footer: `their balance: ${currencyEmoji} ${balance}`
     });
 
 	return await embed_pay.send();

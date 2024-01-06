@@ -69,12 +69,14 @@ function shop(user, userData) {
 		});
 
 		/* - - - - - { Cards } - - - - - */
-		if (card_sets_f.general.length) embed.addFields({ name: "`🃏` Cards", value: card_sets_f.general.join("\n"), inline: true });
-		if (card_sets_f.special.length) embed.addFields({ name: "`🎀` Rewards", value: card_sets_f.special.join("\n"), inline: true });
+		if (card_sets_f.general.length)
+			embed.addFields({ name: "`🃏` Cards", value: card_sets_f.general.join("\n"), inline: true });
+		if (card_sets_f.special.length)
+			embed.addFields({ name: "`🎀` Rewards", value: card_sets_f.special.join("\n"), inline: true });
 
 		/* - - - - - { Items } - - - - - */
 		let _items_f = [];
-		if (items_f.card.length) _items_f.push(...items_f.card)
+		if (items_f.card.length) _items_f.push(...items_f.card);
 		if (items_f.charms.length) _items_f.push(...items_f.charms);
 		if (_items_f.length) embed.addFields({ name: "`📦` Items", value: _items_f.join("\n"), inline: true });
 
@@ -617,4 +619,25 @@ function gift(user, recipient, cards) {
 	return embed_gift;
 }
 
-module.exports = { shop, collections, view, gift };
+/** @param {GuildMember|User} user @param {GuildMember|User} recipient @param {{user:UserData, recipient:UserData}} userData  @param {number} amount @param {import("../mongo/uM_balance").CurrencyType} currencyType  */
+function pay(user, recipient, userData, amount, currencyType) {
+	let currencyEmoji = "";
+
+	// prettier-ignore
+	switch (currencyType) {
+		case "balance": currencyEmoji = config.bot.emojis.currency_1; break;
+		case "ribbon": currencyEmoji = config.bot.emojis.currency_2; break;
+	}
+
+	// prettier-ignore
+	// Create the embed :: { PAY }
+	let embed_pay = new BetterEmbed({
+		author: { text: "$USERNAME | pay", iconURL: true },
+		description: `\`${currencyEmoji} ${amount}\` given to **${user.username}**`,
+		footer: `your balance: ${currencyEmoji} ${userData.user.balance - amount} | their balance: ${currencyEmoji} ${userData.recipient.balance + amount}`
+	});
+
+	return embed_pay;
+}
+
+module.exports = { shop, collections, view, gift, pay };

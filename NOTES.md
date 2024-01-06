@@ -19,6 +19,7 @@
  - /inventory
  - /pay
  - /gift
+ - /sell
 
 <!-- Changelog -->
 - **`Command Changes`**
