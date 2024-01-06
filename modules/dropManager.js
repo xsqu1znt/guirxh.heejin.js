@@ -377,7 +377,6 @@ async function drop(userID, dropType, options) {
 		for (let i = 0; i < options.count; i++) {
 			// Pick the category
 			let card_set = jt.choiceWeighted(options.sets);
-			console.log(card_set);
 			// Create an array of cards of only the chosen set
 			let card_pool = cardManager.get.setID(card_set.id);
 			// Push a random card from the shop to the array
