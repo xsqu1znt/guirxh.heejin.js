@@ -23,6 +23,7 @@
 
 <!-- Changelog -->
 - **`Command Changes`**
+ - Can now `/gift` unlimited cards
 
 - **`/Inventory`**
  - Can now mix and match filters and separate multiple options by commas (,)
