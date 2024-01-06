@@ -238,6 +238,7 @@ function inventory(userData, options, stats) {
 		dupeTag: options.globalID.length && options.globalID[0] !== "all" ? false : true,
 		unique: options.globalID.length && options.globalID[0] !== "all" ? false : true
 	});
+
 	// prettier-ignore
 	let filtered = false, dupeCheck = false;
 
@@ -282,10 +283,10 @@ function inventory(userData, options, stats) {
 	// prettier-ignore
 	// Apply duplicate filter
 	if (options.globalID.length) if (options.globalID[0].toLowerCase() === "all") {
-		cards = cards.filter(c => c.duplicate_count);
+		cards = cards.filter(c => c.duplicateCount);
 		filtered = true;
 	} else {
-		cards = cards.filter(c => options.globalID.includes(c.card.globalID) && c.duplicate_count);
+		cards = cards.filter(c => options.globalID.includes(c.card.globalID) && c.duplicateCount);
 		filtered = true; dupeCheck = true;
 	}
 
@@ -355,7 +356,11 @@ function inventory(userData, options, stats) {
 
 	for (let i = 0; i < cards_f.length; i++) {
 		let _embed = new BetterEmbed({
-			author: { text: dupeCheck ? "$USERNAME | dupes" : "$USERNAME | inventory", user: options.target, iconURL: true },
+			author: {
+				text: dupeCheck ? "$USERNAME | dupes" : `$USERNAME | inventory ${filtered ? "(filtered)" : ""}`,
+				user: options.target,
+				iconURL: true
+			},
 			thumbnailURL: dupeCheck ? cards.slice(-1)[0].card.imageURL : null,
 			// description: `\`\`\`lorem ipsum dolor sit amet\`\`\``,
 			footer: { text: `Page ${i + 1}/${cards_f.length || 1}` }

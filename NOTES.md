@@ -4,6 +4,9 @@
  - fix duplicate user quest data inserts
  - add a charm section to the user's profile
 
+- **NEXT UPDATE**
+ - [OPTIMIZATION] if the user filters their inventory, only fetch cards from the database that they need
+
 - **Tested Commands**
  - /help
  - /start
@@ -13,3 +16,13 @@
  - /daily
  - /random
  - /quest
+ - /inventory~~
+
+<!-- Changelog -->
+- **`Command Changes`**
+ - Can now mix and match set IDs when using /missing
+
+- **`/Inventory`**
+ - Can now mix and match filters and separate multiple options by commas (,)
+ - Can now filter by dupes only by using `/inventory` `dupes:all`
+ - Added a new sorting option: `📅 Recent`

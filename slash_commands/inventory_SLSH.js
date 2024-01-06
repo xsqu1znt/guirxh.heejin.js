@@ -56,7 +56,7 @@ module.exports = {
 		if (!userData) return await error_ES.send({ interaction, description: "That user has not started yet" });
 
 		// Parse the user's card_inventory
-		userData = userParser.cards.parseInventory(userData);
+		userData = userParser.cards.parseInventory(userData, { unique: false });
 
 		let inventory_stats = await userManager.inventory.stats(interaction.user.id);
 		// Create the embeds :: { USER INVENTORY }
