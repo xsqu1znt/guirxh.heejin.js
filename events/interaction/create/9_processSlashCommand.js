@@ -4,10 +4,12 @@ const { Client, PermissionsBitField, BaseInteraction, ButtonBuilder, ButtonStyle
 const { userManager, questManager } = require("../../../modules/mongo");
 const { BetterEmbed } = require("../../../modules/discordTools");
 const logger = require("../../../modules/logger");
+const jt = require("../../../modules/jsTools");
 
 const config = {
 	client: require("../../../configs/config_client.json"),
-	bot: require("../../../configs/config_bot.json")
+	bot: require("../../../configs/config_bot.json"),
+	tips: require("../../../configs/tips.json")
 };
 
 function userIsBotAdminOrBypass(interaction) {
@@ -112,7 +114,7 @@ module.exports = {
 
 			// prettier-ignore
 			return await slashCommand.execute(client, args.interaction).then(async message => {
-				if (!message?.guild) message = await args.interaction.fetchReply().catch(() => null);
+				if (!message?.author) message = await args.interaction.fetchReply().catch(() => null);
 
 				// TODO: run code here after the command is finished
 
@@ -195,7 +197,14 @@ module.exports = {
 						// If that failed, send a separate embed
 						return await sendSeparateEmbed()
 					})
-					/* .catch(() => null) */;
+					.catch(() => null);
+				
+				// prettier-ignore
+				// Send a random tip
+				if (jt.chance(config.bot.TIP_CHANCE)) embed_tip.send({
+					description: jt.choice(config.tips),
+					sendMethod: "channel"
+				}).catch(() => null);
 			});
 		} catch (err) {
 			/* - - - - - { Let the User Know an Error Occurred } - - - - - */
