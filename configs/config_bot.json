@@ -15,7 +15,7 @@
 
 	"timeouts": {
 		"USER_REMINDER_INTERVAL": "5s",
-		"PARSE_QUESTS_INTERVAL": "10s",
+		"PARSE_QUESTS_INTERVAL": "1m",
 
 		"STAGE_START": "3s",
 		"STAGE_TURN": "500ms",

@@ -11,7 +11,6 @@ const userManager = require("./uM_index");
 const uM_inventory = require("./uM_inventory");
 const uM_balance = require("./uM_balance");
 const uM_levels = require("./uM_levels");
-const uM_quests = require("./uM_quests");
 
 const quests = require("../../configs/quests.json");
 let quests_active = quests.filter(q => q.ending > Date.now());
@@ -164,7 +163,7 @@ async function completeQuest(user, questID) {
 	if (!quest) return;
 
 	// Update the user's completed quests in the Mongo
-	uM_quests.update(user.id, { $push: { completed: questID } });
+	userManager.models.userQuestData.findByIdAndUpdate(user.id, { $push: { completed: questID } });
 
 	// prettier-ignore
 	// Give the user rewards
@@ -228,7 +227,7 @@ async function updateQuestProgress(user) {
 			_objectivesComplete.push(objective);
 
 			// Add to the objective cache in Mongo
-			uM_quests.update(user.id, {
+			userManager.models.userQuestData.findByIdAndUpdate(user.id, {
 				$push: { completed_objective_cache: { quest_id: progress.quest_id, type: objective.type } }
 			});
 		}

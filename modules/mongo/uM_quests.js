@@ -1,19 +1,18 @@
 /** @typedef {"user"|"idol"|"xp_user"|"xp_idol"} LevelType */
 
+const questManager = require("./questManager");
 const userManager = require("./uM_index");
 
-/** @param {string} userID @param {boolean} upsert */
-async function exists(userID, upsert = false) {
+/** @param {string} userID */
+async function exists(userID) {
 	let exists = await userManager.models.userQuestData.exists({ _id: userID });
-
-	if (!exists && upsert) await insertNew(userID);
-
-	return exists || upsert ? true : false;
+	return exists ? true : false;
 }
 
 /** @param {string} userID @param {{}} query */
 async function insertNew(userID, query = {}) {
 	let _exists = await exists(userID);
+	if (_exists) return;
 
 	if (!_exists) {
 		let _model = new userManager.models.userQuestData({ _id: userID, ...query });
@@ -27,7 +26,10 @@ async function fetch(userID) {
 }
 
 /** @param {string} userID @param {{}} query */
-async function update(userID, query) {	
+async function update(userID, query) {
+	// Return if there's no active quests
+	if (!questManager.quests_active.length) return;
+
 	await insertNew(userID);
 	return userManager.models.userQuestData.findByIdAndUpdate(userID, query);
 }
