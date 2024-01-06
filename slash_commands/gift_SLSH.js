@@ -39,7 +39,7 @@ module.exports = {
 		let userData = await userManager.fetch(interaction.user.id, { type: "essential" });
 
 		/// Fetch the cards from the user's card_inventory
-		let cards = jt.isArray(await userManager.inventory.get(interaction.user.id, { uids }));
+		let cards = await userManager.inventory.getMultiple(interaction.user.id, { uids });
 
 		// prettier-ignore
 		// Let the user know no cards were found using those UIDs
@@ -56,25 +56,27 @@ module.exports = {
 		// prettier-ignore
 		// Let the user know they tried to sell locked/favorited/selected/team cards
 		if (!cards.length) return await error_ES.send({
-			interaction, description: `${uids.length === 1 ? "That card" : "Those cards"} cannot be sold, it is either:\n\`🔒 vault\` \`🧑🏾‍🤝‍🧑 team\` \`🏃 idol\` \`⭐ favorite\``
+			interaction, description: `${uids.length === 1 ? "That card" : "Those cards"} cannot be gifted, it is either:\n\`🔒 vault\` \`🧑🏾‍🤝‍🧑 team\` \`🏃 idol\` \`⭐ favorite\``
 		});
 
 		// Create the embed :: { GIFT }
 		let embed_gift = general_ES.gift(interaction.member, recipient, cards);
 
+		// prettier-ignore
 		await Promise.all([
 			// Remove the cards from the user's card_inventory
-			userManager.inventory.remove(interaction.user.id, uids),
+			userManager.inventory.remove(interaction.user.id, cards.map(c => c?.uid)),
 			// Add the cards to the recipient card_inventory
-			userManager.inventory.add(recipient.id, uids),
+			userManager.inventory.add(recipient.id, cards),
 			// Update the recipient's quest progress
 			// userManager.quests.increment.cardsNew(recipient.id, cards.length),
 			// Send a DM to the recipient
-			messenger.gift.cards(interaction.user, recipient, cards),
-			// Send the embed :: { GIFT }
-			embed_gift.send({ interaction })
+			messenger.gift.cards(interaction.user, recipient, cards)
 		])
 			// Trigger the recipient quest progress update
 			.then(async () => questManager.updateQuestProgress(recipient));
+
+		// Send the embed :: { GIFT }
+		return await embed_gift.send({ interaction });
 	}
 };

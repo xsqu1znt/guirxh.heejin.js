@@ -17,10 +17,11 @@
  - /random
  - /quest
  - /inventory
+ - /pay
+ - /gift
 
 <!-- Changelog -->
 - **`Command Changes`**
- - Can now mix and match set IDs when using /missing
 
 - **`/Inventory`**
  - Can now mix and match filters and separate multiple options by commas (,)

@@ -602,7 +602,7 @@ function gift(user, recipient, cards) {
 
 	// Create the embed :: { GIFT }
 	let embed_gift = new BetterEmbed({
-		author: { text: "$USERNAME | gift", user },
+		author: { text: "$USERNAME | gift", user, iconURL: true },
 		description: `$GIFTED\n$FROM_TO`
 			.replace("$GIFTED", `You gifted \`${cards.length}\` cards`)
 			.replace("$FROM_TO", from_to),

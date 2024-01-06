@@ -51,7 +51,7 @@ module.exports = {
 
 		// prettier-ignore
 		// Check if the user has sufficient carrots to give
-		if (userData.user.balance > amount) return await error_ES.send({
+		if (userData.user.balance < amount) return await error_ES.send({
             interaction, description: `You do not have enough carrots to give \`${config_bot.emojis.currency_1.EMOJI} ${amount}\``,
             footer: `balance: ${config_bot.emojis.currency_1.EMOJI} ${userData.user.balance}`
         });
