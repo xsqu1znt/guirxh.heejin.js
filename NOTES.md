@@ -16,7 +16,7 @@
  - /daily
  - /random
  - /quest
- - /inventory~~
+ - /inventory
 
 <!-- Changelog -->
 - **`Command Changes`**
