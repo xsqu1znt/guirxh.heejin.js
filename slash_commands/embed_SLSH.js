@@ -17,7 +17,7 @@ const timeouts = {
 };
 
 module.exports = {
-	options: { icon: "📝", deferReply: false, guildAdminOnly: true },
+	options: { /* icon: "📝", */ deferReply: false, guildAdminOnly: true },
 
 	// prettier-ignore
 	builder: new SlashCommandBuilder().setName("embed")

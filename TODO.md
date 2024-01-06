@@ -1,9 +1,0 @@
-- **TODO**:
- - `✅` ~~reroll rarities until there's none left that the user doesn't have~~
- - add caching for already fetched card pools to save database load (also delete cards already used)
- - add dupeRepel reroll to the rest of drop
- - increment quest balance for sell
- - ignore quest database actions if there's no active quest
- - fix duplicate user quest data inserts
- - /admin reset-quest-data
- - auto reset user stats when there's no active quests
