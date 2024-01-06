@@ -55,7 +55,7 @@ module.exports = {
 		});
 		// prettier-ignore
 		let embed_userLevelUp = new BetterEmbed({
-			interaction: args.interaction, author: "🎉 Congratulations, $USER! You leveled up!"
+			interaction: args.interaction
 		});
 
 		// Get the slash command function from the client if it exists
@@ -175,23 +175,25 @@ module.exports = {
 
 						const sendSeparateEmbed = async () => {
 							return await embed_userLevelUp.send({
-								description: `You are now LV. ${levelUpData.level_current}`,
-								sendMethod: "followUp"
+								messageContent: `${args.interaction.user}`,
+								author: `🎉 Congratulations, $USERNAME! You are now LV. ${levelUpData.level_current}!`,
+								sendMethod: "followUp",
+								ephemeral: args.interaction.deferred ? false : true
 							}).catch(() => null);
 						};
 
 						// Let the user know they leveled up
 						// but first, try to edit the message
 						if (message?.editable) return await message.edit({
-							content: "🎉 Congratulations, $USER! You leveled up!\nYou are now LV. $LEVEL"
-								.replace("$USER", args.interaction.user.id)
+							content: "\`🎉\` **Congratulations, $USER! You are now LV. $LEVEL!**"
+								.replace("$USER", args.interaction.user)
 								.replace("$LEVEL", levelUpData.level_current)
 						}).catch(async () => await sendSeparateEmbed());
 
 						// If that failed, send a separate embed
 						return await sendSeparateEmbed()
 					})
-					.catch(() => null);
+					/* .catch(() => null) */;
 			});
 		} catch (err) {
 			/* - - - - - { Let the User Know an Error Occurred } - - - - - */

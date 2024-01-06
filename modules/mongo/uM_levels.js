@@ -28,24 +28,25 @@ async function xp_levelUp(userID) {
 			userData.level++;
 
 			// Calculate the XP required for the next level
-			userData.xp_for_next_level = Math.floor(userData.level * playerConfig.xp.user.LEVEL_XP_MULTIPLIER);
+			userData.xp_for_next_level = Math.floor(userData.level * config.player.xp.user.LEVEL_XP_MULTIPLIER);
 
-			// Update session data
-			session.levels_gained++;
+			/// Update session data
 			session.leveled = true;
+			session.levels_gained++;
+			session.level_current++;
 		}
 	};
 
 	// Level up the user until they can't anymore
 	while (userData.xp >= userData.xp_for_next_level) levelUp();
 
+	// prettier-ignore
 	// Push the update to Mongo
-	if (session.leveled)
-		await userManager.update(userID, {
-			level: userData.level,
-			xp: userData.xp,
-			xp_for_next_level: userData.xp_for_next
-		});
+	if (session.leveled) await userManager.update(userID, {
+		level: userData.level,
+		xp: userData.xp,
+		xp_for_next_level: userData.xp_for_next
+	});
 
 	return session;
 }

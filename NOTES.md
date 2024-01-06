@@ -13,3 +13,4 @@
  - /shop
  - /sell
  - /daily
+ - /random
