@@ -14,11 +14,15 @@ const uM_levels = require("./uM_levels");
 const uM_quests = require("./uM_quests");
 
 const quests = require("../../configs/quests.json");
-const quests_active = quests.filter(q => q.ending > Date.now());
+let quests_active = quests.filter(q => q.ending > Date.now());
 
 const configs = { bot: require("../../configs/config_bot.json") };
 
 /* - - - - - { Parse Quest Config Data } - - - - - */
+function updateActiveQuests() {
+	quests_active = quests.filter(q => q.ending > Date.now());
+}
+
 function parseQuestConfig() {
 	let edited = false;
 
@@ -81,7 +85,9 @@ async function checkUserQuest(userID, questID) {
 
 	const checkHasDupes = async requiredDupes => {
 		// Iterate through each globalID and fetch the matching cards in the user's card_inventory
-		let userCards = await Promise.all(requiredDupes.map(data => uM_inventory.getMultiple(userID, { gids: data.globalID })));
+		let userCards = await Promise.all(
+			requiredDupes.map(data => uM_inventory.getMultiple(userID, { gids: data.globalID }))
+		);
 		let has = [];
 
 		// Iterate through the fetched cards and check if the user has the required dupes
@@ -451,6 +457,8 @@ function toString_objectiveDetails(quest, objectiveType, objectiveProgress, ques
 module.exports = {
 	quests,
 	quests_active,
+
+	updateActiveQuests,
 
 	checkUserQuest,
 	updateQuestProgress,

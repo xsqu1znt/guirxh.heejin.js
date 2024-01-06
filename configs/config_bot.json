@@ -1,5 +1,7 @@
 {
-	"SEND_USER_REMINDERS": false,
+	"USER_REMINDER_INTERVAL_ENABLED": false,
+	"PARSE_QUESTS_INTERVAL_ENABLED": false,
+
 	"TIP_CHANCE": 5,
 
 	"community_server": {
@@ -13,6 +15,7 @@
 
 	"timeouts": {
 		"USER_REMINDER_INTERVAL": "5s",
+		"PARSE_QUESTS_INTERVAL": "10s",
 
 		"STAGE_START": "3s",
 		"STAGE_TURN": "500ms",

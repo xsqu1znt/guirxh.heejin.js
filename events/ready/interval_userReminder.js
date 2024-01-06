@@ -5,8 +5,8 @@ const { Client, userMention } = require("discord.js");
 const { UserReminder } = require("../../modules/mongo/uM_reminders");
 const { reminder_ES } = require("../../modules/embedStyles");
 const { userManager } = require("../../modules/mongo");
-const jt = require("../../modules/jsTools");
 const logger = require("../../modules/logger");
+const jt = require("../../modules/jsTools");
 
 const config = { bot: require("../../configs/config_bot.json") };
 
@@ -56,7 +56,7 @@ module.exports = {
 
 					// prettier-ignore
 					// Fetch the guild from the client
-					let guild = client.guilds.cache.get(reminder.guildID) /* || (await client.guilds.fetch(reminder.guildID).catch(() => null)) */;
+					let guild = client.guilds.cache.get(reminder.guildID) /* || (await client.guilds.fetch(reminder.guildID).catch(() => null)) */
 					if (guild) reminderGuilds.push(await guild.fetch().catch(() => null));
 				}
 
@@ -74,7 +74,7 @@ module.exports = {
 
 					// prettier-ignore
 					// Fetch the channel from the guild
-					let channel = _guild.channels.cache.get(reminder.channelID) /* || (await _guild.channels.fetch(reminder.channelID).catch(() => null)) */;
+					let channel = _guild.channels.cache.get(reminder.channelID) /* || (await _guild.channels.fetch(reminder.channelID).catch(() => null)) */
 					if (channel) reminderChannels.push(await channel.fetch().catch(() => null));
 				}
 
@@ -131,8 +131,8 @@ module.exports = {
 			}
 		};
 
-		// prettier-ignore
 		// Execute the function every (x) milliseconds
-		if (config.bot.SEND_USER_REMINDERS) setInterval(doTheThing, jt.parseTime(config.bot.timeouts.USER_REMINDER_INTERVAL));
+		if (config.bot.USER_REMINDER_INTERVAL_ENABLED)
+			setInterval(doTheThing, jt.parseTime(config.bot.timeouts.USER_REMINDER_INTERVAL));
 	}
 };
