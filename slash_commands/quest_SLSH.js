@@ -28,6 +28,9 @@ module.exports = {
 
 		await interaction.deferReply();
 
+		// Make sure the user has quest cache saved
+		await userManager.quests.insertNew(interaction.user.id);
+
 		// Fetch the user's quest cache from Mongo
 		let userQuestCache = await userManager.quests.fetch(interaction.user.id);
 
