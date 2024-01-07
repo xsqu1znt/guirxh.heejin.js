@@ -639,6 +639,13 @@ function formatTemplate(client, user, template) {
 		
 		.replace(/\\/g, "");
 
+	// prettier-ignore
+	const parseSpecial = str => `${str}`
+		// User avatar
+		.replace(/(?<!\\)\$USER_AVATAR\b/g, user.user.avatarURL({ dynamic: true }) || "n/a")
+		// Bot avatar
+		.replace(/(?<!\\)\$BOT_AVATAR\b/g, client.user.avatarURL({ dynamic: true }) || "n/a");
+
 	if (template.messageContent) template.messageContent = parse(template.messageContent);
 	if (template.author?.text) template.author.text = parse(template.author.text);
 	if (template.title?.text) template.title.text = parse(template.title.text);
@@ -646,12 +653,10 @@ function formatTemplate(client, user, template) {
 	if (template.description) template.description = parse(template.description);
 
 	// Special
-	if (template.author?.iconURL)
-		template.author.iconURL = template.author.iconURL
-			// User avatar
-			.replace(/(?<!\\)\$USER_AVATAR\b/g, user.user.avatarURL({ dynamic: true }) || "n/a")
-			// Bot avatar
-			.replace(/(?<!\\)\$BOT_AVATAR\b/g, client.user.avatarURL({ dynamic: true }) || "n/a");
+	if (template.author?.iconURL) template.author.iconURL = parseSpecial(template.author.iconURL);
+	if (template.thumbnailURL) template.thumbnailURL = parseSpecial(template.thumbnailURL);
+	if (template.imageURL) template.imageURL = parseSpecial(template.imageURL);
+	if (template.footer?.iconURL) template.footer.iconURL = parseSpecial(template.footer.iconURL);
 
 	// Fields
 	if (template.fields) {
