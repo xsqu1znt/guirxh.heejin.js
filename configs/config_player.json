@@ -1,14 +1,14 @@
 {
 	"cooldowns": {
-		"DAILY": "5s",
-		"STAGE": "5s",
-		"RANDOM": "5s",
+		"DAILY": "30s",
+		"STAGE": "30s",
+		"RANDOM": "30s",
 
 		"DROP_GENERAL": "5s",
-		"DROP_WEEKLY": "5s",
-		"DROP_SEASON": "5s",
-		"DROP_EVENT_1": "5s",
-		"DROP_EVENT_2": "5s"
+		"DROP_WEEKLY": "1ms",
+		"DROP_SEASON": "1ms",
+		"DROP_EVENT_1": "1ms",
+		"DROP_EVENT_2": "1ms"
 	},
 
 	"COOLDOWN_LONG_THRESHOLD": "6h",

@@ -21,6 +21,7 @@ module.exports = {
 	execute: async (client, interaction) => {
 		/// Check if the user has an active cooldown :: { DAILY }
 		let cooldown_daily = await userManager.cooldowns.eta(interaction.user.id, "daily");
+		console.log(cooldown_daily);
 		// prettier-ignore
 		if (cooldown_daily) return await cooldown_ES.send({
 			interaction, description: `You can claim your daily in **${cooldown_daily}**`, ephemeral: true

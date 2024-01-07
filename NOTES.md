@@ -21,9 +21,9 @@
  - /gift
  - /sell
  - /missing
+ - /collections
 
 - **Untested Commands**
- - /collections
  - /cooldowns
  - /drop
  - /reminder
@@ -35,6 +35,7 @@
 - **`Overall Changes`**
  - Major design changes
  - Revamped the reminder system
+ - Optimization improvements
 
 - **`Command Changes`**
  - Can now use `/missing` on other players
