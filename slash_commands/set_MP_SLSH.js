@@ -268,6 +268,8 @@ module.exports = {
 
 					// Add the card to the user's team
 					await userManager.update(interaction.user.id, { card_team_uids: [...card_team_add, ...cards].filter(c => c).map(c => c.uid) });
+					// Update the user's team quest stats
+					await userManager.quests.update.teamPower(interaction.user.id);
 
 					/// Let the user know the result
 					cards_f = cards.map(c => cardManager.toString.basic(c));
@@ -300,6 +302,8 @@ module.exports = {
 					/// Set the user's card team
 					card_team_remove = card_team_remove.filter(c => !uids_remove_filter.includes(c.uid.toLowerCase()));
 					await userManager.update(interaction.user.id, { card_team_uids: card_team_remove.map(c => c.uid) });
+					// Update the user's team quest stats
+					await userManager.quests.update.teamPower(interaction.user.id);
 
 					/// Let the user know the result
 					cards_f = cards.map(c => cardManager.toString.basic(c));

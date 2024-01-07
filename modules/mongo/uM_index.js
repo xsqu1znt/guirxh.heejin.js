@@ -1,4 +1,4 @@
-/** @typedef {"id"|"full"|"inventory"|"noInventory"|"essential"|"charm"|"balance"|"xp"|"reminder"|"quest"} UserDataType */
+/** @typedef {"id"|"full"|"inventory"|"noInventory"|"essential"|"charm"|"balance"|"xp"|"reminder"} UserDataType */
 
 /** @typedef UserDataFetchOptions
  * @property {UserDataType} type
@@ -122,9 +122,6 @@ async function userData_fetch(userID, options = {}) {
 			break;
 		case "reminder":
 			fetchFilter = { _id: 1, daily_streak: 1, daily_streak_expires: 1, cooldowns: 1, reminders: 1 };
-			break;
-		case "quest":
-			fetchFilter = { _id: 1, quests_complete: 1 };
 			break;
 		default:
 			fetchFilter = { __v: 0 };

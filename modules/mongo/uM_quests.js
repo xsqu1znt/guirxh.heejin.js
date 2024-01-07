@@ -1,7 +1,9 @@
 /** @typedef {"user"|"idol"|"xp_user"|"xp_idol"} LevelType */
 
+const uM_inventory = require("./uM_inventory");
 const questManager = require("./questManager");
 const userManager = require("./uM_index");
+const jt = require("../jsTools");
 
 /** @param {string} userID */
 async function exists(userID) {
@@ -34,6 +36,18 @@ async function update(userID, query) {
 	return userManager.models.userQuestData.findByIdAndUpdate(userID, query);
 }
 
+/* - - - - - { Update } - - - - - */
+/** @param {string} userID */
+async function update_teamPower(userID) {
+	// Fetch the user's team cards
+	let userData = await userManager.fetch(userID, { type: "essential" });
+
+	let teamCards = await uM_inventory.getMultiple(userID, { uids: userData.card_team_uids });
+	if (!teamCards.length) return;
+
+	await update(userID, { team_power: jt.sum(teamCards.map(c => c.stats.ability)) });
+}
+
 /* - - - - - { Increment } - - - - - */
 /** @param {string} userID @param {number} amount @param {LevelType} levelType  */
 async function increment_level(userID, amount, levelType) {
@@ -61,11 +75,6 @@ async function increment_cardsNew(userID, amount) {
 }
 
 /** @param {string} userID @param {number} amount */
-async function increment_teamPower(userID, amount) {
-	await update(userID, { $inc: { team_power: amount } });
-}
-
-/** @param {string} userID @param {number} amount */
 async function increment_dailyStreak(userID, amount) {
 	await update(userID, { $inc: { daily_streak: amount } });
 }
@@ -76,11 +85,14 @@ module.exports = {
 	fetch,
 	update,
 
+	update: {
+		teamPower: update_teamPower
+	},
+
 	increment: {
 		level: increment_level,
 		balance: increment_balance,
 		cardsNew: increment_cardsNew,
-		teamPower: increment_teamPower,
 		dailyStreak: increment_dailyStreak
 	}
 };
