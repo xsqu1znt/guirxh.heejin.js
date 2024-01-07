@@ -616,6 +616,8 @@ function formatTemplate(client, user, template) {
 	const parse = str => `${str}`
 		// User mentions
 		.replace(/(?<!\\|<)@[0-9]{18}(?!>)/g, s => `<@${s.substring(1)}>`)
+		// Role mentions
+		.replace(/(?<!\\|<)@&[0-9]{18}(?!>)/g, s => `<@&${s.substring(2)}>`)
 		// Channel mentions
 		.replace(/(?<!\\|<)#[0-9]{19}(?!>)/g, s => `<#${s.substring(1)}>`)
 

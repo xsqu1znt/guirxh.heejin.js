@@ -33,6 +33,7 @@
 				"value": [
 					"- **`\\#channel ID`** will mention that channel",
 					"- **`\\@user ID`** will mention that user",
+					"- **`\\@&role ID`** will mention that role",
 					"- **`\\$USER`** will mention yourself",
 					"- **`\\$USERNAME`** will be replaced with your user/display name",
 					"- **`\\$USER_AVATAR`** will be replaced with your avatar's URL",
@@ -58,6 +59,7 @@
 				"name": "Pack Shuffle",
 				"value": "pack_shuffle"
 			},
+			"messageContent": "\\@&903998336980385813",
 			"author": {
 				"text": "Pack Shuffle + New Quest ($year/$month/$day)",
 				"iconURL": "$USER_AVATAR",
