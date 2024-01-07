@@ -42,7 +42,7 @@ module.exports = {
 
 			// prettier-ignore
 			return await new BetterEmbed({
-				interaction, description: `**${cooldown_f}** is now \`${enabled ? "✔️ enabled" : "❌ disabled"}\``
+				interaction, description: `**${cooldown_f}** is now \`${enabled.enabled ? "✔️ enabled" : "❌ disabled"}\``
 			}).send();
 		}
 

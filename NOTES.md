@@ -22,9 +22,9 @@
  - /sell
  - /missing
  - /collections
+ - /cooldowns
 
 - **Untested Commands**
- - /cooldowns
  - /drop
  - /reminder
  - /set
@@ -41,7 +41,11 @@
  - Can now use `/missing` on other players
  - Can now `/gift` unlimited cards
 
-- **`/Inventory`**
+- **`/reminder`**
+ - Use the `edit` option to toggle on/off a reminder
+ - Use the `notify` option to change where your reminder is sent (`📫 DM` `💬 Channel`)
+
+- **`/inventory`**
  - Can now mix and match filters and separate multiple options by commas (,)
  - Can now filter by dupes only by using `/inventory` `dupes:all`
  - Added a new sorting option: `📅 Recent`
