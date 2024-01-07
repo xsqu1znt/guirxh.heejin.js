@@ -188,12 +188,17 @@ class Stage {
 
 		// prettier-ignore
 		// Give the winning user/idol XP
-		if (user) await Promise.all([
-			userManager.inventory.update(user.id, card),
-			userManager.levels.increment.xp(user.id, xp_user, "stage"),
-			userManager.quests.increment.level(user.id, xp_user, "xp_user"),
-			userManager.quests.increment.level(user.id, xp_idol, "xp_idol")
-		]);
+		if (user) {
+			await Promise.all([
+				userManager.inventory.update(user.id, card),
+				userManager.levels.increment.xp(user.id, xp_user, "stage"),
+				userManager.quests.increment.level(user.id, xp_user, "xp_user"),
+				userManager.quests.increment.level(user.id, xp_idol, "xp_idol")
+			]);
+
+			// Update the user's team quest stats
+			await userManager.quests.update.teamPower(user.id);
+		}
 
 		/* - - - - - { Update the Embed } - - - - - */
 		switch (user?.id) {
@@ -225,7 +230,7 @@ class Stage {
 
 		// Return stage data
 		return this.#resolve({
-			id: user?.id || null,
+			userID: user?.id || null,
 			user: user || null,
 			user_xp: xp_user,
 			idol: { card: card_leveled.card, levels: card_leveled.levels_gained, xp: xp_idol }
