@@ -34,7 +34,9 @@
 					"- **`\\#channel ID`** will mention that channel",
 					"- **`\\@user ID`** will mention that user",
 					"- **`\\$USER`** will mention yourself",
-					"- **`\\$USERNAME`** will be replaced with your user/display name"
+					"- **`\\$USERNAME`** will be replaced with your user/display name",
+					"- **`\\$USER_AVATAR`** will be replaced with your avatar's URL",
+					"- **`\\$BOT_AVATAR`** will be replaced with the bot's avatar URL"
 				],
 				"inline": true
 			},
@@ -50,5 +52,24 @@
 		]
 	},
 
-	"templates": []
+	"templates": [
+		{
+			"meta": {
+				"name": "Pack Shuffle",
+				"value": "pack_shuffle"
+			},
+			"author": {
+				"text": "Pack Shuffle + New Quest ($year/$month/$day)",
+				"iconURL": "$USER_AVATAR",
+				"linkURL": ""
+			},
+			"description": "```Hello! It is time for 📦 PACK SHUFFLE\nHere are the sets available for this week!```\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n\n**Just head over to `/shop` and use dropdown menu to ITEM PACKS**\nI hope you manage to drop your desired card!.. And do not gamble too too much!\n```Make sure you read Content before buying any of the packs, they are all different based on their price etc..```\n`🔎` **NEW QUEST**\n> You can now also use `/quest` to check new set of quests. Hope everyone have fun doing them.",
+			"footer": {
+				"text": "",
+				"iconURL": ""
+			},
+			"thumbnailURL": "",
+			"timestamp": false
+		}
+	]
 }

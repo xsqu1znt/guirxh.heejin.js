@@ -51,7 +51,7 @@ module.exports = {
 		}
 
 		// Apply formatting to the template
-		template = formatTemplate(template, interaction.member);
+		template = formatTemplate(client, interaction.member, template);
 
 		/* - - - - - { Configure the Modal } - - - - - */
 		// Create the modal
@@ -242,7 +242,7 @@ module.exports = {
 		// Apply the template to the embed
 		applyEmbedTemplate(
 			embed, message_components,
-			templateUsed ? template : formatTemplate(config.template_default, interaction.member)
+			templateUsed ? template : formatTemplate(client, interaction.member, config.template_default)
 		);
 
 		// Send the embed
@@ -301,7 +301,7 @@ module.exports = {
 					/* - - - - - { Parse Modal Data } - - - - - */
 					template.messageContent = modalData_message.fields.getTextInputValue("mti_messageContent") || "";
 					template.color = modalData_message.fields.getTextInputValue("mti_color") || "";
-					formatTemplate(template, interaction.member);
+					formatTemplate(client, interaction.member, template);
 
 					applyEmbedTemplate(embed, message_components, template);
 					return await refreshEmbed(message, embed, template);
@@ -327,7 +327,7 @@ module.exports = {
 					template.footer.text = modalData_embedContent.fields.getTextInputValue("mti_footerText") || "";
 					template.description = modalData_embedContent.fields.getTextInputValue("mti_description") || "";
 					template.imageURL = modalData_embedContent.fields.getTextInputValue("mti_imageURL") || "";
-					formatTemplate(template, interaction.member);
+					formatTemplate(client, interaction.member, template);
 
 					applyEmbedTemplate(embed, message_components, template);
 					return await refreshEmbed(message, embed, template);
@@ -353,7 +353,7 @@ module.exports = {
 					template.author.linkURL = modalData_embedDetails.fields.getTextInputValue("mti_authorLinkURL") || "";
 					template.title.linkURL = modalData_embedDetails.fields.getTextInputValue("mti_titleLinkURL") || "";
 					template.thumbnailURL = modalData_embedDetails.fields.getTextInputValue("mti_thumbnailURL") || "";
-					formatTemplate(template, interaction.member);
+					formatTemplate(client, interaction.member, template);
 
 					applyEmbedTemplate(embed, message_components, template);
 					return await refreshEmbed(message, embed, template);
@@ -414,7 +414,7 @@ module.exports = {
 					});
 
 					/// Apply changes
-					formatTemplate(template, interaction.member);
+					formatTemplate(client, interaction.member, template);
 					applyEmbedTemplate(embed, message_components, template);
 
 					// Add the field select menu to the message
@@ -472,7 +472,7 @@ module.exports = {
 					_field_edit.value = modalData_fieldMode_edit.fields.getTextInputValue("mti_fieldValue") || "";
 
 					/// Apply changes
-					formatTemplate(template, interaction.member);
+					formatTemplate(client, interaction.member, template);
 					applyEmbedTemplate(embed, message_components, template);
 
 					return await refreshEmbed(message, embed, template);
@@ -496,7 +496,7 @@ module.exports = {
 					_field_toggleInline.inline = !_field_toggleInline.inline || false;
 
 					/// Apply changes
-					formatTemplate(template, interaction.member);
+					formatTemplate(client, interaction.member, template);
 					applyEmbedTemplate(embed, message_components, template);
 
 					return await refreshEmbed(message, embed, template);
@@ -539,7 +539,7 @@ module.exports = {
 					await i.deferUpdate();
 
 					/// Update the embed to reflect its final changes
-					formatTemplate(template, interaction.member);
+					formatTemplate(client, interaction.member, template);
 					applyEmbedTemplate(embed, message_components, template);
 					await refreshEmbed(message, embed, template);
 
@@ -604,7 +604,7 @@ module.exports = {
 	}
 };
 
-function formatTemplate(template, user) {
+function formatTemplate(client, user, template) {
 	if (Array.isArray(template.description)) template.description = template.description.join("\n");
 
 	if (typeof template.author === "string") template.author = { text: template.author, iconURL: "", linkURL: "" };
@@ -623,14 +623,19 @@ function formatTemplate(template, user) {
 		.replace(/(?<!\\)\$USER\b/g, user.toString())
 		// Self username
 		.replace(/(?<!\\)\$USERNAME\b/g, user?.displayName || user?.username || "{invalid user}")
+
+		// Self avatar
+		.replace(/(?<!\\)\$USER_AVATAR\b/g, user.user.avatarURL({ dynamic: true }) || "{invalid avatar url}")
+		// Bot avatar
+		.replace(/(?<!\\)\$BOT_AVATAR\b/g, client.user.avatarURL({ dynamic: true }) || "{invalid avatar url}")
 		
 		/// Dates
 		.replace(/(?<!\\)\$YEAR/g, new Date().getFullYear())
 		.replace(/(?<!\\)\$MONTH/g, `0${new Date().getMonth() + 1}`.slice(-2))
 		.replace(/(?<!\\)\$DAY/g, `0${new Date().getDate()}`.slice(-2))
-		.replace(/(?<!\\)\$year/g, new Date().getFullYear().toString().substring(2))
-		.replace(/(?<!\\)\$month/g, new Date().getMonth() + 1)
-		.replace(/(?<!\\)\$day/g, new Date().getDate())
+		.replace(/(?<!\\)\$year/g, `${new Date().getFullYear()}`.substring(2))
+		.replace(/(?<!\\)\$month/g, `0${new Date().getMonth() + 1}`.slice(-2))
+		.replace(/(?<!\\)\$day/g, `0${new Date().getDate()}`.slice(-2))
 		
 		.replace(/\\/g, "");
 
@@ -639,6 +644,14 @@ function formatTemplate(template, user) {
 	if (template.title?.text) template.title.text = parse(template.title.text);
 	if (template.footer?.text) template.footer.text = parse(template.footer.text);
 	if (template.description) template.description = parse(template.description);
+
+	// Special
+	if (template.author?.iconURL)
+		template.author.iconURL = template.author.iconURL
+			// User avatar
+			.replace(/(?<!\\)\$USER_AVATAR\b/g, user.user.avatarURL({ dynamic: true }) || "n/a")
+			// Bot avatar
+			.replace(/(?<!\\)\$BOT_AVATAR\b/g, client.user.avatarURL({ dynamic: true }) || "n/a");
 
 	// Fields
 	if (template.fields) {
