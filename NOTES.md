@@ -23,6 +23,7 @@
  - /missing
  - /collections
  - /cooldowns
+ - /embed
 
 - **Untested Commands**
  - /drop
