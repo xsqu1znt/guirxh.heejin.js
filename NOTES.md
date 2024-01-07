@@ -20,9 +20,24 @@
  - /pay
  - /gift
  - /sell
+ - /missing
+
+- **Untested Commands**
+ - /collections
+ - /cooldowns
+ - /drop
+ - /reminder
+ - /set
+ - /stage
+ - /quest
 
 <!-- Changelog -->
+- **`Overall Changes`**
+ - Major design changes
+ - Revamped the reminder system
+
 - **`Command Changes`**
+ - Can now use `/missing` on other players
  - Can now `/gift` unlimited cards
 
 - **`/Inventory`**

@@ -269,18 +269,18 @@ function toString_rewards(rewards) {
 function toString_objective(objectiveType) {
 	// prettier-ignore
 	switch (objectiveType) {
-		case "balance": return "🥕 Balance";
-		case "ribbons": return "🎀 Ribbons";
-		case "daily_streak": return "📆 Daily Streak";
-		case "xp_user": return "👆 User XP";
-		case "xp_idol": return "👆 Idol XP";
-		case "level_user": return "📈 User LV.";
-		case "level_idol": return "📈 Idol LV.";
+		case "balance": return "🥕 BALANCE";
+		case "ribbons": return "🎀 RIBBONS";
+		case "daily_streak": return "📆 DAILY STREAK";
+		case "xp_user": return "👆 USER XP";
+		case "xp_idol": return "👆 IDOL XP";
+		case "level_user": return "📈 USER LV.";
+		case "level_idol": return "📈 IDOL LV.";
 		case "team_power": return "👯‍♀️ ABI REP";
-		case "cards_new": return "🃏 Inventory";
+		case "cards_new": return "🃏 INVENTORY";
 		case "cards_have_gids": return "🃏 GID";
-		case "cards_have_sets": return "🗣️ Set";
-		case "cards_have_dupes": return "🃏 Dupes";
+		case "cards_have_sets": return "🗣️ SET";
+		case "cards_have_dupes": return "🃏 DUPES";
 
 		default: return "invalid objective type";
 	}
@@ -296,7 +296,7 @@ function toString_objectiveDetails(quest, objectiveType, objectiveProgress, ques
 		case "balance":
 			if (!quest.objectives?.balance) return "n/a";
 
-			return "- \`$COMPLETE\` \`🥕 Balance\` get \`$REQUIRED\` new $DYNAMIC :: \`[$PROGRESS]\`"
+			return "- \`$COMPLETE\` **\`🥕 BALANCE\`** get \`$REQUIRED\` new $DYNAMIC :: \`[$PROGRESS]\`"
 				.replace("$COMPLETE", objectiveComplete_f)
 				.replace("$REQUIRED", quest.objectives.balance)
 				.replace("$DYNAMIC", quest.objectives.balance === 1 ? "carrot" : "carrots")
@@ -305,7 +305,7 @@ function toString_objectiveDetails(quest, objectiveType, objectiveProgress, ques
 		case "ribbons":
 			if (!quest.objectives?.ribbons) return "n/a";
 
-			return "- \`$COMPLETE\` \`🎀 Ribbons\` get \`$REQUIRED\` new $DYNAMIC :: \`[$PROGRESS]\`"
+			return "- \`$COMPLETE\` **\`🎀 RIBBONS\`** get \`$REQUIRED\` new $DYNAMIC :: \`[$PROGRESS]\`"
 				.replace("$COMPLETE", objectiveComplete_f)
 				.replace("$REQUIRED", quest.objectives.ribbon)
 				.replace("$DYNAMIC", quest.objectives.ribbon === 1 ? "ribbon" : "ribbons")
@@ -314,7 +314,7 @@ function toString_objectiveDetails(quest, objectiveType, objectiveProgress, ques
 		case "daily_streak":
 			if (!quest.objectives?.daily_streak) return "n/a";
 
-			return "- \`$COMPLETE\` \`📆 Daily Streak\` reach a \`$REQUIRED\` streak :: \`[$PROGRESS]\`"
+			return "- \`$COMPLETE\` **\`📆 DAILY STREAK\`** reach a \`$REQUIRED\` streak :: \`[$PROGRESS]\`"
 				.replace("$COMPLETE", objectiveComplete_f)
 				.replace("$REQUIRED", quest.objectives.daily_streak)
 				.replace("$PROGRESS", `${objectiveComplete ? quest.objectives.daily_streak : objectiveProgress.has}/${quest.objectives.daily_streak}`);
@@ -322,7 +322,7 @@ function toString_objectiveDetails(quest, objectiveType, objectiveProgress, ques
 		case "xp_user":
 			if (!quest.objectives?.xp_user) return "n/a";
 
-			return "- \`$COMPLETE\` \`👆 User XP\` get \`$REQUIRED\` user XP :: \`[$PROGRESS]\`"
+			return "- \`$COMPLETE\` **\`👆 USER XP\`** get \`$REQUIRED\` user XP :: \`[$PROGRESS]\`"
 				.replace("$COMPLETE", objectiveComplete_f)
 				.replace("$REQUIRED", quest.objectives.xp_user)
 				.replace("$PROGRESS", `${objectiveComplete ? quest.objectives.xp_user : objectiveProgress.has}/${quest.objectives.xp_user}`);
@@ -330,7 +330,7 @@ function toString_objectiveDetails(quest, objectiveType, objectiveProgress, ques
 		case "xp_idol":
 			if (!quest.objectives?.xp_idol) return "n/a";
 
-			return "- \`$COMPLETE\` \`👆 Idol XP\` get \`$REQUIRED\` idol XP :: \`[$PROGRESS]\`"
+			return "- \`$COMPLETE\` **\`👆 IDOL XP\`** get \`$REQUIRED\` idol XP :: \`[$PROGRESS]\`"
 				.replace("$COMPLETE", objectiveComplete_f)
 				.replace("$REQUIRED", quest.objectives.xp_idol)
 				.replace("$PROGRESS", `${objectiveComplete ? quest.objectives.xp_idol : objectiveProgress.has}/${quest.objectives.xp_idol}`);
@@ -338,7 +338,7 @@ function toString_objectiveDetails(quest, objectiveType, objectiveProgress, ques
 		case "level_user":
 			if (!quest.objectives?.level_user) return "n/a";
 
-			return "- \`$COMPLETE\` \`📈 User LV.\` reach user level \`$REQUIRED\` :: \`[$PROGRESS]\`"
+			return "- \`$COMPLETE\` **\`📈 USER LV.\`** reach user level \`$REQUIRED\` :: \`[$PROGRESS]\`"
 				.replace("$COMPLETE", objectiveComplete_f)
 				.replace("$REQUIRED", quest.objectives.level_user)
 				.replace("$PROGRESS", `${objectiveComplete ? quest.objectives.level_user : objectiveProgress.has}/${quest.objectives.level_user}`);
@@ -346,7 +346,7 @@ function toString_objectiveDetails(quest, objectiveType, objectiveProgress, ques
 		case "level_idol":
 			if (!quest.objectives?.level_idol) return "n/a";
 
-			return "- \`$COMPLETE\` \`📈 Idol LV.\` reach idol level \`$REQUIRED\` :: \`[$PROGRESS]\`"
+			return "- \`$COMPLETE\` **\`📈 IDOL LV.\`** reach idol level \`$REQUIRED\` :: \`[$PROGRESS]\`"
 				.replace("$COMPLETE", objectiveComplete_f)
 				.replace("$REQUIRED", quest.objectives.level_idol)
 				.replace("$PROGRESS", `${objectiveComplete ? quest.objectives.level_idol : objectiveProgress.has}/${quest.objectives.level_idol}`);
@@ -354,7 +354,7 @@ function toString_objectiveDetails(quest, objectiveType, objectiveProgress, ques
 		case "team_power":
 			if (!quest.objectives?.team_power) return "n/a";
 
-			return "- \`$COMPLETE\` \`👯‍♀️ ABI REP\` reach \`$REQUIRED\` in ABI. and REP. stats :: \`[$PROGRESS]\`"
+			return "- \`$COMPLETE\` **\`👯‍♀️ ABI REP\`** reach \`$REQUIRED\` in ABI. and REP. stats :: \`[$PROGRESS]\`"
 				.replace("$COMPLETE", objectiveComplete_f)
 				.replace("$REQUIRED", quest.objectives.team_power)
 				.replace("$PROGRESS", `${objectiveComplete ? quest.objectives.team_power : objectiveProgress.has}/${quest.objectives.team_power}`);
@@ -362,7 +362,7 @@ function toString_objectiveDetails(quest, objectiveType, objectiveProgress, ques
 		case "cards_new":
 			if (!quest.objectives?.cards_new) return "n/a";
 
-			return "- \`$COMPLETE\` \`🃏 Inventory\` drop \`$REQUIRED\` new $DYNAMIC :: \`[$PROGRESS]\`"
+			return "- \`$COMPLETE\` **\`🃏 INVENTORY\`** drop \`$REQUIRED\` new $DYNAMIC :: \`[$PROGRESS]\`"
 				.replace("$COMPLETE", objectiveComplete_f)
 				.replace("$REQUIRED", quest.objectives.cards_new)
 				.replace("$DYNAMIC", quest.objectives.cards_new === 1 ? "card" : "cards")
@@ -371,7 +371,7 @@ function toString_objectiveDetails(quest, objectiveType, objectiveProgress, ques
 		case "cards_have_gids":
 			if (!quest.objectives?.cards_have_gids) return "n/a";
 
-			let result_chg = "- \`$COMPLETE\` \`🃏 GID\` own \`$REQUIRED\` $DYNAMIC: $SINGLE_CARD\n$MULTI_CARD"
+			let result_chg = "- \`$COMPLETE\` **\`🃏 GID\`** own \`$REQUIRED\` $DYNAMIC: $SINGLE_CARD\n$MULTI_CARD"
 				.replace("$COMPLETE", objectiveComplete_f)
 				.replace("$REQUIRED", quest.objectives.cards_have_gids.length)
 				.replace("$DYNAMIC", quest.objectives.cards_have_gids.length === 1 ? "card" : "cards");
@@ -394,7 +394,7 @@ function toString_objectiveDetails(quest, objectiveType, objectiveProgress, ques
 		case "cards_have_sets":
 			if (!quest.objectives?.cards_have_sets) return "n/a";
 
-			let result_chs = "- \`$COMPLETE\` \`🗣️ Set\` complete \`$REQUIRED\` $DYNAMIC: $SINGLE_CARD\n$MULTI_CARD"
+			let result_chs = "- \`$COMPLETE\` **\`🗣️ SET\`** complete \`$REQUIRED\` $DYNAMIC: $SINGLE_CARD\n$MULTI_CARD"
 				.replace("$COMPLETE", objectiveComplete_f)
 				.replace("$REQUIRED", quest.objectives.cards_have_sets.length)
 				.replace("$DYNAMIC", quest.objectives.cards_have_sets.length === 1 ? "set" : "sets");
@@ -417,7 +417,7 @@ function toString_objectiveDetails(quest, objectiveType, objectiveProgress, ques
 		case "cards_have_dupes":
 			if (!quest.objectives?.cards_have_dupes) return "n/a";
 
-			let result_chd = "- \`$COMPLETE\` \`🃏 Dupes\` own: $SINGLE_CARD\n$MULTI_CARD"
+			let result_chd = "- \`$COMPLETE\` **\`🃏 DUPES\`** own: $SINGLE_CARD\n$MULTI_CARD"
 				.replace("$COMPLETE", objectiveComplete_f);
 		
 			// Dynamic format

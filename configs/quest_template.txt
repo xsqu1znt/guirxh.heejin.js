@@ -20,9 +20,9 @@
 		},
 
 		"rewards": {
-			"xp": 5000,
-			"carrots": 1000,
-			"ribbons": 500
+			"xp": 0,
+			"carrots": 0,
+			"ribbons": 0
 		}
 	}
 ]
