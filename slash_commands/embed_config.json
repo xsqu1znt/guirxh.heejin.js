@@ -62,16 +62,33 @@
 			"messageContent": "\\@&903998336980385813",
 			"author": {
 				"text": "Pack Shuffle + New Quest ($year/$month/$day)",
-				"iconURL": "$USER_AVATAR",
-				"linkURL": ""
+				"iconURL": "$BOT_AVATAR"
 			},
-			"description": "```Hello! It is time for 📦 PACK SHUFFLE\nHere are the sets available for this week!```\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n\n**Just head over to `/shop` and use dropdown menu to ITEM PACKS**\nI hope you manage to drop your desired card!.. And do not gamble too too much!\n```Make sure you read Content before buying any of the packs, they are all different based on their price etc..```\n`🔎` **NEW QUEST**\n> You can now also use `/quest` to check new set of quests. Hope everyone have fun doing them.",
-			"footer": {
-				"text": "",
-				"iconURL": ""
+			"description": "```Hello! It is time for 📦 PACK SHUFFLE\nHere are the sets available for this week!```\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n> `000` `🃏` **GROUP** - SINGLE `100%`\n\n**Just head over to `/shop` and use dropdown menu to ITEM PACKS**\nI hope you manage to drop your desired card!.. And do not gamble too too much!\n```Make sure you read Content before buying any of the packs, they are all different based on their price etc..```\n`🔎` **NEW QUEST**\n> You can now also use `/quest` to check new set of quests. Hope everyone have fun doing them."
+		},
+		{
+			"meta": {
+				"name": "Event Update",
+				"value": "event_update"
 			},
-			"thumbnailURL": "",
-			"timestamp": false
+			"messageContent": "\\@&911414367550074941",
+			"author": {
+				"text": "Event Update ($year/$month/$day)",
+				"iconURL": "$BOT_AVATAR"
+			},
+			"description": "```Hello everyone! 💕\nWe have EVENT_NAME dropping today! I hope everyone enjoy the set and manages to finish successfully.```\n`⭐` **EVENT_NAME**\n> `Contains: SETS`\n\nUse `/drop:🎆 Event 1` and `/drop:🎆 Event 2` to get EVENT_NAME cards! The cooldown is of 6 hours and it will end DAY MONTH."
+		},
+		{
+			"meta": {
+				"name": "Overall Updates",
+				"value": "overall_updates"
+			},
+			"messageContent": "\\@&911414367550074941",
+			"author": {
+				"text": "Overall Updates ($year/$month/$day)",
+				"iconURL": "$BOT_AVATAR"
+			},
+			"description": "```Hello everyone! 💕```\n`🃏` ***WEEKLY CARD GIVEAWAY***\n> React `🎁` to participate!\n\n`📜` ***QUEST UPDATE***\n> You can now check `/quest` to see new set of objectives available to do.\n\n`⚠️` ***INVITE LINK***\n> https://discord.gg/G4YHSMNZQp\n\n`📝` ***CUSTOMS ARE CLOSED***\n> They'll be given next week!\n\n```Here is a new poll of the week.\nTheme is: A New Shop Set```\n:1one: **OPTION** :: DESCRIPTION\n:2two: **OPTION** :: DESCRIPTION\n:3three: **OPTION** :: DESCRIPTION\n:4four: **OPTION** :: DESCRIPTION"
 		}
 	]
 }
