@@ -63,6 +63,19 @@ module.exports = {
 		// Defer the interaction
 		await interaction.deferReply().catch(() => null);
 
+		/* - - - - - { Validate UIDs } - - - - - */
+		let uidsVerified = false;
+
+		// Check if the chosen UID(s) exist in the user's card_inventory
+		if (uids.length > 1) uidsVerified = await userManager.inventory.has(interaction.user.id, { uids, sum: true });
+		else uidsVerified = await userManager.inventory.has(interaction.user.id, { uids: uid, sum: true });
+
+		// prettier-ignore
+		if (!uidsVerified) return await error_ES({
+            interaction,
+            description: `${uids.length > 1 ? "Those are" : `\`${uid}\` is`} not ${uids.length > 1 ? "valid card UIDs" : "a valid card UID"}`
+        });
+
 		// Execute the operation
 		switch (interaction.options.getString("edit")) {
 			// prettier-ignore
