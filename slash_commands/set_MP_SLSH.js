@@ -65,7 +65,7 @@ module.exports = {
 					uids.length = 1;
 
 					// Fetch the card from the user's card_inventory
-					cards = await userManager.inventory.get(interaction.user.id, { uid: uids });
+					cards = await userManager.inventory.get(interaction.user.id, { uid: uids[0] });
 
 					// prettier-ignore
 					// Check if the card exists
@@ -94,7 +94,7 @@ module.exports = {
 					uids.length = 1;
 
 					// Fetch the card from the user's card_inventory
-					cards = await userManager.inventory.get(interaction.user.id, { uid: uids });
+					cards = await userManager.inventory.get(interaction.user.id, { uid: uids[0] });
 
 					// prettier-ignore
 					// Check if the card exists
@@ -119,7 +119,7 @@ module.exports = {
 					uids.length = 1;
 
 					// Fetch the card from the user's card_inventory
-					cards = await userManager.inventory.get(interaction.user.id, { uid: uids });
+					cards = await userManager.inventory.get(interaction.user.id, { uid: uids[0] });
 
 					// prettier-ignore
 					// Check if the card exists
@@ -148,7 +148,7 @@ module.exports = {
 					uids.length = 1;
 
 					// Fetch the card from the user's card_inventory
-					cards = await userManager.inventory.get(interaction.user.id, { uid: uids });
+					cards = await userManager.inventory.get(interaction.user.id, { uid: uids[0] });
 
 					// prettier-ignore
 					// Check if the card exists
@@ -252,28 +252,35 @@ module.exports = {
 					});
 
 					// Fetch the cards from the user's card_inventory
-					cards = await userManager.inventory.getMultiple(interaction.user.id, { uids });
-
+					// Fetch the user's team cards from their card_inventory
+					let cards_userTeam_add = await userManager.inventory.getMultiple(interaction.user.id, { uids: userData.card_team_uids });
+					
+					// Check if the user provided UIDs that are in the user's team
+					cards = cards.filter(c => !(cards_userTeam_add.map(c => c.uid) || []).includes(c.uid));
+					
 					// prettier-ignore
-					// Check if the cards exists
 					if (!cards.length) return await error_ES.send({
-                	    interaction, description: `\`${uids.join(", ")}\` ${uids.length === 1 ? "is not a valid UID" : "are not valid UIDs"}`
+						interaction, description: `\`${uids.join(", ")}\` ${uids.length === 1 ? "is" : "are"} already in your \`👯 team\``
 					});
 
-					/// Check if the cards are already in the user's team
-					cards = cards.filter(c => !card_team_add.map(_c => _c?.uid).includes(c.uid));
-					if (!cards.length) return await error_ES.send({
-                	    interaction, description: `${uids.length === 1 ? `\`${uids}\` is` : "Those cards are"} already in your \`👯 team \``
-					});
+					// Convert the chosen filtered cards into an array of UIDs
+					let card_uids_add = cards.map(c => c?.uid);
 
-					// Add the card to the user's team
-					await userManager.update(interaction.user.id, { card_team_uids: [...card_team_add, ...cards].filter(c => c).map(c => c.uid) });
+					/// Set the user's card team
+					cards_userTeam_add = cards_userTeam_add.filter(c => !card_uids_add.includes(c.uid));
+					await userManager.update(interaction.user.id, { card_team_uids: [...cards_userTeam_add.map(c => c.uid), ...cards.map(c => c.uid)] });
 					// Update the user's team quest stats
 					await userManager.quests.update.teamPower(interaction.user.id);
 
 					/// Let the user know the result
+					let extraCount_add = uids.length - cards.length;
+					let extraInfo_add = cards.length < uids.length ? `${extraCount_add} ${extraCount_add === 1 ? "card was" : "cards were"} already in your team` : "";
+
 					cards_f = cards.map(c => cardManager.toString.basic(c));
-                    return await embed_set.send({ description: `\`👯 team edit\` You successfully added:\n>>> ${cards_f.join("\n")}` });
+					return await embed_set.send({
+						description: `\`👯 team edit\` You successfully added:\n>>> ${cards_f.join("\n")}`,
+						footer: extraInfo_add
+					});
 
 				case "remove":
 					uids.length = jt.clamp(uids.length, { max: config.player.team.MAX_SIZE });
@@ -281,7 +288,7 @@ module.exports = {
 					/// Check if the user gave valid UIDs
 					// Fetch the cards from the user's card_inventory
 					cards = await userManager.inventory.getMultiple(interaction.user.id, { uids });
-
+					
 					// prettier-ignore
 					// Check if the cards exists
 					if (!cards.length) return await error_ES.send({
@@ -289,25 +296,34 @@ module.exports = {
 					});
 
 					// Fetch the user's team cards from their card_inventory
-					let card_team_remove = await userManager.inventory.getMultiple(interaction.user.id, { uids: userData.card_team_uids });
+					let cards_userTeam_remove = await userManager.inventory.getMultiple(interaction.user.id, { uids: userData.card_team_uids });
 					
-					// Check if the user gave valid UIDs that are in their team
-					uids_remove_filter = uids.filter(uid => card_team_remove.filter(c => c).map(c => c.uid.toLowerCase()).includes(uid));
-
+					// Check if the user provided UIDs that are in the user's team
+					cards = cards.filter(c => (cards_userTeam_remove.map(c => c.uid) || []).includes(c.uid));
+					
 					// prettier-ignore
-					if (!uids_remove_filter.length) return await error_ES.send({
-                	    interaction, description: `\`${uids.join(", ")}\` ${uids.length === 1 ? "is not" : "are not"} in your \`👯 team\``
+					if (!cards.length) return await error_ES.send({
+						interaction, description: `\`${uids.join(", ")}\` ${uids.length === 1 ? "is not" : "are not"} in your \`👯 team\``
 					});
 
+					// Convert the chosen filtered cards into an array of UIDs
+					let card_uids_remove = cards.map(c => c?.uid);
+
 					/// Set the user's card team
-					card_team_remove = card_team_remove.filter(c => !uids_remove_filter.includes(c.uid.toLowerCase()));
-					await userManager.update(interaction.user.id, { card_team_uids: card_team_remove.map(c => c.uid) });
+					cards_userTeam_remove = cards_userTeam_remove.filter(c => !card_uids_remove.includes(c.uid));
+					await userManager.update(interaction.user.id, { card_team_uids: cards_userTeam_remove.map(c => c.uid) });
 					// Update the user's team quest stats
 					await userManager.quests.update.teamPower(interaction.user.id);
 
 					/// Let the user know the result
+					let extraCount_remove = uids.length - cards.length;
+					let extraInfo_remove = cards.length < uids.length ? `${extraCount_remove} ${extraCount_remove === 1 ? "card was" : "cards were"} already not in your team` : "";
+
 					cards_f = cards.map(c => cardManager.toString.basic(c));
-                    return await embed_set.send({ description: `\`👯 team edit\` You successfully removed:\n>>> ${cards_f.join("\n")}` });
+					return await embed_set.send({
+						description: `\`👯 team edit\` You successfully removed:\n>>> ${cards_f.join("\n")}`,
+						footer: extraInfo_remove
+					});
 			}
 		}
 	}

@@ -26,9 +26,9 @@
  - /embed
  - /drop
  - /reminder
+ - /view
 
 - **Untested Commands**
- - /view
  - /set
  - /stage
  - /quest

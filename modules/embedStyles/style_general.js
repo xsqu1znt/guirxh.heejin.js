@@ -560,8 +560,8 @@ function view(user, userData, card, viewType) {
 		// Sort the cards by global ID and split it
 		let cards = card.sort((a, b) => a.globalID - b.globalID);
 
-		let total_ability = jt.sum(cards, "stats.ability");
-		let total_reputation = jt.sum(cards, "stats.reputation");
+		let total_ability = jt.sum(cards.map(c => c.stats.ability));
+		// let total_reputation = jt.sum(cards.map(c => c.stats.reputation));
 
 		/** @type {BetterEmbed[]} */
 		let embeds = [];
@@ -569,11 +569,12 @@ function view(user, userData, card, viewType) {
 		cards.forEach((_card, idx) => {
 			// Create the embed
 			let _embed = new BetterEmbed({
-				description: cardManager.toString.inventoryEntry(_card, { simplify: true }),
+				description: cardManager.toString.inventoryEntry(_card, { showXP: true }),
 				author: { text: "$USERNAME | team", user, iconURL: true },
-				footer: `Card ${idx + 1}/${cards.length} | Total :: ABI. %TOTAL_ABI / REP. %TOTAL_REP`
-					.replace("%TOTAL_ABI", total_ability)
-					.replace("%TOTAL_REP", total_reputation),
+				footer: `Card ${idx + 1}/${cards.length} | Total Power: $TOTAL`
+					// .replace("$TOTAL_ABI", total_ability)
+					// .replace("$TOTAL_REP", total_reputation),
+					.replace("$TOTAL", total_ability),
 				imageURL: _card.imageURL
 			});
 
