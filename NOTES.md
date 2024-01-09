@@ -28,6 +28,7 @@
  - /reminder
 
 - **Untested Commands**
+ - /view
  - /set
  - /stage
  - /quest

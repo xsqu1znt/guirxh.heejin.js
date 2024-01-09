@@ -71,6 +71,7 @@ async function has(userID, options) {
 async function get(userID, query) {
 	let uid = query?.uid || null;
 	let gid = query?.gid || null;
+	if (!uid && !gid) return null;
 
 	/* - - - - - { Aggregation Pipeline } - - - - - */
 	let pipeline = [{ $unwind: "$card_inventory" }];
@@ -94,6 +95,8 @@ async function get(userID, query) {
 async function getMultiple(userID, query) {
 	let uids = query?.uids ? jt.isArray(query?.uids).map(uid => uid.toUpperCase()) : null;
 	let gids = query?.gids ? jt.isArray(query?.gids) : null;
+
+	if (!uids?.length && !gids?.length) return [];
 
 	/* - - - - - { Aggregation Pipeline } - - - - - */
 	let pipeline = [{ $unwind: "$card_inventory" }];
