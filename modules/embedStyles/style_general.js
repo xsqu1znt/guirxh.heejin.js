@@ -407,7 +407,7 @@ function collections(user, options) {
 	for (let i = 0; i < card_categories_split_chunk.length; i++) {
 		let _embed = new BetterEmbed({
 			author: { text: "$USERNAME | collections", user, iconURL: true },
-			description: "```lorem ipsum dolor sit amet```",
+			// description: "```lorem ipsum dolor sit amet```",
 			footer: `Page: ${i + 1}/${card_categories_split_chunk.length} | Total: ${cards.length}`
 		});
 
