@@ -243,18 +243,18 @@ module.exports = {
 					uids.length = jt.clamp(uids.length, { max: config.player.team.MAX_SIZE });
 
 					// Fetch the user's team cards from their card_inventory
-					let card_team_add = await userManager.inventory.getMultiple(interaction.user.id, { uids: userData.card_team_uids });
+					cards = await userManager.inventory.getMultiple(interaction.user.id, { uids: userData.card_team_uids });
 
 					// prettier-ignore
 					// Check if the user's team is full
-					if (card_team_add.length >= config.player.team.MAX_SIZE) return await error_ES.send({
+					if (cards.length >= config.player.team.MAX_SIZE) return await error_ES.send({
 						interaction, description: `Your \`👯 team\` can only have up to \`${config.player.team.MAX_SIZE}\` cards`
 					});
 
 					// Fetch the cards from the user's card_inventory
 					// Fetch the user's team cards from their card_inventory
 					let cards_userTeam_add = await userManager.inventory.getMultiple(interaction.user.id, { uids: userData.card_team_uids });
-					
+
 					// Check if the user provided UIDs that are in the user's team
 					cards = cards.filter(c => !(cards_userTeam_add.map(c => c.uid) || []).includes(c.uid));
 					
