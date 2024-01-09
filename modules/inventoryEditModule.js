@@ -315,7 +315,6 @@ class InventoryEditModule {
 		}
 	}
 
-	// TODO: Make a cardManager.toString method for this.
 	async #sendEmbed_sell(reaction = null) {
 		// prettier-ignore
 		// Create the embed :: { SELL MODULE }
@@ -392,6 +391,7 @@ class InventoryEditModule {
 
 		/* - - - - - { Sell the Cards } - - - - - */
 		await userManager.inventory.sell(this.data.interaction.user.id, cards, false);
+		await userManager.quests.increment.balance(this.data.interaction.user.id, sellTotal, "balance");
 
 		/// Update the cards the user can select
 		let _selectedUIDs = this.data.cards_selected.map(c => c.uid);
@@ -409,7 +409,6 @@ class InventoryEditModule {
 		await embed_sell.send({ interaction: this.data.interaction, sendMethod: "followUp" });
 	}
 
-	// TODO: Make a cardManager.toString method for this.
 	async #sendEmbed_setFavorite(reaction = null) {
 		// prettier-ignore
 		// Create the embed :: { SELL MODULE }
@@ -494,7 +493,6 @@ class InventoryEditModule {
 		await embed_setFavorite.send({ sendMethod: "followUp" });
 	}
 
-	// TODO: Make a cardManager.toString method for this.
 	async #sendEmbed_setIdol(reaction = null) {
 		// prettier-ignore
 		// Create the embed :: { SELL MODULE }
@@ -579,7 +577,6 @@ class InventoryEditModule {
 		await embed_setIdol.send({ sendMethod: "followUp" });
 	}
 
-	// TODO: Make a cardManager.toString method for this.
 	async #sendEmbed_addVault(reaction = null) {
 		// prettier-ignore
 		// Create the embed :: { SELL MODULE }

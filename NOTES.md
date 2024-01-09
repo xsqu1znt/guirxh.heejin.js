@@ -24,10 +24,10 @@
  - /collections
  - /cooldowns
  - /embed
-
-- **Untested Commands**
  - /drop
  - /reminder
+
+- **Untested Commands**
  - /set
  - /stage
  - /quest
