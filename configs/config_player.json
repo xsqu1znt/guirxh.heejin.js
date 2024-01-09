@@ -5,10 +5,10 @@
 		"RANDOM": "1m",
 
 		"DROP_GENERAL": "5s",
-		"DROP_WEEKLY": "1ms",
-		"DROP_SEASON": "1ms",
-		"DROP_EVENT_1": "5ms",
-		"DROP_EVENT_2": "5ms"
+		"DROP_WEEKLY": "10s",
+		"DROP_SEASON": "10s",
+		"DROP_EVENT_1": "5m",
+		"DROP_EVENT_2": "5m"
 	},
 
 	"COOLDOWN_LONG_THRESHOLD": "6h",

@@ -10,7 +10,7 @@
 	},
 
 	"season": {
-		"NAME": "",
-		"CARD_RARITY_FILTER": []
+		"NAME": "Custom",
+		"CARD_RARITY_FILTER": [22]
 	}
 }
