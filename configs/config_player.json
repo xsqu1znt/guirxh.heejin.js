@@ -1,7 +1,7 @@
 {
 	"cooldowns": {
 		"DAILY": "1m",
-		"STAGE": "1m",
+		"STAGE": "10s",
 		"RANDOM": "1m",
 
 		"DROP_GENERAL": "5s",
