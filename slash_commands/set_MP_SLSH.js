@@ -10,8 +10,19 @@ const config = { player: require("../configs/config_player.json") };
 
 async function subcommand_favorite_add(interaction, uid) {}
 
+async function subcommand_favorite_remove(interaction, uid) {}
+
+async function subcommand_idol_add(interaction, uid) {}
+async function subcommand_idol_remove(interaction, uid) {}
+
+async function subcommand_vault_add(interaction, uids) {}
+async function subcommand_vault_remove(interaction, uids) {}
+
+async function subcommand_team_add(interaction, uids) {}
+async function subcommand_team_remove(interaction, uids) {}
+
 module.exports = {
-	options: { icon: "🍪", deferReply: false, botAdminOnly: false, guildAdminOnly: false },
+	options: { icon: "🏃", deferReply: false },
 
 	// prettier-ignore
 	builder: new SlashCommandBuilder().setName("set")
@@ -32,18 +43,27 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-		// prettier-ignore
-		let choices = [
-            "What's up, **$USERNAME**! Have a cookie! :cookie:",
-            "Hey, **$USERNAME**! Have a glass of milk! :milk:",
-        ];
+        // Get interaction options
+        let edit = interaction.options.getString("edit");
+		let add = interaction.options.getString("add") || null;
+		let remove = interaction.options.getString("remove") || null;
+
+		// Split UIDs by commas
+		let add_split = add ? add.split(",") : [];
+		let remove_split = remove ? remove.split(",") : [];
 
 		// prettier-ignore
-		let embed_cookie = new BetterEmbed({
-            interaction, author: { iconURL: true },
-            description: jt.choice(choices), timestamp: true
+		if (!add_split.length && !remove_split.length) return await error_ES.send({
+            interaction, description: "You must provide at least 1 UID in either `add` or `remove`",
+            ephemeral: true
         });
 
-		return await embed_cookie.send();
+		// Determine the operation
+		let operation = add_split.length ? "add" : "remove";
+
+		// Defer the interaction
+        await interaction.deferReply().catch(() => null);
+        
+        // Execute the operation
 	}
 };
