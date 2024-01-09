@@ -43,27 +43,51 @@ module.exports = {
 
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
-        // Get interaction options
-        let edit = interaction.options.getString("edit");
+		// Get interaction options
 		let add = interaction.options.getString("add") || null;
 		let remove = interaction.options.getString("remove") || null;
 
-		// Split UIDs by commas
-		let add_split = add ? add.split(",") : [];
-		let remove_split = remove ? remove.split(",") : [];
-
 		// prettier-ignore
-		if (!add_split.length && !remove_split.length) return await error_ES.send({
+		if (!add.length && !remove.length) return await error_ES.send({
             interaction, description: "You must provide at least 1 UID in either `add` or `remove`",
             ephemeral: true
         });
 
+		/// Put the chosen UID(s) into proper variables
+		let uid = add ? add : remove;
+		let uids = uids.split(",") || [];
+
 		// Determine the operation
-		let operation = add_split.length ? "add" : "remove";
+		let operation = add ? "add" : "remove";
 
 		// Defer the interaction
-        await interaction.deferReply().catch(() => null);
-        
-        // Execute the operation
+		await interaction.deferReply().catch(() => null);
+
+		// Execute the operation
+		switch (interaction.options.getString("edit")) {
+			// prettier-ignore
+			case "favorite": switch (operation) {
+                case "add": return await subcommand_favorite_add(interaction, uid);
+                case "remove": return await subcommand_favorite_remove(interaction, uid);
+            }
+
+			// prettier-ignore
+			case "idol": switch (operation) {
+                case "add": return await subcommand_idol_add(interaction, uid);
+                case "remove": return await subcommand_idol_remove(interaction, uid);
+            }
+
+			// prettier-ignore
+			case "vault": switch (operation) {
+                case "add": return await subcommand_vault_add(interaction, uids);
+                case "remove": return await subcommand_vault_remove(interaction, uids);
+            }
+
+			// prettier-ignore
+			case "team": switch (operation) {
+                case "add": return await subcommand_team_add(interaction, uids);
+                case "remove": return await subcommand_team_remove(interaction, uids);
+            }
+		}
 	}
 };
