@@ -36,7 +36,7 @@ module.exports = {
 		// Set up page navigation
 		let embedNav = new EmbedNavigator({
 			interaction, embeds: [embeds_collections],
-			pagination: { type: "longJump", dynamic: false, /* useReactions: true */ }
+			pagination: { type: "longJump", dynamic: false, useReactions: true }
         });
 
 		return await embedNav.send();
