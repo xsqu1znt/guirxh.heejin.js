@@ -48,7 +48,7 @@ module.exports = {
 		let remove = interaction.options.getString("remove") || null;
 
 		// prettier-ignore
-		if (!add.length && !remove.length) return await error_ES.send({
+		if (!add && !remove) return await error_ES.send({
             interaction, description: "You must provide at least 1 UID in either `add` or `remove`",
             ephemeral: true
         });
