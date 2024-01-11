@@ -131,7 +131,7 @@ async function subcommand_vault_add(interaction, uids) {
 		description:
 			cards.length > 6
 				? `\`${cards.length}\` ${cards.length === 1 ? "card" : "cards"} added to your \`🔒 vault\``
-				: `${cards.length === 1 ? "card" : "cards"} added to your \`🔒 vault\`:\n>>> ${cards_f.join("\n")}`,
+				: `${cards.length === 1 ? "Card" : "Cards"} added to your \`🔒 vault\`:\n>>> ${cards_f.join("\n")}`,
 		// prettier-ignore
 		footer: cardsAlreadyInVault ? `${cardsAlreadyInVault} ${cardsAlreadyInVault === 1 ? "card was" : "cards were"} already in your 🔒 vault` : ""
 	});
@@ -168,7 +168,7 @@ async function subcommand_vault_remove(interaction, uids) {
 		author: { text: "$USERNAME | edit | 🔒 vault", iconURL: true },
 		description: cards.length > 6
 			? `\`${cards.length}\` ${cards.length === 1 ? "card" : "cards"} added to your \`🔒 vault\``
-			: `${cards.length === 1 ? "card" : "cards"} added to your \`🔒 vault\`:\n>>> ${cards_f.join("\n")}`,
+			: `${cards.length === 1 ? "Card" : "Cards"} removed from your \`🔒 vault\`:\n>>> ${cards_f.join("\n")}`,
 		footer: cardsNotInVault ? `${cardsNotInVault} ${cardsNotInVault === 1 ? "card was" : "cards were"} not in your 🔒 vault` : ""
 	});
 
