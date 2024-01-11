@@ -50,7 +50,12 @@ module.exports = {
 			// Create an interval to change the client's status every interval
 			setInterval(() => {
 				// Pick a random activity
-				while (_activity.NAME === lastActivity?.NAME) _activity = jt.choice(clientStatus.ACTIVITY);
+				let _activity = jt.choice(clientStatus.ACTIVITY);
+
+				// prettier-ignore
+				// Avoid duplicates
+				if (lastActivity) while (_activity.NAME === lastActivity?.NAME)
+					_activity = jt.choice(clientStatus.ACTIVITY);
 
 				// Apply the status
 				setStatus(_activity);
