@@ -26,10 +26,10 @@
  - /embed
  - /drop
  - /reminder
- - /view
+ - /set
 
 - **Untested Commands**
- - /set
+ - /view
  - /stage
  - /quest
 
