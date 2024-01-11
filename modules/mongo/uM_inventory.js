@@ -194,6 +194,7 @@ async function remove(userID, uids) {
 
 /** @param {string} userID */
 async function update(userID, card) {
+	card = cardManager.parse.toCardLike(card);
 	await userManager.update({ _id: userID, "card_inventory.uid": card.uid }, { $set: { "card_inventory.$": card } });
 }
 
