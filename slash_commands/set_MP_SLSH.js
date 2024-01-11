@@ -242,7 +242,7 @@ async function subcommand_team_remove(interaction, uids) {
 	let embed_team = new BetterEmbed({
 		interaction,
 		author: { text: "$USERNAME | edit :: 👯 team", iconURL: true },
-		description: `\`${cards.length}\` ${cards.length === 1 ? "card" : "cards"} added to your \`👯 team\`:\n>>> ${cards_f.join("\n")}`,
+		description: `\`${cards.length}\` ${cards.length === 1 ? "card" : "cards"} removed from your \`👯 team\`:\n>>> ${cards_f.join("\n")}`,
 		footer: cardsNotOnTeam ? `${cardsNotOnTeam} ${cardsNotOnTeam === 1 ? "card was" : "cards were"} not on your 👯 team` : ""
 	});
 

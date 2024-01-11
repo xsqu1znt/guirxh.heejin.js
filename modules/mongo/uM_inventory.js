@@ -266,10 +266,10 @@ async function stats(userID) {
 
 /** @param {string} userID */
 async function clearNullTeamMembers(userID) {
-	let userData = userManager.fetch(userID, { type: "essential" });
+	let userData = await userManager.fetch(userID, { type: "essential" });
 	if (!userData.card_team_uids?.length) return [];
 
-	let _has = await has(userID, { uids: userData.card_team_uids });
+	let _has = jt.isArray(await has(userID, { uids: userData.card_team_uids }));
 
 	let teamUIDs = userData.card_team_uids.filter((uid, idx) => _has[idx]);
 
