@@ -121,11 +121,17 @@ async function subcommand_vault_add(interaction, uids) {
 	// Get the number of cards that were already locked
 	let cardsAlreadyInVault = uids.length - cards.length;
 
+	// Format cards into readable strings
+	let cards_f = cards.length <= 6 ? cards.map(c => cardManager.toString.basic(c)) : [];
+
 	// Create the embed :: { VAULT ADD }
 	let embed_vault = new BetterEmbed({
 		interaction,
 		author: { text: "$USERNAME | edit | 🔒 vault", iconURL: true },
-		description: `\`${cards.length}\` ${cards.length === 1 ? "card" : "cards"} added to your \`🔒 vault\``,
+		description:
+			cards.length > 6
+				? `\`${cards.length}\` ${cards.length === 1 ? "card" : "cards"} added to your \`🔒 vault\``
+				: `${cards.length === 1 ? "card" : "cards"} added to your \`🔒 vault\`:\n>>> ${cards_f.join("\n")}`,
 		// prettier-ignore
 		footer: cardsAlreadyInVault ? `${cardsAlreadyInVault} ${cardsAlreadyInVault === 1 ? "card was" : "cards were"} already in your 🔒 vault` : ""
 	});
@@ -152,12 +158,17 @@ async function subcommand_vault_remove(interaction, uids) {
 	// Get the number of cards that were already unlocked
 	let cardsNotInVault = uids.length - cards.length;
 
+	// Format cards into readable strings
+	let cards_f = cards.length <= 6 ? cards.map(c => cardManager.toString.basic(c)) : [];
+
+	// prettier-ignore
 	// Create the embed :: { VAULT REMOVE }
 	let embed_vault = new BetterEmbed({
 		interaction,
 		author: { text: "$USERNAME | edit | 🔒 vault", iconURL: true },
-		description: `\`${cards.length}\` ${cards.length === 1 ? "card" : "cards"} removed from your \`🔒 vault\``,
-		// prettier-ignore
+		description: cards.length > 6
+			? `\`${cards.length}\` ${cards.length === 1 ? "card" : "cards"} added to your \`🔒 vault\``
+			: `${cards.length === 1 ? "card" : "cards"} added to your \`🔒 vault\`:\n>>> ${cards_f.join("\n")}`,
 		footer: cardsNotInVault ? `${cardsNotInVault} ${cardsNotInVault === 1 ? "card was" : "cards were"} not in your 🔒 vault` : ""
 	});
 
