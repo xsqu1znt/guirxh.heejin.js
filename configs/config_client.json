@@ -7,26 +7,6 @@
 	"ADMIN_IDS": ["842555247145779211"],
 	"admin_bypass_ids": {},
 
-	"client_presence": {
-		"default": {
-			"STATUS": "online",
-			"activity": {
-				"TYPE": "PLAYING",
-				"NAME": "with rabbits 🐰",
-				"STREAM_URL": ""
-			}
-		},
-
-		"dev": {
-			"STATUS": "dnd",
-			"activity": {
-				"TYPE": "PLAYING",
-				"NAME": "hide and seek 🐰",
-				"STREAM_URL": ""
-			}
-		}
-	},
-
 	"client_status": {
 		"host": {
 			"ACTIVITY": {
