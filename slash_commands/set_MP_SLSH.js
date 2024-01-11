@@ -35,16 +35,70 @@ async function subcommand_favorite_add(interaction, userData, uid) {
 
 /** @param {CommandInteraction} interaction @param {UserData} userData @param {string} uid */
 async function subcommand_favorite_remove(interaction, userData, uid) {
+	// prettier-ignore
 	// Check if the card isn't the user's favorite
+	if (userData.card_favorite_uid !== uid) return await error_ES.send({
+		interaction, description: `\`${uid}\` is not your \`⭐ favorite\``
+	});
+
 	// Unset the user's favorite
+	await userManager.update(interaction.user.id, { card_favorite_uid: "" });
+
+	// prettier-ignore
 	// Create the embed :: { SET FAVORITE REMOVE }
+	let embed_favorite = new BetterEmbed({
+		interaction, description: `Your \`⭐ favorite\` has been unset`
+	});
+
 	// Send the embed
+	return await embed_favorite.send();
 }
 
 /** @param {CommandInteraction} interaction @param {UserData} userData @param {string} uid */
-async function subcommand_idol_add(interaction, userData, uid) {}
+async function subcommand_idol_add(interaction, userData, uid) {
+	// prettier-ignore
+	// Check if the card is already the user's idol
+	if (userData.card_selected_uid === uid) return await error_ES.send({
+		interaction, description: `\`${uid}\` is already your \`🏃 idol\``
+	});
+
+	// Set the card as the user's idol
+	await userManager.update(interaction.user.id, { card_selected_uid: uid });
+
+	// Fetch the card so we have the card's information
+	let card = await userManager.inventory.get(interaction.user.id, { uid });
+
+	// Create the embed :: { SET IDOL ADD }
+	let embed_idol = new BetterEmbed({
+		interaction,
+		description: `Your \`🏃 idol\` has been set to:\n> ${cardManager.toString.basic(card)}`,
+		imageURL: card.imageURL
+	});
+
+	// Send the embed
+	return await embed_idol.send();
+}
+
 /** @param {CommandInteraction} interaction @param {UserData} userData @param {string} uid */
-async function subcommand_idol_remove(interaction, userData, uid) {}
+async function subcommand_idol_remove(interaction, userData, uid) {
+	// prettier-ignore
+	// Check if the card isn't the user's idol
+	if (userData.card_selected_uid !== uid) return await error_ES.send({
+		interaction, description: `\`${uid}\` is not your \`🏃 idol\``
+	});
+
+	// Unset the user's idol
+	await userManager.update(interaction.user.id, { card_selected_uid: "" });
+
+	// prettier-ignore
+	// Create the embed :: { SET IDOL REMOVE }
+	let embed_idol = new BetterEmbed({
+		interaction, description: `Your \`🏃 idol\` has been unset`
+	});
+
+	// Send the embed
+	return await embed_idol.send();
+}
 
 /** @param {CommandInteraction} interaction @param {UserData} userData @param {string} uid */
 async function subcommand_vault_add(interaction, userData, uids) {}
