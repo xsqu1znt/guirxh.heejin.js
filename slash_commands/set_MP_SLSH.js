@@ -25,7 +25,7 @@ async function subcommand_favorite_add(interaction, userData, uid) {
 	// Create the embed :: { SET FAVORITE ADD }
 	let embed_favorite = new BetterEmbed({
 		interaction,
-		author: { text: "$USERNAME | set :: ⭐ favorite", iconURL: true },
+		author: { text: "$USERNAME | set | ⭐ favorite", iconURL: true },
 		description: `Your \`⭐ favorite\` has been set to:\n> ${cardManager.toString.basic(card)}`,
 		imageURL: card.imageURL
 	});
@@ -47,7 +47,7 @@ async function subcommand_favorite_remove(interaction, userData, uid) {
 	// Create the embed :: { SET FAVORITE REMOVE }
 	let embed_favorite = new BetterEmbed({
 		interaction,
-		author: { text: "$USERNAME | set :: ⭐ favorite", iconURL: true },
+		author: { text: "$USERNAME | set | ⭐ favorite", iconURL: true },
 		description: `Your \`⭐ favorite\` has been unset`
 	});
 
@@ -72,7 +72,7 @@ async function subcommand_idol_add(interaction, userData, uid) {
 	// Create the embed :: { SET IDOL ADD }
 	let embed_idol = new BetterEmbed({
 		interaction,
-		author: { text: "$USERNAME | set :: 🏃 idol", iconURL: true },
+		author: { text: "$USERNAME | set | 🏃 idol", iconURL: true },
 		description: `Your \`🏃 idol\` has been set to:\n> ${cardManager.toString.basic(card)}`,
 		imageURL: card.imageURL
 	});
@@ -94,7 +94,7 @@ async function subcommand_idol_remove(interaction, userData, uid) {
 	// Create the embed :: { SET IDOL REMOVE }
 	let embed_idol = new BetterEmbed({
 		interaction,
-		author: { text: "$USERNAME | set :: 🏃 idol", iconURL: true },
+		author: { text: "$USERNAME | set | 🏃 idol", iconURL: true },
 		description: `Your \`🏃 idol\` has been unset`
 	});
 
@@ -108,11 +108,11 @@ async function subcommand_vault_add(interaction, uids) {
 	let cards = await userManager.inventory.getMultiple(interaction.user.id, { uids });
 
 	// Filter out cards that are already locked
-	cards = cards.filter(c => c.locked);
+	cards = cards.filter(c => !c.locked);
 
 	// prettier-ignore
 	if (!cards.length) return await error_ES.send({
-		interaction, description: `${cards.length === 1 ? "That card is" : "Those cards are"} already in your \`🔒 vault\``
+		interaction, description: `${uids.length === 1 ? "That card is" : "Those cards are"} already in your \`🔒 vault\``
 	});
 
 	// Lock the cards
@@ -124,8 +124,8 @@ async function subcommand_vault_add(interaction, uids) {
 	// Create the embed :: { VAULT ADD }
 	let embed_vault = new BetterEmbed({
 		interaction,
-		author: { text: "$USERNAME | edit :: 🔒 vault", iconURL: true },
-		description: `\`${cards.length}\` cards added to your \`🔒 vault\``,
+		author: { text: "$USERNAME | edit | 🔒 vault", iconURL: true },
+		description: `\`${cards.length}\` ${cards.length === 1 ? "card" : "cards"} added to your \`🔒 vault\``,
 		// prettier-ignore
 		footer: cardsAlreadyInVault ? `${cardsAlreadyInVault} ${cardsAlreadyInVault === 1 ? "card was" : "cards were"} already in your 🔒 vault` : ""
 	});
@@ -139,11 +139,11 @@ async function subcommand_vault_remove(interaction, uids) {
 	let cards = await userManager.inventory.getMultiple(interaction.user.id, { uids });
 
 	// Filter out cards that aren't locked
-	cards = cards.filter(c => !c.locked);
+	cards = cards.filter(c => c.locked);
 
 	// prettier-ignore
 	if (!cards.length) return await error_ES.send({
-		interaction, description: `${cards.length === 1 ? "That card is" : "Those cards are"} not in your \`🔒 vault\``
+		interaction, description: `${uids.length === 1 ? "That card is" : "Those cards are"} not in your \`🔒 vault\``
 	});
 
 	// Unlock the cards
@@ -155,8 +155,8 @@ async function subcommand_vault_remove(interaction, uids) {
 	// Create the embed :: { VAULT REMOVE }
 	let embed_vault = new BetterEmbed({
 		interaction,
-		author: { text: "$USERNAME | edit :: 🔒 vault", iconURL: true },
-		description: `\`${cards.length}\` cards removed from your \`🔒 vault\``,
+		author: { text: "$USERNAME | edit | 🔒 vault", iconURL: true },
+		description: `\`${cards.length}\` ${cards.length === 1 ? "card" : "cards"} removed from your \`🔒 vault\``,
 		// prettier-ignore
 		footer: cardsNotInVault ? `${cardsNotInVault} ${cardsNotInVault === 1 ? "card was" : "cards were"} not in your 🔒 vault` : ""
 	});
@@ -165,6 +165,7 @@ async function subcommand_vault_remove(interaction, uids) {
 	return await embed_vault.send();
 }
 
+// TODO: show what card were added
 /** @param {CommandInteraction} interaction @param {string} uid */
 async function subcommand_team_add(interaction, uids) {
 	// Clean out non-existing team members and return the current team
@@ -198,8 +199,8 @@ async function subcommand_team_add(interaction, uids) {
 	// Create the embed :: { VAULT ADD }
 	let embed_team = new BetterEmbed({
 		interaction,
-		author: { text: "$USERNAME | edit :: 👯 team", iconURL: true },
-		description: `\`${cards.length}\` cards added to your \`👯 team\``,
+		author: { text: "$USERNAME | edit | 👯 team", iconURL: true },
+		description: `\`${cards.length}\` ${cards.length === 1 ? "card" : "cards"} added to your \`👯 team\``,
 		// prettier-ignore
 		footer: cardsAlreadyOnTeam ? `${cardsAlreadyOnTeam} ${cardsAlreadyOnTeam === 1 ? "card was" : "cards were"} already on your 👯 team` : ""
 	});
@@ -238,7 +239,9 @@ async function subcommand_team_remove(interaction, uids) {
 	let embed_team = new BetterEmbed({
 		interaction,
 		author: { text: "$USERNAME | edit :: 👯 team", iconURL: true },
-		description: `\`${cards.length}\` cards added to your \`👯 team\`:\n>>> ${cards_f.join("\n")}`,
+		description: `\`${cards.length}\` ${
+			cards.length === 1 ? "card" : "cards"
+		} added to your \`👯 team\`:\n>>> ${cards_f.join("\n")}`,
 		// prettier-ignore
 		footer: cardsNotOnTeam ? `${cardsNotOnTeam} ${cardsNotOnTeam === 1 ? "card was" : "cards were"} not on your 👯 team` : ""
 	});
@@ -281,7 +284,8 @@ module.exports = {
 
 		/// Put the chosen UID(s) into proper variables
 		let uid = add ? add : remove;
-		let uids = uid.toUpperCase().split(",") || [];
+		// prettier-ignore
+		let uids = uid.toUpperCase().split(",").map(u => u.trim()) || [];
 
 		// Determine the operation
 		let operation = add ? "add" : "remove";
@@ -294,12 +298,12 @@ module.exports = {
 		let hasUIDs = jt.isArray(await userManager.inventory.has(interaction.user.id, { uids }));
 
 		// Filter out invalid UIDs
-		uids = uids.filter((u, idx) => hasUIDs[idx]);
+		let uids_filtered = uids.filter((u, idx) => hasUIDs[idx]);
 
 		// prettier-ignore
-		if (!uids.length) return await error_ES.send({
+		if (!uids_filtered.length) return await error_ES.send({
             interaction,
-            description: `${uids.length === 1 ? "Those are" : `\`${uids[0]}\` is`} not ${uids.length > 1 ? "valid card UIDs" : "a valid card UID"}`
+            description: `${uids.length === 1 ? `\`${uids[0]}\` is` : "Those are"} not ${uids.length === 1 ? "a valid card UID" : "valid card UIDs"}`
 		});
 
 		// Fetch the user from Mongo
@@ -309,26 +313,26 @@ module.exports = {
 		switch (interaction.options.getString("edit")) {
 			// prettier-ignore
 			case "favorite": switch (operation) {
-                case "add": return await subcommand_favorite_add(interaction, userData, uids[0]);
-                case "remove": return await subcommand_favorite_remove(interaction, userData, uids[0]);
+                case "add": return await subcommand_favorite_add(interaction, userData, uids_filtered[0]);
+                case "remove": return await subcommand_favorite_remove(interaction, userData, uids_filtered[0]);
             }
 
 			// prettier-ignore
 			case "idol": switch (operation) {
-                case "add": return await subcommand_idol_add(interaction, userData, uids[0]);
-                case "remove": return await subcommand_idol_remove(interaction, userData, uids[0]);
+                case "add": return await subcommand_idol_add(interaction, userData, uids_filtered[0]);
+                case "remove": return await subcommand_idol_remove(interaction, userData, uids_filtered[0]);
             }
 
 			// prettier-ignore
 			case "vault": switch (operation) {
-                case "add": return await subcommand_vault_add(interaction, uids);
-                case "remove": return await subcommand_vault_remove(interaction, uids);
+                case "add": return await subcommand_vault_add(interaction, uids_filtered);
+                case "remove": return await subcommand_vault_remove(interaction, uids_filtered);
             }
 
 			// prettier-ignore
 			case "team": switch (operation) {
-                case "add": return await subcommand_team_add(interaction, userData, uids);
-                case "remove": return await subcommand_team_remove(interaction, userData, uids);
+                case "add": return await subcommand_team_add(interaction, uids_filtered);
+                case "remove": return await subcommand_team_remove(interaction, uids_filtered);
             }
 		}
 	}
