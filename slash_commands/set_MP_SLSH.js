@@ -25,7 +25,7 @@ async function subcommand_favorite_add(interaction, userData, uid) {
 	// Create the embed :: { SET FAVORITE ADD }
 	let embed_favorite = new BetterEmbed({
 		interaction,
-		author: { text: "$USERNAME | set", iconURL: true },
+		author: { text: "$USERNAME | ⭐ favorite set", iconURL: true },
 		description: `Your \`⭐ favorite\` has been set to:\n> ${cardManager.toString.basic(card)}`,
 		imageURL: card.imageURL
 	});
@@ -33,7 +33,6 @@ async function subcommand_favorite_add(interaction, userData, uid) {
 	// Send the embed
 	return await embed_favorite.send();
 }
-
 /** @param {CommandInteraction} interaction @param {UserData} userData @param {string} uid */
 async function subcommand_favorite_remove(interaction, userData, uid) {
 	// prettier-ignore
@@ -48,7 +47,7 @@ async function subcommand_favorite_remove(interaction, userData, uid) {
 	// Create the embed :: { SET FAVORITE REMOVE }
 	let embed_favorite = new BetterEmbed({
 		interaction,
-		author: { text: "$USERNAME | set", iconURL: true },
+		author: { text: "$USERNAME | ⭐ favorite set", iconURL: true },
 		description: `Your \`⭐ favorite\` has been unset`
 	});
 
@@ -73,7 +72,7 @@ async function subcommand_idol_add(interaction, userData, uid) {
 	// Create the embed :: { SET IDOL ADD }
 	let embed_idol = new BetterEmbed({
 		interaction,
-		author: { text: "$USERNAME | set", iconURL: true },
+		author: { text: "$USERNAME | 🏃 idol set", iconURL: true },
 		description: `Your \`🏃 idol\` has been set to:\n> ${cardManager.toString.basic(card)}`,
 		imageURL: card.imageURL
 	});
@@ -81,7 +80,6 @@ async function subcommand_idol_add(interaction, userData, uid) {
 	// Send the embed
 	return await embed_idol.send();
 }
-
 /** @param {CommandInteraction} interaction @param {UserData} userData @param {string} uid */
 async function subcommand_idol_remove(interaction, userData, uid) {
 	// prettier-ignore
@@ -96,7 +94,7 @@ async function subcommand_idol_remove(interaction, userData, uid) {
 	// Create the embed :: { SET IDOL REMOVE }
 	let embed_idol = new BetterEmbed({
 		interaction,
-		author: { text: "$USERNAME | set", iconURL: true },
+		author: { text: "$USERNAME | 🏃 idol set", iconURL: true },
 		description: `Your \`🏃 idol\` has been unset`
 	});
 
@@ -104,7 +102,7 @@ async function subcommand_idol_remove(interaction, userData, uid) {
 	return await embed_idol.send();
 }
 
-/** @param {CommandInteraction} interaction @param {UserData} userData @param {string} uid */
+/** @param {CommandInteraction} interaction @param {string} uid */
 async function subcommand_vault_add(interaction, uids) {
 	// Fetch the cards from the user's inventory
 	let cards = await userManager.inventory.getMultiple(interaction.user.id, { uids });
@@ -114,7 +112,7 @@ async function subcommand_vault_add(interaction, uids) {
 
 	// prettier-ignore
 	if (!cards.length) return await error_ES.send({
-		interaction, description: `${cards.length === 1 ? "That card was" : "Those cards were"} already in your \`🔒 vault\``
+		interaction, description: `${cards.length === 1 ? "That card is" : "Those cards are"} already in your \`🔒 vault\``
 	});
 
 	// Lock the cards
@@ -126,17 +124,16 @@ async function subcommand_vault_add(interaction, uids) {
 	// Create the embed :: { VAULT ADD }
 	let embed_vault = new BetterEmbed({
 		interaction,
-		author: { text: "$USERNAME | vault", iconURL: true },
-		description: `\`${cards.length}\` cards added to your vault`,
+		author: { text: "$USERNAME | 🔒 vault edit", iconURL: true },
+		description: `\`${cards.length}\` cards added to your \`🔒 vault\``,
 		// prettier-ignore
-		footer: cardsAlreadyInVault ? `${cardsAlreadyInVault} ${cardsAlreadyInVault === 1 ? "card was" : "cards were"} already in your vault` : ""
+		footer: cardsAlreadyInVault ? `${cardsAlreadyInVault} ${cardsAlreadyInVault === 1 ? "card was" : "cards were"} already in your 🔒 vault` : ""
 	});
 
 	// Send the embed
 	return await embed_vault.send();
 }
-
-/** @param {CommandInteraction} interaction @param {UserData} userData @param {string} uid */
+/** @param {CommandInteraction} interaction @param {string} uid */
 async function subcommand_vault_remove(interaction, uids) {
 	// Fetch the cards from the user's inventory
 	let cards = await userManager.inventory.getMultiple(interaction.user.id, { uids });
@@ -146,8 +143,8 @@ async function subcommand_vault_remove(interaction, uids) {
 
 	// prettier-ignore
 	if (!cards.length) return await error_ES.send({
-			interaction, description: `${cards.length === 1 ? "That card is" : "Those cards are"} not in your \`🔒 vault\``
-		});
+		interaction, description: `${cards.length === 1 ? "That card is" : "Those cards are"} not in your \`🔒 vault\``
+	});
 
 	// Unlock the cards
 	await Promise.all(cards.map(c => userManager.inventory.update(interaction.user.id, { ...c, locked: false })));
@@ -158,20 +155,97 @@ async function subcommand_vault_remove(interaction, uids) {
 	// Create the embed :: { VAULT REMOVE }
 	let embed_vault = new BetterEmbed({
 		interaction,
-		author: { text: "$USERNAME | vault", iconURL: true },
-		description: `\`${cards.length}\` cards removed from your vault`,
+		author: { text: "$USERNAME | 🔒 vault edit", iconURL: true },
+		description: `\`${cards.length}\` cards removed from your \`🔒 vault\``,
 		// prettier-ignore
-		footer: cardsNotInVault ? `${cardsNotInVault} ${cardsNotInVault === 1 ? "card was" : "cards were"} not in your vault` : ""
+		footer: cardsNotInVault ? `${cardsNotInVault} ${cardsNotInVault === 1 ? "card was" : "cards were"} not in your 🔒 vault` : ""
 	});
 
 	// Send the embed
 	return await embed_vault.send();
 }
 
-/** @param {CommandInteraction} interaction @param {UserData} userData @param {string} uid */
-async function subcommand_team_add(interaction, userData, uids) {}
-/** @param {CommandInteraction} interaction @param {UserData} userData @param {string} uid */
-async function subcommand_team_remove(interaction, userData, uids) {}
+/** @param {CommandInteraction} interaction @param {string} uid */
+async function subcommand_team_add(interaction, uids) {
+	// Clean out non-existing team members and return the current team
+	let team = await userManager.inventory.clearNullTeamMembers(interaction.user.id);
+
+	// prettier-ignore
+	// Check if the user's exceeding the max team size
+	if (uids.length > config.player.team.MAX_SIZE - team.length) return await error_ES.send({
+		interaction,
+		description: `Your \`👯 team\` can only have up to \`${config.player.team.MAX_SIZE}\` cards`,
+		footer: config.player.team.MAX_SIZE - team.length ? `slots remaining: ${config.player.team.MAX_SIZE - team.length}` : ""
+	});
+
+	// Fetch the cards so we have the cards' information
+	let cards = await userManager.inventory.getMultiple(interaction.user.id, { uids });
+
+	// Filter out cards that are already on the user's team
+	cards = cards.filter(c => !team.includes(c.uid));
+
+	// prettier-ignore
+	if (!cards.length) return await error_ES.send({
+		interaction, description: `${cards.length === 1 ? "That card is" : "Those cards are"} already on your \`👯 team\``
+	});
+
+	// Add the cards to the user's team
+	await userManager.update(interaction.user.id, { card_team_uids: [...team, ...cards.map(c => c.uid)] });
+
+	// Get the number of cards that were already on the user's team
+	let cardsAlreadyOnTeam = uids.length - cards.length;
+
+	// Create the embed :: { VAULT ADD }
+	let embed_team = new BetterEmbed({
+		interaction,
+		author: { text: "$USERNAME | 👯 team edit", iconURL: true },
+		description: `\`${cards.length}\` cards added to your \`👯 team\``,
+		// prettier-ignore
+		footer: cardsAlreadyOnTeam ? `${cardsAlreadyOnTeam} ${cardsAlreadyOnTeam === 1 ? "card was" : "cards were"} already on your 👯 team` : ""
+	});
+
+	// Send the embed
+	return await embed_team.send();
+}
+/** @param {CommandInteraction} interaction @param {string} uid */
+async function subcommand_team_remove(interaction, uids) {
+	// Clean out non-existing team members and return the current team
+	let team = await userManager.inventory.clearNullTeamMembers(interaction.user.id);
+
+	// Fetch the cards so we have the cards' information
+	let cards = await userManager.inventory.getMultiple(interaction.user.id, { uids });
+
+	// Filter out cards that are already on the user's team
+	cards = cards.filter(c => team.includes(c.uid));
+
+	// prettier-ignore
+	if (!cards.length) return await error_ES.send({
+		interaction, description: `${cards.length === 1 ? "That card is" : "Those cards are"} not on your \`👯 team\``
+	});
+
+	// Add the cards to the user's team
+	await userManager.update(interaction.user.id, {
+		card_team_uids: team.filter(uid => !cards.map(c => c.uid).includes(uid))
+	});
+
+	// Get the number of cards that were already on the user's team
+	let cardsNotOnTeam = uids.length - cards.length;
+
+	// Format cards into readable strings
+	let cards_f = cards.map(c => cardManager.toString.basic(c));
+
+	// Create the embed :: { VAULT ADD }
+	let embed_team = new BetterEmbed({
+		interaction,
+		author: { text: "$USERNAME | 👯 team edit", iconURL: true },
+		description: `\`${cards.length}\` cards added to your \`👯 team\`:\n>>> ${cards_f.join("\n")}`,
+		// prettier-ignore
+		footer: cardsNotOnTeam ? `${cardsNotOnTeam} ${cardsNotOnTeam === 1 ? "card was" : "cards were"} not on your 👯 team` : ""
+	});
+
+	// Send the embed
+	return await embed_team.send();
+}
 
 module.exports = {
 	options: { icon: "🏃", deferReply: false },
@@ -207,7 +281,7 @@ module.exports = {
 
 		/// Put the chosen UID(s) into proper variables
 		let uid = add ? add : remove;
-		let uids = uid.split(",") || [];
+		let uids = uid.toUpperCase().split(",") || [];
 
 		// Determine the operation
 		let operation = add ? "add" : "remove";

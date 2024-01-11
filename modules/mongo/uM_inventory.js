@@ -116,6 +116,7 @@ async function getMultiple(userID, query) {
 	return userData.cards.map(c => cardManager.parse.fromCardLike(c));
 }
 
+/** @param {string} userID */
 async function getVault(userID) {
 	// Create an aggregation pipeline
 	let pipeline = [
@@ -263,4 +264,17 @@ async function stats(userID) {
 	};
 }
 
-module.exports = { count, has, get, getMultiple, getVault, add, remove, update, sell, stats };
+/** @param {string} userID */
+async function clearNullTeamMembers(userID) {
+	let userData = userManager.fetch(userID, { type: "essential" });
+
+	let _has = await has(userID, { uids: userData.card_team_uids });
+
+	let teamUIDs = userData.card_team_uids.filter((uid, idx) => _has[idx]);
+
+	await userManager.update(userID, { card_team_uids: teamUIDs });
+
+	return teamUIDs;
+}
+
+module.exports = { count, has, get, getMultiple, getVault, add, remove, update, sell, stats, clearNullTeamMembers };
