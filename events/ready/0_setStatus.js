@@ -50,7 +50,8 @@ module.exports = {
 			// Create an interval to change the client's status every interval
 			setInterval(() => {
 				// Pick a random activity
-				let _activity = jt.choice(clientStatus.ACTIVITY);
+				while (_activity.NAME === lastActivity?.NAME) _activity = jt.choice(clientStatus.ACTIVITY);
+
 				// Apply the status
 				setStatus(_activity);
 			}, jt.parseTime(clientStatus.INTERVAL));

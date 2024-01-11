@@ -50,9 +50,9 @@
 			"INTERVAL": "1m",
 
 			"ACTIVITY": [
-				{ "STATUS": "online", "TYPE": "CUSTOM", "NAME": "playing with rabbits 🐰" },
-				{ "STATUS": "online", "TYPE": "CUSTOM", "NAME": "playing hide n' seek 🐰" },
-				{ "STATUS": "online", "TYPE": "CUSTOM", "NAME": "wandering around aimlessly 🐰" }
+				{ "STATUS": "dnd", "TYPE": "CUSTOM", "NAME": "playing with rabbits 🐰" },
+				{ "STATUS": "dnd", "TYPE": "CUSTOM", "NAME": "playing hide n' seek 🐰" },
+				{ "STATUS": "dnd", "TYPE": "CUSTOM", "NAME": "wandering around aimlessly 🐰" }
 			]
 		}
 	}
