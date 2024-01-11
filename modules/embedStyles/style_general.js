@@ -612,7 +612,7 @@ function gift(user, recipient, cards) {
 		imageURL: card_last.imageURL
 	});
 
-	if (cards.length <= 6) {
+	if (cards.length <= config.bot.MAX_CARDS_BEFORE_EMBED_TRUNCATE) {
 		embed_gift.addFields(...cards_f.map(f => ({ name: "\u200b", value: f, inline: true })));
 		embed_gift.options.description = from_to;
 	}

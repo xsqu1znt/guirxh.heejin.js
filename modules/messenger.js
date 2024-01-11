@@ -18,19 +18,23 @@ async function gift_cards(gifter, recipient, cards) {
 	let cards_last = cards.slice(-1)[0] || cards[0];
 
 	// Parse each card into a string if card_f wasn't provided
-	let cards_f = cards.map(card => cardManager.toString.basic(card));
+	let cards_f =
+		cards.length > config.bot.MAX_CARDS_BEFORE_EMBED_TRUNCATE ? [] : cards.map(card => cardManager.toString.basic(card));
 
-	// Create the embed
-	let embed_giftCards = new BetterEmbed({
+	// prettier-ignore
+	// Create the embed :: { GIFT }
+	let embed_gift = new BetterEmbed({
 		author: { text: embed_titles.gift },
-		description: `You got a gift from **${gifter.username}**\n>>> ${cards_f.join("\n")}`,
+		description: cards.length > config.bot.MAX_CARDS_BEFORE_EMBED_TRUNCATE
+			? `You got ${cards.length} ${cards.length === 1 ? "card" : "cards"} from **${gifter.username}**`
+			: `You got ${cards.length} ${cards.length === 1 ? "card" : "cards"} from **${gifter.username}**:\n>>> ${cards_f.join("\n")}`,
 		imageURL: cards_last.imageURL,
 		showTimestamp: true
 	});
 
 	// Send the embed to the user
 	try {
-		return await recipient.send({ embeds: [embed_giftCards] });
+		return await recipient.send({ embeds: [embed_gift] });
 	} catch (err) {
 		logger.error("Failed to DM user", `userID: ${recipient?.userID || "N/A"} | TYPE: gift_card`);
 	}
@@ -46,7 +50,7 @@ async function gift_currency(recipient, gifter, amount, balance, currencyType) {
 	}
 
 	// Create the embed :: { CURRENCY }
-	let embed_currency = new BetterEmbed({
+	let embed_gift = new BetterEmbed({
 		author: embed_titles.gift,
 		description: `**${gifter.username}** gave you \`${currencyEmoji} ${amount}\``,
 		footer: `balance: ${currencyEmoji} ${balance}`,
@@ -55,7 +59,7 @@ async function gift_currency(recipient, gifter, amount, balance, currencyType) {
 
 	// Send the embed to the user
 	try {
-		return await recipient.send({ embeds: [embed_currency] });
+		return await recipient.send({ embeds: [embed_gift] });
 	} catch (err) {
 		logger.error("Failed to DM user", `userID: ${recipient?.userID || "n/a"} | type: gift_currency`, err);
 	}
