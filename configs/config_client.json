@@ -25,5 +25,35 @@
 				"STREAM_URL": ""
 			}
 		}
+	},
+
+	"client_status": {
+		"host": {
+			"ACTIVITY": {
+				"STATUS": "online",
+				"TYPE": "CUSTOM",
+				"NAME": "playing with rabbits 🐰",
+				"STREAM_URL": ""
+			}
+		},
+
+		"production": {
+			"ACTIVITY": {
+				"STATUS": "online",
+				"TYPE": "CUSTOM",
+				"NAME": "playing with rabbits 🐰",
+				"STREAM_URL": ""
+			}
+		},
+
+		"dev": {
+			"INTERVAL": "1m",
+
+			"ACTIVITY": [
+				{ "STATUS": "online", "TYPE": "CUSTOM", "NAME": "playing with rabbits 🐰" },
+				{ "STATUS": "online", "TYPE": "CUSTOM", "NAME": "playing hide n' seek 🐰" },
+				{ "STATUS": "online", "TYPE": "CUSTOM", "NAME": "wandering around aimlessly 🐰" }
+			]
+		}
 	}
 }

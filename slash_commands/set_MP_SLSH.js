@@ -297,7 +297,7 @@ module.exports = {
 		uids = uids.filter((u, idx) => hasUIDs[idx]);
 
 		// prettier-ignore
-		if (!uids.length) return await error_ES({
+		if (!uids.length) return await error_ES.send({
             interaction,
             description: `${uids.length > 1 ? "Those are" : `\`${uids[0]}\` is`} not ${uids.length > 1 ? "valid card UIDs" : "a valid card UID"}`
 		});
