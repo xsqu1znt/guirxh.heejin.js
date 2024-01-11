@@ -8,18 +8,53 @@ const jt = require("../modules/jsTools");
 
 const config = { player: require("../configs/config_player.json") };
 
-async function subcommand_favorite_add(interaction, uid) {}
+/** @param {CommandInteraction} interaction @param {UserData} userData @param {string} uid */
+async function subcommand_favorite_add(interaction, userData, uid) {
+	// prettier-ignore
+	// Check if the card is already the user's favorite
+	if (userData.card_favorite_uid === uid) return await error_ES.send({
+		interaction, description: `\`${uid}\` is already your \`⭐ favorite\``
+	});
 
-async function subcommand_favorite_remove(interaction, uid) {}
+	// Set the card as the user's favorite
+	await userManager.update(interaction.user.id, { card_favorite_uid: uid });
 
-async function subcommand_idol_add(interaction, uid) {}
-async function subcommand_idol_remove(interaction, uid) {}
+	// Fetch the card so we have the card's information
+	let card = await userManager.inventory.get(interaction.user.id, { uid });
 
-async function subcommand_vault_add(interaction, uids) {}
-async function subcommand_vault_remove(interaction, uids) {}
+	// Create the embed :: { SET FAVORITE ADD }
+	let embed_favorite = new BetterEmbed({
+		interaction,
+		description: `Your \`⭐ favorite\` has been set to:\n> ${cardManager.toString.basic(card)}`,
+		imageURL: card.imageURL
+	});
 
-async function subcommand_team_add(interaction, uids) {}
-async function subcommand_team_remove(interaction, uids) {}
+	// Send the embed
+	return await embed_favorite.send();
+}
+
+/** @param {CommandInteraction} interaction @param {UserData} userData @param {string} uid */
+async function subcommand_favorite_remove(interaction, userData, uid) {
+	// Check if the card isn't the user's favorite
+	// Unset the user's favorite
+	// Create the embed :: { SET FAVORITE REMOVE }
+	// Send the embed
+}
+
+/** @param {CommandInteraction} interaction @param {UserData} userData @param {string} uid */
+async function subcommand_idol_add(interaction, userData, uid) {}
+/** @param {CommandInteraction} interaction @param {UserData} userData @param {string} uid */
+async function subcommand_idol_remove(interaction, userData, uid) {}
+
+/** @param {CommandInteraction} interaction @param {UserData} userData @param {string} uid */
+async function subcommand_vault_add(interaction, userData, uids) {}
+/** @param {CommandInteraction} interaction @param {UserData} userData @param {string} uid */
+async function subcommand_vault_remove(interaction, userData, uids) {}
+
+/** @param {CommandInteraction} interaction @param {UserData} userData @param {string} uid */
+async function subcommand_team_add(interaction, userData, uids) {}
+/** @param {CommandInteraction} interaction @param {UserData} userData @param {string} uid */
+async function subcommand_team_remove(interaction, userData, uids) {}
 
 module.exports = {
 	options: { icon: "🏃", deferReply: false },
@@ -74,32 +109,35 @@ module.exports = {
 		if (!uidsVerified) return await error_ES({
             interaction,
             description: `${uids.length > 1 ? "Those are" : `\`${uid}\` is`} not ${uids.length > 1 ? "valid card UIDs" : "a valid card UID"}`
-        });
+		});
+
+		// Fetch the user from Mongo
+		let userData = await userManager.fetch(interaction.user.id, { type: "essential" });
 
 		// Execute the operation
 		switch (interaction.options.getString("edit")) {
 			// prettier-ignore
 			case "favorite": switch (operation) {
-                case "add": return await subcommand_favorite_add(interaction, uid);
-                case "remove": return await subcommand_favorite_remove(interaction, uid);
+                case "add": return await subcommand_favorite_add(interaction, userData, uid);
+                case "remove": return await subcommand_favorite_remove(interaction, userData, uid);
             }
 
 			// prettier-ignore
 			case "idol": switch (operation) {
-                case "add": return await subcommand_idol_add(interaction, uid);
-                case "remove": return await subcommand_idol_remove(interaction, uid);
+                case "add": return await subcommand_idol_add(interaction, userData, uid);
+                case "remove": return await subcommand_idol_remove(interaction, userData, uid);
             }
 
 			// prettier-ignore
 			case "vault": switch (operation) {
-                case "add": return await subcommand_vault_add(interaction, uids);
-                case "remove": return await subcommand_vault_remove(interaction, uids);
+                case "add": return await subcommand_vault_add(interaction, userData, uids);
+                case "remove": return await subcommand_vault_remove(interaction, userData, uids);
             }
 
 			// prettier-ignore
 			case "team": switch (operation) {
-                case "add": return await subcommand_team_add(interaction, uids);
-                case "remove": return await subcommand_team_remove(interaction, uids);
+                case "add": return await subcommand_team_add(interaction, userData, uids);
+                case "remove": return await subcommand_team_remove(interaction, userData, uids);
             }
 		}
 	}
