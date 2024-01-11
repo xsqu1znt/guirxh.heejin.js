@@ -110,7 +110,7 @@ async function subcommand_vault_add(interaction, uids) {
 	let cards = await userManager.inventory.getMultiple(interaction.user.id, { uids });
 
 	// Filter out cards that are already locked
-	cards = cards.filter(c => !c.locked);
+	cards = cards.filter(c => c.locked);
 
 	// prettier-ignore
 	if (!cards.length) return await error_ES.send({
@@ -137,7 +137,36 @@ async function subcommand_vault_add(interaction, uids) {
 }
 
 /** @param {CommandInteraction} interaction @param {UserData} userData @param {string} uid */
-async function subcommand_vault_remove(interaction, uids) {}
+async function subcommand_vault_remove(interaction, uids) {
+	// Fetch the cards from the user's inventory
+	let cards = await userManager.inventory.getMultiple(interaction.user.id, { uids });
+
+	// Filter out cards that aren't locked
+	cards = cards.filter(c => !c.locked);
+
+	// prettier-ignore
+	if (!cards.length) return await error_ES.send({
+			interaction, description: `${cards.length === 1 ? "That card is" : "Those cards are"} not in your \`🔒 vault\``
+		});
+
+	// Unlock the cards
+	await Promise.all(cards.map(c => userManager.inventory.update(interaction.user.id, { ...c, locked: false })));
+
+	// Get the number of cards that were already unlocked
+	let cardsNotInVault = uids.length - cards.length;
+
+	// Create the embed :: { VAULT REMOVE }
+	let embed_vault = new BetterEmbed({
+		interaction,
+		author: { text: "$USERNAME | vault", iconURL: true },
+		description: `\`${cards.length}\` cards removed from your vault`,
+		// prettier-ignore
+		footer: cardsNotInVault ? `${cardsNotInVault} ${cardsNotInVault === 1 ? "card was" : "cards were"} not in your vault` : ""
+	});
+
+	// Send the embed
+	return await embed_vault.send();
+}
 
 /** @param {CommandInteraction} interaction @param {UserData} userData @param {string} uid */
 async function subcommand_team_add(interaction, userData, uids) {}
