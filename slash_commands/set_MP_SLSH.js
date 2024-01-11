@@ -165,7 +165,6 @@ async function subcommand_vault_remove(interaction, uids) {
 	return await embed_vault.send();
 }
 
-// TODO: show what card were added
 /** @param {CommandInteraction} interaction @param {string} uid */
 async function subcommand_team_add(interaction, uids) {
 	// Clean out non-existing team members and return the current team
@@ -187,7 +186,7 @@ async function subcommand_team_add(interaction, uids) {
 
 	// prettier-ignore
 	if (!cards.length) return await error_ES.send({
-		interaction, description: `${cards.length === 1 ? "That card is" : "Those cards are"} already on your \`👯 team\``
+		interaction, description: `${uids.length === 1 ? "That card is" : "Those cards are"} already on your \`👯 team\``
 	});
 
 	// Add the cards to the user's team
@@ -196,12 +195,15 @@ async function subcommand_team_add(interaction, uids) {
 	// Get the number of cards that were already on the user's team
 	let cardsAlreadyOnTeam = uids.length - cards.length;
 
+	// Format cards into readable strings
+	let cards_f = cards.map(c => cardManager.toString.basic(c));
+
+	// prettier-ignore
 	// Create the embed :: { VAULT ADD }
 	let embed_team = new BetterEmbed({
 		interaction,
 		author: { text: "$USERNAME | edit | 👯 team", iconURL: true },
-		description: `\`${cards.length}\` ${cards.length === 1 ? "card" : "cards"} added to your \`👯 team\``,
-		// prettier-ignore
+		description: `\`${cards.length}\` ${cards.length === 1 ? "card" : "cards"} added to your \`👯 team\`:\n>>> ${cards_f.join("\n")}`,
 		footer: cardsAlreadyOnTeam ? `${cardsAlreadyOnTeam} ${cardsAlreadyOnTeam === 1 ? "card was" : "cards were"} already on your 👯 team` : ""
 	});
 
@@ -221,7 +223,7 @@ async function subcommand_team_remove(interaction, uids) {
 
 	// prettier-ignore
 	if (!cards.length) return await error_ES.send({
-		interaction, description: `${cards.length === 1 ? "That card is" : "Those cards are"} not on your \`👯 team\``
+		interaction, description: `${uids.length === 1 ? "That card is" : "Those cards are"} not on your \`👯 team\``
 	});
 
 	// Add the cards to the user's team
@@ -235,14 +237,12 @@ async function subcommand_team_remove(interaction, uids) {
 	// Format cards into readable strings
 	let cards_f = cards.map(c => cardManager.toString.basic(c));
 
+	// prettier-ignore
 	// Create the embed :: { VAULT ADD }
 	let embed_team = new BetterEmbed({
 		interaction,
 		author: { text: "$USERNAME | edit :: 👯 team", iconURL: true },
-		description: `\`${cards.length}\` ${
-			cards.length === 1 ? "card" : "cards"
-		} added to your \`👯 team\`:\n>>> ${cards_f.join("\n")}`,
-		// prettier-ignore
+		description: `\`${cards.length}\` ${cards.length === 1 ? "card" : "cards"} added to your \`👯 team\`:\n>>> ${cards_f.join("\n")}`,
 		footer: cardsNotOnTeam ? `${cardsNotOnTeam} ${cardsNotOnTeam === 1 ? "card was" : "cards were"} not on your 👯 team` : ""
 	});
 
@@ -285,7 +285,7 @@ module.exports = {
 		/// Put the chosen UID(s) into proper variables
 		let uid = add ? add : remove;
 		// prettier-ignore
-		let uids = uid.toUpperCase().split(",").map(u => u.trim()) || [];
+		let uids = jt.unique(uid.toUpperCase().split(",").map(u => u.trim())) || [];
 
 		// Determine the operation
 		let operation = add ? "add" : "remove";
