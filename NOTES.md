@@ -37,6 +37,8 @@
 - **`Overall Changes`**
  - Major design changes
  - Revamped the reminder system
+ - Added an error message when commands fail
+ - Huge stability improvements
  - Optimization improvements
 
 - **`Command Changes`**
