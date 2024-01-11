@@ -7,7 +7,7 @@
 		"setID": "C01",
 		"category": "chrm",
 		"description": "**Charm** *`Dev`*",
-		"price": 300000,
+		"price": 100,
 		"duration": "1w",
 		"chance_of_working": 25
 	},
@@ -19,7 +19,7 @@
 		"setID": "C01",
 		"category": "chrm",
 		"description": "**Charm** *`Dev`*",
-		"price": 500000,
+		"price": 100,
 		"duration": "1w",
 		"chance_of_working": 50
 	},
@@ -31,7 +31,7 @@
 		"setID": "C01",
 		"category": "chrm",
 		"description": "**Charm** *`Dev`*",
-		"price": 999999,
+		"price": 100,
 		"duration": "1w",
 		"chance_of_working": 100
 	}

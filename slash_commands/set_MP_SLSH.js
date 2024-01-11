@@ -25,6 +25,7 @@ async function subcommand_favorite_add(interaction, userData, uid) {
 	// Create the embed :: { SET FAVORITE ADD }
 	let embed_favorite = new BetterEmbed({
 		interaction,
+		author: { text: "$USERNAME | set", iconURL: true },
 		description: `Your \`⭐ favorite\` has been set to:\n> ${cardManager.toString.basic(card)}`,
 		imageURL: card.imageURL
 	});
@@ -44,10 +45,11 @@ async function subcommand_favorite_remove(interaction, userData, uid) {
 	// Unset the user's favorite
 	await userManager.update(interaction.user.id, { card_favorite_uid: "" });
 
-	// prettier-ignore
 	// Create the embed :: { SET FAVORITE REMOVE }
 	let embed_favorite = new BetterEmbed({
-		interaction, description: `Your \`⭐ favorite\` has been unset`
+		interaction,
+		author: { text: "$USERNAME | set", iconURL: true },
+		description: `Your \`⭐ favorite\` has been unset`
 	});
 
 	// Send the embed
@@ -71,6 +73,7 @@ async function subcommand_idol_add(interaction, userData, uid) {
 	// Create the embed :: { SET IDOL ADD }
 	let embed_idol = new BetterEmbed({
 		interaction,
+		author: { text: "$USERNAME | set", iconURL: true },
 		description: `Your \`🏃 idol\` has been set to:\n> ${cardManager.toString.basic(card)}`,
 		imageURL: card.imageURL
 	});
@@ -90,10 +93,11 @@ async function subcommand_idol_remove(interaction, userData, uid) {
 	// Unset the user's idol
 	await userManager.update(interaction.user.id, { card_selected_uid: "" });
 
-	// prettier-ignore
 	// Create the embed :: { SET IDOL REMOVE }
 	let embed_idol = new BetterEmbed({
-		interaction, description: `Your \`🏃 idol\` has been unset`
+		interaction,
+		author: { text: "$USERNAME | set", iconURL: true },
+		description: `Your \`🏃 idol\` has been unset`
 	});
 
 	// Send the embed
@@ -101,7 +105,34 @@ async function subcommand_idol_remove(interaction, userData, uid) {
 }
 
 /** @param {CommandInteraction} interaction @param {UserData} userData @param {string} uid */
-async function subcommand_vault_add(interaction, userData, uids) {}
+async function subcommand_vault_add(interaction, userData, uids) {
+	// Fetch the cards from the user's inventory
+	let cards = await userManager.inventory.getMultiple(interaction.user.id, { uids });
+
+	// Filter out cards that are already locked
+	cards = cards.filter(c => !c.locked);
+
+	let cardsAlreadyInVault = uids.length - cards.length;
+
+	// prettier-ignore
+	if (!cards.length) return await error_ES.send({
+		interaction, description: `${cards.length === 1 ? "That card was" : "Those cards were"} already in your \`🔒 vault\``
+	});
+
+	// Lock the cards
+
+	// Create the embed :: { VAULT ADD }
+	let embed_vault = new BetterEmbed({
+		interaction,
+		author: { text: "$USERNAME | vault", iconURL: true },
+		description: `\`${cards.length}\` cards added to your vault`,
+		// prettier-ignore
+		footer: cardsAlreadyInVault ? `${cardsAlreadyInVault} ${cardsAlreadyInVault === 1 ? "card was" : "cards were"} already in your vault` : ""
+	});
+
+	// Send the embed
+}
+
 /** @param {CommandInteraction} interaction @param {UserData} userData @param {string} uid */
 async function subcommand_vault_remove(interaction, userData, uids) {}
 
@@ -144,7 +175,7 @@ module.exports = {
 
 		/// Put the chosen UID(s) into proper variables
 		let uid = add ? add : remove;
-		let uids = uids.split(",") || [];
+		let uids = uid.split(",") || [];
 
 		// Determine the operation
 		let operation = add ? "add" : "remove";
@@ -156,8 +187,16 @@ module.exports = {
 		let uidsVerified = false;
 
 		// Check if the chosen UID(s) exist in the user's card_inventory
-		if (uids.length > 1) uidsVerified = await userManager.inventory.has(interaction.user.id, { uids, sum: true });
-		else uidsVerified = await userManager.inventory.has(interaction.user.id, { uids: uid, sum: true });
+		if (uids.length > 1) {
+			uidsVerified = await userManager.inventory.has(interaction.user.id, { uids });
+
+			// Filter out invalid UIDs
+			uids = uids.filter((u, idx) => uidsVerified[idx]);
+
+			// Check verification
+			if (!uids.length) uidsverified = false;
+			else uidsVerified = true;
+		} else uidsVerified = await userManager.inventory.has(interaction.user.id, { uids: uid, sum: true });
 
 		// prettier-ignore
 		if (!uidsVerified) return await error_ES({

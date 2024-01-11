@@ -12,7 +12,7 @@ module.exports = {
 	options: { icon: "🏃", deferReply: false },
 
 	// prettier-ignore
-	builder: new SlashCommandBuilder().setName("set")
+	builder: new SlashCommandBuilder().setName("ssssset")
         .setDescription("Add/remove a card from something")
 
         .addStringOption(option => option.setName("edit").setDescription("Choose what you want to set")
