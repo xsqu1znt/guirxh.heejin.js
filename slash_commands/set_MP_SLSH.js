@@ -4,7 +4,6 @@ const { BetterEmbed } = require("../modules/discordTools");
 const { error_ES } = require("../modules/embedStyles/index");
 const { userManager } = require("../modules/mongo/index");
 const cardManager = require("../modules/cardManager");
-const jt = require("../modules/jsTools");
 
 const config = { player: require("../configs/config_player.json") };
 
