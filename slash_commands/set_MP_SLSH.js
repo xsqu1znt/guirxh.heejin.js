@@ -4,6 +4,7 @@ const { BetterEmbed } = require("../modules/discordTools");
 const { error_ES } = require("../modules/embedStyles/index");
 const { userManager } = require("../modules/mongo/index");
 const cardManager = require("../modules/cardManager");
+const jt = require("../modules/jsTools");
 
 const config = { player: require("../configs/config_player.json") };
 
@@ -24,7 +25,7 @@ async function subcommand_favorite_add(interaction, userData, uid) {
 	// Create the embed :: { SET FAVORITE ADD }
 	let embed_favorite = new BetterEmbed({
 		interaction,
-		author: { text: "$USERNAME | ⭐ favorite set", iconURL: true },
+		author: { text: "$USERNAME | set :: ⭐ favorite", iconURL: true },
 		description: `Your \`⭐ favorite\` has been set to:\n> ${cardManager.toString.basic(card)}`,
 		imageURL: card.imageURL
 	});
@@ -46,7 +47,7 @@ async function subcommand_favorite_remove(interaction, userData, uid) {
 	// Create the embed :: { SET FAVORITE REMOVE }
 	let embed_favorite = new BetterEmbed({
 		interaction,
-		author: { text: "$USERNAME | ⭐ favorite set", iconURL: true },
+		author: { text: "$USERNAME | set :: ⭐ favorite", iconURL: true },
 		description: `Your \`⭐ favorite\` has been unset`
 	});
 
@@ -290,7 +291,7 @@ module.exports = {
 
 		/* - - - - - { Validate UIDs } - - - - - */
 		// Check if the chosen UID(s) exist in the user's card_inventory
-		let hasUIDs = await userManager.inventory.has(interaction.user.id, { uids });
+		let hasUIDs = jt.isArray(await userManager.inventory.has(interaction.user.id, { uids }));
 
 		// Filter out invalid UIDs
 		uids = uids.filter((u, idx) => hasUIDs[idx]);
@@ -298,7 +299,7 @@ module.exports = {
 		// prettier-ignore
 		if (!uids.length) return await error_ES.send({
             interaction,
-            description: `${uids.length > 1 ? "Those are" : `\`${uids[0]}\` is`} not ${uids.length > 1 ? "valid card UIDs" : "a valid card UID"}`
+            description: `${uids.length === 1 ? "Those are" : `\`${uids[0]}\` is`} not ${uids.length > 1 ? "valid card UIDs" : "a valid card UID"}`
 		});
 
 		// Fetch the user from Mongo
