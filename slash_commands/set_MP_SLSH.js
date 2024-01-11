@@ -125,14 +125,14 @@ async function subcommand_vault_add(interaction, uids) {
 	let cardsAlreadyInVault = uids.length - cards.length;
 
 	// Format cards into readable strings
-	let cards_f = cards.length > config.bot.MAX_CARDS_BEFORE_EMBED_TRUNCATE ? [] : cards.map(c => cardManager.toString.basic(c));
+	let cards_f = cards.length > config.bot.MAX_CARDS_BEFORE_TRUNCATE ? [] : cards.map(c => cardManager.toString.basic(c));
 
 	// Create the embed :: { VAULT ADD }
 	let embed_vault = new BetterEmbed({
 		interaction,
 		author: { text: "$USERNAME | edit | 🔒 vault", iconURL: true },
 		description:
-			cards.length > config.bot.MAX_CARDS_BEFORE_EMBED_TRUNCATE
+			cards.length > config.bot.MAX_CARDS_BEFORE_TRUNCATE
 				? `${cards.length} ${cards.length === 1 ? "card" : "cards"} added to your \`🔒 vault\``
 				: `${cards.length} ${cards.length === 1 ? "card" : "cards"} added to your \`🔒 vault\`:\n>>> ${cards_f.join("\n")}`,
 		// prettier-ignore
@@ -162,14 +162,14 @@ async function subcommand_vault_remove(interaction, uids) {
 	let cardsNotInVault = uids.length - cards.length;
 
 	// Format cards into readable strings
-	let cards_f = cards.length > config.bot.MAX_CARDS_BEFORE_EMBED_TRUNCATE ? [] : cards.map(c => cardManager.toString.basic(c));
+	let cards_f = cards.length > config.bot.MAX_CARDS_BEFORE_TRUNCATE ? [] : cards.map(c => cardManager.toString.basic(c));
 
 	// prettier-ignore
 	// Create the embed :: { VAULT REMOVE }
 	let embed_vault = new BetterEmbed({
 		interaction,
 		author: { text: "$USERNAME | edit | 🔒 vault", iconURL: true },
-		description: cards.length > config.bot.MAX_CARDS_BEFORE_EMBED_TRUNCATE
+		description: cards.length > config.bot.MAX_CARDS_BEFORE_TRUNCATE
 			? `${cards.length} ${cards.length === 1 ? "card" : "cards"} removed from your \`🔒 vault\``
 			: `${cards.length} ${cards.length === 1 ? "card" : "cards"} removed from your \`🔒 vault\`:\n>>> ${cards_f.join("\n")}`,
 		footer: cardsNotInVault ? `${cardsNotInVault} ${cardsNotInVault === 1 ? "card was" : "cards were"} not in your 🔒 vault` : ""
@@ -210,14 +210,14 @@ async function subcommand_team_add(interaction, uids) {
 	let cardsAlreadyOnTeam = uids.length - cards.length;
 
 	// Format cards into readable strings
-	let cards_f = cards.length > config.bot.MAX_CARDS_BEFORE_EMBED_TRUNCATE ? [] : cards.map(c => cardManager.toString.basic(c));
+	let cards_f = cards.length > config.bot.MAX_CARDS_BEFORE_TRUNCATE ? [] : cards.map(c => cardManager.toString.basic(c));
 
 	// prettier-ignore
 	// Create the embed :: { VAULT ADD }
 	let embed_team = new BetterEmbed({
 		interaction,
 		author: { text: "$USERNAME | edit | 👯 team", iconURL: true },
-		description: cards.length > config.bot.MAX_CARDS_BEFORE_EMBED_TRUNCATE
+		description: cards.length > config.bot.MAX_CARDS_BEFORE_TRUNCATE
 			? `${cards.length} ${cards.length === 1 ? "card" : "cards"} added to your \`👯 team\``
 			: `${cards.length} ${cards.length === 1 ? "card" : "cards"} added to your \`👯 team\`:\n>>> ${cards_f.join("\n")}`,
 		footer: cardsAlreadyOnTeam ? `${cardsAlreadyOnTeam} ${cardsAlreadyOnTeam === 1 ? "card was" : "cards were"} already on your 👯 team` : ""
@@ -251,14 +251,14 @@ async function subcommand_team_remove(interaction, uids) {
 	let cardsNotOnTeam = uids.length - cards.length;
 
 	// Format cards into readable strings
-	let cards_f = cards.length > config.bot.MAX_CARDS_BEFORE_EMBED_TRUNCATE ? [] : cards.map(c => cardManager.toString.basic(c));
+	let cards_f = cards.length > config.bot.MAX_CARDS_BEFORE_TRUNCATE ? [] : cards.map(c => cardManager.toString.basic(c));
 
 	// prettier-ignore
 	// Create the embed :: { VAULT ADD }
 	let embed_team = new BetterEmbed({
 		interaction,
 		author: { text: "$USERNAME | edit :: 👯 team", iconURL: true },
-		description: cards.length > config.bot.MAX_CARDS_BEFORE_EMBED_TRUNCATE
+		description: cards.length > config.bot.MAX_CARDS_BEFORE_TRUNCATE
 			? `${cards.length} ${cards.length === 1 ? "card" : "cards"} removed from your \`👯 team\``
 			: `${cards.length} ${cards.length === 1 ? "card" : "cards"} removed from your \`👯 team\`:\n>>> ${cards_f.join("\n")}`,
 		footer: cardsNotOnTeam ? `${cardsNotOnTeam} ${cardsNotOnTeam === 1 ? "card was" : "cards were"} not on your 👯 team` : ""

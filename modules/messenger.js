@@ -19,13 +19,13 @@ async function gift_cards(gifter, recipient, cards) {
 
 	// Parse each card into a string if card_f wasn't provided
 	let cards_f =
-		cards.length > config.bot.MAX_CARDS_BEFORE_EMBED_TRUNCATE ? [] : cards.map(card => cardManager.toString.basic(card));
+		cards.length > config.bot.MAX_CARDS_BEFORE_TRUNCATE ? [] : cards.map(card => cardManager.toString.basic(card));
 
 	// prettier-ignore
 	// Create the embed :: { GIFT }
 	let embed_gift = new BetterEmbed({
 		author: { text: embed_titles.gift },
-		description: cards.length > config.bot.MAX_CARDS_BEFORE_EMBED_TRUNCATE
+		description: cards.length > config.bot.MAX_CARDS_BEFORE_TRUNCATE
 			? `You got ${cards.length} ${cards.length === 1 ? "card" : "cards"} from **${gifter.username}**`
 			: `You got ${cards.length} ${cards.length === 1 ? "card" : "cards"} from **${gifter.username}**:\n>>> ${cards_f.join("\n")}`,
 		imageURL: cards_last.imageURL,
