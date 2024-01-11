@@ -72,7 +72,7 @@ async function subcommand_idol_add(interaction, userData, uid) {
 	// Create the embed :: { SET IDOL ADD }
 	let embed_idol = new BetterEmbed({
 		interaction,
-		author: { text: "$USERNAME | 🏃 idol set", iconURL: true },
+		author: { text: "$USERNAME | set :: 🏃 idol", iconURL: true },
 		description: `Your \`🏃 idol\` has been set to:\n> ${cardManager.toString.basic(card)}`,
 		imageURL: card.imageURL
 	});
@@ -94,7 +94,7 @@ async function subcommand_idol_remove(interaction, userData, uid) {
 	// Create the embed :: { SET IDOL REMOVE }
 	let embed_idol = new BetterEmbed({
 		interaction,
-		author: { text: "$USERNAME | 🏃 idol set", iconURL: true },
+		author: { text: "$USERNAME | set :: 🏃 idol", iconURL: true },
 		description: `Your \`🏃 idol\` has been unset`
 	});
 
@@ -124,7 +124,7 @@ async function subcommand_vault_add(interaction, uids) {
 	// Create the embed :: { VAULT ADD }
 	let embed_vault = new BetterEmbed({
 		interaction,
-		author: { text: "$USERNAME | 🔒 vault edit", iconURL: true },
+		author: { text: "$USERNAME | edit :: 🔒 vault", iconURL: true },
 		description: `\`${cards.length}\` cards added to your \`🔒 vault\``,
 		// prettier-ignore
 		footer: cardsAlreadyInVault ? `${cardsAlreadyInVault} ${cardsAlreadyInVault === 1 ? "card was" : "cards were"} already in your 🔒 vault` : ""
@@ -155,7 +155,7 @@ async function subcommand_vault_remove(interaction, uids) {
 	// Create the embed :: { VAULT REMOVE }
 	let embed_vault = new BetterEmbed({
 		interaction,
-		author: { text: "$USERNAME | 🔒 vault edit", iconURL: true },
+		author: { text: "$USERNAME | edit :: 🔒 vault", iconURL: true },
 		description: `\`${cards.length}\` cards removed from your \`🔒 vault\``,
 		// prettier-ignore
 		footer: cardsNotInVault ? `${cardsNotInVault} ${cardsNotInVault === 1 ? "card was" : "cards were"} not in your 🔒 vault` : ""
@@ -198,7 +198,7 @@ async function subcommand_team_add(interaction, uids) {
 	// Create the embed :: { VAULT ADD }
 	let embed_team = new BetterEmbed({
 		interaction,
-		author: { text: "$USERNAME | 👯 team edit", iconURL: true },
+		author: { text: "$USERNAME | edit :: 👯 team", iconURL: true },
 		description: `\`${cards.length}\` cards added to your \`👯 team\``,
 		// prettier-ignore
 		footer: cardsAlreadyOnTeam ? `${cardsAlreadyOnTeam} ${cardsAlreadyOnTeam === 1 ? "card was" : "cards were"} already on your 👯 team` : ""
@@ -237,7 +237,7 @@ async function subcommand_team_remove(interaction, uids) {
 	// Create the embed :: { VAULT ADD }
 	let embed_team = new BetterEmbed({
 		interaction,
-		author: { text: "$USERNAME | 👯 team edit", iconURL: true },
+		author: { text: "$USERNAME | edit :: 👯 team", iconURL: true },
 		description: `\`${cards.length}\` cards added to your \`👯 team\`:\n>>> ${cards_f.join("\n")}`,
 		// prettier-ignore
 		footer: cardsNotOnTeam ? `${cardsNotOnTeam} ${cardsNotOnTeam === 1 ? "card was" : "cards were"} not on your 👯 team` : ""
