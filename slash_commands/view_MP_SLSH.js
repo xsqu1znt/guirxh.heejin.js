@@ -134,6 +134,9 @@ async function subcommand_section_team(interaction) {
         description: `You do not have any cards on your \`👯 team\`!\n> *Use \`/set\` \`edit:👯 team\` to add some*`
     });
 
+	// Update the user's quest stats
+	await userManager.quests.update.teamPower(interaction.user.id);
+
 	// Fetch the user from Mongo
 	let userData = await userManager.fetch(interaction.user.id, { type: "essential" });
 

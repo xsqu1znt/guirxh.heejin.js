@@ -134,7 +134,9 @@ async function subcommand_vault_add(interaction, uids) {
 		description:
 			cards.length > config.bot.MAX_CARDS_BEFORE_TRUNCATE
 				? `${cards.length} ${cards.length === 1 ? "card" : "cards"} added to your \`🔒 vault\``
-				: `${cards.length} ${cards.length === 1 ? "card" : "cards"} added to your \`🔒 vault\`:\n>>> ${cards_f.join("\n")}`,
+				: `${cards.length} ${cards.length === 1 ? "card" : "cards"} added to your \`🔒 vault\`:\n>>> ${cards_f.join(
+						"\n"
+				  )}`,
 		// prettier-ignore
 		footer: cardsAlreadyInVault ? `${cardsAlreadyInVault} ${cardsAlreadyInVault === 1 ? "card was" : "cards were"} already in your 🔒 vault` : ""
 	});
@@ -203,8 +205,12 @@ async function subcommand_team_add(interaction, uids) {
 		interaction, description: `${uids.length === 1 ? "That card is" : "Those cards are"} already on your \`👯 team\``
 	});
 
-	// Add the cards to the user's team
-	await userManager.update(interaction.user.id, { card_team_uids: [...team, ...cards.map(c => c.uid)] });
+	await Promise.all([
+		// Add the cards to the user's team
+		userManager.update(interaction.user.id, { card_team_uids: [...team, ...cards.map(c => c.uid)] }),
+		// Update the user's quest stats
+		userManager.quests.update.teamPower(interaction.user.id)
+	]);
 
 	// Get the number of cards that were already on the user's team
 	let cardsAlreadyOnTeam = uids.length - cards.length;
@@ -242,10 +248,14 @@ async function subcommand_team_remove(interaction, uids) {
 		interaction, description: `${uids.length === 1 ? "That card is" : "Those cards are"} not on your \`👯 team\``
 	});
 
-	// Add the cards to the user's team
-	await userManager.update(interaction.user.id, {
-		card_team_uids: team.filter(uid => !cards.map(c => c.uid).includes(uid))
-	});
+	await Promise.all([
+		// Remove the cards from the user's team
+		userManager.update(interaction.user.id, {
+			card_team_uids: team.filter(uid => !cards.map(c => c.uid).includes(uid))
+		}),
+		// Update the user's quest stats
+		userManager.quests.update.teamPower(interaction.user.id)
+	]);
 
 	// Get the number of cards that were already on the user's team
 	let cardsNotOnTeam = uids.length - cards.length;
