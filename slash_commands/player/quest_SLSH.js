@@ -35,10 +35,10 @@ module.exports = {
 		let userQuestCache = await userManager.quests.fetch(interaction.user.id);
 
 		// Get the user's quest progress
-		let userQuestProgress = await questManager.updateQuestProgress(interaction.user);
+		let userQuestProgress = (await questManager.updateQuestProgress(interaction.user)) || null;
 
 		// Create the embeds:: { QUEST }
-		let embeds_quest = user_ES.quest(interaction.member, userQuestCache, userQuestProgress.progress);
+		let embeds_quest = user_ES.quest(interaction.member, userQuestCache, userQuestProgress?.progress);
 
 		// prettier-ignore
 		// Set up page navigation

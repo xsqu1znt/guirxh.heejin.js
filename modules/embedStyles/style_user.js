@@ -461,7 +461,7 @@ function quest(user, userQuestCache, userQuestProgress) {
 	// Iterate through each available quest
 	for (let i = 0; i < questManager.quests_active.length; i++) {
 		let _quest = questManager.quests_active[i];
-		let _progress = userQuestProgress.find(p => p.quest_id === _quest.id);
+		let _progress = userQuestProgress ? userQuestProgress.find(p => p.quest_id === _quest.id) : null;
 
 		/* - - - - - { Variables } - - - - - */
 		let isComplete = _progress?.quest_complete || userQuestCache.completed.find(c => c === _quest.id) ? true : false;
@@ -485,7 +485,7 @@ function quest(user, userQuestCache, userQuestProgress) {
 					.replace("$COMPLETE", isComplete ? "✔️ complete" : "🚫 incomplete")
 					.replace(
 						"$OBJECTIVE_PROGRESS",
-						`${_progress ? _progress.objectives.filter(o => o.complete).length : 0}/${_objectiveTypes.length}`
+						`${_progress ? _progress.objectives.filter(o => o.complete).length : _objectiveTypes.length}/${_objectiveTypes.length}`
 					),
 				{ text_color: "yellow", format: "bold", codeblock: true }
 			),

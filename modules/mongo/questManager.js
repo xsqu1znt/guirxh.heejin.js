@@ -163,7 +163,7 @@ async function completeQuest(user, questID) {
 	if (!quest) return;
 
 	// Update the user's completed quests in the Mongo
-	userManager.models.userQuestData.findByIdAndUpdate(user.id, { $push: { completed: questID } });
+	await userManager.models.userQuestData.findByIdAndUpdate(user.id, { $push: { completed: questID } });
 
 	// prettier-ignore
 	// Give the user rewards
