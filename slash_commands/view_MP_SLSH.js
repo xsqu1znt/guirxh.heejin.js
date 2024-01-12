@@ -45,9 +45,9 @@ async function subcommand_setIDs(interaction, setID) {
 	if (!cards.length) return await error_ES.send({ interaction, description: `\`${uid}\` is not a valid card set ID` });
 
 	// Create the embed :: { VIEW SET ID }
-    let embeds_view = general_ES.view(interaction.member, null, cards, "set");
-    
-    // prettier-ignore
+	let embeds_view = general_ES.view(interaction.member, null, cards, "set");
+
+	// prettier-ignore
 	// Setup page navigation
 	let embedNav = new EmbedNavigator({
 		interaction, embeds: [embeds_view],
@@ -114,7 +114,7 @@ async function subcommand_section_vault(interaction) {
 	// Create the embed :: { VIEW IDOL }
 	let embed_view = general_ES.view(interaction.member, userData, cards, "vault");
 
-    // prettier-ignore
+	// prettier-ignore
 	// Setup page navigation
 	let embedNav = new EmbedNavigator({
 		interaction, embeds: [embed_view],
@@ -126,7 +126,33 @@ async function subcommand_section_vault(interaction) {
 }
 
 /** @param {CommandInteraction} interaction */
-async function subcommand_section_team(interaction) {}
+async function subcommand_section_team(interaction) {
+	let teamUIDs = await userManager.inventory.clearNullTeamMembers(interaction.user.id);
+	// prettier-ignore
+	if (!teamUIDs.length) return await error_ES.send({
+        interaction,
+        description: `You do not have any cards on your \`👯 team\`!\n> *Use \`/set\` \`edit:👯 team\` to add some*`
+    });
+
+	// Fetch the user from Mongo
+	let userData = await userManager.fetch(interaction.user.id, { type: "essential" });
+
+	// Fetch the card, if it exists
+	let cards = await userManager.inventory.getMultiple(interaction.user.id, { uids: teamUIDs });
+
+	// Create the embed :: { VIEW IDOL }
+	let embed_view = general_ES.view(interaction.member, userData, cards, "team");
+
+	// prettier-ignore
+	// Setup page navigation
+	let embedNav = new EmbedNavigator({
+		interaction, embeds: [embed_view],
+		pagination: { type: "short", dynamic: false, useReactions: true }
+	});
+
+	// Send the embed with navigation
+	return await embedNav.send();
+}
 
 module.exports = {
 	options: { icon: "👀", deferReply: false },
