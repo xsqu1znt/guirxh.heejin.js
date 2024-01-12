@@ -9,7 +9,7 @@ const {
 const { BetterEmbed } = require("../../modules/discordTools");
 const jt = require("../../modules/jsTools");
 
-const config = require("../embed_config.json");
+const config = require("./embed_config.json");
 
 const timeouts = {
 	base: jt.parseTime(config.timeouts.BASE),
