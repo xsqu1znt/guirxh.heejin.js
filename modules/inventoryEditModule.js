@@ -621,10 +621,10 @@ class InventoryEditModule {
 		if (!cards.length) return;
 
 		/* - - - - - { Clean Up } - - - - - */
-		if (this.data.sent.sell.removeReaction) {
+		if (this.data.sent.vault.removeReaction) {
 			// this is set to false because this message is going to be edited
-			this.data.sent.sell.canDelete = false;
-			this.data.sent.sell.removeReaction();
+			this.data.sent.vault.canDelete = false;
+			this.data.sent.vault.removeReaction();
 		}
 
 		// Stop select menu interaction collection

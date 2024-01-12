@@ -359,7 +359,7 @@ function toString_selectionEntry(card, duplicate = false) {
 		.replace("$SINGLE", card.single)
 		.replace("$GROUP", card.group)
 		.replace("$NAME", card.name)
-		.replace(" $DUPE", duplicate ? ` ***${superscript.dupe}***` : "");
+		.replace(" $DUPE", duplicate ? ` ${superscript.dupe}` : "");
 
 	let description = "$UID :: GID: $GID :: 🗣️ $SET"
 		.replace("$UID", card.uid ? `UID: ${card.uid}` : "")
