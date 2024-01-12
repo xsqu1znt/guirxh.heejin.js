@@ -19,7 +19,7 @@ async function subcommand_uniqueID(interaction, uid) {
 	let embed_view = general_ES.view(interaction.member, userData, card, "uid");
 
 	// Send the embed
-	return await embed_view.send();
+	return await embed_view.send({ interaction });
 }
 
 /** @param {CommandInteraction} interaction @param {string} globalID */
@@ -27,13 +27,13 @@ async function subcommand_globalID(interaction, globalID) {
 	// Fetch the card, if it exists
 	let card = cardManager.get.globalID(globalID);
 	// prettier-ignore
-	if (!card) return await error_ES.send({ interaction, description: `\`${uid}\` is not a valid card GID` });
+	if (!card) return await error_ES.send({ interaction, description: `\`${globalID}\` is not a valid card GID` });
 
 	// Create the embed :: { VIEW GLOBAL ID }
 	let embed_view = general_ES.view(interaction.member, null, card, "gid");
 
 	// Send the embed
-	return await embed_view.send();
+	return await embed_view.send({ interaction });
 }
 
 /** @param {CommandInteraction} interaction @param {string} setID */
@@ -41,7 +41,7 @@ async function subcommand_setIDs(interaction, setID) {
 	// Fetch the card, if it exists
 	let cards = cardManager.get.setID(setID);
 	// prettier-ignore
-	if (!cards.length) return await error_ES.send({ interaction, description: `\`${uid}\` is not a valid card set ID` });
+	if (!cards.length) return await error_ES.send({ interaction, description: `\`${setID}\` is not a valid card set ID` });
 
 	// Create the embed :: { VIEW SET ID }
 	let embeds_view = general_ES.view(interaction.member, null, cards, "set");
@@ -74,7 +74,7 @@ async function subcommand_section_favorite(interaction) {
 	let embed_view = general_ES.view(interaction.member, userData, card, "favorite");
 
 	// Send the embed
-	return await embed_view.send();
+	return await embed_view.send({ interaction });
 }
 
 /** @param {CommandInteraction} interaction */
@@ -94,7 +94,7 @@ async function subcommand_section_idol(interaction) {
 	let embed_view = general_ES.view(interaction.member, userData, card, "idol");
 
 	// Send the embed
-	return await embed_view.send();
+	return await embed_view.send({ interaction });
 }
 
 /** @param {CommandInteraction} interaction */
@@ -121,7 +121,7 @@ async function subcommand_section_vault(interaction) {
 	});
 
 	// Send the embed with navigation
-	return await embedNav.send();
+	return await embed_view.send({ interaction });
 }
 
 /** @param {CommandInteraction} interaction */
@@ -153,7 +153,7 @@ async function subcommand_section_team(interaction) {
 	});
 
 	// Send the embed with navigation
-	return await embedNav.send();
+	return await embed_view.send({ interaction });
 }
 
 module.exports = {
@@ -185,7 +185,7 @@ module.exports = {
 		let section = interaction.options.getString("section") || null;
 
 		// prettier-ignore
-		if (!uid && !globalID && !setID && !section) return await error_ES({
+		if (!uid && !globalID && !setID && !section) return await error_ES.send({
             interaction, description: "You must provide either a \`UID\`, \`GID\`, \`set ID\`, or \`section\`",
             ephemeral: true
         });
