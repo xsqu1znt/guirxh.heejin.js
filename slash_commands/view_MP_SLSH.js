@@ -111,17 +111,17 @@ async function subcommand_section_vault(interaction) {
     });
 
 	// Create the embed :: { VIEW IDOL }
-	let embed_view = general_ES.view(interaction.member, userData, cards, "vault");
+	let embeds_view = general_ES.view(interaction.member, userData, cards, "vault");
 
 	// prettier-ignore
 	// Setup page navigation
 	let embedNav = new EmbedNavigator({
-		interaction, embeds: [embed_view],
+		interaction, embeds: [embeds_view],
 		pagination: { type: "longJump", useReactions: true }
 	});
 
 	// Send the embed with navigation
-	return await embed_view.send({ interaction });
+	return await embedNav.send({ interaction });
 }
 
 /** @param {CommandInteraction} interaction */
@@ -143,17 +143,17 @@ async function subcommand_section_team(interaction) {
 	let cards = await userManager.inventory.getMultiple(interaction.user.id, { uids: teamUIDs });
 
 	// Create the embed :: { VIEW IDOL }
-	let embed_view = general_ES.view(interaction.member, userData, cards, "team");
+	let embeds_view = general_ES.view(interaction.member, userData, cards, "team");
 
 	// prettier-ignore
 	// Setup page navigation
 	let embedNav = new EmbedNavigator({
-		interaction, embeds: [embed_view],
+		interaction, embeds: [embeds_view],
 		pagination: { type: "short", dynamic: false, useReactions: true }
 	});
 
 	// Send the embed with navigation
-	return await embed_view.send({ interaction });
+	return await embedNav.send({ interaction });
 }
 
 module.exports = {
