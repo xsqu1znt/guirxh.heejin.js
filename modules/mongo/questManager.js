@@ -210,7 +210,7 @@ async function updateQuestProgress(user) {
 	let questProgress = await Promise.all(_quests.map(q => checkUserQuest(user.id, q.id)));
 	let newObjectivesComplete = [];
 
-	let _promises = [];
+	let _objectiveCacheToPush = [];
 
 	// Iterate through quest progress
 	for (let progress of questProgress) {
@@ -228,20 +228,19 @@ async function updateQuestProgress(user) {
 			// Push the objective to the array so we can let the user know they completed a quest objective
 			_objectivesComplete.push(objective);
 
-			// Add to the objective cache in Mongo
-			_promises.push(
-				userManager.models.userQuestData.findByIdAndUpdate(user.id, {
-					$push: { completed_objective_cache: { quest_id: progress.quest_id, type: objective.type } }
-				})
-			);
+			// Add to the objective cache
+			_objectiveCacheToPush.push({ quest_id: progress.quest_id, type: objective.type });
 		}
-
-		await Promise.all(_promises);
 
 		// Push the completed objectives to the main array
 		if (_objectivesComplete.length)
 			newObjectivesComplete.push({ quest_id: progress.quest_id, objectives: _objectivesComplete });
 	}
+
+	// Push the objective cache to Mongo
+	await userManager.models.userQuestData.findByIdAndUpdate(user.id, {
+		$push: { completed_objective_cache: { $each: _objectiveCacheToPush } }
+	});
 
 	let questsCompleted = questProgress.filter(p => p.quest_complete);
 

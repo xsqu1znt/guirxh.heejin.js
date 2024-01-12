@@ -28,9 +28,9 @@
  - /reminder
  - /set
  - /view
+ - /stage
 
 - **Untested Commands**
- - /stage
  - /quest
 
 <!-- Changelog -->
@@ -45,6 +45,7 @@
  - Can now use `/missing` on other players
  - Can now `/gift` unlimited cards
  - Rivaling another player with `/stage` is more fleshed out
+ - Rival ability no longer nerfed if rivaling a player with `/stage`
 
 - **`/reminder`**
  - Use the `edit` option to toggle on/off a reminder

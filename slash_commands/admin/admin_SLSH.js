@@ -38,8 +38,12 @@ async function subcommand_summon(client, interaction) {
 		description: "You need to give a valid card ID"
 	});
 
-	// Add the cards to the user's card_inventory
-	await userManager.inventory.add(user.id, cards);
+	await Promise.all([
+		// Add the cards to the user's card_inventory
+		userManager.inventory.add(user.id, cards),
+		// Update the user's quests stats
+		userManager.quests.increment.cardsNew(user.id, cards.length)
+	]);
 
 	/// Create and send the embeds
 	let recipient = await client.users.fetch(user.id);
@@ -71,8 +75,12 @@ async function subcommand_payUser(interaction, currencyType) {
         interaction, description: "You did not give an amount"
     });
 
-	// Increment the user's balance
-	await userManager.balance.increment(user.id, amount, currencyType);
+	await Promise.all([
+		// Increment the user's balance
+		userManager.balance.increment(user.id, amount, currencyType),
+		// Update the user's quest stats
+		userManager.quests.increment.balance(user.id, amount, currencyType)
+	]);
 
 	/* - - - - - { Send Details } - - - - - */
 	let userData = await userManager.fetch(user.id, { type: "balance" });
