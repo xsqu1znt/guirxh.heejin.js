@@ -9,10 +9,10 @@ const schema_questData = new Schema(
 
 		balance: { type: Number, default: 0 },
 		ribbons: { type: Number, default: 0 },
-		daily_streak: { type: Number, default: 0 },
+		// daily_streak: { type: Number, default: 0 },
 		xp_user: { type: Number, default: 0 },
 		xp_idol: { type: Number, default: 0 },
-		level_user: { type: Number, default: 0 },
+		// level_user: { type: Number, default: 0 },
 		level_idol: { type: Number, default: 0 },
 		team_power: { type: Number, default: 0 },
 		cards_new: { type: Number, default: 0 }

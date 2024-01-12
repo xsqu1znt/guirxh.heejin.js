@@ -129,7 +129,7 @@ async function checkUserQuest(userID, questID) {
 			case "xp_idol": parsedObjectives.push({ type: "xp_idol", ...checkIntBasedObjective(objectiveValue, userQuestData.xp_idol) }); break;
 
 			// ObjectiveType :: { USER LVL }
-			case "level_user": parsedObjectives.push({ type: "level_user", ...checkIntBasedObjective(objectiveValue, userQuestData.level_user) }); break;
+			case "level_user": parsedObjectives.push({ type: "level_user", ...checkIntBasedObjective(objectiveValue, userData.level) }); break;
 	
 			// ObjectiveType :: { IDOL LVL }
 			case "level_idol": parsedObjectives.push({ type: "level_idol", ...checkIntBasedObjective(objectiveValue, userQuestData.level_idol) }); break;
@@ -312,8 +312,8 @@ function toString_objectiveDetails(quest, objectiveType, objectiveProgress, ques
 
 			return "- \`$COMPLETE\` **\`🎀 RIBBONS\`** get \`$REQUIRED\` new $DYNAMIC :: \`[$PROGRESS]\`"
 				.replace("$COMPLETE", objectiveComplete_f)
-				.replace("$REQUIRED", quest.objectives.ribbon)
-				.replace("$DYNAMIC", quest.objectives.ribbon === 1 ? "ribbon" : "ribbons")
+				.replace("$REQUIRED", quest.objectives.ribbons)
+				.replace("$DYNAMIC", quest.objectives.ribbons === 1 ? "ribbon" : "ribbons")
 				.replace("$PROGRESS", `${objectiveComplete ? quest.objectives.ribbon : objectiveProgress.has}/${quest.objectives.ribbons}`);
 
 		case "daily_streak":

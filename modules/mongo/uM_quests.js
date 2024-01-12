@@ -48,6 +48,18 @@ async function update_teamPower(userID) {
 	await update(userID, { team_power: jt.sum(teamCards.map(c => c.stats.ability)) });
 }
 
+/* - - - - - { Set } - - - - - */
+/** @param {string} userID @param {number} amount @param {LevelType} levelType  */
+async function set_level(userID, amount, levelType) {
+	// prettier-ignore
+	switch (levelType) {
+		case "user": await update(userID, { level_user: amount }); break;
+		case "idol": await update(userID, { level_idol: amount }); break;
+		case "xp_user": await update(userID, { xp_user: amount }); break;
+		case "xp_idol": await update(userID, { xp_idol: amount }); break;
+	}
+}
+
 /* - - - - - { Increment } - - - - - */
 /** @param {string} userID @param {number} amount @param {LevelType} levelType  */
 async function increment_level(userID, amount, levelType) {
@@ -87,6 +99,10 @@ module.exports = {
 
 	update: {
 		teamPower: update_teamPower
+	},
+
+	set: {
+		level: set_level
 	},
 
 	increment: {

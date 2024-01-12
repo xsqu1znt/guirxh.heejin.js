@@ -147,6 +147,7 @@ function levelUp(card) {
 			card.stats.xp_for_next_level = Math.floor(card.stats.level * config.player.xp.card.LEVEL_XP_MULTIPLIER);
 
 			// Update session data
+			session.level_current++;
 			session.levels_gained++;
 			session.leveled = true;
 		}

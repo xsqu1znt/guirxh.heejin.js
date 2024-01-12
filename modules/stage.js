@@ -194,6 +194,7 @@ class Stage {
 			await Promise.all([
 				userManager.inventory.update(user.id, card),
 				userManager.levels.increment.xp(user.id, xp_user, "stage"),
+				userManager.quests.set.level(user.id, card_leveled.level_current, "idol"),
 				userManager.quests.increment.level(user.id, xp_user, "xp_user"),
 				userManager.quests.increment.level(user.id, xp_idol, "xp_idol")
 			]);
