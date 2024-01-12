@@ -446,7 +446,7 @@ function view(user, userData, card, viewType) {
 
 		// prettier-ignore
 		return new BetterEmbed({
-			description: card_f, author: { text: "$USERNAME | view", user, iconURL: true },
+			description: card_f, author: { text: "$USERNAME | view | uid", user, iconURL: true },
 			imageURL: card.imageURL
 		});
 	};
@@ -454,7 +454,7 @@ function view(user, userData, card, viewType) {
 	const embed_viewGID = () => {
 		return new BetterEmbed({
 			description: cardManager.toString.inventoryEntry(card),
-			author: { text: "$USERNAME | view", user, iconURL: true },
+			author: { text: "$USERNAME | view | gid", user, iconURL: true },
 			imageURL: card.imageURL
 		});
 	};
@@ -481,23 +481,6 @@ function view(user, userData, card, viewType) {
 		return embeds;
 	};
 
-	const embed_viewIdol = () => {
-		// Whether or not this card is favorited, or on the user's team
-		let favorite = card.uid === userData.card_favorite_uid;
-		let onTeam = userData.card_team_uids.includes(card.uid);
-
-		// prettier-ignore
-		let card_f = cardManager.toString.inventoryEntry(card, {
-			locked: card.locked, selected: true, favorite, onTeam, showXP: true
-		});
-
-		// prettier-ignore
-		return new BetterEmbed({
-			description: card_f, author: { text: "$USERNAME | idol", user, iconURL: true },
-			imageURL: card.imageURL
-		});
-	};
-
 	const embed_viewFavorite = () => {
 		// Whether or not this card is selected, or on the user's team
 		let selected = card.uid === userData.card_selected_uid;
@@ -510,7 +493,24 @@ function view(user, userData, card, viewType) {
 
 		// prettier-ignore
 		return new BetterEmbed({
-			description: card_f, author: { text: "$USERNAME | favorite", user, iconURL: true },
+			description: card_f, author: { text: "$USERNAME | view | ⭐ favorite", user, iconURL: true },
+			imageURL: card.imageURL
+		});
+	};
+
+	const embed_viewIdol = () => {
+		// Whether or not this card is favorited, or on the user's team
+		let favorite = card.uid === userData.card_favorite_uid;
+		let onTeam = userData.card_team_uids.includes(card.uid);
+
+		// prettier-ignore
+		let card_f = cardManager.toString.inventoryEntry(card, {
+			locked: card.locked, selected: true, favorite, onTeam, showXP: true
+		});
+
+		// prettier-ignore
+		return new BetterEmbed({
+			description: card_f, author: { text: "$USERNAME | 🏃 idol", user, iconURL: true },
 			imageURL: card.imageURL
 		});
 	};
@@ -539,7 +539,7 @@ function view(user, userData, card, viewType) {
 		for (let i = 0; i < cards_f.length; i++) {
 			/// Create the embed
 			let _embed = new BetterEmbed({
-				author: { text: "$USERNAME | vault", user, iconURL: true },
+				author: { text: "$USERNAME | view | 🔒 vault", user, iconURL: true },
 				description: markdown.ansi(`Total: ${cards.length}`, {
 					text_color: "white",
 					format: "bold",
@@ -570,7 +570,7 @@ function view(user, userData, card, viewType) {
 			// Create the embed
 			let _embed = new BetterEmbed({
 				description: cardManager.toString.inventoryEntry(_card, { showXP: true }),
-				author: { text: "$USERNAME | team", user, iconURL: true },
+				author: { text: "$USERNAME | view | 👯 team", user, iconURL: true },
 				footer: `Card ${idx + 1}/${cards.length} | Total Power: $TOTAL`
 					// .replace("$TOTAL_ABI", total_ability)
 					// .replace("$TOTAL_REP", total_reputation),
@@ -589,8 +589,8 @@ function view(user, userData, card, viewType) {
 		case "uid": return embed_viewUID();
 		case "gid": return embed_viewGID();
 		case "set": return embed_viewSet();
-		case "idol": return embed_viewIdol();
 		case "favorite": return embed_viewFavorite();
+		case "idol": return embed_viewIdol();
 		case "vault": return embed_viewVault();
 		case "team": return embed_viewTeam();
 	}
