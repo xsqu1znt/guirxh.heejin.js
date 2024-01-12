@@ -1,12 +1,12 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { BetterEmbed } = require("../modules/discordTools");
-const { cooldown_ES } = require("../modules/embedStyles/index");
-const { userManager } = require("../modules/mongo/index");
-const jt = require("../modules/jsTools");
+const { BetterEmbed } = require("../../modules/discordTools");
+const { cooldown_ES } = require("../../modules/embedStyles/index");
+const { userManager } = require("../../modules/mongo/index");
+const jt = require("../../modules/jsTools");
 
-const config_player = require("../configs/config_player.json");
-const config_bot = require("../configs/config_bot.json");
+const config_player = require("../../configs/config_player.json");
+const config_bot = require("../../configs/config_bot.json");
 
 module.exports = {
 	options: { icon: "🎱", deferReply: true },

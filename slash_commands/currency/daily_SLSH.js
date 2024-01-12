@@ -1,13 +1,13 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { BetterEmbed, markdown } = require("../modules/discordTools");
-const { cooldown_ES } = require("../modules/embedStyles/index");
-const { userManager } = require("../modules/mongo/index");
-const jt = require("../modules/jsTools");
+const { BetterEmbed, markdown } = require("../../modules/discordTools");
+const { cooldown_ES } = require("../../modules/embedStyles/index");
+const { userManager } = require("../../modules/mongo/index");
+const jt = require("../../modules/jsTools");
 
 const config = {
-	player: require("../configs/config_player.json"),
-	bot: require("../configs/config_bot.json")
+	player: require("../../configs/config_player.json"),
+	bot: require("../../configs/config_bot.json")
 };
 
 module.exports = {

@@ -1,12 +1,12 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { BetterEmbed, EmbedNavigator } = require("../modules/discordTools");
-const { error_ES, general_ES } = require("../modules/embedStyles/index");
-const { userManager } = require("../modules/mongo/index");
-const itemManager = require("../modules/itemManager");
-const jt = require("../modules/jsTools");
+const { BetterEmbed, EmbedNavigator } = require("../../modules/discordTools");
+const { error_ES, general_ES } = require("../../modules/embedStyles/index");
+const { userManager } = require("../../modules/mongo/index");
+const itemManager = require("../../modules/itemManager");
+const jt = require("../../modules/jsTools");
 
-const config = { bot: require("../configs/config_bot.json") };
+const config = { bot: require("../../configs/config_bot.json") };
 
 module.exports = {
 	options: { icon: "🛍️", deferReply: false },

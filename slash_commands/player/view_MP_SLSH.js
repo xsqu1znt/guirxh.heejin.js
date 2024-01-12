@@ -1,9 +1,9 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { error_ES, general_ES } = require("../modules/embedStyles/index");
-const { EmbedNavigator } = require("../modules/discordTools");
-const { userManager } = require("../modules/mongo/index");
-const cardManager = require("../modules/cardManager");
+const { error_ES, general_ES } = require("../../modules/embedStyles/index");
+const { EmbedNavigator } = require("../../modules/discordTools");
+const { userManager } = require("../../modules/mongo/index");
+const cardManager = require("../../modules/cardManager");
 
 /** @param {CommandInteraction} interaction @param {string} uid */
 async function subcommand_uniqueID(interaction, uid) {

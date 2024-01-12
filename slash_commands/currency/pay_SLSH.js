@@ -1,11 +1,11 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { error_ES, general_ES } = require("../modules/embedStyles/index");
-const { userManager, questManager } = require("../modules/mongo/index");
-const messenger = require("../modules/messenger");
-const jt = require("../modules/jsTools");
+const { error_ES, general_ES } = require("../../modules/embedStyles/index");
+const { userManager, questManager } = require("../../modules/mongo/index");
+const messenger = require("../../modules/messenger");
+const jt = require("../../modules/jsTools");
 
-const config_bot = require("../configs/config_bot.json");
+const config_bot = require("../../configs/config_bot.json");
 
 module.exports = {
 	options: { icon: "🥕", deferReply: false },

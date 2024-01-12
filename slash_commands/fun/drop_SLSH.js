@@ -1,17 +1,17 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { error_ES, cooldown_ES } = require("../modules/embedStyles/index");
-const { BetterEmbed } = require("../modules/discordTools");
-const { userManager } = require("../modules/mongo/index");
-const InventoryEditModule = require("../modules/inventoryEditModule");
-const cardManager = require("../modules/cardManager");
-const dropManager = require("../modules/dropManager");
-const jt = require("../modules/jsTools");
+const { error_ES, cooldown_ES } = require("../../modules/embedStyles/index");
+const { BetterEmbed } = require("../../modules/discordTools");
+const { userManager } = require("../../modules/mongo/index");
+const InventoryEditModule = require("../../modules/inventoryEditModule");
+const cardManager = require("../../modules/cardManager");
+const dropManager = require("../../modules/dropManager");
+const jt = require("../../modules/jsTools");
 
 const config = {
-	bot: require("../configs/config_bot.json"),
-	player: require("../configs/config_player.json"),
-	event: require("../configs/config_event.json")
+	bot: require("../../configs/config_bot.json"),
+	player: require("../../configs/config_player.json"),
+	event: require("../../configs/config_event.json")
 };
 
 module.exports = {

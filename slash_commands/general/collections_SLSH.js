@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { EmbedNavigator } = require("../modules/discordTools");
-const { general_ES } = require("../modules/embedStyles/index");
+const { EmbedNavigator } = require("../../modules/discordTools");
+const { general_ES } = require("../../modules/embedStyles/index");
 
 module.exports = {
 	options: { icon: "📁", deferReply: false, dontRequireUserData: true },

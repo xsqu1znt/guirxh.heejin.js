@@ -1,8 +1,8 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { error_ES, cooldown_ES } = require("../modules/embedStyles/index");
-const { userManager } = require("../modules/mongo/index");
-const Stage = require("../modules/stage");
+const { error_ES, cooldown_ES } = require("../../modules/embedStyles/index");
+const { userManager } = require("../../modules/mongo/index");
+const Stage = require("../../modules/stage");
 
 module.exports = {
 	options: { icon: "🎤", deferReply: true },

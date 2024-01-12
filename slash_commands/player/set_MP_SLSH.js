@@ -1,14 +1,14 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { BetterEmbed } = require("../modules/discordTools");
-const { error_ES } = require("../modules/embedStyles/index");
-const { userManager } = require("../modules/mongo/index");
-const cardManager = require("../modules/cardManager");
-const jt = require("../modules/jsTools");
+const { BetterEmbed } = require("../../modules/discordTools");
+const { error_ES } = require("../../modules/embedStyles/index");
+const { userManager } = require("../../modules/mongo/index");
+const cardManager = require("../../modules/cardManager");
+const jt = require("../../modules/jsTools");
 
 const config = {
-	bot: require("../configs/config_bot.json"),
-	player: require("../configs/config_player.json")
+	bot: require("../../configs/config_bot.json"),
+	player: require("../../configs/config_player.json")
 };
 
 /** @param {CommandInteraction} interaction @param {UserData} userData @param {string} uid */

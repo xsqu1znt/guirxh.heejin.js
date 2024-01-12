@@ -1,6 +1,6 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { BetterEmbed } = require("../modules/discordTools");
+const { BetterEmbed } = require("../../modules/discordTools");
 
 module.exports = {
 	options: { deferReply: false, dontRequireUserData: true },

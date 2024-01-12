@@ -1,8 +1,8 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { BetterEmbed, EmbedNavigator } = require("../modules/discordTools");
-const { userManager, questManager } = require("../modules/mongo/index");
-const { error_ES, user_ES } = require("../modules/embedStyles/index");
+const { BetterEmbed, EmbedNavigator } = require("../../modules/discordTools");
+const { userManager, questManager } = require("../../modules/mongo/index");
+const { error_ES, user_ES } = require("../../modules/embedStyles/index");
 // const jt = require("../modules/jsTools");
 
 module.exports = {

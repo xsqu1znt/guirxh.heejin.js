@@ -1,13 +1,13 @@
 // prettier-ignore
 const { Client, CommandInteraction, SlashCommandBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require("discord.js");
 
-const { BetterEmbed } = require("../modules/discordTools");
-const { userManager } = require("../modules/mongo/index");
-const { error_ES } = require("../modules/embedStyles");
+const { BetterEmbed } = require("../../modules/discordTools");
+const { userManager } = require("../../modules/mongo/index");
+const { error_ES } = require("../../modules/embedStyles");
 
 const config = {
-	bot: require("../configs/config_bot.json"),
-	player: require("../configs/config_player.json")
+	bot: require("../../configs/config_bot.json"),
+	player: require("../../configs/config_player.json")
 };
 
 module.exports = {

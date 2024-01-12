@@ -1,7 +1,7 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { user_ES } = require("../modules/embedStyles/index");
-const { userManager } = require("../modules/mongo/index");
+const { user_ES } = require("../../modules/embedStyles/index");
+const { userManager } = require("../../modules/mongo/index");
 
 module.exports = {
 	options: { icon: "⏲️", deferReply: true },

@@ -48,7 +48,7 @@
 
 - **`/reminder`**
  - Use the `edit` option to toggle on/off a reminder
- - Use the `notify` option to change where your reminder is sent (`📫 DM` `💬 Channel`)
+ - Use the `notify` option to change where your reminder is sent (`📫 DM` or `💬 Channel`)
 
 - **`/inventory`**
  - Can now mix and match filters and separate multiple options by commas (,)
