@@ -17,6 +17,9 @@ async function xp_levelUp(userID) {
 		level_current: userData.level
 	};
 
+	// Ignore if the user's at max level
+	if (userData.level >= config.player.xp.user.LEVEL_MAX) return session;
+
 	const levelUp = () => {
 		if (userData.level >= config.player.xp.user.LEVEL_MAX) return;
 
@@ -56,6 +59,12 @@ async function xp_levelUp(userID) {
  * @param {number} amount use a negative number to subtract
  * @param {import("./uM_statistics").StatisticType} statType */
 async function increment_xp(userID, amount, statType) {
+	// Fetch the user from Mongo
+	let userData = await userManager.fetch(userID, { type: "xp" });
+
+	// Ignore if the user's at max level
+	if (userData.level >= config.player.xp.user.LEVEL_MAX) return;
+
 	await Promise.all([
 		userManager.update(userID, { $inc: { xp: amount } }),
 		uM_statistics.push.xp(userID, amount, statType)
