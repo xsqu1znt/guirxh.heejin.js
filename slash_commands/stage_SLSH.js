@@ -63,11 +63,11 @@ module.exports = {
 		/* - - - - - { USER & RIVAL IDOL } - - - - - */
 		// prettier-ignore
 		if (!card_idol.user) return await error_ES.send({
-			interaction, description: "You do not have an `🏃 idol` set\nUse `/set` `edit:🏃 idol` `add:UID`"
+			interaction, description: `You do not have an \`🏃 idol\` card!\n> *Use \`/set\` \`edit:🏃 idol\` to set one*`
 		});
 		// prettier-ignore
 		if (!card_idol.rival && rival) return await error_ES.send({
-			interaction, description: `${rival} does not have an \`🏃 idol\` set\nUse \`/set\` \`edit:🏃 idol\` \`add:UID\``
+			interaction, description: `${rival} does not have an \`🏃 idol\` card!\n> *Use \`/set\` \`edit:🏃 idol\` to set one*`
 		});
 
 		/* - - - - - { COOLDOWNS } - - - - - */

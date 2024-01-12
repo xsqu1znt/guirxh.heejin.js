@@ -27,9 +27,9 @@
  - /drop
  - /reminder
  - /set
+ - /view
 
 - **Untested Commands**
- - /view
  - /stage
  - /quest
 
@@ -44,6 +44,7 @@
 - **`Command Changes`**
  - Can now use `/missing` on other players
  - Can now `/gift` unlimited cards
+ - Rivaling another player with `/stage` is more fleshed out
 
 - **`/reminder`**
  - Use the `edit` option to toggle on/off a reminder

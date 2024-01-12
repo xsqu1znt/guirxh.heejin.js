@@ -87,7 +87,7 @@ async function subcommand_section_idol(interaction) {
 	// prettier-ignore
 	if (!card) return await error_ES.send({
         interaction,
-        description: `You do not have a \`🏃 idol\` card!\n> *Use \`/set\` \`edit:🏃 idol\` to set one*`
+        description: `You do not have an \`🏃 idol\` card!\n> *Use \`/set\` \`edit:🏃 idol\` to set one*`
     });
 
 	// Create the embed :: { VIEW IDOL }

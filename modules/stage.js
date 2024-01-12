@@ -215,13 +215,14 @@ class Stage {
 				break;
 		}
 
+		// prettier-ignore
 		// Set the embed's footer
 		this.embed.setFooter(
 			user
 				? "$WINNER's idol got $XPXP $LEVEL_UP"
 						.replace("$WINNER", user?.displayName || user?.username)
 						.replace("$XP", xp_idol)
-						.replace("$LEVEL_UP", card_leveled.levels_gained ? `and ${card_leveled.levels_gained} LV.` : "")
+						.replace("$LEVEL_UP", card_leveled.levels_gained ? `and ${card_leveled.levels_gained} ${card_leveled.levels_gained === 1 ? "level" : "levels"}` : "")
 				: "You lost... Try again next time!"
 		);
 
