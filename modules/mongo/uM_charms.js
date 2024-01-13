@@ -5,15 +5,12 @@ const jt = require("../jsTools");
 
 /** @param {string} userID @param {CharmType} charmType */
 async function get(userID, charmType) {
-	let userData = await userManager.fetch(userID, { type: "charm", lean: false });
-	if (!userData.charms) return null;
+	// Clean out expired charms and return active ones
+	let charms = await clean(userID);
+	if (!charms) return null;
 
-	let charm = userData.charms.get(charmType);
-	if (!charm) return null;
-
-	if (Date.now() >= charm.expiration) return null;
-
-	return charm;
+	// Return the requested charm, if it exists
+	return charms.get(charmType) || null;
 }
 
 /** @param {string} userID */

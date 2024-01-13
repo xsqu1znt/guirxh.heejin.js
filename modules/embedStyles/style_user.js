@@ -83,7 +83,10 @@ function profile(user, options) {
 	const profile_charms = () => {
 		if (!options.userData?.charms?.length) return null;
 
-		let charms_f = options.userData.charms.map(c => itemManager.toString.charms.profile(c));
+		let charms_active = options.userData.charms.values().filter(c => c.expiration >= Date.now());
+		if (!charms_active) return null;
+
+		let charms_f = charms_active.map(c => itemManager.toString.charms.profile(c));
 		return charms_f.length ? embed_profile.copy({ description: `>>> ${charms_f.join("\n")}` }) : null;
 	};
 
@@ -150,6 +153,8 @@ function profile(user, options) {
 		overview: profile_overview(),
 		// Badges
 		badges: profile_badges(),
+		// Charms
+		charms: profile_charms(),
 		// Card Selected
 		card_selected: profile_cardView(options.card_selected),
 		// Card Favorite
@@ -162,6 +167,7 @@ function profile(user, options) {
 
 	if (embeds.overview) navigationData.push({ label: "📄 Overview", description: "View your profile overview" });
 	if (embeds.badges) navigationData.push({ label: "📛 Badges", description: "View your badges" });
+	if (embeds.charms) navigationData.push({ label: "✨ Charms", description: "View your charms" });
 	if (embeds.card_selected) navigationData.push({ label: "🏃 Stage Idol", description: "View your stage idol" });
 	if (embeds.card_favorite) navigationData.push({ label: "⭐ Favorite Card", description: "View your favorite" });
 	// prettier-ignore

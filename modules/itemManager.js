@@ -387,16 +387,15 @@ function charm_toString_shopEntry(charmID) {
 		.replace("$PRICE", charm.price);
 }
 
-function charm_toString_basic(charmID) {
-	let { item: charm, type: _itemType } = getItem(charmID);
-	if (_itemType !== ItemType.charm) return "n/a";
+function charm_toString_profile(charm) {
+	if (!charm?.name) return "n/a";
 
 	return "`$ID` `$EMOJI` **$NAME** `🌟 $CHANCE%` `⏰ $DURATION`"
 		.replace("$ID", charm.id)
 		.replace("$EMOJI", charm.emoji)
 		.replace("$NAME", charm.name)
 		.replace("$CHANCE", charm.chance_of_working)
-		.replace("$DURATION", charm.duration);
+		.replace("$DURATION", `<t:${jt.msToSec(charm.expiration)}:R>`);
 }
 
 module.exports = {
