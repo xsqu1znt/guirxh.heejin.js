@@ -363,7 +363,7 @@ function charm_toString_setEntry(setID) {
 	let charms_first = charms.slice(-1)[0];
 
 	return (
-		"> **`$CATEGORY`** `🗣️ $SET_ID` `📁 $COUNT` `🌟` $DESCRIPTION"
+		"> **`$CATEGORY`** `🗣️ $SET_ID` `📁 $COUNT` `✨` $DESCRIPTION"
 			.replace("$CATEGORY", charms_first.category)
 			.replace("$SET_ID", charms_first.setID)
 			.replace("$COUNT", charms.length >= 10 ? charms.length : `0${charms.length}`)
@@ -376,11 +376,10 @@ function charm_toString_shopEntry(charmID) {
 	let { item: charm, type: _itemType } = getItem(charmID);
 	if (_itemType !== ItemType.charm) return null;
 
-	return "`$ID` `🗣️ $SET_ID` `$EMOJI` *`$TYPE`* $NAME `☀️ $CHANCE%` `⏰ $DURATION` `💰 $PRICE`"
+	return "`$ID` `🗣️ $SET_ID` `$EMOJI` **$NAME** `☀️ $CHANCE%` `⏰ $DURATION` `💰 $PRICE`"
 		.replace("$ID", charm.id)
 		.replace("$SET_ID", charm.setID)
 		.replace("$EMOJI", charm.emoji)
-		.replace("$TYPE", charm.type)
 		.replace("$NAME", charm.name)
 		.replace("$CHANCE", charm.chance_of_working)
 		.replace("$DURATION", charm.duration)

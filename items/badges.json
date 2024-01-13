@@ -1,13 +1,1 @@
-[
-    {
-        "id": "RS01",
-        "setID": "B01",
-        "name": "squ1d",
-        "description": "**Badge** *`Dev`*",
-        "category": "bdge",
-        "set": "DEV",
-        "customEmoji": "<:realsquid:1085169097114910760>",
-        "rarity": 1,
-        "price": 500
-    }
-]
+[]

@@ -1,38 +1,14 @@
 [
 	{
-		"id": "DR01",
+		"id": "C01",
 		"type": "dupeRepel",
-		"name": "Dupe Repellent",
-		"emoji": "🍀",
+		"name": "Dupe Repel",
+		"emoji": "⛔",
 		"setID": "C01",
 		"category": "chrm",
-		"description": "**Charm** *`Dev`*",
-		"price": 100,
+		"description": "**Charm** *`DupeRepel`*",
+		"price": 21000,
 		"duration": "1w",
-		"chance_of_working": 25
-	},
-	{
-		"id": "DR02",
-		"type": "dupeRepel",
-		"name": "Dupe Repellent",
-		"emoji": "🍀",
-		"setID": "C01",
-		"category": "chrm",
-		"description": "**Charm** *`Dev`*",
-		"price": 100,
-		"duration": "1w",
-		"chance_of_working": 50
-	},
-	{
-		"id": "DR03",
-		"type": "dupeRepel",
-		"name": "Dupe Repellent",
-		"emoji": "🍀",
-		"setID": "C01",
-		"category": "chrm",
-		"description": "**Charm** *`Dev`*",
-		"price": 100,
-		"duration": "1w",
-		"chance_of_working": 100
+		"chance_of_working": 70
 	}
 ]

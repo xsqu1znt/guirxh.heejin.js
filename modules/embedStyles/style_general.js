@@ -35,7 +35,7 @@ function shop(user, userData) {
 	/* - - - - - { Parse Item } - - - - - */
 	let items = {
 		// Get card packs and sort by set ID :: { ASCENDING }
-		card: itemManager.items.cardPacks.general.sort((a, b) => a.setID - b.setID),
+		cardPack: itemManager.items.cardPacks.general.sort((a, b) => a.setID - b.setID),
 		charms: itemManager.items.charms.general
 	};
 
@@ -148,8 +148,10 @@ function shop(user, userData) {
 	};
 
 	const shop_cardPacks = () => {
+		if (!items.cardPack.length) return null;
+
 		// Format Item Packs into strings
-		let packs_f = items.card.map(pack => itemManager.toString.cardPacks.shopEntry(pack.id));
+		let packs_f = items.cardPack.map(pack => itemManager.toString.cardPacks.shopEntry(pack.id));
 
 		/* - - - - - { Split Large Card Packs (MAX=3) } - - - - - */
 		let pack_chunks_f = jt.chunk(packs_f, 3);
@@ -172,6 +174,8 @@ function shop(user, userData) {
 	};
 
 	const shop_badges = () => {
+		if (!badges.length) return null;
+
 		// Format badges into strings
 		let _badges_f = badges.map(b => itemManager.toString.badges.shopEntry(b.id));
 
@@ -196,6 +200,8 @@ function shop(user, userData) {
 	};
 
 	const shop_charms = () => {
+		if (!items.charms.length) return null;
+
 		// Format charms into strings
 		let _charms_f = items.charms.map(c => itemManager.toString.charms.shopEntry(c.id));
 
@@ -257,7 +263,7 @@ function shop(user, userData) {
 	if (embeds.card_rewards) navigationData.push({ emoji: "🎀", label: "Rewards", description: "Buy a special card" });
 	if (embeds.itemPacks) navigationData.push({ emoji: "📦", label: "Item Packs", description: "Buy a card pack" });
 	if (embeds.badges) navigationData.push({ emoji: "📛", label: "Badges", description: "Buy a badge" });
-	if (embeds.charms) navigationData.push({ emoji: "🌟", label: "Charms", description: "Buy a charm" });
+	if (embeds.charms) navigationData.push({ emoji: "✨", label: "Charms", description: "Buy a charm" });
 
 	return {
 		embeds: [
