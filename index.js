@@ -59,7 +59,7 @@ client.login(DEVMODE ? TOKEN_DEV : TOKEN).then(async () => {
 	// await slashCommandManager.push(client, { global: true });
 
 	// Remove commands (does nothing if commands were registered globally) :: { LOCAL }
-	// await slashCommandManager.remove(client, { ids: "1107285909365329922" });
+	// await slashCommandManager.remove(client, { ids: ["1107285909365329922", "802930323095814144"] });
 
 	// Remove commands (does nothing if commands were registered locally) :: { GLOBAL }
 	// await slashCommandManager.remove(client, { global: true });
