@@ -1,7 +1,7 @@
 {
 	"stock": {
 		"card_set_ids": {
-			"GENERAL": ["100", "105"],
+			"GENERAL": ["100"],
 			"SPECIAL": ["151"]
 		}
 	}

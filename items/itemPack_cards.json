@@ -1,1 +1,23 @@
-everyone hold off on running commands until the board post is made
+[
+	{
+		"id": "P1",
+		"setID": "P01",
+		"name": "Pack 01",
+		"description": "**Pack** *`Weekly`*",
+		"emoji": "📦",
+		"category": "pack",
+		"set": "Cards",
+		"rarity": 1,
+		"price": 1000,
+		"content": {
+			"count": 6,
+			"sets": [
+				{ "id": "710", "rarity": 100 },
+				{ "id": "289", "rarity": 100 },
+				{ "id": "271", "rarity": 100 },
+				{ "id": "431", "rarity": 100 },
+				{ "id": "762", "rarity": 100 }
+			]
+		}
+	}
+]

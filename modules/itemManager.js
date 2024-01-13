@@ -177,7 +177,7 @@ async function card_buy(userID, globalID) {
 
 	await Promise.all([
 		// Subtract the card pack's price from the user's balance
-		userManager.balance.increment(userID, -card.price, isSpecial ? "ribbon" : "carrot"),
+		userManager.balance.increment(userID, -card.price, isSpecial ? "ribbon" : "balance"),
 		// Give the cards to the user
 		userManager.inventory.add(userID, card)
 	]);
@@ -202,7 +202,7 @@ async function cardPack_buy(userID, packID) {
 
 	await Promise.all([
 		// Subtract the card pack's price from the user's balance
-		userManager.balance.increment(userID, -cardPack.price, "carrot"),
+		userManager.balance.increment(userID, -cardPack.price, "balance"),
 		// Give the cards to the user
 		userManager.inventory.add(userID, cards),
 		// Update quest stats
@@ -265,7 +265,7 @@ async function badge_buy(userID, badgeID) {
 
 	await Promise.all([
 		// Subtract the badge's price from the user's balance
-		userManager.balance.increment(userID, -badge.price, "carrot"),
+		userManager.balance.increment(userID, -badge.price, "balance"),
 		// Give the badge to the user
 		userManager.badges.add(userID, badge)
 	]);
@@ -336,7 +336,7 @@ async function charm_buy(userID, charmID) {
 
 	await Promise.all([
 		// Subtract the badge's price from the user's balance
-		userManager.balance.increment(userID, -charm.price, "carrot"),
+		userManager.balance.increment(userID, -charm.price, "balance"),
 		// Give the badge to the user
 		userManager.charms.set(userID, charm)
 	]);
