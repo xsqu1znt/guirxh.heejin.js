@@ -54,4 +54,4 @@
 > - `/inventory` Added a new sorting option: `📅 Recent`
 
 - `➕` **`Charms`**: *charms are items that you can buy from the shop, each charm has a set duration and a `☀️ Chance` of working*
-> - `⛔ Dupe Repellent` - will lower the chance of getting a dupe when using `/drop`, or buying a `Card Pack` from the shop
+> - `⛔ Dupe Repel` - will lower the chance of getting a dupe when using `/drop`, or buying a `Card Pack` from the shop
