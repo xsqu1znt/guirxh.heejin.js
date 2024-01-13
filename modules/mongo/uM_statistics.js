@@ -13,25 +13,15 @@ async function exists(userID, upsert = false) {
 	return exists || upsert ? true : false;
 }
 
-/** @param {string} userID @param */
-async function insertNew(userID, query = {}) {
-	let _exists = await exists(userID);
-
-	if (!_exists) {
-		let _model = new userManager.models.userStatistics({ _id: userID, timestamp_data_created: Date.now(), ...query });
-		await _model.save();
-	}
-}
-
 /** @param {string} userID */
 async function fetch(userID) {
 	return (await userManager.models.userStatistics.findById(userID)) || null;
 }
 
-/** @param {string} userID @param {{}} query */
-async function update(userID, query) {
-	await insertNew(userID);
-	return userManager.models.userStatistics.findByIdAndUpdate(userID, query);
+/** @param {string} userID @param {{}} query @param {boolean} upsert  */
+async function update(userID, query, upsert = true) {
+	// prettier-ignore
+	return userManager.models.userStatistics.findByIdAndUpdate(userID, query, { new: true, upsert, setDefaultsOnInsert: true });
 }
 
 /* - - - - - { Commands } - - - - - */
@@ -57,7 +47,7 @@ async function commandsExecuted_increment(userID, amount = 1) {
 
 	await update(userID, { $push: { "commands.executed": data } }); */
 
-	await update(userID, { $inc: { "commands_executed": amount } });
+	await update(userID, { $inc: { commands_executed: amount } });
 }
 
 /* - - - - - { Push } - - - - - */
@@ -92,7 +82,6 @@ async function increment_cardsDropped(userID, amount) {
 
 module.exports = {
 	exists,
-	insertNew,
 	fetch,
 	update,
 

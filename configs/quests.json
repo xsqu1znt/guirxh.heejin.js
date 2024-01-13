@@ -2,22 +2,9 @@
 	{
 		"id": "q1",
 		"name": "Un Poco Loco",
-		"ending": 1705142100291,
+		"ending": 1706142100291,
 		"objectives": {
 			"balance": 420
-		},
-		"rewards": {
-			"xp": 2500,
-			"carrots": 999999,
-			"ribbons": 100
-		}
-	},
-	{
-		"id": "q2",
-		"name": "Un Poco Loco 2",
-		"ending": 1705142100291,
-		"objectives": {
-			"ribbons": 420
 		},
 		"rewards": {
 			"xp": 2500,

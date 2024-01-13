@@ -5,13 +5,12 @@ const schema_userStatistics = new Schema(
 		_id: { type: String, require: true },
 
 		commands_executed: { type: Number, default: 0 },
-		xp: { type: Array, default: [] },
-		balance: { type: Array, default: [] },
-		ribbons: { type: Array, default: [] },
+		/* xp: { type: Array, default: [] }, */
+		/* balance: { type: Array, default: [] }, */
+		/* ribbons: { type: Array, default: [] }, */
 		cards_dropped: { type: Number, default: 0 },
 
-		timestamp_data_created: { type: Number, require: true },
-		timestamp_started: { type: Number, require: true }
+		timestamp_created: { type: Number, require: true }
 	},
 	{ collection: "user_statistics" }
 );

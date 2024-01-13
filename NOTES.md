@@ -1,7 +1,4 @@
 - **TODO**:
- - increment quest balance for sell
- - ignore quest database actions if there's no active quest
- - fix duplicate user quest data inserts
  - add a charm section to the user's profile
  - add quest stat updates: user level, idol level, daily streak
 

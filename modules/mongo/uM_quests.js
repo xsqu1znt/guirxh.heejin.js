@@ -11,29 +11,18 @@ async function exists(userID) {
 	return exists ? true : false;
 }
 
-/** @param {string} userID @param {{}} query */
-async function insertNew(userID, query = {}) {
-	let _exists = await exists(userID);
-	if (_exists) return;
-
-	if (!_exists) {
-		let _model = new userManager.models.userQuestData({ _id: userID, ...query });
-		await _model.save();
-	}
-}
-
 /** @param {string} userID */
 async function fetch(userID) {
 	return await userManager.models.userQuestData.findById(userID).lean();
 }
 
-/** @param {string} userID @param {{}} query */
-async function update(userID, query) {
+/** @param {string} userID @param {{}} query @param {boolean} upsert  */
+async function update(userID, query, upsert = true) {
 	// Return if there's no active quests
 	if (!questManager.quests_active.length) return;
 
-	await insertNew(userID);
-	return userManager.models.userQuestData.findByIdAndUpdate(userID, query);
+	// prettier-ignore
+	return userManager.models.userQuestData.findByIdAndUpdate(userID, query, { new: true, upsert, setDefaultsOnInsert: true });
 }
 
 /* - - - - - { Update } - - - - - */
@@ -93,7 +82,6 @@ async function increment_dailyStreak(userID, amount) {
 
 module.exports = {
 	exists,
-	insertNew,
 	fetch,
 	update,
 
