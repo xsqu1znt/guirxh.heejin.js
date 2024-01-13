@@ -407,6 +407,9 @@ class InventoryEditModule {
 		// Create the embed :: { SELL }
 		let embed_sell = user_ES.sell(this.data.interaction.member, cards, sellTotal);
 		await embed_sell.send({ interaction: this.data.interaction, sendMethod: "followUp" });
+
+		// Clean up if there's no more cards to interact with
+		if (!this.data.cards?.length) await this.#cleanUp();
 	}
 
 	async #sendEmbed_setFavorite(reaction = null) {

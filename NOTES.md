@@ -1,6 +1,7 @@
 - **TODO**:
  - add a charm section to the user's profile
- - add quest stat updates: user level, idol level, daily streak
+ - add an admin command to remove cards from the user
+ - make the error message server dependant
 
 - **NEXT UPDATE**
  - [OPTIMIZATION] if the user filters their inventory, only fetch cards from the database that they need
