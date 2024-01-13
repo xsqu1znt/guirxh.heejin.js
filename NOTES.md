@@ -53,7 +53,7 @@
 > - `/gift` Can now gift unlimited cards
 > - `/missing` Can now be used on other players
 > - `/stage` Rivaling another player now requires each player to not be on cooldown
-> - `/stage` Rival ability no longer nerfed if rivaling a player with
+> - `/stage` Rival ability no longer nerfed if rivaling a player
 > - `/reminder` Use the `edit` option to toggle on/off a reminder
 > - `/reminder` Use the `notify` option to change where your reminder is sent (`📫 DM` or `💬 Channel`)
 > - `/inventory` Can now mix and match filters and separate multiple options by comma `,`
