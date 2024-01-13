@@ -25,23 +25,23 @@ const config = {
 };
 
 const cards_base = {
-	comn: require("../cards/cards_common.json"),
-	uncn: require("../cards/cards_uncommon.json"),
-	rare: require("../cards/cards_rare.json"),
-	epic: require("../cards/cards_epic.json"),
-	mint: require("../cards/cards_mint.json"),
+	comn: require("../cards/common.json"),
+	uncn: require("../cards/uncommon.json"),
+	rare: require("../cards/rare.json"),
+	epic: require("../cards/epic.json"),
+	mint: require("../cards/mint.json"),
 
-	bday: require("../cards/cards_bday.json"),
-	holi: require("../cards/cards_holiday.json"),
+	bday: require("../cards/bday.json"),
+	holi: require("../cards/holiday.json"),
 	evnt: [
-		...require("../cards/cards_event1.json"),
-		...require("../cards/cards_event2.json"),
-		...require("../cards/cards_event3.json")
+		...require("../cards/event1.json"),
+		...require("../cards/event2.json"),
+		...require("../cards/event3.json")
 	],
 
-	seas: require("../cards/cards_season.json"),
-	shop: require("../cards/cards_shop.json"),
-	cust: require("../cards/cards_custom.json")
+	seas: require("../cards/season.json"),
+	shop: require("../cards/shop.json"),
+	cust: require("../cards/custom.json")
 };
 
 /// Card arrays
