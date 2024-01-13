@@ -35,6 +35,7 @@
 > - Huge stability improvements
 > - Optimization improvements
 > - You'll now see an error message when commands fail
+> - Added more filtering options to a few commands
 
 - `⚙️` **`Quests`**
 > - Much more stable and don't require using a command to update your progress

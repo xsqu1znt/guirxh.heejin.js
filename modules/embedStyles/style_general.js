@@ -274,7 +274,7 @@ function shop(user, userData) {
 			embeds.itemPacks,
 			embeds.badges,
 			embeds.charms
-		].filter(a => (Array.isArray(a) && !a.length || !a ? false : true)),
+		].filter(a => ((Array.isArray(a) && !a.length) || !a ? false : true)),
 
 		navigationData
 	};
@@ -331,7 +331,6 @@ function collections(user, options) {
 		cards = _cards; filtered = true;
 	}
 
-	// prettier-ignore
 	// Sort the cards
 	cards.sort((a, b) => a.category - b.category || a.setID - b.setID || a.globalID - b.globalID);
 
@@ -341,7 +340,7 @@ function collections(user, options) {
 	// prettier-ignore
 	// Return an embed :: { ERROR }
 	if (!cards.length) return new BetterEmbed({
-		author: { text: "$USERNAME | collections", user },
+		author: { text: "$USERNAME | collections", user, iconURL: true },
 		description: filtered ? "No sets were found with that search filter" : "There are no sets available"
 	});
 
