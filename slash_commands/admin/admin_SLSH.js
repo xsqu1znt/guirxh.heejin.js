@@ -11,11 +11,12 @@ const {
 	ComponentType
 } = require("discord.js");
 
-const { BetterEmbed, EmbedNavigator } = require("../../modules/discordTools");
+const { BetterEmbed, EmbedNavigator, markdown } = require("../../modules/discordTools");
 const { error_ES } = require("../../modules/embedStyles/index");
 const { userManager } = require("../../modules/mongo/index");
 const cardManager = require("../../modules/cardManager");
 const messenger = require("../../modules/messenger");
+const logger = require("../../modules/logger");
 const jt = require("../../modules/jsTools");
 
 const config = { bot: require("../../configs/config_bot.json") };
@@ -46,22 +47,27 @@ async function subcommand_server(client, interaction) {
 	if (serverID)
 		try {
 			// Fetch the server based on the given ID
-			let guildToLeave = await guilds_partial.find(guild => guild.id === serverID).fetch();
+			let guildToLeave = guilds_partial.find(guild => guild.id === serverID);
 
-			// Leave the server
-			await guildToLeave.leave();
+			if (guildToLeave) {
+				// Fetch the server
+				guildToLeave = await guildToLeave.fetch();
+				// Leave the server
+				await guildToLeave.leave();
+				// Log the leave
+				logger.success(`successfully left server \`🆔 ${serverID}\``);
 
-			// Log the leave
-			logger.success(`successfully left server (${serverID})`);
+				// Let the user know the result
+				return await embed_error.send({ description: `Successfully left server: \`🆔 ${serverID}\`` });
+			}
 
-			// Let the user know the result
-			return await embed_error.send({ description: `Successfully left server: ${inline(true, "🆔", serverID)}` });
+			throw new Error("server not found");
 		} catch (err) {
 			// Log the error
 			logger.error("Could not leave server", `server id: ${serverID}`, err);
 
 			// Let the user know that the server couldn't be left
-			return await embed_error.send({ description: `Failed to leave server: ${inline(true, "🆔", serverID)}` });
+			return await embed_error.send({ description: `Failed to leave server: \`🆔 ${serverID}\`` });
 		}
 
 	//* Show the servers the client's currently in
@@ -98,22 +104,23 @@ async function subcommand_server(client, interaction) {
 			} */
 
 			// Return a formatted guild string
-			return "$IDX $GUILD_NAME ・ $GUILD_ID\n> $MEMBER_COUNT : `📆` $JOINED"
-				.replace("$IDX", inline(`${idx + 1}.`))
-				.replace("$GUILD_NAME", bold(invite_url ? link(guild.name, invite_url) : guild.name))
-				.replace("$GUILD_ID", inline("🆔", guild.id))
-				.replace("$MEMBER_COUNT", inline("👥", guild.memberCount))
-				.replace("$JOINED", `<t:${numberTools.milliToSeconds(guild.members.me.joinedTimestamp)}>`);
+			return "`$IDX.` $GUILD_NAME ・ `🆔 $GUILD_ID`\n> `👥 $MEMBER_COUNT` : `📆` $JOINED"
+				.replace("$IDX", idx + 1)
+				.replace("$GUILD_NAME", `**${invite_url ? markdown.link(guild.name, invite_url) : guild.name}**`)
+				.replace("$GUILD_ID", guild.id)
+				.replace("$MEMBER_COUNT", guild.memberCount)
+				.replace("$JOINED", `<t:${jt.msToSec(guild.members.me.joinedTimestamp)}>`);
 		})
 	);
 
 	// Break up the formatted servers to only show 10 per page
-	guilds_full_f = arrayTools.chunk(guilds_full_f, 10);
+	guilds_full_f = jt.chunk(guilds_full_f, 10);
 
 	// Create a page for each chunk
 	let embeds_servers = [];
 	for (let chunk of guilds_full_f) {
 		let _embed = new BetterEmbed({
+			interaction,
 			author: { text: "$USERNAME | servers", iconURL: true },
 			description: chunk.join("\n")
 		});
