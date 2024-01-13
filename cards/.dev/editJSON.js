@@ -43,7 +43,14 @@ function modifyCards() {
 			let _c = _cards[idx];
 
 			// Modify the description format
-			card_JSON[i].cards[idx].description = `**${_c.single}** *\`${_c.group}\`*`;
+			// card_JSON[i].cards[idx].description = `**${_c.single}** *\`${_c.group}\`*`;
+
+			if (_c.setID === 120) card_JSON[i].cards[idx].description = `**LOONA Solo** *\`Individuals\`*`
+			if (_c.setID === 121) card_JSON[i].cards[idx].description = `**LOONA B-Sides** *\`Special\`*`
+			if (_c.setID === 122) card_JSON[i].cards[idx].description = `**LOONA Solo** *\`Special\`*`
+			if (_c.setID === 199) card_JSON[i].cards[idx].description = `**Special** *\`Solo\`*`
+			if (_c.setID === 200) card_JSON[i].cards[idx].description = `**Special** *\`Loossemble\`*`
+			if (_c.setID === 201) card_JSON[i].cards[idx].description = `**Special** *\`ARTMS\`*`
 		}
 	}
 }
