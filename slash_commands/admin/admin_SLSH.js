@@ -1,4 +1,15 @@
-const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
+const {
+	Client,
+	CommandInteraction,
+	SlashCommandBuilder,
+	ModalBuilder,
+	TextInputBuilder,
+	TextInputStyle,
+	ActionRowBuilder,
+	ButtonBuilder,
+	ButtonStyle,
+	ComponentType
+} = require("discord.js");
 
 const { BetterEmbed } = require("../../modules/discordTools");
 const { error_ES } = require("../../modules/embedStyles/index");
@@ -78,7 +89,9 @@ async function subcommand_payUser(interaction, currencyType) {
 	let user = interaction.options.getUser("user");
 	let amount = interaction.options.getNumber("amount");
 
-	if (!user) return await error_ES.send({ interaction, description: "User not found" });
+	// Fallback
+	if (!user) return await embed_summon.send({ description: "You need to give a user ID" });
+
 	// prettier-ignore
 	if (amount === 0 || typeof amount !== "number") return await error_ES.send({
         interaction, description: "You did not give an amount"
@@ -122,25 +135,27 @@ async function subcommand_customize(interaction) {
 	let user = interaction.options.getUser("user");
 	let uid = interaction.options.getString("uid");
 
-	if (!user) return await error_ES.send({ interaction, description: "User not found" });
-	if (!uid) return await error_ES.send({ interaction, description: "You must provide a UID" });
+	/// Fallback
+	if (!user) return await error_ES.send({ interaction, description: "You need to give a user ID", ephemeral: true });
+	if (!uid) return await error_ES.send({ interaction, description: "You must provide a UID", ephemeral: true });
 
+	// prettier-ignore
+	// Create the embed :: { CUSTOMIZED }
 	let embed_customize = new BetterEmbed({
-		interaction,
-		author: { text: "$USERNAME | customize", user: interaction.member }
+		interaction, author: { text: "$USERNAME | customize", iconURL: true }
 	});
 
 	// prettier-ignore
 	// Check if the user exists in the database
 	if (!(await userManager.exists(user.id))) return await embed_customize.send({
-		description: "That user has not started yet"
+		description: "That user has not started yet", ephemeral: true
 	});
 
-	// Fetch the user's card_inventory
-	let userData = await userManager.fetch(user.id, { type: "cards" });
+	// Defer the interaction
+	await interaction.deferReply().catch(() => null);
 
-	// Check if the card exists
-	let card = userParser.cards.get(userData.card_inventory, uid);
+	// Fetch the card from the user's inventory
+	let card = await userManager.inventory.get(interaction.user.id, { uid });
 	// prettier-ignore
 	if (!card) return await embed_customize.send({
 		description: `\`${uid}\` is not a valid card UID`
@@ -283,15 +298,13 @@ async function subcommand_customize(interaction) {
 	// Refreshes the card info displayed in the embed
 	let refreshEmbed = async () => {
 		// Re-parse the edited card into a human readable string
-		card_f = cardManager.toString.inventory(card);
+		card_f = cardManager.toString.inventoryEntry(card);
 
 		// Change the embed's description and image to display the card
 		embed.setDescription(card_f + `\n\n> ${card.description}`).setImage(card.imageURL);
 
 		// Edit the message with the updated embed data
-		try {
-			await message.edit({ embeds: [embed] });
-		} catch {}
+		return await message.edit({ embeds: [embed] }).catch(() => null);
 	};
 
 	// Wait for the modal to be submitted and return the modal interaction
@@ -401,7 +414,7 @@ async function subcommand_customize(interaction) {
 					i.deferUpdate();
 
 					// Update the user's card in Mongo
-					userManager.inventory.update(user.id, card);
+					await userManager.inventory.update(user.id, card);
 
 					// Let the user know the result
 					await embed_customize.send({
@@ -445,7 +458,7 @@ module.exports = {
             .setRequired(true)
             .addChoices(
                 // { name: "💻 server", value: "server" },
-                { name: "👨‍💻 test", value: "test" },
+                { name: "💭 test", value: "test" },
                 { name: "🪶 summon", value: "summon" },
                 { name: "🥕 pay", value: "pay_carrot" },
                 { name: "🎀 pay", value: "pay_ribbon" },
