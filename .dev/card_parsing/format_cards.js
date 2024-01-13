@@ -54,20 +54,20 @@ const split = (cardArr = [], size) => {
 };
 
 let cards_toJSON = [
-    { name: "common", json: JSON.stringify(cards_category.common, null, 2) },
-    { name: "uncommon", json: JSON.stringify(cards_category.uncommon, null, 2) },
-    { name: "rare", json: JSON.stringify(cards_category.rare, null, 2) },
-    { name: "epic", json: JSON.stringify(cards_category.epic, null, 2) },
-    { name: "mint", json: JSON.stringify(cards_category.mint, null, 2) },
+    { name: "common", json: JSON.stringify(cards_category.common, null, 4) },
+    { name: "uncommon", json: JSON.stringify(cards_category.uncommon, null, 4) },
+    { name: "rare", json: JSON.stringify(cards_category.rare, null, 4) },
+    { name: "epic", json: JSON.stringify(cards_category.epic, null, 4) },
+    { name: "mint", json: JSON.stringify(cards_category.mint, null, 4) },
 
-    { name: "seasonal", json: JSON.stringify(cards_category.seasonal, null, 2) },
-    { name: "holiday", json: JSON.stringify(cards_category.holiday, null, 2) },
-    { name: "bday", json: JSON.stringify(cards_category.bday, null, 2) },
+    { name: "seasonal", json: JSON.stringify(cards_category.seasonal, null, 4) },
+    { name: "holiday", json: JSON.stringify(cards_category.holiday, null, 4) },
+    { name: "bday", json: JSON.stringify(cards_category.bday, null, 4) },
 
-    { name: "event", json: split(cards_category.event, 10).map(card_group => JSON.stringify(card_group, null, 2)) },
+    { name: "event", json: split(cards_category.event, 10).map(card_group => JSON.stringify(card_group, null, 4)) },
 
-    { name: "custom", json: JSON.stringify(cards_category.custom, null, 2) },
-    { name: "shop", json: JSON.stringify(cards_category.shop, null, 2) },
+    { name: "custom", json: JSON.stringify(cards_category.custom, null, 4) },
+    { name: "shop", json: JSON.stringify(cards_category.shop, null, 4) },
 ];
 
 for (let data of cards_toJSON) {
