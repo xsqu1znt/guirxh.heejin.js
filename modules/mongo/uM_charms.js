@@ -10,17 +10,17 @@ async function get(userID, charmType) {
 	if (!charms) return null;
 
 	// Return the requested charm, if it exists
-	return charms.get(charmType) || null;
+	return charms.find(c => c.type === charmType) || null;
 }
 
 /** @param {string} userID */
 async function clean(userID) {
-	let userData = await userManager.fetch(userID, { type: "charms" });
-	if (!userData.charms) return null;
+	let userData = await userManager.fetch(userID, { type: "charm", lean: false });
+	if (!userData?.charms.size) return null;
 
 	let cleaned = false;
 
-	for (let i = 0; i < userData.charms.length; i++) {
+	for (let i = 0; i < userData.charms.size; i++) {
 		let _charm = userData.charms[i];
 
 		if (_charm.expiration >= Date.now()) {
