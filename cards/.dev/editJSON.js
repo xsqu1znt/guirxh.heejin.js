@@ -45,13 +45,29 @@ function modifyCards() {
 			// Modify the description format
 			card_JSON[i].cards[idx].description = `**${_c.single}** *\`${_c.group}\`*`;
 
-			if (_c.setID === "100") card_JSON[i].cards[idx].description = `**Special** *\`Custom\`*`
-			if (_c.setID === "120") card_JSON[i].cards[idx].description = `**LOONA Solo** *\`Individuals\`*`
-			if (_c.setID === "121") card_JSON[i].cards[idx].description = `**LOONA B-Sides** *\`Special\`*`
-			if (_c.setID === "122") card_JSON[i].cards[idx].description = `**LOONA Solo** *\`Special\`*`
-			if (_c.setID === "199") card_JSON[i].cards[idx].description = `**Special** *\`Solo\`*`
-			if (_c.setID === "200") card_JSON[i].cards[idx].description = `**Special** *\`Loossemble\`*`
-			if (_c.setID === "201") card_JSON[i].cards[idx].description = `**Special** *\`ARTMS\`*`
+			if (_c.setID === "100") card_JSON[i].cards[idx].description = `**Special** *\`Custom\`*`;
+			
+			if (_c.setID === "101") card_JSON[i].cards[idx].description = `**Shop** *\`Holo\`*`;
+			if (_c.setID === "102") card_JSON[i].cards[idx].description = `**Shop** *\`Flower\`*`;
+			if (_c.setID === "103") card_JSON[i].cards[idx].description = `**Shop** *\`Polaroid\`*`;
+			if (_c.setID === "104") card_JSON[i].cards[idx].description = `**Shop** *\`Suit\`*`;
+			if (_c.setID === "105") card_JSON[i].cards[idx].description = `**Shop** *\`Kid\`*`;
+			if (_c.setID === "106") card_JSON[i].cards[idx].description = `**Shop** *\`Pets\`*`;
+			if (_c.setID === "151") card_JSON[i].cards[idx].description = `**Shop** *\`Gold\`*`;
+
+			if (_c.setID === "161") card_JSON[i].cards[idx].description = `**Season** *\`WINTER23\`*`;
+			if (_c.setID === "162") card_JSON[i].cards[idx].description = `**Season** *\`SPRING23\`*`;
+			if (_c.setID === "163") card_JSON[i].cards[idx].description = `**Season** *\`SUMMER23\`*`;
+
+			if (_c.setID === "202") card_JSON[i].cards[idx].description = `**Special** *\`K-Actress\`*`;
+
+			if (_c.setID === "120") card_JSON[i].cards[idx].description = `**LOONA Solo** *\`Individuals\`*`;
+			if (_c.setID === "121") card_JSON[i].cards[idx].description = `**LOONA B-Sides** *\`Special\`*`;
+			if (_c.setID === "122") card_JSON[i].cards[idx].description = `**LOONA Solo** *\`Special\`*`;
+
+			if (_c.setID === "199") card_JSON[i].cards[idx].description = `**Special** *\`Solo\`*`;
+			if (_c.setID === "200") card_JSON[i].cards[idx].description = `**Special** *\`Loossemble\`*`;
+			if (_c.setID === "201") card_JSON[i].cards[idx].description = `**Special** *\`ARTMS\`*`;
 		}
 	}
 }
