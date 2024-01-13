@@ -8,6 +8,8 @@ const logger = require("./modules/logger");
 const mongo = require("./modules/mongo");
 const jt = require("./modules/jsTools");
 
+const config = { client: require("./configs/config_client.json") };
+
 const TOKEN = process.env.TOKEN || config.client.TOKEN;
 const TOKEN_DEV = process.env.TOKEN_DEV || config.client.TOKEN_DEV;
 

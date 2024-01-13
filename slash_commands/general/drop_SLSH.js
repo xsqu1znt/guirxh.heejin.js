@@ -55,6 +55,10 @@ module.exports = {
 				break;
 
 			case "drop_weekly":
+				// prettier-ignore
+				if (!cardManager.cards.shop.general.filter(c => c.setID !== "100").length) return await error_ES.send({
+					interaction, description: "There is nothing to drop for `weekly` right now", ephemeral: true
+				});
 				embed_drop.setAuthor({ text: "$USERNAME | weekly" });
 				break;
 

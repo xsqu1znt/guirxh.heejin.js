@@ -3,7 +3,7 @@
 const fs = require("fs");
 const jt = require("../../modules/jsTools");
 
-const card_JSON = [
+/* const card_JSON = [
 	{ fn: "common", cards: require("./.current/cards_common.json") },
 	{ fn: "uncommon", cards: require("./.current/cards_uncommon.json") },
 	{ fn: "rare", cards: require("./.current/cards_rare.json") },
@@ -20,7 +20,7 @@ const card_JSON = [
 	{ fn: "season", cards: require("./.current/cards_season.json") },
 	{ fn: "shop", cards: require("./.current/cards_shop.json") },
 	{ fn: "custom", cards: require("./.current/cards_custom.json") }
-];
+]; */
 
 function exportAll() {
 	for (let file of card_JSON) {
@@ -73,5 +73,5 @@ function editCardDescriptions() {
 	}
 }
 
-editCardDescriptions();
-exportAll();
+// editCardDescriptions();
+// exportAll();
