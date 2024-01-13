@@ -1,6 +1,5 @@
 - **TODO**:
  - add an admin command to remove cards from the user
- - make the error message server dependant
 
 - **NEXT UPDATE**
  - [OPTIMIZATION] if the user filters their inventory, only fetch cards from the database that they need
