@@ -1,12 +1,13 @@
 [
     {
-        "id": "RS01",
+        "id": "B01",
         "setID": "B01",
-        "name": "Cephalopod",
-        "description": "I am but a cephalopod",
+        "name": "NAME",
+        "description": "DESCRIPTION",
         "category": "bdge",
-        "set": "CEPH",
-        "customEmoji": "<:realsquid:1085169097114910760>",
+        "set": "SET_NAME",
+        "emoji": "",
+        "customEmoji": "",
         "emojiURL": "https://cdn.discordapp.com/emojis/1085169097114910760.webp?quality=lossless",
         "rarity": 1,
         "price": 500
