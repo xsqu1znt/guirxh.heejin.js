@@ -99,7 +99,8 @@
 			"author": {
 				"text": "🔧 Changelog ($year/$month/$day)"
 			},
-			"description": "```ansi\n\u001b[1;2mHeejin \u001b[1;31mv3.0.0\u001b[0m\u001b[0m\n```\n*insert absolutely insane update details here*"
+			"description": "```ansi\n\u001b[1;2mHeejin \u001b[1;31mv3.0.0\u001b[0m\u001b[0m\n```\n*insert absolutely insane update details here*",
+			"timestamp": true
 		}
 	]
 }

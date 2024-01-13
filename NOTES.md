@@ -44,15 +44,11 @@
 
 - `🛠️` **`Command Changes`**
 > - `/gift` Can now gift unlimited cards
-
 > - `/missing` Can now be used on other players
-
 > - `/stage` Rivaling another player now requires each player to not be on cooldown
 > - `/stage` Rival ability no longer nerfed if rivaling a player with
-
 > - `/reminder` Use the `edit` option to toggle on/off a reminder
 > - `/reminder` Use the `notify` option to change where your reminder is sent (`📫 DM` or `💬 Channel`)
-
 > - `/inventory` Can now mix and match filters and separate multiple options by comma `,`
 > - `/inventory` Can now filter by dupes only by using `/inventory` `dupes:all`
 > - `/inventory` Added a new sorting option: `📅 Recent`
