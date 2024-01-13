@@ -274,7 +274,7 @@ function shop(user, userData) {
 			embeds.itemPacks,
 			embeds.badges,
 			embeds.charms
-		].filter(a => (Array.isArray(a) && !a.length ? false : true)),
+		].filter(a => (Array.isArray(a) && !a.length || !a ? false : true)),
 
 		navigationData
 	};

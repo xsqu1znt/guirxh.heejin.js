@@ -1,6 +1,6 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { BetterEmbed, EmbedNavigator } = require("../../modules/discordTools");
+const { EmbedNavigator } = require("../../modules/discordTools");
 const { error_ES, general_ES } = require("../../modules/embedStyles/index");
 const { userManager } = require("../../modules/mongo/index");
 const itemManager = require("../../modules/itemManager");
