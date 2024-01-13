@@ -437,6 +437,9 @@ function reminders(user, userData) {
 	// Get the cooldown names from the player config
 	let cooldowns = Object.keys(config_player.cooldowns);
 
+	// Filter out null cooldowns
+	cooldowns = cooldowns.filter(cd => config.player.cooldowns[cd] ? true : false);
+
 	// Parse the cooldowns into strings
 	let cooldowns_f = cooldowns.map(cd => {
 		let reminder = userData.reminders.find(r => r.type === cd.toLowerCase()) || {};

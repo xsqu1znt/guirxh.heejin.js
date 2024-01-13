@@ -5,7 +5,7 @@
 		"RANDOM": "4h",
 
 		"DROP_GENERAL": "10s",
-		"DROP_WEEKLY": "1w",
+		"DROP_WEEKLY": null,
 		"DROP_SEASON": null,
 		"DROP_EVENT_1": null,
 		"DROP_EVENT_2": null

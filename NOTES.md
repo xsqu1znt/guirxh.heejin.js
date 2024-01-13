@@ -1,6 +1,6 @@
 - **TODO**:
  - add an admin command to remove cards from the user
- - fix /reminder checking null time
+ - pagination reactions not using custom emojis
 
 - **NEXT UPDATE**
  - [OPTIMIZATION] if the user filters their inventory, only fetch cards from the database that they need
