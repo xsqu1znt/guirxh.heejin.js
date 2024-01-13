@@ -16,6 +16,14 @@ async function fetch(userID) {
 	return await userManager.models.userQuestData.findById(userID).lean();
 }
 
+/** @param {string} userID */
+async function insertNew(userID) {
+	if (await exists(userID)) return;
+
+	let doc = new userManager.models.userQuestData({ _id: userID });
+	return await doc.save();
+}
+
 /** @param {string} userID @param {{}} query @param {boolean} upsert  */
 async function update(userID, query, upsert = true) {
 	// Return if there's no active quests
@@ -83,6 +91,7 @@ async function increment_dailyStreak(userID, amount) {
 module.exports = {
 	exists,
 	fetch,
+	insertNew,
 	update,
 
 	update: {

@@ -36,22 +36,26 @@
 > - Optimization improvements
 > - You'll now see an error message when commands fail
 
-- `🛠️` **`Command Changes`**
-> - Can now use `/missing` on other players
-> - Can now `/gift` unlimited cards
-> - Rivaling another player with `/stage` is more fleshed out
-> - Rival ability no longer nerfed if rivaling a player with `/stage`
-
-- `🪛` **`Quests`**
+- `⚙️` **`Quests`**
 > - Much more stable and don't require using a command to update your progress
 > - Now show individual progress for each objective
 > - Added new small objectives
+> - Will now end automatically
 
-- `⚙️` **`/reminder`**
-> - Use the `edit` option to toggle on/off a reminder
-> - Use the `notify` option to change where your reminder is sent (`📫 DM` or `💬 Channel`)
+- `🛠️` **`Command Changes`**
+> - `/gift` Can now gift unlimited cards
 
-- `⚙️` **`/inventory`**
-> - Can now mix and match filters and separate multiple options by comma `,`
-> - Can now filter by dupes only by using `/inventory` `dupes:all`
-> - Added a new sorting option: `📅 Recent`
+> - `/missing` Can now be used on other players
+
+> - `/stage` Rivaling another player now requires each player to not be on cooldown
+> - `/stage` Rival ability no longer nerfed if rivaling a player with
+
+> - `/reminder` Use the `edit` option to toggle on/off a reminder
+> - `/reminder` Use the `notify` option to change where your reminder is sent (`📫 DM` or `💬 Channel`)
+
+> - `/inventory` Can now mix and match filters and separate multiple options by comma `,`
+> - `/inventory` Can now filter by dupes only by using `/inventory` `dupes:all`
+> - `/inventory` Added a new sorting option: `📅 Recent`
+
+- `➕` **`Charms`**: *charms are items that you can buy from the shop, each charm has a set duration and a `☀️ Chance` of working*
+> - `⛔ Dupe Repellent` - will lower the chance of getting a dupe when using `/drop`, or buying a `Card Pack` from the shop
