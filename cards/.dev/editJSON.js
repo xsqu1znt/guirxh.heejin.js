@@ -33,7 +33,7 @@ function exportAll() {
 	}
 }
 
-function modifyCards() {
+function editCardDescriptions() {
 	// Iterate through card JSONs
 	for (let i = 0; i < card_JSON.length; i++) {
 		let _cards = card_JSON[i].cards;
@@ -45,8 +45,9 @@ function modifyCards() {
 			// Modify the description format
 			card_JSON[i].cards[idx].description = `**${_c.single}** *\`${_c.group}\`*`;
 
+			/* - - - - - { Special Card Descriptions } - - - - - */
 			if (_c.setID === "100") card_JSON[i].cards[idx].description = `**Special** *\`Custom\`*`;
-			
+
 			if (_c.setID === "101") card_JSON[i].cards[idx].description = `**Shop** *\`Holo\`*`;
 			if (_c.setID === "102") card_JSON[i].cards[idx].description = `**Shop** *\`Flower\`*`;
 			if (_c.setID === "103") card_JSON[i].cards[idx].description = `**Shop** *\`Polaroid\`*`;
@@ -72,5 +73,5 @@ function modifyCards() {
 	}
 }
 
-modifyCards();
+editCardDescriptions();
 exportAll();
