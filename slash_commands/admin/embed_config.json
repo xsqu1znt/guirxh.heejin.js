@@ -89,6 +89,17 @@
 				"iconURL": "$BOT_AVATAR"
 			},
 			"description": "```Hello everyone! 💕```\n`🃏` ***WEEKLY CARD GIVEAWAY***\n> React `🎁` to participate!\n\n`📜` ***QUEST UPDATE***\n> You can now check `/quest` to see new set of objectives available to do.\n\n`⚠️` ***INVITE LINK***\n> https://discord.gg/G4YHSMNZQp\n\n`📝` ***CUSTOMS ARE CLOSED***\n> They'll be given next week!\n\n```Here is a new poll of the week.\nTheme is: A New Shop Set```\n:1one: **OPTION** :: DESCRIPTION\n:2two: **OPTION** :: DESCRIPTION\n:3three: **OPTION** :: DESCRIPTION\n:4four: **OPTION** :: DESCRIPTION"
+		},
+		{
+			"meta": {
+				"name": "Changelog",
+				"value": "changelog"
+			},
+			"messageContent": "Remember to report any issues in #1146773047777427588",
+			"author": {
+				"text": "🔧 Changelog ($year/$month/$day)"
+			},
+			"description": "```ansi\n\u001b[1;2mHeejin \u001b[1;31mv3.0.0\u001b[0m\u001b[0m\n```\n*insert absolutely insane update details here*"
 		}
 	]
 }
