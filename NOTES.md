@@ -1,5 +1,6 @@
 - **TODO**:
  - add an admin command to remove cards from the user
+ - fix /reminder checking null time
 
 - **NEXT UPDATE**
  - [OPTIMIZATION] if the user filters their inventory, only fetch cards from the database that they need
@@ -27,6 +28,11 @@
  - /view
  - /stage
  - /quest
+
+<!-- Patches -->
+- Fixed drop weekly breaking if there were no cards in the shop
+- Fixed shop buy not using your carrots
+- Fixed Dupe Repel charm breaking drop/card packs
 
 <!-- Changelog -->
 - `📰` **`Overall Changes`**

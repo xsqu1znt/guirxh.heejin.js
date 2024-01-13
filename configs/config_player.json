@@ -4,7 +4,7 @@
 		"STAGE": "1h",
 		"RANDOM": "4h",
 
-		"DROP_GENERAL": "20m",
+		"DROP_GENERAL": "10s",
 		"DROP_WEEKLY": "1w",
 		"DROP_SEASON": null,
 		"DROP_EVENT_1": null,
