@@ -225,7 +225,7 @@ module.exports = {
 				description: _isCommunityServer
 					? `Something went wrong while using **\`/${args.interaction.commandName}\`** <:sip2:1114692574616236163>\n\n> **Report channel**: <#${config.bot.community_server.channel_ids.REPORT}>`
 					: `Something went wrong while using **\`/${args.interaction.commandName}\`** <:sip2:1114692574616236163>\nFeel free to report this error in our support server!`,
-				components: _isCommunityServer ? aR_support : null,
+				components: _isCommunityServer ? null : aR_support,
 				ephemeral: true
 			}).catch(() => null);
 
