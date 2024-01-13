@@ -1,5 +1,4 @@
 - **TODO**:
- - add a charm section to the user's profile
  - add an admin command to remove cards from the user
  - make the error message server dependant
 

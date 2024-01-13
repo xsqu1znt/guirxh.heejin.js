@@ -217,11 +217,15 @@ module.exports = {
 			// Create the action row
 			let aR_support = new ActionRowBuilder().setComponents(btn_supportServer);
 
+			let _isCommunityServer = args.interaction.guild.id === config.bot.community_server.ID;
+
 			// prettier-ignore
 			// Send the embed with components
 			embed_fatalError.send({
-				description: `Something went wrong while using **\`/${args.interaction.commandName}\`** <:sip2:1114692574616236163>\nFeel free to report this error in our support server!\n> **Report channel**: <#${config.bot.community_server.channel_ids.REPORT}>`,
-				components: aR_support,
+				description: _isCommunityServer
+					? `Something went wrong while using **\`/${args.interaction.commandName}\`** <:sip2:1114692574616236163>\n\n> **Report channel**: <#${config.bot.community_server.channel_ids.REPORT}>`
+					: `Something went wrong while using **\`/${args.interaction.commandName}\`** <:sip2:1114692574616236163>\nFeel free to report this error in our support server!`,
+				components: _isCommunityServer ? aR_support : null,
 				ephemeral: true
 			}).catch(() => null);
 
