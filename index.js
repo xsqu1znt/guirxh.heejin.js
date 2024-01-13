@@ -8,7 +8,13 @@ const logger = require("./modules/logger");
 const mongo = require("./modules/mongo");
 const jt = require("./modules/jsTools");
 
-const TOKEN = process.env.TOKEN || require("./configs/config_client.json").TOKEN;
+const TOKEN = process.env.TOKEN || config.client.TOKEN;
+const TOKEN_DEV = process.env.TOKEN_DEV || config.client.TOKEN_DEV;
+
+const MONGO_URI = process.env.MONGO_URI || config.client.MONGO_URI;
+const MONGO_URI_DEV = process.env.MONGO_URI_DEV || config.client.MONGO_URI_DEV;
+
+const DEVMODE = process.env.MODE || config.client.MODE === "DEV";
 
 logger.log("initializing...");
 
@@ -43,7 +49,7 @@ importers_dir.forEach(fn => {
 // Connect the client to discord
 logger.log("connecting to Discord...");
 // prettier-ignore
-client.login(TOKEN).then(async () => {
+client.login(DEVMODE ? TOKEN_DEV : TOKEN).then(async () => {
 	// Register slash commands to a specific server :: { LOCAL }
 	// await slashCommandManager.push(client, { ids: "1107285909365329922" });
 
@@ -56,5 +62,5 @@ client.login(TOKEN).then(async () => {
 	// Remove commands (does nothing if commands were registered locally) :: { GLOBAL }
 	// await slashCommandManager.remove(client, { global: true });
 
-	await mongo.connect();
+	await mongo.connect(DEVMODE ? MONGO_URI_DEV : MONGO_URI);
 });
