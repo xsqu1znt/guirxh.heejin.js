@@ -29,24 +29,29 @@
  - /quest
 
 <!-- Changelog -->
-- **`Overall Changes`**
- - Major design changes
- - Revamped the reminder system
- - Added an error message when commands fail
- - Huge stability improvements
- - Optimization improvements
+- `📰` **`Overall Changes`**
+> - Major design changes
+> - Revamped reminder system
+> - Huge stability improvements
+> - Optimization improvements
+> - You'll now see an error message when commands fail
 
-- **`Command Changes`**
- - Can now use `/missing` on other players
- - Can now `/gift` unlimited cards
- - Rivaling another player with `/stage` is more fleshed out
- - Rival ability no longer nerfed if rivaling a player with `/stage`
+- `🛠️` **`Command Changes`**
+> - Can now use `/missing` on other players
+> - Can now `/gift` unlimited cards
+> - Rivaling another player with `/stage` is more fleshed out
+> - Rival ability no longer nerfed if rivaling a player with `/stage`
 
-- **`/reminder`**
- - Use the `edit` option to toggle on/off a reminder
- - Use the `notify` option to change where your reminder is sent (`📫 DM` or `💬 Channel`)
+- `🪛` **`Quests`**
+> - Much more stable and don't require using a command to update your progress
+> - Now show individual progress for each objective
+> - Added new small objectives
 
-- **`/inventory`**
- - Can now mix and match filters and separate multiple options by commas (,)
- - Can now filter by dupes only by using `/inventory` `dupes:all`
- - Added a new sorting option: `📅 Recent`
+- `⚙️` **`/reminder`**
+> - Use the `edit` option to toggle on/off a reminder
+> - Use the `notify` option to change where your reminder is sent (`📫 DM` or `💬 Channel`)
+
+- `⚙️` **`/inventory`**
+> - Can now mix and match filters and separate multiple options by comma `,`
+> - Can now filter by dupes only by using `/inventory` `dupes:all`
+> - Added a new sorting option: `📅 Recent`
