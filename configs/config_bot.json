@@ -3,7 +3,7 @@
 	"PARSE_QUESTS_INTERVAL_ENABLED": true,
 
 	"MAX_CARDS_BEFORE_TRUNCATE": 6,
-	"TIP_CHANCE": 5,
+	"TIP_CHANCE": 1,
 
 	"community_server": {
 		"ID": "802930323095814144",

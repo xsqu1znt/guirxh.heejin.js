@@ -81,9 +81,9 @@ function profile(user, options) {
 	};
 
 	const profile_charms = () => {
-		if (!options.userData?.charms?.length) return null;
+		if (!options.userData?.charms) return null;
 
-		let charms_active = options.userData.charms.values().filter(c => c.expiration >= Date.now());
+		let charms_active = Object.values(options.userData.charms).filter(c => c.expiration >= Date.now());
 		if (!charms_active) return null;
 
 		let charms_f = charms_active.map(c => itemManager.toString.charms.profile(c));
@@ -178,6 +178,7 @@ function profile(user, options) {
 		embeds: [
 			embeds.overview,
 			embeds.badges,
+			embeds.charms,
 			embeds.card_selected,
 			embeds.card_favorite,
 			embeds.inventoryStats

@@ -390,12 +390,11 @@ function charm_toString_shopEntry(charmID) {
 function charm_toString_profile(charm) {
 	if (!charm?.name) return "n/a";
 
-	return "`$ID` `$EMOJI` **$NAME** `🌟 $CHANCE%` `⏰ $DURATION`"
-		.replace("$ID", charm.id)
+	return "`$EMOJI` **$NAME** `🌟 $CHANCE%` :: **$DURATION remaining**"
 		.replace("$EMOJI", charm.emoji)
 		.replace("$NAME", charm.name)
 		.replace("$CHANCE", charm.chance_of_working)
-		.replace("$DURATION", `<t:${jt.msToSec(charm.expiration)}:R>`);
+		.replace("$DURATION", jt.eta(charm.expiration));
 }
 
 module.exports = {
