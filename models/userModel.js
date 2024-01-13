@@ -26,7 +26,6 @@ const schema_user = new Schema(
 		cooldowns: { type: Array, default: new Array() },
 		reminders: { type: Array, default: new Array() },
 
-		quests_complete: { type: Array, default: new Array() },
 		timestamp_started: { type: Number, require: true }
 	},
 	{ collection: "users" }

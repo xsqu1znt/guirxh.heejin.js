@@ -346,7 +346,7 @@ async function charm_buy(userID, charmID) {
 
 function charm_toString_basic(charmID) {
 	let { item: charm, type: _itemType } = getItem(charmID);
-	if (_itemType !== ItemType.charm) return null;
+	if (_itemType !== ItemType.charm) return "n/a";
 
 	return "`$ID` `$EMOJI` **$NAME** `🌟 $CHANCE%` `⏰ $DURATION`"
 		.replace("$ID", charm.id)
@@ -387,6 +387,18 @@ function charm_toString_shopEntry(charmID) {
 		.replace("$PRICE", charm.price);
 }
 
+function charm_toString_basic(charmID) {
+	let { item: charm, type: _itemType } = getItem(charmID);
+	if (_itemType !== ItemType.charm) return "n/a";
+
+	return "`$ID` `$EMOJI` **$NAME** `🌟 $CHANCE%` `⏰ $DURATION`"
+		.replace("$ID", charm.id)
+		.replace("$EMOJI", charm.emoji)
+		.replace("$NAME", charm.name)
+		.replace("$CHANCE", charm.chance_of_working)
+		.replace("$DURATION", charm.duration);
+}
+
 module.exports = {
 	items: {
 		cardPacks: {
@@ -417,11 +429,12 @@ module.exports = {
 			shopEntry: badge_toString_shopEntry,
 			profile: badge_toString_profile
 		},
-
+		
 		charms: {
 			basic: charm_toString_basic,
 			setEntry: charm_toString_setEntry,
-			shopEntry: charm_toString_shopEntry
+			shopEntry: charm_toString_shopEntry,
+			profile: charm_toString_profile
 		}
 	},
 

@@ -80,7 +80,16 @@ function profile(user, options) {
 		return embed;
 	};
 
+	const profile_charms = () => {
+		if (!options.userData?.charms?.length) return null;
+
+		let charms_f = options.userData.charms.map(c => itemManager.toString.charms.profile(c));
+		return charms_f.length ? embed_profile.copy({ description: `>>> ${charms_f.join("\n")}` }) : null;
+	};
+
 	const profile_badges = () => {
+		if (!options.userData?.badges?.length) return null;
+
 		let badges_f = options.userData.badges.map(b => itemManager.toString.badges.profile(b));
 		return badges_f.length ? embed_profile.copy({ description: `>>> ${badges_f.join("\n")}` }) : null;
 	};
