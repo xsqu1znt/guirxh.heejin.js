@@ -2,10 +2,11 @@ node_modules
 # .backup
 # .dev
 
+.vscode/launch.json
+.vscode/settings.json
+
 items/cards_backup
 items/cards_new
-
-# TODO.txt
 
 package-lock.json
 .env
