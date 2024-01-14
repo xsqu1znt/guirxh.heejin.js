@@ -4998,27 +4998,6 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1074372558138376203/Key1.png"
     },
     {
-        "name": "KEY³",
-        "group": "KEY",
-        "single": "Killer",
-        "category": "epic",
-        "description": "**Killer** *`KEY`*",
-        "emoji": "🔪",
-        "globalID": "4193",
-        "setID": "431",
-        "rarity": 40,
-        "price": 45,
-        "sellPrice": 45,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1074372558742368389/Key3.png"
-    },
-    {
         "name": "KEY²",
         "group": "KEY",
         "single": "Killer",
@@ -5038,6 +5017,27 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1074372558448775178/Key2.png"
+    },
+    {
+        "name": "KEY³",
+        "group": "KEY",
+        "single": "Killer",
+        "category": "epic",
+        "description": "**Killer** *`KEY`*",
+        "emoji": "🔪",
+        "globalID": "4193",
+        "setID": "431",
+        "rarity": 40,
+        "price": 45,
+        "sellPrice": 45,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1074372558742368389/Key3.png"
     },
     {
         "name": "Hwanwoong",
