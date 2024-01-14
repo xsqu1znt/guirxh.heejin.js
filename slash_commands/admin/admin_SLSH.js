@@ -260,7 +260,7 @@ async function subcommand_customize(interaction) {
 	await interaction.deferReply().catch(() => null);
 
 	// Fetch the card from the user's inventory
-	let card = await userManager.inventory.get(interaction.user.id, { uid });
+	let card = await userManager.inventory.get(user.id, { uid });
 	// prettier-ignore
 	if (!card) return await embed_customize.send({
 		description: `\`${uid}\` is not a valid card UID`

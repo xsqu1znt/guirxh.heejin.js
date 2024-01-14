@@ -33,11 +33,7 @@ const cards_base = {
 
 	bday: require("../cards/bday.json"),
 	holi: require("../cards/holiday.json"),
-	evnt: [
-		...require("../cards/event1.json"),
-		...require("../cards/event2.json"),
-		...require("../cards/event3.json")
-	],
+	evnt: [...require("../cards/event1.json"), ...require("../cards/event2.json"), ...require("../cards/event3.json")],
 
 	seas: require("../cards/season.json"),
 	shop: require("../cards/shop.json"),
@@ -295,15 +291,15 @@ function get_randomDrop(dropCategory) {
 function parse_toCardLike(card) {
 	if (!card) return null;
 
-	// Ignores custom cards
-	return ["100"].includes(card.rarity)
-		? card
-		: {
-				uid: card.uid,
-				globalID: card.globalID,
-				locked: card?.locked || false,
-				stats: card.stats
-		  };
+	// Don't alter custom cards
+	if (card.setID === "100") return card;
+
+	return {
+		uid: card.uid,
+		globalID: card.globalID,
+		locked: card?.locked || false,
+		stats: card.stats
+	};
 }
 
 function parse_fromCardLike(cardLike) {
