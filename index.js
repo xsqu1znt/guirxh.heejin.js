@@ -38,6 +38,7 @@ const client = new Client({
 /// Collections that hold valuable information for the client
 client.slashCommands = new Collection();
 client.prefixCommands = new Collection();
+client.cooldowns_inventory = new Collection();
 
 // Run importers
 let importers_dir = jt.readDir("./modules/importers").filter(fn => fn.startsWith("import_") && fn.endsWith(".js"));

@@ -51,6 +51,15 @@ module.exports = {
 			order: interaction.options.getString("order") || "ascending"
 		};
 
+		// prettier-ignore
+		// Temporary workaround to prevent over-stressing the bot
+		if (client.cooldowns_inventory.get(interaction.user.id)) return await error_ES.send({
+			interaction, description: "Please wait until your other inventory loads before using it again"
+		});
+
+		// Set temporary cooldown
+		client.cooldowns_inventory.set(interaction.user.id, Date.now());
+
 		// Fetch the targetUser from Mongo
 		let userData = await userManager.fetch(options_inventory.target.id, { type: "full" });
 		if (!userData) return await error_ES.send({ interaction, description: "That user has not started yet" });
@@ -69,6 +78,9 @@ module.exports = {
 			pagination: { type: "longJump", useReactions: true }
         });
 
-		return await embedNav.send();
+		return await embedNav.send().then(() => {
+			// Delete the cooldown
+			client.cooldowns_inventory.delete(interaction.user.id);
+		});
 	}
 };
