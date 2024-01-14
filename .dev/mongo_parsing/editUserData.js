@@ -16,9 +16,9 @@ async function backup() {
 
 	// Export the users to a JSON file before modifying them
 	console.log(`exporting a backup of ${user_count} users...`);
-	fs.writeFileSync("./.backup/users/users_24_01_13_2.json", JSON.stringify(users, null, 2));
+	fs.writeFileSync("./.backup/users/users_24_01_13_3.json", JSON.stringify(users, null, 2));
 
-	console.log(`JSON saved as './.backup/users/users_24_01_13_2.json'`);
+	console.log(`JSON saved as './.backup/users/users_24_01_13_3.json'`);
 }
 
 async function foo() {
