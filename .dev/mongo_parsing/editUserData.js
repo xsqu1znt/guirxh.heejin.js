@@ -37,7 +37,7 @@ async function foo() {
 				let idol = _u.card_inventory.find(c => c.uid === _u.card_selected_uid);
 				let idol_idx = _u.card_inventory.findIndex(c => c.uid === _u.card_selected_uid);
 
-                let idol_backup = _u_backup.card_inventory.find(c => c.uid === _u.card_selected_uid);
+				let idol_backup = _u_backup.card_inventory.find(c => c.uid === _u.card_selected_uid);
 
 				if (idol && idol_backup) {
 					// Add the missing card data back
@@ -110,11 +110,7 @@ async function foo() {
         let userID = _u._id;
         delete _u._id;
 
-        // await userManager.models.user.findByIdAndDelete(_u._id);
-        // await userManager.models.user.findByIdAndUpdate(_u.id, _u, { upsert: true });
-        
         await userManager.models.user.replaceOne({ _id: userID }, _u);
-
         console.log(`replaced user document '${userID}'`);
     }));
 
