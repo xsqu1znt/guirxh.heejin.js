@@ -6,7 +6,7 @@ const { connect, userManager } = require("../../modules/mongo");
 const userBackup = require("../../.backup/users/users_24_01_13_1.json");
 
 async function backup() {
-    await connect(process.env.MONGO_URI);
+	await connect(process.env.MONGO_URI);
 
 	let user_count = await userManager.count();
 
@@ -14,11 +14,11 @@ async function backup() {
 	console.log(`fetching ${user_count} users...`);
 	let users = await userManager.fetch(null, { type: "full" });
 
-    // Export the users to a JSON file before modifying them
-    console.log(`exporting a backup of ${user_count} users...`);
-    fs.writeFileSync("./.backup/users/users_24_01_13_2.json", JSON.stringify(users, null, 2));
+	// Export the users to a JSON file before modifying them
+	console.log(`exporting a backup of ${user_count} users...`);
+	fs.writeFileSync("./.backup/users/users_24_01_13_2.json", JSON.stringify(users, null, 2));
 
-    console.log(`JSON saved as './.backup/users/users_24_01_13_2.json'`);
+	console.log(`JSON saved as './.backup/users/users_24_01_13_2.json'`);
 }
 
 async function foo() {
@@ -68,17 +68,17 @@ async function foo() {
 			}
 		} */
 
-        // Filter cooldowns
-        for (let idx_c = 0; idx_c < _u.cooldowns.length; idx_c++) {
-            let _c = _u.cooldowns[idx_c];
+		// Filter cooldowns
+		for (let idx_c = 0; idx_c < _u.cooldowns.length; idx_c++) {
+			let _c = _u.cooldowns[idx_c];
 
-            // prettier-ignore
+			// prettier-ignore
 			// Remove deprecated reminder types
 			if (!_c.type === null || !["daily", "stage", "random", "drop_general", "drop_weekly", "drop_season", "drop_event_1", "drop_event_2"].includes(_c.type)) {
-                users[i].reminders.splice(idx_c, 1);
+                users[i].cooldowns.splice(idx_c, 1);
                 continue;
             }
-        }
+		}
 
 		// Fix reminders
 		for (let idx_r = 0; idx_r < _u.reminders.length; idx_r++) {
@@ -140,7 +140,7 @@ async function foo() {
         delete _u._id;
 
         await userManager.models.user.replaceOne({ _id: userID }, _u);
-        console.log(`replaced user document '${userID}'`);
+        console.log(`replaced user document (${idx + 1}) '${userID}'`);
     }));
 
 	console.log(`done pushing changes for ${user_count} users!!`);
