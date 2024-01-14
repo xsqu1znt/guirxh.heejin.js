@@ -2,10 +2,10 @@ require("dotenv").config();
 
 const { connect, userManager } = require("../../modules/mongo");
 
-const userBackup = require("../../.backup/users/users_24_01_13.json");
+const userBackup = require("../../.backup/users/users_24_01_13_1.json");
 
 async function foo() {
-	await connect(process.env.MONGO_URI_DEV);
+	await connect(process.env.MONGO_URI);
 
 	let user_count = await userManager.count();
 
