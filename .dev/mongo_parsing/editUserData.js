@@ -33,7 +33,7 @@ async function foo() {
 	// Iterate through each user
 	for (let i = 0; i < users.length; i++) {
 		let _u = users[i];
-		let _u_backup = userBackup.find(u => u._id === _u._id) || null;
+		// let _u_backup = userBackup.find(u => u._id === _u._id) || null;
 
 		console.log(`modifying user document (${i + 1}) '${_u._id}'`);
 
@@ -48,7 +48,7 @@ async function foo() {
 		}
 
 		// Fix custom idol
-		if (_u_backup) {
+		/* if (_u_backup) {
 			// Check if they have an idol selected
 			if (_u.card_selected_uid) {
 				let idol = _u.card_inventory.find(c => c.uid === _u.card_selected_uid);
@@ -66,7 +66,19 @@ async function foo() {
 					};
 				}
 			}
-		}
+		} */
+
+        // Filter cooldowns
+        for (let idx_c = 0; idx_c < _u.cooldowns.length; idx_c++) {
+            let _c = _u.cooldowns[idx_c];
+
+            // prettier-ignore
+			// Remove deprecated reminder types
+			if (!_c.type === null || !["daily", "stage", "random", "drop_general", "drop_weekly", "drop_season", "drop_event_1", "drop_event_2"].includes(_c.type)) {
+                users[i].reminders.splice(idx_c, 1);
+                continue;
+            }
+        }
 
 		// Fix reminders
 		for (let idx_r = 0; idx_r < _u.reminders.length; idx_r++) {
