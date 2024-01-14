@@ -1,8 +1,25 @@
 require("dotenv").config();
 
+const fs = require("fs");
 const { connect, userManager } = require("../../modules/mongo");
 
 const userBackup = require("../../.backup/users/users_24_01_13_1.json");
+
+async function backup() {
+    await connect(process.env.MONGO_URI);
+
+	let user_count = await userManager.count();
+
+	// Fetch all the users
+	console.log(`fetching ${user_count} users...`);
+	let users = await userManager.fetch(null, { type: "full" });
+
+    // Export the users to a JSON file before modifying them
+    console.log(`exporting a backup of ${user_count} users...`);
+    fs.writeFileSync("./.backup/users/users_24_01_13_2.json", JSON.stringify(users, null, 2));
+
+    console.log(`JSON saved as './.backup/users/users_24_01_13_2.json'`);
+}
 
 async function foo() {
 	await connect(process.env.MONGO_URI);
@@ -86,7 +103,7 @@ async function foo() {
 
 			biography: users[i].biography,
 			balance: users[i].balance,
-			ribbons: users[i].ribbons,
+			ribbons: users[i]?.ribbons || 0,
 
 			badges: users[i]?.badges || [],
 			charms: users[i]?.charms || new Map(),
@@ -117,4 +134,5 @@ async function foo() {
 	console.log(`done pushing changes for ${user_count} users!!`);
 }
 
-foo();
+// backup();
+// foo();
