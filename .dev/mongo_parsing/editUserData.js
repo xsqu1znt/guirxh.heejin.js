@@ -5,7 +5,7 @@ const { connect, userManager } = require("../../modules/mongo");
 const userBackup = require("../../.backup/users/users_24_01_13.json");
 
 async function foo() {
-	await connect(process.env.MONGO_URI);
+	await connect(process.env.MONGO_URI_DEV);
 
 	let user_count = await userManager.count();
 
@@ -18,7 +18,7 @@ async function foo() {
 		let _u = users[i];
 		let _u_backup = userBackup.find(u => u._id === _u._id) || null;
 
-		console.log(`modifying user document (${i}) '${_u._id}'`);
+		console.log(`modifying user document (${i + 1}) '${_u._id}'`);
 
 		// Fix level 100 xp
 		if (_u.level === 100) {
@@ -33,39 +33,41 @@ async function foo() {
 		// Fix custom idol
 		if (_u_backup) {
 			// Check if they have an idol selected
-			if (!_u.card_selected_uid) return;
+			if (_u.card_selected_uid) {
+				let idol = _u.card_inventory.find(c => c.uid === _u.card_selected_uid);
+				let idol_idx = _u.card_inventory.findIndex(c => c.uid === _u.card_selected_uid);
 
-			let idol = _u.card_inventory.find(c => c.id === _u.card_selected_uid);
-			let idol_idx = _u.card_inventory.findIndex(c => c.id === _u.card_selected_uid);
+                let idol_backup = _u_backup.card_inventory.find(c => c.uid === _u.card_selected_uid);
 
-			let idol_backup = _u_backup.card_inventory.find(c => c.id === _u.card_selected_uid);
-
-			if (!idol || idol_backup) return;
-
-			// Add the missing card data back
-			users[i].card_inventory[idol_idx] = {
-				...idol,
-				single: idol_backup.single,
-				name: idol_backup.name,
-				imageURL: idol_backup.imageURL
-			};
+				if (idol && idol_backup) {
+					// Add the missing card data back
+					users[i].card_inventory[idol_idx] = {
+						...idol,
+						single: idol_backup.single,
+						name: idol_backup.name,
+						imageURL: idol_backup.imageURL
+					};
+				}
+			}
 		}
 
 		// Fix reminders
-		for (let idx_r = 0; idx_r < _u.reminders; idx_r++) {
+		for (let idx_r = 0; idx_r < _u.reminders.length; idx_r++) {
 			let _r = _u.reminders[idx_r];
 
 			// prettier-ignore
 			// Remove deprecated reminder types
-			if (!_r.type === null || !["daily", "stage", "random", "drop_general", "drop_weekly", "drop_season", "drop_event_1", "drop_event_2"].includes(_r.type))
+			if (!_r.type === null || !["daily", "stage", "random", "drop_general", "drop_weekly", "drop_season", "drop_event_1", "drop_event_2"].includes(_r.type)) {
                 users[i].reminders.splice(idx_r, 1);
+                continue;
+            }
 
 			// Fix reminder data format
 			users[i].reminders[idx_r] = {
 				type: _r.type,
 				timestamp: _r.timestamp <= Date.now() ? 0 : _r.timestamp,
-				guildID: _r?.guildID || "",
-				channelID: _r?.channelID || "",
+				guildID: _r?.guildID || null,
+				channelID: _r?.channelID || null,
 				mode: _r?.mode || "channel",
 				enabled: _r?.enabled !== (undefined || null) ? _r.enabled : true
 			};
@@ -105,10 +107,18 @@ async function foo() {
 
 	// prettier-ignore
 	await Promise.all(users.map(async (_u, idx) => {
-        await userManager.models.user.replaceOne({ _id: _u.id }, _u);
+        let userID = _u._id;
+        delete _u._id;
 
-        console.log(`replaced user document (${idx}) '${_u._id}'`);
+        // await userManager.models.user.findByIdAndDelete(_u._id);
+        // await userManager.models.user.findByIdAndUpdate(_u.id, _u, { upsert: true });
+        
+        await userManager.models.user.replaceOne({ _id: userID }, _u);
+
+        console.log(`replaced user document '${userID}'`);
     }));
 
 	console.log(`done pushing changes for ${user_count} users!!`);
 }
+
+foo();
