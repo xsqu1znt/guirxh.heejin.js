@@ -29,10 +29,13 @@
  - /stage
  - /quest
 
-<!-- Patches -->
-- Fixed drop weekly breaking if there were no cards in the shop
-- Fixed shop buy not using your carrots
-- Fixed Dupe Repel charm breaking drop/card packs
+<!-- PATCHES -->
+- `🛠️` **`PATCHES`**
+> - Fixed `/drop` `card:📅 weekly` breaking if there were no cards in the shop
+> - Fixed `⛔ Dupe Repel` `✨ Charm` breaking `/drop` and buying `Card Packs`
+> - Fixed `/shop` `buy:` not using your `🥕 carrots`
+> - Fixed reminders not pinging you (*they'll work as expected after your 2nd cooldown, check `/reminder` to make sure they're set the way you want*)
+> - Fixed `📝 Custom` `🏃 idols` resetting their single, name, and image after winning `/stage`
 
 <!-- Changelog -->
 - `📰` **`Overall Changes`**
