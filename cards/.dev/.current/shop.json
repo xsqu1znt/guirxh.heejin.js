@@ -1,12 +1,12 @@
 [
     {
-        "name": "Juyeon",
+        "name": "Lisa",
         "group": "HOLO",
-        "single": "THE BOYZ",
+        "single": "BLACKPINK",
         "category": "shop",
         "description": "**Shop** *`Holo`*",
         "emoji": "✨",
-        "globalID": "1001",
+        "globalID": "1020",
         "setID": "101",
         "rarity": 101,
         "price": 2500,
@@ -18,28 +18,7 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1096874257033732196/holojuyeon.gif"
-    },
-    {
-        "name": "Nayeon",
-        "group": "HOLO",
-        "single": "TWICE",
-        "category": "shop",
-        "description": "**Shop** *`Holo`*",
-        "emoji": "✨",
-        "globalID": "1002",
-        "setID": "101",
-        "rarity": 101,
-        "price": 2500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1096874261647458445/holonayeon.gif"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1096874257885184020/hololisa.gif"
     },
     {
         "name": "Taeyeon",
@@ -61,69 +40,6 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1096874262033350726/holotaeyeon.gif"
-    },
-    {
-        "name": "Taeyong",
-        "group": "HOLO",
-        "single": "NCT",
-        "category": "shop",
-        "description": "**Shop** *`Holo`*",
-        "emoji": "✨",
-        "globalID": "1004",
-        "setID": "101",
-        "rarity": 101,
-        "price": 2500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1096874262482133052/holotaeyong.gif"
-    },
-    {
-        "name": "V",
-        "group": "HOLO",
-        "single": "BTS",
-        "category": "shop",
-        "description": "**Shop** *`Holo`*",
-        "emoji": "✨",
-        "globalID": "1005",
-        "setID": "101",
-        "rarity": 101,
-        "price": 2500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1101869135836753970/holov.gif"
-    },
-    {
-        "name": "Bang Chan",
-        "group": "HOLO",
-        "single": "Stray Kids",
-        "category": "shop",
-        "description": "**Shop** *`Holo`*",
-        "emoji": "✨",
-        "globalID": "1006",
-        "setID": "101",
-        "rarity": 101,
-        "price": 2500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1101869132602933278/holobangchan.gif"
     },
     {
         "name": "San",
@@ -168,90 +84,6 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1101869134683308194/holoseulgi.gif"
     },
     {
-        "name": "Taemin",
-        "group": "HOLO",
-        "single": "SHINee",
-        "category": "shop",
-        "description": "**Shop** *`Holo`*",
-        "emoji": "✨",
-        "globalID": "1009",
-        "setID": "101",
-        "rarity": 101,
-        "price": 2500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1101869135459254282/holotaemin.gif"
-    },
-    {
-        "name": "Wonyoung",
-        "group": "HOLO",
-        "single": "IVE",
-        "category": "shop",
-        "description": "**Shop** *`Holo`*",
-        "emoji": "✨",
-        "globalID": "1010",
-        "setID": "101",
-        "rarity": 101,
-        "price": 2500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1096874262893183058/holowonyoung.gif"
-    },
-    {
-        "name": "Jinyoung",
-        "group": "HOLO",
-        "single": "CIX",
-        "category": "shop",
-        "description": "**Shop** *`Holo`*",
-        "emoji": "✨",
-        "globalID": "1011",
-        "setID": "101",
-        "rarity": 101,
-        "price": 2500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1101869133894791299/holojinyoung.gif"
-    },
-    {
-        "name": "Yeonjun",
-        "group": "HOLO",
-        "single": "TXT",
-        "category": "shop",
-        "description": "**Shop** *`Holo`*",
-        "emoji": "✨",
-        "globalID": "1012",
-        "setID": "101",
-        "rarity": 101,
-        "price": 2500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1101869735139868744/holoyeonjun.gif"
-    },
-    {
         "name": "Baekhyun",
         "group": "HOLO",
         "single": "EXO",
@@ -273,27 +105,6 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1096874255939018912/holobaekhyun.gif"
     },
     {
-        "name": "Chuu",
-        "group": "HOLO",
-        "single": "LOONA",
-        "category": "shop",
-        "description": "**Shop** *`Holo`*",
-        "emoji": "✨",
-        "globalID": "1014",
-        "setID": "101",
-        "rarity": 101,
-        "price": 2500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1101869133055930468/holochuu.gif"
-    },
-    {
         "name": "Sullyoon",
         "group": "HOLO",
         "single": "NMIXX",
@@ -313,6 +124,153 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1101869135115329566/holosullyoon.gif"
+    },
+    {
+        "name": "Jisung",
+        "group": "HOLO",
+        "single": "NCT",
+        "category": "shop",
+        "description": "**Shop** *`Holo`*",
+        "emoji": "✨",
+        "globalID": "1018",
+        "setID": "101",
+        "rarity": 101,
+        "price": 2500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1096874256673030204/holojisung.gif"
+    },
+    {
+        "name": "Juyeon",
+        "group": "HOLO",
+        "single": "THE BOYZ",
+        "category": "shop",
+        "description": "**Shop** *`Holo`*",
+        "emoji": "✨",
+        "globalID": "1001",
+        "setID": "101",
+        "rarity": 101,
+        "price": 2500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1096874257033732196/holojuyeon.gif"
+    },
+    {
+        "name": "Nayeon",
+        "group": "HOLO",
+        "single": "TWICE",
+        "category": "shop",
+        "description": "**Shop** *`Holo`*",
+        "emoji": "✨",
+        "globalID": "1002",
+        "setID": "101",
+        "rarity": 101,
+        "price": 2500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1096874261647458445/holonayeon.gif"
+    },
+    {
+        "name": "Bang Chan",
+        "group": "HOLO",
+        "single": "Stray Kids",
+        "category": "shop",
+        "description": "**Shop** *`Holo`*",
+        "emoji": "✨",
+        "globalID": "1006",
+        "setID": "101",
+        "rarity": 101,
+        "price": 2500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1101869132602933278/holobangchan.gif"
+    },
+    {
+        "name": "Taemin",
+        "group": "HOLO",
+        "single": "SHINee",
+        "category": "shop",
+        "description": "**Shop** *`Holo`*",
+        "emoji": "✨",
+        "globalID": "1009",
+        "setID": "101",
+        "rarity": 101,
+        "price": 2500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1101869135459254282/holotaemin.gif"
+    },
+    {
+        "name": "Karina",
+        "group": "HOLO",
+        "single": "aespa",
+        "category": "shop",
+        "description": "**Shop** *`Holo`*",
+        "emoji": "✨",
+        "globalID": "1019",
+        "setID": "101",
+        "rarity": 101,
+        "price": 2500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1096874257511874570/holokarina.gif"
+    },
+    {
+        "name": "Wonyoung",
+        "group": "HOLO",
+        "single": "IVE",
+        "category": "shop",
+        "description": "**Shop** *`Holo`*",
+        "emoji": "✨",
+        "globalID": "1010",
+        "setID": "101",
+        "rarity": 101,
+        "price": 2500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1096874262893183058/holowonyoung.gif"
     },
     {
         "name": "Chaewon",
@@ -357,13 +315,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1101869133496320020/holoeunwoo.gif"
     },
     {
-        "name": "Jisung",
+        "name": "Taeyong",
         "group": "HOLO",
         "single": "NCT",
         "category": "shop",
         "description": "**Shop** *`Holo`*",
         "emoji": "✨",
-        "globalID": "1018",
+        "globalID": "1004",
         "setID": "101",
         "rarity": 101,
         "price": 2500,
@@ -375,16 +333,16 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1096874256673030204/holojisung.gif"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1096874262482133052/holotaeyong.gif"
     },
     {
-        "name": "Karina",
+        "name": "V",
         "group": "HOLO",
-        "single": "aespa",
+        "single": "BTS",
         "category": "shop",
         "description": "**Shop** *`Holo`*",
         "emoji": "✨",
-        "globalID": "1019",
+        "globalID": "1005",
         "setID": "101",
         "rarity": 101,
         "price": 2500,
@@ -396,100 +354,79 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1096874257511874570/holokarina.gif"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1101869135836753970/holov.gif"
     },
     {
-        "name": "Lisa",
+        "name": "Jinyoung",
         "group": "HOLO",
-        "single": "BLACKPINK",
-        "category": "shop",
-        "description": "**Shop** *`Holo`*",
-        "emoji": "✨",
-        "globalID": "1020",
-        "setID": "101",
-        "rarity": 101,
-        "price": 2500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1096874257885184020/hololisa.gif"
-    },
-    {
-        "name": "Eunwoo",
-        "group": "FLOWER",
-        "single": "ASTRO",
-        "category": "shop",
-        "description": "**Shop** *`Flower`*",
-        "emoji": "🌼",
-        "globalID": "1021",
-        "setID": "102",
-        "rarity": 102,
-        "price": 2500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1036046813091860520/flower_eunwoo.png"
-    },
-    {
-        "name": "IU",
-        "group": "FLOWER",
-        "single": "Solo",
-        "category": "shop",
-        "description": "**Shop** *`Flower`*",
-        "emoji": "🌼",
-        "globalID": "1022",
-        "setID": "102",
-        "rarity": 102,
-        "price": 2500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1036046813746188298/flower_iu.png"
-    },
-    {
-        "name": "Jisung",
-        "group": "FLOWER",
-        "single": "NCT",
-        "category": "shop",
-        "description": "**Shop** *`Flower`*",
-        "emoji": "🌼",
-        "globalID": "1023",
-        "setID": "102",
-        "rarity": 102,
-        "price": 2500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1036046814064939018/flower_jisung.png"
-    },
-    {
-        "name": "Seunghun",
-        "group": "FLOWER",
         "single": "CIX",
         "category": "shop",
+        "description": "**Shop** *`Holo`*",
+        "emoji": "✨",
+        "globalID": "1011",
+        "setID": "101",
+        "rarity": 101,
+        "price": 2500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1101869133894791299/holojinyoung.gif"
+    },
+    {
+        "name": "Yeonjun",
+        "group": "HOLO",
+        "single": "TXT",
+        "category": "shop",
+        "description": "**Shop** *`Holo`*",
+        "emoji": "✨",
+        "globalID": "1012",
+        "setID": "101",
+        "rarity": 101,
+        "price": 2500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1101869735139868744/holoyeonjun.gif"
+    },
+    {
+        "name": "Chuu",
+        "group": "HOLO",
+        "single": "LOONA",
+        "category": "shop",
+        "description": "**Shop** *`Holo`*",
+        "emoji": "✨",
+        "globalID": "1014",
+        "setID": "101",
+        "rarity": 101,
+        "price": 2500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1101869133055930468/holochuu.gif"
+    },
+    {
+        "name": "Joy",
+        "group": "FLOWER",
+        "single": "Red Velvet",
+        "category": "shop",
         "description": "**Shop** *`Flower`*",
-        "emoji": "🌼",
-        "globalID": "1024",
+        "emoji": "🍀",
+        "globalID": "1027",
         "setID": "102",
         "rarity": 102,
         "price": 2500,
@@ -501,7 +438,91 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1036046815063183390/flower_seunghun.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1036046814358544435/flower_joy.png"
+    },
+    {
+        "name": "V",
+        "group": "FLOWER",
+        "single": "BTS",
+        "category": "shop",
+        "description": "**Shop** *`Flower`*",
+        "emoji": "🍀",
+        "globalID": "1029",
+        "setID": "102",
+        "rarity": 102,
+        "price": 2500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1036046815759454218/flower_v.png"
+    },
+    {
+        "name": "BamBam",
+        "group": "FLOWER",
+        "single": "GOT7",
+        "category": "shop",
+        "description": "**Shop** *`Flower`*",
+        "emoji": "⚛️",
+        "globalID": "1031",
+        "setID": "102",
+        "rarity": 102,
+        "price": 2500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037106658779869234/flower_bambam.png"
+    },
+    {
+        "name": "Sungchan",
+        "group": "FLOWER",
+        "single": "NCT",
+        "category": "shop",
+        "description": "**Shop** *`Flower`*",
+        "emoji": "⚛️",
+        "globalID": "1034",
+        "setID": "102",
+        "rarity": 102,
+        "price": 2500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037106660465975406/flower_sungchan.png"
+    },
+    {
+        "name": "Onda",
+        "group": "FLOWER",
+        "single": "EVERGLOW",
+        "category": "shop",
+        "description": "**Shop** *`Flower`*",
+        "emoji": "⚛️",
+        "globalID": "1033",
+        "setID": "102",
+        "rarity": 102,
+        "price": 2500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037106659966857387/flower_onda.png"
     },
     {
         "name": "Yeowool",
@@ -546,69 +567,6 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1036046813410631760/flower_gowon.png"
     },
     {
-        "name": "Joy",
-        "group": "FLOWER",
-        "single": "Red Velvet",
-        "category": "shop",
-        "description": "**Shop** *`Flower`*",
-        "emoji": "🍀",
-        "globalID": "1027",
-        "setID": "102",
-        "rarity": 102,
-        "price": 2500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1036046814358544435/flower_joy.png"
-    },
-    {
-        "name": "Ni-Ki",
-        "group": "FLOWER",
-        "single": "ENHYPEN",
-        "category": "shop",
-        "description": "**Shop** *`Flower`*",
-        "emoji": "🍀",
-        "globalID": "1028",
-        "setID": "102",
-        "rarity": 102,
-        "price": 2500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1036046814685712474/flower_niki.png"
-    },
-    {
-        "name": "V",
-        "group": "FLOWER",
-        "single": "BTS",
-        "category": "shop",
-        "description": "**Shop** *`Flower`*",
-        "emoji": "🍀",
-        "globalID": "1029",
-        "setID": "102",
-        "rarity": 102,
-        "price": 2500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1036046815759454218/flower_v.png"
-    },
-    {
         "name": "Yerim",
         "group": "FLOWER",
         "single": "PURPLEBECK",
@@ -628,27 +586,6 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1036046816115953674/flower_yerim.png"
-    },
-    {
-        "name": "BamBam",
-        "group": "FLOWER",
-        "single": "GOT7",
-        "category": "shop",
-        "description": "**Shop** *`Flower`*",
-        "emoji": "⚛️",
-        "globalID": "1031",
-        "setID": "102",
-        "rarity": 102,
-        "price": 2500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037106658779869234/flower_bambam.png"
     },
     {
         "name": "Jaehyun",
@@ -672,13 +609,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037106659400634409/flower_jaehyun.png"
     },
     {
-        "name": "Onda",
+        "name": "Soobin",
         "group": "FLOWER",
-        "single": "EVERGLOW",
+        "single": "TXT",
         "category": "shop",
         "description": "**Shop** *`Flower`*",
-        "emoji": "⚛️",
-        "globalID": "1033",
+        "emoji": "*️⃣",
+        "globalID": "1038",
         "setID": "102",
         "rarity": 102,
         "price": 2500,
@@ -690,49 +627,7 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037106659966857387/flower_onda.png"
-    },
-    {
-        "name": "Sungchan",
-        "group": "FLOWER",
-        "single": "NCT",
-        "category": "shop",
-        "description": "**Shop** *`Flower`*",
-        "emoji": "⚛️",
-        "globalID": "1034",
-        "setID": "102",
-        "rarity": 102,
-        "price": 2500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037106660465975406/flower_sungchan.png"
-    },
-    {
-        "name": "Yoohyeon",
-        "group": "FLOWER",
-        "single": "Dreamcatcher",
-        "category": "shop",
-        "description": "**Shop** *`Flower`*",
-        "emoji": "⚛️",
-        "globalID": "1035",
-        "setID": "102",
-        "rarity": 102,
-        "price": 2500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037106660898000907/flower_yoohyeon.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037106662349222049/flower_soobin.png"
     },
     {
         "name": "Jungwoo",
@@ -756,13 +651,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037106661241925824/flower_jungwoo.png"
     },
     {
-        "name": "Minho",
+        "name": "Yoohyeon",
         "group": "FLOWER",
-        "single": "SHINee",
+        "single": "Dreamcatcher",
         "category": "shop",
         "description": "**Shop** *`Flower`*",
-        "emoji": "*️⃣",
-        "globalID": "1037",
+        "emoji": "⚛️",
+        "globalID": "1035",
         "setID": "102",
         "rarity": 102,
         "price": 2500,
@@ -774,16 +669,16 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037106661875261550/flower_minho.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037106660898000907/flower_yoohyeon.png"
     },
     {
-        "name": "Soobin",
+        "name": "Ni-Ki",
         "group": "FLOWER",
-        "single": "TXT",
+        "single": "ENHYPEN",
         "category": "shop",
         "description": "**Shop** *`Flower`*",
-        "emoji": "*️⃣",
-        "globalID": "1038",
+        "emoji": "🍀",
+        "globalID": "1028",
         "setID": "102",
         "rarity": 102,
         "price": 2500,
@@ -795,7 +690,7 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037106662349222049/flower_soobin.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1036046814685712474/flower_niki.png"
     },
     {
         "name": "Sullyoon",
@@ -819,6 +714,111 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037106662743482478/flower_sullyoon.png"
     },
     {
+        "name": "Eunwoo",
+        "group": "FLOWER",
+        "single": "ASTRO",
+        "category": "shop",
+        "description": "**Shop** *`Flower`*",
+        "emoji": "🌼",
+        "globalID": "1021",
+        "setID": "102",
+        "rarity": 102,
+        "price": 2500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1036046813091860520/flower_eunwoo.png"
+    },
+    {
+        "name": "Jisung",
+        "group": "FLOWER",
+        "single": "NCT",
+        "category": "shop",
+        "description": "**Shop** *`Flower`*",
+        "emoji": "🌼",
+        "globalID": "1023",
+        "setID": "102",
+        "rarity": 102,
+        "price": 2500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1036046814064939018/flower_jisung.png"
+    },
+    {
+        "name": "Seunghun",
+        "group": "FLOWER",
+        "single": "CIX",
+        "category": "shop",
+        "description": "**Shop** *`Flower`*",
+        "emoji": "🌼",
+        "globalID": "1024",
+        "setID": "102",
+        "rarity": 102,
+        "price": 2500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1036046815063183390/flower_seunghun.png"
+    },
+    {
+        "name": "Minho",
+        "group": "FLOWER",
+        "single": "SHINee",
+        "category": "shop",
+        "description": "**Shop** *`Flower`*",
+        "emoji": "*️⃣",
+        "globalID": "1037",
+        "setID": "102",
+        "rarity": 102,
+        "price": 2500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037106661875261550/flower_minho.png"
+    },
+    {
+        "name": "IU",
+        "group": "FLOWER",
+        "single": "Solo",
+        "category": "shop",
+        "description": "**Shop** *`Flower`*",
+        "emoji": "🌼",
+        "globalID": "1022",
+        "setID": "102",
+        "rarity": 102,
+        "price": 2500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1036046813746188298/flower_iu.png"
+    },
+    {
         "name": "Tzuyu",
         "group": "FLOWER",
         "single": "TWICE",
@@ -838,69 +838,6 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1037106663146139688/flower_tzuyu.png"
-    },
-    {
-        "name": "Seonghwa",
-        "group": "FLOWER",
-        "single": "ATEEZ",
-        "category": "shop",
-        "description": "**Shop** *`Flower`*",
-        "emoji": "🌸",
-        "globalID": "1041",
-        "setID": "102",
-        "rarity": 102,
-        "price": 2500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043597866473619588/flower_seonghwa.png"
-    },
-    {
-        "name": "Youngbin",
-        "group": "FLOWER",
-        "single": "SF9",
-        "category": "shop",
-        "description": "**Shop** *`Flower`*",
-        "emoji": "🌸",
-        "globalID": "1042",
-        "setID": "102",
-        "rarity": 102,
-        "price": 2500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043597866926608514/flower_youngbin.png"
-    },
-    {
-        "name": "Gaeul",
-        "group": "FLOWER",
-        "single": "IVE",
-        "category": "shop",
-        "description": "**Shop** *`Flower`*",
-        "emoji": "🌸",
-        "globalID": "1043",
-        "setID": "102",
-        "rarity": 102,
-        "price": 2500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043597867262148668/flower_gaeul.png"
     },
     {
         "name": "Minseo",
@@ -924,13 +861,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043597867580936354/flower_minseo.png"
     },
     {
-        "name": "Solar",
+        "name": "Youngbin",
         "group": "FLOWER",
-        "single": "MAMAMOO",
+        "single": "SF9",
         "category": "shop",
         "description": "**Shop** *`Flower`*",
         "emoji": "🌸",
-        "globalID": "1045",
+        "globalID": "1042",
         "setID": "102",
         "rarity": 102,
         "price": 2500,
@@ -942,28 +879,7 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043597867903881226/flower_solar.png"
-    },
-    {
-        "name": "D.O.",
-        "group": "FLOWER",
-        "single": "EXO",
-        "category": "shop",
-        "description": "**Shop** *`Flower`*",
-        "emoji": "🏵️",
-        "globalID": "1046",
-        "setID": "102",
-        "rarity": 102,
-        "price": 2500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043597868231032872/flower_do.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043597866926608514/flower_youngbin.png"
     },
     {
         "name": "Yuna",
@@ -1008,6 +924,90 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043597868948263013/flower_jungkook.png"
     },
     {
+        "name": "Gaeul",
+        "group": "FLOWER",
+        "single": "IVE",
+        "category": "shop",
+        "description": "**Shop** *`Flower`*",
+        "emoji": "🌸",
+        "globalID": "1043",
+        "setID": "102",
+        "rarity": 102,
+        "price": 2500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043597867262148668/flower_gaeul.png"
+    },
+    {
+        "name": "D.O.",
+        "group": "FLOWER",
+        "single": "EXO",
+        "category": "shop",
+        "description": "**Shop** *`Flower`*",
+        "emoji": "🏵️",
+        "globalID": "1046",
+        "setID": "102",
+        "rarity": 102,
+        "price": 2500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043597868231032872/flower_do.png"
+    },
+    {
+        "name": "Seonghwa",
+        "group": "FLOWER",
+        "single": "ATEEZ",
+        "category": "shop",
+        "description": "**Shop** *`Flower`*",
+        "emoji": "🌸",
+        "globalID": "1041",
+        "setID": "102",
+        "rarity": 102,
+        "price": 2500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043597866473619588/flower_seonghwa.png"
+    },
+    {
+        "name": "Solar",
+        "group": "FLOWER",
+        "single": "MAMAMOO",
+        "category": "shop",
+        "description": "**Shop** *`Flower`*",
+        "emoji": "🌸",
+        "globalID": "1045",
+        "setID": "102",
+        "rarity": 102,
+        "price": 2500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043597867903881226/flower_solar.png"
+    },
+    {
         "name": "AleXa",
         "group": "FLOWER",
         "single": "Solo",
@@ -1050,13 +1050,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043597869548064848/flower_intak.png"
     },
     {
-        "name": "Hitomi",
+        "name": "Yujin",
         "group": "Polaroid",
-        "single": "IZ*ONE",
+        "single": "IVE",
         "category": "shop",
         "description": "**Shop** *`Polaroid`*",
         "emoji": "📸",
-        "globalID": "1051",
+        "globalID": "1060",
         "setID": "103",
         "rarity": 103,
         "price": 500,
@@ -1068,16 +1068,16 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1058414922263969802/polaroid_hitomi.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1058414925489381436/polaroid_yujin.png"
     },
     {
-        "name": "Hongseok",
+        "name": "Rosé",
         "group": "Polaroid",
-        "single": "PENTAGON",
+        "single": "BLACKPINK",
         "category": "shop",
         "description": "**Shop** *`Polaroid`*",
         "emoji": "📸",
-        "globalID": "1052",
+        "globalID": "1057",
         "setID": "103",
         "rarity": 103,
         "price": 500,
@@ -1089,28 +1089,7 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1058414922645643314/polaroid_hongseok.png"
-    },
-    {
-        "name": "Hyolyn",
-        "group": "Polaroid",
-        "single": "Solo",
-        "category": "shop",
-        "description": "**Shop** *`Polaroid`*",
-        "emoji": "📸",
-        "globalID": "1053",
-        "setID": "103",
-        "rarity": 103,
-        "price": 500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1058414923031523358/polaroid_hyolyn.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1058414924570828821/polaroid_rose.png"
     },
     {
         "name": "Mark",
@@ -1155,13 +1134,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1058414923849408612/polaroid_nichkhun.png"
     },
     {
-        "name": "Onew",
+        "name": "Hongseok",
         "group": "Polaroid",
-        "single": "SHINee",
+        "single": "PENTAGON",
         "category": "shop",
         "description": "**Shop** *`Polaroid`*",
         "emoji": "📸",
-        "globalID": "1056",
+        "globalID": "1052",
         "setID": "103",
         "rarity": 103,
         "price": 500,
@@ -1173,16 +1152,16 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1058414924214317157/polaroid_onew.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1058414922645643314/polaroid_hongseok.png"
     },
     {
-        "name": "Rosé",
+        "name": "Hitomi",
         "group": "Polaroid",
-        "single": "BLACKPINK",
+        "single": "IZ*ONE",
         "category": "shop",
         "description": "**Shop** *`Polaroid`*",
         "emoji": "📸",
-        "globalID": "1057",
+        "globalID": "1051",
         "setID": "103",
         "rarity": 103,
         "price": 500,
@@ -1194,7 +1173,7 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1058414924570828821/polaroid_rose.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1058414922263969802/polaroid_hitomi.png"
     },
     {
         "name": "Yohan",
@@ -1218,6 +1197,48 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1058414924843462747/polaroid_yohan.png"
     },
     {
+        "name": "Hyolyn",
+        "group": "Polaroid",
+        "single": "Solo",
+        "category": "shop",
+        "description": "**Shop** *`Polaroid`*",
+        "emoji": "📸",
+        "globalID": "1053",
+        "setID": "103",
+        "rarity": 103,
+        "price": 500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1058414923031523358/polaroid_hyolyn.png"
+    },
+    {
+        "name": "Onew",
+        "group": "Polaroid",
+        "single": "SHINee",
+        "category": "shop",
+        "description": "**Shop** *`Polaroid`*",
+        "emoji": "📸",
+        "globalID": "1056",
+        "setID": "103",
+        "rarity": 103,
+        "price": 500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1058414924214317157/polaroid_onew.png"
+    },
+    {
         "name": "Yoojung",
         "group": "Polaroid",
         "single": "Weki Meki",
@@ -1237,258 +1258,6 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1058414925183205476/polaroid_yoojung.png"
-    },
-    {
-        "name": "Yujin",
-        "group": "Polaroid",
-        "single": "IVE",
-        "category": "shop",
-        "description": "**Shop** *`Polaroid`*",
-        "emoji": "📸",
-        "globalID": "1060",
-        "setID": "103",
-        "rarity": 103,
-        "price": 500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1058414925489381436/polaroid_yujin.png"
-    },
-    {
-        "name": "Chanyeol",
-        "group": "Polaroid",
-        "single": "EXO",
-        "category": "shop",
-        "description": "**Shop** *`Polaroid`*",
-        "emoji": "📸",
-        "globalID": "1061",
-        "setID": "103",
-        "rarity": 103,
-        "price": 500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079414218706653294/polaroid_chanyeol.png"
-    },
-    {
-        "name": "EXY",
-        "group": "Polaroid",
-        "single": "WJSN",
-        "category": "shop",
-        "description": "**Shop** *`Polaroid`*",
-        "emoji": "📸",
-        "globalID": "1062",
-        "setID": "103",
-        "rarity": 103,
-        "price": 500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079414218979295252/polaroid_exy.png"
-    },
-    {
-        "name": "Jake",
-        "group": "Polaroid",
-        "single": "ENHYPEN",
-        "category": "shop",
-        "description": "**Shop** *`Polaroid`*",
-        "emoji": "📸",
-        "globalID": "1063",
-        "setID": "103",
-        "rarity": 103,
-        "price": 500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079414219222560809/polaroid_jake.png"
-    },
-    {
-        "name": "Jennie",
-        "group": "Polaroid",
-        "single": "BLACKPINK",
-        "category": "shop",
-        "description": "**Shop** *`Polaroid`*",
-        "emoji": "📸",
-        "globalID": "1064",
-        "setID": "103",
-        "rarity": 103,
-        "price": 500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079414219478405160/polaroid_jennie.png"
-    },
-    {
-        "name": "Jihyo",
-        "group": "Polaroid",
-        "single": "TWICE",
-        "category": "shop",
-        "description": "**Shop** *`Polaroid`*",
-        "emoji": "📸",
-        "globalID": "1065",
-        "setID": "103",
-        "rarity": 103,
-        "price": 500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079414219734270052/polaroid_jihyo.png"
-    },
-    {
-        "name": "Jinjin",
-        "group": "Polaroid",
-        "single": "ASTRO",
-        "category": "shop",
-        "description": "**Shop** *`Polaroid`*",
-        "emoji": "📸",
-        "globalID": "1066",
-        "setID": "103",
-        "rarity": 103,
-        "price": 500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079414220002701342/polaroid_jinjin.png"
-    },
-    {
-        "name": "Sakura",
-        "group": "Polaroid",
-        "single": "LE SSERAFIM",
-        "category": "shop",
-        "description": "**Shop** *`Polaroid`*",
-        "emoji": "📸",
-        "globalID": "1067",
-        "setID": "103",
-        "rarity": 103,
-        "price": 500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079414220254351521/polaroid_sakura.png"
-    },
-    {
-        "name": "Seolhyun",
-        "group": "Polaroid",
-        "single": "AOA",
-        "category": "shop",
-        "description": "**Shop** *`Polaroid`*",
-        "emoji": "📸",
-        "globalID": "1068",
-        "setID": "103",
-        "rarity": 103,
-        "price": 500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079414220518604800/polaroid_seolhyun.png"
-    },
-    {
-        "name": "Suga",
-        "group": "Polaroid",
-        "single": "BTS",
-        "category": "shop",
-        "description": "**Shop** *`Polaroid`*",
-        "emoji": "📸",
-        "globalID": "1069",
-        "setID": "103",
-        "rarity": 103,
-        "price": 500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079414220828979200/polaroid_suga.png"
-    },
-    {
-        "name": "Winwin",
-        "group": "Polaroid",
-        "single": "NCT",
-        "category": "shop",
-        "description": "**Shop** *`Polaroid`*",
-        "emoji": "📸",
-        "globalID": "1070",
-        "setID": "103",
-        "rarity": 103,
-        "price": 500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079414221114183740/polaroid_winwin.png"
-    },
-    {
-        "name": "Jiwon",
-        "group": "Polaroid",
-        "single": "fromis_9",
-        "category": "shop",
-        "description": "**Shop** *`Polaroid`*",
-        "emoji": "📸",
-        "globalID": "1071",
-        "setID": "103",
-        "rarity": 103,
-        "price": 500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086653998133678090/polaroid__jiwon.png"
     },
     {
         "name": "Crush",
@@ -1512,13 +1281,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086653998439866498/polaroid_crush.png"
     },
     {
-        "name": "DPR IAN",
+        "name": "Seolhyun",
         "group": "Polaroid",
-        "single": "Solo",
+        "single": "AOA",
         "category": "shop",
         "description": "**Shop** *`Polaroid`*",
         "emoji": "📸",
-        "globalID": "1073",
+        "globalID": "1068",
         "setID": "103",
         "rarity": 103,
         "price": 500,
@@ -1530,16 +1299,16 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086653998792200242/polaroid_dprian.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079414220518604800/polaroid_seolhyun.png"
     },
     {
-        "name": "Giselle",
+        "name": "Jiwon",
         "group": "Polaroid",
-        "single": "aespa",
+        "single": "fromis_9",
         "category": "shop",
         "description": "**Shop** *`Polaroid`*",
         "emoji": "📸",
-        "globalID": "1074",
+        "globalID": "1071",
         "setID": "103",
         "rarity": 103,
         "price": 500,
@@ -1551,28 +1320,7 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086653999110951002/polaroid_giselle.png"
-    },
-    {
-        "name": "Hyeongjun",
-        "group": "Polaroid",
-        "single": "CRAVITY",
-        "category": "shop",
-        "description": "**Shop** *`Polaroid`*",
-        "emoji": "📸",
-        "globalID": "1075",
-        "setID": "103",
-        "rarity": 103,
-        "price": 500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086653999513608323/polaroid_hyeongjun.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086653998133678090/polaroid__jiwon.png"
     },
     {
         "name": "Hyuna",
@@ -1596,6 +1344,69 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086653999782056038/polaroid_hyuna.png"
     },
     {
+        "name": "IU",
+        "group": "Polaroid",
+        "single": "Solo",
+        "category": "shop",
+        "description": "**Shop** *`Polaroid`*",
+        "emoji": "📸",
+        "globalID": "1078",
+        "setID": "103",
+        "rarity": 103,
+        "price": 500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086654000302133390/polaroid_iu.png"
+    },
+    {
+        "name": "Sakura",
+        "group": "Polaroid",
+        "single": "LE SSERAFIM",
+        "category": "shop",
+        "description": "**Shop** *`Polaroid`*",
+        "emoji": "📸",
+        "globalID": "1067",
+        "setID": "103",
+        "rarity": 103,
+        "price": 500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079414220254351521/polaroid_sakura.png"
+    },
+    {
+        "name": "Chanyeol",
+        "group": "Polaroid",
+        "single": "EXO",
+        "category": "shop",
+        "description": "**Shop** *`Polaroid`*",
+        "emoji": "📸",
+        "globalID": "1061",
+        "setID": "103",
+        "rarity": 103,
+        "price": 500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079414218706653294/polaroid_chanyeol.png"
+    },
+    {
         "name": "Hyungwon",
         "group": "Polaroid",
         "single": "MONSTA X",
@@ -1617,13 +1428,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086654000050491485/polaroid_hyungwon.png"
     },
     {
-        "name": "IU",
+        "name": "Jake",
         "group": "Polaroid",
-        "single": "Solo",
+        "single": "ENHYPEN",
         "category": "shop",
         "description": "**Shop** *`Polaroid`*",
         "emoji": "📸",
-        "globalID": "1078",
+        "globalID": "1063",
         "setID": "103",
         "rarity": 103,
         "price": 500,
@@ -1635,7 +1446,112 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086654000302133390/polaroid_iu.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079414219222560809/polaroid_jake.png"
+    },
+    {
+        "name": "Winwin",
+        "group": "Polaroid",
+        "single": "NCT",
+        "category": "shop",
+        "description": "**Shop** *`Polaroid`*",
+        "emoji": "📸",
+        "globalID": "1070",
+        "setID": "103",
+        "rarity": 103,
+        "price": 500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079414221114183740/polaroid_winwin.png"
+    },
+    {
+        "name": "EXY",
+        "group": "Polaroid",
+        "single": "WJSN",
+        "category": "shop",
+        "description": "**Shop** *`Polaroid`*",
+        "emoji": "📸",
+        "globalID": "1062",
+        "setID": "103",
+        "rarity": 103,
+        "price": 500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079414218979295252/polaroid_exy.png"
+    },
+    {
+        "name": "Jinjin",
+        "group": "Polaroid",
+        "single": "ASTRO",
+        "category": "shop",
+        "description": "**Shop** *`Polaroid`*",
+        "emoji": "📸",
+        "globalID": "1066",
+        "setID": "103",
+        "rarity": 103,
+        "price": 500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079414220002701342/polaroid_jinjin.png"
+    },
+    {
+        "name": "Jennie",
+        "group": "Polaroid",
+        "single": "BLACKPINK",
+        "category": "shop",
+        "description": "**Shop** *`Polaroid`*",
+        "emoji": "📸",
+        "globalID": "1064",
+        "setID": "103",
+        "rarity": 103,
+        "price": 500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079414219478405160/polaroid_jennie.png"
+    },
+    {
+        "name": "DPR IAN",
+        "group": "Polaroid",
+        "single": "Solo",
+        "category": "shop",
+        "description": "**Shop** *`Polaroid`*",
+        "emoji": "📸",
+        "globalID": "1073",
+        "setID": "103",
+        "rarity": 103,
+        "price": 500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086653998792200242/polaroid_dprian.png"
     },
     {
         "name": "Lily",
@@ -1680,16 +1596,16 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086654000805449778/polaroid_seunghun.png"
     },
     {
-        "name": "AleXa",
-        "group": "SUIT",
-        "single": "Solo",
+        "name": "Jihyo",
+        "group": "Polaroid",
+        "single": "TWICE",
         "category": "shop",
-        "description": "**Shop** *`Suit`*",
-        "emoji": "👔",
-        "globalID": "1081",
-        "setID": "104",
-        "rarity": 104,
-        "price": 250,
+        "description": "**Shop** *`Polaroid`*",
+        "emoji": "📸",
+        "globalID": "1065",
+        "setID": "103",
+        "rarity": 103,
+        "price": 500,
         "sellPrice": 10,
         "stats": {
             "level": 1,
@@ -1698,19 +1614,19 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1091487935725047828/suit_alexa.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079414219734270052/polaroid_jihyo.png"
     },
     {
-        "name": "Dami",
-        "group": "SUIT",
-        "single": "Dreamcatcher",
+        "name": "Suga",
+        "group": "Polaroid",
+        "single": "BTS",
         "category": "shop",
-        "description": "**Shop** *`Suit`*",
-        "emoji": "👔",
-        "globalID": "1082",
-        "setID": "104",
-        "rarity": 104,
-        "price": 250,
+        "description": "**Shop** *`Polaroid`*",
+        "emoji": "📸",
+        "globalID": "1069",
+        "setID": "103",
+        "rarity": 103,
+        "price": 500,
         "sellPrice": 10,
         "stats": {
             "level": 1,
@@ -1719,19 +1635,19 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1091487936085766214/suit_dami.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079414220828979200/polaroid_suga.png"
     },
     {
-        "name": "Gyuri",
-        "group": "SUIT",
-        "single": "fromis_9",
+        "name": "Giselle",
+        "group": "Polaroid",
+        "single": "aespa",
         "category": "shop",
-        "description": "**Shop** *`Suit`*",
-        "emoji": "👔",
-        "globalID": "1083",
-        "setID": "104",
-        "rarity": 104,
-        "price": 250,
+        "description": "**Shop** *`Polaroid`*",
+        "emoji": "📸",
+        "globalID": "1074",
+        "setID": "103",
+        "rarity": 103,
+        "price": 500,
         "sellPrice": 10,
         "stats": {
             "level": 1,
@@ -1740,19 +1656,19 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1091487936459055165/suit_gyuri.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086653999110951002/polaroid_giselle.png"
     },
     {
-        "name": "Haechan",
-        "group": "SUIT",
-        "single": "NCT",
+        "name": "Hyeongjun",
+        "group": "Polaroid",
+        "single": "CRAVITY",
         "category": "shop",
-        "description": "**Shop** *`Suit`*",
-        "emoji": "👔",
-        "globalID": "1084",
-        "setID": "104",
-        "rarity": 104,
-        "price": 250,
+        "description": "**Shop** *`Polaroid`*",
+        "emoji": "📸",
+        "globalID": "1075",
+        "setID": "103",
+        "rarity": 103,
+        "price": 500,
         "sellPrice": 10,
         "stats": {
             "level": 1,
@@ -1761,28 +1677,7 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1091487936677154866/suit_haechan.png"
-    },
-    {
-        "name": "Hyunjin",
-        "group": "SUIT",
-        "single": "Stray Kids",
-        "category": "shop",
-        "description": "**Shop** *`Suit`*",
-        "emoji": "👔",
-        "globalID": "1085",
-        "setID": "104",
-        "rarity": 104,
-        "price": 250,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1091487936949792879/suit_hyunjin.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086653999513608323/polaroid_hyeongjun.png"
     },
     {
         "name": "Jeno",
@@ -1806,13 +1701,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1091487937268555836/suit_jeno.png"
     },
     {
-        "name": "Jimin",
+        "name": "Dami",
         "group": "SUIT",
-        "single": "BTS",
+        "single": "Dreamcatcher",
         "category": "shop",
         "description": "**Shop** *`Suit`*",
         "emoji": "👔",
-        "globalID": "1087",
+        "globalID": "1082",
         "setID": "104",
         "rarity": 104,
         "price": 250,
@@ -1824,7 +1719,28 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1091487937574735893/suit_jimin.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1091487936085766214/suit_dami.png"
+    },
+    {
+        "name": "Moonbyul",
+        "group": "SUIT",
+        "single": "MAMAMOO",
+        "category": "shop",
+        "description": "**Shop** *`Suit`*",
+        "emoji": "👔",
+        "globalID": "1090",
+        "setID": "104",
+        "rarity": 104,
+        "price": 250,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1091487938413605024/suit_moonbyul.png"
     },
     {
         "name": "Mingyu",
@@ -1848,6 +1764,111 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1091487937859952640/suit_mingyu.png"
     },
     {
+        "name": "Haechan",
+        "group": "SUIT",
+        "single": "NCT",
+        "category": "shop",
+        "description": "**Shop** *`Suit`*",
+        "emoji": "👔",
+        "globalID": "1084",
+        "setID": "104",
+        "rarity": 104,
+        "price": 250,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1091487936677154866/suit_haechan.png"
+    },
+    {
+        "name": "Jimin",
+        "group": "SUIT",
+        "single": "BTS",
+        "category": "shop",
+        "description": "**Shop** *`Suit`*",
+        "emoji": "👔",
+        "globalID": "1087",
+        "setID": "104",
+        "rarity": 104,
+        "price": 250,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1091487937574735893/suit_jimin.png"
+    },
+    {
+        "name": "AleXa",
+        "group": "SUIT",
+        "single": "Solo",
+        "category": "shop",
+        "description": "**Shop** *`Suit`*",
+        "emoji": "👔",
+        "globalID": "1081",
+        "setID": "104",
+        "rarity": 104,
+        "price": 250,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1091487935725047828/suit_alexa.png"
+    },
+    {
+        "name": "Gyuri",
+        "group": "SUIT",
+        "single": "fromis_9",
+        "category": "shop",
+        "description": "**Shop** *`Suit`*",
+        "emoji": "👔",
+        "globalID": "1083",
+        "setID": "104",
+        "rarity": 104,
+        "price": 250,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1091487936459055165/suit_gyuri.png"
+    },
+    {
+        "name": "Hyunjin",
+        "group": "SUIT",
+        "single": "Stray Kids",
+        "category": "shop",
+        "description": "**Shop** *`Suit`*",
+        "emoji": "👔",
+        "globalID": "1085",
+        "setID": "104",
+        "rarity": 104,
+        "price": 250,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1091487936949792879/suit_hyunjin.png"
+    },
+    {
         "name": "Momo",
         "group": "SUIT",
         "single": "TWICE",
@@ -1867,27 +1888,6 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1091487938132578445/suit_momo.png"
-    },
-    {
-        "name": "Moonbyul",
-        "group": "SUIT",
-        "single": "MAMAMOO",
-        "category": "shop",
-        "description": "**Shop** *`Suit`*",
-        "emoji": "👔",
-        "globalID": "1090",
-        "setID": "104",
-        "rarity": 104,
-        "price": 250,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1091487938413605024/suit_moonbyul.png"
     },
     {
         "name": "Chungha",
@@ -2940,6 +2940,111 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1113825000303108197/kid_wendy.png"
     },
     {
+        "name": "Baekhyun",
+        "group": "GOLD",
+        "single": "EXO",
+        "category": "gold",
+        "description": "**Shop** *`Gold`*",
+        "emoji": "⚜️",
+        "globalID": "2471",
+        "setID": "151",
+        "rarity": 151,
+        "price": 500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1128988586239348766/gold_baekhyun.gif"
+    },
+    {
+        "name": "Jungkook",
+        "group": "GOLD",
+        "single": "BTS",
+        "category": "gold",
+        "description": "**Shop** *`Gold`*",
+        "emoji": "⚜️",
+        "globalID": "2472",
+        "setID": "151",
+        "rarity": 151,
+        "price": 500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1128988586692329542/gold_jungkook.gif"
+    },
+    {
+        "name": "Sakura",
+        "group": "GOLD",
+        "single": "LE SSERAFIM",
+        "category": "gold",
+        "description": "**Shop** *`Gold`*",
+        "emoji": "⚜️",
+        "globalID": "2473",
+        "setID": "151",
+        "rarity": 151,
+        "price": 500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1128988587099160586/gold_sakura.gif"
+    },
+    {
+        "name": "Soyeon",
+        "group": "GOLD",
+        "single": "GIDLE",
+        "category": "gold",
+        "description": "**Shop** *`Gold`*",
+        "emoji": "⚜️",
+        "globalID": "2474",
+        "setID": "151",
+        "rarity": 151,
+        "price": 500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1128988587627663390/gold_soyeon.gif"
+    },
+    {
+        "name": "Wendy",
+        "group": "GOLD",
+        "single": "Red Velvet",
+        "category": "gold",
+        "description": "**Shop** *`Gold`*",
+        "emoji": "⚜️",
+        "globalID": "2475",
+        "setID": "151",
+        "rarity": 151,
+        "price": 500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1139994620252667985/gold_wendy.gif"
+    },
+    {
         "name": "Danielle",
         "group": "GOLD",
         "single": "NewJeans",
@@ -3673,110 +3778,5 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1145373782236741762/gold_yves.gif"
-    },
-    {
-        "name": "Baekhyun",
-        "group": "GOLD",
-        "single": "EXO",
-        "category": "gold",
-        "description": "**Shop** *`Gold`*",
-        "emoji": "⚜️",
-        "globalID": "2471",
-        "setID": "151",
-        "rarity": 151,
-        "price": 500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1128988586239348766/gold_baekhyun.gif"
-    },
-    {
-        "name": "Jungkook",
-        "group": "GOLD",
-        "single": "BTS",
-        "category": "gold",
-        "description": "**Shop** *`Gold`*",
-        "emoji": "⚜️",
-        "globalID": "2472",
-        "setID": "151",
-        "rarity": 151,
-        "price": 500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1128988586692329542/gold_jungkook.gif"
-    },
-    {
-        "name": "Sakura",
-        "group": "GOLD",
-        "single": "LE SSERAFIM",
-        "category": "gold",
-        "description": "**Shop** *`Gold`*",
-        "emoji": "⚜️",
-        "globalID": "2473",
-        "setID": "151",
-        "rarity": 151,
-        "price": 500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1128988587099160586/gold_sakura.gif"
-    },
-    {
-        "name": "Soyeon",
-        "group": "GOLD",
-        "single": "GIDLE",
-        "category": "gold",
-        "description": "**Shop** *`Gold`*",
-        "emoji": "⚜️",
-        "globalID": "2474",
-        "setID": "151",
-        "rarity": 151,
-        "price": 500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1128988587627663390/gold_soyeon.gif"
-    },
-    {
-        "name": "Wendy",
-        "group": "GOLD",
-        "single": "Red Velvet",
-        "category": "gold",
-        "description": "**Shop** *`Gold`*",
-        "emoji": "⚜️",
-        "globalID": "2475",
-        "setID": "151",
-        "rarity": 151,
-        "price": 500,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1107296640529879060/1139994620252667985/gold_wendy.gif"
     }
 ]

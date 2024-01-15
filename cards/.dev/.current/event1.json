@@ -1,5 +1,47 @@
 [
     {
+        "name": "Olivia Hye",
+        "group": "LOONA Solo",
+        "single": "Egoist",
+        "category": "loon",
+        "description": "**LOONA Solo** *`Individuals`*",
+        "emoji": "🐺",
+        "globalID": "1212",
+        "setID": "120",
+        "rarity": 12,
+        "price": 10,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715778311368746/egoist_oliviahye.png"
+    },
+    {
+        "name": "Yves",
+        "group": "LOONA Solo",
+        "single": "new",
+        "category": "loon",
+        "description": "**LOONA Solo** *`Individuals`*",
+        "emoji": "🦢",
+        "globalID": "1209",
+        "setID": "120",
+        "rarity": 12,
+        "price": 10,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715808933982239/new_yves.png"
+    },
+    {
         "name": "HeeJin",
         "group": "LOONA Solo",
         "single": "ViViD",
@@ -40,48 +82,6 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715777556385812/aroundyou_hyunjin.png"
-    },
-    {
-        "name": "HaSeul",
-        "group": "LOONA Solo",
-        "single": "Let Me In",
-        "category": "loon",
-        "description": "**LOONA Solo** *`Individuals`*",
-        "emoji": "🐦",
-        "globalID": "1203",
-        "setID": "120",
-        "rarity": 12,
-        "price": 10,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715808556490752/letmein_haseul.png"
-    },
-    {
-        "name": "YeoJin",
-        "group": "LOONA Solo",
-        "single": "Kiss Later",
-        "category": "loon",
-        "description": "**LOONA Solo** *`Individuals`*",
-        "emoji": "🐸",
-        "globalID": "1204",
-        "setID": "120",
-        "rarity": 12,
-        "price": 10,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715807746990120/kisslater_yeojin.png"
     },
     {
         "name": "ViVi",
@@ -147,13 +147,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715809802203176/sitr_jinsoul.png"
     },
     {
-        "name": "Choerry",
+        "name": "Go Won",
         "group": "LOONA Solo",
-        "single": "Love Cherry Motion",
+        "single": "One & Only",
         "category": "loon",
         "description": "**LOONA Solo** *`Individuals`*",
-        "emoji": "🦇",
-        "globalID": "1208",
+        "emoji": "🦋",
+        "globalID": "1211",
         "setID": "120",
         "rarity": 12,
         "price": 10,
@@ -165,16 +165,16 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715808170618890/lcm_choerry.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715809357615144/oneonly_gowon.png"
     },
     {
-        "name": "Yves",
+        "name": "YeoJin",
         "group": "LOONA Solo",
-        "single": "new",
+        "single": "Kiss Later",
         "category": "loon",
         "description": "**LOONA Solo** *`Individuals`*",
-        "emoji": "🦢",
-        "globalID": "1209",
+        "emoji": "🐸",
+        "globalID": "1204",
         "setID": "120",
         "rarity": 12,
         "price": 10,
@@ -186,7 +186,7 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715808933982239/new_yves.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715807746990120/kisslater_yeojin.png"
     },
     {
         "name": "Chuu",
@@ -210,13 +210,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715807344349294/heartattack_chuu.png"
     },
     {
-        "name": "Go Won",
+        "name": "Choerry",
         "group": "LOONA Solo",
-        "single": "One & Only",
+        "single": "Love Cherry Motion",
         "category": "loon",
         "description": "**LOONA Solo** *`Individuals`*",
-        "emoji": "🦋",
-        "globalID": "1211",
+        "emoji": "🦇",
+        "globalID": "1208",
         "setID": "120",
         "rarity": 12,
         "price": 10,
@@ -228,16 +228,16 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715809357615144/oneonly_gowon.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715808170618890/lcm_choerry.png"
     },
     {
-        "name": "Olivia Hye",
+        "name": "HaSeul",
         "group": "LOONA Solo",
-        "single": "Egoist",
+        "single": "Let Me In",
         "category": "loon",
         "description": "**LOONA Solo** *`Individuals`*",
-        "emoji": "🐺",
-        "globalID": "1212",
+        "emoji": "🐦",
+        "globalID": "1203",
         "setID": "120",
         "rarity": 12,
         "price": 10,
@@ -249,227 +249,17 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715778311368746/egoist_oliviahye.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035715808556490752/letmein_haseul.png"
     },
     {
-        "name": "Baekhyun",
-        "group": "EXO-CBX",
-        "single": "Blooming Day",
+        "name": "Doyoung",
+        "group": "NCT DOJAEJUNG",
+        "single": "Perfume",
         "category": "unit",
-        "description": "**Blooming Day** *`EXO-CBX`*",
-        "emoji": "🧩",
-        "globalID": "2186",
-        "setID": "235",
-        "rarity": 21,
-        "price": 10,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081972414151409684/bloomingday_baekhyun.png"
-    },
-    {
-        "name": "Chen",
-        "group": "EXO-CBX",
-        "single": "Blooming Day",
-        "category": "unit",
-        "description": "**Blooming Day** *`EXO-CBX`*",
-        "emoji": "🧩",
-        "globalID": "2187",
-        "setID": "235",
-        "rarity": 21,
-        "price": 10,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081972414407258152/bloomingday_chen.png"
-    },
-    {
-        "name": "Xiumin",
-        "group": "EXO-CBX",
-        "single": "Blooming Day",
-        "category": "unit",
-        "description": "**Blooming Day** *`EXO-CBX`*",
-        "emoji": "🧩",
-        "globalID": "2188",
-        "setID": "235",
-        "rarity": 21,
-        "price": 10,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081972414684090388/bloomingday_xiumin.png"
-    },
-    {
-        "name": "DK",
-        "group": "BSS",
-        "single": "Fighting",
-        "category": "unit",
-        "description": "**Fighting** *`BSS`*",
-        "emoji": "🏃",
-        "globalID": "2189",
-        "setID": "234",
-        "rarity": 21,
-        "price": 10,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081972449165443152/fighting_dk.png"
-    },
-    {
-        "name": "Hoshi",
-        "group": "BSS",
-        "single": "Fighting",
-        "category": "unit",
-        "description": "**Fighting** *`BSS`*",
-        "emoji": "🏃",
-        "globalID": "2190",
-        "setID": "234",
-        "rarity": 21,
-        "price": 10,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081972449417105448/fighting_hoshi.png"
-    },
-    {
-        "name": "Seungkwan",
-        "group": "BSS",
-        "single": "Fighting",
-        "category": "unit",
-        "description": "**Fighting** *`BSS`*",
-        "emoji": "🏃",
-        "globalID": "2191",
-        "setID": "234",
-        "rarity": 21,
-        "price": 10,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081972449647788132/fighting_seungkwan.png"
-    },
-    {
-        "name": "Irene",
-        "group": "Irene & Seulgi",
-        "single": "Monster",
-        "category": "unit",
-        "description": "**Monster** *`Irene & Seulgi`*",
-        "emoji": "👾",
-        "globalID": "2192",
-        "setID": "233",
-        "rarity": 21,
-        "price": 10,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081972600584028180/monster_irene.png"
-    },
-    {
-        "name": "Seulgi",
-        "group": "Irene & Seulgi",
-        "single": "Monster",
-        "category": "unit",
-        "description": "**Monster** *`Irene & Seulgi`*",
-        "emoji": "👾",
-        "globalID": "2193",
-        "setID": "233",
-        "rarity": 21,
-        "price": 10,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081972600831496304/monster_seulgi.png"
-    },
-    {
-        "name": "Hyuna",
-        "group": "Trouble Maker",
-        "single": "Trouble Maker",
-        "category": "unit",
-        "description": "**Trouble Maker** *`Trouble Maker`*",
-        "emoji": "😟",
-        "globalID": "2194",
-        "setID": "232",
-        "rarity": 21,
-        "price": 10,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081972601078947961/troublemaker_hyuna.png"
-    },
-    {
-        "name": "Hyunseung",
-        "group": "Trouble Maker",
-        "single": "Trouble Maker",
-        "category": "unit",
-        "description": "**Trouble Maker** *`Trouble Maker`*",
-        "emoji": "😟",
-        "globalID": "2195",
-        "setID": "232",
-        "rarity": 21,
-        "price": 10,
-        "sellPrice": 10,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081972601347391629/troublemaker_hyunseung.png"
-    },
-    {
-        "name": "E'Dawn",
-        "group": "Triple H",
-        "single": "365 FRESH",
-        "category": "unit",
-        "description": "**365 FRESH** *`Triple H`*",
-        "emoji": "🌞",
-        "globalID": "2266",
-        "setID": "228",
+        "description": "**Perfume** *`NCT DOJAEJUNG`*",
+        "emoji": "💐",
+        "globalID": "2279",
+        "setID": "224",
         "rarity": 17,
         "price": 10,
         "sellPrice": 10,
@@ -480,17 +270,17 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1099638114022076506/365fresh_dawn.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1099635172753817710/perfume_doyoung.png"
     },
     {
-        "name": "Hyuna",
-        "group": "Triple H",
-        "single": "365 FRESH",
+        "name": "Jaehyun",
+        "group": "NCT DOJAEJUNG",
+        "single": "Perfume",
         "category": "unit",
-        "description": "**365 FRESH** *`Triple H`*",
-        "emoji": "🌞",
-        "globalID": "2267",
-        "setID": "228",
+        "description": "**Perfume** *`NCT DOJAEJUNG`*",
+        "emoji": "💐",
+        "globalID": "2280",
+        "setID": "224",
         "rarity": 17,
         "price": 10,
         "sellPrice": 10,
@@ -501,17 +291,17 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1099635123852427274/365fresh_hyuna.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1099635172992880680/perfume_jaehyun.png"
     },
     {
-        "name": "Hui",
-        "group": "Triple H",
-        "single": "365 FRESH",
+        "name": "Jungwoo",
+        "group": "NCT DOJAEJUNG",
+        "single": "Perfume",
         "category": "unit",
-        "description": "**365 FRESH** *`Triple H`*",
-        "emoji": "🌞",
-        "globalID": "2268",
-        "setID": "228",
+        "description": "**Perfume** *`NCT DOJAEJUNG`*",
+        "emoji": "💐",
+        "globalID": "2281",
+        "setID": "224",
         "rarity": 17,
         "price": 10,
         "sellPrice": 10,
@@ -522,17 +312,17 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1099635123621744650/365fresh_hui.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1099635173257134142/perfume_jungwoo.png"
     },
     {
-        "name": "Jay B",
-        "group": "JJ Project",
-        "single": "BOUNCE",
+        "name": "Lizzy",
+        "group": "Orange Caramel",
+        "single": "Lipstick",
         "category": "unit",
-        "description": "**BOUNCE** *`JJ Project`*",
-        "emoji": "🎸",
-        "globalID": "2269",
-        "setID": "227",
+        "description": "**Lipstick** *`Orange Caramel`*",
+        "emoji": "💄",
+        "globalID": "2276",
+        "setID": "225",
         "rarity": 17,
         "price": 10,
         "sellPrice": 10,
@@ -543,17 +333,17 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1099635124338950246/bounce_jayb.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1099635171826876569/lipstick_lizzy.png"
     },
     {
-        "name": "Jinyoung",
-        "group": "JJ Project",
-        "single": "BOUNCE",
+        "name": "Nana",
+        "group": "Orange Caramel",
+        "single": "Lipstick",
         "category": "unit",
-        "description": "**BOUNCE** *`JJ Project`*",
-        "emoji": "🎸",
-        "globalID": "2270",
-        "setID": "227",
+        "description": "**Lipstick** *`Orange Caramel`*",
+        "emoji": "💄",
+        "globalID": "2277",
+        "setID": "225",
         "rarity": 17,
         "price": 10,
         "sellPrice": 10,
@@ -564,7 +354,28 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1099635124561268746/bounce_jinyoung.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1099635172187574372/lipstick_nana.png"
+    },
+    {
+        "name": "Raina",
+        "group": "Orange Caramel",
+        "single": "Lipstick",
+        "category": "unit",
+        "description": "**Lipstick** *`Orange Caramel`*",
+        "emoji": "💄",
+        "globalID": "2278",
+        "setID": "225",
+        "rarity": 17,
+        "price": 10,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1099635172489568316/lipstick_raina.png"
     },
     {
         "name": "Hyoyeon",
@@ -672,14 +483,14 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1099635125853114448/liltouch_yuri.png"
     },
     {
-        "name": "Lizzy",
-        "group": "Orange Caramel",
-        "single": "Lipstick",
+        "name": "Jay B",
+        "group": "JJ Project",
+        "single": "BOUNCE",
         "category": "unit",
-        "description": "**Lipstick** *`Orange Caramel`*",
-        "emoji": "💄",
-        "globalID": "2276",
-        "setID": "225",
+        "description": "**BOUNCE** *`JJ Project`*",
+        "emoji": "🎸",
+        "globalID": "2269",
+        "setID": "227",
         "rarity": 17,
         "price": 10,
         "sellPrice": 10,
@@ -690,17 +501,17 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1099635171826876569/lipstick_lizzy.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1099635124338950246/bounce_jayb.png"
     },
     {
-        "name": "Nana",
-        "group": "Orange Caramel",
-        "single": "Lipstick",
+        "name": "Jinyoung",
+        "group": "JJ Project",
+        "single": "BOUNCE",
         "category": "unit",
-        "description": "**Lipstick** *`Orange Caramel`*",
-        "emoji": "💄",
-        "globalID": "2277",
-        "setID": "225",
+        "description": "**BOUNCE** *`JJ Project`*",
+        "emoji": "🎸",
+        "globalID": "2270",
+        "setID": "227",
         "rarity": 17,
         "price": 10,
         "sellPrice": 10,
@@ -711,17 +522,17 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1099635172187574372/lipstick_nana.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1099635124561268746/bounce_jinyoung.png"
     },
     {
-        "name": "Raina",
-        "group": "Orange Caramel",
-        "single": "Lipstick",
+        "name": "E'Dawn",
+        "group": "Triple H",
+        "single": "365 FRESH",
         "category": "unit",
-        "description": "**Lipstick** *`Orange Caramel`*",
-        "emoji": "💄",
-        "globalID": "2278",
-        "setID": "225",
+        "description": "**365 FRESH** *`Triple H`*",
+        "emoji": "🌞",
+        "globalID": "2266",
+        "setID": "228",
         "rarity": 17,
         "price": 10,
         "sellPrice": 10,
@@ -732,17 +543,17 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1099635172489568316/lipstick_raina.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1099638114022076506/365fresh_dawn.png"
     },
     {
-        "name": "Doyoung",
-        "group": "NCT DOJAEJUNG",
-        "single": "Perfume",
+        "name": "Hyuna",
+        "group": "Triple H",
+        "single": "365 FRESH",
         "category": "unit",
-        "description": "**Perfume** *`NCT DOJAEJUNG`*",
-        "emoji": "💐",
-        "globalID": "2279",
-        "setID": "224",
+        "description": "**365 FRESH** *`Triple H`*",
+        "emoji": "🌞",
+        "globalID": "2267",
+        "setID": "228",
         "rarity": 17,
         "price": 10,
         "sellPrice": 10,
@@ -753,17 +564,17 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1099635172753817710/perfume_doyoung.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1099635123852427274/365fresh_hyuna.png"
     },
     {
-        "name": "Jaehyun",
-        "group": "NCT DOJAEJUNG",
-        "single": "Perfume",
+        "name": "Hui",
+        "group": "Triple H",
+        "single": "365 FRESH",
         "category": "unit",
-        "description": "**Perfume** *`NCT DOJAEJUNG`*",
-        "emoji": "💐",
-        "globalID": "2280",
-        "setID": "224",
+        "description": "**365 FRESH** *`Triple H`*",
+        "emoji": "🌞",
+        "globalID": "2268",
+        "setID": "228",
         "rarity": 17,
         "price": 10,
         "sellPrice": 10,
@@ -774,18 +585,18 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1099635172992880680/perfume_jaehyun.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1099635123621744650/365fresh_hui.png"
     },
     {
-        "name": "Jungwoo",
-        "group": "NCT DOJAEJUNG",
-        "single": "Perfume",
+        "name": "Hyuna",
+        "group": "Trouble Maker",
+        "single": "Trouble Maker",
         "category": "unit",
-        "description": "**Perfume** *`NCT DOJAEJUNG`*",
-        "emoji": "💐",
-        "globalID": "2281",
-        "setID": "224",
-        "rarity": 17,
+        "description": "**Trouble Maker** *`Trouble Maker`*",
+        "emoji": "😟",
+        "globalID": "2194",
+        "setID": "232",
+        "rarity": 21,
         "price": 10,
         "sellPrice": 10,
         "stats": {
@@ -795,6 +606,195 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1099635173257134142/perfume_jungwoo.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081972601078947961/troublemaker_hyuna.png"
+    },
+    {
+        "name": "Hyunseung",
+        "group": "Trouble Maker",
+        "single": "Trouble Maker",
+        "category": "unit",
+        "description": "**Trouble Maker** *`Trouble Maker`*",
+        "emoji": "😟",
+        "globalID": "2195",
+        "setID": "232",
+        "rarity": 21,
+        "price": 10,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081972601347391629/troublemaker_hyunseung.png"
+    },
+    {
+        "name": "Irene",
+        "group": "Irene & Seulgi",
+        "single": "Monster",
+        "category": "unit",
+        "description": "**Monster** *`Irene & Seulgi`*",
+        "emoji": "👾",
+        "globalID": "2192",
+        "setID": "233",
+        "rarity": 21,
+        "price": 10,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081972600584028180/monster_irene.png"
+    },
+    {
+        "name": "Seulgi",
+        "group": "Irene & Seulgi",
+        "single": "Monster",
+        "category": "unit",
+        "description": "**Monster** *`Irene & Seulgi`*",
+        "emoji": "👾",
+        "globalID": "2193",
+        "setID": "233",
+        "rarity": 21,
+        "price": 10,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081972600831496304/monster_seulgi.png"
+    },
+    {
+        "name": "Hoshi",
+        "group": "BSS",
+        "single": "Fighting",
+        "category": "unit",
+        "description": "**Fighting** *`BSS`*",
+        "emoji": "🏃",
+        "globalID": "2190",
+        "setID": "234",
+        "rarity": 21,
+        "price": 10,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081972449417105448/fighting_hoshi.png"
+    },
+    {
+        "name": "DK",
+        "group": "BSS",
+        "single": "Fighting",
+        "category": "unit",
+        "description": "**Fighting** *`BSS`*",
+        "emoji": "🏃",
+        "globalID": "2189",
+        "setID": "234",
+        "rarity": 21,
+        "price": 10,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081972449165443152/fighting_dk.png"
+    },
+    {
+        "name": "Seungkwan",
+        "group": "BSS",
+        "single": "Fighting",
+        "category": "unit",
+        "description": "**Fighting** *`BSS`*",
+        "emoji": "🏃",
+        "globalID": "2191",
+        "setID": "234",
+        "rarity": 21,
+        "price": 10,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081972449647788132/fighting_seungkwan.png"
+    },
+    {
+        "name": "Baekhyun",
+        "group": "EXO-CBX",
+        "single": "Blooming Day",
+        "category": "unit",
+        "description": "**Blooming Day** *`EXO-CBX`*",
+        "emoji": "🧩",
+        "globalID": "2186",
+        "setID": "235",
+        "rarity": 21,
+        "price": 10,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081972414151409684/bloomingday_baekhyun.png"
+    },
+    {
+        "name": "Chen",
+        "group": "EXO-CBX",
+        "single": "Blooming Day",
+        "category": "unit",
+        "description": "**Blooming Day** *`EXO-CBX`*",
+        "emoji": "🧩",
+        "globalID": "2187",
+        "setID": "235",
+        "rarity": 21,
+        "price": 10,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081972414407258152/bloomingday_chen.png"
+    },
+    {
+        "name": "Xiumin",
+        "group": "EXO-CBX",
+        "single": "Blooming Day",
+        "category": "unit",
+        "description": "**Blooming Day** *`EXO-CBX`*",
+        "emoji": "🧩",
+        "globalID": "2188",
+        "setID": "235",
+        "rarity": 21,
+        "price": 10,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081972414684090388/bloomingday_xiumin.png"
     }
 ]

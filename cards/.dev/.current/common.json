@@ -21,48 +21,6 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094732287985340469/ttt_chaeyoung.png"
     },
     {
-        "name": "Dahyun",
-        "group": "TWICE",
-        "single": "Talk That Talk",
-        "category": "comn",
-        "description": "**Talk That Talk** *`TWICE`*",
-        "emoji": "🗣",
-        "globalID": "8502",
-        "setID": "851",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094732288287318076/ttt_dahyun.png"
-    },
-    {
-        "name": "Jeongyeon",
-        "group": "TWICE",
-        "single": "Talk That Talk",
-        "category": "comn",
-        "description": "**Talk That Talk** *`TWICE`*",
-        "emoji": "🗣",
-        "globalID": "8503",
-        "setID": "851",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094732288559960164/ttt_jeongyeon.png"
-    },
-    {
         "name": "Jihyo",
         "group": "TWICE",
         "single": "Talk That Talk",
@@ -82,48 +40,6 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094732288845168680/ttt_jihyo.png"
-    },
-    {
-        "name": "Mina",
-        "group": "TWICE",
-        "single": "Talk That Talk",
-        "category": "comn",
-        "description": "**Talk That Talk** *`TWICE`*",
-        "emoji": "🗣",
-        "globalID": "8505",
-        "setID": "851",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094732289113596026/ttt_mina.png"
-    },
-    {
-        "name": "Momo",
-        "group": "TWICE",
-        "single": "Talk That Talk",
-        "category": "comn",
-        "description": "**Talk That Talk** *`TWICE`*",
-        "emoji": "🗣",
-        "globalID": "8506",
-        "setID": "851",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094732289377849355/ttt_momo.png"
     },
     {
         "name": "Nayeon",
@@ -168,6 +84,90 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094732289927290920/ttt_sana.png"
     },
     {
+        "name": "Mina",
+        "group": "TWICE",
+        "single": "Talk That Talk",
+        "category": "comn",
+        "description": "**Talk That Talk** *`TWICE`*",
+        "emoji": "🗣",
+        "globalID": "8505",
+        "setID": "851",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094732289113596026/ttt_mina.png"
+    },
+    {
+        "name": "Jeongyeon",
+        "group": "TWICE",
+        "single": "Talk That Talk",
+        "category": "comn",
+        "description": "**Talk That Talk** *`TWICE`*",
+        "emoji": "🗣",
+        "globalID": "8503",
+        "setID": "851",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094732288559960164/ttt_jeongyeon.png"
+    },
+    {
+        "name": "Momo",
+        "group": "TWICE",
+        "single": "Talk That Talk",
+        "category": "comn",
+        "description": "**Talk That Talk** *`TWICE`*",
+        "emoji": "🗣",
+        "globalID": "8506",
+        "setID": "851",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094732289377849355/ttt_momo.png"
+    },
+    {
+        "name": "Dahyun",
+        "group": "TWICE",
+        "single": "Talk That Talk",
+        "category": "comn",
+        "description": "**Talk That Talk** *`TWICE`*",
+        "emoji": "🗣",
+        "globalID": "8502",
+        "setID": "851",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094732288287318076/ttt_dahyun.png"
+    },
+    {
         "name": "Tzuyu",
         "group": "TWICE",
         "single": "Talk That Talk",
@@ -189,27 +189,6 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094732290216706281/ttt_tzuyu.png"
     },
     {
-        "name": "Chaeryeong",
-        "group": "ITZY",
-        "single": "Sneakers",
-        "category": "comn",
-        "description": "**Sneakers** *`ITZY`*",
-        "emoji": "👟",
-        "globalID": "8510",
-        "setID": "852",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1014248249298788383/Chaeryeong_Sneakers.png"
-    },
-    {
         "name": "Lia",
         "group": "ITZY",
         "single": "Sneakers",
@@ -229,6 +208,27 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1014248249869226094/Lia_Sneakers.png"
+    },
+    {
+        "name": "Yuna",
+        "group": "ITZY",
+        "single": "Sneakers",
+        "category": "comn",
+        "description": "**Sneakers** *`ITZY`*",
+        "emoji": "👟",
+        "globalID": "8514",
+        "setID": "852",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1014248251161051217/Yuna_Sneakers.png"
     },
     {
         "name": "Ryujin",
@@ -273,13 +273,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1014248250720669696/Yeji_Sneakers.png"
     },
     {
-        "name": "Yuna",
+        "name": "Chaeryeong",
         "group": "ITZY",
         "single": "Sneakers",
         "category": "comn",
         "description": "**Sneakers** *`ITZY`*",
         "emoji": "👟",
-        "globalID": "8514",
+        "globalID": "8510",
         "setID": "852",
         "rarity": 70,
         "price": 30,
@@ -291,16 +291,16 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1014248251161051217/Yuna_Sneakers.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1014248249298788383/Chaeryeong_Sneakers.png"
     },
     {
-        "name": "Chenle",
+        "name": "Mark",
         "group": "NCT DREAM",
         "single": "Beatbox",
         "category": "comn",
         "description": "**Beatbox** *`NCT DREAM`*",
         "emoji": "📻",
-        "globalID": "8515",
+        "globalID": "8520",
         "setID": "853",
         "rarity": 70,
         "price": 30,
@@ -312,7 +312,7 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094731646130983002/beatbox_chenle.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094731719111876718/beatbox_mark.png"
     },
     {
         "name": "Haechan",
@@ -357,6 +357,27 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094731646751739934/beatbox_jaemin.png"
     },
     {
+        "name": "Renjun",
+        "group": "NCT DREAM",
+        "single": "Beatbox",
+        "category": "comn",
+        "description": "**Beatbox** *`NCT DREAM`*",
+        "emoji": "📻",
+        "globalID": "8521",
+        "setID": "853",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094731719359344842/beatbox_renjun.png"
+    },
+    {
         "name": "Jeno",
         "group": "NCT DREAM",
         "single": "Beatbox",
@@ -399,13 +420,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094731718822465577/beatbox_jisung.png"
     },
     {
-        "name": "Mark",
+        "name": "Chenle",
         "group": "NCT DREAM",
         "single": "Beatbox",
         "category": "comn",
         "description": "**Beatbox** *`NCT DREAM`*",
         "emoji": "📻",
-        "globalID": "8520",
+        "globalID": "8515",
         "setID": "853",
         "rarity": 70,
         "price": 30,
@@ -417,17 +438,17 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094731719111876718/beatbox_mark.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094731646130983002/beatbox_chenle.png"
     },
     {
-        "name": "Renjun",
-        "group": "NCT DREAM",
-        "single": "Beatbox",
+        "name": "RM",
+        "group": "BTS",
+        "single": "Yet To Come",
         "category": "comn",
-        "description": "**Beatbox** *`NCT DREAM`*",
-        "emoji": "📻",
-        "globalID": "8521",
-        "setID": "853",
+        "description": "**Yet To Come** *`BTS`*",
+        "emoji": "🚌",
+        "globalID": "8526",
+        "setID": "854",
         "rarity": 70,
         "price": 30,
         "sellPrice": 30,
@@ -438,7 +459,7 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094731719359344842/beatbox_renjun.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1018259089077321758/rm.png"
     },
     {
         "name": "J-Hope",
@@ -525,13 +546,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1018259088729190532/jk.png"
     },
     {
-        "name": "RM",
+        "name": "V",
         "group": "BTS",
         "single": "Yet To Come",
         "category": "comn",
         "description": "**Yet To Come** *`BTS`*",
         "emoji": "🚌",
-        "globalID": "8526",
+        "globalID": "8528",
         "setID": "854",
         "rarity": 70,
         "price": 30,
@@ -543,7 +564,7 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1018259089077321758/rm.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1018259089802936420/v.png"
     },
     {
         "name": "Suga",
@@ -567,34 +588,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1018259089446416556/suga.png"
     },
     {
-        "name": "V",
-        "group": "BTS",
-        "single": "Yet To Come",
-        "category": "comn",
-        "description": "**Yet To Come** *`BTS`*",
-        "emoji": "🚌",
-        "globalID": "8528",
-        "setID": "854",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1018259089802936420/v.png"
-    },
-    {
-        "name": "Hyunjae",
+        "name": "New",
         "group": "THE BOYZ",
         "single": "Whisper",
         "category": "comn",
         "description": "**Whisper** *`THE BOYZ`*",
         "emoji": "💨",
-        "globalID": "8529",
+        "globalID": "8534",
         "setID": "855",
         "rarity": 70,
         "price": 30,
@@ -606,7 +606,7 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1020745052835823646/Hyunjae.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1020745770061807691/New.png"
     },
     {
         "name": "Jacob",
@@ -630,6 +630,27 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1020745053204914258/Jacob.png"
     },
     {
+        "name": "Younghoon",
+        "group": "THE BOYZ",
+        "single": "Whisper",
+        "category": "comn",
+        "description": "**Whisper** *`THE BOYZ`*",
+        "emoji": "💨",
+        "globalID": "8538",
+        "setID": "855",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1020746202314178711/Younghoon.png"
+    },
+    {
         "name": "Juhaknyeon",
         "group": "THE BOYZ",
         "single": "Whisper",
@@ -649,6 +670,48 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1020745053603377264/Juhaknyeon.png"
+    },
+    {
+        "name": "Q",
+        "group": "THE BOYZ",
+        "single": "Whisper",
+        "category": "comn",
+        "description": "**Whisper** *`THE BOYZ`*",
+        "emoji": "💨",
+        "globalID": "8535",
+        "setID": "855",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1020745770422521997/Q.png"
+    },
+    {
+        "name": "Hyunjae",
+        "group": "THE BOYZ",
+        "single": "Whisper",
+        "category": "comn",
+        "description": "**Whisper** *`THE BOYZ`*",
+        "emoji": "💨",
+        "globalID": "8529",
+        "setID": "855",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1020745052835823646/Hyunjae.png"
     },
     {
         "name": "Juyeon",
@@ -693,48 +756,6 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1020745769654956102/Kevin.png"
     },
     {
-        "name": "New",
-        "group": "THE BOYZ",
-        "single": "Whisper",
-        "category": "comn",
-        "description": "**Whisper** *`THE BOYZ`*",
-        "emoji": "💨",
-        "globalID": "8534",
-        "setID": "855",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1020745770061807691/New.png"
-    },
-    {
-        "name": "Q",
-        "group": "THE BOYZ",
-        "single": "Whisper",
-        "category": "comn",
-        "description": "**Whisper** *`THE BOYZ`*",
-        "emoji": "💨",
-        "globalID": "8535",
-        "setID": "855",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1020745770422521997/Q.png"
-    },
-    {
         "name": "Sangyeon",
         "group": "THE BOYZ",
         "single": "Whisper",
@@ -777,34 +798,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1020746201945088101/Sunwoo.png"
     },
     {
-        "name": "Younghoon",
-        "group": "THE BOYZ",
-        "single": "Whisper",
-        "category": "comn",
-        "description": "**Whisper** *`THE BOYZ`*",
-        "emoji": "💨",
-        "globalID": "8538",
-        "setID": "855",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1020746202314178711/Younghoon.png"
-    },
-    {
-        "name": "Heeseung",
+        "name": "Sunoo",
         "group": "ENHYPEN",
         "single": "Future Perfect",
         "category": "comn",
         "description": "**Future Perfect** *`ENHYPEN`*",
         "emoji": "🏫",
-        "globalID": "8539",
+        "globalID": "8545",
         "setID": "856",
         "rarity": 70,
         "price": 30,
@@ -816,70 +816,7 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1023271880968384592/Heeseung.png"
-    },
-    {
-        "name": "Jake",
-        "group": "ENHYPEN",
-        "single": "Future Perfect",
-        "category": "comn",
-        "description": "**Future Perfect** *`ENHYPEN`*",
-        "emoji": "🏫",
-        "globalID": "8540",
-        "setID": "856",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1023271881962422413/Jake.png"
-    },
-    {
-        "name": "Jay",
-        "group": "ENHYPEN",
-        "single": "Future Perfect",
-        "category": "comn",
-        "description": "**Future Perfect** *`ENHYPEN`*",
-        "emoji": "🏫",
-        "globalID": "8541",
-        "setID": "856",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1023271882331525140/Jay.png"
-    },
-    {
-        "name": "Jungwon",
-        "group": "ENHYPEN",
-        "single": "Future Perfect",
-        "category": "comn",
-        "description": "**Future Perfect** *`ENHYPEN`*",
-        "emoji": "🏫",
-        "globalID": "8542",
-        "setID": "856",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1023271882671276212/Jungwon.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1023271883782762496/Sunoo.png"
     },
     {
         "name": "Ni-Ki",
@@ -903,6 +840,27 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1023283763167363093/Enhypen_future_perfect_1_copy.png"
     },
     {
+        "name": "Jake",
+        "group": "ENHYPEN",
+        "single": "Future Perfect",
+        "category": "comn",
+        "description": "**Future Perfect** *`ENHYPEN`*",
+        "emoji": "🏫",
+        "globalID": "8540",
+        "setID": "856",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1023271881962422413/Jake.png"
+    },
+    {
         "name": "Sunghoon",
         "group": "ENHYPEN",
         "single": "Future Perfect",
@@ -924,13 +882,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1023271883409461269/Sunghoon.png"
     },
     {
-        "name": "Sunoo",
+        "name": "Heeseung",
         "group": "ENHYPEN",
         "single": "Future Perfect",
         "category": "comn",
         "description": "**Future Perfect** *`ENHYPEN`*",
         "emoji": "🏫",
-        "globalID": "8545",
+        "globalID": "8539",
         "setID": "856",
         "rarity": 70,
         "price": 30,
@@ -942,17 +900,17 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1023271883782762496/Sunoo.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1023271880968384592/Heeseung.png"
     },
     {
-        "name": "Jaehee",
-        "group": "Weeekly",
-        "single": "Ven Para",
+        "name": "Jungwon",
+        "group": "ENHYPEN",
+        "single": "Future Perfect",
         "category": "comn",
-        "description": "**Ven Para** *`Weeekly`*",
-        "emoji": "☀️",
-        "globalID": "8546",
-        "setID": "857",
+        "description": "**Future Perfect** *`ENHYPEN`*",
+        "emoji": "🏫",
+        "globalID": "8542",
+        "setID": "856",
         "rarity": 70,
         "price": 30,
         "sellPrice": 30,
@@ -963,7 +921,28 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1025778108915269724/Jaehee_Ven_Para.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1023271882671276212/Jungwon.png"
+    },
+    {
+        "name": "Jay",
+        "group": "ENHYPEN",
+        "single": "Future Perfect",
+        "category": "comn",
+        "description": "**Future Perfect** *`ENHYPEN`*",
+        "emoji": "🏫",
+        "globalID": "8541",
+        "setID": "856",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1023271882331525140/Jay.png"
     },
     {
         "name": "Jihan",
@@ -987,27 +966,6 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1025778109397598288/Jihan_Ven_Para.png"
     },
     {
-        "name": "Jiyoon",
-        "group": "Weeekly",
-        "single": "Ven Para",
-        "category": "comn",
-        "description": "**Ven Para** *`Weeekly`*",
-        "emoji": "☀️",
-        "globalID": "8548",
-        "setID": "857",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1025778109829615737/Jiyoon_Ven_Para.png"
-    },
-    {
         "name": "Monday",
         "group": "Weeekly",
         "single": "Ven Para",
@@ -1029,13 +987,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1025778110295195648/Monday_Ven_Para.png"
     },
     {
-        "name": "Soeun",
+        "name": "Jaehee",
         "group": "Weeekly",
         "single": "Ven Para",
         "category": "comn",
         "description": "**Ven Para** *`Weeekly`*",
         "emoji": "☀️",
-        "globalID": "8550",
+        "globalID": "8546",
         "setID": "857",
         "rarity": 70,
         "price": 30,
@@ -1047,7 +1005,7 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1025778110731407460/Soeun_Ven_Para.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1025778108915269724/Jaehee_Ven_Para.png"
     },
     {
         "name": "Soojin",
@@ -1092,6 +1050,69 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1025778111494766613/Zoa_Ven_Para.png"
     },
     {
+        "name": "Jiyoon",
+        "group": "Weeekly",
+        "single": "Ven Para",
+        "category": "comn",
+        "description": "**Ven Para** *`Weeekly`*",
+        "emoji": "☀️",
+        "globalID": "8548",
+        "setID": "857",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1025778109829615737/Jiyoon_Ven_Para.png"
+    },
+    {
+        "name": "Soeun",
+        "group": "Weeekly",
+        "single": "Ven Para",
+        "category": "comn",
+        "description": "**Ven Para** *`Weeekly`*",
+        "emoji": "☀️",
+        "globalID": "8550",
+        "setID": "857",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1025778110731407460/Soeun_Ven_Para.png"
+    },
+    {
+        "name": "Vivi",
+        "group": "LOONA",
+        "single": "Flip That",
+        "category": "comn",
+        "description": "**Flip That** *`LOONA`*",
+        "emoji": "🍭",
+        "globalID": "8562",
+        "setID": "858",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1028280192470372392/Vivi_Flip_That2.png"
+    },
+    {
         "name": "Choerry",
         "group": "LOONA",
         "single": "Flip That",
@@ -1111,69 +1132,6 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1028280187382661150/Choerry_Flip_That2.png"
-    },
-    {
-        "name": "Chuu",
-        "group": "LOONA",
-        "single": "Flip That",
-        "category": "comn",
-        "description": "**Flip That** *`LOONA`*",
-        "emoji": "🍭",
-        "globalID": "8554",
-        "setID": "858",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1028280187760148550/Chuu_Flip_That2.png"
-    },
-    {
-        "name": "Go Won",
-        "group": "LOONA",
-        "single": "Flip That",
-        "category": "comn",
-        "description": "**Flip That** *`LOONA`*",
-        "emoji": "🍭",
-        "globalID": "8555",
-        "setID": "858",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1028280188385099836/Go_Won_Flip_That.png"
-    },
-    {
-        "name": "Haseul",
-        "group": "LOONA",
-        "single": "Flip That",
-        "category": "comn",
-        "description": "**Flip That** *`LOONA`*",
-        "emoji": "🍭",
-        "globalID": "8556",
-        "setID": "858",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1028280188921991188/Haseul_Flip_That2.png"
     },
     {
         "name": "Heejin",
@@ -1260,48 +1218,6 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1028280191467933746/Kim_Lip_Flip_That2.png"
     },
     {
-        "name": "Olivia Hye",
-        "group": "LOONA",
-        "single": "Flip That",
-        "category": "comn",
-        "description": "**Flip That** *`LOONA`*",
-        "emoji": "🍭",
-        "globalID": "8561",
-        "setID": "858",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1028280191857983520/Olivia_Hye_Flip_That.png"
-    },
-    {
-        "name": "Vivi",
-        "group": "LOONA",
-        "single": "Flip That",
-        "category": "comn",
-        "description": "**Flip That** *`LOONA`*",
-        "emoji": "🍭",
-        "globalID": "8562",
-        "setID": "858",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1028280192470372392/Vivi_Flip_That2.png"
-    },
-    {
         "name": "Yeojin",
         "group": "LOONA",
         "single": "Flip That",
@@ -1342,6 +1258,111 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1028280302235287622/Yves_Flip_That2.png"
+    },
+    {
+        "name": "Chuu",
+        "group": "LOONA",
+        "single": "Flip That",
+        "category": "comn",
+        "description": "**Flip That** *`LOONA`*",
+        "emoji": "🍭",
+        "globalID": "8554",
+        "setID": "858",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1028280187760148550/Chuu_Flip_That2.png"
+    },
+    {
+        "name": "Go Won",
+        "group": "LOONA",
+        "single": "Flip That",
+        "category": "comn",
+        "description": "**Flip That** *`LOONA`*",
+        "emoji": "🍭",
+        "globalID": "8555",
+        "setID": "858",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1028280188385099836/Go_Won_Flip_That.png"
+    },
+    {
+        "name": "Haseul",
+        "group": "LOONA",
+        "single": "Flip That",
+        "category": "comn",
+        "description": "**Flip That** *`LOONA`*",
+        "emoji": "🍭",
+        "globalID": "8556",
+        "setID": "858",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1028280188921991188/Haseul_Flip_That2.png"
+    },
+    {
+        "name": "Olivia Hye",
+        "group": "LOONA",
+        "single": "Flip That",
+        "category": "comn",
+        "description": "**Flip That** *`LOONA`*",
+        "emoji": "🍭",
+        "globalID": "8561",
+        "setID": "858",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1028280191857983520/Olivia_Hye_Flip_That.png"
+    },
+    {
+        "name": "Wonho³",
+        "group": "Wonho",
+        "single": "Don't Regret",
+        "category": "comn",
+        "description": "**Don't Regret** *`Wonho`*",
+        "emoji": "☎️",
+        "globalID": "8567",
+        "setID": "859",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1030864152304033802/wonho2.png"
     },
     {
         "name": "Wonho¹",
@@ -1386,27 +1407,6 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1030864151716827186/wonho1.png"
     },
     {
-        "name": "Wonho³",
-        "group": "Wonho",
-        "single": "Don't Regret",
-        "category": "comn",
-        "description": "**Don't Regret** *`Wonho`*",
-        "emoji": "☎️",
-        "globalID": "8567",
-        "setID": "859",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1030864152304033802/wonho2.png"
-    },
-    {
         "name": "Asahi",
         "group": "TREASURE",
         "single": "Hello",
@@ -1449,13 +1449,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1033362872463532042/Doyoung.png"
     },
     {
-        "name": "Haruto",
+        "name": "Jeongwoo",
         "group": "TREASURE",
         "single": "Hello",
         "category": "comn",
         "description": "**Hello** *`TREASURE`*",
         "emoji": "👋",
-        "globalID": "8570",
+        "globalID": "8573",
         "setID": "860",
         "rarity": 70,
         "price": 30,
@@ -1467,7 +1467,7 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1033362873210130533/Haruto.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1033362927165640734/Jeongwoo.png"
     },
     {
         "name": "Hyunsuk",
@@ -1489,48 +1489,6 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1033362873545658378/Hyunsuk.png"
-    },
-    {
-        "name": "Jaehyuk",
-        "group": "TREASURE",
-        "single": "Hello",
-        "category": "comn",
-        "description": "**Hello** *`TREASURE`*",
-        "emoji": "👋",
-        "globalID": "8572",
-        "setID": "860",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1033362874069950474/Jaehyuk.png"
-    },
-    {
-        "name": "Jeongwoo",
-        "group": "TREASURE",
-        "single": "Hello",
-        "category": "comn",
-        "description": "**Hello** *`TREASURE`*",
-        "emoji": "👋",
-        "globalID": "8573",
-        "setID": "860",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1033362927165640734/Jeongwoo.png"
     },
     {
         "name": "Jihoon",
@@ -1596,6 +1554,48 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1033362928537174107/Junkyu.png"
     },
     {
+        "name": "Haruto",
+        "group": "TREASURE",
+        "single": "Hello",
+        "category": "comn",
+        "description": "**Hello** *`TREASURE`*",
+        "emoji": "👋",
+        "globalID": "8570",
+        "setID": "860",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1033362873210130533/Haruto.png"
+    },
+    {
+        "name": "Jaehyuk",
+        "group": "TREASURE",
+        "single": "Hello",
+        "category": "comn",
+        "description": "**Hello** *`TREASURE`*",
+        "emoji": "👋",
+        "globalID": "8572",
+        "setID": "860",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1033362874069950474/Jaehyuk.png"
+    },
+    {
         "name": "Yoshi",
         "group": "TREASURE",
         "single": "Hello",
@@ -1615,90 +1615,6 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1033362928889516132/Yoshi.png"
-    },
-    {
-        "name": "Chaehyun",
-        "group": "Kep1er",
-        "single": "We Fresh",
-        "category": "comn",
-        "description": "**We Fresh** *`Kep1er`*",
-        "emoji": "🍉",
-        "globalID": "8578",
-        "setID": "861",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035929324492181625/chaehyun.png"
-    },
-    {
-        "name": "Dayeon",
-        "group": "Kep1er",
-        "single": "We Fresh",
-        "category": "comn",
-        "description": "**We Fresh** *`Kep1er`*",
-        "emoji": "🍉",
-        "globalID": "8579",
-        "setID": "861",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035948300328767519/DAYEON.png"
-    },
-    {
-        "name": "Hikaru",
-        "group": "Kep1er",
-        "single": "We Fresh",
-        "category": "comn",
-        "description": "**We Fresh** *`Kep1er`*",
-        "emoji": "🍉",
-        "globalID": "8580",
-        "setID": "861",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035929326950043698/hikaru.png"
-    },
-    {
-        "name": "Huening Bahiyyih",
-        "group": "Kep1er",
-        "single": "We Fresh",
-        "category": "comn",
-        "description": "**We Fresh** *`Kep1er`*",
-        "emoji": "🍉",
-        "globalID": "8581",
-        "setID": "861",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035929325482033242/hueing-bahiyyih.png"
     },
     {
         "name": "Mashiro",
@@ -1722,13 +1638,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035948300744015912/MASHIRO.png"
     },
     {
-        "name": "Xiaoting",
+        "name": "Yujin",
         "group": "Kep1er",
         "single": "We Fresh",
         "category": "comn",
         "description": "**We Fresh** *`Kep1er`*",
         "emoji": "🍉",
-        "globalID": "8583",
+        "globalID": "8586",
         "setID": "861",
         "rarity": 70,
         "price": 30,
@@ -1740,7 +1656,49 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035948301146673252/XIAOTING.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035929354020081665/yujin.png"
+    },
+    {
+        "name": "Hikaru",
+        "group": "Kep1er",
+        "single": "We Fresh",
+        "category": "comn",
+        "description": "**We Fresh** *`Kep1er`*",
+        "emoji": "🍉",
+        "globalID": "8580",
+        "setID": "861",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035929326950043698/hikaru.png"
+    },
+    {
+        "name": "Dayeon",
+        "group": "Kep1er",
+        "single": "We Fresh",
+        "category": "comn",
+        "description": "**We Fresh** *`Kep1er`*",
+        "emoji": "🍉",
+        "globalID": "8579",
+        "setID": "861",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035948300328767519/DAYEON.png"
     },
     {
         "name": "Yeseo",
@@ -1785,13 +1743,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035929323112251442/youngeun.png"
     },
     {
-        "name": "Yujin",
+        "name": "Chaehyun",
         "group": "Kep1er",
         "single": "We Fresh",
         "category": "comn",
         "description": "**We Fresh** *`Kep1er`*",
         "emoji": "🍉",
-        "globalID": "8586",
+        "globalID": "8578",
         "setID": "861",
         "rarity": 70,
         "price": 30,
@@ -1803,7 +1761,49 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035929354020081665/yujin.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035929324492181625/chaehyun.png"
+    },
+    {
+        "name": "Huening Bahiyyih",
+        "group": "Kep1er",
+        "single": "We Fresh",
+        "category": "comn",
+        "description": "**We Fresh** *`Kep1er`*",
+        "emoji": "🍉",
+        "globalID": "8581",
+        "setID": "861",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035929325482033242/hueing-bahiyyih.png"
+    },
+    {
+        "name": "Xiaoting",
+        "group": "Kep1er",
+        "single": "We Fresh",
+        "category": "comn",
+        "description": "**We Fresh** *`Kep1er`*",
+        "emoji": "🍉",
+        "globalID": "8583",
+        "setID": "861",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1035948301146673252/XIAOTING.png"
     },
     {
         "name": "Eunha",
@@ -1827,27 +1827,6 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038469533452742697/heejin-viviz-eunha.png"
     },
     {
-        "name": "SinB",
-        "group": "VIVIZ",
-        "single": "Rum Pum Pum",
-        "category": "comn",
-        "description": "**Rum Pum Pum** *`VIVIZ`*",
-        "emoji": "👑",
-        "globalID": "8588",
-        "setID": "862",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038469533880553652/heejin-viviz-sinb.png"
-    },
-    {
         "name": "Umji",
         "group": "VIVIZ",
         "single": "Rum Pum Pum",
@@ -1867,6 +1846,27 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038469534249664553/heejin-viviz-umji.png"
+    },
+    {
+        "name": "SinB",
+        "group": "VIVIZ",
+        "single": "Rum Pum Pum",
+        "category": "comn",
+        "description": "**Rum Pum Pum** *`VIVIZ`*",
+        "emoji": "👑",
+        "globalID": "8588",
+        "setID": "862",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038469533880553652/heejin-viviz-sinb.png"
     },
     {
         "name": "Chaeyeon¹",
@@ -1953,27 +1953,6 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038672439221158028/vixx_scentist-hongbin.png"
     },
     {
-        "name": "Hyuk",
-        "group": "VIXX",
-        "single": "Scentist",
-        "category": "comn",
-        "description": "**Scentist** *`VIXX`*",
-        "emoji": "💐",
-        "globalID": "8594",
-        "setID": "864",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038672439535734844/vixx_scentist-hyuk.png"
-    },
-    {
         "name": "Ken",
         "group": "VIXX",
         "single": "Scentist",
@@ -1993,6 +1972,27 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038672439795785728/vixx_scentist-ken.png"
+    },
+    {
+        "name": "N",
+        "group": "VIXX",
+        "single": "Scentist",
+        "category": "comn",
+        "description": "**Scentist** *`VIXX`*",
+        "emoji": "💐",
+        "globalID": "8597",
+        "setID": "864",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038672440454287400/vixx_scentist-n.png"
     },
     {
         "name": "Leo",
@@ -2016,13 +2016,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038672440080990248/vixx_scentist-leo.png"
     },
     {
-        "name": "N",
+        "name": "Hyuk",
         "group": "VIXX",
         "single": "Scentist",
         "category": "comn",
         "description": "**Scentist** *`VIXX`*",
         "emoji": "💐",
-        "globalID": "8597",
+        "globalID": "8594",
         "setID": "864",
         "rarity": 70,
         "price": 30,
@@ -2034,7 +2034,7 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038672440454287400/vixx_scentist-n.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1038672439535734844/vixx_scentist-hyuk.png"
     },
     {
         "name": "Ravi",
@@ -2100,6 +2100,27 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1041006883676360815/Changuk.png"
     },
     {
+        "name": "Minseo",
+        "group": "DRIPPIN",
+        "single": "The One",
+        "category": "comn",
+        "description": "**The One** *`DRIPPIN`*",
+        "emoji": "☄️",
+        "globalID": "8604",
+        "setID": "865",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1041006882627788870/Minseo.png"
+    },
+    {
         "name": "Dongyun",
         "group": "DRIPPIN",
         "single": "The One",
@@ -2163,27 +2184,6 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1041006882288062484/Junho.png"
     },
     {
-        "name": "Minseo",
-        "group": "DRIPPIN",
-        "single": "The One",
-        "category": "comn",
-        "description": "**The One** *`DRIPPIN`*",
-        "emoji": "☄️",
-        "globalID": "8604",
-        "setID": "865",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1041006882627788870/Minseo.png"
-    },
-    {
         "name": "Yunseong",
         "group": "DRIPPIN",
         "single": "The One",
@@ -2226,27 +2226,6 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1041008227170656317/heejin_xdinary-heroes_hair-cut_gaon.png"
     },
     {
-        "name": "Gunil",
-        "group": "Xdinary Heroes",
-        "single": "Hair Cut",
-        "category": "comn",
-        "description": "**Hair Cut** *`Xdinary Heroes`*",
-        "emoji": "✂️‍",
-        "globalID": "8607",
-        "setID": "866",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1041008227510399056/heejin_xdinary-heroes_hair-cut_gunil.png"
-    },
-    {
         "name": "Jooyeon",
         "group": "Xdinary Heroes",
         "single": "Hair Cut",
@@ -2266,27 +2245,6 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1041008227854319686/heejin_xdinary-heroes_hair-cut_jooyeon.png"
-    },
-    {
-        "name": "Jungsu",
-        "group": "Xdinary Heroes",
-        "single": "Hair Cut",
-        "category": "comn",
-        "description": "**Hair Cut** *`Xdinary Heroes`*",
-        "emoji": "✂️‍",
-        "globalID": "8609",
-        "setID": "866",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1041008228198260776/heejin_xdinary-heroes_hair-cut_jungsu.png"
     },
     {
         "name": "Jun Han",
@@ -2331,14 +2289,14 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1041008228781260960/heejin_xdinary-heroes_hair-cut_ode.png"
     },
     {
-        "name": "Jihoon¹",
-        "group": "Jihoon",
-        "single": "Moon&Back",
+        "name": "Gunil",
+        "group": "Xdinary Heroes",
+        "single": "Hair Cut",
         "category": "comn",
-        "description": "**Moon&Back** *`Jihoon`*",
-        "emoji": "🌕",
-        "globalID": "8612",
-        "setID": "867",
+        "description": "**Hair Cut** *`Xdinary Heroes`*",
+        "emoji": "✂️‍",
+        "globalID": "8607",
+        "setID": "866",
         "rarity": 70,
         "price": 30,
         "sellPrice": 30,
@@ -2349,7 +2307,28 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043889205157298237/jihoon-moonback.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1041008227510399056/heejin_xdinary-heroes_hair-cut_gunil.png"
+    },
+    {
+        "name": "Jungsu",
+        "group": "Xdinary Heroes",
+        "single": "Hair Cut",
+        "category": "comn",
+        "description": "**Hair Cut** *`Xdinary Heroes`*",
+        "emoji": "✂️‍",
+        "globalID": "8609",
+        "setID": "866",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1041008228198260776/heejin_xdinary-heroes_hair-cut_jungsu.png"
     },
     {
         "name": "Jihoon²",
@@ -2394,14 +2373,14 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043889206226858064/jihoon-moonback3.png"
     },
     {
-        "name": "Chen¹",
-        "group": "Chen",
-        "single": "Last Scene",
+        "name": "Jihoon¹",
+        "group": "Jihoon",
+        "single": "Moon&Back",
         "category": "comn",
-        "description": "**Last Scene** *`Chen`*",
-        "emoji": "🌇",
-        "globalID": "8615",
-        "setID": "868",
+        "description": "**Moon&Back** *`Jihoon`*",
+        "emoji": "🌕",
+        "globalID": "8612",
+        "setID": "867",
         "rarity": 70,
         "price": 30,
         "sellPrice": 30,
@@ -2412,28 +2391,7 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043889204645613718/lastscene_chen1.png"
-    },
-    {
-        "name": "Chen²",
-        "group": "Chen",
-        "single": "Last Scene",
-        "category": "comn",
-        "description": "**Last Scene** *`Chen`*",
-        "emoji": "🌇",
-        "globalID": "8616",
-        "setID": "868",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043889203588649091/lastscene_chen2.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043889205157298237/jihoon-moonback.png"
     },
     {
         "name": "Chen³",
@@ -2457,6 +2415,48 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043889204184219690/lastscene_chen3.png"
     },
     {
+        "name": "Chen²",
+        "group": "Chen",
+        "single": "Last Scene",
+        "category": "comn",
+        "description": "**Last Scene** *`Chen`*",
+        "emoji": "🌇",
+        "globalID": "8616",
+        "setID": "868",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043889203588649091/lastscene_chen2.png"
+    },
+    {
+        "name": "Chen¹",
+        "group": "Chen",
+        "single": "Last Scene",
+        "category": "comn",
+        "description": "**Last Scene** *`Chen`*",
+        "emoji": "🌇",
+        "globalID": "8615",
+        "setID": "868",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1043889204645613718/lastscene_chen1.png"
+    },
+    {
         "name": "Jennie",
         "group": "BLACKPINK",
         "single": "Lovesick Girls",
@@ -2478,27 +2478,6 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1048959535433400481/Jennie.png"
     },
     {
-        "name": "Jisoo",
-        "group": "BLACKPINK",
-        "single": "Lovesick Girls",
-        "category": "comn",
-        "description": "**Lovesick Girls** *`BLACKPINK`*",
-        "emoji": "🤢",
-        "globalID": "8619",
-        "setID": "869",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1048959535777321110/Jisoo.png"
-    },
-    {
         "name": "Lisa",
         "group": "BLACKPINK",
         "single": "Lovesick Girls",
@@ -2518,6 +2497,27 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1048959536142221392/Lisa.png"
+    },
+    {
+        "name": "Jisoo",
+        "group": "BLACKPINK",
+        "single": "Lovesick Girls",
+        "category": "comn",
+        "description": "**Lovesick Girls** *`BLACKPINK`*",
+        "emoji": "🤢",
+        "globalID": "8619",
+        "setID": "869",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1048959535777321110/Jisoo.png"
     },
     {
         "name": "Rosé",
@@ -2562,27 +2562,6 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1048970035605024898/heejin-ribbon2-dpr_ian.png"
     },
     {
-        "name": "DPR IAN²",
-        "group": "DPR IAN",
-        "single": "Ribbon",
-        "category": "comn",
-        "description": "**Ribbon** *`DPR IAN`*",
-        "emoji": "💉",
-        "globalID": "8623",
-        "setID": "870",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1048970036125114449/heejin-ribbon3-dpr_ian.png"
-    },
-    {
         "name": "DPR IAN³",
         "group": "DPR IAN",
         "single": "Ribbon",
@@ -2604,14 +2583,14 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1048970036716515348/heejin-ribbon-dpr_ian.png"
     },
     {
-        "name": "Arthur",
-        "group": "KINGDOM",
-        "single": "Black Crown",
+        "name": "DPR IAN²",
+        "group": "DPR IAN",
+        "single": "Ribbon",
         "category": "comn",
-        "description": "**Black Crown** *`KINGDOM`*",
-        "emoji": "👑",
-        "globalID": "8625",
-        "setID": "871",
+        "description": "**Ribbon** *`DPR IAN`*",
+        "emoji": "💉",
+        "globalID": "8623",
+        "setID": "870",
         "rarity": 70,
         "price": 30,
         "sellPrice": 30,
@@ -2622,28 +2601,7 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054054220661260389/blackcrown_arthur.png"
-    },
-    {
-        "name": "Chiwoo",
-        "group": "KINGDOM",
-        "single": "Black Crown",
-        "category": "comn",
-        "description": "**Black Crown** *`KINGDOM`*",
-        "emoji": "👑",
-        "globalID": "8626",
-        "setID": "871",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054054220984225812/blackcrown_chiwoo.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1048970036125114449/heejin-ribbon3-dpr_ian.png"
     },
     {
         "name": "Dann",
@@ -2667,13 +2625,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054054221315592212/blackcrown_dann.png"
     },
     {
-        "name": "Ivan",
+        "name": "Mujin",
         "group": "KINGDOM",
         "single": "Black Crown",
         "category": "comn",
         "description": "**Black Crown** *`KINGDOM`*",
         "emoji": "👑",
-        "globalID": "8628",
+        "globalID": "8631",
         "setID": "871",
         "rarity": 70,
         "price": 30,
@@ -2685,7 +2643,28 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054054221718224916/blackcrown_ivan.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054054223081377853/blackcrown_mujin.png"
+    },
+    {
+        "name": "Chiwoo",
+        "group": "KINGDOM",
+        "single": "Black Crown",
+        "category": "comn",
+        "description": "**Black Crown** *`KINGDOM`*",
+        "emoji": "👑",
+        "globalID": "8626",
+        "setID": "871",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054054220984225812/blackcrown_chiwoo.png"
     },
     {
         "name": "Jahan",
@@ -2730,13 +2709,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054054222678741113/blackcrown_louis.png"
     },
     {
-        "name": "Mujin",
+        "name": "Ivan",
         "group": "KINGDOM",
         "single": "Black Crown",
         "category": "comn",
         "description": "**Black Crown** *`KINGDOM`*",
         "emoji": "👑",
-        "globalID": "8631",
+        "globalID": "8628",
         "setID": "871",
         "rarity": 70,
         "price": 30,
@@ -2748,7 +2727,112 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054054223081377853/blackcrown_mujin.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054054221718224916/blackcrown_ivan.png"
+    },
+    {
+        "name": "Arthur",
+        "group": "KINGDOM",
+        "single": "Black Crown",
+        "category": "comn",
+        "description": "**Black Crown** *`KINGDOM`*",
+        "emoji": "👑",
+        "globalID": "8625",
+        "setID": "871",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054054220661260389/blackcrown_arthur.png"
+    },
+    {
+        "name": "Kihyun",
+        "group": "MONSTA X",
+        "single": "HERO",
+        "category": "comn",
+        "description": "**HERO** *`MONSTA X`*",
+        "emoji": "🦸",
+        "globalID": "8635",
+        "setID": "872",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054054263380246528/hero_kihyun.png"
+    },
+    {
+        "name": "Jooheon",
+        "group": "MONSTA X",
+        "single": "HERO",
+        "category": "comn",
+        "description": "**HERO** *`MONSTA X`*",
+        "emoji": "🦸",
+        "globalID": "8634",
+        "setID": "872",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054054263048916992/hero_jooheon.png"
+    },
+    {
+        "name": "Wonho",
+        "group": "MONSTA X",
+        "single": "HERO",
+        "category": "comn",
+        "description": "**HERO** *`MONSTA X`*",
+        "emoji": "🦸",
+        "globalID": "8638",
+        "setID": "872",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054054264634343435/hero_wonho.png"
+    },
+    {
+        "name": "Minhyuk",
+        "group": "MONSTA X",
+        "single": "HERO",
+        "category": "comn",
+        "description": "**HERO** *`MONSTA X`*",
+        "emoji": "🦸",
+        "globalID": "8636",
+        "setID": "872",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054054263766126592/hero_minhyuk.png"
     },
     {
         "name": "Hyungwon",
@@ -2793,69 +2877,6 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054054262717550602/hero_im.png"
     },
     {
-        "name": "Jooheon",
-        "group": "MONSTA X",
-        "single": "HERO",
-        "category": "comn",
-        "description": "**HERO** *`MONSTA X`*",
-        "emoji": "🦸",
-        "globalID": "8634",
-        "setID": "872",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054054263048916992/hero_jooheon.png"
-    },
-    {
-        "name": "Kihyun",
-        "group": "MONSTA X",
-        "single": "HERO",
-        "category": "comn",
-        "description": "**HERO** *`MONSTA X`*",
-        "emoji": "🦸",
-        "globalID": "8635",
-        "setID": "872",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054054263380246528/hero_kihyun.png"
-    },
-    {
-        "name": "Minhyuk",
-        "group": "MONSTA X",
-        "single": "HERO",
-        "category": "comn",
-        "description": "**HERO** *`MONSTA X`*",
-        "emoji": "🦸",
-        "globalID": "8636",
-        "setID": "872",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054054263766126592/hero_minhyuk.png"
-    },
-    {
         "name": "Shownu",
         "group": "MONSTA X",
         "single": "HERO",
@@ -2875,27 +2896,6 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054054264252682310/hero_shownu.png"
-    },
-    {
-        "name": "Wonho",
-        "group": "MONSTA X",
-        "single": "HERO",
-        "category": "comn",
-        "description": "**HERO** *`MONSTA X`*",
-        "emoji": "🦸",
-        "globalID": "8638",
-        "setID": "872",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1054054264634343435/hero_wonho.png"
     },
     {
         "name": "Taeyeon¹",
@@ -2961,27 +2961,6 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1056562892201271326/somethingnew_taeyeon3.png"
     },
     {
-        "name": "WOODZ¹",
-        "group": "WOODZ",
-        "single": "WAITING",
-        "category": "comn",
-        "description": "**WAITING** *`WOODZ`*",
-        "emoji": "🔦",
-        "globalID": "8642",
-        "setID": "874",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1056562892570382346/1_Soloist_Woodz_-_Waiting.png"
-    },
-    {
         "name": "WOODZ²",
         "group": "WOODZ",
         "single": "WAITING",
@@ -3003,6 +2982,27 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1056562892956246056/2_Soloist_WOODZ_-_Waiting.png"
     },
     {
+        "name": "WOODZ¹",
+        "group": "WOODZ",
+        "single": "WAITING",
+        "category": "comn",
+        "description": "**WAITING** *`WOODZ`*",
+        "emoji": "🔦",
+        "globalID": "8642",
+        "setID": "874",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1056562892570382346/1_Soloist_Woodz_-_Waiting.png"
+    },
+    {
         "name": "WOODZ³",
         "group": "WOODZ",
         "single": "WAITING",
@@ -3022,111 +3022,6 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1056562893388263445/3_Soloist_WOODZ_-_Waiting.png"
-    },
-    {
-        "name": "Hongjoong",
-        "group": "ATEEZ",
-        "single": "HALAZIA",
-        "category": "comn",
-        "description": "**HALAZIA** *`ATEEZ`*",
-        "emoji": "⛓️",
-        "globalID": "8645",
-        "setID": "875",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059118125427216404/halazia_hongjoong.png"
-    },
-    {
-        "name": "Jongho",
-        "group": "ATEEZ",
-        "single": "HALAZIA",
-        "category": "comn",
-        "description": "**HALAZIA** *`ATEEZ`*",
-        "emoji": "⛓️",
-        "globalID": "8646",
-        "setID": "875",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059118125716619274/halazia_jongho.png"
-    },
-    {
-        "name": "Mingi",
-        "group": "ATEEZ",
-        "single": "HALAZIA",
-        "category": "comn",
-        "description": "**HALAZIA** *`ATEEZ`*",
-        "emoji": "⛓️",
-        "globalID": "8647",
-        "setID": "875",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059118126006022275/halazia_mingi.png"
-    },
-    {
-        "name": "San",
-        "group": "ATEEZ",
-        "single": "HALAZIA",
-        "category": "comn",
-        "description": "**HALAZIA** *`ATEEZ`*",
-        "emoji": "⛓️",
-        "globalID": "8648",
-        "setID": "875",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059118126308020265/halazia_san.png"
-    },
-    {
-        "name": "Seonghwa",
-        "group": "ATEEZ",
-        "single": "HALAZIA",
-        "category": "comn",
-        "description": "**HALAZIA** *`ATEEZ`*",
-        "emoji": "⛓️",
-        "globalID": "8649",
-        "setID": "875",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059118126618394644/halazia_seonghwa.png"
     },
     {
         "name": "Wooyoung",
@@ -3171,14 +3066,14 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059118127402733629/halazia_yeosang.png"
     },
     {
-        "name": "Boni",
-        "group": "DreamNote",
-        "single": "Ghost",
+        "name": "San",
+        "group": "ATEEZ",
+        "single": "HALAZIA",
         "category": "comn",
-        "description": "**Ghost** *`DreamNote`*",
-        "emoji": "👻",
-        "globalID": "8652",
-        "setID": "876",
+        "description": "**HALAZIA** *`ATEEZ`*",
+        "emoji": "⛓️",
+        "globalID": "8648",
+        "setID": "875",
         "rarity": 70,
         "price": 30,
         "sellPrice": 30,
@@ -3189,7 +3084,112 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059118190204035202/boni.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059118126308020265/halazia_san.png"
+    },
+    {
+        "name": "Jongho",
+        "group": "ATEEZ",
+        "single": "HALAZIA",
+        "category": "comn",
+        "description": "**HALAZIA** *`ATEEZ`*",
+        "emoji": "⛓️",
+        "globalID": "8646",
+        "setID": "875",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059118125716619274/halazia_jongho.png"
+    },
+    {
+        "name": "Seonghwa",
+        "group": "ATEEZ",
+        "single": "HALAZIA",
+        "category": "comn",
+        "description": "**HALAZIA** *`ATEEZ`*",
+        "emoji": "⛓️",
+        "globalID": "8649",
+        "setID": "875",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059118126618394644/halazia_seonghwa.png"
+    },
+    {
+        "name": "Hongjoong",
+        "group": "ATEEZ",
+        "single": "HALAZIA",
+        "category": "comn",
+        "description": "**HALAZIA** *`ATEEZ`*",
+        "emoji": "⛓️",
+        "globalID": "8645",
+        "setID": "875",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059118125427216404/halazia_hongjoong.png"
+    },
+    {
+        "name": "Mingi",
+        "group": "ATEEZ",
+        "single": "HALAZIA",
+        "category": "comn",
+        "description": "**HALAZIA** *`ATEEZ`*",
+        "emoji": "⛓️",
+        "globalID": "8647",
+        "setID": "875",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059118126006022275/halazia_mingi.png"
+    },
+    {
+        "name": "Yunho",
+        "group": "ATEEZ",
+        "single": "HALAZIA",
+        "category": "comn",
+        "description": "**HALAZIA** *`ATEEZ`*",
+        "emoji": "⛓️",
+        "globalID": "8658",
+        "setID": "875",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1061648980397789235/halazia_yunho.png"
     },
     {
         "name": "Eunjo",
@@ -3211,6 +3211,27 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059118190732521532/eunnjo.png"
+    },
+    {
+        "name": "Youi",
+        "group": "DreamNote",
+        "single": "Ghost",
+        "category": "comn",
+        "description": "**Ghost** *`DreamNote`*",
+        "emoji": "👻",
+        "globalID": "8657",
+        "setID": "876",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059118192154386505/youi.png"
     },
     {
         "name": "Lara",
@@ -3255,6 +3276,27 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059118191462330438/miso.png"
     },
     {
+        "name": "Boni",
+        "group": "DreamNote",
+        "single": "Ghost",
+        "category": "comn",
+        "description": "**Ghost** *`DreamNote`*",
+        "emoji": "👻",
+        "globalID": "8652",
+        "setID": "876",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059118190204035202/boni.png"
+    },
+    {
         "name": "Sumin",
         "group": "DreamNote",
         "single": "Ghost",
@@ -3274,69 +3316,6 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059118191806255205/sumin.png"
-    },
-    {
-        "name": "Youi",
-        "group": "DreamNote",
-        "single": "Ghost",
-        "category": "comn",
-        "description": "**Ghost** *`DreamNote`*",
-        "emoji": "👻",
-        "globalID": "8657",
-        "setID": "876",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1059118192154386505/youi.png"
-    },
-    {
-        "name": "Yunho",
-        "group": "ATEEZ",
-        "single": "HALAZIA",
-        "category": "comn",
-        "description": "**HALAZIA** *`ATEEZ`*",
-        "emoji": "⛓️",
-        "globalID": "8658",
-        "setID": "875",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1061648980397789235/halazia_yunho.png"
-    },
-    {
-        "name": "Hwasa",
-        "group": "MAMAMOO",
-        "single": "mumumumuch",
-        "category": "comn",
-        "description": "**mumumumuch** *`MAMAMOO`*",
-        "emoji": "🥳",
-        "globalID": "8659",
-        "setID": "877",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1061646225054642307/Hwasa_Mumumumuch.png"
     },
     {
         "name": "Moonbyul",
@@ -3360,27 +3339,6 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1061646225469882398/Moonbyul_Mumumumuch.png"
     },
     {
-        "name": "Solar",
-        "group": "MAMAMOO",
-        "single": "mumumumuch",
-        "category": "comn",
-        "description": "**mumumumuch** *`MAMAMOO`*",
-        "emoji": "🥳",
-        "globalID": "8661",
-        "setID": "877",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1061646225843171368/Solar_Mumumumuch.png"
-    },
-    {
         "name": "Wheein",
         "group": "MAMAMOO",
         "single": "mumumumuch",
@@ -3400,6 +3358,48 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1061646226375856208/Wheein_Mumumumuch.png"
+    },
+    {
+        "name": "Hwasa",
+        "group": "MAMAMOO",
+        "single": "mumumumuch",
+        "category": "comn",
+        "description": "**mumumumuch** *`MAMAMOO`*",
+        "emoji": "🥳",
+        "globalID": "8659",
+        "setID": "877",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1061646225054642307/Hwasa_Mumumumuch.png"
+    },
+    {
+        "name": "Solar",
+        "group": "MAMAMOO",
+        "single": "mumumumuch",
+        "category": "comn",
+        "description": "**mumumumuch** *`MAMAMOO`*",
+        "emoji": "🥳",
+        "globalID": "8661",
+        "setID": "877",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1061646225843171368/Solar_Mumumumuch.png"
     },
     {
         "name": "Irene",
@@ -3444,13 +3444,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1064166577588666408/Joy_Queendom.png"
     },
     {
-        "name": "Seulgi",
+        "name": "Yeri",
         "group": "Red Velvet",
         "single": "Queendom",
         "category": "comn",
         "description": "**Queendom** *`Red Velvet`*",
         "emoji": "👑",
-        "globalID": "8665",
+        "globalID": "8667",
         "setID": "878",
         "rarity": 70,
         "price": 30,
@@ -3462,7 +3462,7 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1064166577865494628/Seulgi_Queendom.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1064166578528194620/Yeri_Queendom.png"
     },
     {
         "name": "Wendy",
@@ -3486,13 +3486,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1064166578201034812/Wendy_Queendom.png"
     },
     {
-        "name": "Yeri",
+        "name": "Seulgi",
         "group": "Red Velvet",
         "single": "Queendom",
         "category": "comn",
         "description": "**Queendom** *`Red Velvet`*",
         "emoji": "👑",
-        "globalID": "8667",
+        "globalID": "8665",
         "setID": "878",
         "rarity": 70,
         "price": 30,
@@ -3504,49 +3504,7 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1064166578528194620/Yeri_Queendom.png"
-    },
-    {
-        "name": "Haebin",
-        "group": "gugudan",
-        "single": "Not That Type",
-        "category": "comn",
-        "description": "**Not That Type** *`gugudan`*",
-        "emoji": "💿",
-        "globalID": "8668",
-        "setID": "879",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066691287341858816/haebin.png"
-    },
-    {
-        "name": "Hana",
-        "group": "gugudan",
-        "single": "Not That Type",
-        "category": "comn",
-        "description": "**Not That Type** *`gugudan`*",
-        "emoji": "💿",
-        "globalID": "8669",
-        "setID": "879",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066691287593525320/hana.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1064166577865494628/Seulgi_Queendom.png"
     },
     {
         "name": "Mimi",
@@ -3570,48 +3528,6 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066691288235261952/mimi.png"
     },
     {
-        "name": "Mina",
-        "group": "gugudan",
-        "single": "Not That Type",
-        "category": "comn",
-        "description": "**Not That Type** *`gugudan`*",
-        "emoji": "💿",
-        "globalID": "8671",
-        "setID": "879",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066691288499486750/mina.png"
-    },
-    {
-        "name": "Nayoung",
-        "group": "gugudan",
-        "single": "Not That Type",
-        "category": "comn",
-        "description": "**Not That Type** *`gugudan`*",
-        "emoji": "💿",
-        "globalID": "8672",
-        "setID": "879",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066691288767930428/nayoung.png"
-    },
-    {
         "name": "Sally",
         "group": "gugudan",
         "single": "Not That Type",
@@ -3631,6 +3547,48 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066691289007013939/sally.png"
+    },
+    {
+        "name": "Soyee",
+        "group": "gugudan",
+        "single": "Not That Type",
+        "category": "comn",
+        "description": "**Not That Type** *`gugudan`*",
+        "emoji": "💿",
+        "globalID": "8675",
+        "setID": "879",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066691289489350756/soyee.png"
+    },
+    {
+        "name": "Hana",
+        "group": "gugudan",
+        "single": "Not That Type",
+        "category": "comn",
+        "description": "**Not That Type** *`gugudan`*",
+        "emoji": "💿",
+        "globalID": "8669",
+        "setID": "879",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066691287593525320/hana.png"
     },
     {
         "name": "Sejeong",
@@ -3654,13 +3612,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066691289246072883/sejeong.png"
     },
     {
-        "name": "Soyee",
+        "name": "Nayoung",
         "group": "gugudan",
         "single": "Not That Type",
         "category": "comn",
         "description": "**Not That Type** *`gugudan`*",
         "emoji": "💿",
-        "globalID": "8675",
+        "globalID": "8672",
         "setID": "879",
         "rarity": 70,
         "price": 30,
@@ -3672,7 +3630,91 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066691289489350756/soyee.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066691288767930428/nayoung.png"
+    },
+    {
+        "name": "Haebin",
+        "group": "gugudan",
+        "single": "Not That Type",
+        "category": "comn",
+        "description": "**Not That Type** *`gugudan`*",
+        "emoji": "💿",
+        "globalID": "8668",
+        "setID": "879",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066691287341858816/haebin.png"
+    },
+    {
+        "name": "Mina",
+        "group": "gugudan",
+        "single": "Not That Type",
+        "category": "comn",
+        "description": "**Not That Type** *`gugudan`*",
+        "emoji": "💿",
+        "globalID": "8671",
+        "setID": "879",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1066691288499486750/mina.png"
+    },
+    {
+        "name": "Jungmo",
+        "group": "CRAVITY",
+        "single": "Adrenaline",
+        "category": "comn",
+        "description": "**Adrenaline** *`CRAVITY`*",
+        "emoji": "🏫",
+        "globalID": "8678",
+        "setID": "880",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1069248763098574898/Jungmo.png"
+    },
+    {
+        "name": "Woobin",
+        "group": "CRAVITY",
+        "single": "Adrenaline",
+        "category": "comn",
+        "description": "**Adrenaline** *`CRAVITY`*",
+        "emoji": "🏫",
+        "globalID": "8684",
+        "setID": "880",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1069248765254438947/Woobin.png"
     },
     {
         "name": "Allen",
@@ -3717,69 +3759,6 @@
         "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1069248762708496446/Hyeongjun.png"
     },
     {
-        "name": "Jungmo",
-        "group": "CRAVITY",
-        "single": "Adrenaline",
-        "category": "comn",
-        "description": "**Adrenaline** *`CRAVITY`*",
-        "emoji": "🏫",
-        "globalID": "8678",
-        "setID": "880",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1069248763098574898/Jungmo.png"
-    },
-    {
-        "name": "Minhee",
-        "group": "CRAVITY",
-        "single": "Adrenaline",
-        "category": "comn",
-        "description": "**Adrenaline** *`CRAVITY`*",
-        "emoji": "🏫",
-        "globalID": "8679",
-        "setID": "880",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1069248763513802773/Minhee.png"
-    },
-    {
-        "name": "Seongmin",
-        "group": "CRAVITY",
-        "single": "Adrenaline",
-        "category": "comn",
-        "description": "**Adrenaline** *`CRAVITY`*",
-        "emoji": "🏫",
-        "globalID": "8680",
-        "setID": "880",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1069248763811606660/Seongmin.png"
-    },
-    {
         "name": "Serim",
         "group": "CRAVITY",
         "single": "Adrenaline",
@@ -3799,27 +3778,6 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1069248764163924018/Serim.png"
-    },
-    {
-        "name": "Taeyoung",
-        "group": "CRAVITY",
-        "single": "Adrenaline",
-        "category": "comn",
-        "description": "**Adrenaline** *`CRAVITY`*",
-        "emoji": "🏫",
-        "globalID": "8682",
-        "setID": "880",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1069248764486881361/Taeyoung.png"
     },
     {
         "name": "Wonjin",
@@ -3843,13 +3801,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1069248764872765550/Wonjin_1.png"
     },
     {
-        "name": "Woobin",
+        "name": "Seongmin",
         "group": "CRAVITY",
         "single": "Adrenaline",
         "category": "comn",
         "description": "**Adrenaline** *`CRAVITY`*",
         "emoji": "🏫",
-        "globalID": "8684",
+        "globalID": "8680",
         "setID": "880",
         "rarity": 70,
         "price": 30,
@@ -3861,7 +3819,49 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1069248765254438947/Woobin.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1069248763811606660/Seongmin.png"
+    },
+    {
+        "name": "Taeyoung",
+        "group": "CRAVITY",
+        "single": "Adrenaline",
+        "category": "comn",
+        "description": "**Adrenaline** *`CRAVITY`*",
+        "emoji": "🏫",
+        "globalID": "8682",
+        "setID": "880",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1069248764486881361/Taeyoung.png"
+    },
+    {
+        "name": "Minhee",
+        "group": "CRAVITY",
+        "single": "Adrenaline",
+        "category": "comn",
+        "description": "**Adrenaline** *`CRAVITY`*",
+        "emoji": "🏫",
+        "globalID": "8679",
+        "setID": "880",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/906261481274867723/1069248763513802773/Minhee.png"
     },
     {
         "name": "Chungha¹",
@@ -3885,27 +3885,6 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1074372722282467408/Demente_Chungha.png"
     },
     {
-        "name": "Chungha²",
-        "group": "Chungha",
-        "single": "Demente",
-        "category": "comn",
-        "description": "**Demente** *`Chungha`*",
-        "emoji": "👄",
-        "globalID": "8686",
-        "setID": "881",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1074372722701905971/Demente_Chungha2.png"
-    },
-    {
         "name": "Chungha³",
         "group": "Chungha",
         "single": "Demente",
@@ -3925,6 +3904,27 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1074372723070992556/Demente_Chungha3.png"
+    },
+    {
+        "name": "Chungha²",
+        "group": "Chungha",
+        "single": "Demente",
+        "category": "comn",
+        "description": "**Demente** *`Chungha`*",
+        "emoji": "👄",
+        "globalID": "8686",
+        "setID": "881",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1074372722701905971/Demente_Chungha2.png"
     },
     {
         "name": "Elkie",
@@ -3948,27 +3948,6 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1076885205857603664/Elkie.png"
     },
     {
-        "name": "Eunbin",
-        "group": "CLC",
-        "single": "Devil",
-        "category": "comn",
-        "description": "**Devil** *`CLC`*",
-        "emoji": "😈",
-        "globalID": "8689",
-        "setID": "882",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1076885206151208981/Eunbin_1.png"
-    },
-    {
         "name": "Seunghee",
         "group": "CLC",
         "single": "Devil",
@@ -3990,13 +3969,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1076885207103328266/Seunghee.png"
     },
     {
-        "name": "Seungyeon",
+        "name": "Eunbin",
         "group": "CLC",
         "single": "Devil",
         "category": "comn",
         "description": "**Devil** *`CLC`*",
         "emoji": "😈",
-        "globalID": "8691",
+        "globalID": "8689",
         "setID": "882",
         "rarity": 70,
         "price": 30,
@@ -4008,49 +3987,7 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1076885207476605018/Seungyeon.png"
-    },
-    {
-        "name": "Sorn",
-        "group": "CLC",
-        "single": "Devil",
-        "category": "comn",
-        "description": "**Devil** *`CLC`*",
-        "emoji": "😈",
-        "globalID": "8692",
-        "setID": "882",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1076885207816347819/Sorn.png"
-    },
-    {
-        "name": "Yeeun",
-        "group": "CLC",
-        "single": "Devil",
-        "category": "comn",
-        "description": "**Devil** *`CLC`*",
-        "emoji": "😈",
-        "globalID": "8693",
-        "setID": "882",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1076885208135110737/Yeeun.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1076885206151208981/Eunbin_1.png"
     },
     {
         "name": "Yujin",
@@ -4074,14 +4011,14 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1076885208458076242/Yujin.png"
     },
     {
-        "name": "Chaewon",
-        "group": "IZ*ONE",
-        "single": "Violeta",
+        "name": "Sorn",
+        "group": "CLC",
+        "single": "Devil",
         "category": "comn",
-        "description": "**Violeta** *`IZ*ONE`*",
-        "emoji": "💎",
-        "globalID": "8695",
-        "setID": "883",
+        "description": "**Devil** *`CLC`*",
+        "emoji": "😈",
+        "globalID": "8692",
+        "setID": "882",
         "rarity": 70,
         "price": 30,
         "sellPrice": 30,
@@ -4092,7 +4029,49 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079400918925181048/violet_chaewon.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1076885207816347819/Sorn.png"
+    },
+    {
+        "name": "Seungyeon",
+        "group": "CLC",
+        "single": "Devil",
+        "category": "comn",
+        "description": "**Devil** *`CLC`*",
+        "emoji": "😈",
+        "globalID": "8691",
+        "setID": "882",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1076885207476605018/Seungyeon.png"
+    },
+    {
+        "name": "Yeeun",
+        "group": "CLC",
+        "single": "Devil",
+        "category": "comn",
+        "description": "**Devil** *`CLC`*",
+        "emoji": "😈",
+        "globalID": "8693",
+        "setID": "882",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1076885208135110737/Yeeun.png"
     },
     {
         "name": "Chaeyeon",
@@ -4135,6 +4114,111 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079400919487238235/violet_eunbi.png"
+    },
+    {
+        "name": "Yena",
+        "group": "IZ*ONE",
+        "single": "Violeta",
+        "category": "comn",
+        "description": "**Violeta** *`IZ*ONE`*",
+        "emoji": "💎",
+        "globalID": "8704",
+        "setID": "883",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079400974650720287/violet_yena.png"
+    },
+    {
+        "name": "Sakura",
+        "group": "IZ*ONE",
+        "single": "Violeta",
+        "category": "comn",
+        "description": "**Violeta** *`IZ*ONE`*",
+        "emoji": "💎",
+        "globalID": "8702",
+        "setID": "883",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079400973950271560/violet_sakura.png"
+    },
+    {
+        "name": "Wonyoung",
+        "group": "IZ*ONE",
+        "single": "Violeta",
+        "category": "comn",
+        "description": "**Violeta** *`IZ*ONE`*",
+        "emoji": "💎",
+        "globalID": "8703",
+        "setID": "883",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079400974235471962/violet_wonyoung.png"
+    },
+    {
+        "name": "Chaewon",
+        "group": "IZ*ONE",
+        "single": "Violeta",
+        "category": "comn",
+        "description": "**Violeta** *`IZ*ONE`*",
+        "emoji": "💎",
+        "globalID": "8695",
+        "setID": "883",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079400918925181048/violet_chaewon.png"
+    },
+    {
+        "name": "Yujin",
+        "group": "IZ*ONE",
+        "single": "Violeta",
+        "category": "comn",
+        "description": "**Violeta** *`IZ*ONE`*",
+        "emoji": "💎",
+        "globalID": "8705",
+        "setID": "883",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079400974914949140/violet_yujin.png"
     },
     {
         "name": "Hitomi",
@@ -4221,90 +4305,6 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079400973576966144/violet_nako.png"
     },
     {
-        "name": "Sakura",
-        "group": "IZ*ONE",
-        "single": "Violeta",
-        "category": "comn",
-        "description": "**Violeta** *`IZ*ONE`*",
-        "emoji": "💎",
-        "globalID": "8702",
-        "setID": "883",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079400973950271560/violet_sakura.png"
-    },
-    {
-        "name": "Wonyoung",
-        "group": "IZ*ONE",
-        "single": "Violeta",
-        "category": "comn",
-        "description": "**Violeta** *`IZ*ONE`*",
-        "emoji": "💎",
-        "globalID": "8703",
-        "setID": "883",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079400974235471962/violet_wonyoung.png"
-    },
-    {
-        "name": "Yena",
-        "group": "IZ*ONE",
-        "single": "Violeta",
-        "category": "comn",
-        "description": "**Violeta** *`IZ*ONE`*",
-        "emoji": "💎",
-        "globalID": "8704",
-        "setID": "883",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079400974650720287/violet_yena.png"
-    },
-    {
-        "name": "Yujin",
-        "group": "IZ*ONE",
-        "single": "Violeta",
-        "category": "comn",
-        "description": "**Violeta** *`IZ*ONE`*",
-        "emoji": "💎",
-        "globalID": "8705",
-        "setID": "883",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079400974914949140/violet_yujin.png"
-    },
-    {
         "name": "Yuri",
         "group": "IZ*ONE",
         "single": "Violeta",
@@ -4324,6 +4324,48 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1079400975229526066/violet_yuri.png"
+    },
+    {
+        "name": "Chan",
+        "group": "iKON",
+        "single": "BUT YOU",
+        "category": "comn",
+        "description": "**BUT YOU** *`iKON`*",
+        "emoji": "🎆",
+        "globalID": "8708",
+        "setID": "884",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081698545687597157/heejin_ikon_but-you_chan.png"
+    },
+    {
+        "name": "Song",
+        "group": "iKON",
+        "single": "BUT YOU",
+        "category": "comn",
+        "description": "**BUT YOU** *`iKON`*",
+        "emoji": "🎆",
+        "globalID": "8712",
+        "setID": "884",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081698546924916756/heejin_ikon_but-you_song.png"
     },
     {
         "name": "Bobby",
@@ -4347,13 +4389,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081698545339474041/heejin_ikon_but-you_bobby.png"
     },
     {
-        "name": "Chan",
+        "name": "Ju-ne",
         "group": "iKON",
         "single": "BUT YOU",
         "category": "comn",
         "description": "**BUT YOU** *`iKON`*",
         "emoji": "🎆",
-        "globalID": "8708",
+        "globalID": "8711",
         "setID": "884",
         "rarity": 70,
         "price": 30,
@@ -4365,7 +4407,7 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081698545687597157/heejin_ikon_but-you_chan.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081698546664882206/heejin_ikon_but-you_june.png"
     },
     {
         "name": "DK",
@@ -4410,132 +4452,6 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081698546299965560/heejin_ikon_but-you_jay.png"
     },
     {
-        "name": "Ju-ne",
-        "group": "iKON",
-        "single": "BUT YOU",
-        "category": "comn",
-        "description": "**BUT YOU** *`iKON`*",
-        "emoji": "🎆",
-        "globalID": "8711",
-        "setID": "884",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081698546664882206/heejin_ikon_but-you_june.png"
-    },
-    {
-        "name": "Song",
-        "group": "iKON",
-        "single": "BUT YOU",
-        "category": "comn",
-        "description": "**BUT YOU** *`iKON`*",
-        "emoji": "🎆",
-        "globalID": "8712",
-        "setID": "884",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1081698546924916756/heejin_ikon_but-you_song.png"
-    },
-    {
-        "name": "Dino",
-        "group": "SEVENTEEN",
-        "single": "Rock with you",
-        "category": "comn",
-        "description": "**Rock with you** *`SEVENTEEN`*",
-        "emoji": "🚀",
-        "globalID": "8713",
-        "setID": "886",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494726394281984/seventeen-rockwithyou_dino.png"
-    },
-    {
-        "name": "DK",
-        "group": "SEVENTEEN",
-        "single": "Rock with you",
-        "category": "comn",
-        "description": "**Rock with you** *`SEVENTEEN`*",
-        "emoji": "🚀",
-        "globalID": "8714",
-        "setID": "886",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494726679515216/seventeen-rockwithyou_dk.png"
-    },
-    {
-        "name": "Hoshi",
-        "group": "SEVENTEEN",
-        "single": "Rock with you",
-        "category": "comn",
-        "description": "**Rock with you** *`SEVENTEEN`*",
-        "emoji": "🚀",
-        "globalID": "8715",
-        "setID": "886",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494726973095936/seventeen-rockwithyou_hoshi.png"
-    },
-    {
-        "name": "Joshua",
-        "group": "SEVENTEEN",
-        "single": "Rock with you",
-        "category": "comn",
-        "description": "**Rock with you** *`SEVENTEEN`*",
-        "emoji": "🚀",
-        "globalID": "8716",
-        "setID": "886",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494727254130809/seventeen-rockwithyou_joshua.png"
-    },
-    {
         "name": "Jun",
         "group": "SEVENTEEN",
         "single": "Rock with you",
@@ -4578,13 +4494,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494727728070777/seventeen-rockwithyou_mingyu.png"
     },
     {
-        "name": "S.Coups",
+        "name": "Wonwoo",
         "group": "SEVENTEEN",
         "single": "Rock with you",
         "category": "comn",
         "description": "**Rock with you** *`SEVENTEEN`*",
         "emoji": "🚀",
-        "globalID": "8719",
+        "globalID": "8723",
         "setID": "886",
         "rarity": 70,
         "price": 30,
@@ -4596,16 +4512,16 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494727967162508/seventeen-rockwithyou_scoups.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494770245738566/seventeen-rockwithyou_wonwoo.png"
     },
     {
-        "name": "Seungkwan",
+        "name": "Hoshi",
         "group": "SEVENTEEN",
         "single": "Rock with you",
         "category": "comn",
         "description": "**Rock with you** *`SEVENTEEN`*",
         "emoji": "🚀",
-        "globalID": "8720",
+        "globalID": "8715",
         "setID": "886",
         "rarity": 70,
         "price": 30,
@@ -4617,7 +4533,49 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494728306905128/seventeen-rockwithyou_seungkwan.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494726973095936/seventeen-rockwithyou_hoshi.png"
+    },
+    {
+        "name": "Woozi",
+        "group": "SEVENTEEN",
+        "single": "Rock with you",
+        "category": "comn",
+        "description": "**Rock with you** *`SEVENTEEN`*",
+        "emoji": "🚀",
+        "globalID": "8724",
+        "setID": "886",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494770526748682/seventeen-rockwithyou_woozi.png"
+    },
+    {
+        "name": "Dino",
+        "group": "SEVENTEEN",
+        "single": "Rock with you",
+        "category": "comn",
+        "description": "**Rock with you** *`SEVENTEEN`*",
+        "emoji": "🚀",
+        "globalID": "8713",
+        "setID": "886",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494726394281984/seventeen-rockwithyou_dino.png"
     },
     {
         "name": "The8",
@@ -4662,13 +4620,13 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494769922789536/seventeen-rockwithyou_vernon.png"
     },
     {
-        "name": "Wonwoo",
+        "name": "Seungkwan",
         "group": "SEVENTEEN",
         "single": "Rock with you",
         "category": "comn",
         "description": "**Rock with you** *`SEVENTEEN`*",
         "emoji": "🚀",
-        "globalID": "8723",
+        "globalID": "8720",
         "setID": "886",
         "rarity": 70,
         "price": 30,
@@ -4680,16 +4638,16 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494770245738566/seventeen-rockwithyou_wonwoo.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494728306905128/seventeen-rockwithyou_seungkwan.png"
     },
     {
-        "name": "Woozi",
+        "name": "DK",
         "group": "SEVENTEEN",
         "single": "Rock with you",
         "category": "comn",
         "description": "**Rock with you** *`SEVENTEEN`*",
         "emoji": "🚀",
-        "globalID": "8724",
+        "globalID": "8714",
         "setID": "886",
         "rarity": 70,
         "price": 30,
@@ -4701,17 +4659,17 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494770526748682/seventeen-rockwithyou_woozi.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494726679515216/seventeen-rockwithyou_dk.png"
     },
     {
-        "name": "IU¹",
-        "group": "IU",
-        "single": "The red shoes",
+        "name": "Joshua",
+        "group": "SEVENTEEN",
+        "single": "Rock with you",
         "category": "comn",
-        "description": "**The red shoes** *`IU`*",
-        "emoji": "👠",
-        "globalID": "8725",
-        "setID": "887",
+        "description": "**Rock with you** *`SEVENTEEN`*",
+        "emoji": "🚀",
+        "globalID": "8716",
+        "setID": "886",
         "rarity": 70,
         "price": 30,
         "sellPrice": 30,
@@ -4722,17 +4680,17 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086995845871837265/TRS_IU.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494727254130809/seventeen-rockwithyou_joshua.png"
     },
     {
-        "name": "IU²",
-        "group": "IU",
-        "single": "The red shoes",
+        "name": "S.Coups",
+        "group": "SEVENTEEN",
+        "single": "Rock with you",
         "category": "comn",
-        "description": "**The red shoes** *`IU`*",
-        "emoji": "👠",
-        "globalID": "8726",
-        "setID": "887",
+        "description": "**Rock with you** *`SEVENTEEN`*",
+        "emoji": "🚀",
+        "globalID": "8719",
+        "setID": "886",
         "rarity": 70,
         "price": 30,
         "sellPrice": 30,
@@ -4743,7 +4701,28 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086995846224150558/TRS_IU2.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1084494727967162508/seventeen-rockwithyou_scoups.png"
+    },
+    {
+        "name": "Jeonghan",
+        "group": "SEVENTEEN",
+        "single": "Rock with you",
+        "category": "comn",
+        "description": "**Rock with you** *`SEVENTEEN`*",
+        "emoji": "🚀",
+        "globalID": "8753",
+        "setID": "886",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1098050283566813204/seventeen-jeonghan.png"
     },
     {
         "name": "IU³",
@@ -4767,6 +4746,48 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086995846610030622/TRS_IU3.png"
     },
     {
+        "name": "IU²",
+        "group": "IU",
+        "single": "The red shoes",
+        "category": "comn",
+        "description": "**The red shoes** *`IU`*",
+        "emoji": "👠",
+        "globalID": "8726",
+        "setID": "887",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086995846224150558/TRS_IU2.png"
+    },
+    {
+        "name": "IU¹",
+        "group": "IU",
+        "single": "The red shoes",
+        "category": "comn",
+        "description": "**The red shoes** *`IU`*",
+        "emoji": "👠",
+        "globalID": "8725",
+        "setID": "887",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086995845871837265/TRS_IU.png"
+    },
+    {
         "name": "WOOZI¹",
         "group": "WOOZI",
         "single": "Ruby",
@@ -4786,27 +4807,6 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086995874804154368/woozi-ruby_v1.png"
-    },
-    {
-        "name": "WOOZI²",
-        "group": "WOOZI",
-        "single": "Ruby",
-        "category": "comn",
-        "description": "**Ruby** *`WOOZI`*",
-        "emoji": "💎",
-        "globalID": "8729",
-        "setID": "888",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086995875181637672/woozi-ruby_v2.png"
     },
     {
         "name": "WOOZI³",
@@ -4830,14 +4830,14 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086995875496202290/woozi-ruby_v3.png"
     },
     {
-        "name": "Bora",
-        "group": "Cherry Bullet",
-        "single": "P.O.W!",
+        "name": "WOOZI²",
+        "group": "WOOZI",
+        "single": "Ruby",
         "category": "comn",
-        "description": "**P.O.W!** *`Cherry Bullet`*",
-        "emoji": "🤾",
-        "globalID": "8731",
-        "setID": "889",
+        "description": "**Ruby** *`WOOZI`*",
+        "emoji": "💎",
+        "globalID": "8729",
+        "setID": "888",
         "rarity": 70,
         "price": 30,
         "sellPrice": 30,
@@ -4848,70 +4848,7 @@
             "ability": 100,
             "reputation": 100
         },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092061379487338517/POW_Bora.png"
-    },
-    {
-        "name": "Chaerin",
-        "group": "Cherry Bullet",
-        "single": "P.O.W!",
-        "category": "comn",
-        "description": "**P.O.W!** *`Cherry Bullet`*",
-        "emoji": "🤾",
-        "globalID": "8732",
-        "setID": "889",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092061379969679531/POW_Chaerin.png"
-    },
-    {
-        "name": "Haeyoon",
-        "group": "Cherry Bullet",
-        "single": "P.O.W!",
-        "category": "comn",
-        "description": "**P.O.W!** *`Cherry Bullet`*",
-        "emoji": "🤾",
-        "globalID": "8733",
-        "setID": "889",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092061380267479161/POW_Haeyoon.png"
-    },
-    {
-        "name": "Jiwon",
-        "group": "Cherry Bullet",
-        "single": "P.O.W!",
-        "category": "comn",
-        "description": "**P.O.W!** *`Cherry Bullet`*",
-        "emoji": "🤾",
-        "globalID": "8734",
-        "setID": "889",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092061380582055998/POW_Jiwon.png"
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1086995875181637672/woozi-ruby_v2.png"
     },
     {
         "name": "May",
@@ -4935,6 +4872,48 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092061380967923722/POW_May.png"
     },
     {
+        "name": "Jiwon",
+        "group": "Cherry Bullet",
+        "single": "P.O.W!",
+        "category": "comn",
+        "description": "**P.O.W!** *`Cherry Bullet`*",
+        "emoji": "🤾",
+        "globalID": "8734",
+        "setID": "889",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092061380582055998/POW_Jiwon.png"
+    },
+    {
+        "name": "Haeyoon",
+        "group": "Cherry Bullet",
+        "single": "P.O.W!",
+        "category": "comn",
+        "description": "**P.O.W!** *`Cherry Bullet`*",
+        "emoji": "🤾",
+        "globalID": "8733",
+        "setID": "889",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092061380267479161/POW_Haeyoon.png"
+    },
+    {
         "name": "Remi",
         "group": "Cherry Bullet",
         "single": "P.O.W!",
@@ -4956,6 +4935,27 @@
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092061381383164004/POW_Remi.png"
     },
     {
+        "name": "Chaerin",
+        "group": "Cherry Bullet",
+        "single": "P.O.W!",
+        "category": "comn",
+        "description": "**P.O.W!** *`Cherry Bullet`*",
+        "emoji": "🤾",
+        "globalID": "8732",
+        "setID": "889",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092061379969679531/POW_Chaerin.png"
+    },
+    {
         "name": "Yuju",
         "group": "Cherry Bullet",
         "single": "P.O.W!",
@@ -4975,6 +4975,48 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092061381773238292/POW_Yuju.png"
+    },
+    {
+        "name": "Bora",
+        "group": "Cherry Bullet",
+        "single": "P.O.W!",
+        "category": "comn",
+        "description": "**P.O.W!** *`Cherry Bullet`*",
+        "emoji": "🤾",
+        "globalID": "8731",
+        "setID": "889",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092061379487338517/POW_Bora.png"
+    },
+    {
+        "name": "BOBBY³",
+        "group": "BOBBY",
+        "single": "Drowing",
+        "category": "comn",
+        "description": "**Drowing** *`BOBBY`*",
+        "emoji": "🏊",
+        "globalID": "8740",
+        "setID": "890",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092061382700179486/drowning_bobby3.png"
     },
     {
         "name": "BOBBY¹",
@@ -5017,69 +5059,6 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092061382335270912/drowning_bobby2.png"
-    },
-    {
-        "name": "BOBBY³",
-        "group": "BOBBY",
-        "single": "Drowing",
-        "category": "comn",
-        "description": "**Drowing** *`BOBBY`*",
-        "emoji": "🏊",
-        "globalID": "8740",
-        "setID": "890",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1092061382700179486/drowning_bobby3.png"
-    },
-    {
-        "name": "Bomi",
-        "group": "Apink",
-        "single": "D N D",
-        "category": "comn",
-        "description": "**D N D** *`Apink`*",
-        "emoji": "📰",
-        "globalID": "8741",
-        "setID": "891",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094606277629444117/dnd_bomi.png"
-    },
-    {
-        "name": "Chorong",
-        "group": "Apink",
-        "single": "D N D",
-        "category": "comn",
-        "description": "**D N D** *`Apink`*",
-        "emoji": "📰",
-        "globalID": "8742",
-        "setID": "891",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094606278053085194/dnd_chorong.png"
     },
     {
         "name": "Eunji",
@@ -5143,6 +5122,48 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094606278896123934/dnd_namjoo.png"
+    },
+    {
+        "name": "Bomi",
+        "group": "Apink",
+        "single": "D N D",
+        "category": "comn",
+        "description": "**D N D** *`Apink`*",
+        "emoji": "📰",
+        "globalID": "8741",
+        "setID": "891",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094606277629444117/dnd_bomi.png"
+    },
+    {
+        "name": "Chorong",
+        "group": "Apink",
+        "single": "D N D",
+        "category": "comn",
+        "description": "**D N D** *`Apink`*",
+        "emoji": "📰",
+        "globalID": "8742",
+        "setID": "891",
+        "rarity": 70,
+        "price": 30,
+        "sellPrice": 30,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1094606278053085194/dnd_chorong.png"
     },
     {
         "name": "Eunchan",
@@ -5290,27 +5311,6 @@
             "reputation": 100
         },
         "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1097180330110242826/Taerae.png"
-    },
-    {
-        "name": "Jeonghan",
-        "group": "SEVENTEEN",
-        "single": "Rock with you",
-        "category": "comn",
-        "description": "**Rock with you** *`SEVENTEEN`*",
-        "emoji": "🚀",
-        "globalID": "8753",
-        "setID": "886",
-        "rarity": 70,
-        "price": 30,
-        "sellPrice": 30,
-        "stats": {
-            "level": 1,
-            "xp": 0,
-            "xp_for_next_level": 100,
-            "ability": 100,
-            "reputation": 100
-        },
-        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1098050283566813204/seventeen-jeonghan.png"
     },
     {
         "name": "HA:TFELT¹",

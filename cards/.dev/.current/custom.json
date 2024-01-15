@@ -1,0 +1,86 @@
+[
+    {
+        "name": "Custom",
+        "group": "Custom",
+        "single": "CUST00",
+        "category": "cust",
+        "description": "**Special** *`Custom`*",
+        "emoji": "📝",
+        "globalID": "100",
+        "setID": "100",
+        "rarity": 1000,
+        "price": null,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1088081215271223377/custom_cust01.png"
+    },
+    {
+        "name": "Custom",
+        "group": "Custom",
+        "single": "CUST01",
+        "category": "cust",
+        "description": "**Special** *`Custom`*",
+        "emoji": "📝",
+        "globalID": "101",
+        "setID": "100",
+        "rarity": 100,
+        "price": 500,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1088081215271223377/custom_cust01.png"
+    },
+    {
+        "name": "Custom",
+        "group": "Custom",
+        "single": "CUST02",
+        "category": "cust",
+        "description": "**Special** *`Custom`*",
+        "emoji": "📝",
+        "globalID": "102",
+        "setID": "100",
+        "rarity": 100,
+        "price": 750,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1088081215606755398/custom_cust02.png"
+    },
+    {
+        "name": "Custom",
+        "group": "Custom",
+        "single": "CUST03",
+        "category": "cust",
+        "description": "**Special** *`Custom`*",
+        "emoji": "📝",
+        "globalID": "103",
+        "setID": "100",
+        "rarity": 100,
+        "price": 1000,
+        "sellPrice": 10,
+        "stats": {
+            "level": 1,
+            "xp": 0,
+            "xp_for_next_level": 100,
+            "ability": 100,
+            "reputation": 100
+        },
+        "imageURL": "https://cdn.discordapp.com/attachments/1014199645750186044/1088081215854223451/custom_cust03.png"
+    }
+]

@@ -3,24 +3,24 @@
 const fs = require("fs");
 const jt = require("../../modules/jsTools");
 
-/* const card_JSON = [
-	{ fn: "common", cards: require("./.current/cards_common.json") },
-	{ fn: "uncommon", cards: require("./.current/cards_uncommon.json") },
-	{ fn: "rare", cards: require("./.current/cards_rare.json") },
-	{ fn: "epic", cards: require("./.current/cards_epic.json") },
-	{ fn: "mint", cards: require("./.current/cards_mint.json") },
+const card_JSON = [
+	{ fn: "common", cards: require("./.current/common.json") },
+	{ fn: "uncommon", cards: require("./.current/uncommon.json") },
+	{ fn: "rare", cards: require("./.current/rare.json") },
+	{ fn: "epic", cards: require("./.current/epic.json") },
+	{ fn: "mint", cards: require("./.current/mint.json") },
 
-	{ fn: "bday", cards: require("./.current/cards_bday.json") },
-	{ fn: "holiday", cards: require("./.current/cards_holiday.json") },
+	{ fn: "bday", cards: require("./.current/bday.json") },
+	{ fn: "holiday", cards: require("./.current/holiday.json") },
 
-	{ fn: "event1", cards: require("./.current/cards_event1.json") },
-	{ fn: "event2", cards: require("./.current/cards_event2.json") },
-	{ fn: "event3", cards: require("./.current/cards_event3.json") },
+	{ fn: "event1", cards: require("./.current/event1.json") },
+	{ fn: "event2", cards: require("./.current/event2.json") },
+	{ fn: "event3", cards: require("./.current/event3.json") },
 
-	{ fn: "season", cards: require("./.current/cards_season.json") },
-	{ fn: "shop", cards: require("./.current/cards_shop.json") },
-	{ fn: "custom", cards: require("./.current/cards_custom.json") }
-]; */
+	{ fn: "season", cards: require("./.current/season.json") },
+	{ fn: "shop", cards: require("./.current/shop.json") },
+	{ fn: "custom", cards: require("./.current/custom.json") }
+];
 
 function exportAll() {
 	for (let file of card_JSON) {
@@ -73,5 +73,20 @@ function editCardDescriptions() {
 	}
 }
 
+function resortCards() {
+	// Iterate through card JSONs
+	for (let i = 0; i < card_JSON.length; i++) {
+		let _cards = card_JSON[i].cards;
+
+		// Iterate through cards in the JSON
+		for (let idx = 0; idx < _cards.length; idx++) {
+			// let _c = _cards[idx];
+
+			card_JSON[i].cards.sort((a, b) => a.globalID - b.globalID);
+		}
+	}
+}
+
 // editCardDescriptions();
+// resortCards();
 // exportAll();
