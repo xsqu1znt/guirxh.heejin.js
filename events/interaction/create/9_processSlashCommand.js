@@ -112,11 +112,27 @@ module.exports = {
 				description: "**You have not started yet!** Use \`/start\` first!"
 			});
 
+			let timestamp_execute = Date.now(); // DEBUG
+
+			// prettier-ignore
+			// DEBUG
+			logger.debug(`executing '/${args.interaction.commandName}' | user: '${args.interaction.user.username}' | guild: '${args.interaction?.guild?.name}'`);
+
 			// prettier-ignore
 			return await slashCommand.execute(client, args.interaction).then(async message => {
-				if (!message?.author) message = await args.interaction.fetchReply().catch(() => null);
+				// prettier-ignore
+				// DEBUG
+				logger.debug(`DONE!! used '/${args.interaction.commandName}' | user: '${args.interaction.user.username}' | guild: '${args.interaction?.guild?.name}' | time: ${jt.eta(timestamp_execute, { since: Date.now() })}`);
 
+				if (!message?.author) message = await args.interaction.fetchReply().catch(() => null);
+				
 				// TODO: run code here after the command is finished
+				
+				let timestamp_afterExecute = Date.now(); // DEBUG
+
+				// prettier-ignore
+				// DEBUG
+				logger.debug(`running logic after '/${args.interaction.commandName}' | user: '${args.interaction.user.username}' | guild: '${args.interaction?.guild?.name}'`);
 
 				// Increment commands used
 				userManager.statistics.commands.executed.increment(args.interaction.user.id);
@@ -205,6 +221,10 @@ module.exports = {
 					description: jt.choice(config.tips),
 					sendMethod: "channel"
 				}).catch(() => null);
+
+				// prettier-ignore
+				// DEBUG
+				logger.debug(`DONE!! ran logic after '/${args.interaction.commandName}' | user: '${args.interaction.user.username}' | guild: '${args.interaction?.guild?.name}' | time: ${jt.eta(timestamp_afterExecute, { since: Date.now() })}`);
 			});
 		} catch (err) {
 			/* - - - - - { Let the User Know an Error Occurred } - - - - - */
