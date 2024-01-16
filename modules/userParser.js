@@ -72,12 +72,12 @@ function cards_getIdol(userData) {
 }
 
 /** @typedef options_cards_getInventory
- * @property {boolean} dupeTag
+ * @property {boolean} dupe
  * @property {boolean} unique */
 
 /** @param {options_cards_getInventory} options  */
 function cards_getInventory(userData, options = {}) {
-	options = { dupeTag: true, unique: true, ...options };
+	options = { dupe: true, unique: true, ...options };
 
 	let cards = [];
 	let cards_primary = userData?.card_inventory || userData;
@@ -95,11 +95,11 @@ function cards_getInventory(userData, options = {}) {
 
 		// prettier-ignore
 		let _card_f = cardManager.toString.inventoryEntry(card, {
-			duplicate: options.dupeTag ? duplicateCount : false,
+			duplicate: options.dupe ? duplicateCount : false,
 			locked: card.locked, favorite, selected, onTeam
 		});
 
-		cards.push({ card, card_f: _card_f, duplicateCount, favorite, selected, onTeam });
+		cards.push({ card, card_f: _card_f, duplicate: duplicateCount, favorite, selected, onTeam });
 	}
 
 	return cards;

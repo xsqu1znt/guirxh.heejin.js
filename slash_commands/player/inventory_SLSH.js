@@ -4,6 +4,7 @@ const { EmbedNavigator } = require("../../modules/discordTools");
 const { error_ES, user_ES } = require("../../modules/embedStyles/index");
 const { userManager } = require("../../modules/mongo/index");
 const userParser = require("../../modules/userParser");
+const jt = require("../../modules/jsTools");
 
 module.exports = {
 	// prettier-ignore
@@ -38,7 +39,7 @@ module.exports = {
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
 		// Sorting options
-		let options_inventory = {
+		let inventoryOptions = {
 			target: interaction.options.getUser("player") || interaction.member,
 			rarity: interaction.options.getString("rarity") || "",
 			setID: interaction.options.getString("setid") || "",
@@ -51,26 +52,27 @@ module.exports = {
 			order: interaction.options.getString("order") || "ascending"
 		};
 
-		// prettier-ignore
-		// Temporary workaround to prevent over-stressing the bot
-		if (client.cooldowns_inventory.get(interaction.user.id)) return await error_ES.send({
-			interaction, description: "Please wait until your other inventory loads before using it again"
-		});
-
-		// Set temporary cooldown
-		client.cooldowns_inventory.set(interaction.user.id, Date.now());
-
-		// Fetch the targetUser from Mongo
-		let userData = await userManager.fetch(options_inventory.target.id, { type: "full" });
+		// Fetch the target user from Mongo
+		let userData = await userManager.fetch(inventoryOptions.target.id, { type: "full" });
 		if (!userData) return await error_ES.send({ interaction, description: "That user has not started yet" });
 
 		// Parse the user's card_inventory
 		userData = userParser.cards.parseInventory(userData, { unique: false });
 
-		let inventory_stats = await userManager.inventory.stats(options_inventory.target.id);
+		// Fetch the user's inventory stats
+		let inventoryStats = await userManager.inventory.stats(inventoryOptions.target.id);
+
+		let timestamp_embed = Date.now(); // DEBUG
+
+		// Sort the inventory using the provided filters and create a page template
+		let embedTemplate_inventory = user_ES.inventory(userData, inventoryOptions, inventoryStats.categories);
+
+		console.log(embedTemplate_inventory, jt.eta(Date.now(), { since: timestamp_embed })); // DEBUG
+
+		return; // DEBUG
 
 		// Create the embeds :: { USER INVENTORY }
-		let embeds_inventory = user_ES.inventory(userData, options_inventory, inventory_stats.categories);
+		let embeds_inventory = user_ES.inventory(userData, inventoryOptions, inventoryStats.categories);
 
 		// prettier-ignore
 		// Set up page navigation
@@ -79,11 +81,6 @@ module.exports = {
 			pagination: { type: "longJump", useReactions: true }
 		});
 
-		let msg = await embedNav.send();
-
-		// Delete the cooldown
-		client.cooldowns_inventory.delete(interaction.user.id);
-
-		return msg;
+		return await embedNav.send();
 	}
 };

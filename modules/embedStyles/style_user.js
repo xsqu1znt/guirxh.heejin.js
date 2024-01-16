@@ -233,25 +233,25 @@ function inventory(userData, options, stats) {
 		sorting: "setID", order: "ascending", ...options
 	};
 
-	/// Parse options
+	/* - - - - - { Parse Options } - - - - - */
 	// prettier-ignore
-	options.rarity = options.rarity.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
+	options.rarity = options.rarity.split(",").map(str => str.trim().toLowerCase());
 	// prettier-ignore
-	options.setID = options.setID.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
+	options.setID = options.setID.split(",").map(str => str.trim().toLowerCase());
 	// prettier-ignore
-	options.globalID = options.globalID.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
+	options.globalID = options.globalID.split(",").map(str => str.trim().toLowerCase());
 	// prettier-ignore
-	options.category = options.category.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
+	options.category = options.category.split(",").map(str => str.trim().toLowerCase());
 	// prettier-ignore
-	options.group = options.group.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
+	options.group = options.group.split(",").map(str => str.trim().toLowerCase());
 	// prettier-ignore
-	options.single = options.single.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
+	options.single = options.single.split(",").map(str => str.trim().toLowerCase());
 	// prettier-ignore
-	options.name = options.name.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
+	options.name = options.name.split(",").map(str => str.trim().toLowerCase());
 
 	/// Parse user's card_inventory
 	let cards = userParser.cards.getInventory(userData, {
-		dupeTag: options.globalID.length && options.globalID[0] !== "all" ? false : true,
+		dupe: options.globalID.length && options.globalID[0] !== "all" ? false : true,
 		unique: options.globalID.length && options.globalID[0] !== "all" ? false : true
 	});
 
@@ -299,10 +299,10 @@ function inventory(userData, options, stats) {
 	// prettier-ignore
 	// Apply duplicate filter
 	if (options.globalID.length) if (options.globalID[0].toLowerCase() === "all") {
-		cards = cards.filter(c => c.duplicateCount);
+		cards = cards.filter(c => c.duplicate);
 		filtered = true;
 	} else {
-		cards = cards.filter(c => options.globalID.includes(c.card.globalID) && c.duplicateCount);
+		cards = cards.filter(c => options.globalID.includes(c.card.globalID) && c.duplicate);
 		filtered = true; dupeCheck = true;
 	}
 
@@ -319,17 +319,21 @@ function inventory(userData, options, stats) {
 
 	// prettier-ignore
 	// Return an embed :: { ERROR }
-	if (!cards.length) return new BetterEmbed({
-		author: { text: "$USERNAME | inventory", user: options.target, iconURL: true },
-		description: filtered ? dupeCheck
-			? `You do not have any dupes of ${options.globalID.length === 1 ? "that card" : "those cards"}`
-			: "No cards were found with that search filter"
-			: "There are no cards in your inventory"
-	});
+	if (!cards.length) return {
+		embed_error: new BetterEmbed({
+			author: { text: "$USERNAME | inventory", user: options.target, iconURL: true },
+			description: filtered ? dupeCheck
+				? `You do not have any dupes of ${options.globalID.length === 1 ? "that card" : "those cards"}`
+				: "No cards were found with that search filter"
+				: "There are no cards in your inventory"
+		})
+	};
 
 	// prettier-ignore
 	// Format the user's cards into list entries, with a max of 15 per page
 	let cards_f = jt.chunk(cards.map(c => c.card_f), 15);
+
+	return; // DEBUG
 
 	/// Create the embeds :: { INVENTORY }
 	let embeds_inventory = [];
@@ -438,7 +442,7 @@ function reminders(user, userData) {
 	let cooldowns = Object.keys(config_player.cooldowns);
 
 	// Filter out null cooldowns
-	cooldowns = cooldowns.filter(cd => config.player.cooldowns[cd] ? true : false);
+	cooldowns = cooldowns.filter(cd => (config.player.cooldowns[cd] ? true : false));
 
 	// Parse the cooldowns into strings
 	let cooldowns_f = cooldowns.map(cd => {
