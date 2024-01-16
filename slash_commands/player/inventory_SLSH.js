@@ -4,6 +4,7 @@ const { EmbedNavigator } = require("../../modules/discordTools");
 const { error_ES, user_ES } = require("../../modules/embedStyles/index");
 const { userManager } = require("../../modules/mongo/index");
 const userParser = require("../../modules/userParser");
+const jt = require("../../modules/jsTools");
 
 module.exports = {
 	// prettier-ignore
@@ -60,14 +61,28 @@ module.exports = {
 		// Set temporary cooldown
 		client.cooldowns_inventory.set(interaction.user.id, Date.now());
 
+		let timestamp_start_userData = Date.now(); // DEBUG
+		// prettier-ignore
+		console.log(`loading inventory for '${options_inventory.target?.user?.username || options_inventory.target?.username}'`); // DEBUG
+
 		// Fetch the targetUser from Mongo
 		let userData = await userManager.fetch(options_inventory.target.id, { type: "full" });
 		if (!userData) return await error_ES.send({ interaction, description: "That user has not started yet" });
 
+		// prettier-ignore
+		console.log(`done loading inventory for '${options_inventory.target?.user?.username || options_inventory.target?.username}' | time: ${jt.eta(Date.now(), { since: timestamp_start_userData })}`); // DEBUG
+
 		// Parse the user's card_inventory
 		userData = userParser.cards.parseInventory(userData, { unique: false });
 
-		let inventory_stats = await userManager.inventory.stats(interaction.user.id);
+		let timestamp_start_stats = Date.now(); // DEBUG
+		console.log(`loading stats for '${options_inventory.target?.user?.username || options_inventory.target?.username}'`); // DEBUG
+
+		let inventory_stats = await userManager.inventory.stats(options_inventory.target.id);
+
+		// prettier-ignore
+		console.log(`done loading stats for '${options_inventory.target?.user?.username || options_inventory.target?.username}' | time: ${jt.eta(Date.now(), { since: timestamp_start_stats })}`); // DEBUG
+
 		// Create the embeds :: { USER INVENTORY }
 		let embeds_inventory = user_ES.inventory(userData, options_inventory, inventory_stats.categories);
 
