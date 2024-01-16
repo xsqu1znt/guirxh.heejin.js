@@ -37,6 +37,9 @@
 > - Fixed reminders not pinging you (*they'll work as expected after your 2nd cooldown, check `/reminder` to make sure they're set the way you want*)
 > - Fixed `📝 Custom` `🏃 idols` resetting their single, name, and image after winning `/stage`
 
+> - Fixed level `📈 100` `🏃 idols` causing Heejin to go down after winning `/stage`
+> - Removed the temporary `/inventory` cooldown (*not spamming `/inventory` is still advised*)
+
 <!-- Changelog -->
 - `📰` **`Overall Changes`**
 > - Major design changes
