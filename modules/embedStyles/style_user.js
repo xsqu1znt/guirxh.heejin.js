@@ -372,18 +372,18 @@ function inventory(userData, options, stats) {
 	// Create the template :: { INVENTORY }
 	const embedTemplate_inventory = idx => {
 		// Create the embed :: { INVENTORY }
-		let _embed = new BetterEmbed({
+		let embed = new BetterEmbed({
 			author: {
 				text: dupeCheck ? "$USERNAME | dupes" : `$USERNAME | inventory ${filtered ? "(filtered)" : ""}`,
 				user: options.target,
 				iconURL: true
 			},
 			thumbnailURL: dupeCheck ? cards.slice(-1)[0].card.imageURL : null,
-			footer: { text: `Page ${i + 1}/${cards_f_chunk.length || 1}` }
+			footer: { text: `Page ${idx + 1}/${cards_f_chunk.length || 1}` }
 		});
 
 		// Add stat fields to the embed
-		_embed.addFields(
+		embed.addFields(
 			// Inventory stats
 			{ name: "\u200b", value: `\n\`\`\`ansi\n${stats_f_1.join("\n")}\`\`\``, inline: true },
 			// Profile stats
@@ -393,7 +393,9 @@ function inventory(userData, options, stats) {
 		);
 
 		// Add cards
-		_embed.addFields(cards_f_chunk[idx].map(c_f => ({ name: "\u200b", value: c_f, inline: true })));
+		embed.addFields(cards_f_chunk[idx].map(c_f => ({ name: "\u200b", value: c_f, inline: true })));
+
+		return embed;
 	};
 
 	return { template: embedTemplate_inventory, pageCount: cards_f_chunk.length };

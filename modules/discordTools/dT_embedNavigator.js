@@ -70,21 +70,22 @@ class EmbedNavigator {
 
 		let _page = this.options.embeds[this.data.pages.idx.current];
 
-		// Generate the page using the provided template
-		if (this.options.embedTemplate && !_page) {
-			// Generate the embed
-			_page = this.options.embedTemplate(this.data.pages.idx.current);
-
-			// Cache the generated embed
-			this.options.embeds.splice(this.data.pages.idx.current, 1, structuredClone(_page));
-		}
-
-		// prettier-ignore
 		// Check if the current page is an array of embeds
-		if (Array.isArray(_page) && _page.length)
+		if (Array.isArray(_page) && _page.length) {
+			// Generate the page using the provided template
+			if (!_page[this.data.pages.idx.nested] && this.options.embedTemplate) {
+				// Generate the embed
+				this.options.embeds[this.data.pages.idx.current].splice(
+					this.data.pages.idx.nested,
+					1,
+					this.options.embedTemplate(this.data.pages.idx.nested)
+				);
+
+				_page = this.options.embeds[this.data.pages.idx.current];
+			}
+
 			this.data.pages.current = _page[this.data.pages.idx.nested];
-		else
-			this.data.pages.current = _page;
+		} else this.data.pages.current = _page;
 
 		// Count how many nested pages there are currently
 		this.data.pages.nested_length = Array.isArray(_page) ? _page.length : 0;
@@ -456,8 +457,9 @@ class EmbedNavigator {
 			}
 
 		// Embeds
-		if (!options.embeds) throw new Error("You must provide at least 1 embed");
-		if (Array.isArray(options.embeds) && !options.embeds.length) throw new Error("Embeds cannot be an empty array");
+		if (!options?.embedTemplate && !options.embeds) throw new Error("You must provide at least 1 embed");
+		if (!options?.embedTemplate && Array.isArray(options.embeds) && !options.embeds.length)
+			throw new Error("Embeds cannot be an empty array");
 
 		/// Parse options
 		// prettier-ignore
@@ -469,10 +471,10 @@ class EmbedNavigator {
 			timeout: config.timeouts.PAGINATION, ...options
 		};
 
-		if (this.options.embedTemplate) embeds = [...new Array(this.options.pageCount)].fill(null);
+		if (this.options.embedTemplate) this.options.embeds = [[...new Array(this.options.pageCount)].fill(null)];
 
-		if (!Array.isArray(this.options.users) && this.options.users) this.options.users = [this.options.users];
-		if (!Array.isArray(this.options.embeds) && this.options.embeds) this.options.embeds = [this.options.embeds];
+		this.options.users &&= jt.isArray(this.options.users);
+		this.options.embeds &&= jt.isArray(this.options.embeds);
 		this.options.timeout = jt.parseTime(this.options.timeout);
 
 		/// Configure data & variables
