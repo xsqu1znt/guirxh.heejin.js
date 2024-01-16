@@ -101,7 +101,7 @@ module.exports = {
 			pagination: { type: "longJump", useReactions: true }
         });
 
-		let timestamp_start_start = Date.now(); // DEBUG
+		let timestamp_start_send = Date.now(); // DEBUG
 		console.log(`sending inventory for ${username}...`); // DEBUG
 
 		let msg = await embedNav.send();
