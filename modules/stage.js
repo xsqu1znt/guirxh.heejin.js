@@ -43,9 +43,7 @@ class Stage {
 			case "home":
 				// Calculate the resulting attack power :: { AWAY }
 				let attackPower_away = jt.randomNumber(
-					this.data.opponents.away
-						? this.data.idol.away.stats.ability
-						: jt.percent(30, this.data.idol.away.stats.ability),
+					jt.percent(30, this.data.idol.away.stats.ability),
 					this.data.idol.away.stats.ability
 				);
 
@@ -59,8 +57,8 @@ class Stage {
 			case "away":
 				// Calculate the resulting attack power :: { HOME }
 				let attackPower_home = jt.randomNumber(
-					jt.percent(30, this.data.idol.away.stats.ability),
-					this.data.idol.away.stats.ability
+					jt.percent(30, this.data.idol.home.stats.ability),
+					this.data.idol.home.stats.ability
 				);
 
 				// prettier-ignore
