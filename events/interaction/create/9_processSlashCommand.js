@@ -122,7 +122,7 @@ module.exports = {
 			return await slashCommand.execute(client, args.interaction).then(async message => {
 				// prettier-ignore
 				// DEBUG
-				logger.debug(`DONE!! used '/${args.interaction.commandName}' | user: '${args.interaction.user.username}' | guild: '${args.interaction?.guild?.name}' | time: ${jt.eta(timestamp_execute, { since: Date.now() })}`);
+				logger.success(`DONE!! used '/${args.interaction.commandName}' | user: '${args.interaction.user.username}' | guild: '${args.interaction?.guild?.name}' | time: ${jt.eta(Date.now(), { since: timestamp_execute })}`);
 
 				if (!message?.author) message = await args.interaction.fetchReply().catch(() => null);
 				
@@ -224,7 +224,7 @@ module.exports = {
 
 				// prettier-ignore
 				// DEBUG
-				logger.debug(`DONE!! ran logic after '/${args.interaction.commandName}' | user: '${args.interaction.user.username}' | guild: '${args.interaction?.guild?.name}' | time: ${jt.eta(timestamp_afterExecute, { since: Date.now() })}`);
+				logger.success(`DONE!! ran logic after '/${args.interaction.commandName}' | user: '${args.interaction.user.username}' | guild: '${args.interaction?.guild?.name}' | time: ${jt.eta(Date.now(), { since: timestamp_afterExecute })}`);
 			});
 		} catch (err) {
 			/* - - - - - { Let the User Know an Error Occurred } - - - - - */
