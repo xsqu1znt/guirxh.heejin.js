@@ -11,7 +11,7 @@
  * @property {TextChannel} channel
  * @property {GuildMember|User|Array<GuildMember|User>} users extra users that are allowed to use the navigator
  * @property {Function} embedTemplate called whenever a new page is navigated to, generated embeds are then cached
- * @property {number} embedCount this is used when an embedTemplate is provided
+ * @property {number} pageCount this is used when an embedTemplate is provided
  * @property {EmbedBuilder|BetterEmbed} embeds can be an array/contain nested arrays
  * @property {boolean} selectMenuEnabled
  * @property {eN_paginationOptions} pagination
@@ -463,13 +463,13 @@ class EmbedNavigator {
 		// prettier-ignore
 		this.options = {
 			interaction: null, channel: null, users: null, embeds: null,
-			embedTemplate: null, embedCount: null,
+			embedTemplate: null, pageCount: null,
 			selectMenuEnabled: false,
 			pagination: { type: null, useReactions: false, dynamic: false },
 			timeout: config.timeouts.PAGINATION, ...options
 		};
 
-		if (this.options.embedTemplate) embeds = [...new Array(embedCount)].fill(null);
+		if (this.options.embedTemplate) embeds = [...new Array(this.options.pageCount)].fill(null);
 
 		if (!Array.isArray(this.options.users) && this.options.users) this.options.users = [this.options.users];
 		if (!Array.isArray(this.options.embeds) && this.options.embeds) this.options.embeds = [this.options.embeds];

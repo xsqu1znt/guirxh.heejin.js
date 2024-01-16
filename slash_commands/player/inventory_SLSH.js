@@ -66,14 +66,17 @@ module.exports = {
 
 		// Sort the inventory using the provided filters and create a page template
 		let embedTemplate_inventory = user_ES.inventory(userData, inventoryOptions, inventoryStats.categories);
-
 		console.log(embedTemplate_inventory, jt.eta(Date.now(), { since: timestamp_embed })); // DEBUG
+
+		// prettier-ignore
+		if (embedTemplate_inventory.embed_error)
+			return await embedTemplate_inventory.embed_error.send({ interaction });
 
 		// Set up page navigation
 		let embedNav = new EmbedNavigator({
 			interaction,
 			embedTemplate: embedTemplate_inventory.template,
-			embedCount: embedCount_inventory.pageCount,
+			pageCount: embedCount_inventory.pageCount,
 			pagination: { type: "longJump", useReactions: true }
 		});
 
