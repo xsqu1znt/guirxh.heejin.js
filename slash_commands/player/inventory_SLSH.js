@@ -69,14 +69,14 @@ module.exports = {
 		console.log(embedTemplate_inventory, jt.eta(Date.now(), { since: timestamp_embed })); // DEBUG
 
 		// prettier-ignore
-		if (embedTemplate_inventory.embed_error)
+		if (embedTemplate_inventory?.embed_error)
 			return await embedTemplate_inventory.embed_error.send({ interaction });
 
 		// Set up page navigation
 		let embedNav = new EmbedNavigator({
 			interaction,
 			embedTemplate: embedTemplate_inventory.template,
-			pageCount: embedCount_inventory.pageCount,
+			pageCount: embedTemplate_inventory.pageCount,
 			pagination: { type: "longJump", useReactions: true }
 		});
 
