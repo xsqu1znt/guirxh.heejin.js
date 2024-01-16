@@ -149,41 +149,9 @@ function levelUp(card) {
 		}
 	};
 
-	while (card.stats.xp >= card.stats.xp_for_next_level) levelUp();
+	while (card.stats.xp >= card.stats.xp_for_next_level && card.stats.level < config.player.xp.card.LEVEL_MAX) levelUp();
 
 	return { card: recalculateStats(card), ...session };
-
-	/* session = { leveled: false, levelsGained: 0, ...session };
-
-	// Don't level the card past the max card level
-	if (card.stats.level === config.player.xp.card.LEVEL_MAX) return session;
-
-	// Increase the card's level by 1 if they meet or surpass the required XP
-	if (card.stats.xp >= card.stats.xp_for_next_level) {
-		card.stats.level++;
-		session.leveled = true;
-		session.levelsGained++;
-
-		// If the card's at its max level set its XP to its required xp_for_next_level
-		if (card.stats.level === config.player.xp.card.LEVEL_MAX) card.stats.xp = card.stats.xp_for_next_level;
-		else {
-			// Reset XP, keeping any overshoot
-			// defaults to 0 if there wasn't a positive overshoot value
-			card.stats.xp = card.stats.xp - card.stats.xp_for_next_level || 0;
-
-			// Multiply the card's xp_for_next_level by its multipler
-			card.stats.xp_for_next_level = Math.round(card.stats.level * config.player.xp.card.LEVEL_XP_MULTIPLIER);
-
-			card = recalculateStats(card);
-
-			// Recursively level up the card if there's still enough XP
-			if (card.stats.xp >= card.stats.xp_for_next_level) return tryLevelUp(card, session);
-		}
-	}
-
-	// Return whether the card was leveled up or not
-	session.card = card;
-	return session; */
 }
 
 //! General

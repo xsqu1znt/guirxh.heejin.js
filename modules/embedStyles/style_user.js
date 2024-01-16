@@ -333,7 +333,9 @@ function inventory(userData, options, stats) {
 	// Break up cards into groups with a max of 15 per page
 	let cards_f_chunk = jt.chunk(cards.map(c => c.card_f), 15);
 
-	/* - - - - - { Create the Page Template } - - - - - */
+	/// Create the embeds :: { INVENTORY }
+	let embeds_inventory = [];
+
 	// prettier-ignore
 	let stats_f_1 = stats.slice(0, 5).map(c =>
 		markdown.ansi(`${cardManager.cards.category.meta.base[c.name].emoji} ${c.name}: ${c.has}/${c.outOf}`, {
@@ -351,7 +353,7 @@ function inventory(userData, options, stats) {
 		})
 	);
 
-	// Format profile stats
+	/* - - - - - { PROFILE STATS } - - - - - */
 	let stats_profile = markdown.ansi(
 		"$CARROTS\n$RIBBONS\n📆 $DAILY_STREAK\n📈 $LEVEL\n☝️ $XP/$XP_NEEDEDXP\n🃏 $INVENTORY_COUNT/$CARD_COUNT"
 			.replace("$CARROTS", `${config_bot.emojis.currency_1.EMOJI} ${userData.balance || 0}`)
@@ -369,77 +371,7 @@ function inventory(userData, options, stats) {
 		{ format: "bold", text_color: "white" }
 	);
 
-	// Create the template :: { INVENTORY }
-	const embedTemplate_inventory = idx => {
-		// Create the embed :: { INVENTORY }
-		let embed = new BetterEmbed({
-			author: {
-				text: dupeCheck ? "$USERNAME | dupes" : `$USERNAME | inventory ${filtered ? "(filtered)" : ""}`,
-				user: options.target,
-				iconURL: true
-			},
-			thumbnailURL: dupeCheck ? cards.slice(-1)[0].card.imageURL : null,
-			footer: { text: `Page ${idx + 1}/${cards_f_chunk.length || 1}` }
-		});
-
-		// Add stat fields to the embed
-		embed.addFields(
-			// Inventory stats
-			{ name: "\u200b", value: `\n\`\`\`ansi\n${stats_f_1.join("\n")}\`\`\``, inline: true },
-			// Profile stats
-			{ name: "\u200b", value: `\`\`\`ansi\n${stats_profile}\`\`\``, inline: true },
-			// Inventory stats
-			{ name: "\u200b", value: `\n\`\`\`ansi\n${stats_f_2.join("\n")}\`\`\``, inline: true }
-		);
-
-		// Add cards
-		embed.addFields(cards_f_chunk[idx].map(c_f => ({ name: "\u200b", value: c_f, inline: true })));
-
-		return embed;
-	};
-
-	return { template: embedTemplate_inventory, pageCount: cards_f_chunk.length };
-
-	/// Create the embeds :: { INVENTORY }
-	// let embeds_inventory = [];
-
-	// prettier-ignore
-	/* let stats_f_1 = stats.slice(0, 5).map(c =>
-		markdown.ansi(`${cardManager.cards.category.meta.base[c.name].emoji} ${c.name}: ${c.has}/${c.outOf}`, {
-			format: "bold", text_color: cardManager.cards.category.meta.base[c.name].color_ansi
-		})
-	);
-
-	// Add the user's inventory count to the first stat section
-	stats_f_1.push(markdown.ansi(`⚪ total: ${cards.length}`, { format: "bold", text_color: "white" }));
-
-	// prettier-ignore
-	let stats_f_2 = stats.slice(5).map(c =>
-		markdown.ansi(`${cardManager.cards.category.meta.base[c.name].emoji} ${c.name}: ${c.has}/${c.outOf}`, {
-			format: "bold", text_color: cardManager.cards.category.meta.base[c.name].color_ansi
-		})
-	); */
-
-	/* - - - - - { PROFILE STATS } - - - - - */
-	// let stats_profile = "> `$CARROTS` :: `$RIBBONS` :: `🃏 $INVENTORY_COUNT/$CARD_COUNT` :: `📈 LV. $LEVEL ☝️ $XPXP/$XP_NEEDEDXP`"
-	/* let stats_profile = markdown.ansi(
-		"$CARROTS\n$RIBBONS\n📆 $DAILY_STREAK\n📈 $LEVEL\n☝️ $XP/$XP_NEEDEDXP\n🃏 $INVENTORY_COUNT/$CARD_COUNT"
-			.replace("$CARROTS", `${config_bot.emojis.currency_1.EMOJI} ${userData.balance || 0}`)
-			.replace("$RIBBONS", `${config_bot.emojis.currency_2.EMOJI} ${userData.ribbons || 0}`)
-
-			.replace("$DAILY_STREAK", userData.daily_streak || 0)
-			.replace("$LEVEL", userData.level || 0)
-
-			.replace("$XP", Math.floor(userData.xp || 0))
-			.replace("$XP_NEEDED", Math.floor(userData.xp_for_next_level || 0))
-
-			.replace("$INVENTORY_COUNT", cards.length || 0)
-			.replace("$CARD_COUNT", cardManager.cards.count || 0),
-
-		{ format: "bold", text_color: "white" }
-	); */
-
-	/* for (let i = 0; i < cards_f.length; i++) {
+	for (let i = 0; i < cards_f_chunk.length; i++) {
 		let _embed = new BetterEmbed({
 			author: {
 				text: dupeCheck ? "$USERNAME | dupes" : `$USERNAME | inventory ${filtered ? "(filtered)" : ""}`,
@@ -448,7 +380,7 @@ function inventory(userData, options, stats) {
 			},
 			thumbnailURL: dupeCheck ? cards.slice(-1)[0].card.imageURL : null,
 			// description: `\`\`\`lorem ipsum dolor sit amet\`\`\``,
-			footer: { text: `Page ${i + 1}/${cards_f.length || 1}` }
+			footer: { text: `Page ${i + 1}/${cards_f_chunk.length || 1}` }
 		});
 
 		_embed.addFields(
@@ -461,12 +393,12 @@ function inventory(userData, options, stats) {
 		);
 
 		// Add cards
-		_embed.addFields(cards_f[i].map(c_f => ({ name: "\u200b", value: c_f, inline: true })));
+		_embed.addFields(cards_f_chunk[i].map(c_f => ({ name: "\u200b", value: c_f, inline: true })));
 
 		embeds_inventory.push(_embed);
-	} */
+	}
 
-	// return embeds_inventory;
+	return embeds_inventory;
 }
 
 /** @param {GuildMember|User} user @param {UserData} userData */

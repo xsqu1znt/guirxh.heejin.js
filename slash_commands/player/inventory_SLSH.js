@@ -62,21 +62,13 @@ module.exports = {
 		// Fetch the user's inventory stats
 		let inventoryStats = await userManager.inventory.stats(inventoryOptions.target.id);
 
-		// let timestamp_embed = Date.now(); // DEBUG
-
 		// Sort the inventory using the provided filters and create a page template
-		let embedTemplate_inventory = user_ES.inventory(userData, inventoryOptions, inventoryStats.categories);
-		// console.log(embedTemplate_inventory, jt.eta(Date.now(), { since: timestamp_embed })); // DEBUG
+		let embeds_inventory = user_ES.inventory(userData, inventoryOptions, inventoryStats.categories);
 
 		// prettier-ignore
-		if (embedTemplate_inventory?.embed_error)
-			return await embedTemplate_inventory.embed_error.send({ interaction });
-
 		// Set up page navigation
 		let embedNav = new EmbedNavigator({
-			interaction,
-			embedTemplate: embedTemplate_inventory.template,
-			pageCount: embedTemplate_inventory.pageCount,
+			interaction, embeds: [embeds_inventory],
 			pagination: { type: "longJump", useReactions: true }
 		});
 

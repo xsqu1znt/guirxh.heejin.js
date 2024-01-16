@@ -179,9 +179,6 @@ class Stage {
 	}
 
 	async #end(user, idol) {
-		let timestamp = Date.now();
-		// prettier-ignore
-		console.log(`ending stage for user '${this.data.opponents.home?.user?.username || this.data.opponents.home.username}'`);
 		let xp_user = jt.randomNumber(config.player.xp.user.rewards.stage.MIN, config.player.xp.user.rewards.stage.MAX);
 		let xp_idol = jt.randomNumber(config.player.xp.card.rewards.stage.MIN, config.player.xp.card.rewards.stage.MAX);
 
@@ -220,20 +217,16 @@ class Stage {
 
 		// prettier-ignore
 		// Set the embed's footer
-		this.embed.setFooter(
-			user
-				? "$WINNER's idol got $XPXP $LEVEL_UP"
-						.replace("$WINNER", user?.displayName || user?.username)
-						.replace("$XP", xp_idol)
-						.replace("$LEVEL_UP", card_leveled.levels_gained ? `and ${card_leveled.levels_gained} ${card_leveled.levels_gained === 1 ? "level" : "levels"}` : "")
-				: "You lost... Try again next time!"
+		this.embed.setFooter(user
+			? "$WINNER's idol got $XPXP $LEVEL_UP"
+					.replace("$WINNER", user?.displayName || user?.username)
+					.replace("$XP", xp_idol)
+					.replace("$LEVEL_UP", card_leveled.levels_gained ? `and ${card_leveled.levels_gained} ${card_leveled.levels_gained === 1 ? "level" : "levels"}` : "")
+			: "You lost... Try again next time!"
 		);
 
 		// Refresh the embed
 		await this.#refresh();
-
-		// prettier-ignore
-		console.log(`DONE!! ending stage for user '${this.data.opponents.home?.user?.username || this.data.opponents.home.username}' | time: ${jt.eta(Date.now(), { since: timestamp })}`);
 
 		// Return stage data
 		return this.#resolve({
