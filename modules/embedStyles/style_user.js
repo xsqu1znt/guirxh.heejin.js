@@ -235,21 +235,21 @@ function inventory(userData, options, stats) {
 
 	/* - - - - - { Parse Options } - - - - - */
 	// prettier-ignore
-	options.rarity = options.rarity.split(",").map(str => str.trim().toLowerCase());
+	options.rarity = options.rarity.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
 	// prettier-ignore
-	options.setID = options.setID.split(",").map(str => str.trim().toLowerCase());
+	options.setID = options.setID.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
 	// prettier-ignore
-	options.globalID = options.globalID.split(",").map(str => str.trim().toLowerCase());
+	options.globalID = options.globalID.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
 	// prettier-ignore
-	options.category = options.category.split(",").map(str => str.trim().toLowerCase());
+	options.category = options.category.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
 	// prettier-ignore
-	options.group = options.group.split(",").map(str => str.trim().toLowerCase());
+	options.group = options.group.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
 	// prettier-ignore
-	options.single = options.single.split(",").map(str => str.trim().toLowerCase());
+	options.single = options.single.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
 	// prettier-ignore
-	options.name = options.name.split(",").map(str => str.trim().toLowerCase());
+	options.name = options.name.split(",").map(str => str.trim().toLowerCase()).filter(str => str);
 
-	/// Parse user's card_inventory
+	// Parse user's card_inventory
 	let cards = userParser.cards.getInventory(userData, {
 		dupe: options.globalID.length && options.globalID[0] !== "all" ? false : true,
 		unique: options.globalID.length && options.globalID[0] !== "all" ? false : true
@@ -258,7 +258,7 @@ function inventory(userData, options, stats) {
 	// prettier-ignore
 	let filtered = false, dupeCheck = false;
 
-	/// Apply inventory filters
+	/* - - - - - { Card Filters } - - - - - */
 	// prettier-ignore
 	if (options.rarity.length) {
 		let _cards = [];
@@ -330,14 +330,10 @@ function inventory(userData, options, stats) {
 	};
 
 	// prettier-ignore
-	// Format the user's cards into list entries, with a max of 15 per page
-	let cards_f = jt.chunk(cards.map(c => c.card_f), 15);
+	// Break up cards into groups with a max of 15 per page
+	let cards_f_chunk = jt.chunk(cards.map(c => c.card_f), 15);
 
-	return; // DEBUG
-
-	/// Create the embeds :: { INVENTORY }
-	let embeds_inventory = [];
-
+	/* - - - - - { Create the Page Template } - - - - - */
 	// prettier-ignore
 	let stats_f_1 = stats.slice(0, 5).map(c =>
 		markdown.ansi(`${cardManager.cards.category.meta.base[c.name].emoji} ${c.name}: ${c.has}/${c.outOf}`, {
@@ -355,8 +351,7 @@ function inventory(userData, options, stats) {
 		})
 	);
 
-	/* - - - - - { PROFILE STATS } - - - - - */
-	// let stats_profile = "> `$CARROTS` :: `$RIBBONS` :: `🃏 $INVENTORY_COUNT/$CARD_COUNT` :: `📈 LV. $LEVEL ☝️ $XPXP/$XP_NEEDEDXP`"
+	// Format profile stats
 	let stats_profile = markdown.ansi(
 		"$CARROTS\n$RIBBONS\n📆 $DAILY_STREAK\n📈 $LEVEL\n☝️ $XP/$XP_NEEDEDXP\n🃏 $INVENTORY_COUNT/$CARD_COUNT"
 			.replace("$CARROTS", `${config_bot.emojis.currency_1.EMOJI} ${userData.balance || 0}`)
@@ -374,7 +369,77 @@ function inventory(userData, options, stats) {
 		{ format: "bold", text_color: "white" }
 	);
 
-	for (let i = 0; i < cards_f.length; i++) {
+	// Create the template :: { INVENTORY }
+	const embedTemplate_inventory = idx => {
+		// Create the embed :: { INVENTORY }
+		let _embed = new BetterEmbed({
+			author: {
+				text: dupeCheck ? "$USERNAME | dupes" : `$USERNAME | inventory ${filtered ? "(filtered)" : ""}`,
+				user: options.target,
+				iconURL: true
+			},
+			thumbnailURL: dupeCheck ? cards.slice(-1)[0].card.imageURL : null,
+			footer: { text: `Page ${i + 1}/${cards_f_chunk.length || 1}` }
+		});
+
+		// Add stat fields to the embed
+		_embed.addFields(
+			// Inventory stats
+			{ name: "\u200b", value: `\n\`\`\`ansi\n${stats_f_1.join("\n")}\`\`\``, inline: true },
+			// Profile stats
+			{ name: "\u200b", value: `\`\`\`ansi\n${stats_profile}\`\`\``, inline: true },
+			// Inventory stats
+			{ name: "\u200b", value: `\n\`\`\`ansi\n${stats_f_2.join("\n")}\`\`\``, inline: true }
+		);
+
+		// Add cards
+		_embed.addFields(cards_f_chunk[idx].map(c_f => ({ name: "\u200b", value: c_f, inline: true })));
+	};
+
+	return { template: embedTemplate_inventory, pageCount: cards_f_chunk.length };
+
+	return; // DEBUG
+
+	/// Create the embeds :: { INVENTORY }
+	// let embeds_inventory = [];
+
+	// prettier-ignore
+	/* let stats_f_1 = stats.slice(0, 5).map(c =>
+		markdown.ansi(`${cardManager.cards.category.meta.base[c.name].emoji} ${c.name}: ${c.has}/${c.outOf}`, {
+			format: "bold", text_color: cardManager.cards.category.meta.base[c.name].color_ansi
+		})
+	);
+
+	// Add the user's inventory count to the first stat section
+	stats_f_1.push(markdown.ansi(`⚪ total: ${cards.length}`, { format: "bold", text_color: "white" }));
+
+	// prettier-ignore
+	let stats_f_2 = stats.slice(5).map(c =>
+		markdown.ansi(`${cardManager.cards.category.meta.base[c.name].emoji} ${c.name}: ${c.has}/${c.outOf}`, {
+			format: "bold", text_color: cardManager.cards.category.meta.base[c.name].color_ansi
+		})
+	); */
+
+	/* - - - - - { PROFILE STATS } - - - - - */
+	// let stats_profile = "> `$CARROTS` :: `$RIBBONS` :: `🃏 $INVENTORY_COUNT/$CARD_COUNT` :: `📈 LV. $LEVEL ☝️ $XPXP/$XP_NEEDEDXP`"
+	/* let stats_profile = markdown.ansi(
+		"$CARROTS\n$RIBBONS\n📆 $DAILY_STREAK\n📈 $LEVEL\n☝️ $XP/$XP_NEEDEDXP\n🃏 $INVENTORY_COUNT/$CARD_COUNT"
+			.replace("$CARROTS", `${config_bot.emojis.currency_1.EMOJI} ${userData.balance || 0}`)
+			.replace("$RIBBONS", `${config_bot.emojis.currency_2.EMOJI} ${userData.ribbons || 0}`)
+
+			.replace("$DAILY_STREAK", userData.daily_streak || 0)
+			.replace("$LEVEL", userData.level || 0)
+
+			.replace("$XP", Math.floor(userData.xp || 0))
+			.replace("$XP_NEEDED", Math.floor(userData.xp_for_next_level || 0))
+
+			.replace("$INVENTORY_COUNT", cards.length || 0)
+			.replace("$CARD_COUNT", cardManager.cards.count || 0),
+
+		{ format: "bold", text_color: "white" }
+	); */
+
+	/* for (let i = 0; i < cards_f.length; i++) {
 		let _embed = new BetterEmbed({
 			author: {
 				text: dupeCheck ? "$USERNAME | dupes" : `$USERNAME | inventory ${filtered ? "(filtered)" : ""}`,
@@ -399,9 +464,9 @@ function inventory(userData, options, stats) {
 		_embed.addFields(cards_f[i].map(c_f => ({ name: "\u200b", value: c_f, inline: true })));
 
 		embeds_inventory.push(_embed);
-	}
+	} */
 
-	return embeds_inventory;
+	// return embeds_inventory;
 }
 
 /** @param {GuildMember|User} user @param {UserData} userData */

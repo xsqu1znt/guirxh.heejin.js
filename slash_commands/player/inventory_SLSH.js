@@ -69,9 +69,19 @@ module.exports = {
 
 		console.log(embedTemplate_inventory, jt.eta(Date.now(), { since: timestamp_embed })); // DEBUG
 
+		// Set up page navigation
+		let embedNav = new EmbedNavigator({
+			interaction,
+			embedTemplate: embedTemplate_inventory.template,
+			embedCount: embedCount_inventory.pageCount,
+			pagination: { type: "longJump", useReactions: true }
+		});
+
+		return await embedNav.send();
+
 		return; // DEBUG
 
-		// Create the embeds :: { USER INVENTORY }
+		/* // Create the embeds :: { USER INVENTORY }
 		let embeds_inventory = user_ES.inventory(userData, inventoryOptions, inventoryStats.categories);
 
 		// prettier-ignore
@@ -81,6 +91,6 @@ module.exports = {
 			pagination: { type: "longJump", useReactions: true }
 		});
 
-		return await embedNav.send();
+		return await embedNav.send(); */
 	}
 };
