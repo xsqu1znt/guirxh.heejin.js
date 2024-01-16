@@ -400,8 +400,6 @@ function inventory(userData, options, stats) {
 
 	return { template: embedTemplate_inventory, pageCount: cards_f_chunk.length };
 
-	return; // DEBUG
-
 	/// Create the embeds :: { INVENTORY }
 	// let embeds_inventory = [];
 
