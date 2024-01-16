@@ -18,11 +18,11 @@ module.exports = {
 
 		/* - - - - - { COOLDOWNS } - - - - - */
 		/// Check if the user has an active cooldown :: { STAGE }
-		let cooldown_stage_user = await userManager.cooldowns.eta(interaction.user.id, "stage");
+		/* let cooldown_stage_user = await userManager.cooldowns.eta(interaction.user.id, "stage");
 		// prettier-ignore
 		if (cooldown_stage_user) return await cooldown_ES.send({
             interaction, description: `Your stage will be ready in **${cooldown_stage_user}**`
-		});
+		}); */
 
 		/* - - - - - { RIVAL } - - - - - */
 		if (rival) {

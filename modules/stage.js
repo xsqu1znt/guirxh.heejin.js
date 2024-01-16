@@ -179,6 +179,9 @@ class Stage {
 	}
 
 	async #end(user, idol) {
+		let timestamp = Date.now();
+		// prettier-ignore
+		console.log(`ending stage for user '${this.data.opponents.home?.user?.username || this.data.opponents.home.username}'`);
 		let xp_user = jt.randomNumber(config.player.xp.user.rewards.stage.MIN, config.player.xp.user.rewards.stage.MAX);
 		let xp_idol = jt.randomNumber(config.player.xp.card.rewards.stage.MIN, config.player.xp.card.rewards.stage.MAX);
 
@@ -186,7 +189,6 @@ class Stage {
 		let card_leveled = cardManager.levelUp(idol);
 		let card = cardManager.parse.toCardLike(card_leveled.card);
 
-		// prettier-ignore
 		// Give the winning user/idol XP
 		if (user) {
 			await Promise.all([
@@ -229,6 +231,9 @@ class Stage {
 
 		// Refresh the embed
 		await this.#refresh();
+
+		// prettier-ignore
+		console.log(`DONE!! ending stage for user '${this.data.opponents.home?.user?.username || this.data.opponents.home.username}' | time: ${jt.eta(Date.now(), { since: timestamp })}`);
 
 		// Return stage data
 		return this.#resolve({
