@@ -45,14 +45,6 @@
 			{ "NAME": "3three", "EMOJI": "<:3three:1183407918545117255>" },
 			{ "NAME": "4four", "EMOJI": "<:4four:1183407933258747955>" },
 			{ "NAME": "5five", "EMOJI": "<:5five:1183407949255811102>" }
-		],
-
-		"pagination": {
-			"to_first": { "NAME": "left2", "EMOJI": "<:left2:1110403342611513344>" },
-			"back": { "NAME": "left1", "EMOJI": "<:left1:1110405467370434670>" },
-			"jump": { "NAME": "📄", "EMOJI": "📄" },
-			"next": { "NAME": "right1", "EMOJI": "<:right1:1110405469350146089>" },
-			"to_last": { "NAME": "right2", "EMOJI": "<:right2:1110403345702735963>" }
-		}
+		]
 	}
 }
