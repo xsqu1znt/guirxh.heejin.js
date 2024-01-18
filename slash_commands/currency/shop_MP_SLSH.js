@@ -1,8 +1,9 @@
 const { Client, CommandInteraction, SlashCommandBuilder } = require("discord.js");
 
-const { EmbedNavigator } = require("../../modules/discordTools");
 const { error_ES, general_ES } = require("../../modules/embedStyles/index");
+const { EmbedNavigator } = require("../../modules/discordTools");
 const { userManager } = require("../../modules/mongo/index");
+const InventoryEditModule = require("../../modules/inventoryEditModule");
 const itemManager = require("../../modules/itemManager");
 const jt = require("../../modules/jsTools");
 
@@ -47,12 +48,26 @@ module.exports = {
 
 		let item = await itemManager.buyItem(interaction.member, itemID);
 
-		if (item?.embed) return await item.embed.send({ interaction });
-
 		// prettier-ignore
-		if (!item?.item || !item?.item?.length) return await error_ES.send({
+		// Error message
+		if (!item?.item) return await error_ES.send({
 			interaction, author: { text: "⛔ Purchase failed" },
 			description: `\`${itemID}\` is not an item in the shop`
 		});
+
+		if (item?.embed) {
+			let msg = await item.embed.send({ interaction });
+
+			if (item.type === "cardPack") {
+				// Add inventory edit reactions
+				new InventoryEditModule(client, interaction, msg, {
+					cards: item.item.cards,
+					dupeIndex: item.item.dupeIndex,
+					modules: ["sell"]
+				});
+			}
+
+			return msg;
+		}
 	}
 };

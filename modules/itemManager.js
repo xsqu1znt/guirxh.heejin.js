@@ -102,7 +102,7 @@ async function buyItem(user, id) {
 				imageURL: item.card_imageURL
 			});
 
-			return { item: item.cards, type, embed: embed_cardPack };
+			return { item, type, embed: embed_cardPack };
 		
 		case ItemType.badge:
 			item = await badge_buy(user.id, id);
@@ -216,7 +216,7 @@ async function cardPack_buy(userID, packID) {
 
 	// prettier-ignore
 	return {
-		cards, cards_f, card_imageURL: cards.slice(-1)[0]?.imageURL,
+		cards, cards_f, dupeIndex, card_imageURL: cards.slice(-1)[0]?.imageURL,
 		name: cardPack.name, balance: userData.balance - (cardPack.price || 0)
 	};
 }
@@ -426,7 +426,7 @@ module.exports = {
 			shopEntry: badge_toString_shopEntry,
 			profile: badge_toString_profile
 		},
-		
+
 		charms: {
 			basic: charm_toString_basic,
 			setEntry: charm_toString_setEntry,
