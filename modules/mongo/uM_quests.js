@@ -27,7 +27,7 @@ async function insertNew(userID) {
 /** @param {string} userID @param {{}} query @param {boolean} upsert  */
 async function update(userID, query, upsert = true) {
 	// Return if there's no active quests
-	if (!questManager.quests_active.length) return;
+	if (!questManager.quests_active().length) return;
 
 	// prettier-ignore
 	return userManager.models.userQuestData.findByIdAndUpdate(userID, query, { new: true, upsert, setDefaultsOnInsert: true });

@@ -2,7 +2,7 @@
 
 const fs = require("fs");
 
-const { markdown, BetterEmbed } = require("../discordTools");
+const { BetterEmbed } = require("../discordTools");
 const cardManager = require("../cardManager");
 const logger = require("../logger");
 const jt = require("../jsTools");
@@ -460,7 +460,7 @@ function toString_objectiveDetails(quest, objectiveType, objectiveProgress, ques
 
 module.exports = {
 	quests,
-	quests_active,
+	quests_active: () => quests_active,
 
 	updateActiveQuests,
 

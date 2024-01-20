@@ -17,7 +17,7 @@ module.exports = {
 			// Update the active quest array
 			questManager.updateActiveQuests();
 
-			if (!questManager.quests_active.length) {
+			if (!questManager.quests_active().length) {
 				// Delete every user quest cache that exists
 				await userManager.models.userQuestData.deleteMany({}).catch(() => {});
 			}

@@ -479,8 +479,8 @@ function quest(user, userQuestCache, userQuestProgress) {
 	let embeds = [];
 
 	// Iterate through each available quest
-	for (let i = 0; i < questManager.quests_active.length; i++) {
-		let _quest = questManager.quests_active[i];
+	for (let i = 0; i < questManager.quests_active().length; i++) {
+		let _quest = questManager.quests_active()[i];
 		let _progress = userQuestProgress ? userQuestProgress.find(p => p.quest_id === _quest.id) : null;
 
 		/* - - - - - { Variables } - - - - - */
@@ -489,7 +489,7 @@ function quest(user, userQuestCache, userQuestProgress) {
 		// Create the embed :: { QUEST }
 		let embed_quest = new BetterEmbed({
 			author: { text: "$USERNAME | quest", user, iconURL: true },
-			footer: `Page ${i + 1}/${questManager.quests_active.length}`
+			footer: `Page ${i + 1}/${questManager.quests_active().length}`
 		});
 
 		/* - - - - - { Format Quest Data } - - - - - */

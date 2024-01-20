@@ -15,7 +15,7 @@ module.exports = {
 	/** @param {Client} client @param {CommandInteraction} interaction */
 	execute: async (client, interaction) => {
 		// Check if there's any active quests currently
-		if (!questManager.quests_active.length) {
+		if (!questManager.quests_active().length) {
 			// prettier-ignore
 			// Create the embed :: { NO QUESTS }
 			let embed_noQuests = new BetterEmbed({
