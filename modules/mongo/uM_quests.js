@@ -80,7 +80,7 @@ async function increment_balance(userID, amount, currencyType) {
 
 /** @param {string} userID @param {number} amount */
 async function increment_cardsNew(userID, amount) {
-	await update(userID, { $inc: { inventory_count: amount } });
+	await update(userID, { $inc: { cards_new: amount } });
 }
 
 /** @param {string} userID @param {number} amount */

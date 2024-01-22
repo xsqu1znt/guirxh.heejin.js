@@ -36,6 +36,8 @@ function parseQuestConfig() {
 
 	// Save the edited file
 	if (edited) {
+		quests = quests;
+
 		// Convert into JSON
 		let jsonData = JSON.stringify(quests, null, 4);
 
