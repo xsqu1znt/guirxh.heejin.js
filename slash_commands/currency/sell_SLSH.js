@@ -149,7 +149,7 @@ module.exports = {
 			});
 
 			// Update the user's quest stats
-			userManager.quests.increment.balance(interaction.user.id, _amount, "carrot");
+			userManager.quests.increment.balance(interaction.user.id, _amount, "balance");
 
 			return await embed_sell.send({
 				description: cards_f

@@ -60,9 +60,9 @@ module.exports = {
 			userManager.reminders.set(interaction.user.id, "daily", interaction.guildId, interaction.channelId),
 
 			// Update the user's quest progress
-			userManager.quests.increment.balance(interaction.user.id, reward_carrots, "carrot"),
+			userManager.quests.increment.balance(interaction.user.id, reward_carrots, "balance"),
 			// Update the user's statistics
-			userManager.statistics.push.balance(interaction.user.id, reward_carrots, "carrot", "daily")
+			userManager.statistics.push.balance(interaction.user.id, reward_carrots, "balance", "daily")
 		]);
 
 		/* - - - - - { Create the Embed } - - - - - */

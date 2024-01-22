@@ -69,7 +69,7 @@ async function push_balance(userID, amount, currencyType, statType) {
 
 	// prettier-ignore
 	switch (currencyType) {
-        case "carrot": await update(userID, { $push: { balance: data } }); break;
+        case "balance": await update(userID, { $push: { balance: data } }); break;
         case "ribbon": await update(userID, { $push: { ribbons: data } }); break;
 	}
 }
