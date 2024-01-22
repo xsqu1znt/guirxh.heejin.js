@@ -1,4 +1,4 @@
-{
+{ 
 	"timeouts": {
 		"BASE": "2m",
 		"CHANNEL_SELECT": "1m"
